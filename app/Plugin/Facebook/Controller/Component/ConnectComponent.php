@@ -135,7 +135,6 @@ class ConnectComponent extends Component {
 			$this->__error("Facebook.Connect handleFacebookUser Error.  facebook_id not found in {$Auth->userModel} table.");
 			return false;
 		}
-		
 		// check if the user already has an account
 		// User is logged in but doesn't have a 
 		if($Auth->user('id')){
@@ -144,12 +143,14 @@ class ConnectComponent extends Component {
 			if (!$this->User->field('facebook_id')) {
 				$this->User->saveField('facebook_id', $this->uid);
 			}
+			$this->log("Saved user without callback");	
 			return true;
 		} 
 		else {
 			// attempt to find the user by their facebook id
 			$this->authUser = $this->User->findByFacebookId($this->uid);
 			//if we have a user, set hasAccount
+
 			if(!empty($this->authUser)){
 				$this->hasAccount = true;
 			}
@@ -215,6 +216,7 @@ class ConnectComponent extends Component {
 	* @return mixed result of the callback function
 	*/ 
 	private function __runCallback($callback, $passedIn = null){
+		$this->log("calling".$callback);
 		if(is_callable(array($this->Controller, $callback))){
 			return call_user_func_array(array($this->Controller, $callback), array($passedIn));
 		}

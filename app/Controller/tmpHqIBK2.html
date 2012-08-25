@@ -1,0 +1,185 @@
+
+Warning: strtotime(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'Asia/Calcutta' for 'IST/5.0/no DST' instead in /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php on line 59
+
+Call Stack:
+    0.4697     665120   1. {main}() /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/webroot/index.php:0
+    0.4707     726184   2. include('/Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/bootstrap.php') /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/webroot/index.php:77
+    0.4783    1873720   3. Configure::bootstrap(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/bootstrap.php:142
+    0.4815    2246280   4. include('/Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/Config/core.php') /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Core/Configure.php:76
+    0.4845    2412104   5. Cache::config(???, ???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/Config/core.php:266
+    0.4846    2413512   6. Cache::_buildEngine(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Cache.php:135
+    0.4867    2607112   7. FileEngine->init(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Cache.php:164
+    0.4867    2608704   8. CacheEngine->init(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Engine/FileEngine.php:80
+    0.4867    2610904   9. strtotime(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php:59
+
+
+Warning: strtotime(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'Asia/Calcutta' for 'IST/5.0/no DST' instead in /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php on line 59
+
+Call Stack:
+    0.4697     665120   1. {main}() /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/webroot/index.php:0
+    0.4707     726184   2. include('/Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/bootstrap.php') /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/webroot/index.php:77
+    0.4783    1873720   3. Configure::bootstrap(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/bootstrap.php:142
+    0.4815    2246280   4. include('/Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/Config/core.php') /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Core/Configure.php:76
+    0.4877    2609224   5. Cache::config(???, ???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/app/Config/core.php:278
+    0.4878    2610632   6. Cache::_buildEngine(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Cache.php:135
+    0.4879    2611896   7. FileEngine->init(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Cache.php:164
+    0.4879    2613488   8. CacheEngine->init(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/Engine/FileEngine.php:80
+    0.4879    2615640   9. strtotime(???) /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php:59
+
+<pre class="cake-error"><a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d881dfa-trace').style.display = (document.getElementById('cakeErr503332d881dfa-trace').style.display == 'none' ? '' : 'none');"><b>Warning</b> (2)</a>: session_start(): Cannot send session cookie - headers already sent by (output started at /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php:59) [<b>APP/Plugin/Facebook/Vendor/Facebook.php</b>, line <b>37</b>]<div id="cakeErr503332d881dfa-trace" class="cake-stack-trace" style="display: none;"><a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d881dfa-code').style.display = (document.getElementById('cakeErr503332d881dfa-code').style.display == 'none' ? '' : 'none')">Code</a> <a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d881dfa-context').style.display = (document.getElementById('cakeErr503332d881dfa-context').style.display == 'none' ? '' : 'none')">Context</a><pre id="cakeErr503332d881dfa-code" class="cake-code-dump" style="display: none;"><code><span style="color: #000000">&nbsp;&nbsp;public&nbsp;function&nbsp;__construct($config)&nbsp;{</span></code>
+<code><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!session_id())&nbsp;{</span></code>
+<span class="code-highlight"><code><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session_start();</span></code></span></pre><pre id="cakeErr503332d881dfa-context" class="cake-context" style="display: none;">$config = array(
+	&#039;appId&#039; =&gt; &#039;123811554431067&#039;,
+	&#039;apiKey&#039; =&gt; &#039;123811554431067&#039;,
+	&#039;secret&#039; =&gt; &#039;e2d0817aac0ad5b7ad73cdcf9166776e&#039;,
+	&#039;cookie&#039; =&gt; true,
+	&#039;locale&#039; =&gt; &#039;en_US&#039;
+)</pre><pre class="stack-trace">session_start - [internal], line ??
+Facebook::__construct() - APP/Plugin/Facebook/Vendor/Facebook.php, line 37
+FB::__construct() - APP/Plugin/Facebook/Lib/FB.php, line 22
+ConnectComponent::initialize() - APP/Plugin/Facebook/Controller/Component/ConnectComponent.php, line 79
+ObjectCollection::trigger() - CORE/Cake/Utility/ObjectCollection.php, line 130
+call_user_func - [internal], line ??
+CakeEventManager::dispatch() - CORE/Cake/Event/CakeEventManager.php, line 246
+Controller::startupProcess() - CORE/Cake/Controller/Controller.php, line 670
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 183
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92</pre></div></pre><pre class="cake-error"><a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d885308-trace').style.display = (document.getElementById('cakeErr503332d885308-trace').style.display == 'none' ? '' : 'none');"><b>Warning</b> (2)</a>: session_start() [http://php.net/function.session-start]: Cannot send session cache limiter - headers already sent (output started at /Users/nikhilsama/Dropbox/Code/www/Cake2.2/lib/Cake/Cache/CacheEngine.php:59) [<b>APP/Plugin/Facebook/Vendor/Facebook.php</b>, line <b>37</b>]<div id="cakeErr503332d885308-trace" class="cake-stack-trace" style="display: none;"><a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d885308-code').style.display = (document.getElementById('cakeErr503332d885308-code').style.display == 'none' ? '' : 'none')">Code</a> <a href="javascript:void(0);" onclick="document.getElementById('cakeErr503332d885308-context').style.display = (document.getElementById('cakeErr503332d885308-context').style.display == 'none' ? '' : 'none')">Context</a><pre id="cakeErr503332d885308-code" class="cake-code-dump" style="display: none;"><code><span style="color: #000000">&nbsp;&nbsp;public&nbsp;function&nbsp;__construct($config)&nbsp;{</span></code>
+<code><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!session_id())&nbsp;{</span></code>
+<span class="code-highlight"><code><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session_start();</span></code></span></pre><pre id="cakeErr503332d885308-context" class="cake-context" style="display: none;">$config = array(
+	&#039;appId&#039; =&gt; &#039;123811554431067&#039;,
+	&#039;apiKey&#039; =&gt; &#039;123811554431067&#039;,
+	&#039;secret&#039; =&gt; &#039;e2d0817aac0ad5b7ad73cdcf9166776e&#039;,
+	&#039;cookie&#039; =&gt; true,
+	&#039;locale&#039; =&gt; &#039;en_US&#039;
+)</pre><pre class="stack-trace">session_start - [internal], line ??
+Facebook::__construct() - APP/Plugin/Facebook/Vendor/Facebook.php, line 37
+FB::__construct() - APP/Plugin/Facebook/Lib/FB.php, line 22
+ConnectComponent::initialize() - APP/Plugin/Facebook/Controller/Component/ConnectComponent.php, line 79
+ObjectCollection::trigger() - CORE/Cake/Utility/ObjectCollection.php, line 130
+call_user_func - [internal], line ??
+CakeEventManager::dispatch() - CORE/Cake/Event/CakeEventManager.php, line 246
+Controller::startupProcess() - CORE/Cake/Controller/Controller.php, line 670
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 183
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92</pre></div></pre>OAuthException: An active access token must be used to query information about the current user.
+Exception: 102: Requires user session
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	<title>
+		Giftology: The social gifting company:
+		Users	</title>
+	<link href="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/favicon.ico" type="image/x-icon" rel="icon" /><link href="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/favicon.ico" type="image/x-icon" rel="shortcut icon" /><link rel="stylesheet" type="text/css" href="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/css/cake.generic.css" /><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script><script type="text/javascript" src="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/js/giftology.js"></script></head>
+<body>
+
+
+	<div id="container">
+		<div id="header">
+			<img src="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/img/giftologylogo.png" alt="" />		</div>
+		
+		
+		
+		
+		
+		<div id="spinner" class="centered">
+			<img src="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/img/spinner.gif" alt="" />		
+		</div>
+		
+		<div id="content">
+						    <fb:login-button show-faces='1' width='200' max-rows='1' perms='email,publish_stream,friends_birthday'></fb:login-button>    <!--?= debug ($facebook_user); ?-->
+    <!--
+<div class="users form">
+<form action="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/" id="UserLoginForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>    <fieldset>
+        <legend>Please enter your username and password</legend>
+    <div class="input text required"><label for="UserUsername">Username</label><input name="data[User][username]" maxlength="50" type="text" id="UserUsername"/></div><div class="input password required"><label for="UserPassword">Password</label><input name="data[User][password]" type="password" id="UserPassword"/></div>    </fieldset>
+<div class="submit"><input  type="submit" value="Login"/></div></form><fb:login-button show-faces='1' width='200' max-rows='1' perms='email,publish_stream,friends_birthday'></fb:login-button></div>
+-->		</div>
+		
+		
+	
+		
+		
+		<div id="footer">
+			<a href="http://www.cakephp.org/" target="_blank"><img src="/Users/nikhilsama/Dropbox/Code/www/Cake2.2/img/cake.power.gif" alt="Giftology: The social gifting company" border="0" /></a>		</div>
+	</div>
+	<table class="cake-sql-log" id="cakeSqlLog_134553269750333319a44ad6_09230652" summary="Cake SQL Log" cellspacing="0"><caption>(default) 0 query took  ms</caption>	<thead>
+		<tr><th>Nr</th><th>Query</th><th>Error</th><th>Affected</th><th>Num. rows</th><th>Took (ms)</th></tr>
+	</thead>
+	<tbody>
+		</tbody></table>
+		<div id="fb-root"></div><script src="//connect.facebook.net/en_US/all.js"></script><script type="text/javascript">
+//<![CDATA[
+
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '123811554431067', // App ID
+			channelURL : '../../Vendor/channel.php', // Channel File
+			status     : true, // check login status
+			cookie     : true, // enable cookies to allow the server to access the session
+			oauth      : true, // enable OAuth 2.0
+			xfbml      : true  // parse XFBML
+		});
+		
+		
+		// Checks whether the user is logged in
+		FB.getLoginStatus(function(response) {
+			if (response.authResponse) {
+				// logged in and connected user, someone you know
+				// alert('You are connected');
+			} else {
+				// no user session available, someone you dont know
+				// alert('You are disconnected');
+			}
+		});
+			   
+		FB.Event.subscribe('auth.authResponseChange', function(response) {
+			if (response.authResponse) {
+				// the user has just logged in
+				// alert('You just logged in facebook from somewhere');
+			} else {
+				// the user has just logged out
+				// alert('You just logged out from faceboook');
+			}
+		});
+		
+		// Other javascript code goes here!
+
+	};
+
+	// logs the user in the application and facebook
+	function login(redirection){
+		FB.login(function (response) {
+			if(response.authResponse) {
+				// user is logged in
+				// console.log('Welcome!');
+				if(redirection != null && redirection != ''){
+					top.location.href = redirection;
+				}
+			} else {
+				// user could not log in
+				console.log('User cancelled login or did not fully authorize.');
+			}
+		}, {scope: 'email'});
+	}
+
+	// logs the user out of the application and facebook
+	function logout(redirection){
+		FB.logout(function(response) {
+			// user is logged out
+			// redirection if any
+			if(redirection != null && redirection != ''){
+				top.location.href = redirection;
+			}
+		});
+	}
+
+	// Load the SDK Asynchronously
+	(function() {
+	var e = document.createElement('script'); e.async = true;
+	e.src = document.location.protocol 
+	+ '//connect.facebook.net/en_US/all.js';
+	document.getElementById('fb-root').appendChild(e);
+	}());
+//]]>
+</script></body>
+</html>

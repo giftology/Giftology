@@ -38,15 +38,24 @@ class AppController extends Controller {
     var $components = array('Session',
                             'Auth' => array(
                                 'authorize' => 'controller',
-                                'authorizedActions' => array ('index', 'view')
-                                           ),
-                            'Facebook.Connect' => array('model' => 'User'));
+                                'authorizedActions' => array ('index', 'view'),
+                                'loginRedirect' => array('controller' => 'users', 'action' => 'view_friends'),
+                                'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'home')
+                            ),
+                            'Facebook.Connect' => array('model' => 'User'),
+                            'RequestHandler');
     
     function beforeFilter() {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
+        
+        $this->Auth->allow('index', 'view');
     }
     function isAuthorized() {
+            // Admin can access every action
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
         return true;
     }
 }
