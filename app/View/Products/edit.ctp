@@ -6,7 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('min_price');
 		echo $this->Form->input('max_price');
-		echo $this->Form->input('image');
+		echo $this->Form->input('image', array('type' => 'file'));
 		echo $this->Form->input('days_valid');
 		echo $this->Form->input('terms');
 		echo $this->Form->input('code');

@@ -14,7 +14,7 @@ class ProductsController extends AppController {
  */
 	public function index() {
 		$this->Product->recursive = 0;
-		$this->set('receiver_id', $this->request->params['named']['receiver_id']);
+		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
 		$this->set('products', $this->paginate());
 	}
 

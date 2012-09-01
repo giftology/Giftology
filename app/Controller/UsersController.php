@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 /**
  * Users Controller
@@ -35,7 +36,7 @@ class UsersController extends AppController {
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-                $this->User->recursive = 2;
+                $this->User->recursive = 2; 
 		$this->set('user', $this->User->read(null, $id));
 	}
 
@@ -125,10 +126,179 @@ class UsersController extends AppController {
         if (!$this->Connect->user()) {
             $this->redirect(array('controller'=>'users', 'action'=>'login'));
         }
+        $this->set('user', $this->get_birthdays('mine','thisweek'));
+    }
+    
+    function beforeFacebookSave() {
+        $this->Connect->authUser['User']['last_login'] = date('Y-m-d');
+        $this->setUserProfile();
+        $this->setUserUtm();
+        $this->setUserReminders();
+        return true;
+    }
+    
+    function afterFacebookSave($last_insert_id) {
+        $updatedGiftId = $this->updatePlaceholderGifts($last_insert_id);
+        $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
+    }
+    function updatePlaceholderGifts ($last_insert_id) {
+
+        // Main deal here is that we may have some dudes who didnt have a user account
+        // before when gifts were sent to them, so the gifts went to the placeholder
+        // account UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID.  Now that a
+        // new user has been created, we want to check to see if this user already
+        // has some placeholder gifts, and if that is the case then update the gifts
+        // to the correct and valid user account, instead of placeholder
+        // Might also be a good place to set User UTM, since its likely that
+        // this user came in here from a sent gift - NS
+
+
+        $this->User->GiftsReceived->recursive = -1;
+        $giftsReceived = $this->User->GiftsReceived->find('all',
+            array('conditions' => array(
+                'receiver_fb_id' => $this->Connect->user('id'),
+                'receiver_id' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
+        $gift_id_to_return = null;
+        if (!$giftsReceived) {
+            return $gift_id_to_return;
+        }
+        $updatedGifts = array();
+        foreach($giftsReceived as $giftReceived) {
+            $updatedGift['GiftsReceived']['receiver_id'] = $last_insert_id;
+            $updatedGift['GiftsReceived']['id'] = $giftReceived['GiftsReceived']['id'];
+            array_push($updatedGifts, $updatedGift);
+            $gift_id_to_return = $giftReceived['GiftsReceived']['id'];
+        }
+        $this->User->GiftsReceived->saveMany($updatedGifts);
+        return $gift_id_to_return;
+    }
+    function updateUTMForReferredUser ($updatedGiftId, $user_id) {
+        $this->User->UserUtm->recursive = -1;
+        $currUTM = $this->User->UserUtm->find('first',
+                        array('conditions' => array(
+                                'user_id' => $user_id
+                        )));
+        
+        if ($currUTM) {
+            return; //already has a good UTM, no need to hack in a new one 
+        }
+
+        $newUTM['UserUtm']['utm_source'] = 'GiftReceived';
+        $newUTM['UserUtm']['utm_medium'] = 'Generated';
+        $newUTM['UserUtm']['utm_term'] = $updatedGiftId;
+        
+        $this->User->UserUtm->save($newUTM);
+    }
+        
+    function setUserProfile () {
+        $this->Connect->authUser['UserProfile']['email'] = $this->Connect->user('email');
+        
+        $fb_user = $this->Connect->user();
+        $location = $fb_user['location'];
+        $this->Connect->authUser['UserProfile']['city'] = isset($location) ? $location['name'] : NULL;
+        
+        $this->Connect->authUser['UserProfile']['gender'] = $this->Connect->user('gender');
+        $this->Connect->authUser['UserProfile']['birthday'] = $this->Connect->user('birthday');
+        $this->Connect->authUser['UserProfile']['first_name'] = $this->Connect->user('first_name');
+        $this->Connect->authUser['UserProfile']['last_name'] = $this->Connect->user('last_name');
+        
+    }
+    function setUserUtm() {
+        if (isset($this->request->query['utm_source'])) {
+            $this->Connect->authUser['UserUtm']['utm_source'] = $this->request->query['utm_source'];
+        }
+        if (isset($this->request->query['utm_medium'])) {
+            $this->Connect->authUser['UserUtm']['utm_medium'] = $this->request->query['utm_medium'];
+        }
+        if (isset($this->request->query['utm_campaign'])) {
+            $this->Connect->authUser['UserUtm']['utm_campaign'] = $this->request->query['utm_campaign'];
+        }
+        if (isset($this->request->query['utm_term'])) {
+            $this->Connect->authUser['UserUtm']['utm_term'] = $this->request->query['utm_term'];
+        }
+    }
+    function setUserReminders() {
+
+        $friends = $this->getUserFriends();
+        $reminders = array();
+        foreach ($friends as $friend) {
+            array_push($reminders, array (
+                    'friend_fb_id' => $friend['uid'],
+                    'friend_name' => $friend['name'],
+                    'friend_birthday' => $friend['birthday']
+                ));
+        }
+        $this->Connect->authUser['Reminders'] = $reminders;
+    }
+    
+    function getUserFriends() {
         $Facebook = new FB();
-        //$friends = $Facebook->api('/me');
         $friends = $Facebook->api(array('method' => 'fql.query',
                                         'query' => 'SELECT uid, birthday, pic_big, name FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
-        $this->set('friends', $friends);
+        return $friends;
+    }
+    
+    function send_welcome_email() {
+        $email = new CakeEmail();
+	$email->config('smtp')
+              ->template('welcome', 'default') 
+	      ->emailFormat('html')
+	      ->to($this->Connect->user('email'))
+	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
+	      ->subject('Welcome to Giftology')
+              ->viewVars(array('name' => $this->Connect->user('name')))
+              ->send();
+    }
+    public function send_reminder_emails () {
+        $users = $this->get_birthdays('all_users', 'thismonth');
+        foreach($users as $user) {
+            $this->send_reminder_email($user);
+        }
+    }
+    function get_birthdays ($whose, $when) {
+        $find_type = 'all';
+        
+        if ($whose == 'mine') {
+            $conditions = array(
+                'User.id' => $this->Auth->user('id'));
+            $find_type = 'first';
+        }
+        
+        if ($when == 'today') {
+            $reminder_conditions = array(
+                            'MONTH(Reminders.friend_birthday)' => date('m'),
+                            'DAY(Reminders.friend_birthday)' => date('d')); 
+        } elseif ($when =='thisweek') {
+            $reminder_conditions = array(
+                            'Reminders.friend_birthday BETWEEN ? AND ?' => array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week"))));
+        } elseif ($when == 'thismonth') {
+            $reminder_conditions = array(
+                            'Reminders.friend_birthday BETWEEN ? AND ?' => array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 month"))));
+        }
+        
+        $this->User->Behaviors->attach('Containable');
+        $user = $this->User->find($find_type,
+                    array(
+                        'contain' => array(
+                            'UserProfile',
+                            'Reminders' => array(
+                                'conditions' => isset($reminder_conditions) ? $reminder_conditions : array(),
+                                'order' => 'Reminders.friend_birthday ASC'
+                        )),
+                        'conditions' => isset($conditions) ? $conditions : array())
+        );
+        return $user;
+    }
+    function send_reminder_email($user) {
+        $email = new CakeEmail();
+	$email->config('smtp')
+              ->template('reminder', 'default') 
+	      ->emailFormat('html')
+	      ->to($user['UserProfile']['email'])
+	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
+	      ->subject('Birthday Reminder')
+              ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+                               'reminders' => $user['Reminders']))
+              ->send();
     }
 }

@@ -7,7 +7,7 @@
 		echo $this->Form->input('max_age');
 		echo $this->Form->input('city');
 		echo $this->Form->input('gender');
-		echo $this->Form->input('inter');
+		echo $this->Form->input('interests');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

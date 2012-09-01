@@ -4,12 +4,13 @@
 		<legend><?php echo __('Add Gift'); ?></legend>
 	<?php
 		echo $this->Form->input('product_id');
-		echo $this->Form->input('receiver_id');
 		echo $this->Form->input('sender_id');
+		echo $this->Form->input('receiver_id');
+		echo $this->Form->input('receiver_fb_id');
 		echo $this->Form->input('code');
 		echo $this->Form->input('gift_amount');
-		echo $this->Form->input('expiry_date');
 		echo $this->Form->input('gift_status_id');
+		echo $this->Form->input('expiry_date');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -25,5 +26,7 @@
 		<li><?php echo $this->Html->link(__('New Gift Status'), array('controller' => 'gift_statuses', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Sender'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

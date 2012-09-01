@@ -9,5 +9,5 @@
     ?>
     </fieldset>
 <?php echo $this->Form->end(__('Login')); ?>
-<?php echo $this->Facebook->login(array('perms' => 'email,publish_stream,friends_birthday')); ?>
+<?php echo $this->Facebook->login(array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location')); ?>
 </div>

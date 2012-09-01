@@ -4,14 +4,15 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('product_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('receiver_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('sender_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('receiver_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('receiver_fb_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
 			<th><?php echo $this->Paginator->sort('gift_amount'); ?></th>
+			<th><?php echo $this->Paginator->sort('gift_status_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('expiry_date'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
-			<th><?php echo $this->Paginator->sort('gift_status_id'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -22,19 +23,20 @@
 			<?php echo $this->Html->link($gift['Product']['id'], array('controller' => 'products', 'action' => 'view', $gift['Product']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($gift['Receiver']['id'], array('controller' => 'users', 'action' => 'view', $gift['Receiver']['id'])); ?>
-		</td>
-		<td>
 			<?php echo $this->Html->link($gift['Sender']['id'], array('controller' => 'users', 'action' => 'view', $gift['Sender']['id'])); ?>
 		</td>
+		<td>
+			<?php echo $this->Html->link($gift['Receiver']['id'], array('controller' => 'users', 'action' => 'view', $gift['Receiver']['id'])); ?>
+		</td>
+		<td><?php echo h($gift['Gift']['receiver_fb_id']); ?>&nbsp;</td>
 		<td><?php echo h($gift['Gift']['code']); ?>&nbsp;</td>
 		<td><?php echo h($gift['Gift']['gift_amount']); ?>&nbsp;</td>
-		<td><?php echo h($gift['Gift']['expiry_date']); ?>&nbsp;</td>
-		<td><?php echo h($gift['Gift']['created']); ?>&nbsp;</td>
-		<td><?php echo h($gift['Gift']['modified']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($gift['GiftStatus']['id'], array('controller' => 'gift_statuses', 'action' => 'view', $gift['GiftStatus']['id'])); ?>
 		</td>
+		<td><?php echo h($gift['Gift']['expiry_date']); ?>&nbsp;</td>
+		<td><?php echo h($gift['Gift']['created']); ?>&nbsp;</td>
+		<td><?php echo h($gift['Gift']['modified']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $gift['Gift']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $gift['Gift']['id'])); ?>
@@ -68,5 +70,7 @@
 		<li><?php echo $this->Html->link(__('New Gift Status'), array('controller' => 'gift_statuses', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Sender'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -43,22 +43,8 @@ class User extends AppModel {
             )
         )
     );
-
-	public $hasMany = array(
-		'UserAddress' => array(
-			'className' => 'UserAddress',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'UserProfile' => array(
+        public $hasOne = array(
+            		'UserProfile' => array(
 			'className' => 'UserProfile',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
@@ -73,6 +59,21 @@ class User extends AppModel {
 		),
 		'UserUtm' => array(
 			'className' => 'UserUtm',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+        );
+	public $hasMany = array(
+		'UserAddress' => array(
+			'className' => 'UserAddress',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -122,7 +123,20 @@ class User extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+                'Reminders' => array(
+                        'className' => 'Reminder',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''                
+                )
 	);
         
         public function beforeSave($options = array()) {

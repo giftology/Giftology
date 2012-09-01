@@ -26,9 +26,9 @@
 			<?php echo h($productSegment['ProductSegment']['gender']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Inter'); ?></dt>
+		<dt><?php echo __('Interests'); ?></dt>
 		<dd>
-			<?php echo h($productSegment['ProductSegment']['inter']); ?>
+			<?php echo h($productSegment['ProductSegment']['interests']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
@@ -66,11 +66,11 @@
 		<th><?php echo __('Days Valid'); ?></th>
 		<th><?php echo __('Terms'); ?></th>
 		<th><?php echo __('Code'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
 		<th><?php echo __('Vendor Id'); ?></th>
 		<th><?php echo __('Product Type Id'); ?></th>
 		<th><?php echo __('Product Segment Id'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -84,11 +84,11 @@
 			<td><?php echo $product['days_valid']; ?></td>
 			<td><?php echo $product['terms']; ?></td>
 			<td><?php echo $product['code']; ?></td>
-			<td><?php echo $product['created']; ?></td>
-			<td><?php echo $product['modified']; ?></td>
 			<td><?php echo $product['vendor_id']; ?></td>
 			<td><?php echo $product['product_type_id']; ?></td>
 			<td><?php echo $product['product_segment_id']; ?></td>
+			<td><?php echo $product['created']; ?></td>
+			<td><?php echo $product['modified']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'products', 'action' => 'view', $product['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'products', 'action' => 'edit', $product['id'])); ?>

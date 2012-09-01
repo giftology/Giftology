@@ -46,6 +46,10 @@ class AppController extends Controller {
                             'RequestHandler');
     
     function beforeFilter() {
+        if (!$this->noAuth && !empty($this->uid)) {
+            $this->__syncFacebookUser();
+        }
+
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         

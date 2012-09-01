@@ -7,7 +7,7 @@
 			<th><?php echo $this->Paginator->sort('max_age'); ?></th>
 			<th><?php echo $this->Paginator->sort('city'); ?></th>
 			<th><?php echo $this->Paginator->sort('gender'); ?></th>
-			<th><?php echo $this->Paginator->sort('inter'); ?></th>
+			<th><?php echo $this->Paginator->sort('interests'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -20,7 +20,7 @@
 		<td><?php echo h($productSegment['ProductSegment']['max_age']); ?>&nbsp;</td>
 		<td><?php echo h($productSegment['ProductSegment']['city']); ?>&nbsp;</td>
 		<td><?php echo h($productSegment['ProductSegment']['gender']); ?>&nbsp;</td>
-		<td><?php echo h($productSegment['ProductSegment']['inter']); ?>&nbsp;</td>
+		<td><?php echo h($productSegment['ProductSegment']['interests']); ?>&nbsp;</td>
 		<td><?php echo h($productSegment['ProductSegment']['created']); ?>&nbsp;</td>
 		<td><?php echo h($productSegment['ProductSegment']['modified']); ?>&nbsp;</td>
 		<td class="actions">
