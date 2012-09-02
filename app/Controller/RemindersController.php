@@ -8,6 +8,9 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Reminder $Reminder
  */
 class RemindersController extends AppController {
+    public $paginate = array(
+        'limit' => 27,
+    );
 
 /**
  * index method
@@ -196,4 +199,73 @@ class RemindersController extends AppController {
 		$this->Session->setFlash(__('Reminder was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	public function view_friends($type=null) {
+		if (!$this->Connect->user()) {
+		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
+		}
+	        if ($type) {//type = all
+	            $this->set('all_users', $this->get_birthdays('mine','all', 1));
+	            $this->set('today_users', array());
+	            $this->set('this_month_users', array());
+	        } else {
+	            $this->set('all_users', array());
+	            $this->set('today_users', $this->get_birthdays('mine','today'));
+	            $this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
+	        }
+	    }
+
+	
+	
+	function get_birthdays ($whose, $when, $do_pagination=0) {
+		
+		if ($whose == 'mine') {
+		    $conditions = array(
+			'user_id' => $this->Auth->user('id'));
+		}
+		
+		if ($when == 'today') {
+			$conditions['MONTH(friend_birthday)'] = date('m');
+			$conditions['DAY(friend_birthday)'] = date('d'); 
+		} elseif ($when =='thisweek') {
+		    $conditions['friend_birthday BETWEEN ? AND ?'] =
+		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week")));
+		} elseif ($when == 'thismonth') {
+		    $conditions['friend_birthday BETWEEN ? AND ?'] =
+		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 month")));
+		}
+
+		$this->Reminder->recursive = -1;
+		if ($do_pagination) {
+			$reminders = $this->paginate($conditions);
+		} else {
+			$reminders = $this->Reminder->find('all',
+			    array('conditions' => $conditions
+			));
+		}
+		return $reminders;
+    }
+/* delete
+    	function get_all_birthdays ($whose, $when) {
+		
+		if ($whose == 'mine') {
+		    $conditions = array(
+			'user_id' => $this->Auth->user('id'));
+		}
+		
+		if ($when == 'today') {
+			$conditions['MONTH(friend_birthday)'] = date('m');
+			$conditions['DAY(friend_birthday)'] = date('d'); 
+		} elseif ($when =='thisweek') {
+		    $conditions['friend_birthday BETWEEN ? AND ?'] =
+		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week")));
+		} elseif ($when == 'thismonth') {
+		    $conditions['friend_birthday BETWEEN ? AND ?'] =
+		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 month")));
+		}
+
+		$this->Reminder->recursive = -1;		
+		$reminders = $this->paginate($conditions);
+		return $reminders;
+    }
+*/
 }

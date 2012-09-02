@@ -110,23 +110,22 @@ class UsersController extends AppController {
 	}
     
     public function login() {
-        if ($this->request->is('post')) {
+        if ($this->Connect->user()) {
+            $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        } else {
+            $this->layout = 'landing';
+        }
+       /* if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 $this->redirect($this->Auth->redirect());
             } else {
                 $this->Session->setFlash(__('Invalid username or password, try again'));
             }
-        }
+        }*/
     }
 
     public function logout() {
         $this->redirect($this->Auth->logout());
-    }
-    public function view_friends() {
-        if (!$this->Connect->user()) {
-            $this->redirect(array('controller'=>'users', 'action'=>'login'));
-        }
-        $this->set('user', $this->get_birthdays('mine','thisweek'));
     }
     
     function beforeFacebookSave() {
@@ -139,7 +138,9 @@ class UsersController extends AppController {
     
     function afterFacebookSave($last_insert_id) {
         $updatedGiftId = $this->updatePlaceholderGifts($last_insert_id);
-        $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
+        if ($updatedGiftId) {
+            $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
+        }
     }
     function updatePlaceholderGifts ($last_insert_id) {
 
@@ -178,16 +179,13 @@ class UsersController extends AppController {
                         array('conditions' => array(
                                 'user_id' => $user_id
                         )));
-        
         if ($currUTM) {
             return; //already has a good UTM, no need to hack in a new one 
-        }
-
-        $newUTM['UserUtm']['utm_source'] = 'GiftReceived';
-        $newUTM['UserUtm']['utm_medium'] = 'Generated';
-        $newUTM['UserUtm']['utm_term'] = $updatedGiftId;
-        
-        $this->User->UserUtm->save($newUTM);
+        }        
+        $this->User->UserUtm->updateAll(array('utm_source' => 'GiftReceived',
+                                              'utm_medium' => 'Generated',
+                                              'utm_term' => $updatedGiftId),
+                                        array('UserUtm.id' => $currUTM['UserUtm']['id']));
     }
         
     function setUserProfile () {
@@ -255,7 +253,39 @@ class UsersController extends AppController {
             $this->send_reminder_email($user);
         }
     }
-    function get_birthdays ($whose, $when) {
+    
+    function send_reminder_email($user) {
+        $email = new CakeEmail();
+	$email->config('smtp')
+              ->template('reminder', 'default') 
+	      ->emailFormat('html')
+	      ->to($user['UserProfile']['email'])
+	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
+	      ->subject('Birthday Reminder')
+              ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+                               'reminders' => $user['Reminders']))
+              ->send();
+    }
+    
+    
+    /* Moved to Reminders 
+    public function view_friends($type=null) {
+        if (!$this->Connect->user()) {
+            $this->redirect(array('controller'=>'users', 'action'=>'login'));
+        }
+        if ($type) {
+            $this->set('all_users', $this->get_birthdays('mine','all'));
+            $this->set('today_users', array('Reminders' =>array()));
+            $this->set('this_month_users', array('Reminders' =>array()));
+
+        } else {
+            $this->set('all_users', array('Reminders' =>array()));
+            $this->set('today_users', $this->get_birthdays('mine','today'));
+            $this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
+        }
+    }
+    
+        function get_birthdays ($whose, $when) {
         $find_type = 'all';
         
         if ($whose == 'mine') {
@@ -278,27 +308,18 @@ class UsersController extends AppController {
         
         $this->User->Behaviors->attach('Containable');
         $user = $this->User->find($find_type,
-                    array(
-                        'contain' => array(
-                            'UserProfile',
-                            'Reminders' => array(
-                                'conditions' => isset($reminder_conditions) ? $reminder_conditions : array(),
-                                'order' => 'Reminders.friend_birthday ASC'
-                        )),
-                        'conditions' => isset($conditions) ? $conditions : array())
-        );
+                array(
+                    'contain' => array(
+                        'UserProfile',
+                        'Reminders' => array(
+                            'conditions' => isset($reminder_conditions) ? $reminder_conditions : array(),
+                            'order' => 'Reminders.friend_birthday ASC',
+                            'limit' => 200
+                    )),
+                    'conditions' => isset($conditions) ? $conditions : array())
+                );
         return $user;
     }
-    function send_reminder_email($user) {
-        $email = new CakeEmail();
-	$email->config('smtp')
-              ->template('reminder', 'default') 
-	      ->emailFormat('html')
-	      ->to($user['UserProfile']['email'])
-	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
-	      ->subject('Birthday Reminder')
-              ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
-                               'reminders' => $user['Reminders']))
-              ->send();
-    }
+
+    */
 }

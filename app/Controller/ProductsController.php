@@ -41,6 +41,8 @@ class ProductsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			$this->request->data['Product']['image'] = 'files/'.$this->request->data['Product']['image_file']['name'];
+			copy($this->request->data['Product']['image_file']['tmp_name'], $this->request->data['Product']['image']);
 			$this->Product->create();
 			if ($this->Product->save($this->request->data)) {
 				$this->Session->setFlash(__('The product has been saved'));
@@ -68,6 +70,9 @@ class ProductsController extends AppController {
 			throw new NotFoundException(__('Invalid product'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			$this->request->data['Product']['image'] = 'files/'.$this->request->data['Product']['image_file']['name'];
+			copy($this->request->data['Product']['image_file']['tmp_name'], $this->request->data['Product']['image']);
+
 			if ($this->Product->save($this->request->data)) {
 				$this->Session->setFlash(__('The product has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -105,6 +110,27 @@ class ProductsController extends AppController {
 		}
 		$this->Session->setFlash(__('Product was not deleted'));
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	public function view_products () {
+		$this->Product->recursive = 0;
+		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
+		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
+		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+		$this->set('products', $this->paginate());
+	}
+	public function view_product($id=null) {
+		$this->Product->id = $id;
+		if (!$this->Product->exists()) {
+			throw new NotFoundException(__('Invalid product'));
+		}
+		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
+		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
+		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+		$this->set('product', $this->Product->read(null, $id));
+
 	}
 	
 }

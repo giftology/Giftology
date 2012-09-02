@@ -15,6 +15,7 @@ class TransactionStatus extends AppModel {
  *
  * @var array
  */
+        public $displayField = 'status';
 	public $hasMany = array(
 		'Transaction' => array(
 			'className' => 'Transaction',

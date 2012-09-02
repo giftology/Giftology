@@ -1,11 +1,12 @@
 <div class="products form">
-<?php echo $this->Form->create('Product'); ?>
+<?php echo $this->Form->create('Product', array('type' => 'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Add Product'); ?></legend>
 	<?php
 		echo $this->Form->input('min_price');
 		echo $this->Form->input('max_price');
-		echo $this->Form->input('image', array('type' => 'file'));
+		echo $this->Form->input('min_value');
+		echo $this->Form->input('image_file', array('type' => 'file'));
 		echo $this->Form->input('days_valid');
 		echo $this->Form->input('terms');
 		echo $this->Form->input('code');
@@ -31,5 +32,7 @@
 		<li><?php echo $this->Html->link(__('New Gift'), array('controller' => 'gifts', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Uploaded Product Codes'), array('controller' => 'uploaded_product_codes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

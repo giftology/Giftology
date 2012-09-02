@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class GiftsController extends AppController {
 
+    public $components = array('Giftology');
+
 /**
  * index method
  *
@@ -44,7 +46,7 @@ class GiftsController extends AppController {
 
 			if ($this->Gift->save($this->request->data)) {
 				$this->Session->setFlash(__('The gift has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index')); exit();
 			} else {
 				$this->Session->setFlash(__('The gift could not be saved. Please, try again.'));
 			}
@@ -71,7 +73,7 @@ class GiftsController extends AppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Gift->save($this->request->data)) {
 				$this->Session->setFlash(__('The gift has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index')); exit();
 			} else {
 				$this->Session->setFlash(__('The gift could not be saved. Please, try again.'));
 			}
@@ -103,10 +105,10 @@ class GiftsController extends AppController {
 		}
 		if ($this->Gift->delete()) {
 			$this->Session->setFlash(__('Gift deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'index')); exit();
 		}
 		$this->Session->setFlash(__('Gift was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send($id = null) {
 		$this->Gift->create();
@@ -116,7 +118,6 @@ class GiftsController extends AppController {
 		}
 		$this->Gift->Product->recursive = 0;
 		$product = $this->Gift->Product->read(null, $this->request->params['named']['product_id']); 
-		echo debug($product);
 		$gift['Gift']['product_id'] = $this->request->params['named']['product_id'];
 		$gift['Gift']['sender_id'] = $this->Auth->user('id');
 
@@ -146,10 +147,10 @@ class GiftsController extends AppController {
 
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id'] : UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['code'] = $this->getCode($product);
-		$gift['Gift']['gift_amout'] = '100';
+		$gift['Gift']['gift_amount'] = $product['Product']['min_value'];
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
-		$gift['Gift']['gift_status_id'] = 1;
-		
+		$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
+			
 		if ($this->Gift->save($gift)) {
 			$this->informSenderReceipientOfGiftSent();
 			$this->Session->setFlash(__('Your gift has been sent'));
@@ -158,29 +159,32 @@ class GiftsController extends AppController {
 
 		}
 		$this->redirect(array(
-			'controller' => 'users', 'action'=>'view_friends'));
+			'controller' => 'users', 'action'=>'view_friends'));exit();
 	}
 
         function getCode($product) {
 	    if ($product['Product']['code'] == 'Generated') {
-		return $this->getGeneratedCode($product['Product']['id']);
+		return $this->Giftology->generateGiftCode($product['Product']['id']);
 	    } elseif ($product['Product']['code'] == 'Uploaded') {
-		return $this->getUploadedCode();
+		return $this->getUploadedCode($product['Product']['id'], $gift['Gift']['gift_amount']); 
 	    } else {
 		return $product['Product']['code']; //Static Reusable code for all gifts, as entered
 	    }
         }
-	function getGeneratedCode($prodId) {
-	    $length = 4;
-	    $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-	    $string = 'GIFT-'.$prodId.'-';
-	    for ($p = 0; $p < $length; $p++) {
-		$string .= $characters[mt_rand(0, strlen($characters)-1)];
+	function getUploadedCode($product, $value) {
+		$code = $this->Gift->Product->UploadedProductCode->find('first',
+			array('conditions' => array('available'=>1, 'product_id' =>$product,
+				'value' => $value)));
+		if (!$code) {
+			$this->Session->setFlash(__('Unable to sent gift, please select another product'));
+			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value);
+			$this->redirect(array('controller'=>'products', 'action'=>'index',
+					      'recepient_id'=>$this->request->params['named']['receiver_fb_id']));
+				exit();
 		}
-	    return $string;
-	}
-	function getUploadedCode() {
-		return '123';
+		$this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+								     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
+		return $code['UploadedProductCode']['code'];
 	}
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
@@ -188,5 +192,17 @@ class GiftsController extends AppController {
 	function informSenderReceipientOfGiftSent() {
 		// Post to both sender and receipients facebook wall
 		// Send email to both sender and receipients about gifts sent
+	}
+	function redeemGiftCode ($code) {
+		//XXX Needs authentication
+		$this->Gift->recursive = -1;
+		$gift = $this->Gift->find('first', array('conditions' => array ('code' => $code)));
+		
+		if ($gift & $gift['Gift']['gift_status_id'] == GIFT_STATUS_VALID) {
+			$this->Gift->updateAll(array('gift_status_id' => GIFT_STATUS_REDEEMED),
+						array('id'=> $gift['Gift']['id']));
+			return $gift['Gift']['gift_amount'];
+		}
+		return null;
 	}
 }

@@ -1,8 +1,5 @@
 <div class="products view">
 <h2><?php  echo __('Product'); ?></h2>
-
-        <?php echo $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'square', 'facebook-logo'=>false)); ?><br>
-
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -17,6 +14,11 @@
 		<dt><?php echo __('Max Price'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['max_price']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Min Value'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['min_value']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Image'); ?></dt>
@@ -39,6 +41,21 @@
 			<?php echo h($product['Product']['code']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Vendor'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($product['Vendor']['name'], array('controller' => 'vendors', 'action' => 'view', $product['Vendor']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Product Type'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($product['ProductType']['type'], array('controller' => 'product_types', 'action' => 'view', $product['ProductType']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Product Segment'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($product['ProductSegment']['id'], array('controller' => 'product_segments', 'action' => 'view', $product['ProductSegment']['id'])); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['created']); ?>
@@ -47,21 +64,6 @@
 		<dt><?php echo __('Modified'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Vendor'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($product['Vendor']['name'], array('controller' => 'vendors', 'action' => 'view', $product['Vendor']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Product Type'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($product['ProductType']['id'], array('controller' => 'product_types', 'action' => 'view', $product['ProductType']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Product Segment'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($product['ProductSegment']['id'], array('controller' => 'product_segments', 'action' => 'view', $product['ProductSegment']['id'])); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -83,7 +85,8 @@
 		<li><?php echo $this->Html->link(__('New Gift'), array('controller' => 'gifts', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Send Gift'), array('controller' => 'gifts', 'action' => 'send', 'receiver_fb_id' => $receiver_id, 'product_id' => $product['Product']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Uploaded Product Codes'), array('controller' => 'uploaded_product_codes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -93,14 +96,15 @@
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>
-		<th><?php echo __('Receiver Id'); ?></th>
 		<th><?php echo __('Sender Id'); ?></th>
+		<th><?php echo __('Receiver Id'); ?></th>
+		<th><?php echo __('Receiver Fb Id'); ?></th>
 		<th><?php echo __('Code'); ?></th>
 		<th><?php echo __('Gift Amount'); ?></th>
+		<th><?php echo __('Gift Status Id'); ?></th>
 		<th><?php echo __('Expiry Date'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
-		<th><?php echo __('Gift Status Id'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -109,14 +113,15 @@
 		<tr>
 			<td><?php echo $gift['id']; ?></td>
 			<td><?php echo $gift['product_id']; ?></td>
-			<td><?php echo $gift['receiver_id']; ?></td>
 			<td><?php echo $gift['sender_id']; ?></td>
+			<td><?php echo $gift['receiver_id']; ?></td>
+			<td><?php echo $gift['receiver_fb_id']; ?></td>
 			<td><?php echo $gift['code']; ?></td>
 			<td><?php echo $gift['gift_amount']; ?></td>
+			<td><?php echo $gift['gift_status_id']; ?></td>
 			<td><?php echo $gift['expiry_date']; ?></td>
 			<td><?php echo $gift['created']; ?></td>
 			<td><?php echo $gift['modified']; ?></td>
-			<td><?php echo $gift['gift_status_id']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'gifts', 'action' => 'view', $gift['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'gifts', 'action' => 'edit', $gift['id'])); ?>
@@ -177,6 +182,43 @@
 	<div class="actions">
 		<ul>
 			<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Uploaded Product Codes'); ?></h3>
+	<?php if (!empty($product['UploadedProductCode'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('Product Id'); ?></th>
+		<th><?php echo __('Code'); ?></th>
+		<th><?php echo __('Value'); ?></th>
+		<th><?php echo __('Available'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($product['UploadedProductCode'] as $uploadedProductCode): ?>
+		<tr>
+			<td><?php echo $uploadedProductCode['id']; ?></td>
+			<td><?php echo $uploadedProductCode['product_id']; ?></td>
+			<td><?php echo $uploadedProductCode['code']; ?></td>
+			<td><?php echo $uploadedProductCode['value']; ?></td>
+			<td><?php echo $uploadedProductCode['available']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'uploaded_product_codes', 'action' => 'view', $uploadedProductCode['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'uploaded_product_codes', 'action' => 'edit', $uploadedProductCode['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'uploaded_product_codes', 'action' => 'delete', $uploadedProductCode['id']), null, __('Are you sure you want to delete # %s?', $uploadedProductCode['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

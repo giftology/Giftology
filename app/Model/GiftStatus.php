@@ -15,6 +15,7 @@ class GiftStatus extends AppModel {
  *
  * @var array
  */
+        public $displayField = 'status';
 	public $hasMany = array(
 		'Gift' => array(
 			'className' => 'Gift',

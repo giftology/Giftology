@@ -15,6 +15,7 @@ class ProductType extends AppModel {
  *
  * @var array
  */
+        public $displayField = 'type';
 	public $hasMany = array(
 		'Product' => array(
 			'className' => 'Product',
