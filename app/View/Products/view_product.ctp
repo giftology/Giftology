@@ -34,30 +34,33 @@
 			  	</div>
 		  		<h4>Deliver your gift</h4>
 		  		<div class="delivery-sharing">
-					<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="facebook" class="facebook">
+					<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
 						<label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
 					</div>
 					<div class="input email">
 			  			<label for="email">Send email to</label>
-			  			<input type="email" placeholder="<?= $receiver_name; ?>@example.com" name="email" id="email">
+			  			<input type="email" id="receiver_email" placeholder="<?= $receiver_name; ?>@example.com" name="receiver_email" id="email">
 					</div>
 		  		</div>
-			<ul class="voucher-details"><li>This gift card is valid forever.</li></ul>
+			<ul class="voucher-details"><li>This gift card is valid for <?= $product['Product']['days_valid']; ?> days.</li></ul>
+			
+			<button class="buy" onClick="location.href='<?=
+                            $this->Html->url(array(
+				'controller' => 'gifts',
+				'action' => 'send',
+				'receiver_fb_id' => $receiver_id,
+				'receiver_name' => $receiver_name,
+				'receiver_birthday' => $receiver_birthday,
+				'product_id' => $product['Product']['id']));; ?>/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked">Send to <?= $receiver_name; ?>
+			</button>
+
 		</div>
 		<div class="purchase voucher-container">
 			<?= $this->element('gift_voucher',
                                         array('product' => $product,
-					      'small' => false,
-					      'show_redemption' => false),
+					      'small' => false),
                                         array('cache' => array(
-                                                'key' => $product['Product']['id'].'no_redemption_full'))); ?>
-			<button class="buy" onClick="location.href='<?=
-                            $this->Html->url(array('controller' => 'gifts',
-                                                   'action' => 'send',
-                                                   'receiver_fb_id' => $receiver_id,
-                                                   'receiver_name' => $receiver_name,
-                                                   'receiver_birthday' => $receiver_birthday,
-                                                   'product_id' => $product['Product']['id']));; ?>'">Send to <?= $receiver_name; ?></button>
+                                                'key' => $product['Product']['id'].'full'))); ?>
 		</div>
 	</div>	
 	<div class="clear"></div>

@@ -1122,6 +1122,7 @@ ul.voucher-details li {
     margin-top: 5px;
     text-align: center;
     width: 194px;
+    margin-left:50px;
 }
 .minus-plus > button.minus, .minus-plus > button.plus {
     background-color: transparent;
@@ -1172,16 +1173,10 @@ button.buy, button.use, button.single-use, button.yellow, input.buy[type="submit
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    background-color: #FDD241;
+    background-color: rgba(173, 46, 13, 0.86);
     background-image: -moz-linear-gradient(#FFDF42, #FFD33F 50%, #FBCA3C 50%, #FBCA3C);
-    border-color: #B2A594 #A79986 #917F67;
-    border-left: 1px solid #A79986;
-    border-right: 1px solid #A79986;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 1px #FFF6C7 inset, 0 1px #E5E5E5;
-    color: #663A00;
-    text-shadow: 0 1px rgba(255, 246, 199, 0.5);
+    color: #FFFFFF;
+    margin-left: 60px;
 }
 button, input[type="submit"] {
     -moz-border-bottom-colors: none;

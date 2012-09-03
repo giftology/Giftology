@@ -120,7 +120,10 @@ class GiftsController extends AppController {
 		$product = $this->Gift->Product->read(null, $this->request->params['named']['product_id']); 
 		$gift['Gift']['product_id'] = $this->request->params['named']['product_id'];
 		$gift['Gift']['sender_id'] = $this->Auth->user('id');
-
+		if ($this->request->params['named']['receiver_email']) {
+			$gift['Gift']['receiver_email'] = $this->request->params['named']['receiver_email'];
+		}
+		$gift['Gift']['post_to_fb'] = $this->request->params['named']['post_to_fb'];
 		$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
 		$gift['Gift']['receiver_fb_id'] = $receiver_fb_id;
 		
@@ -210,7 +213,13 @@ class GiftsController extends AppController {
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
 		}
-		$gift = $this->Gift->read(null, $id);
+	        $this->Gift->Behaviors->attach('Containable');
+		$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$id)));
+		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
 		$this->set('gift', $gift);	
 	}
 }

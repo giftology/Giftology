@@ -14,7 +14,15 @@
 		                'language'=>'en' 
 		            ), 
 		            'full' 
+	        );
+		echo $this->Tinymce->input('Product.redeem_instr', array( 
+	            'label' => 'Redemption Instructions' 
+		            ),array( 
+		                'language'=>'en' 
+		            ), 
+		            'full' 
 	        ); 
+
 		echo $this->Form->input('code');
 		echo $this->Form->input('vendor_id');
 		echo $this->Form->input('product_type_id');

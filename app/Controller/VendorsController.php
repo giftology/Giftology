@@ -70,12 +70,14 @@ class VendorsController extends AppController {
 			throw new NotFoundException(__('Invalid vendor'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
-			copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
-
-			$this->request->data['Vendor']['wide_image'] = 'files/'.$this->request->data['Vendor']['wide_file']['name'];
-			copy($this->request->data['Vendor']['wide_file']['tmp_name'], $this->request->data['Vendor']['wide_image']);
-
+			if (isset($this->request->data['Vendor']['thumb_file']['name'])) {
+				$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
+				copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
+			}
+			if (isset($this->request->data['Vendor']['wide_file']['name'])) {
+				$this->request->data['Vendor']['wide_image'] = 'files/'.$this->request->data['Vendor']['wide_file']['name'];
+				copy($this->request->data['Vendor']['wide_file']['tmp_name'], $this->request->data['Vendor']['wide_image']);
+			}
 			if ($this->Vendor->save($this->request->data)) {
 				$this->Session->setFlash(__('The vendor has been saved'));
 				$this->redirect(array('action' => 'index'));

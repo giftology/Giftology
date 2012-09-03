@@ -12,15 +12,15 @@ $(document).ready(function(){
         //JQuery animate cannot understand
         //auto height, so calculate and give
         //to animate before calling
-        var curHeight = $('.wrapper').height();
-        $('.wrapper').css('height', 'auto');
-        var finalHeight = $('.wrapper').height();
+        var curHeight = $(this).parent().find('.wrapper').height();
+        $(this).parent().find('.wrapper').css('height', 'auto');
+        var finalHeight = $(this).parent().find('.wrapper').height();
         
         //check if wrapper is already open
         if (curHeight == finalHeight) {
             finalHeight = 0;
         }
-        $('.wrapper').height(curHeight).animate({
+        $(this).parent().find('.wrapper').height(curHeight).animate({
             height: finalHeight
             }, 1000, function() {
             // Animation complete.

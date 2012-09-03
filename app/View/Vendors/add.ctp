@@ -6,6 +6,14 @@
 		echo $this->Form->input('name');
 		echo $this->Form->input('thumb_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
 		echo $this->Form->input('wide_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file'));
+		echo $this->Tinymce->input('Vendor.description', array( 
+	            'label' => 'About' 
+		            ),array( 
+		                'language'=>'en' 
+		            ), 
+		            'full' 
+	        ); 
+
 
 	?>
 	</fieldset>
