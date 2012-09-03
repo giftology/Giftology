@@ -1,9 +1,12 @@
 <div class="vendors form">
-<?php echo $this->Form->create('Vendor'); ?>
+<?php echo $this->Form->create('Vendor', array('type' => 'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Add Vendor'); ?></legend>
 	<?php
 		echo $this->Form->input('name');
+		echo $this->Form->input('thumb_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
+		echo $this->Form->input('wide_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file'));
+
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

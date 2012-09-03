@@ -21,7 +21,7 @@
 			<div class="delivery-details">
 			  	<div class="delivery-message">
 					<div class="greeting-bubble">
-				  		<textarea placeholder="Write something nice to <?= $receiver_name; ?>." name="message" class="message" autofocus="autofocus"></textarea>
+				  		<textarea placeholder="Write something nice to <?= $receiver_name; ?>." name="gift-message" class="gift-message" autofocus="autofocus"></textarea>
 					</div>
 					<div class="shadow-wrapper">
 				  		<div class="frame">
@@ -45,29 +45,12 @@
 			<ul class="voucher-details"><li>This gift card is valid forever.</li></ul>
 		</div>
 		<div class="purchase voucher-container">
-			<div class="voucher">
-				<div class="paper"></div>
-				<h2 class="value"><span class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></h2>
-    				<div class="divider"></div>
-                                <img width="200" height="64" src="img/sephora.png" class="wide">
-				<p class="at">at</p><p class="fine-print">Only valid in United States.</p>
-				<div class="frame"></div>
-			</div>
-			<div class="disclosure opened">
-				<p class="heading">Terms and conditions</p>
-				<div class="wrapper" style="height: 295px;">
-					<p class="content shown">Use of this Paid Gift Card constitutes acceptance of the following terms: Paid Gift Cards are redeemable for merchandise sold in U.S. Sephora stores, on Sephora.com for U.S. orders only, through the Sephora catalog and at Sephora inside JCPenney stores.  Paid Gift Cards are not redeemable for cash (except as required by law). This Paid Gift Card does not expire and is valid until redeemed.  The value of this Paid Gift Card will not be replaced if the card is lost, stolen, altered or destroyed.  Treat this card as cash. If your purchase exceeds the unused balance of the Paid Gift Card, you must pay the excess at the time of purchase. For questions regarding Paid Gift Cards or the Wrapp application, please contact support@wrapp.com. For Sephora store locations, to order, or for card balance, please visit Sephora.com or call 1.877.SEPHORA. Issued by Sephora USA, Inc.</p>
-				</div>
-				<a class="toggle">
-					<span class="arrow"></span>
-				</a>
-			</div>
-			<div class="minus-plus">
-				<input type="hidden" name="contribution_amount" class="contribution_amount" value="1000">
-				<button class="disabled minus"></button>
-				<p class="amount"><span class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></p>
-				<button class="plus"></button>
-			</div>
+			<?= $this->element('gift_voucher',
+                                        array('product' => $product,
+					      'small' => false,
+					      'show_redemption' => false),
+                                        array('cache' => array(
+                                                'key' => $product['Product']['id'].'no_redemption_full'))); ?>
 			<button class="buy" onClick="location.href='<?=
                             $this->Html->url(array('controller' => 'gifts',
                                                    'action' => 'send',

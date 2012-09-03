@@ -153,13 +153,13 @@ class GiftsController extends AppController {
 			
 		if ($this->Gift->save($gift)) {
 			$this->informSenderReceipientOfGiftSent();
-			$this->Session->setFlash(__('Your gift has been sent'));
+			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
 		} else {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
 
 		}
 		$this->redirect(array(
-			'controller' => 'users', 'action'=>'view_friends'));exit();
+			'controller' => 'reminders', 'action'=>'view_friends'));exit();
 	}
 
         function getCode($product) {
@@ -204,5 +204,13 @@ class GiftsController extends AppController {
 			return $gift['Gift']['gift_amount'];
 		}
 		return null;
+	}
+	public function redeem($id) {
+		$this->Gift->id = $id;
+		if (!$this->Gift->exists()) {
+			throw new NotFoundException(__('Invalid gift'));
+		}
+		$gift = $this->Gift->read(null, $id);
+		$this->set('gift', $gift);	
 	}
 }

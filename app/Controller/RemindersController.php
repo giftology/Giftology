@@ -8,9 +8,12 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Reminder $Reminder
  */
 class RemindersController extends AppController {
-    public $paginate = array(
-        'limit' => 27,
-    );
+	public $paginate = array(
+	        'limit' => 24,
+	);
+	public $components = array('RequestHandler');
+	public $helpers = array('Js');
+
 
 /**
  * index method
@@ -229,9 +232,11 @@ class RemindersController extends AppController {
 		} elseif ($when =='thisweek') {
 		    $conditions['friend_birthday BETWEEN ? AND ?'] =
 		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week")));
+		    $conditions['DAY(friend_birthday) <>'] = date('d');
 		} elseif ($when == 'thismonth') {
 		    $conditions['friend_birthday BETWEEN ? AND ?'] =
 		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 month")));
+		    $conditions['DAY(friend_birthday) <>'] = date('d');
 		}
 
 		$this->Reminder->recursive = -1;

@@ -158,8 +158,8 @@ class ConnectComponent extends Component {
 				$this->authUser[$this->User->alias]['facebook_id'] = $this->uid;
 				$this->authUser[$this->User->alias][$this->modelFields['password']] = $Auth->password(FacebookInfo::randPass());
 				if($this->__runCallback('beforeFacebookSave')){
-					$this->hasAccount = ($this->User->saveAssociated($this->authUser, array('validate' => false)));
-					$this->__runCallback('afterFacebookSave');
+                                       $this->hasAccount = ($this->User->saveAssociated($this->authUser, array('validate' => false)));
+                                       $this->__runCallback('afterFacebookSave', $this->User->getLastInsertID());
 				}
 				else {
 					$this->authUser = null;

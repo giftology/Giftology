@@ -28,10 +28,11 @@ class Reminder extends AppModel {
             /// Store birth year as a sperate field
             if (isset($this->data[$this->alias]['friend_birthday'])) {
                 if ($this->data[$this->alias]['friend_birthday']) {
+                    $this->data[$this->alias]['friend_birthyear'] =
+                        date('Y', strtotime($this->data[$this->alias]['friend_birthday']));
+
                     $this->data[$this->alias]['friend_birthday'] =
                         '2012-'.date('m-d', strtotime($this->data[$this->alias]['friend_birthday']));
-                    $this->date[$this->alias]['friend_birthyear'] =
-                        date('Y', strtotime($this->data[$this->alias]['friend_birthday']));
                 }
             }
             return true;

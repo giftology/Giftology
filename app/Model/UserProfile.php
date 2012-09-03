@@ -46,10 +46,10 @@ class UserProfile extends AppModel {
             /// Crazy hack (NS).  Convert all birthdays to year 2012, so that we can order etc from the db
             /// Store birth year as a sperate field
            if (isset($this->data[$this->alias]['birthday'])) {
-                $this->data[$this->alias]['birthday'] =
-                    '2012-'.date('m-d', strtotime($this->data[$this->alias]['birthday']));
-                $this->date[$this->alias]['birthyear'] =
+               $this->data[$this->alias]['birthyear'] =
                     date('Y', strtotime($this->data[$this->alias]['birthday']));
+               $this->data[$this->alias]['birthday'] =
+                    '2012-'.date('m-d', strtotime($this->data[$this->alias]['birthday']));
             }
             return true;
         }

@@ -31,9 +31,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 		echo $this->Html->css('style');
 		echo $this->Html->css('http://cdn.webrupee.com/font');
-		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
-		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
-		//echo $this->Html->script('giftology');
+		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
+		echo $this->Html->script('giftology');
+		echo $this->Html->script('jquery.ias.min');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
@@ -74,19 +75,11 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		</div>
 		
 	</div>
-		
-	<!--div id="spinner" class="centered">
-		<?= $this->Html->image("spinner.gif"); ?>		
-	</div-->
-		
+				
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		
-		
-	
-		
 		
 		<div id="footer">
 		</div>

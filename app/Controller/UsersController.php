@@ -163,6 +163,9 @@ class UsersController extends AppController {
         if (!$giftsReceived) {
             return $gift_id_to_return;
         }
+        
+        $this->Session->setFlash(__('Good Karma - Someone has sent you a gift. Click My Gifts above to redeem'));
+
         $updatedGifts = array();
         foreach($giftsReceived as $giftReceived) {
             $updatedGift['GiftsReceived']['receiver_id'] = $last_insert_id;
@@ -181,11 +184,11 @@ class UsersController extends AppController {
                         )));
         if ($currUTM) {
             return; //already has a good UTM, no need to hack in a new one 
-        }        
-        $this->User->UserUtm->updateAll(array('utm_source' => 'GiftReceived',
+        }
+        $this->User->UserUtm->save(array('UserUtm' => array('utm_source' => 'GiftReceived',
                                               'utm_medium' => 'Generated',
-                                              'utm_term' => $updatedGiftId),
-                                        array('UserUtm.id' => $currUTM['UserUtm']['id']));
+                                              'utm_term' => $updatedGiftId,
+                                              'user_id' => $user_id)));
     }
         
     function setUserProfile () {
@@ -266,7 +269,26 @@ class UsersController extends AppController {
                                'reminders' => $user['Reminders']))
               ->send();
     }
-    
+    public function view_gifts() {
+/*        $this->User->id = $this->Auth->user('id');
+        if (!$this->User->exists()) {
+                throw new NotFoundException(__('Invalid user'));
+        }
+*/
+        $this->User->Behaviors->attach('Containable');
+        $this->set('user', $this->User->find('first',
+                array(
+                    'contain' => array(
+                        'UserProfile',
+                        'GiftsReceived' => array(
+                            'Product' => array('Vendor'),
+                            'Sender'),
+                        'GiftsSent' => array(
+                            'Product' => array('Vendor')
+                        )
+                    ),
+                    'conditions' => array('User.id' => $this->User->id))));
+    }
     
     /* Moved to Reminders 
     public function view_friends($type=null) {

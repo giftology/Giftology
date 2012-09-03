@@ -23,9 +23,20 @@
             <?php endif; ?>
 
             <?php if(isset($all_users) & $all_users): ?>
-            <div>
+            <div id='friend_list'>
                     <h4 class="line-header">Send a gift card to any friend </h4>
+
+                        <div id='paginator_nav'>
+                                
                         <?php
+                                //Set paginator options for AJAX
+                                // Not using paginator AJAX.  Using Infinite scroll
+                                // ajax instead
+                                /*$this->Paginator->options(array(
+                                    'update' => '#friend_list',
+                                    'evalScripts' => true,
+                                ));*/
+
                                 if ($this->Paginator->hasPrev()) {
                                         echo $this->Paginator->prev(' << ', array(), null, array('class' => 'prev disabled'));
                                 }
@@ -33,6 +44,7 @@
                                         echo $this->Paginator->next(' >> ', array(), null, array('class' => 'next disabled'));
                                 }
                         ?>
+                        </div>
                     <?= $this->element('friend_list',
                                         array('reminders' => $all_users),
                                         array('cache' => array(
@@ -66,6 +78,10 @@
     
     <div class="clear"></div>
     
+        <?php /* Since the JsHelper automatically buffers all generated script content to reduce the number of
+       * <script> tags in your source code you must call write the buffer out. At the bottom of your view file. Be sure to include: */ ?>
+
+    <?= $this->Js->writeBuffer(); ?>
     
         <? /*php echo "<h1> welcome to giftology ".$user['UserProfile']['first_name']." ".$user['UserProfile']['last_name']." </h1>"; ?>
     <?php if(isset($user['Reminders'])): ?>

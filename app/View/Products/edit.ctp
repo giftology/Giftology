@@ -1,5 +1,5 @@
 <div class="products form">
-<?php echo $this->Form->create('Product', array('type' => 'file')); ?>
+<?php echo $this->Form->create('Product'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Product'); ?></legend>
 	<?php
@@ -7,9 +7,14 @@
 		echo $this->Form->input('min_price');
 		echo $this->Form->input('max_price');
 		echo $this->Form->input('min_value');
-		echo $this->Form->input('image_file', array('type' => 'file'));
 		echo $this->Form->input('days_valid');
-		echo $this->Form->input('terms');
+	        echo $this->Tinymce->input('Product.terms', array( 
+	            'label' => 'Terms & Conditions' 
+		            ),array( 
+		                'language'=>'en' 
+		            ), 
+		            'full' 
+	        ); 
 		echo $this->Form->input('code');
 		echo $this->Form->input('vendor_id');
 		echo $this->Form->input('product_type_id');

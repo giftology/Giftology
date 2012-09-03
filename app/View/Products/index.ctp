@@ -6,7 +6,6 @@
 			<th><?php echo $this->Paginator->sort('min_price'); ?></th>
 			<th><?php echo $this->Paginator->sort('max_price'); ?></th>
 			<th><?php echo $this->Paginator->sort('min_value'); ?></th>
-			<th><?php echo $this->Paginator->sort('image'); ?></th>
 			<th><?php echo $this->Paginator->sort('days_valid'); ?></th>
 			<th><?php echo $this->Paginator->sort('terms'); ?></th>
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
@@ -24,7 +23,6 @@
 		<td><?php echo h($product['Product']['min_price']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['max_price']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['min_value']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['image']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['days_valid']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['terms']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['code']); ?>&nbsp;</td>

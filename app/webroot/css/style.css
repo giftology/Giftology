@@ -28,7 +28,7 @@ body {
 }
 
 .header {
-	background: url(../img/header-shadow.png) no-repeat center 74px;
+	background: url(../img//header-shadow.png) no-repeat center 74px;
     height: 90px;
     margin: auto;
     overflow: hidden;
@@ -53,7 +53,7 @@ ul.nav li {
     margin-right: 60px;}
 	
 ul.nav li a {
-	background-image: url("../img/sprite.png");
+	background-image: url("../img//sprite.png");
     background-repeat: no-repeat;
     color: #6A6C6F;
     display: block;
@@ -112,7 +112,7 @@ ul.nav li a.wallet:hover {
 }
 
 .shadow-wrapper {
-    background-image: url("../img/frame-shadow.png");
+    background-image: url("../img//frame-shadow.png");
     background-position: 100% 100%;
     background-repeat: no-repeat;
     background-size: 100% 5px;
@@ -202,7 +202,7 @@ ul.nav li a.wallet:hover {
     right: 10px;
 }
 .calendar {
-    background-image: url("../img/calendar-icon.png");
+    background-image: url("../img//calendar-icon.png");
     bottom: -9px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     height: 26px;
@@ -247,7 +247,7 @@ ul.nav li a.wallet:hover {
 }
 
 .suggested .event-marker {
-    background-image: url("../img/baloon-icon.png");
+    background-image: url("../img//baloon-icon.png");
     margin: 4px 0 0 -12px;
 }
 .event-marker {
@@ -393,7 +393,7 @@ p.occasion {
 
 
 a.green-button{
- background: url(../img/green-btn-left.jpg) no-repeat top left;
+ background: url(../img//green-btn-left.jpg) no-repeat top left;
  display: block;
  float: left;
  font: bold 13px Arial;
@@ -410,19 +410,19 @@ a:link.green-button, a:visited.green-button, a:hover.green-button, a:active.gree
 }
  
 a.green-button span{
- background: transparent url(../img/green-btn-right.jpg) no-repeat top right;
+ background: transparent url(../img//green-btn-right.jpg) no-repeat top right;
  display: block;
  padding: 2px 13px 4px 7px; 
 }
  
 a:hover.green-button{ 
  text-decoration: none;
- background:url(../img/green-btn-left-hover.jpg) no-repeat top left;
+ background:url(../img//green-btn-left-hover.jpg) no-repeat top left;
  
 }
 
 a:hover.green-button span{ 
- background:url(../img/green-btn-right-hover.jpg) no-repeat top right;
+ background:url(../img//green-btn-right-hover.jpg) no-repeat top right;
  
 }
 
@@ -447,7 +447,7 @@ ul.topnav {
      float: left;
      display:inline;  
      background: #153a71;  
-     background: url(../img/medium-blue-grad.jpg) repeat-x; 
+     background: url(../img//medium-blue-grad.jpg) repeat-x; 
 	
 }  
  
@@ -484,7 +484,7 @@ ul.topnav li a:hover, ul.topnav li a.selected{
 	color:#555;
 	font-size:11px;
 	padding-left:10px;
-	background:url(../img/right-border.jpg) top right repeat-y;
+	background:url(../img//right-border.jpg) top right repeat-y;
 }
 
 .content-main {
@@ -522,7 +522,7 @@ a:hover.f-link {text-decoration:underline;}
     margin-bottom: 55px;
 }
 .shadow-wrapper.right {
-    background-image: url("../img/frame-shadow-right.png");
+    background-image: url("../img//frame-shadow-right.png");
 }
 .shadow-wrapper.right .frame {
     background-image: url("../img/white-edge.png");
@@ -787,7 +787,7 @@ a .free.voucher .label {
     color: #9DCB35;
 }
 
-.small-voucher a:hover .selected-overlay{display:block}
+.small-voucher:hover .selected-overlay{display:block}
 .small-voucher .selected-overlay {
     background-image: url("../img/small-voucher-hover.png");
     display: none;
@@ -1585,4 +1585,104 @@ button, input[type="submit"] {
     float: right;
     margin-top: 69px;
     width: 642px;
+}
+.centered {
+	position: relative;
+	top: 50%;
+	left:50%;
+}
+/* Infinite paginator */
+.ias_loader {
+	text-align:center;
+	margin: 5px 0;
+}
+
+.message {
+	clear: both;
+	color: #fff;
+	font-size: 140%;
+	font-weight: bold;
+	margin: 0 0 1em 0;
+	padding: 5px;
+}
+.success,
+.message,
+.cake-error,
+.cake-debug,
+.notice,
+p.error,
+.error-message {
+	background: #ffcc00;
+	background-repeat: repeat-x;
+	background-image: -moz-linear-gradient(top, #ffcc00, #E6B800);
+	background-image: -ms-linear-gradient(top, #ffcc00, #E6B800);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcc00), to(#E6B800));
+	background-image: -webkit-linear-gradient(top, #ffcc00, #E6B800);
+	background-image: -o-linear-gradient(top, #ffcc00, #E6B800);
+	background-image: linear-gradient(top, #ffcc00, #E6B800);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	margin-bottom: 18px;
+	margin-top: 18px;
+	padding: 7px 14px;
+	color: #404040;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.success,
+.message,
+.cake-error,
+p.error,
+.error-message {
+	clear: both;
+	color: #fff;
+	background: #c43c35;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background-repeat: repeat-x;
+	background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+	background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+	background-image: linear-gradient(top, #ee5f5b, #c43c35);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+.success {
+	clear: both;
+	color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: #3B8230;
+	background-repeat: repeat-x;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
+	background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: -ms-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: -o-linear-gradient(top, #76BF6B, #3B8230);
+	background-image: linear-gradient(top, #76BF6B, #3B8230);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+p.error {
+	font-family: Monaco, Consolas, Courier, monospace;
+	font-size: 120%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+p.error em {
+	font-weight: normal;
+	line-height: 140%;
+}
+.notice {
+	color: #000;
+	display: block;
+	font-size: 120%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+.success {
+	color: #fff;
 }

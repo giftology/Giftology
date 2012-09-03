@@ -48,6 +48,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       <div class="first">
         <h1>Giftology.com</h1>
         <h2>Giftology.com is a fun and easy way to give free and paid gift cards to your Facebook friends.</h2>
+	<?php if ($facebook_user) {
+		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', action => 'view_friends'));	
+	} else {
+		echo "Start by logging into facebook >>";
+	}
+	?>
         <?php echo $this->Facebook->login(
             array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location')); ?>
     </div>

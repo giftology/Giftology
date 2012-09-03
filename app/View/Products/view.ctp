@@ -21,11 +21,6 @@
 			<?php echo h($product['Product']['min_value']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Image'); ?></dt>
-		<dd>
-			<?php echo h($product['Product']['image']); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Days Valid'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['days_valid']); ?>

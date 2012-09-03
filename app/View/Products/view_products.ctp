@@ -19,27 +19,20 @@
 		
 		<div id="campaigns">
                         <?php foreach ($products as $product): ?>
-			<div class="small-voucher">
-				<a href="<?= $this->Html->url(array('controller' => 'products',
-                                                                    'action' => 'view_product',
-                                                                    'receiver_id' => $receiver_id,
-                                                                    'receiver_name' => $receiver_name,
-                                                                    'receiver_birthday' => $receiver_birthday,
-                                                                    $product['Product']['id'])); ?>">
-					<span class="free  voucher">
-						<span class="featured-frame"></span>
-						<span class="selected-overlay"></span>
-						<span class="image-container">
-							<span class="image-frame"></span>
-							<img src="<?= DOMAIN_NAME.$product['Product']['image']; ?>">						</span>
-						<span class="details">
-							<span class="issuer"><?= $product['Vendor']['name']; ?></span>
-							<span class="value"><span class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></span>
-							<span class="label">FREE</span>
-                                                </span>
-                                        </span>
-                                </a>
-                        </div>
+			<a href="<?= $this->Html->url(array('controller' => 'products',
+				    'action' => 'view_product',
+				    'receiver_id' => $receiver_id,
+				    'receiver_name' => $receiver_name,
+				    'receiver_birthday' => $receiver_birthday,
+				    'ocasion' => $ocasion,
+				    $product['Product']['id'])); ?>">
+
+				<?= $this->element('gift_voucher',
+						array('product' => $product,
+						      'small' => true),
+						array('cache' => array(
+							'key' => $product['Product']['id'].'small'))); ?>
+			</a>
 			<?php endforeach; ?>
 		</div>
 		

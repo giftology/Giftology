@@ -11,6 +11,16 @@
 			<?php echo h($vendor['Vendor']['name']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Thumb'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$vendor['Vendor']['thumb_image']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Image'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$vendor['Vendor']['wide_image']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($vendor['Vendor']['created']); ?>
