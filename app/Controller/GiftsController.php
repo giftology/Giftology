@@ -20,6 +20,17 @@ class GiftsController extends AppController {
 	    }
 	    return parent::isAuthorized($user);
 	}
+	//WEB SERVICES
+	public function ws_list () {
+		$this->Gift->recursive = 0;
+		$this->set('gifts', $this->Gift->find('all'));
+		$this->set('_serialize', array('gifts'));
+	}
+	public function ws_send () {
+		$this->Gift->recursive = 0;
+		$this->set('gifts', $this->Gift->find('all'));
+		$this->set('_serialize', array('gifts'));
+	}
 
 /**
  * index method

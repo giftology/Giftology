@@ -20,6 +20,14 @@ class UsersController extends AppController {
         return parent::isAuthorized($user);
 
     }
+    //WEB SERVICES
+    public function ws_add () {
+        //parse json
+        //Add User, Profile, Reminders
+        $status = array('Status' => 'OK');
+        $this->set('status', $status);
+        $this->set('_serialize', array('status'));
+    }
 /**
  * index method
  *

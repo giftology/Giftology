@@ -46,6 +46,19 @@ class AppController extends Controller {
                             'RequestHandler');
     
     function beforeFilter() {
+    
+    if (isset($this->params['ext']) && $this->params['ext'] == 'json') {
+        //json call
+        $allowed_json_methods = array('ws_list', 'ws_add', 'ws_send');
+        if (in_array($this->action, $allowed_json_methods)) {
+            //authenticate json
+            if (isset($this->params->query['rand']) && isset($this->params->query['key'])
+                && md5('GiftologyMobile422'.$this->params->query['rand']) == $this->params->query['key']) {
+                $this->Auth->allow($this->action);
+            }
+        }
+    }
+
         if (!$this->noAuth && !empty($this->uid)) {
             $this->__syncFacebookUser();
         }

@@ -12,7 +12,13 @@ class ProductsController extends AppController {
 	    }
 	    return parent::isAuthorized($user);
 	}
-
+	//WEB SERVICES
+	public function ws_list () {
+		$this->Product->recursive = 0;
+		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+		$this->set('products', $this->Product->find('all'));
+		$this->set('_serialize', array('products'));
+	}
 /**
  * index method
  *
