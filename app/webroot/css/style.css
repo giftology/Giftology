@@ -284,33 +284,6 @@ p.occasion {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .mainpage a:hover {
 	text-decoration:underline;
 }
@@ -1680,4 +1653,31 @@ p.error em {
 }
 .success {
 	color: #fff;
+}
+#gift-redemption-details {
+	float: left;
+	position: relative;
+	width: 450px;
+	height: 210px;
+	border: dashed;
+	border-color: ghostwhite;
+	background-color: ghostwhite;
+}
+#redemption-code-title {
+	font-size: 24px;
+	background-color: white;
+	coolor: white;
+	padding-left: 120px;
+	border-bottom-color: black;
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+}
+#redemption-code {
+	font-size: 72px;
+	padding-top: 40px;
+	padding-left: 10px;
+}
+#redeem-instr {
+	position: relative;
+	margin-top: 285px;
 }

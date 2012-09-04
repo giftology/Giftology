@@ -51,12 +51,14 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 <body>
 <div class="mainpage">
 	<div class="header">
+		<a href=<?= DOMAIN_NAME; ?>>
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
+		</a>
 		
 		<ul class="nav float-l">
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events active"><span>Events</span></a></li>
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends"><span>Friends</span></a></li>
-			<li><a href=<?= $this->Html->url(array('controller'=>'users',  'action'=>'view_gifts')); ?> class="wallet"><span>Wallet</span></a></li>
+			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet"><span>Wallet</span></a></li>
 		</ul>
 		
 		<div class="controls">

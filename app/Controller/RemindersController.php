@@ -11,8 +11,12 @@ class RemindersController extends AppController {
 	public $paginate = array(
 	        'limit' => 24,
 	);
-	public $components = array('RequestHandler');
-	public $helpers = array('Js');
+	public function isAuthorized($user) {
+	    if (($this->action == 'view_friends')) {
+	        return true;
+	    }
+	    return parent::isAuthorized($user);
+	}
 
 
 /**
@@ -241,6 +245,7 @@ class RemindersController extends AppController {
 
 		$this->Reminder->recursive = -1;
 		if ($do_pagination) {
+			$this->paginate = $conditions;
 			$reminders = $this->paginate($conditions);
 		} else {
 			$reminders = $this->Reminder->find('all',

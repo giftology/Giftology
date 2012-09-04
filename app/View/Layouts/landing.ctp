@@ -42,6 +42,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 
 <body>
+
 <div class="mainpage2 content">
   <div class="wrapper">
     <div class="about">
@@ -54,12 +55,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo "Start by logging into facebook >>";
 	}
 	?>
-        <?php echo $this->Facebook->login(
-            array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location')); ?>
     </div>
       <div class="second">
         <div class="facepile">
-          <iframe scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:297px;" src="https://www.facebook.com/plugins/facepile.php?app_id=227739037248749" allowtransparency="true"></iframe>
+        <?php echo $this->Facebook->login(
+            array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location')); ?>
         </div>
         <div class="social">
           <div class="twitter">

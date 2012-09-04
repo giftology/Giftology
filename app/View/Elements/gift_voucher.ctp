@@ -8,7 +8,7 @@
             <p class="at">at</p><p class="fine-print">Only valid in India.</p>
             <div class="frame"></div>
     </div>
-    <div id="terms" class="disclosure opened">
+    <div class="disclosure opened">
             <p class="heading">Terms and conditions</p>
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Product']['terms']; ?></p>
@@ -17,19 +17,10 @@
                     <span class="arrow"></span>
             </a>
     </div>
-    <div id="About" class="disclosure opened">
+    <div class="disclosure opened">
             <p class="heading">About <?= $product['Vendor']['name']; ?></p>
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Vendor']['description']; ?></p>
-            </div>
-            <a class="toggle">
-                    <span class="arrow"></span>
-            </a>
-    </div>
-    <div id="Redeem"class="disclosure opened">
-            <p class="heading">How to Redeem</p>
-            <div class="wrapper" style="height: 0px;">
-                    <p class="content shown"><?= $product['Product']['redeem_instr']; ?></p>
             </div>
             <a class="toggle">
                     <span class="arrow"></span>

@@ -2,11 +2,17 @@
 			<ul id="breadcrumbs">
 				<li class="breadcrumb home events">
 					<span class="left"></span>
-					<a href="#"><span class="arrow"></span></a>
+					<a href="<?= DOMAIN_NAME; ?>"><span class="arrow"></span></a>
 				</li>
 				<li class="breadcrumb">
 					<span class="left"></span>
-					<a href="#events/53376186"><?= $receiver_name; ?><span class="arrow"></span></a>
+					<a href="<?= $this->Html->url(array('controller'=>'products',
+								'action'=> 'view_products',
+								'receiver_id' => $receiver_id,
+								'receiver_name' => $receiver_name,
+								'receiver_birthday' => $receiver_birthday,
+								'ocasion' => $ocasion));
+						?>"><?= $receiver_name; ?><span class="arrow"></span></a>
 				</li>
 				<li>Send a gift</li>
 			</ul>

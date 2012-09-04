@@ -11,9 +11,15 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('login','logout');
     }
+    public function isAuthorized($user) {
+        if (($this->action == 'login') || ($this->action == 'logout')) {
+            return true;
+        }
+        return parent::isAuthorized($user);
 
+    }
 /**
  * index method
  *
@@ -81,8 +87,6 @@ class UsersController extends AppController {
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
-		$facebooks = $this->User->Facebook->find('list');
-		$this->set(compact('facebooks'));
 	}
 
 /**
@@ -282,11 +286,15 @@ class UsersController extends AppController {
                         'UserProfile',
                         'GiftsReceived' => array(
                             'Product' => array('Vendor'),
-                            'Sender'),
+                            'Sender',
+                            'limit' => 30,
+                            'order' => 'GiftsReceived.created DESC',
+                            'conditions' => array('GiftsReceived.gift_status_id' => GIFT_STATUS_VALID)),
                         'GiftsSent' => array(
-                            'Product' => array('Vendor')
-                        )
-                    ),
+                            'Product' => array('Vendor'),
+                            'limit' => 30,
+                            'order' => 'GiftsSent.created DESC',
+                            'conditions' => array('GiftsSent.gift_status_id' => GIFT_STATUS_VALID))),
                     'conditions' => array('User.id' => $this->User->id))));
     }
     

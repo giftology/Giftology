@@ -8,6 +8,18 @@ App::uses('AppController', 'Controller');
 class GiftsController extends AppController {
 
     public $components = array('Giftology');
+    public $paginate = array(
+	'contain' => array(
+		'Product' => array('Vendor')),
+	'order' => 'Gift.created DESC',
+	'limit' => 9,
+	);
+	public function isAuthorized($user) {
+	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')) {
+	        return true;
+	    }
+	    return parent::isAuthorized($user);
+	}
 
 /**
  * index method
@@ -42,7 +54,6 @@ class GiftsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Gift->create();
-			echo debug($this->request->data);
 
 			if ($this->Gift->save($this->request->data)) {
 				$this->Session->setFlash(__('The gift has been saved'));
@@ -221,5 +232,20 @@ class GiftsController extends AppController {
 			'conditions' => array('Gift.id'=>$id)));
 		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
 		$this->set('gift', $gift);	
+	}
+	public function view_gifts() {
+		if (isset($this->request->params['named']['sent'])) {
+			$conditions = array('sender_id' => $this->Auth->user('id'));
+		} else {
+			$conditions = array('receiver_id' => $this->Auth->user('id'));
+		}
+		if (isset($this->request->params['named']['invalid'])) {
+			$conditions['gift_status_id <>'] = GIFT_STATUS_VALID;
+		} else {
+			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
+
+		}
+		$this->paginate['conditions'] = $conditions;
+		$this->set('gifts', $this->paginate());
 	}
 }

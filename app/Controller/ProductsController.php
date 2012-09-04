@@ -6,6 +6,12 @@ App::uses('AppController', 'Controller');
  * @property Product $Product
  */
 class ProductsController extends AppController {
+	public function isAuthorized($user) {
+	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
+	        return true;
+	    }
+	    return parent::isAuthorized($user);
+	}
 
 /**
  * index method
@@ -17,7 +23,6 @@ class ProductsController extends AppController {
 		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
 		$this->set('products', $this->paginate());
 	}
-
 /**
  * view method
  *
