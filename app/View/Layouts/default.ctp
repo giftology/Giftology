@@ -84,6 +84,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		</div>
 		
 		<div id="footer">
+			<div class="footer-line"></div>
 		</div>
 	</div>
 	<?php //echo $this->element('sql_dump'); ?>

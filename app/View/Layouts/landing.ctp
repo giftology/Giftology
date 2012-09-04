@@ -48,19 +48,20 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="about">
       <div class="first">
         <h1>Giftology.com</h1>
-        <h2>Giftology.com is a fun and easy way to give free and paid gift cards to your Facebook friends.</h2>
+        <h2>The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends.</h2>
 	<?php if ($facebook_user) {
 		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', action => 'view_friends'));	
 	} else {
-		echo "Start by logging into facebook >>";
+		echo "Start by logging in with facebook <br><br>";
 	}
 	?>
     </div>
       <div class="second">
         <div class="facepile">
-        <?php echo $this->Facebook->login(
-            array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location')); ?>
-        </div>
+		<fb:login-button size="xlarge" show-faces='1' width='400' max-rows='1' onlogin="<? DOMAIN_NAME; ?>"
+			 perms='email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'>	
+		</fb:login-button>
+	</div>
         <div class="social">
           <div class="twitter">
             
@@ -69,9 +70,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             
           </div>
         </div>
-        <div class="availability">
+        <!--div class="availability">
           <p class="iphone-android">Giftology.com is also available for <a class="android" href="https://market.android.com/details?id=com.wrapp.android">Android</a> and <a class="iphone" href="http://itunes.apple.com/app/wrapp/id458640944">iPhone</a>.</p>
-        </div>
+        </div-->
       </div>
     </div>
 	
@@ -91,6 +92,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	  </div>
   </div>
 </div>
+<div id="footer">
+	<div class="footer-line"></div>
+</div>
+
 <!-- Main page close -->
 	<?= $this->Facebook->init(); ?>
 
