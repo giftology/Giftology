@@ -58,7 +58,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     </div>
       <div class="second">
         <div class="facepile">
-		<fb:login-button size="xlarge" show-faces='1' width='400' max-rows='1' onlogin="<? DOMAIN_NAME; ?>"
+		<fb:login-button size="xlarge" show-faces='1' width='400' max-rows='1' onlogin="<?= DOMAIN_NAME; ?>"
 			 perms='email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'>	
 		</fb:login-button>
 	</div>
@@ -97,7 +97,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 </div>
 
 <!-- Main page close -->
-	<?= $this->Facebook->init(); ?>
+	<?php echo $this->Facebook->init(); ?>
 
 </body>
 </html>

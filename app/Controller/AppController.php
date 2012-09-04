@@ -37,7 +37,7 @@ class AppController extends Controller {
     var $helpers = array('Session', 'Facebook.Facebook');
     var $components = array('Session',
                             'Auth' => array(
-                                'authorize' => 'controller',
+                                'authorize' => 'Controller',
                                 'authorizedActions' => array ('index', 'view'),
                                 'loginRedirect' => array('controller' => 'reminders', 'action' => 'view_friends'),
                                 'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'home')
