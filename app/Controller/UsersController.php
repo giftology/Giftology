@@ -122,7 +122,7 @@ class UsersController extends AppController {
 	}
     
     public function login() {
-        if ($this->Connect->user()) {
+        if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
             $this->layout = 'landing';
@@ -137,7 +137,13 @@ class UsersController extends AppController {
     }
 
     public function logout() {
-        $this->redirect($this->Auth->logout());
+        session_destroy();
+        session_start();
+            $this->layout = 'landing';
+        
+        //$this->redirect($this->referer());
+
+     //   $this->redirect($this->Auth->logout());
     }
     
     function beforeFacebookSave() {
