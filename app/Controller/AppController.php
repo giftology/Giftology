@@ -44,7 +44,7 @@ class AppController extends Controller {
                             ),
                             'Facebook.Connect' => array('model' => 'User'),
                             'RequestHandler');
-    
+
     function beforeFilter() {
     
     if (isset($this->params['ext']) && $this->params['ext'] == 'json') {
@@ -58,11 +58,6 @@ class AppController extends Controller {
             }
         }
     }
-
-        if (!$this->noAuth && !empty($this->uid)) {
-            $this->__syncFacebookUser();
-        } 
-
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
     }
