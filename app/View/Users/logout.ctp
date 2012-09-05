@@ -1,3 +1,3 @@
 <?php echo $this->Session->flash('auth'); ?>
 
-You have been logged out
+<h1>Thanks for stopping by Giftology.  Come back soon !</h1> 
