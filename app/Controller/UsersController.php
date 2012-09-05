@@ -125,6 +125,7 @@ class UsersController extends AppController {
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
+            $this->set('message', 'The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends');
             $this->layout = 'landing';
         }
        /* if ($this->request->is('post')) {
@@ -139,8 +140,8 @@ class UsersController extends AppController {
     public function logout() {
         session_destroy();
         session_start();
-            $this->layout = 'landing';
-        
+        $this->layout = 'landing';
+        $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
         //$this->redirect($this->referer());
 
      //   $this->redirect($this->Auth->logout());

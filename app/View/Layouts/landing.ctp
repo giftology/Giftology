@@ -49,7 +49,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="about">
       <div class="first">
         <h1>Giftology.com</h1>
-        <h2>The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends.</h2>
+        <h2><?= $message; ?></h2>
 	<?php if ($facebook_user) {
 		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', action => 'view_friends'));	
 	} else {
