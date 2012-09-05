@@ -51,7 +51,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <h1>Giftology.com</h1>
         <h2><?= $message; ?></h2>
 	<?php if ($facebook_user) {
-		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', action => 'view_friends'));	
+		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', 'action' => 'view_friends'));	
 	} else {
 		echo "Start by logging in with facebook <br><br>";
 	}
