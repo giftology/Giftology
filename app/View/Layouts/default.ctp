@@ -72,7 +72,8 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			</div>
 			<div class="current-user">
 				<p><?= $facebook_user['name']; ?></p>
-				<?php echo $this->Facebook->logout(/*array('redirect' => array('controller' => 'users', 'action' => 'logout'))*/); ?>
+				<?php echo $this->Facebook->logout(array('label' => 'Logout',
+									 'redirect' => array('controller' => 'users', 'action' => 'logout'))); ?>
 			</div>
 		</div>
 		

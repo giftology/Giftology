@@ -62,11 +62,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		<?php echo $this->Facebook->login(array('perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location',
 							'img' => 'connectwithfacebook.gif',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
-		<?php echo $this->Facebook->friendpile(array('app_id'=>'105463376223556')); ?>
-
-		<!--fb:login-button size="xlarge" show-faces='1' width='400' max-rows='1' onlogin="<?= DOMAIN_NAME; ?>"
-			 perms='email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'>	
-		</fb:login-button-->
+		<?php echo $this->Facebook->friendpile(); ?>
 	</div>
         <div class="social">
           <div class="twitter">
