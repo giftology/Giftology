@@ -493,7 +493,7 @@ class FacebookHelper extends AppHelper {
 	
 	public function init($options = null, $reload = true) {
 		$options = array_merge(array(
-			'perms' => 'email'
+			'perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'
 		), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
 			$init = '<div id="fb-root"></div>';
