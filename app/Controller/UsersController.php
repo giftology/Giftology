@@ -125,10 +125,22 @@ class UsersController extends AppController {
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
-            $this->set('fb_title', "test tiel");
-            $this->set('fb_image', "http://giftology.com/img/brand-logo.jpg");
-            $this->set('fb_description', "test descrption");
-            
+            if (isset($this->request->params['named']['gift_id'])) {
+                // Set the FB OG stuff here
+                $gift = $this->User->GiftsReceived->find('first', array(
+                        'conditions' => array(
+                            'GiftsReceived.id' => $this->request->params['named']['gift_id']),
+                        'contain' => array(
+                            'Product' => array(
+                                'fields' => array('Product.id'),
+                                'Vendor' => array('fields' => array('name','facebook_image'))))
+                        ));
+                if ($gift) {
+                    $this->set('fb_title', "Gift Voucher to ".$gift['Product']['Vendor']['name']);
+                    $this->set('fb_image', FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image']);
+                    $this->set('fb_description', "Giftology is the hip new replacement to the boring old Happy Birthday facebook post.  Click the link above to redeem your voucher.");
+                }
+            }            
             $this->set('message', 'The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends');
             $this->layout = 'landing';
         }

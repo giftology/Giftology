@@ -26,11 +26,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		<?php echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
 	</title>
+	<?php if (isset($fb_title)): ?>
 	  <meta property="og:title" content=<?= $fb_title; ?> /> 
 	  <meta property="og:image" content=<?= $fb_image; ?> /> 
 	  <meta property="og:description" content=<?= $fb_description; ?> /> 
           <meta property="og:url" content= <?= FULL_BASE_URL; ?> />
-
+	<?php endif; ?>
 	<?php
 		echo $this->Html->meta('icon');
 
