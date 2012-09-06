@@ -517,7 +517,6 @@ class FacebookHelper extends AppHelper {
 				// logged in and connected user, someone you know
 				// alert('You are connected');
 			} else {
-				top.location.href = '$logoutURL';
 				// no user session available, someone you dont know
 				// alert('You are disconnected');
 			}

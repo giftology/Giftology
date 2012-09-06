@@ -4,14 +4,14 @@ $(document).ready(function(){
 		item: ".image-wrapper",
 		pagination: "#paginator_nav",
 		next: ".next a",
-		loader: "/images/loader.gif",
+		loader: "../img/loader.gif",
 	});
 	jQuery.ias({
 		container : "#campaigns",
 		item: ".small-voucher",
 		pagination: "#paginator_nav",
 		next: ".next a",
-		loader: "/images/loader.gif",
+		loader: "../img/loader.gif",
 	});
 
         $('#flashMessage').delay(8000).slideUp(1000);

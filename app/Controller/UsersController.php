@@ -127,7 +127,7 @@ class UsersController extends AppController {
         } else {
             $this->set('fb_title', "test tiel");
             $this->set('fb_image', "http://giftology.com/img/brand-logo.jpg");
-            $this->set('$fb_description', "test descrption");
+            $this->set('fb_description', "test descrption");
             
             $this->set('message', 'The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends');
             $this->layout = 'landing';
