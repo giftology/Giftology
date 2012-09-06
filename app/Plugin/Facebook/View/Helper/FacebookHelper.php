@@ -497,6 +497,7 @@ class FacebookHelper extends AppHelper {
 		), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
 			$init = '<div id="fb-root"></div>';
+			$logoutURL = Router::url(array('controller'=>'users', 'action'=>'logout'));
 			//$init .= '<script src="//connect.facebook.net/en_US/all.js"></script>';
 			$init .= $this->Html->scriptBlock("
 	window.fbAsyncInit = function() {
@@ -516,6 +517,7 @@ class FacebookHelper extends AppHelper {
 				// logged in and connected user, someone you know
 				// alert('You are connected');
 			} else {
+				top.location.href = '$logoutURL';
 				// no user session available, someone you dont know
 				// alert('You are disconnected');
 			}
@@ -526,6 +528,7 @@ class FacebookHelper extends AppHelper {
 				// the user has just logged in
 				// alert('You just logged in facebook from somewhere');
 			} else {
+				top.location.href = '$logoutURL';
 				// the user has just logged out
 				// alert('You just logged out from faceboook');
 			}
