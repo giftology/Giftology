@@ -149,6 +149,7 @@ class UsersController extends AppController {
     
     function beforeFacebookSave() {
         $this->Connect->authUser['User']['last_login'] = date('Y-m-d');
+        $this->Connect->authUser['User']['access_token'] = '"'.FB::getAccessToken().'"';
         $this->setUserProfile();
         $this->setUserUtm();
         $this->setUserReminders();
@@ -160,6 +161,37 @@ class UsersController extends AppController {
         if ($updatedGiftId) {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
+    }
+    function afterFacebookLogin() {
+        $user = $this->Auth->user();
+
+        if (!$user || !isset($user['id']))
+        { return; }
+
+        $daysSinceLogin =round (strtotime(date('Y-m-d')) - strtotime($user['last_login']))/86400;
+        $numReminders = $this->User->Reminders->find('count', array(
+                    'conditions' => array('user_id' => $user['id'])));
+
+        if ($daysSinceLogin > 15 || $numReminders == 0) {
+            //refesh reminders
+            $this->setUserReminders($user['id']);
+            $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+        }
+        
+        //update User Profile if necesary
+        if (!$this->User->UserProfile->find('first', array('conditions' => array('user_id' => $user['id'])))) {
+            //no user profile, create now
+            $this->setUserProfile();
+            $this->Connect->authUser['UserProfile']['user_id'] = $user['id'];
+            $this->User->UserProfile->save($this->Connect->authUser);
+        }
+        
+        // Update Access token and last_login
+        $this->User->updateAll(array(
+            'User.last_login' => date('Y-m-d'),
+            'User.access_token' => '"'.FB::getAccessToken().'"'
+        ), array(
+            'User.id' => $user['id']));
     }
     function updatePlaceholderGifts ($last_insert_id) {
 
@@ -237,18 +269,17 @@ class UsersController extends AppController {
             $this->Connect->authUser['UserUtm']['utm_term'] = $this->request->query['utm_term'];
         }
     }
-    function setUserReminders() {
-
+    function setUserReminders($user_id = null) {
         $friends = $this->getUserFriends();
-        $reminders = array();
+        $this->Connect->authUser['Reminders'] = array();
         foreach ($friends as $friend) {
-            array_push($reminders, array (
+            array_push($this->Connect->authUser['Reminders'], array (
+                    'user_id' => $user_id,
                     'friend_fb_id' => $friend['uid'],
                     'friend_name' => $friend['name'],
                     'friend_birthday' => $friend['birthday']
                 ));
         }
-        $this->Connect->authUser['Reminders'] = $reminders;
     }
     
     function getUserFriends() {

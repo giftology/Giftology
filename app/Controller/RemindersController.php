@@ -207,6 +207,7 @@ class RemindersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	public function view_friends($type=null) {
+		$this->Session->setFlash("Giftology is in development mode.  You can test it out but no vouchers will be sent.");
 		if (!$this->Connect->user()) {
 		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
 		}
