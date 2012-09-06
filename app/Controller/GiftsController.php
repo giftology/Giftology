@@ -145,6 +145,9 @@ class GiftsController extends AppController {
 		if ($this->request->params['named']['receiver_email']) {
 			$gift['Gift']['receiver_email'] = $this->request->params['named']['receiver_email'];
 		}
+		if ($this->request->params['named']['message']) {
+			$gift['Gift']['gift_message'] = $this->request->params['named']['message'];
+		}
 		$gift['Gift']['post_to_fb'] = $this->request->params['named']['post_to_fb'];
 		$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
 		$gift['Gift']['receiver_fb_id'] = $receiver_fb_id;
@@ -177,7 +180,7 @@ class GiftsController extends AppController {
 		$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
 			
 		if ($this->Gift->save($gift)) {
-			$this->informSenderReceipientOfGiftSent();
+			$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
 			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
 		} else {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
@@ -214,9 +217,21 @@ class GiftsController extends AppController {
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
-	function informSenderReceipientOfGiftSent() {
+	function informSenderReceipientOfGiftSent($gift_id) {
+		
+		if ($this->request->params['named']['message']) {
+			$message = $this->request->params['named']['message'];
+		} else {
+			$message = $this->Connect->user('name').' sent you a gift';
+		}
 		// Post to both sender and receipients facebook wall
+		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
+					   FULL_BASE_URL.'users/login/gift_id:'.$gift_id, 'Sent a gift on Giftology.com');
+		$this->Giftology->postToFB($this->request->params['named']['receiver_fb_id'], FB::getAccessToken(),
+					   FULL_BASE_URL.'users/login/gift_id:'.$gift_id, $message);
+		
 		// Send email to both sender and receipients about gifts sent
+		// XXX TODO
 	}
 	function redeemGiftCode ($code) {
 		//XXX Needs authentication

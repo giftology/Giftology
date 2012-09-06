@@ -27,7 +27,7 @@
 			<div class="delivery-details">
 			  	<div class="delivery-message">
 					<div class="greeting-bubble">
-				  		<textarea placeholder="Write something nice to <?= $receiver_name; ?>." name="gift-message" class="gift-message" autofocus="autofocus"></textarea>
+				  		<textarea placeholder="Write something nice to <?= $receiver_name; ?>." id="gift-message" name="gift-message" class="gift-message" autofocus="autofocus"></textarea>
 					</div>
 					<div class="shadow-wrapper">
 				  		<div class="frame">
@@ -57,7 +57,7 @@
 				'receiver_fb_id' => $receiver_id,
 				'receiver_name' => $receiver_name,
 				'receiver_birthday' => $receiver_birthday,
-				'product_id' => $product['Product']['id']));; ?>/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked">Send to <?= $receiver_name; ?>
+				'product_id' => $product['Product']['id']));; ?>/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value">Send to <?= $receiver_name; ?>
 			</button>
 
 		</div>
