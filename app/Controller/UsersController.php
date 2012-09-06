@@ -188,7 +188,11 @@ class UsersController extends AppController {
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
 
-        if ($daysSinceLogin > 15 || $numReminders == 0) {
+        if ($daysSinceLogin > 15 || $numReminders < 10) {
+            // Delete old reminders
+            if ($numReminders) {
+                $this->User->Reminders->deleteAll(array('user_id' => $user['id']));
+            }
             //refesh reminders
             $this->setUserReminders($user['id']);
             $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
