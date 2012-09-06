@@ -41,6 +41,14 @@ class VendorsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Vendor->create();
 			
+			//facebook linter doesnt like image links with space in them, convert all space to underscore	
+			$this->request->data['Vendor']['thumb_file']['name']
+				= str_replace(" ","_", $this->request->data['Vendor']['thumb_file']['name']);
+			$this->request->data['Vendor']['wide_file']['name']
+				= str_replace(" ","_", $this->request->data['Vendor']['wide_file']['name']);
+			$this->request->data['Vendor']['facebook_file']['name']
+				= str_replace(" ","_", $this->request->data['Vendor']['facebook_file']['name']);
+					
 			$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
 			copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
 
@@ -73,15 +81,22 @@ class VendorsController extends AppController {
 			throw new NotFoundException(__('Invalid vendor'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+
 			if (isset($this->request->data['Vendor']['thumb_file']['name']) && $this->request->data['Vendor']['thumb_file']['name']) {
+				$this->request->data['Vendor']['thumb_file']['name']
+					= str_replace(" ","_", $this->request->data['Vendor']['thumb_file']['name']);
 				$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
 				copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
 			}
 			if (isset($this->request->data['Vendor']['wide_file']['name']) && $this->request->data['Vendor']['wide_file']['name']) {
+				$this->request->data['Vendor']['wide_file']['name']
+					= str_replace(" ","_", $this->request->data['Vendor']['wide_file']['name']);
 				$this->request->data['Vendor']['wide_image'] = 'files/'.$this->request->data['Vendor']['wide_file']['name'];
 				copy($this->request->data['Vendor']['wide_file']['tmp_name'], $this->request->data['Vendor']['wide_image']);
 			}
 			if (isset($this->request->data['Vendor']['facebook_file']['name']) && $this->request->data['Vendor']['facebook_file']['name']) {
+				$this->request->data['Vendor']['facebook_file']['name']	
+					= str_replace(" ","_", $this->request->data['Vendor']['facebook_file']['name']);
 				$this->request->data['Vendor']['facebook_image'] = 'files/'.$this->request->data['Vendor']['facebook_file']['name'];
 				copy($this->request->data['Vendor']['facebook_file']['tmp_name'], $this->request->data['Vendor']['facebook_image']);
 			}
