@@ -125,6 +125,10 @@ class UsersController extends AppController {
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
+            $this->set('fb_title', "test tiel");
+            $this->set('fb_image', "http://giftology.com/img/brand-logo.jpg");
+            $this->set('$fb_description', "test descrption");
+            
             $this->set('message', 'The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends');
             $this->layout = 'landing';
         }
@@ -246,8 +250,8 @@ class UsersController extends AppController {
         $this->Connect->authUser['UserProfile']['email'] = $this->Connect->user('email');
         
         $fb_user = $this->Connect->user();
-        $location = $fb_user['location'];
-        $this->Connect->authUser['UserProfile']['city'] = isset($location) ? $location['name'] : NULL;
+        $location = isset($fb_user['location']) ? $fb_user['location'] : array('name' => 'not provided');
+        $this->Connect->authUser['UserProfile']['city'] = $location['name'];
         
         $this->Connect->authUser['UserProfile']['gender'] = $this->Connect->user('gender');
         $this->Connect->authUser['UserProfile']['birthday'] = $this->Connect->user('birthday');
