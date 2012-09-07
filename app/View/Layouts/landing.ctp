@@ -23,8 +23,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $cakeDescription ?>:
-		<?php echo $title_for_layout; ?>
+		Giftology | The Social Gifting Company | Homepage
 	</title>
 	<?php if (isset($fb_title)): ?>
 	  <meta property="og:title" content="<?= $fb_title; ?>" /> 

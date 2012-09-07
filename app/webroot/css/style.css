@@ -519,6 +519,17 @@ a:hover.f-link {text-decoration:underline;}
     margin: 10px;
     text-align: center;
 }
+#news-items .items li {
+    background-image: url("../img/gift_sent.png");
+    background-position: 0 1px;
+    background-repeat: no-repeat;
+    font-family: Adelle,"Helvetica Neue",Arial,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    padding-left: 30px;
+    margin-left: 10px;
+}
+
 #news-items .twitter-widget {
     background-image: url("../img/twitter-icon.png");
     background-position: 9px 13px;

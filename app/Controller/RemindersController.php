@@ -220,6 +220,7 @@ class RemindersController extends AppController {
 	            $this->set('today_users', $this->get_birthdays('mine','today'));
 	            $this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
 	        }
+		$this->setGiftsSent();
 	    }
 
 	
@@ -254,6 +255,21 @@ class RemindersController extends AppController {
 			));
 		}
 		return $reminders;
+    }
+	function setGiftsSent() {
+		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count')+20000);
+		$this->Reminder->User->GiftsReceived->recursive = 2;
+		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
+			      array('order'=>'GiftsReceived.id DESC',
+				    'limit'=>10,
+				    'order'=>'GiftsReceived.id DESC',
+				    'contain' => array(
+					'Product' => array(
+						'fields' => array('id'),
+						'Vendor' => array('name')),
+					'Sender' => array(
+						'fields' => array('facebook_id'))))));
+		
     }
 /* delete
     	function get_all_birthdays ($whose, $when) {

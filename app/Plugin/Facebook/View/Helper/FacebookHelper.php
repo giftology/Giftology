@@ -308,6 +308,22 @@ class FacebookHelper extends AppHelper {
 			return "";
 		}
 	}
+
+	public function name($uid = null, $options = array()){
+		$options = array_merge(
+			array(
+				'uid' => $uid,
+				'capitalize' => 1,
+			),
+			$options
+		);
+		if($options['uid']){
+			return $this->__fbTag('fb:name', '', $options);
+		}
+		else {
+			return "";
+		}
+	}
 	
 	/**
 	* New send social plugin
@@ -498,6 +514,7 @@ class FacebookHelper extends AppHelper {
 		if ($appId = FacebookInfo::getConfig('appId')) {
 			$init = '<div id="fb-root"></div>';
 			$logoutURL = Router::url(array('controller'=>'users', 'action'=>'logout'));
+			$afterLoginURL = Router::url(array('controller' => 'reminders', 'action'=>'view_friends'));
 			//$init .= '<script src="//connect.facebook.net/en_US/all.js"></script>';
 			$init .= $this->Html->scriptBlock("
 	window.fbAsyncInit = function() {
@@ -515,7 +532,11 @@ class FacebookHelper extends AppHelper {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 				// logged in and connected user, someone you know
-				// alert('You are connected');
+				//alert('You are connected redirection');
+				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
+                                        top.location.href = '$afterLoginURL';
+                                }
+
 			} else {
 				// no user session available, someone you dont know
 				// alert('You are disconnected');
@@ -525,7 +546,11 @@ class FacebookHelper extends AppHelper {
 		FB.Event.subscribe('auth.authResponseChange', function(response) {
 			if (response.authResponse) {
 				// the user has just logged in
-				// alert('You just logged in facebook from somewhere');
+				//alert('You just logged in facebook from somewhere redirecting');
+				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
+                                        top.location.href = '$afterLoginURL';
+                                }
+
 			} else {
 				top.location.href = '$logoutURL';
 				// the user has just logged out

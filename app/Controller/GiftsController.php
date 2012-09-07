@@ -180,7 +180,7 @@ class GiftsController extends AppController {
 		$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
 			
 		if ($this->Gift->save($gift)) {
-			$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
+			//$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
 			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
 		} else {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
@@ -273,5 +273,21 @@ class GiftsController extends AppController {
 		}
 		$this->paginate['conditions'] = $conditions;
 		$this->set('gifts', $this->paginate());
+	}
+	public function news() {
+		$this->layout = 'ajax';
+		$gifts = $this->Gift->find('all', array(
+			'contain' => array(
+				'Product' => array(
+					'fields' => array('id'),
+					'Vendor.name'),
+				'Sender' => array(
+					'fields' => array('facebook_id'))),
+			'limit' => 10
+		));
+		$this->set('num_gifts_sent', $this->Gift->find('count')+20000);
+		$this->set('gifts_sent', $gifts);
+		$this->set('_serialize', array('gifts'));
+		
 	}
 }

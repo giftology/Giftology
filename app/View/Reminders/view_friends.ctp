@@ -1,7 +1,7 @@
     <div class="left-container">
             <?php if(isset($today_users) & $today_users): ?>
             <div>
-                    <h4 class="line-header">Celebrate today<div class="calendar"><p>28</p></div></h4>
+                    <h4 class="line-header">Celebrate today<div class="calendar"><p><?= date('d'); ?></p></div></h4>
                     <?= $this->element('friend_list',
                                         array('reminders' => $today_users,
                                               'ocasion' => 'Birthday', ),
@@ -54,27 +54,21 @@
             </div>
             <?php endif; ?>
     </div>
-            
-    <div id="news-items"><div class="shadow-wrapper right items">
-      <div class="frame">
-            <h3>News</h3>
-            <h4>No news at the moment</h4>
-      </div>
-    </div>
-    
-    <div class="shadow-wrapper right facebook">
-      <div class="frame"><iframe scrolling="no" frameborder="0" allowtransparency="true" src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FWrappcorp&amp;width=292&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color=%23FAFAFA&amp;stream=false&amp;header=false&amp;appId=218834354823410"></iframe>
-    </div>
-    </div>
-    
-    <div class="shadow-wrapper right twitter">
-      <div class="frame"><div class="twitter-widget"><p>@<a rel="nofollow" href="https://twitter.com/oscaraltkvist" data-screen-name="oscaraltkvist" class="tweet-url username" target="_blank">oscaraltkvist</a> No, not to apply. :)</p>
-    <p>"On average women get 12 compliments a night when they RENT THE RUNWAY" Need we say more….http://t.co/kTcJRO2u @<a rel="nofollow" href="https://twitter.com/RentTheRunway" data-screen-name="RentTheRunway" class="tweet-url username" target="_blank">RentTheRunway</a></p>
-    <p>@<a rel="nofollow" href="https://twitter.com/juliedevoe" data-screen-name="juliedevoe" class="tweet-url username" target="_blank">juliedevoe</a> did you know you can give your friends RTR gifts cards via Wrapp?  <a rel="nofollow" href="https://t.co/JjmKP59s" target="_blank">https://t.co/JjmKP59s</a></p>
-    <a target="_blank" href="https://twitter.com/wrappcorp">Follow us on Twitter</a></div></div>
-    </div>
-    </div>
 
+    <div id="news-items">
+        <div class="shadow-wrapper right items">
+                <div class="frame">
+                        <h3>Total Gifts Sent</h3><ul>
+                       <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
+                       <h3>Whats happening now</h3><ul>
+                        <?php foreach($gifts_sent as $gift): ?>
+                                <li><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
+                                </li>
+                        <?php endforeach; ?>
+                        </ul>
+                 </div>
+        </div>
+    </div>
     
     <div class="clear"></div>
     

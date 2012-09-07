@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 
         $('#flashMessage').delay(8000).slideUp(1000);
-
+        
     $('.toggle').click(function () {
         //JQuery animate cannot understand
         //auto height, so calculate and give
