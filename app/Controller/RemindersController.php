@@ -223,6 +223,34 @@ class RemindersController extends AppController {
 		$this->setGiftsSent();
 	    }
 
+    /*public function send_reminder_emails () {
+        $users = $this->get_birthdays('all_users', 'thismonth');
+        foreach($users as $user) {
+            $this->send_reminder_email($user);
+        }
+    }*/ //no longer works
+    
+    public function send_reminder_email_for_user($id) {
+        $reminders = $this->get_birthdays($id, 'thismonth');
+	$user = $this->Reminder->User->find('first', array(
+		'conditions' => array('User.id' => $id),
+		'contain'=>array('UserProfile')));
+        $this->send_reminder_email($user, $reminders);	
+    }
+    function send_reminder_email($user, $reminders) {
+	
+        $email = new CakeEmail();
+	$email->config('smtp')
+              ->template('reminder', 'default') 
+	      ->emailFormat('html')
+	      ->to($user['UserProfile']['email'])
+	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
+	      ->subject('Birthday Reminder')
+              ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+                               'reminders' => $reminders))
+              ->send();
+    }
+
 	
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
@@ -230,6 +258,10 @@ class RemindersController extends AppController {
 		if ($whose == 'mine') {
 		    $conditions = array(
 			'user_id' => $this->Auth->user('id'));
+		} elseif ($whose != 'all_user') {
+		    $conditions = array(
+			'user_id' => $whose
+			);
 		}
 		
 		if ($when == 'today') {

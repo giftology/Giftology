@@ -320,25 +320,6 @@ class UsersController extends AppController {
               ->viewVars(array('name' => $this->Connect->user('name')))
               ->send();
     }
-    public function send_reminder_emails () {
-        $users = $this->get_birthdays('all_users', 'thismonth');
-        foreach($users as $user) {
-            $this->send_reminder_email($user);
-        }
-    }
-    
-    function send_reminder_email($user) {
-        $email = new CakeEmail();
-	$email->config('smtp')
-              ->template('reminder', 'default') 
-	      ->emailFormat('html')
-	      ->to($user['UserProfile']['email'])
-	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
-	      ->subject('Birthday Reminder')
-              ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
-                               'reminders' => $user['Reminders']))
-              ->send();
-    }
     public function view_gifts() {
 /*        $this->User->id = $this->Auth->user('id');
         if (!$this->User->exists()) {

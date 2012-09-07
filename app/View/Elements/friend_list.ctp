@@ -13,7 +13,7 @@
                                 <div class="frame-wrapper">
                                         <div class="shadow-wrapper">
                                                 <div class="frame">
-                                                        <?php echo $this->Facebook->picture($reminder['Reminder']['friend_fb_id'], array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?><br>
+                                                        <?php echo $this->Facebook->picture($reminder['Reminder']['friend_fb_id'], array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?>
                                                         <div class="calendar">
                                                                 <p><?= date('d', strtotime($reminder['Reminder']['friend_birthday'])); ?></p>
                                                         </div>

@@ -23,9 +23,10 @@
 //	echo '<p> ' . $line . "</p>\n";
 //endforeach;
 
-echo $name;
+echo "<h1>Reminder for ".$name."</h1>";
 foreach ($reminders as $reminder) {
-    echo "<p>".$reminder['friend_name']." ".$reminder['friend_birthday']."</p>";
+    echo "<img src=\"http://graph.facebook.com/".$reminder['Reminder']['friend_fb_id']."/picture?type=normal\">";
+    echo "<p>".$reminder['Reminder']['friend_name']." ".substr($this->Time->niceShort($reminder['Reminder']['friend_birthday']), 0, -7)."</p>";
 }
 
 ?>
