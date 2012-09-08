@@ -66,15 +66,15 @@ ul.nav li a {
     width: 50px;}
 
 ul.nav li a.events.active {
-    background-position: 0 -102px;
+    background-position: 0 -101px;
 }
 
 ul.nav li a.events{
-    background-position: 0 -50px;
+    background-position: 0 0px;
 }
 
 ul.nav li a.events:hover{
-    background-position: 0 -102px;
+    background-position: 0 -50px;
 }
 
 ul.nav li a span {
@@ -84,26 +84,25 @@ ul.nav li a span {
 }
 
 ul.nav li a.friends {
-    background-position: -50px -50px;
+    background-position: -50px 0px;
 }
-ul.nav li a.friends.active {
-    background-position: -50px -102px;
+ul.nav li a.friends.active, ul.nav li a.friends.active:hover {
+    background-position: -50px -101px;
 }
 ul.nav li a.friends:hover {
-    background-position: -50px -102px;
+    background-position: -50px -50px;
 }
 
 ul.nav li a.wallet {
-    background-position: -150px -50px;
+    background-position: -150px 0px;
 }
-ul.nav li a.wallet.active {
-    background-position: -150px -102px;
-}
-
-ul.nav li a.wallet:hover {
+ul.nav li a.wallet.active, ul.nav li a.wallet.active:hover {
     background-position: -150px -101px;
 }
 
+ul.nav li a.wallet:hover {
+    background-position: -150px -50px;
+}
 
 
 .header .controls {

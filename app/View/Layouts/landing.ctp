@@ -47,6 +47,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 <body>
 <?php echo $this->Facebook->init(); ?>
+	<?= $this->Facebook->init(); ?>
 
 <div class="mainpage2 content">
   <div class="wrapper">
