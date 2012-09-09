@@ -273,6 +273,7 @@ class GiftsController extends AppController {
 		}
 		$this->paginate['conditions'] = $conditions;
 		$this->set('gifts', $this->paginate());
+		$this->set('gifts_active', 'active');
 	}
 	public function news() {
 		$this->layout = 'ajax';

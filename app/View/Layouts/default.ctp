@@ -56,9 +56,9 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		</a>
 		
 		<ul class="nav float-l">
-			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events active"><span>Events</span></a></li>
-			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends"><span>Friends</span></a></li>
-			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet"><span>Wallet</span></a></li>
+			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
+			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends <?= isset($friends_active) ? $friends_active:''; ?>"><span>Friends</span></a></li>
+			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>My Giftsw</span></a></li>
 		</ul>
 		
 		<div class="controls">

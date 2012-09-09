@@ -215,11 +215,12 @@ class RemindersController extends AppController {
 	            $this->set('all_users', $this->get_birthdays('mine','all', 1));
 	            $this->set('today_users', array());
 	            $this->set('this_month_users', array());
+		    $this->set('friends_active', 'active');
 	        } else {
 	            $this->set('all_users', array());
 	            $this->set('today_users', $this->get_birthdays('mine','today'));
 	            $this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
-	        }
+		    $this->set('celebrations_active', 'active');	        }
 		$this->setGiftsSent();
 	    }
 
