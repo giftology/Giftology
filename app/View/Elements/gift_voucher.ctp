@@ -13,7 +13,7 @@
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Product']['terms']; ?></p>
             </div>
-            <a class="toggle">
+            <a class="toggle clicky_log">
                     <span class="arrow"></span>
             </a>
     </div>
@@ -22,7 +22,7 @@
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Vendor']['description']; ?></p>
             </div>
-            <a class="toggle">
+            <a class="toggle clicky_log">
                     <span class="arrow"></span>
             </a>
     </div>

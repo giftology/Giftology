@@ -11,8 +11,8 @@
 <div>
         <h3 class="line-header">
                 <span><?= $facebook_user['name'].'\'s received gifts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-		echo $this->Html->link('View Sent gifts  ', array('controller' => 'gifts', 'action' => 'view_gifts', 'sent' => 1));
-		echo $this->Html->link('  View Expired/Used gifts', array('controller' => 'gifts', 'action' => 'view_gifts', 'invalid' => 1));?></span>
+		//echo $this->Html->link('View Sent gifts  ', array('controller' => 'gifts', 'action' => 'view_gifts', 'sent' => 1));
+		//echo $this->Html->link('  View Expired/Used gifts', array('controller' => 'gifts', 'action' => 'view_gifts', 'invalid' => 1));?></span>
         </h3>
         
         <div id="campaigns">
@@ -46,7 +46,8 @@
                 <?php endforeach; ?>
 		
 		<?php if (empty($gifts)): ?>
-			<div class='no_data'>Nothing here.  Start some good Karma.  Send gifts to some friends, and they'll send you some in return. </div>
+			<br><br>
+			<div class='no_data'>Nothing here yet.  <br><br>Start some good Karma.  Send gifts to some friends, and they'll send you some in return. </div>
 		<?php endif; ?>
         </div>
         
