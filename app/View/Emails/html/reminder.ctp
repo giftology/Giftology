@@ -110,7 +110,7 @@
 			<td>
 				<table bgcolor="#000000" style="color:#fff; font-size:16px; font-family:Arial, Helvetica, sans-serif" width="100%" cellspacing="10">
 					<tr>
-						<td><span style="font-size:14px; color:#d2d2d2">contact@giftology.com</span></td>
+						<td><span style="font-size:14px; color:#d2d2d2">care@giftology.com</span></td>
 						<td align="right"><span style="font-size:16px; color:#d2d2d2">www.giftology.com</span></td>
 					</tr>
 				</table>
