@@ -650,7 +650,7 @@ ul, ol {
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    -moz-transform: rotate(7deg);
+    -moz-transform: rotate(353deg);
     -moz-transition-duration: 0.3s;
     background-color: #FAFAFA;
     border-color: #D9D9D9 #D9D9D9 #A8A8A8;
@@ -658,6 +658,12 @@ ul, ol {
     border-width: 1px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     padding: 4px;
+    transform:rotate(353deg);
+    -ms-transform:rotate(353deg); /* IE 9 */
+    -moz-transform:rotate(353deg); /* Firefox */
+    -webkit-transform:rotate(353deg); /* Safari and Chrome */
+    -o-transform:rotate(353deg); /* Opera */
+
 }
 #celebration-details .image-container .polaroid img {
     -moz-transition-duration: 0.3s;

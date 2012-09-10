@@ -58,7 +58,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<ul class="nav float-l">
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends <?= isset($friends_active) ? $friends_active:''; ?>"><span>Friends</span></a></li>
-			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>My Giftsw</span></a></li>
+			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>My Gifts</span></a></li>
 		</ul>
 		
 		<div class="controls">
@@ -91,6 +91,14 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 	</div>
 	<?php //echo $this->element('sql_dump'); ?>
 	<?= $this->Facebook->init(); ?>
+	<script type="text/javascript">
+		var clicky_custom = {};
+		clicky_custom.session = {
+		   username: '<?= $facebook_user['name']; ?>',
+	           fb_id: '<?= $facebook_user['id']; ?>'
+		};
+	</script>
+
 	<script type="text/javascript">
 		var clicky_site_ids = clicky_site_ids || [];
 		clicky_site_ids.push(66489932);
