@@ -12,7 +12,7 @@ class RemindersController extends AppController {
 	        'limit' => 24,
 	);
 	public function isAuthorized($user) {
-	    if (($this->action == 'view_friends')) {
+	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user') {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -232,7 +232,7 @@ class RemindersController extends AppController {
     }*/ //no longer works
     
     public function send_reminder_email_for_user($id) {
-        $reminders = $this->get_birthdays($id, 'thismonth');
+        $reminders = $this->get_birthdays($id, 'thisweek');
 	$user = $this->Reminder->User->find('first', array(
 		'conditions' => array('User.id' => $id),
 		'contain'=>array('UserProfile')));
@@ -246,13 +246,13 @@ class RemindersController extends AppController {
 	      ->emailFormat('html')
 	      ->to($user['UserProfile']['email'])
 	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
-	      ->subject('Birthday Reminder')
+	      ->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': Birthday Reminders this week')
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+			       'num_birthdays' => sizeof($reminders),
+			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
               ->send();
     }
-
-	
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
 		
@@ -304,7 +304,8 @@ class RemindersController extends AppController {
 						'fields' => array('facebook_id'))))));
 		
     }
-/* delete
+/*
+ delete
     	function get_all_birthdays ($whose, $when) {
 		
 		if ($whose == 'mine') {
