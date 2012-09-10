@@ -62,8 +62,11 @@ class ProductsController extends AppController {
 		}
 		$vendors = $this->Product->Vendor->find('list');
 		$productTypes = $this->Product->ProductType->find('list');
-		$productSegments = $this->Product->ProductSegment->find('list');
-		$this->set(compact('vendors', 'productTypes', 'productSegments'));
+		$codeTypes = $this->Product->CodeType->find('list');
+		$genderSegments = $this->Product->GenderSegment->find('list');
+		$ageSegments = $this->Product->AgeSegment->find('list');
+		$citySegments = $this->Product->CitySegment->find('list');
+		$this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));
 	}
 
 /**
@@ -88,11 +91,13 @@ class ProductsController extends AppController {
 		} else {
 			$this->request->data = $this->Product->read(null, $id);
 		}
+		$codeTypes = $this->Product->CodeType->find('list');
 		$vendors = $this->Product->Vendor->find('list');
 		$productTypes = $this->Product->ProductType->find('list');
-		$productSegments = $this->Product->ProductSegment->find('list');
-		$this->set(compact('vendors', 'productTypes', 'productSegments'));
-	}
+		$genderSegments = $this->Product->GenderSegment->find('list');
+		$ageSegments = $this->Product->AgeSegment->find('list');
+		$citySegments = $this->Product->CitySegment->find('list');
+		$this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));	}
 
 /**
  * delete method

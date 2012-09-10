@@ -71,9 +71,30 @@ class Product extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'ProductSegment' => array(
-			'className' => 'ProductSegment',
-			'foreignKey' => 'product_segment_id',
+		'GenderSegment' => array(
+			'className' => 'GenderSegment',
+			'foreignKey' => 'gender_segment_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'AgeSegment' => array(
+			'className' => 'AgeSegment',
+			'foreignKey' => 'age_segment_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'CitySegment' => array(
+			'className' => 'CitySegment',
+			'foreignKey' => 'city_segment_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'CodeType' => array(
+			'className' => 'CodeType',
+			'foreignKey' => 'code_type_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

@@ -51,7 +51,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 <body>
 <div class="mainpage">
 	<div class="header">
-		<a href=<?= DOMAIN_NAME; ?>>
+		<a href=<?= FULL_BASE_URL; ?>>
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
 		</a>
 		

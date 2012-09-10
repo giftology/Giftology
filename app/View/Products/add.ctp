@@ -21,11 +21,14 @@
 		            ), 
 		            'full' 
 	        ); 
-
+		echo $this->Form->input('code_type_id');
 		echo $this->Form->input('code');
 		echo $this->Form->input('vendor_id');
 		echo $this->Form->input('product_type_id');
-		echo $this->Form->input('product_segment_id');
+		echo $this->Form->input('age_segment_id');
+		echo $this->Form->input('gender_segment_id');
+		echo $this->Form->input('city_segment_id');
+
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -39,8 +42,8 @@
 		<li><?php echo $this->Html->link(__('New Vendor'), array('controller' => 'vendors', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Product Types'), array('controller' => 'product_types', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Product Type'), array('controller' => 'product_types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Product Segments'), array('controller' => 'product_segments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product Segment'), array('controller' => 'product_segments', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Gender Segments'), array('controller' => 'gender_segments', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Gender Segment'), array('controller' => 'gender_segments', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Gifts'), array('controller' => 'gifts', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Gift'), array('controller' => 'gifts', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>

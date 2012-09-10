@@ -174,8 +174,8 @@ class GiftsController extends AppController {
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
 
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id'] : UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
-		$gift['Gift']['code'] = $this->getCode($product);
 		$gift['Gift']['gift_amount'] = $product['Product']['min_value'];
+		$gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount']);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
 			
@@ -190,11 +190,11 @@ class GiftsController extends AppController {
 			'controller' => 'reminders', 'action'=>'view_friends'));exit();
 	}
 
-        function getCode($product) {
-	    if ($product['Product']['code'] == 'Generated') {
+        function getCode($product, $gift_amount) {
+	    if ($product['Product']['code_type_id'] == GENERATED_CODE) {
 		return $this->Giftology->generateGiftCode($product['Product']['id']);
-	    } elseif ($product['Product']['code'] == 'Uploaded') {
-		return $this->getUploadedCode($product['Product']['id'], $gift['Gift']['gift_amount']); 
+	    } elseif ($product['Product']['code_type_id'] == UPLOADED_CODE) {
+		return $this->getUploadedCode($product['Product']['id'], $gift_amount); 
 	    } else {
 		return $product['Product']['code']; //Static Reusable code for all gifts, as entered
 	    }

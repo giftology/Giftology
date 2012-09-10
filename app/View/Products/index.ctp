@@ -11,7 +11,9 @@
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
 			<th><?php echo $this->Paginator->sort('vendor_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('product_type_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('product_segment_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('gender_segment_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('age_segment_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('city_segment_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -33,7 +35,13 @@
 			<?php echo $this->Html->link($product['ProductType']['type'], array('controller' => 'product_types', 'action' => 'view', $product['ProductType']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($product['ProductSegment']['id'], array('controller' => 'product_segments', 'action' => 'view', $product['ProductSegment']['id'])); ?>
+			<?php echo $this->Html->link($product['GenderSegment']['id'], array('controller' => 'gender_segments', 'action' => 'view', $product['GenderSegment']['id'])); ?>
+		</td>
+		<td>
+			<?php echo $this->Html->link($product['AgeSegment']['id'], array('controller' => 'age_segments', 'action' => 'view', $product['AgeSegment']['id'])); ?>
+		</td>
+		<td>
+			<?php echo $this->Html->link($product['CitySegment']['id'], array('controller' => 'city_segments', 'action' => 'view', $product['CitySegment']['id'])); ?>
 		</td>
 		<td><?php echo h($product['Product']['created']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['modified']); ?>&nbsp;</td>
