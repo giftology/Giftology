@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class GiftsController extends AppController {
 
-    public $components = array('Giftology');
+    public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
 	'contain' => array(
 		'Product' => array('Vendor')),
@@ -15,7 +15,8 @@ class GiftsController extends AppController {
 	'limit' => 9,
 	);
 	public function isAuthorized($user) {
-	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')) {
+	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
+		|| ($this->action == 'tx_callback')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -132,7 +133,7 @@ class GiftsController extends AppController {
 		$this->Session->setFlash(__('Gift was not deleted'));
 		$this->redirect(array('action' => 'index'));exit();
 	}
-	public function send($id = null) {
+	public function send() {
 		$this->Gift->create();
 		$this->Gift->Product->id = $this->request->params['named']['product_id'];
 		if (!$this->Gift->Product->exists()) {
@@ -173,21 +174,37 @@ class GiftsController extends AppController {
 		// receipients are identified by their recipient_fb_id, and at the time of registration
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
 
-		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id'] : UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
-		$gift['Gift']['gift_amount'] = $product['Product']['min_value'];
+		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
+			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
+		$gift['Gift']['gift_amount'] = $this->request->params['named']['gift_amount'];
 		$gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount']);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
-		$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
-			
-		if ($this->Gift->save($gift)) {
-			//$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
-			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+		
+		$payment_needed = $gift['Gift']['gift_amount'] - $product['Product']['min_value'];
+		
+		if ($payment_needed) {
+			// Paid Gift.  Start Transaction
+			$gift['Transaction']['transaction_status_id'] = TX_STATUS_PROCESSING;
+			$gift['Gift']['gift_status_id'] = GIFT_STATUS_TRANSACTION_PENDING;
+		} else {
+			$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
+		}
+		if ($this->Gift->saveAssociated($gift)) {
+			if ($payment_needed) {
+				$this->redirect(array('controller' => 'transactions',
+							'action' => 'start_transaction',
+							'amount' => $payment_needed,
+							'OrderId' => $this->Gift->getLastInsertID()));	
+			} else {
+				$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
+				$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+			}
 		} else {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
-
+			$this->redirect($this->referer);
 		}
 		$this->redirect(array(
-			'controller' => 'reminders', 'action'=>'view_friends'));exit();
+			'controller' => 'reminders', 'action'=>'view_friends'));
 	}
 
         function getCode($product, $gift_amount) {
@@ -218,16 +235,22 @@ class GiftsController extends AppController {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
 	function informSenderReceipientOfGiftSent($gift_id) {
-		
-		if ($this->request->params['named']['message']) {
+		if (isset($this->request->params['named']['message'])) {
 			$message = $this->request->params['named']['message'];
+			$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
 		} else {
-			$message = $this->Connect->user('name').' sent you a gift';
+			$gift = $this->Gift->read(array('receiver_fb_id', 'gift_message'), $gift_id); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
+			if ($gift['Gift']['gift_message']) {
+				$message = $gift['Gift']['gift_message'];
+			} else {
+				$message = $this->Connect->user('name').' sent you a gift';
+			}
+			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
 					   FULL_BASE_URL.'/users/login/gift_id:'.$gift_id, 'Sent a gift on Giftology.com');
-		$this->Giftology->postToFB($this->request->params['named']['receiver_fb_id'], FB::getAccessToken(),
+		$this->Giftology->postToFB($receiver_fb_id, FB::getAccessToken(),
 					   FULL_BASE_URL.'/users/login/gift_id:'.$gift_id, $message);
 		
 		// Send email to both sender and receipients about gifts sent
@@ -291,4 +314,59 @@ class GiftsController extends AppController {
 		$this->set('_serialize', array('gifts'));
 		
 	}
+	public function tx_callback() {
+		$WorkingKey = CCAV_WORKING_KEY ; //put in the 32 bit working key in the quotes provided here
+		$Merchant_Id= $_REQUEST['Merchant_Id'];
+		$Amount= $_REQUEST['Amount'];
+		$Order_Id= substr($_REQUEST['Order_Id'], 4); // strip out the 'GIFT' part of the id
+		$Merchant_Param= $_REQUEST['Merchant_Param'];
+		$Checksum= $_REQUEST['Checksum'];
+		$AuthDesc=$_REQUEST['AuthDesc'];
+		
+		$Checksum = $this->CCAvenue->verifyChecksum($Merchant_Id, $_REQUEST['Order_Id'] , $Amount,$AuthDesc,$Checksum,$WorkingKey);
+	
+	
+		if($Checksum=="true" && $AuthDesc=="Y")
+		{
+			
+			//Update Gift and TX
+			$this->Gift->updateAll (array('Gift.gift_status_id' => GIFT_STATUS_VALID),
+						array('Gift.id' => $Order_Id));
+			$this->Gift->Transaction->updateAll (array('Transaction.transaction_status_id' => TX_STATUS_SUCCESS,
+								   'Transaction.amount_paid' => $Amount),
+						array('Transaction.gift_id' => $Order_Id));
+			
+			// Inform 
+			$this->informSenderReceipientOfGiftSent($Order_Id);
+			
+			// Redirect
+			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+			$this->redirect(array(
+				'controller' => 'reminders', 'action'=>'view_friends'));
+		}
+		else if($Checksum=="true" && $AuthDesc=="B")
+		{
+			$this->Session->setFlash(__('Your transaction seems to be taking too long to complete.  Try with another card ?'));
+			$this->redirect(array(
+				'controller' => 'reminders', 'action'=>'view_friends'));
+			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
+
+		}
+		else if($Checksum=="true" && $AuthDesc=="N")
+		{			
+			$this->Session->setFlash(__('Ouch ! Your transaction failed. Maybe a typing error ? Try again ? '));
+			$this->redirect(array(
+				'controller' => 'reminders', 'action'=>'view_friends'));
+			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
+		}
+		else
+		{
+			echo "<br>Security Error. Illegal access detected";
+			
+			//Here you need to simply ignore this and dont need
+			//to perform any operation in this condition
+		}
+
+	}
+
 }

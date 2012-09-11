@@ -20,9 +20,10 @@
         <div class="purchase voucher-container">
             <?= $this->element('gift_voucher',
                         array('product' => $gift,
-                              'small' => false),
+                              'small' => false,
+                              'redeem' => true),
                         array('cache' => array(
-                                'key' => $gift['Product']['id'].'full'))); ?>
+                                'key' => $gift['Product']['id'].'full_redeem'))); ?>
         </div>
         <div id="gift-redemption-details">
             <div id="redemption-code-title">Redemption Code</div>

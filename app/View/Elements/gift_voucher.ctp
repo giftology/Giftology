@@ -8,6 +8,18 @@
             <p class="at">at</p><p class="fine-print">Only valid in India.</p>
             <div class="frame"></div>
     </div>
+    <?php if (!isset($redeem) || !$redeem): ?>
+    <?php if ($product['Product']['max_price'] > $product['Product']['min_value']): ?>
+        <div id="add-value">
+            <div id="contrib-text"><center>You pay: <span class="WebRupee">Rs.</span>0</center></div>
+            <div class="minus-plus">
+                    <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>">
+                    <button type="hidden" class="disabled minus"></button>
+                    <button type="hidden" class="plus"></button>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php endif; ?>
     <div class="disclosure opened">
             <p class="heading">Terms and conditions</p>
             <div class="wrapper" style="height: 0px;">
@@ -26,14 +38,12 @@
                     <span class="arrow"></span>
             </a>
     </div>
-
-    <div class="minus-plus">
-            <input type="hidden" name="contribution_amount" class="contribution_amount" value="1000">
-            <!--button type="hidden" class="disabled minus"></button-->
-            <p class="amount"><span class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></p>
-            <!--button type="hidden" class="plus"></button-->
+    <div class="gift-amount">
+                <p class="amount"><span class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></p>
     </div>
-    
+    <input type="hidden" id="free-voucher-value" value=<?= $product['Product']['min_value']; ?>></input>
+    <input type="hidden" id="max-voucher-value" value=<?= $product['Product']['max_price']; ?>></input>
+
 <?php else: ?>
     <div class="small-voucher">
                     <span class="free  voucher">

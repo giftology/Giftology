@@ -55,8 +55,8 @@ class Gift extends AppModel {
  *
  * @var array
  */
-	public $hasMany = array(
-		'Transaction' => array(
+        public $hasOne = array(
+            		'Transaction' => array(
 			'className' => 'Transaction',
 			'foreignKey' => 'gift_id',
 			'dependent' => false,

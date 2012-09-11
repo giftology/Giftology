@@ -20,13 +20,6 @@ class Transaction extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Product' => array(
-			'className' => 'Product',
-			'foreignKey' => 'product_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
 		'Gift' => array(
 			'className' => 'Gift',
 			'foreignKey' => 'gift_id',
@@ -37,20 +30,6 @@ class Transaction extends AppModel {
 		'TransactionStatus' => array(
 			'className' => 'TransactionStatus',
 			'foreignKey' => 'transaction_status_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Sender' => array(
-			'className' => 'User',
-			'foreignKey' => 'sender_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Receiver' => array(
-			'className' => 'User',
-			'foreignKey' => 'receiver_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

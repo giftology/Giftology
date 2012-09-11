@@ -25,6 +25,7 @@
 		<div id="gift-details">
 			<h3>Will be delivered: <strong>Today<!--?= substr($this->Time->niceShort($receiver_birthday), 0, -7); ?--></strong></h3>
 			<div class="delivery-details">
+
 			  	<div class="delivery-message">
 					<div class="greeting-bubble">
 				  		<textarea placeholder="Write something nice to <?= $receiver_name; ?>." id="gift-message" name="gift-message" class="gift-message" autofocus="autofocus"></textarea>
@@ -57,7 +58,7 @@
 				'receiver_fb_id' => $receiver_id,
 				'receiver_name' => $receiver_name,
 				'receiver_birthday' => $receiver_birthday,
-				'product_id' => $product['Product']['id']));; ?>/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value">Send to <?= $receiver_name; ?>
+				'product_id' => $product['Product']['id']));; ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value">Send to <?= $receiver_name; ?>
 			</button>
 
 		</div>

@@ -120,19 +120,6 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Transaction' => array(
-			'className' => 'Transaction',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
                 'UploadedProductCode' => array(
 			'className' => 'UploadedProductCode',
 			'foreignKey' => 'product_id',

@@ -1071,9 +1071,11 @@ ul.voucher-details li {
     top: 9px;
     width: 13px;
 }
-.voucher-container.purchase .minus-plus {
+.voucher-container.purchase .gift-amount {
     position: absolute;
     top: 27px;
+}
+.voucher-container.purchase .minus-plus {
 }
 .minus-plus .minus.disabled {
     background-position: 0 -144px;
@@ -1098,10 +1100,10 @@ ul.voucher-details li {
     vertical-align: top;
     width: 48px;
 }
-.voucher-container.purchase .minus-plus .amount {
+.voucher-container.purchase .gift-amount .amount {
     color: #000000;
 }
-.minus-plus .amount {
+.gift-amount .amount {
     display: inline-block;
     font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 45px;
@@ -1133,6 +1135,7 @@ ul.voucher-details li {
 }
 .minus-plus .plus {
     background-position: -48px 0;
+    float:right;
 }
 .voucher .frame {
     background-image: url("../img/voucher-frame.png");
@@ -1704,4 +1707,13 @@ p.error em {
 }
 .no_data {
 	margin-left: 30px;
+}
+#add-value {
+	margin-bottom: 30px;
+}
+#contrib-text {
+	position: absolute;
+	top:273px;
+	left: 80px;
+	font-size: 24px;
 }

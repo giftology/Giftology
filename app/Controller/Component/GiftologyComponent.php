@@ -11,6 +11,7 @@ class GiftologyComponent extends Component {
 	    return $string;
 	}
 	function postToFB($fb_id, $access_token, $url, $message) {
+		return; // tmp for debug
 		// go with exec curl, as the return here is quicker (asynchronous) NS
 		exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		

@@ -34,6 +34,49 @@ $(document).ready(function(){
             // Animation complete.
         });
     });
+    
+    $('.minus-plus .plus').click(function() {
+            var freeVoucherValue = parseInt($('#free-voucher-value').val());
+            var maxVoucherValue = parseInt($('#max-voucher-value').val());
+            var currVoucherValue = parseInt($('.contribution_amount').val());
+            var newVoucherValue = 0;
+            if (currVoucherValue >= maxVoucherValue) {
+                $('.minus-plus .plus').addClass('disabled');
+                return;
+            }
+            if (currVoucherValue == freeVoucherValue) {
+                newVoucherValue = 500;
+            } else {
+                newVoucherValue = currVoucherValue + 500;
+            }
+            var youPay = newVoucherValue - freeVoucherValue;
+            //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
+            $('.contribution_amount').val(newVoucherValue);
+            $('#contrib-text').html("You pay: <span class=\"WebRupee\">Rs.</span>"+youPay);
+            $('.amount').html("<span class=\"WebRupee\">Rs.</span>"+newVoucherValue);
+            $('.minus-plus .minus').removeClass('disabled');
+        });
+    $('.minus-plus .minus').click(function() {
+            var freeVoucherValue = parseInt($('#free-voucher-value').val());
+            var currVoucherValue = parseInt($('.contribution_amount').val());
+            var newVoucherValue = 0;
+            if (currVoucherValue == freeVoucherValue) {
+                $('.minus-plus .minus').addClass('disabled');
+                return;
+            }
+            newVoucherValue = currVoucherValue - 500;
+
+            if (newVoucherValue < freeVoucherValue) {
+                newVoucherValue = freeVoucherValue;
+            } 
+            var youPay = newVoucherValue - freeVoucherValue;
+            //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
+            $('.contribution_amount').val(newVoucherValue);
+            $('#contrib-text').html("You pay: <span class=\"WebRupee\">Rs.</span>"+youPay);
+            $('.amount').html("<span class=\"WebRupee\">Rs.</span>"+newVoucherValue);
+            $('.minus-plus .plus').removeClass('disabled');
+        });
+
 });
 
 
