@@ -50,6 +50,6 @@ Redirecting you to CCAvenue for Payment ...
 	<input type="hidden" name="delivery_zip_code" value="<?php echo $delivery_zip; ?>"> 
 	<input type="submit" value="submit">
 	</form>
-<!--script type="text/javascript">
+<script type="text/javascript">
     document.getElementById('submit_ccav').submit();
-</script-->
+</script>
