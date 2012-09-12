@@ -526,8 +526,7 @@ class FacebookHelper extends AppHelper {
 			oauth      : true, // enable OAuth 2.0
 			xfbml      : true  // parse XFBML
 		});
-		
-		
+				
 		// Checks whether the user is logged in
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
@@ -559,6 +558,9 @@ class FacebookHelper extends AppHelper {
 		});
 		
 		// Other javascript code goes here!
+		//FB.Event.subscribe('xfbml.render', function(response) {
+		//	$(document).trigger('fb_xfbml_rendered'); // trigger event
+		//});
 
 	};
 
