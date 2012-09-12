@@ -58,6 +58,9 @@ class AppController extends Controller {
             }
         }
     }
+     if ($this->name == 'CakeError') {  
+		$this->redirect(array('controller' => 'reminders', 'action'=> 'view_friends'));
+	}
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
     }
