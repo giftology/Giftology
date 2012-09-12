@@ -45,7 +45,11 @@ $(document).ready(function(){
                 return;
             }
             if (currVoucherValue == freeVoucherValue) {
-                newVoucherValue = 500;
+                if (currVoucherValue < 500) {
+			newVoucherValue = 500;
+		} else {
+			newVoucherValue = 1000;
+		}
             } else {
                 newVoucherValue = currVoucherValue + 500;
             }
