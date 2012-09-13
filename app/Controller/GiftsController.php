@@ -221,11 +221,10 @@ class GiftsController extends AppController {
 			array('conditions' => array('available'=>1, 'product_id' =>$product,
 				'value' => $value)));
 		if (!$code) {
-			$this->Session->setFlash(__('Unable to sent gift, please select another product'));
+			$this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
 			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value);
-			$this->redirect(array('controller'=>'products', 'action'=>'index',
+			$this->redirect(array('controller'=>'products', 'action'=>'view_products',
 					      'recepient_id'=>$this->request->params['named']['receiver_fb_id']));
-				exit();
 		}
 		$this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
 								     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));

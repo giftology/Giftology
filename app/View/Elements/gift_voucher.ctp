@@ -5,7 +5,7 @@
             <div class="divider"></div>
             <img width="200" height="64" src="<?= FULL_BASE_URL.'/'.$product['Vendor']['wide_image'];
             ?>" class="wide">
-            <p class="at">at</p><p class="fine-print">Only valid in India.</p>
+            <p class="at">at</p><p class="fine-print"><?= $product['Product']['terms_heading']; ?></p>
             <div class="frame"></div>
     </div>
     <?php if (!isset($redeem) || !$redeem): ?>
@@ -13,12 +13,13 @@
         <div id="add-value">
             <div id="contrib-text"><center>You pay: <span class="WebRupee">Rs.</span>0</center></div>
             <div class="minus-plus">
-                    <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>">
                     <button type="hidden" class="disabled minus"></button>
                     <button type="hidden" class="plus"></button>
             </div>
         </div>
     <?php endif; ?>
+        <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>">
+
     <?php endif; ?>
     <div class="disclosure opened">
             <p class="heading">Terms and conditions</p>

@@ -7,6 +7,7 @@
 		echo $this->Form->input('max_price');
 		echo $this->Form->input('min_value');
 		echo $this->Form->input('days_valid');
+		echo $this->Form->input('terms_heading');
 	        echo $this->Tinymce->input('Product.terms', array( 
 	            'label' => 'Terms & Conditions' 
 		            ),array( 
@@ -28,6 +29,7 @@
 		echo $this->Form->input('age_segment_id');
 		echo $this->Form->input('gender_segment_id');
 		echo $this->Form->input('city_segment_id');
+		echo $this->Form->input('display_order');
 
 	?>
 	</fieldset>
