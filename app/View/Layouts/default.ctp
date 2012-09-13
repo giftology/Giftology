@@ -80,6 +80,8 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		
 	</div>
 				
+		<div class="transbox"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
+
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>

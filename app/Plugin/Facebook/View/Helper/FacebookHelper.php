@@ -558,9 +558,9 @@ class FacebookHelper extends AppHelper {
 		});
 		
 		// Other javascript code goes here!
-		//FB.Event.subscribe('xfbml.render', function(response) {
-		//	$(document).trigger('fb_xfbml_rendered'); // trigger event
-		//});
+		FB.Event.subscribe('xfbml.render', function(response) {
+			$(document).trigger('fb_xfbml_rendered'); // trigger event
+		});
 
 	};
 

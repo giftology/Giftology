@@ -95,9 +95,9 @@ $(document).ajaxComplete(function(){
 });
 
 // listen to an XFBML rendered Event
-//$(document).bind('fb_xfbml_rendered',function(){
+$(document).bind('fb_xfbml_rendered',function(){
     //console.log('fb_xfbml_rendered; Images are vieable');
-    //$('#content').toggle();
-//});
+    $('.transbox').fadeOut('slow');
+});
 
 
