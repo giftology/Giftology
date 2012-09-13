@@ -11,11 +11,12 @@ class GiftologyComponent extends Component {
 	    return $string;
 	}
 	function postToFB($fb_id, $access_token, $url, $message) {
-		return; // tmp for debug
+		//return; // tmp for debug
 		// go with exec curl, as the return here is quicker (asynchronous) NS
-		exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
+		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
+		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
 		
-		/*$fields = array(
+		$fields = array(
 		  'access_token'=> $access_token,
 	          'message'=>$message,
 	          'link'=>urlencode($url)
@@ -27,12 +28,16 @@ class GiftologyComponent extends Component {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
 		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
 		
 		//execute post
 		$result = curl_exec($ch);
-		
+		$error = curl_error($ch);
+		if ($error) {
+			$this->log($error);
+		}
 		//close connection
-		curl_close($ch);*/
+		curl_close($ch);
 	}
 }
