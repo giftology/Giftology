@@ -929,7 +929,7 @@ ul.voucher-details {
     width: 300px;
 }
 ul.voucher-details li {
-    background-image: url("../img/notice-icon.gif");
+    background-image: url("../img/notice.gif");
     background-position: left center;
     background-repeat: no-repeat;
     color: #4D4D4D;
