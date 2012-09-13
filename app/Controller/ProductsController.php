@@ -6,6 +6,14 @@ App::uses('AppController', 'Controller');
  * @property Product $Product
  */
 class ProductsController extends AppController {
+	
+	public $paginate = array(
+        'limit' => 25,
+        'order' => array(
+            'Product.display_order' => 'asc'
+	    )
+	);
+
 	public function isAuthorized($user) {
 	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
 	        return true;
