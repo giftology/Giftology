@@ -224,7 +224,6 @@ class RemindersController extends AppController {
 				$this->set('this_month_users', array());
 				$this->set('friends_active', 'active');
 			    } else {
-				$this->set('all_users', array());
 				$this->set('today_users', $this->get_birthdays('mine','today'));
 				$this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
 				$this->set('celebrations_active', 'active');
@@ -274,7 +273,8 @@ class RemindersController extends AppController {
 				);
 			} else {
 				$conditions = array(
-					'friend_name LIKE' => "%".$whose."%"
+					'friend_name LIKE' => "%".$whose."%",
+					'user_id' => $this->Auth->user('id')
 				);
 			}
 		}		
