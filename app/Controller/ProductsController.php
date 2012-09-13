@@ -148,6 +148,7 @@ class ProductsController extends AppController {
 		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
 		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
 		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+		$this->Product->contain(array('Vendor'));
 		$this->set('product', $this->Product->read(null, $id));
 
 	}

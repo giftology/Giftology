@@ -211,15 +211,16 @@ class GiftsController extends AppController {
 	    if ($product['Product']['code_type_id'] == GENERATED_CODE) {
 		return $this->Giftology->generateGiftCode($product['Product']['id']);
 	    } elseif ($product['Product']['code_type_id'] == UPLOADED_CODE) {
-		return $this->getUploadedCode($product['Product']['id'], $gift_amount); 
+		return $this->getUploadedCode($product['Product']['id'], $gift_amount,
+			date("Y-m-d", strtotime(date("Y-m-d")	 . "+".$product['Product']['days_valid']." days"))); 
 	    } else {
 		return $product['Product']['code']; //Static Reusable code for all gifts, as entered
 	    }
         }
-	function getUploadedCode($product, $value) {
+	function getUploadedCode($product, $value, $valid_till) {
 		$code = $this->Gift->Product->UploadedProductCode->find('first',
 			array('conditions' => array('available'=>1, 'product_id' =>$product,
-				'value' => $value)));
+				'value' => $value, 'expiry >' => $valid_till)));
 		if (!$code) {
 			$this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
 			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value);
