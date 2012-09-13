@@ -1733,3 +1733,19 @@ p.error em {
 	left: 240px;
 	top: 100px;
 }
+#search_friend {
+	float:right;
+	width: 150px;
+}
+#search_friend div.input.text {
+	float: left;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px 5px 5px 5px;
+}
+#search_friend div.submit {
+	float: right;
+}
+#search_friend input {
+	border: none;
+	padding: 0px;
+}

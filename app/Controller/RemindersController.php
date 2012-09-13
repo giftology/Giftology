@@ -207,20 +207,29 @@ class RemindersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	public function view_friends($type=null) {
+		$this->Reminder->recursive = -1;
 		$this->Session->setFlash("Giftology is in development mode.  You can test it out but no vouchers will be sent.");
 		if (!$this->Connect->user()) {
 		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
 		}
-	        if ($type) {//type = all
-	            $this->set('all_users', $this->get_birthdays('mine','all', 1));
-	            $this->set('today_users', array());
-	            $this->set('this_month_users', array());
-		    $this->set('friends_active', 'active');
-	        } else {
-	            $this->set('all_users', array());
-	            $this->set('today_users', $this->get_birthdays('mine','today'));
-	            $this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
-		    $this->set('celebrations_active', 'active');	        }
+		if ($this->request->is('post')) {
+				$this->set('all_users', $this->get_birthdays($this->request->data['Reminders']['friend_name'],'all', 1));
+				$this->set('today_users', array());
+				$this->set('this_month_users', array());
+				$this->set('friends_active', 'active');			
+		} else {
+			if ($type) {//type = all
+				$this->set('all_users', $this->get_birthdays('mine','all', 1));
+				$this->set('today_users', array());
+				$this->set('this_month_users', array());
+				$this->set('friends_active', 'active');
+			    } else {
+				$this->set('all_users', array());
+				$this->set('today_users', $this->get_birthdays('mine','today'));
+				$this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
+				$this->set('celebrations_active', 'active');
+				}
+		}
 		$this->setGiftsSent();
 	    }
 
@@ -255,16 +264,20 @@ class RemindersController extends AppController {
     }
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
-		
 		if ($whose == 'mine') {
 		    $conditions = array(
 			'user_id' => $this->Auth->user('id'));
 		} elseif ($whose != 'all_user') {
-		    $conditions = array(
-			'user_id' => $whose
-			);
-		}
-		
+			if (is_numeric($whose)) {
+				$conditions = array(
+					'user_id' => $whose
+				);
+			} else {
+				$conditions = array(
+					'friend_name LIKE' => "%".$whose."%"
+				);
+			}
+		}		
 		if ($when == 'today') {
 			$conditions['MONTH(friend_birthday)'] = date('m');
 			$conditions['DAY(friend_birthday)'] = date('d'); 

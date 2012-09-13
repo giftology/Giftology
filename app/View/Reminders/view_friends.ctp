@@ -24,8 +24,14 @@
 
             <?php if(isset($all_users) & $all_users): ?>
             <div id='friend_list'>
-                    <h4 class="line-header">Send a gift card to any friend </h4>
+                    <h4 class="line-header">Send a gift card to any friend
+                                            <div id='search_friend'>
+                                <?php echo $this->Form->create('Reminders'); ?>
+                                <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
+                                <?php echo $this->Form->end(__('search_button_small.jpg')); ?>
+                        </div>
 
+                    </h4>
                         <div id='paginator_nav'>
                                 
                         <?php
@@ -50,7 +56,10 @@
                                         array('cache' => array(
                                                 'key' => $facebook_user['id'].'All-Page'.
                                                 (isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1).
-                                                date('Y-m-d')))); ?>
+                                                date('Y-m-d').
+                                                (isset($this->request->data['Reminders']) ?
+                                                        $this->request->data['Reminders']['friend_name']
+                                                        : '')))); ?>
             </div>
             <?php endif; ?>
     </div>
