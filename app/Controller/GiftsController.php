@@ -134,6 +134,9 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send() {
+		
+		$this->redirectIfNotAllowedToSend();
+		
 		$this->Gift->create();
 		$this->Gift->Product->id = $this->request->params['named']['product_id'];
 		if (!$this->Gift->Product->exists()) {
@@ -366,7 +369,15 @@ class GiftsController extends AppController {
 			//Here you need to simply ignore this and dont need
 			//to perform any operation in this condition
 		}
-
 	}
-
+	function redirectIfNotAllowedToSend() {
+		if ($this->Gift->find('count', array('conditions' =>
+			array('sender_id' => $this->Auth->user('id'),
+			      'Gift.created >' => date('Y-m-d'))))
+		    > DAILY_MAX_GIFTS_PER_USER) {
+			$this->Session->setFlash(__('Unable to send.  You have reached the max limit for daily gifts.  Good going.  Come back tommorrow and send more'));
+			$this->redirect(array(
+				'controller' => 'reminders', 'action'=>'view_friends'));
+		}
+	}
 }
