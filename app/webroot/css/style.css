@@ -741,7 +741,8 @@ a .free.voucher .image-frame {
     background: url("../img/voucher-frame-free.png") repeat scroll 0 0 transparent;
 }
 .small-voucher .voucher .image-container img {
-    margin: 10px;
+	margin-top: 20px;
+	margin-left: 5px;
 }
 .small-voucher .voucher .details {
     color: #4D4D4D;
