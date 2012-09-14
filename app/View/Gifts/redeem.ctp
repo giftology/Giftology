@@ -40,6 +40,3 @@
         </div>
 </div>	
 <div class="clear"></div>
-
-
-<?= debug ($gift); ?>

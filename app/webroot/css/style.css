@@ -773,7 +773,8 @@ a .free.voucher .image-frame {
     text-align: left;
 }
 a .free.voucher .label {
-    color: #9DCB35;
+	color: #F5F7F2;
+	background-color: crimson;
 }
 
 .small-voucher:hover .selected-overlay{display:block}

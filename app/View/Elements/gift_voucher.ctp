@@ -59,7 +59,11 @@
                                     <?= isset($product['Product']['min_value']) ?
                                         $product['Product']['min_value'] :
                                         $product['min_value']; ?></span>
-                                    <span class="label">FREE</span>
+                                    <?php if ($product['Product']['min_price'] == 0): ?>
+                                            <span class="label">FREE</span>
+                                    <?php else: ?>
+                                            <span class="label">BUY</span>
+                                    <?php endif; ?> 
                             </span>
                     </span>
     </div>
