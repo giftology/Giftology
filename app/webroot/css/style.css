@@ -1735,12 +1735,15 @@ p.error em {
 }
 #search_friend {
 	float:right;
-	width: 150px;
+	width: 180px;
 }
 #search_friend div.input.text {
 	float: left;
 	border: 1px solid #CCCCCC;
 	border-radius: 5px 5px 5px 5px;
+	margin-top: 1px;
+	width: 150px;
+	height: 17px;
 }
 #search_friend div.submit {
 	float: right;
