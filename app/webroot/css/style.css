@@ -741,7 +741,7 @@ a .free.voucher .image-frame {
 }
 .small-voucher .voucher .image-container img {
 	margin-top: 20px;
-	margin-left: 5px;
+	margin-left: 0px;
 }
 .small-voucher .voucher .details {
     color: #4D4D4D;
