@@ -80,6 +80,10 @@ $(document).ready(function(){
             $('.amount').html("&#x20b9;"+newVoucherValue);
             $('.minus-plus .plus').removeClass('disabled');
         });
+     $('.showtransbox').click(function() {
+	    $('.transbox').show();
+        });
+
 
 });
 
