@@ -56,8 +56,8 @@ $(document).ready(function(){
             var youPay = newVoucherValue - freeVoucherValue;
             //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
             $('.contribution_amount').val(newVoucherValue);
-            $('#contrib-text').html("You pay: <span class=\"WebRupee\">Rs.</span>"+youPay);
-            $('.amount').html("<span class=\"WebRupee\">Rs.</span>"+newVoucherValue);
+            $('#contrib-text').html("You pay: &#x20b9;"+youPay);
+            $('.amount').html("&#x20b9;"+newVoucherValue);
             $('.minus-plus .minus').removeClass('disabled');
         });
     $('.minus-plus .minus').click(function() {
@@ -76,8 +76,8 @@ $(document).ready(function(){
             var youPay = newVoucherValue - freeVoucherValue;
             //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
             $('.contribution_amount').val(newVoucherValue);
-            $('#contrib-text').html("You pay: <span class=\"WebRupee\">Rs.</span>"+youPay);
-            $('.amount').html("<span class=\"WebRupee\">Rs.</span>"+newVoucherValue);
+            $('#contrib-text').html("You pay: &#x20b9;"+youPay);
+            $('.amount').html("&#x20b9;"+newVoucherValue);
             $('.minus-plus .plus').removeClass('disabled');
         });
 

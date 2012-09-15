@@ -30,7 +30,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('style');
-		echo $this->Html->css('http://cdn.webrupee.com/font');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		echo $this->Html->script('giftology');
