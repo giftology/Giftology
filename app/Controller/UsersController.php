@@ -178,11 +178,7 @@ class UsersController extends AppController {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
     }
-    function afterFacebookLogin($first_login) {
-	if ($first_login) {
-		$this->log("redirecting");
-	    	return $this->redirect($this->Auth->redirect());
-	}
+    function afterFacebookLogin() {
         $user = $this->Auth->user();
 
         if (!$user || !isset($user['id']))

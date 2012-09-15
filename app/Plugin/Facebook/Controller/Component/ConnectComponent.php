@@ -136,7 +136,6 @@ class ConnectComponent extends Component {
 			return false;
 		}
 		
-		$new_user_created = 0;
 		// check if the user already has an account
 		// User is logged in but doesn't have a 
 		if($Auth->user('id')){
@@ -165,7 +164,6 @@ class ConnectComponent extends Component {
 				else {
 					$this->authUser = null;
 				}
-				$new_user_created = 1;
 			}
 			//Login user if we have one
 			if($this->authUser){
@@ -176,9 +174,9 @@ class ConnectComponent extends Component {
 					)
 				);
 				if($Auth->login($this->authUser[$this->model])){
-					$this->__runCallback('afterFacebookLogin', $new_user_created);
+					$this->__runCallback('afterFacebookLogin');
 				}
-			} 
+			}
 			return true;
 		}
 	}
