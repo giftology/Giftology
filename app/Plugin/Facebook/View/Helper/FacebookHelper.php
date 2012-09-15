@@ -539,7 +539,7 @@ class FacebookHelper extends AppHelper {
 
 			} else {
 				// no user session available, someone you dont know
-				// alert('You are disconnected');
+				 //alert('You are disconnected');
 			}
 		});
 			   
@@ -553,7 +553,7 @@ class FacebookHelper extends AppHelper {
                                 }
 
 			} else {
-				 alert('You just logged out from faceboook and Giftology');
+				//alert('You just logged out from faceboook and Giftology');
 				top.location.href = '$logoutURL';
 				// the user has just logged out
 			}
@@ -569,15 +569,16 @@ class FacebookHelper extends AppHelper {
 	// logs the user in the application and facebook
 	function login(redirection){
 		FB.login(function (response) {
+			document.getElementById(\"transbox\").style.display = \"inline\";
 			if(response.authResponse) {
 				// user is logged in
 				// console.log('Welcome!');
 				if(redirection != null && redirection != ''){
-					//alert(\"redirecting from login\");
 					top.location.href = redirection;
 				}
 			} else {
 				// user could not log in
+				document.getElementById(\"transbox\").style.display = \"none\";
 				console.log('User cancelled login or did not fully authorize.');
 			}
 		}, {scope: '" . $options['perms'] . "'});
