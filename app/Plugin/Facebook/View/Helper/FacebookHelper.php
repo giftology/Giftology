@@ -533,7 +533,8 @@ class FacebookHelper extends AppHelper {
 				// logged in and connected user, someone you know
 				//alert('You are connected redirection');
 				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
-                                        top.location.href = '$afterLoginURL';
+				    //alert(\"redirecting from getLoginStatus\");
+				    //top.location.href = '$afterLoginURL';
                                 }
 
 			} else {
@@ -547,13 +548,14 @@ class FacebookHelper extends AppHelper {
 				// the user has just logged in
 				//alert('You just logged in facebook from somewhere redirecting');
 				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
-                                        top.location.href = '$afterLoginURL';
+                                        //alert(\"redirecting from authResponseChange\");
+					//top.location.href = '$afterLoginURL';
                                 }
 
 			} else {
+				 alert('You just logged out from faceboook and Giftology');
 				top.location.href = '$logoutURL';
 				// the user has just logged out
-				// alert('You just logged out from faceboook');
 			}
 		});
 		
@@ -571,6 +573,7 @@ class FacebookHelper extends AppHelper {
 				// user is logged in
 				// console.log('Welcome!');
 				if(redirection != null && redirection != ''){
+					//alert(\"redirecting from login\");
 					top.location.href = redirection;
 				}
 			} else {
