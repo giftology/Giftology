@@ -1692,9 +1692,9 @@ p.error em {
 	border-bottom-style: solid;
 }
 #redemption-code {
-	font-size: 72px;
-	padding-top: 40px;
-	padding-left: 10px;
+	font-size: 40px;
+	padding-top: 60px;
+	padding-left: 20%;
 }
 #redeem-instr {
 	position: relative;
@@ -1733,6 +1733,7 @@ p.error em {
 	opacity: .1;
 	filter: alpha(opacity=10);
 	position: absolute;
+	z-index: 10;
 }
 .spinner {
 	position:absolute;
