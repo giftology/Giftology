@@ -228,7 +228,12 @@ class GiftsController extends AppController {
 			$this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
 			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value);
 			$this->redirect(array('controller'=>'products', 'action'=>'view_products',
-					      'recepient_id'=>$this->request->params['named']['receiver_fb_id']));
+					      'receiver_id'=>$this->request->params['named']['receiver_fb_id'],
+					      'receiver_name' => $this->request->params['named']['receiver_name'],
+                                              'receiver_birthday' => $this->request->params['named']['receiver_birthday'],
+					      'ocasion' => isset($this->request->params['named']['ocasion']) ?
+						    $this->request->params['named']['ocasion'] : null
+					      ));
 		}
 		$this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
 								     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));

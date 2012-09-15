@@ -13,7 +13,7 @@
         </ul>
 </div>
 <br><br>
-</div>
+
 <div id="gift-details">
         <h3><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
 

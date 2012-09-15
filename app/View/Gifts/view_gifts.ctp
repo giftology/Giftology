@@ -39,9 +39,10 @@
 				    $gift['Gift']['id'])); ?>" title="Click to redeem">
                 <?= $this->element('gift_voucher',
                                 array('product' => $gift,
-                                      'small' => true),
+                                      'small' => true,
+				      'hide_price' => true),
                                 array('cache' => array(
-                                        'key' => $gift['Product']['id'].'small'))); ?>
+                                        'key' => $gift['Product']['id'].'small_hide_price'))); ?>
                 </a>
                 <?php endforeach; ?>
 		

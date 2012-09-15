@@ -9,17 +9,16 @@
             <div class="frame"></div>
     </div>
     <?php if (!isset($redeem) || !$redeem): ?>
-    <?php if ($product['Product']['max_price'] > $product['Product']['min_value']): ?>
-        <div id="add-value">
-            <div id="contrib-text"><center>You pay: <span class="WebRupee">Rs.</span>0</center></div>
-            <div class="minus-plus">
-                    <button type="hidden" class="disabled minus"></button>
-                    <button type="hidden" class="plus"></button>
+        <?php if ($product['Product']['max_price'] > $product['Product']['min_value']): ?>
+            <div id="add-value">
+                <div id="contrib-text"><center>You pay: <span class="WebRupee">Rs.</span>0</center></div>
+                <div class="minus-plus">
+                        <button type="hidden" class="disabled minus"></button>
+                        <button type="hidden" class="plus"></button>
+                </div>
             </div>
-        </div>
-    <?php endif; ?>
-        <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>">
-
+        <?php endif; ?>
+        <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>"/>
     <?php endif; ?>
     <div class="disclosure opened">
             <p class="heading">Terms and conditions</p>
@@ -59,11 +58,15 @@
                                     <?= isset($product['Product']['min_value']) ?
                                         $product['Product']['min_value'] :
                                         $product['min_value']; ?></span>
-                                    <?php if ($product['Product']['min_price'] == 0): ?>
-                                            <span class="label">FREE</span>
+                                    <?php if (isset($hide_price) && $hide_price): ?>
+                                            <span class="label">REDEEM</span>
                                     <?php else: ?>
-                                            <span class="label">BUY</span>
-                                    <?php endif; ?> 
+                                            <?php if ($product['Product']['min_price'] == 0): ?>
+                                                    <span class="label">FREE</span>
+                                            <?php else: ?>
+                                                    <span class="label">BUY</span>
+                                            <?php endif; ?> 
+                                    <?php endif; ?>
                             </span>
                     </span>
     </div>
