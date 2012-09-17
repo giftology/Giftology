@@ -11,6 +11,11 @@ class RemindersController extends AppController {
 	public $paginate = array(
 	        'limit' => 24,
 	);
+	public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('send_reminder_email_for_user');
+	}
+
 	public function isAuthorized($user) {
 	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user') {
 	        return true;
@@ -240,11 +245,16 @@ class RemindersController extends AppController {
     }*/ //no longer works
     
     public function send_reminder_email_for_user($id) {
-        $reminders = $this->get_birthdays($id, 'thisweek');
 	$user = $this->Reminder->User->find('first', array(
 		'conditions' => array('User.id' => $id),
 		'contain'=>array('UserProfile')));
-        $this->send_reminder_email($user, $reminders);	
+	if (!$user['UserProfile']['email']) {
+		$this->log ("ERROR: User without an email ID:".$id);
+		exit();
+	}
+        $reminders = $this->get_birthdays($id, 'thisweek');
+        $this->send_reminder_email($user, $reminders);
+	exit();
     }
     function send_reminder_email($user, $reminders) {
 	

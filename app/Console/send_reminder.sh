@@ -1,6 +1,6 @@
 #!/bin/bash
 
-users=$(echo "SELECT id FROM users" | /Applications/MAMP/Library/bin/mysql -uroot -proot -B --disable-column-names giftology)
+users=$(echo "SELECT id FROM users where id >1;" | /Applications/MAMP/Library/bin/mysql -uroot -proot -B --disable-column-names giftology)
 
 for user in $users
 do

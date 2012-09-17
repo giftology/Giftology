@@ -1,6 +1,6 @@
 
 <table width="600px" cellpadding="0" cellspacing="0" align="center" border="0" style="border:1px solid #999999"><tr><td>
-	<table align="center" width="600px" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:12px">
+	<table align="center" width="600px" cellpadding="0" cellspacing="0" border="0" style="font-family:Helvetica, Arial, sans-serif; font-size:14px">
 		<tr><td height="8px" bgcolor="#bc202b"></td></tr>
 		<tr><td align="right" style="padding:10px"><img src="<?= IMAGE_ROOT; ?>/logo.jpg" /></tr>
 		<tr><td height="40px"></td></tr>
@@ -8,7 +8,7 @@
 		<tr>
 			<table cellpadding="3" cellspacing="0" border="0" align="center" width="560px" style="font-family:Arial, Helvetica, sans-serif;">
 				<tr>
-					<td><span style="font-size:18px; color:#b10e0b">Dear <b><?= $name; ?></b>, <?= $num_birthdays; ?> friends have birthdays in the coming week!</span></td>
+					<td><span style="font-size:18px; color:#505050">Dear <b><?= $name; ?></b>, <?= $num_birthdays; ?> friends have birthdays in the coming week!</span></td>
 				</tr>
 				<tr>
 					<td><span style="font-size:13px;">Choose a gift to make their day special!</span></td>
