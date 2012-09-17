@@ -7,9 +7,6 @@
 			<th><?php echo $this->Paginator->sort('max_price'); ?></th>
 			<th><?php echo $this->Paginator->sort('min_value'); ?></th>
 			<th><?php echo $this->Paginator->sort('days_valid'); ?></th>
-			<th><?php echo $this->Paginator->sort('terms_heading'); ?></th>
-			<th><?php echo $this->Paginator->sort('terms'); ?></th>
-			<th><?php echo $this->Paginator->sort('redeem_instr'); ?></th>
 			<th><?php echo $this->Paginator->sort('code_type_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
 			<th><?php echo $this->Paginator->sort('vendor_id'); ?></th>
@@ -30,9 +27,6 @@
 		<td><?php echo h($product['Product']['max_price']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['min_value']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['days_valid']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['terms_heading']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['terms']); ?>&nbsp;</td>
-		<td><?php echo h($product['Product']['redeem_instr']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($product['CodeType']['name'], array('controller' => 'code_types', 'action' => 'view', $product['CodeType']['id'])); ?>
 		</td>
