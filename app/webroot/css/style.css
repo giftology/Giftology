@@ -1702,7 +1702,7 @@ p.error em {
 }
 #footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     width: 880px;
 	}
 
