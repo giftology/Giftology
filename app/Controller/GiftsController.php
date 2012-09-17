@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
+
 /**
  * Gifts Controller
  *
@@ -243,17 +245,27 @@ class GiftsController extends AppController {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
 	function informSenderReceipientOfGiftSent($gift_id) {
-		if (isset($this->request->params['named']['message'])) {
-			$message = $this->request->params['named']['message'];
+		if (isset($this->request->params['named']['receiver_fb_id'])) {
+			//callback without ccav inturuption, all data is in params
+			//no need to read DB
+			if ($this->request->params['named']['message']) {
+				$message = $this->request->params['named']['message'];
+			} else {
+				$message = $this->Connect->user('name').' sent you a gift';
+			}
 			$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
+			$receiver_name = $this->request->params['named']['receiver_name'];
+			$receiver_email = $this->request->params['named']['receiver_email'];
 		} else {
-			$gift = $this->Gift->read(array('receiver_fb_id', 'gift_message'), $gift_id); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
+			$gift = $this->Gift->read(array('receiver_fb_id', 'gift_message', 'receiver_email'), $gift_id); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
 			if ($gift['Gift']['gift_message']) {
 				$message = $gift['Gift']['gift_message'];
 			} else {
 				$message = $this->Connect->user('name').' sent you a gift';
 			}
 			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
+			$receiver_email = $gift['Gift']['receiver_email'];
+			//XXX TODO receiver_name is missing here, need to pull this from the reminders table
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
@@ -261,8 +273,29 @@ class GiftsController extends AppController {
 		$this->Giftology->postToFB($receiver_fb_id, FB::getAccessToken(),
 					   FULL_BASE_URL.'/users/login/gift_id:'.$gift_id, $message);
 		
-		// Send email to both sender and receipients about gifts sent
-		// XXX TODO
+		// Send email to receipients about gifts sent
+		if ($receiver_email) {		    
+		    $gift = $this->Gift->find('first', array(
+			'conditions' => array('Gift.id' => $gift_id),
+			'contain' => array(
+				'Product' => array('Vendor'))));
+		    $vendor_name = $gift['Product']['Vendor']['name'];
+		    $email = new CakeEmail();
+		    $email->config('smtp')
+		    ->template('gift_sent', 'default') 
+		    ->emailFormat('html')
+		    ->to($receiver_email)
+		    ->from(array($this->Connect->user('email') => $this->Connect->user('name')))
+		    ->subject($receiver_name.', '.$this->Connect->user('name').' sent you a gift voucher to '.$vendor_name)
+		    ->viewVars(array('sender' => $this->Connect->user('name'),
+				     'receiver' => $receiver_name,
+				     'vendor' => $vendor_name,
+				     'linkback' => FULL_BASE_URL.'/users/login/gift_id:'.$gift_id,
+				     'message' => $message,
+				     'value' => $gift['Gift']['gift_amount'],
+				     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+		    ->send();
+		}
 	}
 	function redeemGiftCode ($code) {
 		//XXX Needs authentication
