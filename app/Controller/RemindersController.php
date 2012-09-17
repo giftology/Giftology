@@ -270,6 +270,7 @@ class RemindersController extends AppController {
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
               ->send();
+	$this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
     }
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
