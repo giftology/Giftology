@@ -26,7 +26,8 @@ class UsersController extends AppController {
         //Add User, Profile, Reminders
         $status = array('Status' => 'OK');
         $this->set('status', $status);
-        $this->set('_serialize', array('status'));
+	$this->set('request', $this->request->data);
+        $this->set('_serialize', array('status', 'request'));
     }
 /**
  * index method
