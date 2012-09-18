@@ -111,5 +111,17 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 	</script>
+<script type="text/javascript"> 
+var _urq = _urq || []; 
+_urq.push(['setPerformInitialShorctutAnimation', false]); 
+_urq.push(['initSite', '5fca15d4-fe52-4122-8671-dbac1fd0847a']); 
+
+(function() { 
+var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true; 
+ur.src = 'http://sdscdn.userreport.com/userreport.js'; 
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
+})(); 
+</script> 
+
 </body>
 </html>
