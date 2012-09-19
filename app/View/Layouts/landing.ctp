@@ -46,7 +46,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	        <script>
             $(function(){
                 $("#slides").slides({
-			        play: 5000,
+			        play: 8000,
 				generatePagination: true,
 				slideSpeed: 1000,
 			});
@@ -119,9 +119,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		</div>
 	  </div>
   </div>
-</div>
-<div id="footer">
-	<div class="footer-line"></div>
 </div>
 
 <!-- Main page close -->
