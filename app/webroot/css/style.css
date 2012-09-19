@@ -1407,7 +1407,7 @@ button, input[type="submit"] {
 .content .about {
     float: left;
     width: 296px;
-	margin-top:70px;
+    margin-top:70px;
 }
 .content .about .first, #home .content .about .second {
     overflow: hidden;
@@ -1771,4 +1771,53 @@ p.error em {
 #search_friend input {
 	border: none;
 	padding: 0px;
+}
+
+.slides_container {
+    width:643px;
+    height:362px;
+}
+.slides_container div {
+    width:643px;
+    height:362px;
+    display:block;
+}
+
+/*
+Pagination for homepage slider
+*/
+.pagination {
+	margin:26px auto 0;
+	width:100px;
+}
+
+.pagination li {
+	float:left;
+	margin:0 1px;
+	list-style:none;
+}
+
+.pagination li a {
+	display:block;
+	width:12px;
+	height:0;
+	padding-top:12px;
+	background-image:url(../img/pagination.png);
+	background-position:0 0;
+	float:left;
+	overflow:hidden;
+}
+
+.pagination li.current a {
+	background-position:0 -12px;
+}
+
+.next {
+	float: right;
+}
+#slideprevnext {
+	position:absolute;
+	top: 200px;
+	left:435px;
+	width: 690px;
 }

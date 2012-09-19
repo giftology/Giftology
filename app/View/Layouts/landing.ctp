@@ -34,14 +34,26 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('style');
-		echo $this->Html->css('http://cdn.webrupee.com/font');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	
+	        <script>
+            $(function(){
+                $("#slides").slides({
+			        play: 5000,
+				generatePagination: true,
+				slideSpeed: 1000,
+				hoverPause: true,
+			});
+            });
+        </script>
+
 </head>
 
 
@@ -87,14 +99,24 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	
 	 <div class="infographic interactive">
 		<div class="shadow">
-		  <div class="slides">
-			<ul>
-			  <li class="slide1 animate hide hide-ball" style="z-index: 4;">
-				<div class="image"></div>
-				<div class="overlay"></div>
-			  </li>
-			</ul>
-		  </div>
+	        <div id="slides">
+
+			<div class="slides_container">
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/homeslide1.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/homeslide2.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/homeslide3.jpg">
+			    </div>
+			</div>
+			<div id="slideprevnext">
+			<a href="#" class="prev"><img src="img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+			<a href="#" class="next"><img src="img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+			</div>
+		</div>
 		</div>
 	  </div>
   </div>
