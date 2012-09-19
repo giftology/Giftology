@@ -517,14 +517,18 @@ a:hover.f-link {text-decoration:underline;}
     text-align: center;
 }
 #news-items .items li {
-    background-image: url("../img/gift_sent.png");
-    background-position: 0 1px;
-    background-repeat: no-repeat;
     font-family: Adelle,"Helvetica Neue",Arial,sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
-    padding-left: 30px;
-    margin-left: 10px;
+    height:60px;
+}
+#news-items .items li p {
+	padding-top: 10px;
+}
+
+#news-items .items li img {
+	width: 50px;
+	float:left;
 }
 
 #news-items .twitter-widget {

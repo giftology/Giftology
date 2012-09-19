@@ -10,6 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
 class RemindersController extends AppController {
 	public $paginate = array(
 	        'limit' => 24,
+		'order' => 'friend_birthday ASC'
 	);
 	public function beforeFilter() {
         parent::beforeFilter();
@@ -230,6 +231,7 @@ class RemindersController extends AppController {
 				$this->set('friends_active', 'active');
 			    } else {
 				$this->set('today_users', $this->get_birthdays('mine','today'));
+				$this->set('tommorrow_users', $this->get_birthdays('mine','tommorrow'));
 				$this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
 				$this->set('celebrations_active', 'active');
 				}
@@ -292,6 +294,8 @@ class RemindersController extends AppController {
 		if ($when == 'today') {
 			$conditions['MONTH(friend_birthday)'] = date('m');
 			$conditions['DAY(friend_birthday)'] = date('d'); 
+		} elseif ($when =='tommorrow') {
+			$conditions['friend_birthday'] = date('Y-m-d', strtotime(date('Y-m-d')."+1 days")); 
 		} elseif ($when =='thisweek') {
 		    $conditions['friend_birthday BETWEEN ? AND ?'] =
 		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week")));

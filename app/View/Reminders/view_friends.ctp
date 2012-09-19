@@ -1,5 +1,5 @@
     <div class="left-container">
-            <?php if(isset($today_users) & $today_users): ?>
+            <?php if(isset($today_users) && $today_users): ?>
             <div>
                     <h4 class="line-header">Celebrate today<div class="calendar"><p><?= date('d'); ?></p></div></h4>
                     <?= $this->element('friend_list',
@@ -11,7 +11,19 @@
             <div class="clear"></div>
             <?php endif; ?>
 
-            <?php if(isset($this_month_users) & $this_month_users): ?>
+            <?php if(isset($tommorrow_users) && $tommorrow_users): ?>
+            <div>
+                    <h4 class="line-header">Celebrate tommorrow</h4>
+                    <?= $this->element('friend_list',
+                                        array('reminders' => $tommorrow_users,
+                                              'ocasion' => 'Birthday', ),
+                                        array('cache' => array(
+                                                'key' => $facebook_user['id'].'tommorrow.Birthday'.date('Y-m-d')))); ?>
+            </div>
+            <div class="clear"></div>
+            <?php endif; ?>
+
+            <?php if(isset($this_month_users) && $this_month_users): ?>
             <div>
                     <h4 class="line-header">Celebrate this month </h4>
                     <?= $this->element('friend_list',
@@ -52,11 +64,12 @@
                         ?>
                         </div>
                     <?= $this->element('friend_list',
-                                        array('reminders' => $all_users),
+                                        array('reminders' => $all_users,
+                                              'no_calendar' => true),
                                         array('cache' => array(
                                                 'key' => $facebook_user['id'].'All-Page'.
                                                 (isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1).
-                                                date('Y-m-d').
+                                                date('Y-m-d').'no_calendar'.
                                                 (isset($this->request->data['Reminders']) ?
                                                         '_search_'.$this->request->data['Reminders']['friend_name']
                                                         : '')))); ?>
@@ -71,8 +84,11 @@
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
                        <h3>Whats happening now</h3><ul>
                         <?php foreach($gifts_sent as $gift): ?>
-                                <li><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
-                                </li>
+                                <li>
+                                <div>
+                                <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
+                                <p></p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
+                                </p></div></li>
                         <?php endforeach; ?>
                         </ul>
                  </div>
