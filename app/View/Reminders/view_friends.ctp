@@ -25,12 +25,23 @@
 
             <?php if(isset($this_month_users) && $this_month_users): ?>
             <div>
-                    <h4 class="line-header">Celebrate this month </h4>
+                    <h4 class="line-header">Celebrate in <?= date("F"); ?> </h4>
                     <?= $this->element('friend_list',
                                         array('reminders' => $this_month_users,
                                               'ocasion' => 'Birthday', ),
                                         array('cache' => array(
                                                 'key' => $facebook_user['id'].'Month.Birthday'.date('Y-m-d')))); ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if(isset($next_month_users) && $next_month_users): ?>
+            <div>
+                    <h4 class="line-header">Celebrate in <?= date("F", strtotime(date('Y-m-d')."+ 1month")); ?> </h4>
+                    <?= $this->element('friend_list',
+                                        array('reminders' => $next_month_users,
+                                              'ocasion' => 'Birthday', ),
+                                        array('cache' => array(
+                                                'key' => $facebook_user['id'].'NextMonth.Birthday'.date('Y-m-d')))); ?>
             </div>
             <?php endif; ?>
 

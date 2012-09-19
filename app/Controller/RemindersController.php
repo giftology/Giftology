@@ -10,7 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
 class RemindersController extends AppController {
 	public $paginate = array(
 	        'limit' => 24,
-		'order' => 'friend_birthday ASC'
+		'order' => array('friend_name' => 'ASC')
 	);
 	public function beforeFilter() {
         parent::beforeFilter();
@@ -226,13 +226,12 @@ class RemindersController extends AppController {
 		} else {
 			if ($type) {//type = all
 				$this->set('all_users', $this->get_birthdays('mine','all', 1));
-				$this->set('today_users', array());
-				$this->set('this_month_users', array());
 				$this->set('friends_active', 'active');
 			    } else {
 				$this->set('today_users', $this->get_birthdays('mine','today'));
 				$this->set('tommorrow_users', $this->get_birthdays('mine','tommorrow'));
 				$this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
+				$this->set('next_month_users', $this->get_birthdays('mine','nextmonth'));
 				$this->set('celebrations_active', 'active');
 				}
 		}
@@ -301,18 +300,18 @@ class RemindersController extends AppController {
 		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 week")));
 		    $conditions['DAY(friend_birthday) <>'] = date('d');
 		} elseif ($when == 'thismonth') {
-		    $conditions['friend_birthday BETWEEN ? AND ?'] =
-		    array(date("Y-m-d"), date("Y-m-d", strtotime(date("Y-m-d") . "+1 month")));
-		    $conditions['DAY(friend_birthday) <>'] = date('d');
+		    $conditions['MONTH(friend_birthday)'] = date('m');
+		    $conditions['friend_birthday >'] = date('Y-m-d', strtotime(date('Y-m-d')."+1 days"));
+		} elseif ($when == 'nextmonth') {
+		    $conditions['MONTH(friend_birthday)'] = date('m', strtotime(date('Y-m-d')."+1 month"));
 		}
-
 		$this->Reminder->recursive = -1;
 		if ($do_pagination) {
-			$this->paginate = $conditions;
 			$reminders = $this->paginate($conditions);
-		} else {
+		} else {	
 			$reminders = $this->Reminder->find('all',
-			    array('conditions' => $conditions
+			    array('conditions' => $conditions,
+		  		  'order' => 'friend_birthday ASC'
 			));
 		}
 		return $reminders;
