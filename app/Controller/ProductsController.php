@@ -133,6 +133,7 @@ class ProductsController extends AppController {
 	
 	public function view_products () {
 		$this->Product->recursive = 0;
+		$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
 		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
 		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
 		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
