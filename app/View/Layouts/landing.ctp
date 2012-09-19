@@ -49,7 +49,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			        play: 5000,
 				generatePagination: true,
 				slideSpeed: 1000,
-				hoverPause: true,
 			});
             });
         </script>
