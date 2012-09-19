@@ -234,6 +234,8 @@ ul.nav li a.wallet:hover {
     position: relative;
 }
 
+
+
 .event {
     cursor: pointer;
     float: left;
@@ -241,6 +243,13 @@ ul.nav li a.wallet:hover {
     margin: 0 auto 12px;
     position: relative;
     width: 190px;
+}
+.event:hover {
+	background-color: #F2F2F2;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px 5px 5px 5px;
+    margin: 0 auto 10px;
+
 }
 
 .suggested .event-marker {
