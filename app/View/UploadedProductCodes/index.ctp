@@ -6,6 +6,7 @@
 			<th><?php echo $this->Paginator->sort('product_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
 			<th><?php echo $this->Paginator->sort('available'); ?></th>
+			<th><?php echo $this->Paginator->sort('expiry'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php
@@ -17,6 +18,7 @@
 		</td>
 		<td><?php echo h($uploadedProductCode['UploadedProductCode']['code']); ?>&nbsp;</td>
 		<td><?php echo h($uploadedProductCode['UploadedProductCode']['available']); ?>&nbsp;</td>
+		<td><?php echo h($uploadedProductCode['UploadedProductCode']['expiry']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $uploadedProductCode['UploadedProductCode']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $uploadedProductCode['UploadedProductCode']['id'])); ?>

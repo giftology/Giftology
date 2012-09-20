@@ -40,13 +40,12 @@ class UploadedProductCodesController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->UploadedProductCode->create();
-			if ($this->UploadedProductCode->save($this->request->data)) {
-				$this->Session->setFlash(__('The uploaded product code has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The uploaded product code could not be saved. Please, try again.'));
-			}
+			$new_file_name = 'files/'.$this->request->data['UploadedProductCode']['product_id'].$this->request->data['UploadedProductCode']['upload']['name'];
+			copy($this->request->data['UploadedProductCode']['upload']['tmp_name'], $new_file_name);
+			$query = "load data local infile '".WWW_ROOT.'/'.$new_file_name."' into table uploaded_product_codes fields terminated by ',' lines terminated by '\n' (product_id, code, value, expiry);";
+			echo debug($query);
+			$results = $this->UploadedProductCode->query($query);
+			echo debug($results);
 		}
 		$products = $this->UploadedProductCode->Product->find('list');
 		$this->set(compact('products'));
