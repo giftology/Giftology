@@ -112,8 +112,8 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			    </div>
 			</div>
 			<div id="slideprevnext">
-			<a href="#" class="prev"><img src="img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
-			<a href="#" class="next"><img src="img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+			<a href="#" class="prev"><img src="<?=IMAGE_ROOT;?>arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+			<a href="#" class="next"><img src="<?=IMAGE_ROOT;?>arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
 			</div>
 		</div>
 		</div>
