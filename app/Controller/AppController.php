@@ -43,26 +43,42 @@ class AppController extends Controller {
                                 'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'home')
                             ),
                             'Facebook.Connect' => array('model' => 'User'),
-                            'RequestHandler');
+                            'RequestHandler', 'Cookie');
 
     function beforeFilter() {
-    
-    if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
-	isset($this->params->query['rand']) && isset($this->params->query['key'])) {
-        //json call
-        $allowed_json_methods = array('ws_list', 'ws_add', 'ws_send');
-        if (in_array($this->action, $allowed_json_methods)) {
-            //authenticate json
-            if (md5('GiftologyMobile422'.$this->params->query['rand']) == $this->params->query['key']) {
-                $this->Auth->allow($this->action);
-            }
-        }
-    }
-     if ($this->name == 'CakeError') {  
-		$this->redirect(array('controller' => 'reminders', 'action'=> 'view_friends'));
+	if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
+	    isset($this->params->query['rand']) && isset($this->params->query['key'])) {
+	    //json call
+	    $allowed_json_methods = array('ws_list', 'ws_add', 'ws_send');
+	    if (in_array($this->action, $allowed_json_methods)) {
+		//authenticate json
+		if (md5('GiftologyMobile422'.$this->params->query['rand']) == $this->params->query['key']) {
+		    $this->Auth->allow($this->action);
+		}
+	    }
 	}
+	if ($this->name == 'CakeError') {  
+		   $this->redirect(array('controller' => 'reminders', 'action'=> 'view_friends'));
+	   }
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
+	
+	//set utm source if set
+	if (isset($this->request->params['named']['utm_source'])) {
+	    $this->Cookie->write('utm_source', $this->request->params['named']['utm_source'], false, '2 days');
+	}
+	if (isset($this->request->params['named']['utm_medium'])) {
+	    $this->Cookie->write('utm_medium', $this->request->params['named']['utm_medium'], false, '2 days');
+	}
+	if (isset($this->request->params['named']['utm_campaign'])) {
+	    $this->Cookie->write('utm_campaign', $this->request->params['named']['utm_campaign'], false, '2 days');
+	}
+	if (isset($this->request->params['named']['utm_term'])) {
+	    $this->Cookie->write('utm_term', $this->request->params['named']['utm_term'], false, '2 days');
+	}
+	if (isset($this->request->params['named']['utm_content'])) {
+	    $this->Cookie->write('utm_content', $this->request->params['named']['utm_content'], false, '2 days');
+	}
     }
     function isAuthorized($user) {
         // Admin can access every action

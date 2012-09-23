@@ -126,11 +126,11 @@ class UsersController extends AppController {
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
-            if (isset($this->request->params['named']['gift_id'])) {
+            if (isset($this->request->query['gift_id'])) {
                 // Set the FB OG stuff here
                 $gift = $this->User->GiftsReceived->find('first', array(
                         'conditions' => array(
-                            'GiftsReceived.id' => $this->request->params['named']['gift_id']),
+                            'GiftsReceived.id' => $this->request->query['gift_id']),
                         'contain' => array(
                             'Product' => array(
                                 'fields' => array('Product.id'),
@@ -281,17 +281,17 @@ class UsersController extends AppController {
         
     }
     function setUserUtm() {
-        if (isset($this->request->query['utm_source'])) {
-            $this->Connect->authUser['UserUtm']['utm_source'] = $this->request->query['utm_source'];
+        if ($this->Cookie->check('utm_source')) {
+            $this->Connect->authUser['UserUtm']['utm_source'] = $this->Cookie->read('utm_source');
         }
-        if (isset($this->request->query['utm_medium'])) {
-            $this->Connect->authUser['UserUtm']['utm_medium'] = $this->request->query['utm_medium'];
+        if ($this->Cookie->check('utm_medium')) {
+            $this->Connect->authUser['UserUtm']['utm_medium'] = $this->Cookie->read('utm_medium');
         }
-        if (isset($this->request->query['utm_campaign'])) {
-            $this->Connect->authUser['UserUtm']['utm_campaign'] = $this->request->query['utm_campaign'];
+        if ($this->Cookie->check('utm_campaign')) {
+            $this->Connect->authUser['UserUtm']['utm_campaign'] = $this->Cookie->read('utm_campaign');
         }
-        if (isset($this->request->query['utm_term'])) {
-            $this->Connect->authUser['UserUtm']['utm_term'] = $this->request->query['utm_term'];
+        if ($this->Cookie->check('utm_term')) {
+            $this->Connect->authUser['UserUtm']['utm_term'] = $this->Cookie->read('utm_term');
         }
     }
     function setUserReminders($user_id = null) {

@@ -244,6 +244,11 @@ class GiftsController extends AppController {
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
+	function getGiftURL($gift_id, $content) {
+	    return FULL_BASE_URL.'/users/login/?gift_id='.
+		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent&utm_term='.
+		    $gift_id.'&utm_content='.$content;
+	}
 	function informSenderReceipientOfGiftSent($gift_id) {
 		if (isset($this->request->params['named']['receiver_fb_id'])) {
 			//callback without ccav inturuption, all data is in params
@@ -269,9 +274,9 @@ class GiftsController extends AppController {
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
-					   FULL_BASE_URL.'/users/login/gift_id:'.$gift_id, 'Sent a gift on Giftology.com');
+					   getGiftURL($gift_id, 'Sender'), 'Sent a gift on Giftology.com');
 		$this->Giftology->postToFB($receiver_fb_id, FB::getAccessToken(),
-					   FULL_BASE_URL.'/users/login/gift_id:'.$gift_id, $message);
+					   getGiftURL($gift_id, 'Receiver'), $message);
 		
 		// Send email to receipients about gifts sent
 		if ($receiver_email) {		    
