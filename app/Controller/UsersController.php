@@ -137,12 +137,24 @@ class UsersController extends AppController {
                                 'Vendor' => array('fields' => array('name','facebook_image'))))
                         ));
                 if ($gift) {
-		    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
-                    $this->set('fb_title', "Gift Voucher to ".$gift['Product']['Vendor']['name']);
-                    $this->set('fb_image', FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image']);
-                    $this->set('fb_description', "Giftology is the hip new replacement to the boring old Happy Birthday facebook post.  Click the link above to redeem your voucher.");
+		    $vendor_name = $gift['Product']['Vendor']['name'];
+		    $image = $gift['Product']['Vendor']['facebook_image'];
                 }
             }
+	    
+	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
+	    if (isset($vendor_name)) {
+		$this->set('fb_title', $vendor_name." gift voucher.  Sent using Giftology - The hip, new way to say Happy Birthday");
+	    } else {
+		$this->set('fb_title', "Giftology - The hip, new way to say Happy Birthday");
+	    }
+	    if (isset($image)) {
+		$this->set('fb_image', FULL_BASE_URL.'/'.$image);
+	    } else {
+		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
+	    }
+	    $this->set('fb_description', "Instantly send free and paid digital gift vouchers to facebook friends on their birthday.  Click here to redeem, or learn about India's favorite social gifting app.");
+
 	    //set utm source if set
 	    if (isset($this->request->query['utm_source'])) {
 		$this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
