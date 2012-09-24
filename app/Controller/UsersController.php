@@ -144,7 +144,7 @@ class UsersController extends AppController {
 	    
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-		$this->set('fb_title', $vendor_name." gift voucher.  Sent using Giftology - The hip, new way to say Happy Birthday");
+		$this->set('fb_title', $vendor_name." gift voucher:  Via Giftology | The hip, new way to say Happy Birthday");
 	    } else {
 		$this->set('fb_title', "Giftology - The hip, new way to say Happy Birthday");
 	    }
