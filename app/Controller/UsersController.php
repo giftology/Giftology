@@ -137,6 +137,7 @@ class UsersController extends AppController {
                                 'Vendor' => array('fields' => array('name','facebook_image'))))
                         ));
                 if ($gift) {
+		    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
                     $this->set('fb_title', "Gift Voucher to ".$gift['Product']['Vendor']['name']);
                     $this->set('fb_image', FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image']);
                     $this->set('fb_description', "Giftology is the hip new replacement to the boring old Happy Birthday facebook post.  Click the link above to redeem your voucher.");
@@ -181,7 +182,6 @@ class UsersController extends AppController {
     }
     function afterFacebookLogin($first_login) {
 	if ($first_login) {
-		$this->log("redirecting");
 	    	return $this->redirect($this->Auth->redirect());
 	}
         $user = $this->Auth->user();
@@ -281,16 +281,18 @@ class UsersController extends AppController {
         
     }
     function setUserUtm() {
-        if ($this->Cookie->check('utm_source')) {
+$this->log("called set utm");
+        if ($this->Cookie->read('utm_source')) {
+$this->log("setting src to".$this->Cookie->read('utm_source'));
             $this->Connect->authUser['UserUtm']['utm_source'] = $this->Cookie->read('utm_source');
         }
-        if ($this->Cookie->check('utm_medium')) {
+        if ($this->Cookie->read('utm_medium')) {
             $this->Connect->authUser['UserUtm']['utm_medium'] = $this->Cookie->read('utm_medium');
         }
-        if ($this->Cookie->check('utm_campaign')) {
+        if ($this->Cookie->read('utm_campaign')) {
             $this->Connect->authUser['UserUtm']['utm_campaign'] = $this->Cookie->read('utm_campaign');
         }
-        if ($this->Cookie->check('utm_term')) {
+        if ($this->Cookie->read('utm_term')) {
             $this->Connect->authUser['UserUtm']['utm_term'] = $this->Cookie->read('utm_term');
         }
     }

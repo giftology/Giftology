@@ -14,11 +14,10 @@ class GiftologyComponent extends Component {
 		// go with exec curl, as the return here is quicker (asynchronous) NS
 		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
-		
 		$fields = array(
 		  'access_token'=> $access_token,
 	          'message'=>$message,
-	          'link'=>urlencode($url)
+	          'link'=>$url
 	        );
 		$ch = curl_init();
 
