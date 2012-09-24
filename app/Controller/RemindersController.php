@@ -264,7 +264,7 @@ class RemindersController extends AppController {
 	      ->emailFormat('html')
 	      ->to($user['UserProfile']['email'])
 	      ->from(array('noreply@giftology.com' => 'Giftology'))
-	      ->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': Birthday Reminders this week')
+	      ->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': '.sizeof($reminders).' Birthdays this week')
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
 			       'num_birthdays' => sizeof($reminders),
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
