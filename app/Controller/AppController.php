@@ -62,24 +62,7 @@ class AppController extends Controller {
 	   }
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
-	
-	//set utm source if set
-	if (isset($this->request->params['named']['utm_source'])) {
-	    $this->Cookie->write('utm_source', $this->request->params['named']['utm_source'], false, '2 days');
-	}
-	if (isset($this->request->params['named']['utm_medium'])) {
-	    $this->Cookie->write('utm_medium', $this->request->params['named']['utm_medium'], false, '2 days');
-	}
-	if (isset($this->request->params['named']['utm_campaign'])) {
-	    $this->Cookie->write('utm_campaign', $this->request->params['named']['utm_campaign'], false, '2 days');
-	}
-	if (isset($this->request->params['named']['utm_term'])) {
-	    $this->Cookie->write('utm_term', $this->request->params['named']['utm_term'], false, '2 days');
-	}
-	if (isset($this->request->params['named']['utm_content'])) {
-	    $this->Cookie->write('utm_content', $this->request->params['named']['utm_content'], false, '2 days');
-	}
-    }
+        }
     function isAuthorized($user) {
         // Admin can access every action
         if (isset($user['role']) && $user['role'] === 'admin') {

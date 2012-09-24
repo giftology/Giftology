@@ -122,7 +122,7 @@ class UsersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
     
-    public function login() {
+    public function login() {	        
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
@@ -142,17 +142,27 @@ class UsersController extends AppController {
                     $this->set('fb_image', FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image']);
                     $this->set('fb_description', "Giftology is the hip new replacement to the boring old Happy Birthday facebook post.  Click the link above to redeem your voucher.");
                 }
-            }            
+            }
+	    //set utm source if set
+	    if (isset($this->request->query['utm_source'])) {
+		$this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
+	    }
+	    if (isset($this->request->query['utm_medium'])) {
+		$this->Cookie->write('utm_medium', $this->request->query['utm_medium'], false, '2 days');
+	    }
+	    if (isset($this->request->query['utm_campaign'])) {
+		$this->Cookie->write('utm_campaign', $this->request->query['utm_campaign'], false, '2 days');
+	    }
+	    if (isset($this->request->query['utm_term'])) {
+		$this->Cookie->write('utm_term', $this->request->query['utm_term'], false, '2 days');
+	    }
+	    if (isset($this->request->query['utm_content'])) {
+		$this->Cookie->write('utm_content', $this->request->query['utm_content'], false, '2 days');
+	    }
+
             $this->set('message', 'The	 fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends');
             $this->layout = 'landing';
-        }
-       /* if ($this->request->is('post')) {
-            if ($this->Auth->login()) {
-                $this->redirect($this->Auth->redirect());
-            } else {
-                $this->Session->setFlash(__('Invalid username or password, try again'));
-            }
-        }*/
+       }
     }
 
     public function logout() {
@@ -281,9 +291,7 @@ class UsersController extends AppController {
         
     }
     function setUserUtm() {
-$this->log("called set utm");
         if ($this->Cookie->read('utm_source')) {
-$this->log("setting src to".$this->Cookie->read('utm_source'));
             $this->Connect->authUser['UserUtm']['utm_source'] = $this->Cookie->read('utm_source');
         }
         if ($this->Cookie->read('utm_medium')) {
