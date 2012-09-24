@@ -386,7 +386,7 @@ class GiftsController extends AppController {
 			$this->informSenderReceipientOfGiftSent($Order_Id);
 			
 			// Redirect
-			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one?'));
 			$this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 		}
