@@ -152,11 +152,11 @@ class UsersController extends AppController {
 	    } else {
 		$this->set('fb_title', "Giftology | The hip, new way to say Happy Birthday");
 	    }
-	    if (isset($image)) {
-		$this->set('fb_image', FULL_BASE_URL.'/'.$image);
-	    } else {
+	    //if (isset($image)) {
+		//$this->set('fb_image', FULL_BASE_URL.'/'.$image);
+	    //} else {
 		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
-	    }
+	    //}
 	    $this->set('fb_description', "Giftology: Instantly send free and paid digital gift vouchers to facebook friends on their birthday.");
 
 	    //set utm source if set
