@@ -47,7 +47,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	        <script>
             $(function(){
                 $("#slides").slides({
-			        play: 8000,
+			        play: <?= $slidePlaySpeed; ?>,
 				generatePagination: true,
 				slideSpeed: 1000,
 			});
@@ -83,10 +83,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       <div class="first">
         <h1>Giftology.com</h1>
         <h2><?= $message; ?></h2>
-	<?php if ($facebook_user) {
-		$this->Html->link('Click here to Start >> ', array('controller' => 'reminders', 'action' => 'view_friends'));	
-	} else {
+	<?php if (!isset($this->request->query['gift_id'])) {
 		echo "Start by logging in with facebook <br><br>";
+	} else {
+		echo "Connect with facebook to redeem your gift voucher<br><br>";
 	}
 	?>
     </div>
@@ -117,6 +117,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	        <div id="slides">
 
 			<div class="slides_container">
+			    <?php if (!isset($this->request->query['gift_id'])): ?>
 			    <div>
 				<img src="<?= FULL_BASE_URL; ?>/img/homeslide1.jpg">
 			    </div>
@@ -126,6 +127,14 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			    <div>
 				<img src="<?= FULL_BASE_URL; ?>/img/homeslide3.jpg">
 			    </div>
+			    <?php else: ?>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/giftrecv_homeslide1.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/giftrecv_homeslide2.jpg">
+			    </div>			    
+			    <?php endif; ?>
 			</div>
 			<div id="slideprevnext">
 			<a href="#" class="prev"><img src="<?=IMAGE_ROOT;?>arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
