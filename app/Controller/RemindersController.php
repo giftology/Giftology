@@ -253,7 +253,9 @@ class RemindersController extends AppController {
 		exit();
 	}
         $reminders = $this->get_birthdays($id, 'thisweek');
-        $this->send_reminder_email($user, $reminders);
+	if ($reminders && sizeof($reminders)) {
+	        $this->send_reminder_email($user, $reminders);
+	}
 	exit();
     }
     function send_reminder_email($user, $reminders) {
