@@ -51,7 +51,7 @@
 		  		</div>
 			<ul class="voucher-details"><li>This gift card is valid for <?= $product['Product']['days_valid']; ?> days.</li></ul>
 			
-			<button class="buy showtransbox" onClick="location.href='<?=
+			<button class="buy showtransbox" onClick="clicky.log('#SendGiftClicked','Send Gift Clicked');location.href='<?=
                             $this->Html->url(array(
 				'controller' => 'gifts',
 				'action' => 'send',

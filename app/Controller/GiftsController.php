@@ -274,7 +274,7 @@ class GiftsController extends AppController {
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
-					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').'a gift on Giftology.com');
+					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a gift on Giftology.com');
 		$this->Giftology->postToFB($receiver_fb_id, FB::getAccessToken(),
 					   $this->getGiftURL($gift_id, 'Receiver'), $message);
 		
