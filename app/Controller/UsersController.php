@@ -141,7 +141,7 @@ class UsersController extends AppController {
                 if ($gift) {
 		    $vendor_name = $gift['Product']['Vendor']['name'];
 		    $image = $gift['Product']['Vendor']['facebook_image'];
-	    	    $message = "Welcome to the Giftology family!<br><br>You have recieved a real gift voucher to ".$vendor_name."<br><br>";
+	    	    $message = "Welcome to the Giftology family!<br><br>You have recieved a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem.";
 		    $slidePlaySpeed = 2000;
 		}
             }

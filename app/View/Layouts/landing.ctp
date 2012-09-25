@@ -85,8 +85,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <h2><?= $message; ?></h2>
 	<?php if (!isset($this->request->query['gift_id'])) {
 		echo "Start by logging in with facebook <br><br>";
-	} else {
-		echo "Connect with facebook to redeem your gift voucher<br><br>";
 	}
 	?>
     </div>

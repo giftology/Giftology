@@ -1434,7 +1434,7 @@ button, input[type="submit"] {
     font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 20px;
     font-weight: normal;
-    height: 75px;
+    height: auto;
     margin-bottom: 25px;
 }
 .app:after {
