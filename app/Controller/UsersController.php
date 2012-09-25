@@ -148,7 +148,7 @@ class UsersController extends AppController {
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-		$this->set('fb_title', "Giftology: The hip, new way to say Happy Birthday | Click to redeem your ".$vendor_name." gift voucher.");
+		$this->set('fb_title', "You have received a gift voucher to ".$vendor_name.".  Click here to redeem.");
 	    } else {
 		$this->set('fb_title', "Giftology | The hip, new way to say Happy Birthday");
 	    }
@@ -157,7 +157,7 @@ class UsersController extends AppController {
 	    } else {
 		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
 	    }
-	    $this->set('fb_description', "Instantly send free and paid digital gift vouchers to facebook friends on their birthday.  Click here to redeem, or learn about India's favorite social gifting app.");
+	    $this->set('fb_description', "Giftology: Instantly send free and paid digital gift vouchers to facebook friends on their birthday.");
 
 	    //set utm source if set
 	    if (isset($this->request->query['utm_source'])) {
