@@ -25,7 +25,7 @@
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Product']['terms']; ?></p>
             </div>
-            <a class="toggle clicky_log">
+            <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                     <span class="arrow"></span>
             </a>
     </div>
@@ -34,7 +34,7 @@
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $product['Vendor']['description']; ?></p>
             </div>
-            <a class="toggle clicky_log">
+            <a class="toggle" onclick="clicky.log('#About Toggle','About Toggle');">
                     <span class="arrow"></span>
             </a>
     </div>

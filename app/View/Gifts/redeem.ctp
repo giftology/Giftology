@@ -34,7 +34,7 @@
             <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $gift['Product']['redeem_instr']; ?></p>
             </div>
-            <a class="toggle">
+            <a class="toggle" onclick="clicky.log('#Redeem Instr Toggle','Redeem Instr Toggle');">
                     <span class="arrow"></span>
             </a>
         </div>
