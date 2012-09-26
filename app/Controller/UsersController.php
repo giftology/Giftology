@@ -141,6 +141,7 @@ class UsersController extends AppController {
                 if ($gift) {
 		    $vendor_name = $gift['Product']['Vendor']['name'];
 		    $image = $gift['Product']['Vendor']['facebook_image'];
+		    $value = $gift['GiftsReceived']['gift_amount'];
 	    	    $message = "Welcome to the Giftology family!<br><br>You have recieved a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem.";
 		    $slidePlaySpeed = 4000;
 		}
@@ -148,15 +149,15 @@ class UsersController extends AppController {
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-		$this->set('fb_title', "You have received a gift voucher to ".$vendor_name.".  Click here to redeem.");
+		$this->set('fb_title', "You have received a Rs.".$value." gift voucher to ".$vendor_name.".  Click here to redeem.");
 	    } else {
 		$this->set('fb_title', "Giftology | The hip, new way to say Happy Birthday");
 	    }
-	    //if (isset($image)) {
-		//$this->set('fb_image', FULL_BASE_URL.'/'.$image);
-	    //} else {
+	    if (isset($image)) {
+		$this->set('fb_image', FULL_BASE_URL.'/'.$image);
+	    } else {
 		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
-	    //}
+	    }
 	    $this->set('fb_description', "Giftology: Instantly send free and paid digital gift vouchers to facebook friends on their birthday.");
 
 	    //set utm source if set

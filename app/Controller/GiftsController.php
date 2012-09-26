@@ -246,7 +246,7 @@ class GiftsController extends AppController {
         }
 	function getGiftURL($gift_id, $content) {
 	    return FULL_BASE_URL.'/users/login/?gift_id='.
-		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent&utm_term='.
+		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
 		    $gift_id.'&utm_content='.$content;
 	}
 	function informSenderReceipientOfGiftSent($gift_id) {

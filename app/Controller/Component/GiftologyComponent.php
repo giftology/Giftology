@@ -32,6 +32,9 @@ class GiftologyComponent extends Component {
 		//execute post
 		$result = curl_exec($ch);
 		$error = curl_error($ch);
+
+		$this->log($result);
+
 		if ($error) {
 			$this->log($error);
 		}
