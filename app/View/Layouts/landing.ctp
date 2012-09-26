@@ -90,7 +90,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     </div>
       <div class="second">
         <div class="facepile">
-		<?php echo $this->Facebook->login(array('img' => 'connectwithfacebook.gif',
+		<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
 		<?php echo $this->Facebook->friendpile(); ?>
 	</div>
