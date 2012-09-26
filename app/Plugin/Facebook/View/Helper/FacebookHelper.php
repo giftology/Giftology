@@ -568,6 +568,11 @@ class FacebookHelper extends AppHelper {
 
 	// logs the user in the application and facebook
 	function login(redirection){
+		if (typeof FB == 'undefined') { 
+			alert('You have a brower extention such as AVG Secure Search that is blocking facebook javascript from executing.  Please disable this extention and try again');
+			return;
+		}
+
 		FB.login(function (response) {
 			document.getElementById(\"transbox\").style.display = \"inline\";
 			if(response.authResponse) {
