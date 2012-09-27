@@ -17,8 +17,7 @@ class UsersController extends AppController {
         if (($this->action == 'login') || ($this->action == 'logout')) {
             return true;
         }
-        return parent::isAuthorized($user);
-
+	return parent::isAuthorized($user);
     }
     //WEB SERVICES
     public function ws_add () {
@@ -396,7 +395,10 @@ class UsersController extends AppController {
 				    'fields' => array('facebook_id'))))));		
     }
 
-    
+    public function noutmuserlist() {
+		$this->User->recursive = 0;
+		$this->set('users', $this->paginate());
+    }
     /* Moved to Reminders 
     public function view_friends($type=null) {
         if (!$this->Connect->user()) {
