@@ -97,7 +97,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <div class="facepile">
 		<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
-		<p>We take your privacy seriously. We'll never post on your behalf, unless you send a gift and explicitly ask us to notify the recipient on your behalf</p>
+		<p>We take your privacy seriously. Unless you ask us to, We'll never post on your behalf.</p>
 		<?php echo $this->Facebook->friendpile(); ?>
 	</div>
       </div>

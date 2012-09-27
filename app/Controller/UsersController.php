@@ -144,7 +144,7 @@ class UsersController extends AppController {
 		    $vendor_name = $gift['Product']['Vendor']['name'];
 		    $image = $gift['Product']['Vendor']['facebook_image'];
 		    $value = $gift['GiftsReceived']['gift_amount'];
-	    	    $message = "Welcome to the Giftology family!<br><br>".$sender_name." has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
+	    	    $message = "Welcome to the Giftology family!<br><br><strong>".$sender_name."</strong> has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
 		    $slidePlaySpeed = 4000;
 		    $this->setGiftsSent();
 		}
