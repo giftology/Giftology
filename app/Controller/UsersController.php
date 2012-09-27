@@ -136,14 +136,17 @@ class UsersController extends AppController {
                         'contain' => array(
                             'Product' => array(
                                 'fields' => array('Product.id'),
-                                'Vendor' => array('fields' => array('name','facebook_image'))))
+                                'Vendor' => array('fields' => array('name','facebook_image'))),
+			    'Sender' => array('UserProfile'))
                         ));
                 if ($gift) {
+		    $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
 		    $vendor_name = $gift['Product']['Vendor']['name'];
 		    $image = $gift['Product']['Vendor']['facebook_image'];
 		    $value = $gift['GiftsReceived']['gift_amount'];
-	    	    $message = "Welcome to the Giftology family!<br><br>You have recieved a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem.";
+	    	    $message = "Welcome to the Giftology family!<br><br>".$sender_name." has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
 		    $slidePlaySpeed = 4000;
+		    $this->setGiftsSent();
 		}
             }
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
@@ -159,7 +162,7 @@ class UsersController extends AppController {
 		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
 	    }
 	    $this->set('fb_description', "Giftology: Instantly send free and paid digital gift vouchers to facebook friends on their birthday.");
-
+	    
 	    //set utm source if set
 	    if (isset($this->request->query['utm_source'])) {
 		$this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
@@ -377,6 +380,22 @@ class UsersController extends AppController {
                             'conditions' => array('GiftsSent.gift_status_id' => GIFT_STATUS_VALID))),
                     'conditions' => array('User.id' => $this->User->id))));
     }
+    
+    function setGiftsSent() {
+    $this->set('num_gifts_sent', $this->User->GiftsReceived->find('count')+20000);
+    $this->User->GiftsReceived->recursive = 2;
+    $this->set('gifts_sent', $this->User->GiftsReceived->find('all',
+		  array('order'=>'GiftsReceived.id DESC',
+			'limit'=>3,
+			'order'=>'GiftsReceived.id DESC',
+			'contain' => array(
+			    'Product' => array(
+				    'fields' => array('id'),
+				    'Vendor' => array('name')),
+			    'Sender' => array(
+				    'fields' => array('facebook_id'))))));		
+    }
+
     
     /* Moved to Reminders 
     public function view_friends($type=null) {

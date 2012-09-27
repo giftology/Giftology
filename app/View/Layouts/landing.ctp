@@ -51,6 +51,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 				generatePagination: true,
 				slideSpeed: 1000,
 			});
+                $(".recoslides").slides({
+			        play: 4000,
+				generatePagination: false,
+				effect: 'fade',
+				fadeSpeed: 3000,
+			});
             });
         </script>
 
@@ -74,7 +80,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 <body>
 <?php echo $this->Facebook->init(); ?>
-	<?= $this->Facebook->init(); ?>
 	<div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
 
 <div class="mainpage2 content">
@@ -95,26 +100,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		<p>We take your privacy seriously. We'll never post on your behalf, unless you send a gift and explicitly ask us to notify the recipient on your behalf</p>
 		<?php echo $this->Facebook->friendpile(); ?>
 	</div>
-        <div class="social">
-          <div class="twitter">
-            
-          </div>
-          <div class="facebook">
-            
-          </div>
-        </div>
-        <!--div class="availability">
-          <p class="iphone-android">Giftology.com is also available for <a class="android" href="https://market.android.com/details?id=com.wrapp.android">Android</a> and <a class="iphone" href="http://itunes.apple.com/app/wrapp/id458640944">iPhone</a>.</p>
-        </div-->
       </div>
     </div>
-	
-	
-	
 	 <div class="infographic interactive">
 		<div class="shadow">
 	        <div id="slides">
-
 			<div class="slides_container">
 			    <?php if (!isset($this->request->query['gift_id'])): ?>
 			    <div>
@@ -130,9 +120,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			    <div>
 				<img src="<?= FULL_BASE_URL; ?>/img/giftrecv_homeslide1.jpg">
 			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/giftrecv_homeslide2.jpg">
-			    </div>			    
 			    <?php endif; ?>
 			</div>
 			<div id="slideprevnext">
@@ -143,6 +130,64 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		</div>
 	  </div>
   </div>
+  	<?php if (isset($gifts_sent)): ?>
+
+  	<div id="reco" class="landingbottomboxes">
+		<h2>User chatter</h2>
+		<div class="recoslides">
+			<div class="slides_container">
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/reco1.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/reco2.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/reco3.jpg">
+			    </div>
+			</div>
+		</div>
+	</div>
+	<div id="coverage" class="landingbottomboxes">
+		<h2>Recommended By</h2>
+		<div class="recoslides">
+			<div class="slides_container">
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/media1.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/media2.jpg">
+			    </div>
+			    <div>
+				<img src="<?= FULL_BASE_URL; ?>/img/media3.jpg">
+			    </div>
+			</div>
+		</div>
+	</div>
+
+	<div id="recent" class="landingbottomboxes">
+		<h2>Whats happening</h2>
+       <!--div id="news-items"-->
+        <!--div class="shadow-wrapper right items"-->
+                <div class="frame">
+                       <ul>
+                        <?php foreach($gifts_sent as $gift): ?>
+                                <li>
+                                <div>
+                                <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
+                                <p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
+                                </p></div></li>
+                        <?php endforeach; ?>
+                        </ul>
+                 </div>
+        <!--/div-->
+    <!--/div-->
+	</div>
+	<?php endif; ?>
+	
+	<div id="footer">
+		<div class="footer-line"></div>
+	</div>
 </div>
 
 <!-- Main page close -->
