@@ -151,7 +151,7 @@ class UsersController extends AppController {
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-		$this->set('fb_title', "You have received a Rs.".$value." gift voucher to ".$vendor_name.".  Click here to redeem.");
+		$this->set('fb_title', $sender_name." has sent you a gift voucher to ".$vendor_name.".  Click here to visit Giftology.com, and access your gift voucher.");
 	    } else {
 		$this->set('fb_title', "Giftology | The hip, new way to say Happy Birthday");
 	    }
@@ -160,7 +160,7 @@ class UsersController extends AppController {
 	    } else {
 		$this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');		
 	    }
-	    $this->set('fb_description', "Giftology: Instantly send free and paid digital gift vouchers to facebook friends on their birthday.");
+	    $this->set('fb_description', "Giftology is the hip, new way to say Happy Birthday.  Instantly send digital gift vouchers to facebook friends.");
 	    
 	    //set utm source if set
 	    if (isset($this->request->query['utm_source'])) {
@@ -397,8 +397,11 @@ class UsersController extends AppController {
 
     public function noutmuserlist() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->paginate());
-    }
+		$conditions = array(
+			//'UserUtm.utm_source' => 'streamsend',
+			'User.created LIKE' => date('Y-m-d', strtotime(date('Y-m-d')."-1day")).'%');
+		$this->set('users', $this->paginate($conditions));
+	}
     /* Moved to Reminders 
     public function view_friends($type=null) {
         if (!$this->Connect->user()) {

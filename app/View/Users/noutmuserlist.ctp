@@ -13,6 +13,7 @@
 	</tr>
 	<?php
 	foreach ($users as $user): ?>
+	<?php if (!$user['UserUtm']['utm_source']): ?>
 	<tr>
 		<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
 		<td><?php echo h($user['UserProfile']['first_name']." ".$user['UserProfile']['last_name']); ?>&nbsp;</td>
@@ -27,6 +28,7 @@
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
 		</td>
 	</tr>
+<?php endif; ?>
 <?php endforeach; ?>
 	</table>
 	<p>

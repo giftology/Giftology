@@ -79,6 +79,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 
 <body>
+
 <?php echo $this->Facebook->init(); ?>
 	<div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
 
@@ -92,6 +93,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo "Start by logging in with facebook <br><br>";
 	}
 	?>
+	<noscript>
+		<h1>Looks like javascript is disabled in your browser.  This WebApp requires Javascript to be enabled. Please enable and return. Thank You! </h1>
+    		<img src="<?echo IMAGE_ROOT.'/no_js.gif'; ?>" style="display:none" alt="Javascript not enabled" />
+	</noscript>
+
     </div>
       <div class="second">
         <div class="facepile">

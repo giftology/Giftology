@@ -568,8 +568,9 @@ class FacebookHelper extends AppHelper {
 
 	// logs the user in the application and facebook
 	function login(redirection){
-		if (typeof FB == 'undefined') { 
-			alert('You have a brower extention such as AVG Secure Search that is blocking facebook javascript from executing.  Please disable this extention and try again');
+		if (typeof FB == 'undefined') {
+			clicky.log('#FBNotDefined','FB not defined'); 
+			alert('Something went wrong.  We apologize for this; Please reload this page and try again.\\n\\nIf retry does not fix this issue, then you may have a brower extention(such as AVG Secure Search) that is blocking facebook javascript from executing.  If so, please disable this extention and try again');
 			return;
 		}
 
