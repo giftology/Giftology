@@ -570,8 +570,7 @@ class FacebookHelper extends AppHelper {
 		clicky.log('#SendGiftClicked','Send Gift Clicked');
 		FB.api('/me/permissions', function (response) {			
 		    if (response.data[0].publish_stream == 1) {
-		    					console.log(send_url);
-
+			top.location.href=send_url;
 		    	clicky.log('#PermsOKSending','SendingGift');
 		    } else {
 			clicky.log('#PermsNOTOKRequesting','RequestingPublishPerms');
@@ -583,7 +582,6 @@ class FacebookHelper extends AppHelper {
 				    console.log(response);
 				    if (response && response.perms) {
 					clicky.log('#PermsOKSending','SendingGift');
-					console.log(send_url);
 					top.location.href=send_url;
 				    } else if (!response.perms){
 					alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
