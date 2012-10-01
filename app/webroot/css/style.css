@@ -1416,6 +1416,10 @@ button, input[type="submit"] {
     overflow: hidden;
     width: 100%;
 }
+.content .about .second {
+   height: 400px;
+}
+
 .content .about h1 {
     background-image: url("../img/brand-logo.jpg");
     background-size: 100% 100%;
@@ -1466,7 +1470,7 @@ button, input[type="submit"] {
     width: 100%;
 }
 .content .about .facepile {
-    height: 66px;
+    height: 100px;
     width: 296px;
 }
 .content .about .social .twitter, .content .about .social .facebook {
