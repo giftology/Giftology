@@ -566,6 +566,35 @@ class FacebookHelper extends AppHelper {
 
 	};
 
+	function check_perms_and_send (send_url) {
+		console.log('called');
+		clicky.log('#SendGiftClicked','Send Gift Clicked');
+		FB.api('/me/permissions', function (response) {			
+		    if (response.data[0].publish_stream == 1) {
+		    					console.log(send_url);
+
+		    	clicky.log('#PermsOKSending','SendingGift');
+		    } else {
+			clicky.log('#PermsNOTOKRequesting','RequestingPublishPerms');
+			FB.ui({
+				method: 'permissions.request',
+				perms: 'publish_stream',
+				display: 'popup'
+				},function(response) {
+				    console.log(response);
+				    if (response && response.perms) {
+					clicky.log('#PermsOKSending','SendingGift');
+					console.log(send_url);
+					location.href=send_url;
+				    } else if (!response.perms){
+					alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
+				    	$('.transbox').hide();
+					clicky.log('#PermsStillNotGranted','RetrySend');
+				    }
+			    });
+		    }
+		} );
+	}
 	// logs the user in the application and facebook
 	function login(redirection){
 		if (typeof FB == 'undefined') {
