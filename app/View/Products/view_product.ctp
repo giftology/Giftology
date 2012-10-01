@@ -50,8 +50,17 @@
 					</div>
 		  		</div>
 			<ul class="voucher-details"><li>This gift card is valid for <?= $product['Product']['days_valid']; ?> days.</li></ul>
-			
-			<button class="buy showtransbox" onClick="check_perms_and_send('<?=
+			<button id="SendButtonWithPerms" style="display:none" class="buy showtransbox" onClick="send_gift('<?=
+                            $this->Html->url(array(
+				'controller' => 'gifts',
+				'action' => 'send',
+				'receiver_fb_id' => $receiver_id,
+				'receiver_name' => $receiver_name,
+				'receiver_birthday' => $receiver_birthday,
+				'product_id' => $product['Product']['id'])); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
+			Send to <?= $receiver_name; ?>
+			</button>
+			<button id="SendButtonForNoPerms" class="buy showtransbox" onClick="get_perms_and_send_gift('<?=
                             $this->Html->url(array(
 				'controller' => 'gifts',
 				'action' => 'send',
@@ -71,6 +80,6 @@
                                                 'key' => $product['Product']['id'].'full'))); ?>
 		</div>
 	</div>	
-	<div class="clear"></div>	
+	<div class="clear"></div>
 
 

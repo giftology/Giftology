@@ -531,11 +531,13 @@ class FacebookHelper extends AppHelper {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 				// logged in and connected user, someone you know
-				//alert('You are connected redirection');
-				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
+				if (document.title == \"Giftology: The social gifting company: Send Gift\") {
+					check_perms();
+				}
+//				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
 				    //alert(\"redirecting from getLoginStatus\");
 				    //top.location.href = '$afterLoginURL';
-                                }
+  //                              }
 
 			} else {
 				// no user session available, someone you dont know
@@ -547,10 +549,10 @@ class FacebookHelper extends AppHelper {
 			if (response.authResponse) {
 				// the user has just logged in
 				//alert('You just logged in facebook from somewhere redirecting');
-				if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
+				//if (document.title == \"Giftology | The Social Gifting Company | Homepage\") {
                                         //alert(\"redirecting from authResponseChange\");
 					//top.location.href = '$afterLoginURL';
-                                }
+                                //}
 
 			} else {
 				//alert('You just logged out from faceboook and Giftology');
@@ -565,30 +567,32 @@ class FacebookHelper extends AppHelper {
 		});
 
 	};
-
-	function check_perms_and_send (send_url) {
-		clicky.log('#SendGiftClicked','Send Gift Clicked');
-		FB.api('/me/permissions', function (response) {			
+	function get_perms_and_send_gift(send_url) {
+		clicky.log('#SendGiftClickedPermsNOTOKRequesting','RequestingPublishPerms');
+		FB.ui({
+			method: 'permissions.request',
+			perms: 'publish_stream',
+			display: 'popup'
+			},function(response) {
+			    console.log(response);
+			    if (response && response.perms) {
+				send_gift(send_url);
+			    } else if (!response.perms){
+				alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
+				$('.transbox').hide();
+				clicky.log('#PermsStillNotGranted','RetrySend');
+			    }
+		    });
+	}
+	function send_gift(send_url) {
+		clicky.log('#SendGiftClickedPermsOKSending','SendingGift');
+		top.location.href=send_url;
+	}
+	function check_perms () {
+		FB.api('/me/permissions', function (response) {
 		    if (response.data[0].publish_stream == 1) {
-			top.location.href=send_url;
-		    	clicky.log('#PermsOKSending','SendingGift');
-		    } else {
-			clicky.log('#PermsNOTOKRequesting','RequestingPublishPerms');
-			FB.ui({
-				method: 'permissions.request',
-				perms: 'publish_stream',
-				display: 'popup'
-				},function(response) {
-				    console.log(response);
-				    if (response && response.perms) {
-					clicky.log('#PermsOKSending','SendingGift');
-					top.location.href=send_url;
-				    } else if (!response.perms){
-					alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
-				    	$('.transbox').hide();
-					clicky.log('#PermsStillNotGranted','RetrySend');
-				    }
-			    });
+			$('#SendButtonForNoPerms').hide();
+			$('#SendButtonWithPerms').show();
 		    }
 		} );
 	}
