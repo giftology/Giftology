@@ -23,7 +23,17 @@
 		</div>
 	
 		<div id="gift-details">
-			<h3>Will be delivered: <strong>Today<!--?= substr($this->Time->niceShort($receiver_birthday), 0, -7); ?--></strong></h3>
+			<?php 		if (isset($this->request->params['named']['receiver_birthday']) &&
+					    !$this->Time->isToday($this->request->params['named']['receiver_birthday']) &&
+					    isset($this->request->params['named']['ocasion']) &&
+					    $this->request->params['named']['ocasion'] == 'Birthday') {
+						$send_now = 0;
+					} else {
+						$send_now = 1;
+					}
+			?>
+			<h3>Will be delivered: <strong><?= $send_now ? 'Today' :
+				substr($this->Time->niceShort($receiver_birthday), 0, -7); ?></strong></h3>
 			<div class="delivery-details">
 
 			  	<div class="delivery-message">
@@ -50,6 +60,7 @@
 					</div>
 		  		</div>
 			<ul class="voucher-details"><li>This gift card is valid for <?= $product['Product']['days_valid']; ?> days.</li></ul>
+
 			<button id="SendButtonWithPerms" style="display:none" class="buy showtransbox" onClick="send_gift('<?=
                             $this->Html->url(array(
 				'controller' => 'gifts',
@@ -57,7 +68,8 @@
 				'receiver_fb_id' => $receiver_id,
 				'receiver_name' => $receiver_name,
 				'receiver_birthday' => $receiver_birthday,
-				'product_id' => $product['Product']['id'])); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
+				'product_id' => $product['Product']['id'],
+				'send_now' => $send_now)); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
 			Send to <?= $receiver_name; ?>
 			</button>
 			<button id="SendButtonForNoPerms" class="buy showtransbox" onClick="get_perms_and_send_gift('<?=
@@ -67,7 +79,8 @@
 				'receiver_fb_id' => $receiver_id,
 				'receiver_name' => $receiver_name,
 				'receiver_birthday' => $receiver_birthday,
-				'product_id' => $product['Product']['id'])); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
+				'product_id' => $product['Product']['id'],
+				'send_now' => $send_now)); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
 			Send to <?= $receiver_name; ?>
 			</button>
 

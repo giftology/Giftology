@@ -13,7 +13,7 @@
 
             <?php if(isset($tommorrow_users) && $tommorrow_users): ?>
             <div>
-                    <h4 class="line-header">Celebrate tommorrow</h4>
+                    <h4 class="line-header">Celebrate tommorrow (schedule gift now)</h4>
                     <?= $this->element('friend_list',
                                         array('reminders' => $tommorrow_users,
                                               'ocasion' => 'Birthday', ),
@@ -25,7 +25,7 @@
 
             <?php if(isset($this_month_users) && $this_month_users): ?>
             <div>
-                    <h4 class="line-header">Celebrate in <?= date("F"); ?> </h4>
+                    <h4 class="line-header">Celebrate in <?= date("F"); ?> (schedule gift now)</h4>
                     <?= $this->element('friend_list',
                                         array('reminders' => $this_month_users,
                                               'ocasion' => 'Birthday', ),
@@ -36,7 +36,7 @@
 
             <?php if(isset($next_month_users) && $next_month_users): ?>
             <div>
-                    <h4 class="line-header">Celebrate in <?= date("F", strtotime(date('Y-m-d')."+ 1month")); ?> </h4>
+                    <h4 class="line-header">Celebrate in <?= date("F", strtotime(date('Y-m-d')."+ 1month")); ?> (schedule gift now)</h4>
                     <?= $this->element('friend_list',
                                         array('reminders' => $next_month_users,
                                               'ocasion' => 'Birthday', ),

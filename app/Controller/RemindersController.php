@@ -13,8 +13,8 @@ class RemindersController extends AppController {
 		'order' => array('friend_name' => 'ASC')
 	);
 	public function beforeFilter() {
-        parent::beforeFilter();
-        $this->Auth->allow('send_reminder_email_for_user');
+		parent::beforeFilter();
+		$this->Auth->allow('send_reminder_email_for_user');
 	}
 
 	public function isAuthorized($user) {

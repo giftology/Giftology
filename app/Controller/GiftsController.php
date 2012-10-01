@@ -16,9 +16,14 @@ class GiftsController extends AppController {
 	'order' => 'Gift.created DESC',
 	'limit' => 9,
 	);
+    public function beforeFilter() {
+	parent::beforeFilter();
+	$this->Auth->allow('send_today_scheduled_gifts');
+    }
+
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -138,6 +143,7 @@ class GiftsController extends AppController {
 	public function send() {
 		
 		$this->redirectIfNotAllowedToSend();
+		$send_now = $this->request->params['named']['send_now'];
 		
 		$this->Gift->create();
 		$this->Gift->Product->id = $this->request->params['named']['product_id'];
@@ -148,6 +154,7 @@ class GiftsController extends AppController {
 		$product = $this->Gift->Product->read(null, $this->request->params['named']['product_id']); 
 		$gift['Gift']['product_id'] = $this->request->params['named']['product_id'];
 		$gift['Gift']['sender_id'] = $this->Auth->user('id');
+		$gift['Gift']['send_now'] = $this->request->params['named']['send_now'];
 		if ($this->request->params['named']['receiver_email']) {
 			$gift['Gift']['receiver_email'] = $this->request->params['named']['receiver_email'];
 		}
@@ -184,7 +191,9 @@ class GiftsController extends AppController {
 		$gift['Gift']['gift_amount'] = $this->request->params['named']['gift_amount'];
 		$gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount']);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
-		
+		if (!$send_now) {
+		    $gift['Gift']['date_to_send'] = $this->request->params['named']['receiver_birthday'];
+		}
 		$payment_needed = $gift['Gift']['gift_amount'] - $product['Product']['min_value'];
 		
 		if ($payment_needed) {
@@ -192,8 +201,12 @@ class GiftsController extends AppController {
 			$gift['Transaction']['transaction_status_id'] = TX_STATUS_PROCESSING;
 			$gift['Gift']['gift_status_id'] = GIFT_STATUS_TRANSACTION_PENDING;
 		} else {
-			$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
-		}
+			if ($send_now) {
+				$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
+			} else {
+				$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
+			}
+    		}
 		if ($this->Gift->saveAssociated($gift)) {
 			if ($payment_needed) {
 				$this->redirect(array('controller' => 'transactions',
@@ -201,8 +214,13 @@ class GiftsController extends AppController {
 							'amount' => $payment_needed,
 							'OrderId' => $this->Gift->getLastInsertID()));	
 			} else {
-				$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
-				$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+				if ($send_now) {
+					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
+					$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+				} else {	    
+					$this->Session->setFlash(__('Awesome Karma ! Your gift is scheduled to be sent. Want to send another one ? '));
+				
+				}
 			}
 		} else {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
@@ -270,7 +288,8 @@ class GiftsController extends AppController {
 			}
 			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
 			$receiver_email = $gift['Gift']['receiver_email'];
-			//XXX TODO receiver_name is missing here, need to pull this from the reminders table
+			$ret = $this->Gift->query("SELECT friend_name from reminders where friend_fb_id =".$gift['Gift']['receiver_fb_id']);
+			$receiver_name = $ret[0]['reminders']['friend_name'];
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
@@ -374,7 +393,9 @@ class GiftsController extends AppController {
 	
 		if($Checksum=="true" && $AuthDesc=="Y")
 		{
-			
+			// KNOWN ISSUE.  SCHEDULED GIFTS DONT WORK WITH CCAV CURRENTLY
+			// AS WE MARK THEM VALID ON RETURN FROM CCAV AND INFORM RECIPENT
+			//XXX TODO XXXX 
 			//Update Gift and TX
 			$this->Gift->updateAll (array('Gift.gift_status_id' => GIFT_STATUS_VALID),
 						array('Gift.id' => $Order_Id));
@@ -422,5 +443,17 @@ class GiftsController extends AppController {
 			$this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 		}
+	}
+	public function send_today_scheduled_gifts () {
+	    $this->Gift->recursive = -1;
+	    $gifts = $this->Gift->find('all', array(
+		    'conditions' => array(
+			'date_to_send' => date('Y-m-d'),
+			'gift_status_id' => GIFT_STATUS_SCHEDULED)));
+	    foreach ($gifts as $gift) {
+		$this->Gift->updateAll(array('Gift.gift_status_id' => GIFT_STATUS_VALID),
+				       array('Gift.id' => $gift['Gift']['id']));
+		$this->informSenderReceipientOfGiftSent($gift['Gift']['id']);
+	    }
 	}
 }
