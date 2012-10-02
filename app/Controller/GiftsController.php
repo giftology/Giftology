@@ -215,7 +215,7 @@ class GiftsController extends AppController {
 							'OrderId' => $this->Gift->getLastInsertID()));	
 			} else {
 				if ($send_now) {
-					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID());
+					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID(), FB::getAccessToken());
 					$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
 				} else {	    
 					$this->Session->setFlash(__('Awesome Karma ! Your gift is scheduled to be sent. Want to send another one ? '));
@@ -267,7 +267,7 @@ class GiftsController extends AppController {
 		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
 		    $gift_id.'&utm_content='.$content;
 	}
-	function informSenderReceipientOfGiftSent($gift_id) {
+	function informSenderReceipientOfGiftSent($gift_id, $access_token) {
 		if (isset($this->request->params['named']['receiver_fb_id'])) {
 			//callback without ccav inturuption, all data is in params
 			//no need to read DB
@@ -292,9 +292,9 @@ class GiftsController extends AppController {
 			$receiver_name = $ret[0]['reminders']['friend_name'];
 		}
 		// Post to both sender and receipients facebook wall
-		$this->Giftology->postToFB($this->Connect->user('id'), FB::getAccessToken(),
+		$this->Giftology->postToFB($this->Connect->user('id'), $access_token,
 					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a gift on Giftology.com');
-		$this->Giftology->postToFB($receiver_fb_id, FB::getAccessToken(),
+		$this->Giftology->postToFB($receiver_fb_id, $access_token,
 					   $this->getGiftURL($gift_id, 'Receiver'), $message);
 		
 		// Send email to receipients about gifts sent
@@ -404,7 +404,7 @@ class GiftsController extends AppController {
 						array('Transaction.gift_id' => $Order_Id));
 			
 			// Inform 
-			$this->informSenderReceipientOfGiftSent($Order_Id);
+			$this->informSenderReceipientOfGiftSent($Order_Id, FB::getAccessToken());
 			
 			// Redirect
 			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one?'));
@@ -449,11 +449,12 @@ class GiftsController extends AppController {
 	    $gifts = $this->Gift->find('all', array(
 		    'conditions' => array(
 			'date_to_send' => date('Y-m-d'),
-			'gift_status_id' => GIFT_STATUS_SCHEDULED)));
+			'gift_status_id' => GIFT_STATUS_SCHEDULED),
+		    'contain' => 'Sender'));
 	    foreach ($gifts as $gift) {
 		$this->Gift->updateAll(array('Gift.gift_status_id' => GIFT_STATUS_VALID),
 				       array('Gift.id' => $gift['Gift']['id']));
-		$this->informSenderReceipientOfGiftSent($gift['Gift']['id']);
+		$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token']);
 	    }
 	}
 }
