@@ -180,7 +180,7 @@ class UsersController extends AppController {
 	    }
 
             $this->set('message', $message);
-            $this->layout = 'landing';
+	    $this->layout = 'landing';
        }
     }
 
@@ -225,6 +225,8 @@ class UsersController extends AppController {
 	
 	if ($daysSinceLogin > 15) {
 	    $access_token = $this->get_new_long_lived_fb_access_token();
+	} else {
+	    $access_token = FB::getAccessToken();
 	}
         if ($daysSinceLogin > 15 || $numReminders < 10) {
 	    // Delete old reminders
