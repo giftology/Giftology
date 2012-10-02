@@ -180,7 +180,9 @@ class UsersController extends AppController {
 	    }
 
             $this->set('message', $message);
-	    $this->layout = 'landing';
+	    //if (!$this->RequestHandler->isMobile()) {
+                $this->layout = 'landing';
+	    //}
        }
     }
 
@@ -197,7 +199,7 @@ class UsersController extends AppController {
     
     function beforeFacebookSave() {
         $this->Connect->authUser['User']['last_login'] = date('Y-m-d');
-        $this->Connect->authUser['User']['access_token'] = '"'.$this->get_new_long_lived_fb_access_token().'"';
+        $this->Connect->authUser['User']['access_token'] = '"'.$this->get_new_long_lived_access_token().'"';
         $this->setUserProfile();
         $this->setUserUtm();
         $this->setUserReminders();
@@ -224,7 +226,7 @@ class UsersController extends AppController {
                     'conditions' => array('user_id' => $user['id'])));
 	
 	if ($daysSinceLogin > 15) {
-	    $access_token = $this->get_new_long_lived_fb_access_token();
+	    $access_token = $this->get_new_long_lived_access_token();
 	} else {
 	    $access_token = FB::getAccessToken();
 	}
