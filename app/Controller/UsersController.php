@@ -197,7 +197,7 @@ class UsersController extends AppController {
     
     function beforeFacebookSave() {
         $this->Connect->authUser['User']['last_login'] = date('Y-m-d');
-        $this->Connect->authUser['User']['access_token'] = '"'.FB::getAccessToken().'"';
+        $this->Connect->authUser['User']['access_token'] = '"'.$this->get_new_long_lived_fb_access_token().'"';
         $this->setUserProfile();
         $this->setUserUtm();
         $this->setUserReminders();
@@ -214,7 +214,7 @@ class UsersController extends AppController {
 	if ($first_login) {
 	    	return $this->redirect($this->Auth->redirect());
 	}
-        $user = $this->Auth->user();
+        $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
         { return; }
@@ -222,9 +222,12 @@ class UsersController extends AppController {
         $daysSinceLogin =round (strtotime(date('Y-m-d')) - strtotime($user['last_login']))/86400;
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
-
+	
+	if ($daysSinceLogin > 15) {
+	    $access_token = $this->get_new_long_lived_fb_access_token();
+	}
         if ($daysSinceLogin > 15 || $numReminders < 10) {
-            // Delete old reminders
+	    // Delete old reminders
             if ($numReminders) {
                 $this->User->Reminders->deleteAll(array('user_id' => $user['id']));
             }
@@ -244,7 +247,7 @@ class UsersController extends AppController {
         // Update Access token and last_login
         $this->User->updateAll(array(
             'User.last_login' => date('Y-m-d'),
-            'User.access_token' => '"'.FB::getAccessToken().'"'
+            'User.access_token' => '"'.$access_token.'"'
         ), array(
             'User.id' => $user['id']));
     }
@@ -402,6 +405,40 @@ class UsersController extends AppController {
 			'User.created LIKE' => date('Y-m-d', strtotime(date('Y-m-d')."-1day")).'%');
 		$this->set('users', $this->paginate($conditions));
 	}
+	
+    function get_new_long_lived_access_token() {
+		$fields = array(		
+		  'client_id' => FB::getAppId(),
+		  'client_secret' => FB::getAppSecret(),
+		  'grant_type' => 'fb_exchange_token',
+		  'fb_exchange_token' => FB::getAccessToken(),
+	        );
+		$ch = curl_init();
+
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/oauth/access_token');
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+		
+		//execute post
+		$result = curl_exec($ch);
+		$error = curl_error($ch);
+		
+		$this->log($result, 'ns');
+
+		if ($error) {
+			$this->log($fb_id.$error, 'ns');
+		} else {
+		    $ret = parse_str($result);
+    		    $this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token, 'ns');
+		}
+		//close connection
+		curl_close($ch);
+		return $access_token;
+    }
     /* Moved to Reminders 
     public function view_friends($type=null) {
         if (!$this->Connect->user()) {
