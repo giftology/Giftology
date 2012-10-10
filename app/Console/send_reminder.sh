@@ -4,5 +4,5 @@ users=$(echo "SELECT id FROM users where id >1;" | mysql -h giftology.cck6cwihhy
 
 for user in $users
 do
-    curl http://localhost/reminders/send_reminder_email_for_user/$user
+    curl http://www.giftology.com/reminders/send_reminder_email_for_user/$user
 done
