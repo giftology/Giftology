@@ -574,7 +574,6 @@ class FacebookHelper extends AppHelper {
 			perms: 'publish_stream',
 			display: 'popup'
 			},function(response) {
-			    console.log(response);
 			    if (response && response.perms) {
 				clicky.log('#SendGiftClickedPermsOKSending','SendingGift');
 				send_gift(send_url);
@@ -616,7 +615,7 @@ class FacebookHelper extends AppHelper {
 			} else {
 				// user could not log in
 				document.getElementById(\"transbox\").style.display = \"none\";
-				console.log('User cancelled login or did not fully authorize.');
+				//console.log('User cancelled login or did not fully authorize.');
 			}
 		}, {scope: '" . $options['perms'] . "'});
 	}
