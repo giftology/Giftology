@@ -576,6 +576,7 @@ class FacebookHelper extends AppHelper {
 			},function(response) {
 			    console.log(response);
 			    if (response && response.perms) {
+				clicky.log('#SendGiftClickedPermsOKSending','SendingGift');
 				send_gift(send_url);
 			    } else if (!response.perms){
 				alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
