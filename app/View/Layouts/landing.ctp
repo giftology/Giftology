@@ -136,7 +136,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		</div>
 	  </div>
   </div>
-  	<?php if (isset($gifts_sent)): ?>
+	<?php if (isset($this->request->query['gift_id'])): ?>
 
   	<div id="reco" class="landingbottomboxes">
 		<h2>User chatter</h2>
@@ -154,7 +154,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			</div>
 		</div>
 	</div>
-	<div id="coverage" class="landingbottomboxes">
+	<!--div id="coverage" class="landingbottomboxes">
 		<h2>Recommended By</h2>
 		<div class="recoslides">
 			<div class="slides_container">
@@ -169,7 +169,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			    </div>
 			</div>
 		</div>
-	</div>
+	</div-->
 
 	<div id="recent" class="landingbottomboxes">
 		<h2>Whats happening</h2>

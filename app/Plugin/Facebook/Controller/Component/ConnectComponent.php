@@ -73,7 +73,7 @@ class ConnectComponent extends Component {
 	* @return void
 	* @access public
 	*/
-	public function initialize(&$Controller, $settings = array()){
+	public function initialize(Controller $Controller, $settings = array()){
 		$this->Controller = $Controller;
 		$this->_set($settings);
 		$this->FB = new FB();
@@ -89,7 +89,7 @@ class ConnectComponent extends Component {
 	* @param Controller object to attach to
 	* @return void
 	*/
-	public function startup() {
+	public function startup(Controller $controller) {
 		// Prevent using Auth component only if there is noAuth setting provided
 		if (!$this->noAuth && !empty($this->uid)) {
 			$this->__syncFacebookUser();

@@ -214,6 +214,8 @@ class RemindersController extends AppController {
 	}
 	public function view_friends($type=null) {
 		$this->Reminder->recursive = -1;
+		$this->set('title_for_layout', 'Select a friend');
+
 		if (!$this->Connect->user()) {
 		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
 		}
@@ -235,7 +237,7 @@ class RemindersController extends AppController {
 				}
 		}
 		$this->setGiftsSent();
-	    }
+	}
 
     /*public function send_reminder_emails () {
         $users = $this->get_birthdays('all_users', 'thismonth');

@@ -1880,3 +1880,20 @@ left: 750px;
 	width: 50px;
 	float:left;
 }
+
+.mobile_label {
+	    background-clip: padding-box;
+    background-color: #9DCB35;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 2px 2px 2px 2px;
+    font-size: 12px;
+    font-weight: bold;
+    height: 17px;
+    left: 12px;
+    line-height: 17px;
+    padding: 0 5px;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.6);
+    top: 63px;
+    z-index: 2;
+
+}

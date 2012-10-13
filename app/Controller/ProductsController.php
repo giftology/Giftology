@@ -139,6 +139,7 @@ class ProductsController extends AppController {
 		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
 		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
 		$this->set('products', $this->paginate());
+		$this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
 	}
 	public function view_product($id=null) {
 		$this->Product->id = $id;
