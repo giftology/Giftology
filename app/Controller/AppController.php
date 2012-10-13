@@ -59,7 +59,21 @@ class AppController extends Controller {
 	}
 	if ($this->name == 'CakeError') {  
 		   $this->redirect(array('controller' => 'reminders', 'action'=> 'view_friends'));
-	   }
+	}
+	   
+	// check for mobile devices
+	/*if ($this->RequestHandler->isMobile()) {
+	    // if device is mobile, change layout to mobile
+	    $this->layout = 'mobile';
+	    
+	    // and if a mobile view file has been created for the action, serve it instead of the default view file
+	    $mobileViewFile = ROOT.'/app/View/'.$this->viewPath . '/mobile/' . $this->params['action'] . '.ctp';
+
+	    if (file_exists($mobileViewFile)) {
+		$mobileView = strtolower($this->params['controller']) . '/mobile/';
+		$this->viewPath = $mobileView;
+	    }
+	}*/
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         }

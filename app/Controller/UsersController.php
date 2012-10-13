@@ -121,7 +121,7 @@ class UsersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
     
-    public function login() {	        
+    public function login() {
         if ($this->Connect->user() && $this->Auth->User('id')) {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
@@ -181,7 +181,9 @@ class UsersController extends AppController {
 
             $this->set('message', $message);
 	    //if (!$this->RequestHandler->isMobile()) {
-                $this->layout = 'landing';
+               $this->layout = 'landing';
+	    //} else {
+		//$this->layout = 'mobile_landing';
 	    //}
        }
     }
