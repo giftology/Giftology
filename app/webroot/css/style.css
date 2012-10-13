@@ -1897,3 +1897,6 @@ left: 750px;
     z-index: 2;
 
 }
+#WebRupee {
+	display: inline;
+}
