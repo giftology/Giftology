@@ -1,7 +1,7 @@
 <?php if (!$small) : ?>
     <div class="voucher">
             <div class="paper"></div>
-            <h2 class="value">&#x20b9;<?= $product['Product']['min_value']; ?></h2>
+            <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></h2>
             <div class="divider"></div>
             <img width="200" height="64" src="<?= FULL_BASE_URL.'/'.$product['Vendor']['wide_image'];
             ?>" class="wide">
@@ -11,7 +11,7 @@
     <?php if (!isset($redeem) || !$redeem): ?>
         <?php if ($product['Product']['max_price'] > $product['Product']['min_value']): ?>
             <div id="add-value">
-                <div id="contrib-text"><center>You pay: &#x20b9;</span>0</center></div>
+                <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>0</center></div>
                 <div class="minus-plus">
                         <button type="hidden" class="disabled minus"></button>
                         <button type="hidden" class="plus"></button>
@@ -39,7 +39,7 @@
             </a>
     </div>
     <div class="gift-amount">
-                <p class="amount">&#x20b9;<?= $product['Product']['min_value']; ?></p>
+                <p class="amount"><span id="WebRupee" class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></p>
     </div>
     <input type="hidden" id="free-voucher-value" value=<?= $product['Product']['min_value']; ?>></input>
     <input type="hidden" id="max-voucher-value" value=<?= $product['Product']['max_price']; ?>></input>
@@ -54,7 +54,7 @@
                                     <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">						</span>
                             <span class="details">
                                     <span class="issuer"><?= $product['Vendor']['name']; ?></span>
-                                    <span class="value">&#x20b9;
+                                    <span class="value"><span id="WebRupee" class="WebRupee">Rs.</span>
                                     <?= isset($product['Product']['min_value']) ?
                                         $product['Product']['min_value'] :
                                         $product['min_value']; ?></span>
