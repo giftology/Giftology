@@ -116,6 +116,8 @@
 		<li><?php echo $this->Html->link(__('New Gift'), array('controller' => 'gifts', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Uploaded Product Codes'), array('controller' => 'uploaded_product_codes', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete All Available Uploaded Product Codes'), array('controller' => 'uploaded_product_codes',
+							'action' => 'deleteAll', $product['Product']['id'])); ?> </li>
 	</ul>
 </div>
 <div class="related">
