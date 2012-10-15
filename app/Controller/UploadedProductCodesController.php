@@ -101,6 +101,15 @@ class UploadedProductCodesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	public function deleteAll($ProductId = null) {
+		if ($this->UploadedProductCode->deleteAll(array('product_id' => $ProductId, 'available' => 1))) {
+			$this->Session->setFlash(__('Uploaded product codes deleted'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash(__('Uploaded product codes was not deleted'));
+		$this->redirect(array('action' => 'index'));
+	}
+
 /**
  * admin_index method
  *
