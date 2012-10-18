@@ -217,4 +217,12 @@ class UploadedProductCodesController extends AppController {
 		$this->Session->setFlash(__($num.' new gift codes of '.$value.' created for product '.$prod_id));
 		$this->set('data', $data);
 	}
+	public function update_expiry_date ($prod_id, $value, $new_date) {
+		$this->UploadedProductCode->updateAll(array('expiry' => $new_date),
+						      array('product_id' => $prod_id,
+							    'available' => 1,
+							    'value' => $value));
+		$this->Session->setFlash(__('Updated.  Please verify operation by listing Uploading product Codes'));
+		$this->redirect($this->referer());
+	}
 }
