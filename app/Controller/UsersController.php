@@ -151,7 +151,7 @@ class UsersController extends AppController {
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-		$this->set('fb_title', $sender_name." has sent you a gift voucher to ".$vendor_name.".  Click here to visit Giftology.com, and access your gift voucher.");
+		$this->set('fb_title', "You received a gift ! Click here to visit Giftology.com, and receive your gift voucher.");
 	    } else {
 		$this->set('fb_title', "Giftology | The hip, new way to say Happy Birthday");
 	    }
@@ -439,7 +439,7 @@ class UsersController extends AppController {
 			$this->log($fb_id.$error, 'ns');
 		} else {
 		    $ret = parse_str($result);
-    		    $this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token, 'ns');
+    		    //$this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token, 'ns');
 		}
 		//close connection
 		curl_close($ch);

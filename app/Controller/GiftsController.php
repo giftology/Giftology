@@ -272,9 +272,9 @@ class GiftsController extends AppController {
 			//callback without ccav inturuption, all data is in params
 			//no need to read DB
 			if ($this->request->params['named']['message']) {
-				$message = $this->request->params['named']['message'];
+				$message = $this->Connect->user('name').' sent you a real gift voucher on Giftology.com.  Message: '.$this->request->params['named']['message'];
 			} else {
-				$message = $this->Connect->user('name').' sent you a gift';
+				$message = $this->Connect->user('name').' sent you a real gift voucher on Giftology.com';
 			}
 			$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
 			$receiver_name = $this->request->params['named']['receiver_name'];
@@ -284,7 +284,7 @@ class GiftsController extends AppController {
 			if ($gift['Gift']['gift_message']) {
 				$message = $gift['Gift']['gift_message'];
 			} else {
-				$message = $this->Connect->user('name').' sent you a gift';
+				$message = $this->Connect->user('name').' sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 			}
 			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
 			$receiver_email = $gift['Gift']['receiver_email'];
@@ -293,7 +293,7 @@ class GiftsController extends AppController {
 		}
 		// Post to both sender and receipients facebook wall
 		$this->Giftology->postToFB($this->Connect->user('id'), $access_token,
-					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a gift on Giftology.com');
+					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
 		$this->Giftology->postToFB($receiver_fb_id, $access_token,
 					   $this->getGiftURL($gift_id, 'Receiver'), $message);
 		
