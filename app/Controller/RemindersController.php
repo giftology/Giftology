@@ -229,12 +229,24 @@ class RemindersController extends AppController {
 				$this->set('all_users', $this->get_birthdays('mine','all', 1));
 				$this->set('friends_active', 'active');
 			    } else {
-				$this->set('today_users', $this->get_birthdays('mine','today'));
-				$this->set('tommorrow_users', $this->get_birthdays('mine','tommorrow'));
-				$this->set('this_month_users', $this->get_birthdays('mine','thismonth'));
-				$this->set('next_month_users', $this->get_birthdays('mine','nextmonth'));
-				$this->set('celebrations_active', 'active');
+				$today_users = $this->get_birthdays('mine','today');
+				$tommorrow_users = $this->get_birthdays('mine','tommorrow');
+				$thismonth_users = $this->get_birthdays('mine','thismonth');
+				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
+				if (empty($today_users) && empty($tommorrow_users) &&
+				    empty($thismonth_users) && empty($nextmonth_users)) {
+					//type = all
+					$this->set('all_users', $this->get_birthdays('mine','all', 1));
+					$this->set('friends_active', 'active');
+					$this->Session->setFlash(__('You have no upcoming birthdays.  Displaying all friends'));
+				} else {
+					$this->set('today_users', $today_users);
+					$this->set('tommorrow_users', $tommorrow_users);
+					$this->set('this_month_users', $thismonth_users);
+					$this->set('next_month_users', $nextmonth_users);
+					$this->set('celebrations_active', 'active');
 				}
+			    }
 		}
 		$this->setGiftsSent();
 	}
