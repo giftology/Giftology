@@ -316,53 +316,6 @@
 	</div>
 </div>
 <div class="related">
-	<h3><?php echo __('Related Transactions'); ?></h3>
-	<?php if (!empty($user['Transactions'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Sender Id'); ?></th>
-		<th><?php echo __('Receiver Id'); ?></th>
-		<th><?php echo __('Product Id'); ?></th>
-		<th><?php echo __('Gift Id'); ?></th>
-		<th><?php echo __('Amount Paid'); ?></th>
-		<th><?php echo __('Transaction Status Id'); ?></th>
-		<th><?php echo __('Pg Id'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($user['Transactions'] as $transactions): ?>
-		<tr>
-			<td><?php echo $transactions['id']; ?></td>
-			<td><?php echo $transactions['sender_id']; ?></td>
-			<td><?php echo $transactions['receiver_id']; ?></td>
-			<td><?php echo $transactions['product_id']; ?></td>
-			<td><?php echo $transactions['gift_id']; ?></td>
-			<td><?php echo $transactions['amount_paid']; ?></td>
-			<td><?php echo $transactions['transaction_status_id']; ?></td>
-			<td><?php echo $transactions['pg_id']; ?></td>
-			<td><?php echo $transactions['created']; ?></td>
-			<td><?php echo $transactions['modified']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'transactions', 'action' => 'view', $transactions['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'transactions', 'action' => 'edit', $transactions['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'transactions', 'action' => 'delete', $transactions['id']), null, __('Are you sure you want to delete # %s?', $transactions['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Transactions'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
-</div>
-<div class="related">
 	<h3><?php echo __('Related Reminders'); ?></h3>
 	<?php if (!empty($user['Reminders'])): ?>
 	<table cellpadding = "0" cellspacing = "0">

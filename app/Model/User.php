@@ -111,19 +111,6 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Transactions' => array(
-			'className' => 'Transaction',
-			'foreignKey' => 'sender_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
                 'Reminders' => array(
                         'className' => 'Reminder',
 			'foreignKey' => 'user_id',

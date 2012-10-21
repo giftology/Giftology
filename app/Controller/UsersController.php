@@ -23,7 +23,12 @@ class UsersController extends AppController {
     public function ws_add () {
         //parse json
         //Add User, Profile, Reminders
-        $status = array('Status' => 'OK');
+	$this->User->create();
+	if ($this->User->saveAssociated($this->request->data)) {
+            $status = array('Status' => 'OK', 'user_id' => $this->User->getLastInsertID());
+	} else {
+	    $status = array('Status' => 'Failed');
+	}
         $this->set('status', $status);
 	$this->set('request', $this->request->data);
         $this->set('_serialize', array('status', 'request'));
@@ -50,7 +55,8 @@ class UsersController extends AppController {
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-                $this->User->recursive = 2; 
+                $this->User->recursive = 2;
+		echo debug($this->User->read(null, $id));
 		$this->set('user', $this->User->read(null, $id));
 	}
 
@@ -69,8 +75,8 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		}
-		$facebooks = $this->User->Facebook->find('list');
-		$this->set(compact('facebooks'));
+		//$facebooks = $this->User->Facebook->find('list');
+		//$this->set(compact('facebooks'));
 	}
 
 /**
