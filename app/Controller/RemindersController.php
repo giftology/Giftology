@@ -332,7 +332,7 @@ class RemindersController extends AppController {
 		return $reminders;
     }
 	function setGiftsSent() {
-		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count')+20000);
+		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count'));
 		$this->Reminder->User->GiftsReceived->recursive = 2;
 		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
