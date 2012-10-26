@@ -1098,6 +1098,10 @@ ul.voucher-details li {
     background-position: 0 -144px;
     cursor: auto;
 }
+.minus-plus .plus.disabled {
+    background-position: -48px -144px;
+    cursor: auto;
+}
 .minus-plus > button.minus, .minus-plus > button.plus {
     background-color: transparent;
     background-image: url("../img/minus-plus.png");

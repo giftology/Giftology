@@ -9,14 +9,26 @@
             <div class="frame"></div>
     </div>
     <?php if (!isset($redeem) || !$redeem): ?>
-        <?php if ($product['Product']['max_price'] > $product['Product']['min_value']): ?>
+        <?php if ($product['Product']['max_price'] > $product['Product']['min_price']): ?>
             <div id="add-value">
-                <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>0</center></div>
+                <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>
+                    <?= $product['Product']['min_price']; ?></center></div>
                 <div class="minus-plus">
                         <button type="hidden" class="disabled minus"></button>
                         <button type="hidden" class="plus"></button>
                 </div>
             </div>
+        <?php else: ?>
+            <?php if ($product['Product']['min_price'] > 0): ?>
+                <div id="add-value">
+                    <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>
+                        <?= $product['Product']['min_price']; ?></center></div>
+                    <div class="minus-plus">
+                            <button type="hidden" class="disabled minus"></button>
+                            <button type="hidden" class="disabled plus"></button>
+                    </div>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <input type="hidden" id="contribution_amount" name="contribution_amount" class="contribution_amount" value="<?= $product['Product']['min_value']; ?>"/>
     <?php endif; ?>
@@ -41,8 +53,10 @@
     <div class="gift-amount">
                 <p class="amount"><span id="WebRupee" class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></p>
     </div>
-    <input type="hidden" id="free-voucher-value" value=<?= $product['Product']['min_value']; ?>></input>
-    <input type="hidden" id="max-voucher-value" value=<?= $product['Product']['max_price']; ?>></input>
+    <input type="hidden" id="free-voucher-value" value=<?= ($product['Product']['min_price'] > 0) ? 
+                    0 : $product['Product']['min_value']; ?>></input>
+    <input type="hidden" id="min-voucher-price" value=<?= $product['Product']['min_price']; ?>></input>
+    <input type="hidden" id="max-voucher-price" value=<?= $product['Product']['max_price']; ?>></input>
 
 <?php else: ?>
     <div class="small-voucher">
@@ -58,13 +72,17 @@
                                     <?= isset($product['Product']['min_value']) ?
                                         $product['Product']['min_value'] :
                                         $product['min_value']; ?></span>
+                                    <?= (isset($product['Product']['min_price']) && ($product['Product']['max_price'] > $product['Product']['min_price'])) ? 'or more':'' ?>
                                     <?php if (isset($hide_price) && $hide_price): ?>
                                             <span class="label">REDEEM</span>
                                     <?php else: ?>
                                             <?php if ($product['Product']['min_price'] == 0): ?>
                                                     <span class="label">FREE</span>
                                             <?php else: ?>
-                                                    <span class="label">BUY</span>
+                                                    <span class="label">PAY <span id="WebRupee" class="WebRupee">Rs.</span>
+                                                    <?= $product['Product']['min_price']; ?>
+                                                    <?= (isset($product['Product']['min_price']) && ($product['Product']['max_price'] > $product['Product']['min_price'])) ? '+':'' ?>
+
                                             <?php endif; ?> 
                                     <?php endif; ?>
                             </span>
