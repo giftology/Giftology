@@ -37,24 +37,25 @@ $(document).ready(function(){
     
     $('.minus-plus .plus').click(function() {
             var freeVoucherValue = parseInt($('#free-voucher-value').val());
-            var maxVoucherValue = parseInt($('#max-voucher-value').val());
-            var currVoucherValue = parseInt($('.contribution_amount').val());
+            var minVoucherPrice = parseInt($('#min-voucher-price').val());
+            var maxVoucherPrice = parseInt($('#max-voucher-price').val());
+            var contributionAmount = parseInt($('.contribution_amount').val());
             var newVoucherValue = 0;
-            if (currVoucherValue >= maxVoucherValue) {
+            if (contributionAmount >= maxVoucherPrice) {
                 $('.minus-plus .plus').addClass('disabled');
                 return;
             }
-            if (currVoucherValue == freeVoucherValue) {
-                if (currVoucherValue < 500) {
-			newVoucherValue = 500;
-		} else {
-			newVoucherValue = 1000;
-		}
+            if (contributionAmount == freeVoucherValue) {
+                if (freeVoucherValue < 500 && minVoucherPrice < 500) {
+        			newVoucherValue = 500;
+        		} else {
+        			newVoucherValue = 1000;
+        		}
             } else {
-                newVoucherValue = currVoucherValue + 500;
+                newVoucherValue = contributionAmount + 500;
             }
             var youPay = newVoucherValue - freeVoucherValue;
-            //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
+            //alert("Curr is "+ contributionAmount+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherPrice);
             $('.contribution_amount').val(newVoucherValue);
             $('#contrib-text').html("You pay: &#x20b9;"+youPay);
             $('.amount').html("&#x20b9;"+newVoucherValue);
@@ -62,19 +63,23 @@ $(document).ready(function(){
         });
     $('.minus-plus .minus').click(function() {
             var freeVoucherValue = parseInt($('#free-voucher-value').val());
-            var currVoucherValue = parseInt($('.contribution_amount').val());
+            var minVoucherPrice = parseInt($('#min-voucher-price').val());
+            var contributionAmount = parseInt($('.contribution_amount').val());
             var newVoucherValue = 0;
-            if (currVoucherValue == freeVoucherValue) {
+            if (contributionAmount == freeVoucherValue) {
                 $('.minus-plus .minus').addClass('disabled');
                 return;
             }
-            newVoucherValue = currVoucherValue - 500;
+            newVoucherValue = contributionAmount - 500;
 
             if (newVoucherValue < freeVoucherValue) {
                 newVoucherValue = freeVoucherValue;
             } 
+            if (newVoucherValue < minVoucherPrice) {
+                newVoucherValue = minVoucherPrice;
+            }
             var youPay = newVoucherValue - freeVoucherValue;
-            //alert("Curr is "+ currVoucherValue+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherValue);
+            //alert("Curr is "+ contributionAmount+ " new is " + newVoucherValue + " You pay " + youPay + " max is " +maxVoucherPrice);
             $('.contribution_amount').val(newVoucherValue);
             $('#contrib-text').html("You pay: &#x20b9;"+youPay);
             $('.amount').html("&#x20b9;"+newVoucherValue);

@@ -194,8 +194,12 @@ class GiftsController extends AppController {
 		if (!$send_now) {
 		    $gift['Gift']['date_to_send'] = $this->request->params['named']['receiver_birthday'];
 		}
-		$payment_needed = $gift['Gift']['gift_amount'] - $product['Product']['min_value'];
-		
+		if ($product['Product']['min_price'] == 0) {
+			$payment_needed = $gift['Gift']['gift_amount'] - 
+				$product['Product']['min_value'];
+		} else {
+			$payment_needed = $gift['Gift']['gift_amount'];
+		}	
 		if ($payment_needed) {
 			// Paid Gift.  Start Transaction
 			$gift['Transaction']['transaction_status_id'] = TX_STATUS_PROCESSING;
