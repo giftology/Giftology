@@ -283,26 +283,35 @@ class GiftsController extends AppController {
 			$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
 			$receiver_name = $this->request->params['named']['receiver_name'];
 			$receiver_email = $this->request->params['named']['receiver_email'];
+			$sender_name = $this->Connect->user('name');
+			$sender_email = $this->Connect->user('email');
+			$sender_fb_id = $this->Connect->user('id');
 		} else {
-			$gift = $this->Gift->read(array('receiver_fb_id', 'gift_message', 'receiver_email'), $gift_id); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
-			if ($gift['Gift']['gift_message']) {
-				$message = $gift['Gift']['gift_message'];
-			} else {
-				$message = $this->Connect->user('name').' sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
-			}
+			$gift = $this->Gift->find('first', array('conditions' => array ('Gift.id' => $gift_id),
+					'contain' => array('Sender' => array('UserProfile')))); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
 			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
 			$receiver_email = $gift['Gift']['receiver_email'];
 			$ret = $this->Gift->query("SELECT friend_name from reminders where friend_fb_id =".$gift['Gift']['receiver_fb_id']);
 			$receiver_name = $ret[0]['reminders']['friend_name'];
+			$sender_name = $gift['Sender']['UserProfile']['first_name'].$gift['Sender']['UserProfile']['last_name'];
+			$sender_email = $gift['Sender']['UserProfile']['email'];
+			$sender_fb_id = $gift['Sender']['facebook_id'];
+			if ($gift['Gift']['gift_message']) {
+				$message = $gift['Gift']['gift_message'];
+			} else {
+				$message = $sender_name.' sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
+			}
 		}
 		// Post to both sender and receipients facebook wall
-		$this->Giftology->postToFB($this->Connect->user('id'), $access_token,
+		$this->Giftology->postToFB($sender_fb_id, $access_token,
 					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
 		$this->Giftology->postToFB($receiver_fb_id, $access_token,
 					   $this->getGiftURL($gift_id, 'Receiver'), $message);
 		
 		// Send email to receipients about gifts sent
-		if ($receiver_email) {		    
+		if ($receiver_email) {
+			if (!$sender_email) $sender_email = 'cs@giftology.com';
+			if (!$sender_name) $sender_name = 'Giftology';
 		    $gift = $this->Gift->find('first', array(
 			'conditions' => array('Gift.id' => $gift_id),
 			'contain' => array(
@@ -313,9 +322,9 @@ class GiftsController extends AppController {
 		    ->template('gift_sent', 'default') 
 		    ->emailFormat('html')
 		    ->to($receiver_email)
-		    ->from(array($this->Connect->user('email') => $this->Connect->user('name')))
-		    ->subject($receiver_name.', '.$this->Connect->user('name').' sent you a gift voucher to '.$vendor_name)
-		    ->viewVars(array('sender' => $this->Connect->user('name'),
+		    ->from(array($sender_email => $sender_name))
+		    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+		    ->viewVars(array('sender' => $sender_name,
 				     'receiver' => $receiver_name,
 				     'vendor' => $vendor_name,
 				     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
