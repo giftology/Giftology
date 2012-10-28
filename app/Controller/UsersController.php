@@ -221,31 +221,29 @@ class UsersController extends AppController {
         }
     }
     function afterFacebookLogin($first_login) {
-	if ($first_login) {
-	    	return $this->redirect($this->Auth->redirect());
-	}
+    	if ($first_login) {
+    	    	return $this->redirect($this->Auth->redirect());
+    	}
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
         { return; }
 
-        $daysSinceLogin =round (strtotime(date('Y-m-d')) - strtotime($user['last_login']))/86400;
+        $reminderUpdateDate = $this->User->Reminders->find('first', array(
+                'conditions' => array('user_id' => $user['id'])));
+
+        $daysSinceUpdate =round ((strtotime(date('Y-m-d')) - strtotime($reminderUpdateDate['Reminders']['created']))/86400);
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
 	
-	if ($daysSinceLogin > 15) {
-	    $access_token = $this->get_new_long_lived_access_token();
-	} else {
-	    $access_token = FB::getAccessToken();
-	}
-        if ($daysSinceLogin > 15 || $numReminders < 10) {
-	    // Delete old reminders
-            if ($numReminders) {
-                $this->User->Reminders->deleteAll(array('user_id' => $user['id']));
-            }
-            //refesh reminders
-            $this->setUserReminders($user['id']);
-            $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+    	if ($daysSinceUpdate > 15) {
+    	    $access_token = $this->get_new_long_lived_access_token();
+    	} else {
+    	    $access_token = FB::getAccessToken();
+    	}
+        if ($daysSinceUpdate > 15 || $numReminders < 10) {
+	       // Refresh old reminders
+            if ($this->User->Reminders->deleteAll(array('user_id' => $user['id']), false)) $this->refreshReminders($user['id']);
         }
         
         //update User Profile if necesary
@@ -262,6 +260,11 @@ class UsersController extends AppController {
             'User.access_token' => '"'.$access_token.'"'
         ), array(
             'User.id' => $user['id']));
+    }
+    function refreshReminders ($id ) {
+        //refesh reminders
+        $this->setUserReminders($id);
+        $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
     }
     function updatePlaceholderGifts ($last_insert_id) {
 
