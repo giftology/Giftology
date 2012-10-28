@@ -449,16 +449,19 @@ class GiftsController extends AppController {
 		}
 	}
 	public function send_today_scheduled_gifts () {
+	    ini_set("max_execution_time",0); // infinite execution time
 	    $this->Gift->recursive = -1;
 	    $gifts = $this->Gift->find('all', array(
 		    'conditions' => array(
-			'date_to_send' => date('Y-m-d'),
+			'date_to_send ' => date('Y-m-d'),
 			'gift_status_id' => GIFT_STATUS_SCHEDULED),
 		    'contain' => 'Sender'));
 	    foreach ($gifts as $gift) {
+		echo 'Sending gift id '.$gift['Gift']['id'].'/n ';
 		$this->Gift->updateAll(array('Gift.gift_status_id' => GIFT_STATUS_VALID),
 				       array('Gift.id' => $gift['Gift']['id']));
 		$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token']);
 	    }
+	    $this->autoRender = $this->autoLayout = false;
 	}
 }
