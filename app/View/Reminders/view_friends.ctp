@@ -108,8 +108,10 @@
     </div>
     
     <div class="clear"></div>
-   <img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologyreg">
- 
+    <?php if (isset($fire_swaransoft_pixel)): ?>
+       <img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologyreg">
+    <?php endif; ?>
+
         <?php /* Since the JsHelper automatically buffers all generated script content to reduce the number of
        * <script> tags in your source code you must call write the buffer out. At the bottom of your view file. Be sure to include: */ ?>
 

@@ -216,6 +216,11 @@ class RemindersController extends AppController {
 		$this->Reminder->recursive = -1;
 		$this->set('title_for_layout', 'Select a friend');
 
+		// First off email maketing cookies 
+        if ($this->Cookie->read('utm_source') == 'swaransoft') {
+            $this->set('fire_swaransoft_pixel', 1);
+        }
+
 		if (!$this->Connect->user()) {
 		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
 		}

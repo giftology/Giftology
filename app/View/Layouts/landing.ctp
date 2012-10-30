@@ -193,7 +193,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	
 	<div id="footer">
 		<div class="footer-line"></div>
-		<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">
+		<?php if (isset($this->request->query['utm_source']) &&
+		$this->request->query['utm_source'] == 'swaransoft'): ?>
+			<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">
+		<?php endif; ?>
 	</div>
 </div>
 
