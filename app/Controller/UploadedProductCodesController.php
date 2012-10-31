@@ -18,12 +18,28 @@ class UploadedProductCodesController extends AppController {
 		$this->set('uploadedProductCodes', $this->paginate());
 	}
 
-	public function new_index() {
-		$this->set('uploadedProductCodes', $this->UploadedProductCode->find('count',
-			array(
-				'conditions' => array('available' => '1'),
-				'group' => 'product_id')));		
-	}
+    public function new_index() {
+    	$this->UploadedProductCode->recursive = -1; 
+    	$this->UploadedProductCode->Product->recursive = -1;
+        $products = $this->UploadedProductCode->find('all',
+                array('fields' => 'DISTINCT UploadedProductCode.product_id',
+                      'group' => 'UploadedProductCode.product_id'));
+        $ret = array(); $i = 0;
+        foreach($products as $product) {
+                $ret[$i]['prod_id'] = $product['UploadedProductCode']['product_id'];
+                $ret[$i]['avail_count'] = $this->UploadedProductCode->find('count',                        
+                        array('conditions' => array('available' => 1, 'product_id' => $product['UploadedProductCode']['product_id'])));
+        		$ret[$i]['used_count'] = $this->UploadedProductCode->find('count',                        
+                        array('conditions' => array('available' => 0, 'product_id' => $product['UploadedProductCode']['product_id'])));
+        		$tmp =$this->UploadedProductCode->find('first', array('conditions' => array(
+        			'available' => 1, 'product_id' => $ret[$i]['prod_id'])));
+        		$ret[$i]['expires'] = $tmp['UploadedProductCode']['expiry'];
+        		$i++;
+        }
+
+              $this->set('ret',$ret);
+}
+
 
 /**
  * view method
