@@ -339,16 +339,21 @@ class RemindersController extends AppController {
 	function setGiftsSent() {
 		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count'));
 		$this->Reminder->User->GiftsReceived->recursive = 2;
+		$fields = array('DISTINCT (GiftsReceived.sender_id), GiftsReceived.receiver_fb_id, 
+			GiftsReceived.product_id, GiftsReceived.created');
+		$group = array('GiftsReceived.sender_id');
 		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
 				    'limit'=>10,
+				    'fields' => $fields,
 				    'order'=>'GiftsReceived.id DESC',
+					'group'=> $group,
 				    'contain' => array(
-					'Product' => array(
-						'fields' => array('id'),
-						'Vendor' => array('name')),
-					'Sender' => array(
-						'fields' => array('facebook_id'))))));
+						'Product' => array(
+							'fields' => array('id'),
+							'Vendor' => array('name')),
+						'Sender' => array(
+							'fields' => array('facebook_id'))))));
 		
     }
 /*
