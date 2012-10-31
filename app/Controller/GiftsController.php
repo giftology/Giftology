@@ -30,11 +30,17 @@ class GiftsController extends AppController {
 	}
 	//WEB SERVICES
 	public function ws_list () {
+		$receiver_fb_id = isset($this->request->params['named']['receiver_fb_id']) ? $this->request->params['named']['receiver_fb_id'] : null;
+		if (!$receiver_fb_id) return;
+		$conditions = array('receiver_fb_id' => $receiver_fb_id);
 		$this->Gift->recursive = 0;
-		$this->set('gifts', $this->Gift->find('all'));
+		$this->set('gifts', $this->Gift->find('all', array('conditions' => $conditions)));
 		$this->set('_serialize', array('gifts'));
 	}
 	public function ws_send () {
+		$sender_id = isset($this->request->params['named']['sender_id']) ? $this->request->params['named']['sender_id'] : null;
+		$receiver_fb_id = isset($this->request->params['named']['receiver_fb_id']) ? $this->request->params['named']['receiver_fb_id'] : null;
+		$product_id = isset($this->request->params['named']['product_id']) ? $this->request->params['named']['product_id'] : null;
 		$this->Gift->recursive = 0;
 		$this->set('gifts', $this->Gift->find('all'));
 		$this->set('_serialize', array('gifts'));

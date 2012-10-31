@@ -18,6 +18,13 @@ class UploadedProductCodesController extends AppController {
 		$this->set('uploadedProductCodes', $this->paginate());
 	}
 
+	public function new_index() {
+		$this->set('uploadedProductCodes', $this->UploadedProductCode->find('count',
+			array(
+				'conditions' => array('available' => '1'),
+				'group' => 'product_id')));		
+	}
+
 /**
  * view method
  *
