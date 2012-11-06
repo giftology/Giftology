@@ -134,6 +134,10 @@ class UsersController extends AppController {
 	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
 	    $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
+                $this->Mixpanel->track('Gift Recipient arrived', array(
+                    'GiftId' => $this->request->query['gift_id']
+                ));
+
                 // Set the FB OG stuff here
                 $gift = $this->User->GiftsReceived->find('first', array(
                         'conditions' => array(

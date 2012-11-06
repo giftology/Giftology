@@ -136,5 +136,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur
 })(); 
 </script> 
 
+<?php echo $this->Mixpanel->embed(); ?>
 </body>
 </html>

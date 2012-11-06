@@ -214,5 +214,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 })();
 	</script>
 
+<?php echo $this->Mixpanel->embed(); ?>
 </body>
 </html>

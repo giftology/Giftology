@@ -140,6 +140,11 @@ class ProductsController extends AppController {
 		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
 		$this->set('products', $this->paginate());
 		$this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
+		$this->Mixpanel->track('Viewing Product List ', array(
+	            'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
+	            $this->request->params['named']['receiver_name'] : null,
+        	));
+	
 	}
 	public function view_product($id=null) {
 		$this->Product->id = $id;
@@ -153,6 +158,12 @@ class ProductsController extends AppController {
 		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
 		$this->Product->contain(array('Vendor'));
 		$this->set('product', $this->Product->read(null, $id));
+		$this->Mixpanel->track('Viewing Product', array(
+	        'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
+		        $this->request->params['named']['receiver_name'] : null,
+		    'ProductId' => $id
+			));
+
 
 	}
 	
