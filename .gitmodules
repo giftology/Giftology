@@ -1,0 +1,3 @@
+[submodule "app/Plugin/Mixpanel"]
+	path = app/Plugin/Mixpanel
+	url = git://github.com/noahm/CakePHP-Mixpanel.git

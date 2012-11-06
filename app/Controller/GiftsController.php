@@ -227,9 +227,10 @@ class GiftsController extends AppController {
 				if ($send_now) {
 					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID(), FB::getAccessToken());
 					$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
+					$this->Mixpanel->track('Sent Gift', array());
 				} else {	    
 					$this->Session->setFlash(__('Awesome Karma ! Your gift is scheduled to be sent. Want to send another one ? '));
-				
+					$this->Mixpanel->track('Scheduled Gift', array());				
 				}
 			}
 		} else {
@@ -255,6 +256,9 @@ class GiftsController extends AppController {
 			array('conditions' => array('available'=>1, 'product_id' =>$product,
 				'value' => $value, 'expiry >' => $valid_till)));
 		if (!$code) {
+			$this->Mixpanel->track('Out of Codes', array(
+					'ProductId' => $product
+				));
 			$this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
 			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
 			$this->redirect(array('controller'=>'products', 'action'=>'view_products',
@@ -381,6 +385,8 @@ class GiftsController extends AppController {
 		$this->paginate['conditions'] = $conditions;
 		$this->set('gifts', $this->paginate());
 		$this->set('gifts_active', 'active');
+		$this->Mixpanel->track('Viewing Gifts', array(
+		));
 	}
 	public function news() {
 		$this->layout = 'ajax';
@@ -458,6 +464,10 @@ class GiftsController extends AppController {
 			array('sender_id' => $this->Auth->user('id'),
 			      'Gift.created >' => date('Y-m-d'))))
 		    > DAILY_MAX_GIFTS_PER_USER) {
+			$this->Mixpanel->track('Not Allowed to send', array(
+				'Sender' => $this->Auth->user('id')
+			));
+
 			$this->Session->setFlash(__('Unable to send.  You have reached the max limit for daily gifts.  Good going.  Come back tommorrow and send more'));
 			$this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));

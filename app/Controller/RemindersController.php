@@ -254,6 +254,14 @@ class RemindersController extends AppController {
 			    }
 		}
 		$this->setGiftsSent();
+		if ($this->request->is('post')) {
+			$this->Mixpanel->track('Search Friend', array(
+    	            'search_term' => $this->request->data['Reminders']['friend_name'],
+            	));
+		} else {
+			$this->Mixpanel->track($type ? 'View Friends' : 'View Events', array());			
+		}
+
 	}
 
     /*public function send_reminder_emails () {

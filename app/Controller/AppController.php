@@ -34,8 +34,8 @@ App::uses('FB', 'Facebook.Lib');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-    var $helpers = array('Session', 'Facebook.Facebook');
-    var $components = array('Session',
+    var $helpers = array('Session', 'Facebook.Facebook', 'Mixpanel.Mixpanel');
+    var $components = array('Session', 'Mixpanel.Mixpanel',
                             'Auth' => array(
                                 'authorize' => 'Controller',
                                 'authorizedActions' => array ('index', 'view'),
@@ -74,6 +74,11 @@ class AppController extends Controller {
 		$this->viewPath = $mobileView;
 	    }
 	}*/
+	if ($this->Auth->user()) {
+	    // if a user is logged in
+		$this->Mixpanel->identify($this->Connect->user('id'));
+		$this->Mixpanel->name_tag($this->Connect->user('name'));
+	}
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         }
