@@ -19,10 +19,18 @@ class UploadedProductCodesController extends AppController {
 	}
 
 	public function new_index() {
-		$this->set('uploadedProductCodes', $this->UploadedProductCode->find('count',
-			array(
-				'conditions' => array('available' => '1'),
-				'group' => 'product_id')));		
+		$products = $this->UploadedProductCode->find('all', 
+			array('fields' => 'DISTINCT UploadedProductCode.product_id',
+			      'group' => 'UploadedProductCode.product_id'));
+		$ret = array(); $i = 0;
+		foreach($products as $product) {
+			$ret[$i++]['prod_id'] = $product['UploadedProductCode']['product_id'];
+	
+			$ret[$i]['avail_count'] = $this->UploadedProductCode->find('count', 
+				array('conditions' => array('available' => 1, 'product_id' => $product['UploadedProductCode']['product_id'])));
+		}
+		$this->log($ret);
+//		$this->set('uploadedProductCodes',$count); 
 	}
 
 /**
@@ -211,12 +219,13 @@ class UploadedProductCodesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	public function generate_codes ($prod_id, $value, $num) {
+	public function generate_codes ($prod_id, $value, $expiry, $num) {
 		$data = array();
 		for($count = $num;$count>0;$count--) {
 			array_push($data, array(
 				'code' => $this->Giftology->generateGiftCode($prod_id),
 				'product_id' => $prod_id,
+				'expiry' => $expiry,
 				'value' => $value));
 		}
 		$this->UploadedProductCode->create();
