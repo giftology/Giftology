@@ -78,6 +78,15 @@ class AppController extends Controller {
 	    // if a user is logged in
 		$this->Mixpanel->identify($this->Connect->user('id'));
 		$this->Mixpanel->name_tag($this->Connect->user('name'));
+
+		    /* To make use of the people API */
+	    $this->Mixpanel->people($this->Auth->user('id'), array(
+	        '$username' => $this->Connect->user('name'),
+	        '$email' => $this->Connect->user('email'),
+	        '$created' => $this->Auth->user('created'),
+	        '$last_login' => $this->Auth->user('connected')
+	    ));
+
 	}
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
