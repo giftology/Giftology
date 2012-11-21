@@ -352,7 +352,7 @@ class RemindersController extends AppController {
 		$group = array('GiftsReceived.sender_id');
 		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
-				    'limit'=>10,
+				    'limit'=>25,
 				    'fields' => $fields,
 				    'order'=>'GiftsReceived.id DESC',
 					//'group'=> $group,

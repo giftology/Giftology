@@ -94,13 +94,19 @@
                         <h3>Total Gifts Sent</h3><ul>
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
                        <h3>Whats happening now</h3><ul>
+			<?php $last_sender_id = 0; ?>
                         <?php foreach($gifts_sent as $gift): ?>
+                        <?php echo $gift['Gift']['sender_id']; ?>
+
+				<?php if ($gift['Sender']['facebook_id'] != $last_sender_id): ?>
                                 <li>
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
                                 <p></p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
 				</p></div></li>
+				<?php $last_sender_id = $gift['Sender']['facebook_id']; ?>
+				<?php endif; ?>
                         <?php endforeach; ?>
                         </ul>
                  </div>

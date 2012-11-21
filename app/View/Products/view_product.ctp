@@ -59,7 +59,7 @@
 			  			<input type="email" id="receiver_email" placeholder="<?= $receiver_name; ?>@example.com" name="receiver_email" id="email">
 					</div>
 		  		</div>
-			<ul class="voucher-details"><li>This gift card is valid for <?= $product['Product']['days_valid']; ?> days.</li></ul>
+			<ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
 
 			<button id="SendButtonWithPerms" style="display:none" class="buy showtransbox" onClick="send_gift('<?=
                             $this->Html->url(array(

@@ -157,7 +157,11 @@ class UsersController extends AppController {
 		    $slidePlaySpeed = 4000;
 		    $this->setGiftsSent();
 		}
-            }
+            } else {
+                $this->Mixpanel->track('Landing Page', array(
+                ));
+
+		}
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
