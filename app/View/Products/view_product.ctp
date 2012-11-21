@@ -61,7 +61,10 @@
 		  		</div>
 			<ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
 
-			<button id="SendButtonWithPerms" style="display:none" class="buy showtransbox" onClick="send_gift('<?=
+			<button id="SendButtonWithPerms" style="display:none" class="buy" onClick="if (document.getElementById('receiver_email').value == '') {
+			alert('Please enter an email address for the recipient.'); 
+			document.getElementById('receiver_email').focus();
+		} else { send_gift('<?=
                             $this->Html->url(array(
 				'controller' => 'gifts',
 				'action' => 'send',
@@ -69,7 +72,7 @@
 				'receiver_name' => $receiver_name,
 				'receiver_birthday' => $receiver_birthday,
 				'product_id' => $product['Product']['id'],
-				'send_now' => $send_now)); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)">
+				'send_now' => $send_now)); ?>/gift_amount:'+document.getElementById('contribution_amount').value+'/receiver_email:'+document.getElementById('receiver_email').value+'/post_to_fb:'+document.getElementById('post_to_fb').checked+'/message:'+document.getElementById('gift-message').value)}">
 			Send to <?= $receiver_name; ?>
 			</button>
 			<button id="SendButtonForNoPerms" class="buy showtransbox" onClick="get_perms_and_send_gift('<?=
