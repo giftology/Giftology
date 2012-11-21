@@ -33,10 +33,8 @@ class GiftologyComponent extends Component {
 		$result = curl_exec($ch);
 		$error = curl_error($ch);
 
-		$this->log($fb_id.$result, 'ns');
-
 		if ($error) {
-			$this->log($fb_id.$error, 'ns');
+			$this->log($fb_id." token ".$access_token.$error, 'ns');
 		}
 		//close connection
 		curl_close($ch);

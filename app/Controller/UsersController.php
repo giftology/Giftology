@@ -453,10 +453,10 @@ class UsersController extends AppController {
 		$this->log($result, 'ns');
 
 		if ($error) {
-			$this->log($fb_id.$error, 'ns');
+			$this->log("Unable to set new access token for ".$fb_id.$error, 'ns');
 		} else {
 		    $ret = parse_str($result);
-    		    //$this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token, 'ns');
+    		$this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token.' expires '.$expires, 'ns');
 		}
 		//close connection
 		curl_close($ch);
