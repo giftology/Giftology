@@ -219,6 +219,7 @@ class RemindersController extends AppController {
 		// First off email maketing cookies 
         if ($this->Cookie->read('utm_source') == 'swaransoft') {
             $this->set('fire_swaransoft_pixel', 1);
+            $this->Cookie->delete('utm_source');
         }
 
 		if (!$this->Connect->user()) {
