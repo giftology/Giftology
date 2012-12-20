@@ -241,6 +241,10 @@ class RemindersController extends AppController {
 				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
 				if (empty($today_users) && empty($tommorrow_users) &&
 				    empty($thismonth_users) && empty($nextmonth_users)) {
+					if ($this->requestAction('users/refreshReminders/'.$this->Auth->user('id'))) {
+						$this->redirect('/reminders/view_friends');
+					}
+
 					//type = all
 					$this->set('all_users', $this->get_birthdays('mine','all', 1));
 					$this->set('friends_active', 'active');

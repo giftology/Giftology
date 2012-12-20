@@ -251,7 +251,7 @@ class UsersController extends AppController {
     	}
         if ($daysSinceUpdate > 15 || $numReminders < 10) {
 	       // Refresh old reminders
-            if ($this->User->Reminders->deleteAll(array('user_id' => $user['id']), false)) $this->refreshReminders($user['id']);
+            $this->refreshReminders($user['id']);
         }
         
         //update User Profile if necesary
@@ -269,10 +269,17 @@ class UsersController extends AppController {
         ), array(
             'User.id' => $user['id']));
     }
-    function refreshReminders ($id ) {
+    public function refreshReminders ($id ) {
         //refesh reminders
-        $this->setUserReminders($id);
-        $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+        if ($this->setUserReminders($id)) {
+            if ($this->User->Reminders->deleteAll(array('user_id' => $id), false)) {
+                $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+                return true;
+            }
+        } else {
+            $this->log("Not attempting to refresh reminders because no reminders were returned by fql");
+        }
+        return false;
     }
     function updatePlaceholderGifts ($last_insert_id) {
 
@@ -352,14 +359,19 @@ class UsersController extends AppController {
     }
     function setUserReminders($user_id = null) {
         $friends = $this->getUserFriends();
-        $this->Connect->authUser['Reminders'] = array();
-        foreach ($friends as $friend) {
-            array_push($this->Connect->authUser['Reminders'], array (
-                    'user_id' => $user_id,
-                    'friend_fb_id' => $friend['uid'],
-                    'friend_name' => $friend['name'],
-                    'friend_birthday' => $friend['birthday']
-                ));
+        if ($friends) {
+            $this->Connect->authUser['Reminders'] = array();
+            foreach ($friends as $friend) {
+                array_push($this->Connect->authUser['Reminders'], array (
+                        'user_id' => $user_id,
+                        'friend_fb_id' => $friend['uid'],
+                        'friend_name' => $friend['name'],
+                        'friend_birthday' => $friend['birthday']
+                    ));
+            }
+            return true;
+        } else {
+            return false; 
         }
     }
     
@@ -372,7 +384,7 @@ class UsersController extends AppController {
     
     function send_welcome_email() {
         $email = new CakeEmail();
-	$email->config('smtp')
+    	$email->config('smtp')
               ->template('welcome', 'default') 
 	      ->emailFormat('html')
 	      ->to($this->Connect->user('email'))
