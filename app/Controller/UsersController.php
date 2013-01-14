@@ -14,7 +14,8 @@ class UsersController extends AppController {
         $this->Auth->allow('login','logout');
     }
     public function isAuthorized($user) {
-        if (($this->action == 'login') || ($this->action == 'logout')) {
+        if (($this->action == 'login') || ($this->action == 'logout')
+            || ($this->action == 'refreshReminders')) {
             return true;
         }
 	return parent::isAuthorized($user);
