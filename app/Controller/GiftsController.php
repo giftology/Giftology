@@ -42,8 +42,10 @@ class GiftsController extends AppController {
 		$sender_id = isset($this->params->query['sender_id']) ? $this->params->query['sender_id'] : null;
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
+		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
 
-                $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
+        $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
+        $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount);
 
 		$this->set('gifts', array('result' => '1'));
 		$this->set('_serialize', array('gifts'));
@@ -150,28 +152,42 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send() {
+		$sender_id = $this->Auth->user('id');
+		$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
+		$product_id = $this->request->params['named']['product_id'];
+		$amount = $this->request->params['named']['gift_amount']; 
+		$send_now = $this->request->params['named']['send_now'];
+		$receiver_email = $this->request->params['named']['receiver_email'];
+		$gift_message = $this->request->params['named']['message'];
+		$post_to_fb = $this->request->params['named']['post_to_fb'];
+		$receiver_birthday = $this->request->params['named']['receiver_birthday'];
+		$this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
+			$receiver_email, $gift_message, $post_to_fb, $receiver_birthday);
+	}
+
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,
+		$receiver_email = null, $gift_message = null, $post_to_fb = true, $date_to_send = null) {
 		
 		$this->redirectIfNotAllowedToSend();
-		$send_now = $this->request->params['named']['send_now'];
 		
 		$this->Gift->create();
-		$this->Gift->Product->id = $this->request->params['named']['product_id'];
+		$this->Gift->Product->id = $product_id;
 		if (!$this->Gift->Product->exists()) {
 			throw new NotFoundException(__('Invalid Product'));
 		}
 		$this->Gift->Product->recursive = 0;
-		$product = $this->Gift->Product->read(null, $this->request->params['named']['product_id']); 
-		$gift['Gift']['product_id'] = $this->request->params['named']['product_id'];
-		$gift['Gift']['sender_id'] = $this->Auth->user('id');
-		$gift['Gift']['send_now'] = $this->request->params['named']['send_now'];
-		if ($this->request->params['named']['receiver_email']) {
-			$gift['Gift']['receiver_email'] = $this->request->params['named']['receiver_email'];
+		$product = $this->Gift->Product->read(null, $product_id); 
+
+		$gift['Gift']['product_id'] = $product_id;
+		$gift['Gift']['sender_id'] = $sender_id;
+		$gift['Gift']['send_now'] = $send_now;
+		if ($receiver_email) {
+			$gift['Gift']['receiver_email'] = $receiver_email;
 		}
-		if ($this->request->params['named']['message']) {
-			$gift['Gift']['gift_message'] = $this->request->params['named']['message'];
+		if ($gift_message) {
+			$gift['Gift']['gift_message'] = $gift_message;
 		}
-		$gift['Gift']['post_to_fb'] = $this->request->params['named']['post_to_fb'];
-		$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
+		$gift['Gift']['post_to_fb'] = $post_to_fb;
 		$gift['Gift']['receiver_fb_id'] = $receiver_fb_id;
 		
 		$receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
@@ -197,11 +213,11 @@ class GiftsController extends AppController {
 
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
-		$gift['Gift']['gift_amount'] = $this->request->params['named']['gift_amount'];
+		$gift['Gift']['gift_amount'] = $amount;
 		$gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount']);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		if (!$send_now) {
-		    $gift['Gift']['date_to_send'] = $this->request->params['named']['receiver_birthday'];
+		    $gift['Gift']['date_to_send'] = $date_to_send;
 		}
 		if ($product['Product']['min_price'] == 0) {
 			$payment_needed = $gift['Gift']['gift_amount'] - 
