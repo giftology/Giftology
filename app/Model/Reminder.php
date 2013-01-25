@@ -32,7 +32,7 @@ class Reminder extends AppModel {
                         date('Y', strtotime($this->data[$this->alias]['friend_birthday']));
 
                     $this->data[$this->alias]['friend_birthday'] =
-                        '2012-'.date('m-d', strtotime($this->data[$this->alias]['friend_birthday']));
+                        '2013-'.date('m-d', strtotime($this->data[$this->alias]['friend_birthday']));
                 }
             }
             return true;
