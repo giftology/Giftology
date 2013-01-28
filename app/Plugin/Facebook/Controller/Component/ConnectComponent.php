@@ -56,6 +56,11 @@ class ConnectComponent extends Component {
 	* set to model alias to init the model.
 	*/
 	public $model = false;
+
+	/**
+	* name of the plugin containing the authentication model, if any; false by default.
+	*/
+	public $plugin = false;
 	
 	/**
 	* Fields for the model if you want to save the Auth component.
@@ -68,13 +73,13 @@ class ConnectComponent extends Component {
 	/**
 	* Initialize, load the api, decide if we're logged in
 	* Sync the connected Facebook user with your application
-	* @param Controller object to attach to
+	* @param controller object to attach to
 	* @param settings for Connect
 	* @return void
 	* @access public
 	*/
-	public function initialize(Controller $Controller, $settings = array()){
-		$this->Controller = $Controller;
+	public function initialize(Controller $controller, $settings = array()){
+		$this->Controller = $controller;
 		$this->_set($settings);
 		$this->FB = new FB();
 		$this->uid = $this->FB->getUser();
@@ -86,7 +91,7 @@ class ConnectComponent extends Component {
 	* Attempt to authenticate user using Facebook.
 	* Currently the uid is fetched from $this->uid
 	*
-	* @param Controller object to attach to
+	* @param controller object to attach to
 	* @return void
 	*/
 	public function startup(Controller $controller) {
@@ -136,7 +141,6 @@ class ConnectComponent extends Component {
 			return false;
 		}
 		
-		$new_user_created = 0;
 		// check if the user already has an account
 		// User is logged in but doesn't have a 
 		if($Auth->user('id')){
@@ -159,13 +163,11 @@ class ConnectComponent extends Component {
 				$this->authUser[$this->User->alias]['facebook_id'] = $this->uid;
 				$this->authUser[$this->User->alias][$this->modelFields['password']] = $Auth->password(FacebookInfo::randPass());
 				if($this->__runCallback('beforeFacebookSave')){
-                                       $this->hasAccount = ($this->User->saveAssociated($this->authUser, array('validate' => false)));
-                                       $this->__runCallback('afterFacebookSave', $this->User->getLastInsertID());
+					$this->hasAccount = ($this->User->save($this->authUser, array('validate' => false)));
 				}
 				else {
 					$this->authUser = null;
 				}
-				$new_user_created = 1;
 			}
 			//Login user if we have one
 			if($this->authUser){
@@ -176,9 +178,9 @@ class ConnectComponent extends Component {
 					)
 				);
 				if($Auth->login($this->authUser[$this->model])){
-					$this->__runCallback('afterFacebookLogin', $new_user_created);
+					$this->__runCallback('afterFacebookLogin');
 				}
-			} 
+			}
 			return true;
 		}
 	}
@@ -218,7 +220,7 @@ class ConnectComponent extends Component {
 	* @return mixed result of the callback function
 	*/ 
 	private function __runCallback($callback, $passedIn = null){
-		if(is_callable(array($this->Controller, $callback))){
+		if(method_exists($this->Controller, $callback)){
 			return call_user_func_array(array($this->Controller, $callback), array($passedIn));
 		}
 		return true;
@@ -231,8 +233,12 @@ class ConnectComponent extends Component {
 	*/
 	private function __initUserModel(){
 		if($this->model){
-			App::uses($this->model,'Model');
-			$this->User = ClassRegistry::init($this->model);
+			$plugin = '';
+			if ($this->plugin) {
+				$plugin = $this->plugin.'.';
+			}
+			App::uses($this->model, $plugin.'Model');
+			$this->User = ClassRegistry::init($plugin.$this->model);
 		}
 		if (isset($this->User)) {
 			$this->User->recursive = -1;
