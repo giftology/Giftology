@@ -68,8 +68,8 @@ class FacebookHelper extends AppHelper {
 	* @return string of html header
 	* @access public
 	*/
-	public function html(){
-		return '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">';
+	public function html() {
+		return '<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xmlns:fb="https://www.facebook.com/2008/fbml">';
 	}
 	
 	/**
@@ -129,7 +129,7 @@ class FacebookHelper extends AppHelper {
 		);
 		if((isset($options['redirect']) && $options['redirect']) || $options['custom']){
 			$options['redirect'] = Router::url($options['redirect']);
-			$onclick = "login('".$options['redirect']."');";
+			$onclick = "login('".$options['redirect']."');clicky.log('#FBLogin','FB Login Clicked');";	
 			if($options['img']){
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
@@ -308,7 +308,22 @@ class FacebookHelper extends AppHelper {
 			return "";
 		}
 	}
-	
+	public function name($uid = null, $options = array()){
+		$options = array_merge(
+			array(
+				'uid' => $uid,
+				'capitalize' => 1,
+			),
+			$options
+		);
+		if($options['uid']){
+			return $this->__fbTag('fb:name', '', $options);
+		}
+		else {
+			return "";
+		}
+	}
+ 	
 	/**
 	* New send social plugin
 	* $facebook->init() is required for this
@@ -493,11 +508,15 @@ class FacebookHelper extends AppHelper {
 	
 	public function init($options = null, $reload = true) {
 		$options = array_merge(array(
-			'perms' => 'email'
-		), (array)$options);
+			'perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'
+			), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
+
+			$logoutURL = Router::url(array('controller'=>'users', 'action'=>'logout'));
+			$afterLoginURL = Router::url(array('controller' => 'reminders', 'action'=>'view_friends'));
+
 			$init = '<div id="fb-root"></div>';
-			$init .= '<script src="//connect.facebook.net/'.$this->locale.'/all.js"></script>';
+			//$init .= '<script src="//connect.facebook.net/'.$this->locale.'/all.js"></script>';
 			$init .= $this->Html->scriptBlock("
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -515,6 +534,9 @@ class FacebookHelper extends AppHelper {
 			if (response.authResponse) {
 				// logged in and connected user, someone you know
 				// alert('You are connected');
+				if (document.title == \"Giftology: The social gifting company: Send Gift\") {
+					check_perms();
+				}
 			} else {
 				// no user session available, someone you dont know
 				// alert('You are disconnected');
@@ -528,16 +550,56 @@ class FacebookHelper extends AppHelper {
 			} else {
 				// the user has just logged out
 				// alert('You just logged out from faceboook');
+				top.location.href = '$logoutURL';
 			}
 		});
 		
 		// Other javascript code goes here!
-
+		FB.Event.subscribe('xfbml.render', function(response) {
+			$(document).trigger('fb_xfbml_rendered'); // trigger event
+		});
 	};
+	function get_perms_and_send_gift(send_url) {
+		clicky.log('#SendGiftClickedPermsNOTOKRequesting','RequestingPublishPerms');
+		FB.ui({
+			method: 'permissions.request',
+			perms: 'publish_stream',
+			display: 'popup'
+			},function(response) {
+			    if (response && response.perms) {
+				clicky.log('#SendGiftClickedPermsNOWOKSending','SendingGift');
+				send_gift(send_url);
+			    } else if (!response.perms){
+				alert(\"Giftology needs permission, on facebook, to inform your friend of the gift you are sending them.  \\n\\nPlease click Send again, and allow us this permission so we can send this gift.  \\n\\nWe take your privacy seriously, and promise never to post on your behalf without your knowledge\");		    
+				$('.transbox').hide();
+				clicky.log('#PermsStillNotGranted','RetrySend');
+			    }
+		    });
+	}
+	function send_gift(send_url) {
+		clicky.log('#SendGiftClickedPermsOKSending','SendingGift');
+		top.location.href=send_url;
+	}
+	function check_perms () {
+		FB.api('/me/permissions', function (response) {
+		    if (response.data[0].publish_stream == 1) {
+			$('#SendButtonForNoPerms').hide();
+			$('#SendButtonWithPerms').show();
+		    }
+		} );
+	}
 
 	// logs the user in the application and facebook
 	function login(redirection){
+
+		if (typeof FB == 'undefined') {
+			clicky.log('#FBNotDefined','FB not defined'); 
+			alert('Something went wrong.  We apologize for this; Please reload this page and try again.\\n\\nIf retry does not fix this issue, then you may have a brower extention(such as AVG Secure Search) that is blocking facebook javascript from executing.  If so, please disable this extention and try again');
+			return;
+		}
+
 		FB.login(function (response) {
+			document.getElementById(\"transbox\").style.display = \"inline\";
 			if(response.authResponse) {
 				// user is logged in
 				// console.log('Welcome!');
@@ -546,7 +608,9 @@ class FacebookHelper extends AppHelper {
 				}
 			} else {
 				// user could not log in
-				console.log('User cancelled login or did not fully authorize.');
+				//console.log('User cancelled login or did not fully authorize.');
+				document.getElementById(\"transbox\").style.display = \"none\";
+
 			}
 		}, {scope: '" . $options['perms'] . "'});
 	}
