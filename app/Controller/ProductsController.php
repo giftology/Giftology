@@ -132,8 +132,25 @@ class ProductsController extends AppController {
 	}
 	
 	public function view_products () {
+		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
+		$gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
+		$year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
+		$today = date("Y"); 
+		$gender=strtoupper($gender);
+		$age=$today-$year;
+
+		$gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
+		$location = $this->Product->CitySegment->find('all',array('conditions' => array('CitySegment.city' => $location)));
+		$age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
+		
+		
+		$gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
+		$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
+		$age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
+		
+		$this->paginate['conditions']  = array('Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
 		$this->Product->recursive = 0;
-		$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
+		//$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
 		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
 		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
 		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);

@@ -367,7 +367,9 @@ class UsersController extends AppController {
                         'user_id' => $user_id,
                         'friend_fb_id' => $friend['uid'],
                         'friend_name' => $friend['name'],
-                        'friend_birthday' => $friend['birthday']
+                        'friend_birthday' => $friend['birthday'],
+                        'current_location' => $friend['current_location']['city'],
+                        'sex' => $friend['sex']
                     ));
             }
             return true;
@@ -379,7 +381,7 @@ class UsersController extends AppController {
     function getUserFriends() {
         $Facebook = new FB();
         $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT uid, birthday, pic_big, name FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
+                                        'query' => 'SELECT uid, current_location, birthday, pic_big, name, sex FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
         return $friends;
     }
     

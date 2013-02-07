@@ -7,6 +7,9 @@
                                                     'receiver_id' => $reminder['Reminder']['friend_fb_id'],
                                                     'receiver_name' => $reminder['Reminder']['friend_name'],
                                                     'receiver_birthday' => $reminder['Reminder']['friend_birthday'],
+                                                    'receiver_location' => $reminder['Reminder']['current_location'],
+                                                    'friend_birthyear' => $reminder['Reminder']['friend_birthyear'],
+                                                    'receiver_sex' => $reminder['Reminder']['sex'],
                                                     'ocasion' => isset($ocasion) ? $ocasion : null)); ?>">
                 <div class="event suggested">
                         <div class="image-container">
