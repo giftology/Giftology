@@ -904,7 +904,7 @@ textarea {
     overflow: hidden;
 }
 body:not(#foo) input[type="checkbox"] {
-    display: none;
+    /*display: none;*/
 }
 .delivery-sharing div.input.checkbox input {
     margin: 3px 6px 0 0;
@@ -917,14 +917,19 @@ body:not(#foo) input[type="checkbox"] {
 body:not(#foo) input[type="checkbox"]:checked + label {
     background-position: 0 0;
 }
+
+.submit{
+    margin-top: 10px;
+    height: 65px;
+}
 body:not(#foo) input[type="checkbox"] + label {
-    background-image: url("../img/checkbox-sprite.gif");
+    /*background-image: url("../img/checkbox-sprite.gif");*/
     background-position: 0 -81px;
     background-repeat: no-repeat;
     display: inline-block;
     height: 27px;
     line-height: 25px;
-    padding-left: 35px;
+    padding-left: 8px;
 }
 .delivery-sharing div.input label {
     float: left;

@@ -15,7 +15,7 @@ class UsersController extends AppController {
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -213,6 +213,55 @@ class UsersController extends AppController {
 
      //   $this->redirect($this->Auth->logout());
     }
+
+    public function setting()
+    {
+
+    $user_profile = $this->User->UserProfile->find('first', array(
+        'conditions' => array('user_id' => $this->Auth->user('id'))));
+    $this->set('check',$user_profile['UserProfile']['email_unsubscribed']);
+ 
+    }
+    public function email_stop()
+    {
+        $user_profile = $this->User->UserProfile->find('first', array(
+        'conditions' => array('user_id' => $this->Auth->user('id'))));
+        $unsubscribed = 0;
+        if($user_profile['UserProfile']['email_unsubscribed']!=1)
+        {
+            $this->User->UserProfile->updateAll(
+                array('email_unsubscribed' => 1), 
+                array('user_id' => $this->Auth->user('id')));
+                $unsubscribed=1;
+            
+        } 
+        if($user_profile['UserProfile']['email_unsubscribed']==1)
+        {
+            $this->User->UserProfile->updateAll(
+                array('email_unsubscribed' => 0), 
+                array('user_id' => $this->Auth->user('id')));
+                $unsubscribed=0;
+            
+        } 
+        
+
+        if ($unsubscribed==1)
+         {
+            $this->Session->setFlash('Successfully unsubscribed from email updates. Sorry to see you go! ');
+         }
+         else if ($unsubscribed==0)
+         {
+            $this->Session->setFlash('Successfully subscribed from email updates. Happy to see you again! ');
+         }
+         
+         else 
+         {
+            $this->Session->setFlash('Unable to unsubscribe you from email.  Please contact support.');
+         }
+        
+         $this->redirect(array(
+                'controller' => 'reminders', 'action'=>'view_friends'));
+    }   
     
     function beforeFacebookSave() {
         $this->Connect->authUser['User']['last_login'] = date('Y-m-d');

@@ -87,6 +87,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 				<?php echo $this->Facebook->logout(array('label' => 'Logout',
 									 'redirect' => array('controller' => 'users',
 											     'action' => 'logout'))); ?>
+		     <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'setting')); ?>><span>Settings</span></a>
 			</div>
 		</div>
 		

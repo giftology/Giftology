@@ -284,6 +284,11 @@ class RemindersController extends AppController {
 		$this->log ("ERROR: User without an email ID:".$id);
 		exit();
 	}
+	else {
+		if ($user['UserProfile']['email_unsubscribed']==1) {
+			exit();
+		}
+	}
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
 	        $this->send_reminder_email($user, $reminders);
