@@ -152,7 +152,7 @@ class GiftsController extends AppController {
 		$this->Session->setFlash(__('Gift was not deleted'));
 		$this->redirect(array('action' => 'index'));exit();
 	}
-	public function send() {  DebugBreak();
+	public function send() {
 		if(isset($this->data['gifts']))
         {
             $receiver_fb_id=$this->data['gifts']['user_id'];
