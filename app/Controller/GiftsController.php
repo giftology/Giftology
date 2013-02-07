@@ -8,6 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
+	public $uses = array( 'Gift','UserAddress','User' );
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -151,22 +152,88 @@ class GiftsController extends AppController {
 		$this->Session->setFlash(__('Gift was not deleted'));
 		$this->redirect(array('action' => 'index'));exit();
 	}
-	public function send() {
-		$sender_id = $this->Auth->user('id');
-		$receiver_fb_id = $this->request->params['named']['receiver_fb_id'];
-		$product_id = $this->request->params['named']['product_id'];
-		$amount = $this->request->params['named']['gift_amount']; 
-		$send_now = $this->request->params['named']['send_now'];
-		$receiver_email = $this->request->params['named']['receiver_email'];
-		$gift_message = $this->request->params['named']['message'];
-		$post_to_fb = $this->request->params['named']['post_to_fb'];
-		$receiver_birthday = $this->request->params['named']['receiver_birthday'];
-		$this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
-			$receiver_email, $gift_message, $post_to_fb, $receiver_birthday);
+	public function send() {  DebugBreak();
+		if(isset($this->data['gifts']))
+        {
+            $receiver_fb_id=$this->data['gifts']['user_id'];
+            $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
+
+            if (!$receiver) 
+            {
+                //Create a User for the receiver            
+                /* Dont create User for receiver, just set the receiver_fb_id  */
+                $this->Gift->Receiver->create();
+                $data['Receiver']['facebook_id'] = $receiver_fb_id;
+                if (!$this->Gift->Receiver->save($data)) {
+                $this->Session->setFlash(__('Cant create new receipient. Gift not sent'));
+                return;
+                }
+                $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
+            }
+
+            $data1['user_id'] =  $receiver['User']['id'];
+             $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
+            if (array_key_exists('address1', $this->data['gifts']))
+            {
+                $data1['address1'] = $this->data['gifts']['address1'];
+                $data1['address2'] = $this->data['gifts']['address2'];
+                $data1['city'] = $this->data['gifts']['city'];
+                $data1['pin_code'] = $this->data['gifts']['pin_code'];
+                $data1['phone'] = $this->data['gifts']['phone'];
+                $data1['state'] = $this->data['gifts']['state'];                          
+                $data1['country'] = $this->data['gifts']['country'];
+                $data1['state'] = $this->data['gifts']['state'];
+                $data1['country'] = $this->data['gifts']['country'];
+            }
+            $this->Gift->set($data1);
+                          
+            $sender_id = $this->Auth->user('id');
+            $receiver_fb_id = $receiver['User']['facebook_id'];
+            $product_id = $this->data['gifts']['product_id'];
+            $amount = $this->data['contribution_amount']; 
+            $send_now = $this->data['gifts']['send_now'];
+            $reciever_email = $this->data['gifts']['reciever_email'];
+            $gift_message = $this->data['gifts']['gift-message'];
+            $post_to_fb = "true";
+            $reciever_name = $this->data['gifts']['reciver_name'];
+            $receiver_birthday = $this->data['gifts']['receiver_birthday'];
+
+            if (!$this->Gift->validates())
+            {
+                 $errors1 = $this->Gift->validationErrors;
+                 $errors=(array_values($errors1));
+                 $errorString1 = null;
+                   foreach($errors as $err)
+                   {
+                       if($errorString1 == null)
+                           $errorString1 = $err[0];
+                       else
+                           $errorString1 = $errorString1.', '.$err[0];
+                       
+                   }
+                $finalErrorString = 'Please Enter: '.$errorString1.'<br/>';
+                $this->Session->setFlash(__($finalErrorString));
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product',
+                    $product_id,
+                    'receiver_id'=>$receiver_fb_id ,
+                    'receiver_name' => $reciever_name,
+                    'receiver_birthday' => $receiver_birthday,
+                    'ocasion' => isset($this->request->params['named']['ocasion']) ?
+                    $this->request->params['named']['ocasion'] : null
+
+                )); 
+            }
+             if(isset($data1['address1']))
+             {
+            $this->UserAddress->save($data1);
+             }
+            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
+            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name); 
+
+        }
 	}
 
-	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,
-		$receiver_email = null, $gift_message = null, $post_to_fb = true, $date_to_send = null) {
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $date_to_send = null,$reciever_name = null) {
 		
 		$this->redirectIfNotAllowedToSend();
 		
@@ -214,7 +281,7 @@ class GiftsController extends AppController {
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-		$gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount']);
+        $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		if (!$send_now) {
 		    $gift['Gift']['date_to_send'] = $date_to_send;
@@ -260,38 +327,39 @@ class GiftsController extends AppController {
 			'controller' => 'reminders', 'action'=>'view_friends'));
 	}
 
-        function getCode($product, $gift_amount) {
-	    if ($product['Product']['code_type_id'] == GENERATED_CODE) {
-		return $this->Giftology->generateGiftCode($product['Product']['id']);
-	    } elseif ($product['Product']['code_type_id'] == UPLOADED_CODE) {
-		return $this->getUploadedCode($product['Product']['id'], $gift_amount,
-			date("Y-m-d", strtotime(date("Y-m-d")	 . "+".$product['Product']['days_valid']." days"))); 
-	    } else {
-		return $product['Product']['code']; //Static Reusable code for all gifts, as entered
-	    }
+        function getCode($product, $gift_amount,$reciever_name,$receiver_fb_id,$receiver_birthday) {
+        if ($product['Product']['code_type_id'] == GENERATED_CODE) {
+        return $this->Giftology->generateGiftCode($product['Product']['id']);
+        } elseif ($product['Product']['code_type_id'] == UPLOADED_CODE) {
+        return $this->getUploadedCode($product['Product']['id'], $gift_amount,
+            date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")),$reciever_name,$receiver_fb_id,$receiver_birthday); 
+        } else {
+        return $product['Product']['code']; //Static Reusable code for all gifts, as entered
         }
-	function getUploadedCode($product, $value, $valid_till) {
-		$code = $this->Gift->Product->UploadedProductCode->find('first',
-			array('conditions' => array('available'=>1, 'product_id' =>$product,
-				'value' => $value, 'expiry >' => $valid_till)));
-		if (!$code) {
-			$this->Mixpanel->track('Out of Codes', array(
-					'ProductId' => $product
-				));
-			$this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
-			$this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
-			$this->redirect(array('controller'=>'products', 'action'=>'view_products',
-					      'receiver_id'=>$this->request->params['named']['receiver_fb_id'],
-					      'receiver_name' => $this->request->params['named']['receiver_name'],
-                                              'receiver_birthday' => $this->request->params['named']['receiver_birthday'],
-					      'ocasion' => isset($this->request->params['named']['ocasion']) ?
-						    $this->request->params['named']['ocasion'] : null
-					      ));
-		}
-		$this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
-								     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
-		return $code['UploadedProductCode']['code'];
-	}
+        }
+    function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
+        $code = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$product,
+                'value' => $value, 'expiry >' => $valid_till)));
+        if (!$code) {
+            $this->Mixpanel->track('Out of Codes', array(
+                    'ProductId' => $product
+                ));
+            $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+            $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+            $this->redirect(array('controller'=>'products', 'action'=>'view_product',
+                    'receiver_id'=>$receiver_fb_id ,
+                    'receiver_name' => $reciever_name,
+                    'receiver_birthday' => $receiver_birthday,
+                    'ocasion' => isset($this->request->params['named']['ocasion']) ?
+                    $this->request->params['named']['ocasion'] : null
+
+                )); 
+        }
+        $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
+        return $code['UploadedProductCode']['code'];
+    }
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }

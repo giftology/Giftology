@@ -1224,6 +1224,17 @@ button, input[type="submit"] {
     text-align: center;
   /*  text-shadow: 0 1px rgba(255, 255, 255, 0.5);*/
 }
+.parent_submit input[type="submit"]{
+     -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: rgba(173, 46, 13, 0.86);
+    background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
+    color: #FFFFFF;
+    margin-left: 60px;
+}
 #breadcrumbs {
     color: #969696;
     display: block;

@@ -10,7 +10,7 @@ App::uses('AppModel', 'Model');
  * @property Transaction $Transaction
  */
 class Gift extends AppModel {
-
+        var $name = 'Gift';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -19,6 +19,58 @@ class Gift extends AppModel {
  *
  * @var array
  */
+  
+  public $validate = array(
+        'address1' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => ' First Name'
+            )
+        ),
+        'address2' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Last Name '
+            )
+        ),
+         'city' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'City '
+            )
+        ),
+         'pin_code' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'pin code '
+            )
+        ),
+          'phone' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Phone '
+            )
+        ),
+        'country' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Country '
+            )
+        ),
+         'state' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'State'
+            )
+        ),
+          'reciever_email' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Email'
+            )
+        )
+         
+    );
 	public $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
@@ -70,5 +122,5 @@ class Gift extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
+  
 }
