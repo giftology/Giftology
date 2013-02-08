@@ -21,16 +21,17 @@ class Gift extends AppModel {
  */
   
   public $validate = array(
-        'address1' => array(
+        'first_name' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
                 'message' => ' First Name'
             )
         ),
-        'address2' => array(
+        
+        'address1' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
-                'message' => 'Last Name '
+                'message' => 'address '
             )
         ),
          'city' => array(

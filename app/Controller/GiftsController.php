@@ -176,10 +176,11 @@ class GiftsController extends AppController {
 
             $data1['user_id'] =  $receiver['User']['id'];
              $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
-            if (array_key_exists('address1', $this->data['gifts']))
+            if (array_key_exists('first_name', $this->data['gifts']))
             {
+                $data1['first_name'] = $this->data['gifts']['first_name'];
+                $data1['last_name'] = $this->data['gifts']['last_name'];
                 $data1['address1'] = $this->data['gifts']['address1'];
-                $data1['address2'] = $this->data['gifts']['address2'];
                 $data1['city'] = $this->data['gifts']['city'];
                 $data1['pin_code'] = $this->data['gifts']['pin_code'];
                 $data1['phone'] = $this->data['gifts']['phone'];
@@ -226,7 +227,7 @@ class GiftsController extends AppController {
 
                 )); 
             }
-             if(isset($data1['address1']))
+             if(isset($data1['first_name']))
              {
             $this->UserAddress->save($data1);
              }
