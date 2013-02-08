@@ -99,7 +99,21 @@ class Gift extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'sender_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
+        'Reminder' => array(
+            'className' => 'Reminder',
+            'foreignKey' => 'receiver_fb_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        )
 	);
 
 /**
