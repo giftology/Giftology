@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class ProductsController extends AppController {
 	
 	public $paginate = array(
-        'limit' => 50,
+        'limit' => 100,
         'order' => array(
             'Product.display_order' => 'asc'
 	    )
