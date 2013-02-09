@@ -64,12 +64,6 @@ class Gift extends AppModel {
                 'message' => 'State'
             )
         ),
-          'reciever_email' => array(
-            'required' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Email'
-            )
-        )
          
     );
 	public $belongsTo = array(

@@ -86,7 +86,7 @@ $(document).ready(function(){
             $('.minus-plus .plus').removeClass('disabled');
         });
      $('.showtransbox').click(function() {
-	    $('.transbox').show();
+	    //$('.transbox').show();
         });
 
 
