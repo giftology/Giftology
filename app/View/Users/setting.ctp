@@ -1,12 +1,12 @@
 <h3>Settings</h3>
 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
-if($check==0)
+if($check)
 {
-	echo $this->Form->input('Unsubscribe from email updates', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>$check)); 
+  echo $this->Form->input('Currently unsubscribed, Check this box and submit to resubscribe', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); 
 }
 else
 {
-	echo $this->Form->input('Currently unsubscribed, Check this box and submit to resubscribe', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); 
+  echo $this->Form->input('Unsubscribe from email updates', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>$check));
 }
  
     

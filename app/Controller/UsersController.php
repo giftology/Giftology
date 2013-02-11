@@ -227,7 +227,7 @@ class UsersController extends AppController {
         $user_profile = $this->User->UserProfile->find('first', array(
         'conditions' => array('user_id' => $this->Auth->user('id'))));
         $unsubscribed = 0;
-        if($user_profile['UserProfile']['email_unsubscribed']!=1)
+        if(!$user_profile['UserProfile']['email_unsubscribed'])
         {
             $this->User->UserProfile->updateAll(
                 array('email_unsubscribed' => 1), 
@@ -235,7 +235,7 @@ class UsersController extends AppController {
                 $unsubscribed=1;
             
         } 
-        if($user_profile['UserProfile']['email_unsubscribed']==1)
+        if($user_profile['UserProfile']['email_unsubscribed'])
         {
             $this->User->UserProfile->updateAll(
                 array('email_unsubscribed' => 0), 
