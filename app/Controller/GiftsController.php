@@ -423,6 +423,7 @@ class GiftsController extends AppController {
 		    ->template('gift_sent', 'default') 
 		    ->emailFormat('html')
 		    ->to($receiver_email)
+		    ->cc(array('care@giftology.com'))
 		    ->from(array($sender_email => $sender_name))
 		    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
 		    ->viewVars(array('sender' => $sender_name,
