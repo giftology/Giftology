@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
-	public $uses = array( 'Gift','UserAddress','User' );
+	public $uses = array( 'Gift','UserAddress','User','ProductType' );
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -373,6 +373,9 @@ class GiftsController extends AppController {
 		    $gift_id.'&utm_content='.$content;
 	}
 	function informSenderReceipientOfGiftSent($gift_id, $access_token) {
+        $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
+        $product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
+        $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
 		if (isset($this->request->params['named']['receiver_fb_id'])) {
 			//callback without ccav inturuption, all data is in params
 			//no need to read DB
@@ -423,7 +426,6 @@ class GiftsController extends AppController {
 		    ->template('gift_sent', 'default') 
 		    ->emailFormat('html')
 		    ->to($receiver_email)
-		    ->cc(array('care@giftology.com'))
 		    ->from(array($sender_email => $sender_name))
 		    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
 		    ->viewVars(array('sender' => $sender_name,
@@ -434,6 +436,23 @@ class GiftsController extends AppController {
 				     'value' => $gift['Gift']['gift_amount'],
 				     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
 		    ->send();
+            
+            if($product_type['ProductType']['type']=='SHIPPED'){
+                $email->config('smtp')
+                ->template('gift_sent', 'default') 
+                ->emailFormat('html')
+                ->to('care@giftology.com')
+                ->from(array($sender_email => $sender_name))
+                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->viewVars(array('sender' => $sender_name,
+                         'receiver' => $receiver_name,
+                         'vendor' => $vendor_name,
+                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+                         'message' => $message,
+                         'value' => $gift['Gift']['gift_amount'],
+                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                ->send();    
+            }
 		}
 	}
 	function redeemGiftCode ($code) {
