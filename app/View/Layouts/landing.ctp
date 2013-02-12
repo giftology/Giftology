@@ -43,7 +43,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-	<script src="//cdn.optimizely.com/js/182331063.js"></script>
+	<script src="http://cdn.optimizely.com/js/182331063.js"></script>
 	
 	        <script>
             $(function(){
