@@ -10,9 +10,16 @@
                                                       'action'=>'view_gifts')); ?>"><?= $facebook_user['name']; ?>'s gifts<span class="arrow"></span></a>
                 </li>
                 <li>Redeem your gift</li>
+                
         </ul>
+        
 </div>
-<br><br>
+
+<br>
+<a href="<?= $this->Html->url(array('controller'=>'gifts',
+                                                      'action'=>'print_pdf',
+                    $gift['Gift']['id'])); ?>"><span class="arrow" style="margin-left:800px"><img title="print the voucher"  src="<?= IMAGE_ROOT; ?>printer.jpg" /></span></a>
+
 
 <div id="gift-details">
         <h3><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>

@@ -24,7 +24,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -402,15 +402,21 @@ class GiftsController extends AppController {
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
 				$message = $gift['Gift']['gift_message'];
+				$fb_post_to_receiver = $gift['Gift']['gift_message'].'- @['.$sender_fb_id.':]';
 			} else {
 				$message = $sender_name.' sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
+				$fb_post_to_receiver = '@['.$sender_fb_id.':] sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 			}
 		}
 		// Post to both sender and receipients facebook wall
-		$this->Giftology->postToFB($sender_fb_id, $access_token,
-					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
-		$this->Giftology->postToFB($receiver_fb_id, $access_token,
-					   $this->getGiftURL($gift_id, 'Receiver'), $message);
+		//$this->Giftology->postToFB($sender_fb_id, $access_token,
+			//		   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
+        $this->Giftology->postToFB($sender_fb_id, $access_token,
+                       $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? '@['.$receiver_fb_id.':]' : '').' a real gift voucher on Giftology.com');
+		//$this->Giftology->postToFB($receiver_fb_id, $access_token,
+					   //$this->getGiftURL($gift_id, 'Receiver'), $message);
+        $this->Giftology->postToFB($receiver_fb_id, $access_token,
+                       $this->getGiftURL($gift_id, 'Receiver'), $fb_post_to_receiver);
 		
 		// Send email to receipients about gifts sent
 		if ($receiver_email) {
@@ -499,6 +505,25 @@ class GiftsController extends AppController {
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
 	}
+
+	
+    public function print_pdf($id) 
+    { 
+    	$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$id)));
+    	//print_r($gift['Product']['redeem_instr']);
+    	//die();
+    	$this->set('gift', $gift);
+    	
+    	Configure::write('debug',0); //
+		$this->layout = 'pdf'; //this will use the pdf.ctp layout
+		$this->render();
+
+    } 
+
 	public function news() {
 		$this->layout = 'ajax';
 		$gifts = $this->Gift->find('all', array(
