@@ -9,9 +9,6 @@ body {
     font-size: 18px;
     font-weight: normal;
     line-height: normal;
-    padding-bottom: 1px;
-   
-
 }
 
 
@@ -21,11 +18,9 @@ body {
     position: relative;
     width: 880px;
 	margin:0 auto;
-     height: auto;
-
 }
 .mainpage2 {
-    min-height: 600px;
+    height: 750px;
     position: relative;
     width: 1100px;
 	margin:0 auto;
@@ -1760,151 +1755,18 @@ p.error em {
 	position: relative;
 	margin-top: 285px;
 }
-
-
-
 #footer {
-    position: relative;
-    background-color: #D9D9D9;
-    width: 100%;
-    clear: both;
-    float:left;
-    margin-left: 0px;
-    padding-left:0px;
+    position: absolute;
     bottom: 0px;
-    width: 100%;
+    width: 880px;
 	}
 
 .footer-line {
-    position:relative;
-    margin-left: 120px;
-	max-width: 900px;
-	height: 80px;
-	
-	margin-top:10px;
+	width:880px;
+	height: 2px;
+	background-color: #D9D9D9;
+	margin-top:0px;
 }
-
-.footer-line ul {
-margin-left: 86px;
-}
-
-
-.footer-line ul li {
-            float: left;
-           list-style-type: none;
-    list-style-position: inside;
-
-    
-            
-            margin-left: 12px;
-            
-            
-            margin-top: 6px;
-            background: url(..img/divider.gif) no-repeat 0 center;
-        }
-
-       .footer-line ul li.f{
-    color: #000;
-    display: block;
-    font-style: normal;
-    width:auto;
-
-    
-    
-    font-size: 11px;
-        }
-            .footer-line  ul li.f a {
-                 text-transform: uppercase;
-                 font-family: serif;
-
-
-            font-weight: lighter;
-               
-    padding-left: 3px;
-    
-    
-            }
-
-
-    .footer-line ul li.f:hover {
-
-  
-    
-     text-decoration:underline;
-     font-weight: bold;
-
-}
- .span1 {
-     position: relative;
-    float:left;
-    width: auto;
-    height: 20px;
-    margin-top:10px;
-    margin-left:100px;
-        
-}
-
-.span1 p{
-width:380px;
-font-size:12px;
-
-}
-   
-  
-
-
-       
-           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .no_data {
 	margin-left: 30px;
 }
