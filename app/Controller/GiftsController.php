@@ -24,7 +24,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -479,6 +479,25 @@ class GiftsController extends AppController {
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
 	}
+
+	
+    public function print_pdf($id) 
+    { 
+    	$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$id)));
+    	//print_r($gift['Product']['redeem_instr']);
+    	//die();
+    	$this->set('gift', $gift);
+    	
+    	Configure::write('debug',0); //
+		$this->layout = 'pdf'; //this will use the pdf.ctp layout
+		$this->render();
+
+    } 
+
 	public function news() {
 		$this->layout = 'ajax';
 		$gifts = $this->Gift->find('all', array(
