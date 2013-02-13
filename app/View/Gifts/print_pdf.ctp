@@ -24,7 +24,7 @@
             			<p class="at">at</p><p class="fine-print"><?= $gift['Product']['terms_heading'] ?></p>
 
             		
-            			<div id="" style="margin-left:350px;margin-top:-85px;width:400px;font-size:small"><h2 sytle="margin-left:40px">How to Redeem : </h2><?=$gift['Product']['redeem_instr']; ?></div>
+            			<div id="" style="margin-left:350px;margin-top:-110px;width:420px;font-size:small"><h2 sytle="margin-left:40px">How to Redeem : </h2><?=$gift['Product']['redeem_instr']; ?></div>
     			</div>
 
 	 	</div>
