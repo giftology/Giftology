@@ -193,23 +193,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	<?php endif; ?>
 	
 	<div id="footer">
-			<div class="footer-line">
-			
-			<ul>  <li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' => 'about_us')); ?></li>
-			<li class="f"><?= $this->Html->link('Retailers', array('FAQ' => 'pages', 'action' => 'Retailers')); ?> </li>
-
-            <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
-          <li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'Terms_of_use')); ?> </li>
-           <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy_policy')); ?> </li>
-           <li class="f"><?= $this->Html->link('Careers', array('controller' => 'pages', 'action' => 'Careers')); ?> </li>
-           <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' => 'Faq')); ?> </li>
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'contact_us')); ?> </li>
-
-
-                          
-            </ul>
-            <div class="span1"><p>Copyright ©2013 Sama Web Innovation Pvt. Ltd. All Rights Reserved.</p></div></div>
-		</div>
+		<div class="footer-line"></div>
 		<?php if (isset($this->request->query['utm_source']) &&
 		$this->request->query['utm_source'] == 'swaransoft'): ?>
 			<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">

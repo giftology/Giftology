@@ -46,9 +46,6 @@ class AppController extends Controller {
                             'RequestHandler', 'Cookie');
 
     function beforeFilter() {
-    	if ($this->params['controller'] == 'pages') {
-		    $this->Auth->allow('*'); // or ('page1', 'page2', ..., 'pageN')
-		 }
 	if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
 	    isset($this->params->query['rand']) && isset($this->params->query['key'])) {
 	    //json call
