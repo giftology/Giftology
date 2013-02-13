@@ -66,12 +66,6 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<a href=<?= FULL_BASE_URL; ?>>
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
 		</a>
-
-      
-
-
-
-
 		
 		<ul class="nav float-l">
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
@@ -105,28 +99,11 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		</div>
-	
-
+		
 		<div id="footer">
-			<div class="footer-line">
-			
-			<ul>  <li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' => 'about_us')); ?></li>
-			<li class="f"><?= $this->Html->link('Retailers', array('FAQ' => 'pages', 'action' => 'Retailers')); ?> </li>
-
-            <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
-          <li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'Terms_of_use')); ?> </li>
-           <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy_policy')); ?> </li>
-           <li class="f"><?= $this->Html->link('Careers', array('controller' => 'pages', 'action' => 'Careers')); ?> </li>
-           <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' => 'Faq')); ?> </li>
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'contact_us')); ?> </li>
-
-
-                          
-            </ul>
-            <div class="span1"><p>Copyright ©2013 Sama Web Innovation Pvt. Ltd. All Rights Reserved.</p></div></div>
+			<div class="footer-line"></div>
 		</div>
-	
+	</div>
 	<?php //echo $this->element('sql_dump'); ?>
 	<?= $this->Facebook->init(); ?>
 	<script type="text/javascript">
