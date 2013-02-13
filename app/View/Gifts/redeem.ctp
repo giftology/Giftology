@@ -15,10 +15,10 @@
         
 </div>
 
-<br>
+
 <a href="<?= $this->Html->url(array('controller'=>'gifts',
                                                       'action'=>'print_pdf',
-                    $gift['Gift']['id'])); ?>"><span class="arrow" style="margin-left:800px"><img title="print the voucher"  src="<?= IMAGE_ROOT; ?>printer.jpg" /></span></a>
+                    $gift['Gift']['id'])); ?>" target="_blank"><span class="arrow" style="margin-left:800px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.jpg" /></span></a>
 
 
 <div id="gift-details">
