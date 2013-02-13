@@ -402,21 +402,15 @@ class GiftsController extends AppController {
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
 				$message = $gift['Gift']['gift_message'];
-				$fb_post_to_receiver = $gift['Gift']['gift_message'].'- @['.$sender_fb_id.':]';
 			} else {
 				$message = $sender_name.' sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
-				$fb_post_to_receiver = '@['.$sender_fb_id.':] sent you a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 			}
 		}
 		// Post to both sender and receipients facebook wall
-		//$this->Giftology->postToFB($sender_fb_id, $access_token,
-			//		   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
-        $this->Giftology->postToFB($sender_fb_id, $access_token,
-                       $this->getGiftURL($gift_id, 'Sender'), '@['.$sender_fb_id.':] sent '.(isset($receiver_name) ? '@['.$receiver_fb_id.':]' : '').' a real gift voucher on Giftology.com');
-		//$this->Giftology->postToFB($receiver_fb_id, $access_token,
-					   //$this->getGiftURL($gift_id, 'Receiver'), $message);
-        $this->Giftology->postToFB($receiver_fb_id, $access_token,
-                       $this->getGiftURL($gift_id, 'Receiver'), $fb_post_to_receiver);
+		$this->Giftology->postToFB($sender_fb_id, $access_token,
+					   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
+		$this->Giftology->postToFB($receiver_fb_id, $access_token,
+					   $this->getGiftURL($gift_id, 'Receiver'), $message);
 		
 		// Send email to receipients about gifts sent
 		if ($receiver_email) {
