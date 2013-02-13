@@ -412,7 +412,7 @@ class GiftsController extends AppController {
 		//$this->Giftology->postToFB($sender_fb_id, $access_token,
 			//		   $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? $receiver_name : '').' a real gift voucher on Giftology.com');
         $this->Giftology->postToFB($sender_fb_id, $access_token,
-                       $this->getGiftURL($gift_id, 'Sender'), 'Sent '.(isset($receiver_name) ? '@['.$receiver_fb_id.':]' : '').' a real gift voucher on Giftology.com');
+                       $this->getGiftURL($gift_id, 'Sender'), '@['.$receiver_fb_id.':] sent '.(isset($receiver_name) ? '@['.$receiver_fb_id.':]' : '').' a real gift voucher on Giftology.com');
 		//$this->Giftology->postToFB($receiver_fb_id, $access_token,
 					   //$this->getGiftURL($gift_id, 'Receiver'), $message);
         $this->Giftology->postToFB($receiver_fb_id, $access_token,
