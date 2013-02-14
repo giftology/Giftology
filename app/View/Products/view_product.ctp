@@ -57,15 +57,30 @@
 
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
-                if (!valid) {
-                    $("#error_email").show();
-                    e = true;
-                }
-                else{
-                    $("#error_email").hide();    
-                }
 
-
+                if ($("#email").val().length == 0)
+                 {
+                    /*$("#error_email").show();
+                    e = true;*/
+                    var r=confirm("continue without email address!");
+                    if (r==true)
+                      {
+                         return true;
+                      }
+                    else
+                      {
+                        e = true;
+                      }
+                    }
+               else if(!valid)
+                        {
+                          $("#error_email").show();
+                             e = true;  
+                        }
+                else if(valid)
+                        {
+                            $("#error_email").hide();    
+                        }
                 if(e) return false;
             });
            
@@ -204,7 +219,7 @@
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
                 </div> 
                 <div class="input email">
-                    <label for="email">Send email to</label>
+                    <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
                     <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
                     'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
                     <div class="error_message" id="error_email" style="display:none; margin-left:120px;">

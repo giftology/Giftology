@@ -63,12 +63,6 @@ class Gift extends AppModel {
                 'rule' => array('notEmpty'),
                 'message' => 'State'
             )
-        ),
-          'reciever_email' => array(
-            'required' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Email'
-            )
         )
          
     );
