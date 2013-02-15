@@ -21,7 +21,6 @@ class GiftologyComponent extends Component {
               'name' => $receiver_name,
               'caption' => $message,
               'description' => $message,
-              'actions' => array('link' => $url, $name => $receiver_name),
               'place' => '185972794801597',
               'tags' => $receiver_fb_id
 	        );
