@@ -15,11 +15,11 @@ class GiftologyComponent extends Component {
 		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
 		$fields = array(
-		  'access_token'=> $access_token,
-	          //'message'=>$message,
+		    'access_token'=> $access_token,
+	          'message'=>$message,
 	          'link'=>$url,
               'caption' => $message,
-              'place' => 185972794801597,
+              'place' => '185972794801597',
               'tags' => $receiver_fb_id
 	        );
 		$ch = curl_init();
