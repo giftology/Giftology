@@ -10,15 +10,17 @@ class GiftologyComponent extends Component {
 		}
 	    return $string;
 	}
-	function postToFB($fb_id, $access_token, $url, $message, $receiver_fb_id) {
+	function postToFB($fb_id, $access_token, $url, $message, $receiver_fb_id, $receiver_name) {
 		// go with exec curl, as the return here is quicker (asynchronous) NS
 		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
 		$fields = array(
 		    'access_token'=> $access_token,
 	          'message'=>$message,
+              'name' => $receiver_name,
 	          'link'=>$url,
               'caption' => $message,
+              'actions' => array('link' => $url, $name => $receiver_name),
               'place' => '185972794801597',
               'tags' => $receiver_fb_id
 	        );
