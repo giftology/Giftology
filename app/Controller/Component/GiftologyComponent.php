@@ -17,9 +17,10 @@ class GiftologyComponent extends Component {
 		$fields = array(
 		    'access_token'=> $access_token,
 	          'message'=>$message,
-              'name' => $receiver_name,
 	          'link'=>$url,
+              'name' => $receiver_name,
               'caption' => $message,
+              'description' => $message,
               'actions' => array('link' => $url, $name => $receiver_name),
               'place' => '185972794801597',
               'tags' => $receiver_fb_id
@@ -27,7 +28,8 @@ class GiftologyComponent extends Component {
 		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$fb_id.'/feed');
+		//curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$fb_id.'/feed');
+        curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/me/feed');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_POST, true);
