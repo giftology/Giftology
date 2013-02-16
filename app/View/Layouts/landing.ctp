@@ -26,6 +26,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		Giftology | The Social Gifting Company | Homepage
 	</title>
 	<?php if (isset($fb_title)): ?>
+          <meta property="og:type" content="giftology:gift" />
           <meta property="og:url" content="<?= $fb_url; ?>" />
 	  <meta property="og:title" content="<?= $fb_title; ?>" /> 
 	  <meta property="og:image" content="<?= $fb_image; ?>" /> 
