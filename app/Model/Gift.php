@@ -63,7 +63,7 @@ class Gift extends AppModel {
                 'rule' => array('notEmpty'),
                 'message' => 'State'
             )
-        ),
+        )
          
     );
 	public $belongsTo = array(
