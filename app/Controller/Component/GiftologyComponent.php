@@ -15,7 +15,7 @@ class GiftologyComponent extends Component {
 		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
 		$fields = array(
-		    'access_token'=> $access_token,
+		  'access_token'=> $access_token,
 	          'message'=>$message,
 	          'link'=>$url,
 	          'place'=>'185972794801597',
@@ -26,7 +26,6 @@ class GiftologyComponent extends Component {
 
 		//set the url, number of POST vars, POST data
 		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$sender_fb_id.'/feed');
-		//curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$fb_id.'/feed');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_POST, true);
