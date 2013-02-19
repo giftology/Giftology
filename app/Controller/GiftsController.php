@@ -401,7 +401,7 @@ class GiftsController extends AppController {
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
-				//$message = $gift['Gift']['gift_message'];
+				$email_message = $gift['Gift']['gift_message'];
 				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
 			} else {
 				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
@@ -432,7 +432,7 @@ class GiftsController extends AppController {
 				     'receiver' => $receiver_name,
 				     'vendor' => $vendor_name,
 				     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-				     'message' => $message,
+				     'message' => $email_message,
 				     'value' => $gift['Gift']['gift_amount'],
 				     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
 		    ->send();
