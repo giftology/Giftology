@@ -5,6 +5,15 @@
                 var e = false;
                 var emailRegex = new RegExp(/^[0-9-+]+$/);
                 var valid_phone = emailRegex.test($("#phone_len").val());
+                if($("#text_message").val().length == 0){
+                    //alert("shu");
+                    $("#error_text").show();
+                        return false;
+                }
+                else{
+                    $("#error_text").hide();
+                }
+
                 if(!valid_phone || $("#phone_len").val().length < 10){
                     $("#error_phone").show();
                         e = true;
@@ -139,6 +148,7 @@
                 <div class="greeting-bubble">
                     <?php echo $this->Form->textarea("gift-message" ,array('label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
                 </div>
+                
                 <div class="shadow-wrapper">
                     <div class="frame">
                         <div class="img-placeholder male">
@@ -245,8 +255,9 @@
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
-                    <?php echo $this->Form->textarea("gift-message" ,array('label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
                 </div>
+                
                 <div class="shadow-wrapper">
                     <div class="frame">
                         <div class="img-placeholder male">
@@ -255,7 +266,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
+                    <h5 style="color:#FF0000">*please enter the message.</h5>
+                </div>
             </div>
+
             <h4>Deliver your gift</h4>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>

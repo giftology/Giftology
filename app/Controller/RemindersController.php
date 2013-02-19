@@ -8,6 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Reminder $Reminder
  */
 class RemindersController extends AppController {
+	
 	public $paginate = array(
 	        'limit' => 24,
 		'order' => array('friend_name' => 'ASC')
@@ -212,9 +213,9 @@ class RemindersController extends AppController {
 		$this->Session->setFlash(__('Reminder was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-	public function view_friends($type=null) {
+	public function view_friends($type=null) { 
 		$this->Reminder->recursive = -1;
-		$this->set('title_for_layout', 'Select a friend');
+        $this->set('title_for_layout', 'Select a friend');
 
 		// First off email maketing cookies 
         if ($this->Cookie->read('utm_source') == 'swaransoft') {
@@ -295,8 +296,8 @@ class RemindersController extends AppController {
 	}
 	exit();
     }
-    function send_reminder_email($user, $reminders) {
-	
+    function send_reminder_email($user,$reminders) {
+	$product = $this->Reminder->Product->find('all',array('conditions' => array('Product.display_order >' => 0)));
         $email = new CakeEmail();
 	$email->config('smtp')
               ->template('reminder', 'default') 
@@ -306,6 +307,7 @@ class RemindersController extends AppController {
 	      ->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': '.sizeof($reminders).' Birthdays this week')
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
 			       'num_birthdays' => sizeof($reminders),
+			       'products' => $product,
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
               ->send();
