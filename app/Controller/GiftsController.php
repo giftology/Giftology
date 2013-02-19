@@ -401,9 +401,11 @@ class GiftsController extends AppController {
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
-				$message = $gift['Gift']['gift_message'];
+				//$message = $gift['Gift']['gift_message'];
+				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
 			} else {
-				$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
+				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
+				$message = '@['.$sender_fb_id.']'.' sent '.'@['.$receiver_fb_id.']'.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 			}
 		}
 		// Post to both sender and receipients facebook wall

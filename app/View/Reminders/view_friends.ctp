@@ -1,4 +1,5 @@
     <div class="left-container">
+            <h5>Selected Friend will be tagged in your post</h5>
             <?php if(isset($today_users) && $today_users): ?>
             <div>
                     <h4 class="line-header">Celebrate today<div class="calendar"><p><?= date('d'); ?></p></div></h4>
