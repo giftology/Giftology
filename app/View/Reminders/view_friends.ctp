@@ -2,6 +2,7 @@
             <?php if(isset($today_users) && $today_users): ?>
             <div>
                     <h4 class="line-header">Celebrate today<div class="calendar"><p><?= date('d'); ?></p></div></h4>
+                    <h5>Selected Friend will be tagged in your post</h5>
                     <?= $this->element('friend_list',
                                         array('reminders' => $today_users,
                                               'ocasion' => 'Birthday', ),
@@ -14,6 +15,7 @@
             <?php if(isset($tommorrow_users) && $tommorrow_users): ?>
             <div>
                     <h4 class="line-header">Celebrate tommorrow (schedule gift now)</h4>
+                    <h5>Selected Friend will be tagged in your post</h5>
                     <?= $this->element('friend_list',
                                         array('reminders' => $tommorrow_users,
                                               'ocasion' => 'Birthday', ),
@@ -26,6 +28,7 @@
             <?php if(isset($this_month_users) && $this_month_users): ?>
             <div>
                     <h4 class="line-header">Celebrate in <?= date("F"); ?> (schedule gift now)</h4>
+                    <h5>Selected Friend will be tagged in your post</h5>
                     <?= $this->element('friend_list',
                                         array('reminders' => $this_month_users,
                                               'ocasion' => 'Birthday', ),
@@ -37,6 +40,7 @@
             <?php if(isset($next_month_users) && $next_month_users): ?>
             <div>
                     <h4 class="line-header">Celebrate in <?= date("F", strtotime(date('Y-m-d')."+ 1month")); ?> (schedule gift now)</h4>
+                    <h5>Selected Friend will be tagged in your post</h5>
                     <?= $this->element('friend_list',
                                         array('reminders' => $next_month_users,
                                               'ocasion' => 'Birthday', ),
@@ -55,6 +59,7 @@
                         </div>
 
                     </h4>
+                    <h5>Selected Friend will be tagged in your post</h5>
                         <div id='paginator_nav'>
                                 
                         <?php
