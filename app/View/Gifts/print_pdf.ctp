@@ -1,7 +1,4 @@
-<?php echo $this->Html->css('style'); 
- 
-
-?>
+<?php echo $this->Html->css('style'); ?>
 
 <div class="mainpage" style="border-style:solid;border-width:1px;width:800px;height:auto">
 	<div class="header">
