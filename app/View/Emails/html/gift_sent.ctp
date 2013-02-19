@@ -86,7 +86,7 @@ your gift<br>
 <table border="0" cellpadding="10" cellspacing="0" style="background-color:#e86848;border:1px solid #c84f3d;border-radius:10px">
 <tr>
 <td align="center" valign="middle" style="padding-right:20px;padding-left:20px;border-collapse:collapse">
-<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="<?= $linkback; ?> target="_blank" style="border:0"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_with_fb.JPG" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
+<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="<?= $linkback; ?> target="_blank" style="border:0"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_withfb.jpg" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
 </div>
 </td>
 </tr>
