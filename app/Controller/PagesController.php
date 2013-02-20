@@ -51,6 +51,20 @@ class PagesController extends AppController {
  * @param mixed What page to display
  * @return void
  */
+
+	public function beforeFilter(){
+		if ($this->Auth->user()) {
+	    // if a user is logged in
+
+		    $this->set('user', $this->Auth->user());
+	        $this->set('facebook_user', $this->Connect->user());
+		}
+        
+		if($this->params['controller']=='pages'){
+			$this->Auth->Allow($this->action);
+			$this->set('user', $this->Auth->user());
+		}
+	}
 	public function display() {
 		$path = func_get_args();
 
@@ -70,6 +84,12 @@ class PagesController extends AppController {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
-		$this->render(implode('/', $path));
+
+		if($this->params['controller']=='pages'){
+			$controller = array('slash' => '', 'controller' => $this->params['controller']);
+			$final_path = array_merge($controller, $path);
+			$this->render(implode('/', $final_path));	
+		}
+		else $this->render(implode('/', $path));
 	}
 }
