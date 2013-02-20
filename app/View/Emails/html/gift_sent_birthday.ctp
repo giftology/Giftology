@@ -1,7 +1,3 @@
-<html>
-<head>
-</head>
-<body>
 <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;min-height:100%!important;width:100%!important">
 <tr>
 <td align="center" valign="top" style="border-collapse:collapse;height:1000px"><font color="#550055">
@@ -43,7 +39,7 @@
 <span style="font-size:24px"><span style="color:#696969">Hey <?= $receiver; ?> !</span>
     <br>
     <br>
-    <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">Welcome to Giftology</span><br>
+    <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">HAPPY BIRTHDAY!!</span><br>
 <h2 style="text-align:left;color:#ac8e75;font-family:Helvetica;font-size:30px;letter-spacing:-1px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0">
 </h2>
 <span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms;width:50px;"><?= $sender; ?> has sent you an awesome gift via <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">giftology.com</span></a></span>
@@ -82,7 +78,7 @@ your gift<br>
 <table border="0" cellpadding="10" cellspacing="0" style="background-color:#e86848;border:1px solid #c84f3d;border-radius:10px">
 <tr>
 <td align="center" valign="middle" style="padding-right:20px;padding-left:20px;border-collapse:collapse">
-<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="<?= $linkback; ?> target="_blank" style="border:0"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_withfb.jpg" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
+<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="<?= $linkback; ?>" target="_blank" style="border:0"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_withfb.jpg" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
 </div>
 </td>
 </tr>
@@ -167,5 +163,4 @@ your gift<br>
 </table>
 </div>
 </div>
-</body>
-</html>
+

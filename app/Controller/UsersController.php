@@ -279,8 +279,10 @@ class UsersController extends AppController {
         }
     }
     function afterFacebookLogin($first_login) {
-    	if ($first_login) {
-    	    	return $this->redirect($this->Auth->redirect());
+    if ($first_login) 
+        {
+            $this->send_welcome_email();
+            return $this->redirect($this->Auth->redirect());
     	}
         $user = $this->Auth->user(); 
 
@@ -319,6 +321,8 @@ class UsersController extends AppController {
         ), array(
             'User.id' => $user['id']));
     }
+
+    
     public function refreshReminders ($id ) {
         //refesh reminders
         if ($this->setUserReminders($id)) {
@@ -440,7 +444,7 @@ class UsersController extends AppController {
               ->template('welcome', 'default') 
 	      ->emailFormat('html')
 	      ->to($this->Connect->user('email'))
-	      ->from(array('care@giftology.com' => 'Giftology Customer Care'))
+	      ->from(array('care@giftology.com' => 'Giftology'))
 	      ->subject('Welcome to Giftology')
               ->viewVars(array('name' => $this->Connect->user('name')))
               ->send();

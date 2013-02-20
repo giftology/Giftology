@@ -4,7 +4,7 @@
 border-width:15px;border-color:#f7f5ae">
  	<font color="#550055">
  		<h1 style="text-align:left;color:#e86848;display:block;font-family:Helvetica;font-size:48px;font-weight:bold;letter-spacing:-4px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0">
-			<a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><img align="right" height="89" src="<?= IMAGE_ROOT; ?>GiftologyDOTCOM_COMPLETE_Logo.jpg" style="font-size:48px;letter-spacing:-4px;line-height:53.333335876464844px;text-align:center;min-height:89px;width:200px;border:0;outline:none;text-decoration:none;display:inline" width="200"></a>
+			<a href="" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><img align="right" height="89" src="<?= IMAGE_ROOT; ?>GiftologyDOTCOM_COMPLETE_Logo.jpg" style="font-size:48px;letter-spacing:-4px;line-height:53.333335876464844px;text-align:center;min-height:89px;width:200px;border:0;outline:none;text-decoration:none;display:inline" width="200"></a>
 		</h1>
     	<br>
     	 <br>
@@ -26,7 +26,7 @@ border-width:15px;border-color:#f7f5ae">
 
 						  <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[1]['Vendor']['wide_image']; ?>" /></a>
 
-						  <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[2]['Vendor']['wide_image']; ?>" /></a><br>
+						  <a href="<?= $linkback; ?>" style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[2]['Vendor']['wide_image']; ?>" /></a><br>
 
 						  
 
@@ -53,16 +53,16 @@ border-width:15px;border-color:#f7f5ae">
                 <table width="570px" cellpadding="0" align="center" cellspacing="0" border="0" >
                     <tr>
                         <td width="33%" align="center" valign="top">
-                            <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
+                            <a href="<?= $linkback; ?>" style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
                         </td>
                           <td width="33%" align="center" valign="top">
                             <?php if (isset($reminders[$i+1])): ?>
-                            <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i+1]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
+                            <a href="<?= $linkback; ?>" style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i+1]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
                             <?php endif; ?>
                           </td>
                         <td width="33%" align="center" valign="top">
                             <?php if (isset($reminders[$i+2])): ?>
-                            <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i+2]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
+                            <a href="<?= $linkback; ?>" style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i+2]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -77,7 +77,7 @@ border-width:15px;border-color:#f7f5ae">
                     </tr>
                     <tr>
                         <td width="33%" align="center" valign="top">
-                            <a href="<?= $linkback; ?> style="border:0"><img style="border:0" src="<?= IMAGE_ROOT; ?>/send-gift-btn.jpg" alt="Click here to send Gift" /></a>
+                            <a href="<?= $linkback; ?>"" style="border:0"><img style="border:0" src="<?= IMAGE_ROOT; ?>/send-gift-btn.jpg" alt="Click here to send Gift" /></a>
                         </td>
                     </tr>
                             </table>
@@ -220,23 +220,14 @@ border-width:15px;border-color:#f7f5ae">
 </table>
 </center><font color="#550055">
 <center>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 <table border="0" cellpadding="20" cellspacing="0" width="100%" style="background:#eeeeee!important;border-top:1px solid #dddddd;clear:both">
 <tr>
 <td align="center" valign="top" style="padding-bottom:0">
 <table border="0" cellpadding="0" cellspacing="0" width="600">
 <tr>
 <td align="left" valign="top" style="color:#505050!important;font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:none!important;vertical-align:top!important;text-align:left!important">
-Sent to <a href="mailto:varun@giftology.com" target="_blank">varun@giftology.com</a> — <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:underline!important;color:#404040!important" target="_blank"><em>why did I get this?</em></a>
-<br>
-<a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:none!important;color:#369!important" target="_blank">unsubscribe from this list</a> |
-<a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:none!important;color:#369!important" target="_blank">update subscription preferences</a>
-<br>
+
 <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" target="_blank">giftology.com</a> • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010
 </tr>
 </table>
