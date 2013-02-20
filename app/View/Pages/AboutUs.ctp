@@ -102,7 +102,7 @@ $("img[rel]").overlay({mask: '#000'});
                  
                    </div>
                    <div class="span">
-                        <IMG SRC="../img/varun.png" rel="#mies2">
+                        <IMG SRC="../img/VARUN.png" rel="#mies2">
                          	<div class="simple_overlay" id="mies2">
                              <!-- large image -->
                                
