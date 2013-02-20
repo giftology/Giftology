@@ -17,7 +17,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-$cakeDescription = __d('cake_dev', 'Giftology: Retailers');
+$cakeDescription = __d('cake_dev', 'Giftology: AboutUs');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php echo $this->Facebook->html(); ?>
@@ -95,7 +95,7 @@ $("img[rel]").overlay({mask: '#000'});
 
     
                                      
-                             </div>
+                            </div>
                       	  <p><strong>Aman Narang</strong></p>
                         	<p>Co-Founder & Head Business Development</p>
 

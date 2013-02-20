@@ -94,7 +94,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
 		else{
 			echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-							'redirect' => array('controller'=>'Pages', 'action'=>'AboutUs'))); 
+							'redirect' => array('controller'=>'Reminders', 'action'=>'view_friends'))); 
 		} ?>
 	</div>
 				
