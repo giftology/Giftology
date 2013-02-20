@@ -95,7 +95,7 @@ $("img[rel]").overlay({mask: '#000'});
 
     
                                      
-                             </div>
+                            </div>
                       	  <p><strong>Aman Narang</strong></p>
                         	<p>Co-Founder & Head Business Development</p>
 
