@@ -86,7 +86,7 @@ class PagesController extends AppController {
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 
 		if($this->params['controller']=='pages'){
-			$controller = array('slash' => '', 'controller' => $this->params['controller']);
+			$controller = array('slash' => '', 'controller' => ucfirst($this->params['controller']));
 			$final_path = array_merge($controller, $path);
 			$this->render(implode('/', $final_path));	
 		}
