@@ -51,7 +51,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 	<div class="content">
 		<h3>Merchants/Retailers</h3>
 <h4>Partner with us!</h4>
-<p>Giftology is the new age, social gifting platform that presents your brand/products to 71 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. 
-We help generate in person and online traffic for top brands by letting customers send free and paid gifts to their friends and family via Facebook. Learn how we can work together to help you increase sales with Giftology by filling out the form below (we can use the template from wrap/modify it or simply give an email id like <B> partner@giftology.com </B> )</p>
+<p>Email us at partner@giftology.com</p>
 </div>
 </div>

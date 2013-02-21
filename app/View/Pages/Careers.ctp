@@ -56,6 +56,6 @@ ul.left-menu li a { font-size:13px;  color:#fff}
    <div id="foot_content" >
 	<div class="content">
 		<h3>Join us</h3>
-<p>simple email like betheteam@giftology.com  can be created and put up here.</p>
+<p>Email us at career@giftology.com</p>
 </div>
 </div>
