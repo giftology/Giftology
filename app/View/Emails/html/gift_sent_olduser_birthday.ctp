@@ -1,28 +1,14 @@
-<html>
-<head>
-</head>
-<body>
 <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;min-height:100%!important;width:100%!important">
 <tr>
 <td align="center" valign="top" style="border-collapse:collapse;height:1000px"><font color="#550055">
-<table border="0" cellpadding="10" cellspacing="0" width="600">
-<tr>
-    <td valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="10" cellspacing="0" width="100%">
-<tr>
-<td valign="top" style="border-collapse:collapse">
-</tr>
-</table>
-</td>
-</tr>
-</table>
+
 </font><table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#ffffff">
 <tr>
     <td align="center" valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#f7f5ae;border-bottom:0">
+<table border="0" cellpadding="0" cellspacing="0" width="600" style="border-bottom:0">
 <tr>
 <td style="border-collapse:collapse;color:#202020;font-family:Helvetica;font-size:34px;font-weight:bold;line-height:100%;text-align:center;vertical-align:middle">
-<br>
+
 <!--<img src="<?= IMAGE_ROOT; ?>/giftbox_yellowtop.jpg" height="245" width="600" style="display:block;border:0;min-height:auto;line-height:100%;outline:none;text-decoration:none">-->
 </td>
 </tr>
@@ -43,7 +29,7 @@
 <span style="font-size:24px"><span style="color:#696969">Hey <?= $receiver; ?> !</span>
     <br>
     <br>
-    <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">Welcome to Giftology</span><br>
+    <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">HAPPY BIRTHDAY!!</span><br>
 <h2 style="text-align:left;color:#ac8e75;font-family:Helvetica;font-size:30px;letter-spacing:-1px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0">
 </h2>
 <span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms;width:50px;"><?= $sender; ?> has sent you an awesome gift via <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">giftology.com</span></a></span>
@@ -164,5 +150,4 @@ your gift<br>
 </table>
 </div>
 </div>
-</body>
-</html>
+

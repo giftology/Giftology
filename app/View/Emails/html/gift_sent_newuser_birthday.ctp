@@ -1,28 +1,15 @@
+<html>
+<head>
+</head>
+<body>
 <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;min-height:100%!important;width:100%!important">
 <tr>
-<td align="center" valign="top" style="border-collapse:collapse;height:1000px"><font color="#550055">
-<table border="0" cellpadding="10" cellspacing="0" width="600">
-<tr>
-    <td valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="10" cellspacing="0" width="100%">
-<tr>
-<td valign="top" style="border-collapse:collapse">
-</tr>
-</table>
-</td>
-</tr>
-</table>
+<td align="center" valign="top" style="border-collapse:collapse"><font color="#550055">
+
 </font><table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#ffffff">
 <tr>
     <td align="center" valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#f7f5ae;border-bottom:0">
-<tr>
-<td style="border-collapse:collapse;color:#202020;font-family:Helvetica;font-size:34px;font-weight:bold;line-height:100%;text-align:center;vertical-align:middle">
-<br>
-<!--<img src="<?= IMAGE_ROOT; ?>/giftbox_yellowtop.jpg" height="245" width="600" style="display:block;border:0;min-height:auto;line-height:100%;outline:none;text-decoration:none">-->
-</td>
-</tr>
-</table>
+
 </td>
 </tr>
 <tr>
@@ -34,22 +21,26 @@
 <tr>
 <td valign="top" style="border-collapse:collapse">
 <div style="color:#505050;font-family:Helvetica;font-size:14px;line-height:150%;text-align:left"><font color="#550055"><h1 style="text-align:left;color:#e86848;display:block;font-family:Helvetica;font-size:48px;font-weight:bold;letter-spacing:-4px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0">
-<a href="" target="_blank" style="border:0"><img align="right" height="89" src="<?= IMAGE_ROOT; ?>GiftologyDOTCOM_COMPLETE_Logo.jpg" style="font-size:48px;letter-spacing:-4px;line-height:53.333335876464844px;text-align:center;min-height:89px;width:200px;border:0;outline:none;text-decoration:none;display:inline" width="200"></a></h1>
-   
-<span style="font-size:24px"><span style="color:#696969">Hey <?= $receiver; ?> !</span>
+<a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><img align="right" height="89" src="<?= IMAGE_ROOT; ?>GiftologyDOTCOM_COMPLETE_Logo.jpg" style="font-size:48px;letter-spacing:-4px;line-height:53.333335876464844px;text-align:center;min-height:89px;width:200px;border:0;outline:none;text-decoration:none;display:inline" width="200"></a></h1>
     <br>
-    <br>
+     <br>
+<span style="font-size:26px"><span style="color:#696969">Hey <?= $receiver; ?> !</span>
+    <br> <br>
     <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">HAPPY BIRTHDAY!!</span><br>
-<h2 style="text-align:left;color:#ac8e75;font-family:Helvetica;font-size:30px;letter-spacing:-1px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0">
-</h2>
-<span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms;width:50px;"><?= $sender; ?> has sent you an awesome gift via <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">giftology.com</span></a></span>
-<br><br>
+<h2 style="text-align:left;color:#ac8e75;font-family:Helvetica;font-size:30px;letter-spacing:-1px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:1px;margin-left:0">
+<br></h2>
+<span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms"><?= $sender; ?> has sent you an awesome gift via <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">giftology.com</span></a></span><br><br>
+<span style="color:#696969;font-size:20px; font-family:comic sans ms">Gift voucher worth &#x20b9;<?= $value; ?></span><br><br>
 <textarea style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms" rows="4" cols="40"><?=$message;?></textarea>
-    <br>
+
+    
     <br>
 
-        <span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"></span><span style="color:#696969;font-size:16px; font-family:comic sans ms">You can redeem your gift by logging into your giftology account. NOW!</span> <br><br>
-        <span style="color:#696969;font-size:20px; font-family:comic sans ms">Gift voucher worth &#x20b9;<?= $value; ?></span> 
+        <span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"><a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:#b22222;font-size:16px">Sign Up</span></a><span style="color:#696969;font-size:16px"> by logging into giftology.com and you can view how to redeem your (vendor name) gift. Come and join the new gifting Revolution. NOW !</span><br><br><span style="color:#b22222;font-size:16px">Just 3 simple clicks to send amazing gifts.</span><br><br>
+            <span style="color:#696969;font-size:16px">
+Log on to giftology.com & connect to facebook.<br>
+Select the friend you want to send the gift to.<br>
+                Select the gift you want to send.</span>
 </div><font color="#550055">
 </div>
 </td>
@@ -59,17 +50,15 @@
 </tr>
 <tr>
 <td align="center" colspan="2" valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="10" cellspacing="0" width="670" style="border-collapse:collapse;height:1000px">
+<table border="0" cellpadding="10" cellspacing="0" width="450">
 <tr>
 <td valign="middle" width="50%" style="padding-top:0px;border-collapse:collapse">
-<div style="color:#e86848;font-family:Helvetica;font-size:48px;font-weight:bold;line-height:150%;text-align:center">
-<a href="" style="border:0"><img align="none" width="200" height="64" src="<?= $wide_image_link; ?>"></a></div>
-
+<div style="color:#e86848;font-family:Helvetica;font-size:48px;font-weight:bold;line-height:150%;text-align:center"<a href="" style="border:0"><img align="none" width="200" height="64" src="<?= $wide_image_link; ?>"></a></div>
 </td>
 <td valign="middle" width="50%" style="padding-top:0px;border-collapse:collapse">
-<div style="color:#707070;font-family:Helvetica;font-size:11px;line-height:125%;text-align:left"><span style="color:#b22222"><span style="font-size:24px"><span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"><a href="<?= $linkback; ?>" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">Click here</span></a><br><br>
+<div style="color:#707070;font-family:Helvetica;font-size:11px;line-height:125%;text-align:left"><span style="color:#b22222"><span style="font-size:24px"><span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"><a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">Click here</span></a><br><br>
 to redeem <br><br>
-your gift<br>
+your gift<br>   
 <br></span></span></span></div>
 </td>
 </tr>
@@ -78,7 +67,7 @@ your gift<br>
 <table border="0" cellpadding="10" cellspacing="0" style="background-color:#e86848;border:1px solid #c84f3d;border-radius:10px">
 <tr>
 <td align="center" valign="middle" style="padding-right:20px;padding-left:20px;border-collapse:collapse">
-<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="<?= $linkback; ?>" target="_blank" style="border:0"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_withfb.jpg" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
+<div style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none"><a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#ffffff;font-family:Helvetica;font-size:20px;font-weight:bold;line-height:100%;text-align:center;text-decoration:none" target="_blank"><img align="none" height="40" src="<?= IMAGE_ROOT; ?>connect_withfb.jpg" style="width:297px;min-height:40px;border:0;line-height:100%;outline:none;text-decoration:none" width="297"></a><br>
 </div>
 </td>
 </tr>
@@ -102,10 +91,10 @@ your gift<br>
 </td>
 </tr>
 <tr>
-<td align="center" valign="top" style="border-collapse:collapse;height:1000px">
+<td align="center" valign="top" style="border-collapse:collapse">
 <table border="0" cellpadding="10" cellspacing="0" width="600" style="background-color:#f7f5ae">
 <tr>
-<td valign="top" style="border-collapse:collapse;background-color:#f7f5ae">
+<td valign="top" style="border-collapse:collapse">
 <table border="0" cellpadding="10" cellspacing="0" width="100%">
 <tr>
 <td colspan="2" valign="middle" style="border-collapse:collapse">
@@ -145,10 +134,7 @@ your gift<br>
 
 <table border="0" cellpadding="20" cellspacing="0" width="100%" style="background:#eeeeee!important;border-top:1px solid #dddddd;clear:both">
 <tr>
-<td align="center" valign="top" style="padding-bottom:0">
-<table border="0" cellpadding="0" cellspacing="0" width="600">
-<tr>
-<td align="left" valign="top" style="color:#505050!important;font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:none!important;vertical-align:top!important;text-align:left!important">
+
 
 <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" target="_blank">giftology.com</a> • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010
 </tr>
@@ -157,10 +143,11 @@ your gift<br>
 </tr>
 </table>
 </center>
-</font></div>
+</font><img src="http://giftology.us6.list-manage.com/track/open.php?u=6598e30bdddd14828661338d9&amp;id=1ab4bbc7b7&amp;e=7423a8e233" height="1" width="1"></div>
 </font>
 </table>
 </table>
 </div>
 </div>
-
+</body>
+</html>

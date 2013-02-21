@@ -223,10 +223,7 @@ border-width:15px;border-color:#f7f5ae">
 
 <table border="0" cellpadding="20" cellspacing="0" width="100%" style="background:#eeeeee!important;border-top:1px solid #dddddd;clear:both">
 <tr>
-<td align="center" valign="top" style="padding-bottom:0">
-<table border="0" cellpadding="0" cellspacing="0" width="600">
-<tr>
-<td align="left" valign="top" style="color:#505050!important;font-family:Verdana,Arial,Sans!important;font-size:11px!important;font-weight:normal!important;text-decoration:none!important;vertical-align:top!important;text-align:left!important">
+
 
 <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" target="_blank">giftology.com</a> • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010
 </tr>

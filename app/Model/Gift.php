@@ -108,6 +108,13 @@ class Gift extends AppModel {
             'conditions' => '',
             'fields' => '',
             'order' => ''
+        ),
+        'UserProfile' => array(
+            'className' => 'UserProfile',
+            'foreignKey' => '',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
         )
 	);
 
