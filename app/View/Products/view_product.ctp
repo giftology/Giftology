@@ -5,15 +5,7 @@
                 var e = false;
                 var emailRegex = new RegExp(/^[0-9-+]+$/);
                 var valid_phone = emailRegex.test($("#phone_len").val());
-                if($("#text_message").val().length == 0){
-                    //alert("shu");
-                    $("#error_text").show();
-                        return false;
-                }
-                else{
-                    $("#error_text").hide();
-                }
-
+              
                 if(!valid_phone || $("#phone_len").val().length < 10){
                     $("#error_phone").show();
                         e = true;
@@ -96,6 +88,8 @@
         });
       
       </script>
+     
+
      <div>
             <ul id="breadcrumbs">
                 <li class="breadcrumb home events">
