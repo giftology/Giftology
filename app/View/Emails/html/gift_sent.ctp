@@ -5,25 +5,12 @@
 <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;min-height:100%!important;width:100%!important">
 <tr>
 <td align="center" valign="top" style="border-collapse:collapse;height:1000px"><font color="#550055">
-<table border="0" cellpadding="10" cellspacing="0" width="600">
-<tr>
-    <td valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="10" cellspacing="0" width="100%">
-<tr>
-<td valign="top" style="border-collapse:collapse">
-</tr>
-</table>
-</td>
-</tr>
-</table>
+
 </font><table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#ffffff">
 <tr>
     <td align="center" valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color:#f7f5ae;border-bottom:0">
-<tr>
-<td style="border-collapse:collapse;color:#202020;font-family:Helvetica;font-size:34px;font-weight:bold;line-height:100%;text-align:center;vertical-align:middle">
-<br>
-<!--<img src="<?= IMAGE_ROOT; ?>/giftbox_yellowtop.jpg" height="245" width="600" style="display:block;border:0;min-height:auto;line-height:100%;outline:none;text-decoration:none">-->
+
+
 </td>
 </tr>
 </table>
