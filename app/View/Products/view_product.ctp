@@ -1,4 +1,4 @@
-    <script type="text/javascript">
+     <script type="text/javascript">
 
       $(document).ready(function(){
             $(".submit").click(function (){
@@ -153,7 +153,7 @@
                 </div>
             </div>
             <div class="delivery-sharing">
-            <center><h3>Shipping Address</h3></center>
+             <center><h3>Shipping Address</h3></center>
             <div class="error_message"></div>
 
             <?php $name = explode(" ", $receiver_name);
@@ -169,50 +169,51 @@
             </div>
             <div class="input email">
                 <label for="email">Last Name</label>
-                <div class="input email" ><?php echo $this->Form->input("last_name" ,array('label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$last_name))?></div>
+                <div class="input email" ><?php  echo $this->Form->input("last_name" ,array('label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$last_name))?></div>
             </div>
             <div class="input email">
                 <label for="email">Address</label>
-                <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address1','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $address1 ))?></div>
                 <div class="error_message" id="error_address" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the address.</h5>
                 </div>
             </div>
             <div class="input email">
                 <label for="email">City</label>
-                <div class="input email" ><?php  echo $this->Form->input("city" ,array('id'=>'city','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php  echo $this->Form->input("city" ,array('id'=>'city','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $city ))?></div>
                 <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the city.</h5>
                 </div>
              </div>
              <div class="input email">
                 <label for="email">Pin Code</label>
-                <div class="input email" ><?php echo $this->Form->input("pin_code" ,array('id' => 'pin_code', 'label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("pin_code" ,array('id' => 'pin_code', 'label' => false,'div' => false,'class'=>"umstyle5",'value'=> $pin_code ))?></div>
                 <div class="error_message" id="error_pin" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the 6 digit pincode</h5>
                 </div>
             </div>
             <div class="input email">
                 <label for="email">Phone</label>
-                <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_len','div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_len','div' => false,'class'=>"umstyle5",'value'=> $phone ))?></div>
                 <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
                 </div>
             </div>
             <div class="input email">
                 <label for="email">State</label>
-                <div class="input email" ><?php echo $this->Form->input("state" ,array('id' => 'state','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("state" ,array('id' => 'state','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=> $state))?></div>
                 <div class="error_message" id="error_state" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter state.</h5>
                 </div>
             </div>
             <div class="input email">
                 <label for="email">Country</label>
-                <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $country ))?></div>
                 <div class="error_message" id="error_country" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter country.</h5>
                 </div>
             </div>
+            <div class="input email" ><?php echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['id'] ))?></div>
@@ -225,7 +226,7 @@
                 <div class="input email">
                     <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
                     <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
-                    'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
+                    'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com",'value'=> $reciever_email ))?></div>
                     <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter valid email address.</h5>
                 </div>

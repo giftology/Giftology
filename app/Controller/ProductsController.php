@@ -13,7 +13,7 @@ class ProductsController extends AppController {
             'Product.display_order' => 'asc'
 	    )
 	);
-
+	public $uses = array( 'Product','User','UserAddress');
 	public function isAuthorized($user) {
 	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
 	        return true;
@@ -164,6 +164,20 @@ class ProductsController extends AppController {
 	
 	}
 	public function view_product($id=null) {
+		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$this->request->params['named']['receiver_id'])));
+        $reciever_id_user_table=$rec_id['User']['id'];
+        $reciever_address=$this->UserAddress->find('first',array('conditions'=>array('UserAddress.user_id'=>$reciever_id_user_table)));
+        $this->set('id',$reciever_address['UserAddress']['id']);
+		$this->set('address1',$reciever_address['UserAddress']['address1']);
+        $this->set('address2',$reciever_address['UserAddress']['address2']);
+        $this->set('city',$reciever_address['UserAddress']['city']);
+        $this->set('pin_code',$reciever_address['UserAddress']['pin_code']);
+        $this->set('phone',$reciever_address['UserAddress']['phone']);
+        $this->set('state',$reciever_address['UserAddress']['state']);
+        $this->set('country',$reciever_address['UserAddress']['country']);
+        $this->set('reciever_email',$reciever_address['UserAddress']['reciever_email']);
+
+
 		$this->Product->id = $id;
 		if (!$this->Product->exists()) {
 			throw new NotFoundException(__('Invalid product'));

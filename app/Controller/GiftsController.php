@@ -173,7 +173,7 @@ class GiftsController extends AppController {
                 }
                 $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
             }
-
+            $data1['id'] =  $this->data['gifts']['id'];
             $data1['user_id'] =  $receiver['User']['id'];
              $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
             if (array_key_exists('first_name', $this->data['gifts']))
