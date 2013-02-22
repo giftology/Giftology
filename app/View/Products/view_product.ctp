@@ -244,9 +244,12 @@
             <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
              
-                <div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
+                <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
-                </div> 
+                </div> -->
+            <div class="input checkbox">
+                <?php echo $this->Form->input('Share on'.$receiver_name.'Facebook wall', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); ?>
+            </div>
                 <div class="input email">
                     <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
                     <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
@@ -297,9 +300,12 @@
             <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
             <div class="delivery-sharing">
-                <div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
+                <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
-                </div>
+                </div>-->
+            <div class="input checkbox">
+                <?php echo $this->Form->input('Share on'.$receiver_name.'Facebook wall', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); ?>
+            </div>
                 <div class="input email">
                     <label for="email">Send email to</label>
                     <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>

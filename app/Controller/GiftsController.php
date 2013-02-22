@@ -198,7 +198,7 @@ class GiftsController extends AppController {
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
             $gift_message = $this->data['gifts']['gift-message'];
-            $post_to_fb = "true";
+            $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
             $receiver_birthday = $this->data['gifts']['receiver_birthday'];
 
@@ -315,7 +315,7 @@ class GiftsController extends AppController {
 							'OrderId' => $this->Gift->getLastInsertID()));	
 			} else {
 				if ($send_now) {
-					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID(), FB::getAccessToken());
+					$this->informSenderReceipientOfGiftSent($this->Gift->getLastInsertID(), FB::getAccessToken(), $post_to_fb);
 					$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one ? '));
 					$this->Mixpanel->track('Sent Gift', array());
 				} else {	    
@@ -372,7 +372,7 @@ class GiftsController extends AppController {
 		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
 		    $gift_id.'&utm_content='.$content;
 	}
-	function informSenderReceipientOfGiftSent($gift_id, $access_token) {
+	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
         $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
         $product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
@@ -423,7 +423,7 @@ class GiftsController extends AppController {
 		}
 		// Post to both sender and receipients facebook wall
 			$this->Giftology->postToFB($sender_fb_id, $receiver_fb_id, $access_token,
-					   $this->getGiftURL($gift_id, 'Receiver'), $message);
+					   $this->getGiftURL($gift_id, 'Receiver'), $message, $post_to_fb);
 
 			if (!$sender_email) $sender_email = 'cs@giftology.com';
 				if (!$sender_name) $sender_name = 'Giftology';
