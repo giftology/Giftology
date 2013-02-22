@@ -408,13 +408,9 @@ class GiftsController extends AppController {
 			$receiver_id = $this->Gift->User->find('first',array('conditions' => array('User.facebook_id' => $receiver_fb_id)));
 			$idd=$receiver_id['User']['id'];
 			$User_id = $this->Gift->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
-			//print_r($receiver_name);
-			//print_r($User_id);
-			//die();
+	
 
 			$sender_name = $gift['Sender']['UserProfile']['first_name'].$gift['Sender']['UserProfile']['last_name'];
-			//print_r($sender_name);
-			//die();
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
@@ -428,114 +424,30 @@ class GiftsController extends AppController {
 		// Post to both sender and receipients facebook wall
 			$this->Giftology->postToFB($sender_fb_id, $receiver_fb_id, $access_token,
 					   $this->getGiftURL($gift_id, 'Receiver'), $message);
-		
+
+			if (!$sender_email) $sender_email = 'cs@giftology.com';
+				if (!$sender_name) $sender_name = 'Giftology';
+			    
 		// Send email to receipients about gifts sent
 		if ($receiver_email && $User_id=="" && $receiver_birthday==date("Y-m-d")) 
 			{
-				//print_r($sender_name);
-				//die();
-				if (!$sender_email) $sender_email = 'cs@giftology.com';
-				if (!$sender_name) $sender_name = 'Giftology';
-			    $gift = $this->Gift->find('first', array(
-				'conditions' => array('Gift.id' => $gift_id),
-				'contain' => array(
-					'Product' => array('Vendor'))));
-			    $vendor_name = $gift['Product']['Vendor']['name'];
-			    $email = new CakeEmail();
-			    $email->config('smtp')
-			    ->template('gift_sent_newuser_birthday', 'default') 
-			    ->emailFormat('html')
-			    ->to($receiver_email)
-			    ->from(array($sender_email => $sender_name))
-			    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
-			    ->viewVars(array('sender' => $sender_name,
-					     'receiver' => $receiver_name,
-					     'vendor' => $vendor_name,
-					     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-					     'message' => $email_message,
-					     'value' => $gift['Gift']['gift_amount'],
-					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
-			    ->send();	
+				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_newuser_birthday');
 			}
 
-			else if ($receiver_email && $User_id=="") 
+		else if ($receiver_email && $User_id=="") 
 			{
-				
-				if (!$sender_email) $sender_email = 'cs@giftology.com';
-				if (!$sender_name) $sender_name = 'Giftology';
-			    $gift = $this->Gift->find('first', array(
-				'conditions' => array('Gift.id' => $gift_id),
-				'contain' => array(
-					'Product' => array('Vendor'))));
-			    $vendor_name = $gift['Product']['Vendor']['name'];
-			    $email = new CakeEmail();
-			    $email->config('smtp')
-			    ->template('gift_sent_newuser', 'default') 
-			    ->emailFormat('html')
-			    ->to($receiver_email)
-			    ->from(array($sender_email => $sender_name))
-			    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
-			    ->viewVars(array('sender' => $sender_name,
-					     'receiver' => $receiver_name,
-					     'vendor' => $vendor_name,
-					     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-					     'message' => $email_message,
-					     'value' => $gift['Gift']['gift_amount'],
-					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
-			    ->send();	
+				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_newuser');
 			}
 
 		else if ($receiver_email && $receiver_birthday==date("Y-m-d") && $User_id!="") 
 			{
-				if (!$sender_email) $sender_email = 'cs@giftology.com';
-				if (!$sender_name) $sender_name = 'Giftology';
-			    $gift = $this->Gift->find('first', array(
-				'conditions' => array('Gift.id' => $gift_id),
-				'contain' => array(
-					'Product' => array('Vendor'))));
-			    $vendor_name = $gift['Product']['Vendor']['name'];
-			    $email = new CakeEmail();
-			    $email->config('smtp')
-			    ->template('gift_sent_olduser_birthday', 'default') 
-			    ->emailFormat('html')
-			    ->to($receiver_email)
-			    ->from(array($sender_email => $sender_name))
-			    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
-			    ->viewVars(array('sender' => $sender_name,
-					     'receiver' => $receiver_name,
-					     'vendor' => $vendor_name,
-					     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-					     'message' => $email_message,
-					     'value' => $gift['Gift']['gift_amount'],
-					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
-			    ->send();	
+			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_olduser_birthday');
 			}
 
 		else if ($receiver_email)
 		 {	
-		 	if (!$sender_email) $sender_email = 'cs@giftology.com';
-			if (!$sender_name) $sender_name = 'Giftology';
-		    $gift = $this->Gift->find('first', array(
-			'conditions' => array('Gift.id' => $gift_id),
-			'contain' => array(
-				'Product' => array('Vendor'))));
-		    $vendor_name = $gift['Product']['Vendor']['name'];
-		    $email = new CakeEmail();
-		    $email->config('smtp')
-		    ->template('gift_sent', 'default') 
-		    ->emailFormat('html')
-		    ->to($receiver_email)
-		    ->from(array($sender_email => $sender_name))
-		    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
-		    ->viewVars(array('sender' => $sender_name,
-				     'receiver' => $receiver_name,
-				     'vendor' => $vendor_name,
-				     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-				     'message' => $email_message,
-				     'value' => $gift['Gift']['gift_amount'],
-				     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
-		    ->send();
-            
+		 	$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent');
+		    
             if($product_type['ProductType']['type']=='SHIPPED')
             {
                 $email->config('smtp')
@@ -555,6 +467,33 @@ class GiftsController extends AppController {
             }
 		}
 	}
+
+	function send_email ($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$template)
+	{
+		$gift = $this->Gift->find('first', array(
+				'conditions' => array('Gift.id' => $gift_id),
+				'contain' => array(
+					'Product' => array('Vendor'))));
+			    $vendor_name = $gift['Product']['Vendor']['name'];
+				
+			    $email = new CakeEmail();
+			    $email->config('smtp')
+			    ->template($template, 'default') 
+			    ->emailFormat('html')
+			    ->to($receiver_email)
+			    ->from(array($sender_email => $sender_name))
+			    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+			    ->viewVars(array('sender' => $sender_name,
+					     'receiver' => $receiver_name,
+					     'vendor' => $vendor_name,
+					     'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+					     'message' => $email_message,
+					     'value' => $gift['Gift']['gift_amount'],
+					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+			    ->send();	
+	}
+
+
 	function redeemGiftCode ($code) {
 		//XXX Needs authentication
 		$this->Gift->recursive = -1;

@@ -1,11 +1,17 @@
      <script type="text/javascript">
 
       $(document).ready(function(){
-            $(".submit").click(function (){
+            $("#form_shipping").click(function (){
                 var e = false;
                 var emailRegex = new RegExp(/^[0-9-+]+$/);
                 var valid_phone = emailRegex.test($("#phone_len").val());
-              
+               if($("#text_message").val().length == 0){
+                    $("#error_text").show();
+                        e = true;
+                }
+                else{
+                    $("#error_text").hide();
+                }
                 if(!valid_phone || $("#phone_len").val().length < 10){
                     $("#error_phone").show();
                         e = true;
@@ -88,6 +94,21 @@
         });
       
       </script>
+      <script type="text/javascript">
+
+      $(document).ready(function(){
+            $("#form_free").click(function (){
+                if($("#text_message").val().length == 0){
+                    $("#error_text").show();
+                        return false;
+                }
+                else{
+                    $("#error_text").hide();
+                }
+            });
+        });
+      </script>
+
      
 
      <div>
@@ -140,7 +161,7 @@
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
-                    <?php echo $this->Form->textarea("gift-message" ,array('label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
                 </div>
                 
                 <div class="shadow-wrapper">
@@ -150,6 +171,9 @@
                             <img src=<?= $photo_url; ?>>
                         </div>
                     </div>
+                </div>
+                 <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
+                    <h5 style="color:#FF0000">*please enter the message.</h5>
                 </div>
             </div>
             <div class="delivery-sharing">
@@ -173,7 +197,7 @@
             </div>
             <div class="input email">
                 <label for="email">Address</label>
-                <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address1','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $address1 ))?></div>
+                <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$address1))?></div>
                 <div class="error_message" id="error_address" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the address.</h5>
                 </div>
@@ -235,7 +259,7 @@
             <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
 
             <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name));?>  
+            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_shipping'));?>  
                
             </div>    
             </div>
@@ -284,7 +308,7 @@
             <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
 
             <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name));?>  
+            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
                
             </div>     
             </div>
