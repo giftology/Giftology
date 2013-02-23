@@ -248,7 +248,7 @@
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
                 </div> -->
             <div class="input checkbox">
-                <?php echo $this->Form->input('Share on'.$receiver_name.'Facebook wall', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); ?>
+                <?php echo $this->Form->input('Share on'.$receiver_name."'s Facebook wall", array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
             </div>
                 <div class="input email">
                     <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
@@ -304,7 +304,7 @@
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
                 </div>-->
             <div class="input checkbox">
-                <?php echo $this->Form->input('Share on'.$receiver_name.'Facebook wall', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'')); ?>
+                <?php echo $this->Form->input('Share on'.$receiver_name."'s Facebook wall", array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
             </div>
                 <div class="input email">
                     <label for="email">Send email to</label>
