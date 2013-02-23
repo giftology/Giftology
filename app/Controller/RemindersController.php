@@ -8,6 +8,8 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Reminder $Reminder
  */
 class RemindersController extends AppController {
+
+public $uses = array( 'Reminder','Product' );
 	
 	public $paginate = array(
 	        'limit' => 24,
@@ -297,7 +299,7 @@ class RemindersController extends AppController {
 	exit();
     }
     function send_reminder_email($user,$reminders) {
-	$product = $this->Reminder->Product->find('all',array('conditions' => array('Product.display_order >' => 0)));
+	$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0)));
         $email = new CakeEmail();
 	$email->config('smtp')
               ->template('reminder', 'default') 

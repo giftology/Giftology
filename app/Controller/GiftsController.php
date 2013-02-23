@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
-	public $uses = array( 'Gift','UserAddress','User','ProductType' );
+	public $uses = array( 'Gift','UserAddress','User','ProductType','UserProfile' );
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -372,9 +372,10 @@ class GiftsController extends AppController {
 		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
 		    $gift_id.'&utm_content='.$content;
 	}
+
 	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
-        $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
-        $product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
+		$product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
+		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
 
 		if (isset($this->request->params['named']['receiver_fb_id'])) 
@@ -407,7 +408,8 @@ class GiftsController extends AppController {
 
 			$receiver_id = $this->Gift->User->find('first',array('conditions' => array('User.facebook_id' => $receiver_fb_id)));
 			$idd=$receiver_id['User']['id'];
-			$User_id = $this->Gift->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
+
+			$User_id = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
 	
 
 			$sender_name = $gift['Sender']['UserProfile']['first_name'].$gift['Sender']['UserProfile']['last_name'];

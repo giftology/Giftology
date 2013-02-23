@@ -21,14 +21,7 @@ class Reminder extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-        'Product' => array(
-            'className' => 'Product',
-            'foreignKey' => '',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        )
+		)
 	);
         public function beforeSave($options = array()) {
             /// Crazy hack (NS).  Convert all birthdays to year 2012, so that we can order etc from the db
