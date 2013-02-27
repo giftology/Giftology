@@ -156,7 +156,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                 </div>
                        <!--no constraints for web portal-->
                 <div class="input email" style="margin-top:10px">
-                    <label for="email">Company/Website</label>
+                    <label for="email">Website</label>
                     <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "www.example.com" ))?>
                     </div>
                    
