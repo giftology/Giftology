@@ -93,7 +93,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <div class="flexslider">
           <ul class="slides">
             <li style="display: list-item;">
-  	    	    <img src="../img/slides.jpg">
+  	    	    <img src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
   	    		</li>
   	    		
           </ul>
@@ -102,10 +102,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
            <section class="show-case">
             <div class="showcase-wrap">
                 <ul>
-                    <li><img src="../img/carat-lane.jpg" alt=""></li>
-                    <li><img src="../img/firstcry.jpg" alt=""></li>
-                    <li><img src="../img/jabong.jpg" alt=""></li>
-                    <li><img src="../img/nirulas.jpg" alt=""></li>
+                    <li><img src="<?= FULL_BASE_URL; ?>/img/carat-lane.jpg" alt=""></li>
+                    <li><img src="<?= FULL_BASE_URL; ?>/img/firstcry.jpg" alt=""></li>
+                    <li><img src="<?= FULL_BASE_URL; ?>/img/jabong.jpg" alt=""></li>
+                    <li><img src="<?= FULL_BASE_URL; ?>/img/nirulas.jpg" alt=""></li>
                 </ul>
             </div>
          </section>
@@ -117,17 +117,17 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <ul>
                         <li>
                             <span class="title">1. Choose a Friend</span>
-                            <div class="box-block"><img src="../img/chose-frnd.png" alt=""></div>
+                            <div class="box-block"><img src="<?= FULL_BASE_URL; ?>/img/chose-frnd.png" alt=""></div>
                             <p>You don't need a reason but we<br> notify you of friends birthdays</p>
                         </li>
                         <li>
                             <span class="title">2. Select a Gift</span>
-                            <div class="box-block"><img src="../img/select-gift.png" alt=""></div>
+                            <div class="box-block"><img src="<?= FULL_BASE_URL; ?>/img/select-gift.png" alt=""></div>
                             <p>Choose the right gift for your<br>  friend or loved one</p>
                         </li>
                         <li>
                             <span class="title">3. Share the Joy!</span>
-                            <div class="box-block"><img src="../img/share-joy.png" alt=""></div>
+                            <div class="box-block"><img src="<?= FULL_BASE_URL; ?>/img/share-joy.png" alt=""></div>
                             <p>That's right! The gift notification is<br> delivered instantly via Facebook</p>
                         </li>
                     </ul>
