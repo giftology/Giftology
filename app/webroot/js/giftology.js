@@ -1,17 +1,17 @@
 $(document).ready(function(){
 	jQuery.ias({
-		container : "#friend_list",
-		item: ".image-wrapper",
-		pagination: "#paginator_nav",
-		next: ".next a",
-		loader: "../img/loader.gif",
+		container : '#friend_list',
+		item: '.image-wrapper',
+		pagination: '#paginator_nav',
+		next: '.next a',
+		loader: '<img src="img/loader.gif"/>'
 	});
 	jQuery.ias({
 		container : "#campaigns",
 		item: ".small-voucher",
 		pagination: "#paginator_nav",
 		next: ".next a",
-		loader: "../img/loader.gif",
+		loader: "../img/loader.gif"
 	});
 
         $('#flashMessage').delay(8000).slideUp(1000);
