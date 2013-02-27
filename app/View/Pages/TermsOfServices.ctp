@@ -59,9 +59,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: Terms Of Services');
 	
 				
 		
-		
-	
-                    	<h3>1. General Terms & Conditions</h3>
+		<center><h3>GENERAL TERMS & CONDITIONS</h3></center>
+	<br>
+                    	<h3>1.Terms & Conditions</h3>
                     		 
 <p>1.1 <a href="http://giftology.com">www.giftology.com</a>(the "<strong>Website</strong>") is a social gifting website, enabling its users to send and receive  gifts ("<strong>Gifts</strong>") to and from friends for gifts and products offered by Giftology and/or third party suppliers ("<strong>Merchants</strong>"). </p>
 <p>1.2   Giftology allows Merchants to market their brands through gifts offered on the Website. Note that in certain limited instances Giftology may promote its own products and/or services on the Website through Gifts.</p>

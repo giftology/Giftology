@@ -111,21 +111,22 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			<div class="footer-line">
 			
 			<ul>
+				<li class="f"> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
 		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'AboutUs')); ?></li>
 		<li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
 
             <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
             <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
          <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'Retailers')); ?> </li>
-           <li class="f"><?= $this->Html->link('Careers', array('controller' => 'pages', 'action' => 'Careers')); ?> </li>
+           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
            <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
            
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
+          
 
 
                           
             </ul>
-            <div class="span1"><p>Copyright © 2013 Sama Web Innovation Pvt. Ltd. All Rights Reserved.</p>
+            <div class="span1"><p>©Copyright 2013 Ltd. All Rights Reserved.</p>
             </div>
         </div>
 		<?php if (isset($this->request->query['utm_source']) &&

@@ -12,14 +12,14 @@
                 else{
                     $("#error_text").hide();
                 }
-                if(!valid_phone || $("#phone_len").val().length < 10){
+                if(!valid_phone || $("#phone_len").val().length < 10 || $("#phone_len").val().length >10){
                     $("#error_phone").show();
                         e = true;
                 }
                 else{
                     $("#error_phone").hide();
                 }
-                if($("#pin_code").val().length < 6){
+                if($("#pin_code").val().length < 6 ||$("#pin_code").val().length > 6){
                     $("#error_pin").show();
                         e = true;
                 }

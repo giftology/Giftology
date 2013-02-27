@@ -55,8 +55,13 @@ ul.left-menu li a { font-size:13px;  color:#fff}
           
    <div id="foot_content" >
 	<div class="content">
-		<h3>Contact us:</h3>
-<b>Looking for us?</b>
+		<center><h3>CONTACT US</h3></center>
+		<p>We always look for creative people so email us at <strong>career@giftology.com</strong></p>
+
+
+
+
+<h4>Looking for us?</h4>
 <p>We are based out of Gurgaon and here’s the address:<br>
 27, Nathupur Road,<br>
 DLF Phse 3<br>

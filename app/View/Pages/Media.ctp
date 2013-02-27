@@ -78,7 +78,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Privacy Policy');
         </div>
 
 	    <div class="bag">
-                <img src="../img/afaqs.jpg">
+                <img src="../img/afaq.jpg">
                   <div class="press">
 
                     <p><a href="http://www.afaqs.com/media/media_newslets/index.html?id=55825_Looking+for+a+perfect+Gift+for+your+beloved+this+V-Day">Looking for a perfect Gift for your beloved this V-Day?</a></p>

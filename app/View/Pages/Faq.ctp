@@ -54,7 +54,8 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
           
    <div id="foot_content" >
-	<div class="content"><center><h3>FAQ:</h3></center>
+	<div class="content"><center><h3>FAQ</h3></center>
+		<br>
 <h4>What is Giftology?<h4>
 <p>Giftology serves as a ‘discovery platform’ where customers can explore a plethora of brands; add-ons and gifts on their assorted collections. Our free gift cards save your time, money and effort to choose the right gift, at the same time allowing great brands to be a part of the social media action. And you can make it even bigger by sending paid gifts to your loved ones!!</p>
 <p>You can send free and paid gifts to friends and family anywhere in India. We've got big-brand retailers on-board, so you're sure to find a gift for anyone.</p>
@@ -99,7 +100,7 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 <p>At Giftology, what you see is what you pay for with absolutely no hidden charges!!</p>
 
 <h4>Will I receive an invoice along with the order? Who should I contact in case of payment related issues?</h4>
-<p>Yes, am email regarding the complete order details will be sent at the email id supplied to Giftology at the time of registration. Please retain this for any future claims/clarifications, if any.<p>
+<p>Yes, an email regarding the complete order details will be sent at the email id supplied to Giftology at the time of registration. Please retain this for any future claims/clarifications, if any.<p>
 <p>Kindly email us at <b>payments@giftology.com</b> mentioning your order id and nature of concern. We will try our best to attend to it as quickly as we can.</p>
 
 </div>

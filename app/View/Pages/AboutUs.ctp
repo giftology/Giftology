@@ -54,7 +54,7 @@ $("img[rel]").overlay({mask: '#000'});
 
  <div id="foot_content" >
 	<div class="content">
-		<center><h3>About Us</h3></center>
+		<center><h3>ABOUT US</h3></center>
 
 
 		<P>  Do away with your gifting woes, because Giftology is here to make your life a lot

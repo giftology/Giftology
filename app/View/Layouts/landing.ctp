@@ -35,35 +35,20 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	<?php
 		echo $this->Html->meta('icon');
 
+		echo $this->Html->css('normalize');
 		echo $this->Html->css('style');
+		echo $this->Html->css('flexslider');
+		echo $this->Html->css('main');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
-		echo $this->Html->script('slides.min.jquery');
+		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-	<script src="http://cdn.optimizely.com/js/182331063.js"></script>
-	
-	        <script>
-            $(function(){
-                $("#slides").slides({
-			        play: <?= $slidePlaySpeed; ?>,
-				generatePagination: true,
-				slideSpeed: 1000,
-			});
-                $(".recoslides").slides({
-			        play: 4000,
-				generatePagination: false,
-				effect: 'fade',
-				fadeSpeed: 3000,
-			});
-            });
-        </script>
-
-
-<script type="text/javascript">
+<!-- saved from url=(0044)http://vikasmakwana.com/giftology/index.html -->
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-24851185-2']);
@@ -75,169 +60,143 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script>
-
-</head>
-
-
-<body>
-
+</script><head>
+<!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>giftology</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="http://vikasmakwana.com/giftology/favicon.ico" type="image/x-icon">
+         <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/normalize.css">
+        <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/main.css">
+        <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/flexslider.css"> -->
+        <script type="text/javascript" async="" src="../js/ga.js"></script><script src="../js/modernizr-2.6.2.min.js"></script>
+<body style="zoom: 1; margin-bottom: 0px;">
 <?php echo $this->Facebook->init(); ?>
 	<div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
-
-<div class="mainpage2 content">
-  <div class="wrapper">
-    <div class="about">
-      <div class="first">
-        <h1>Giftology.com</h1>
-        <h2><?= $message; ?></h2>
-	<?php if (!isset($this->request->query['gift_id'])) {
-		echo "Start by logging in with facebook <br><br>";
-	}
-	?>
-	<noscript>
-		<h1>Looks like javascript is disabled in your browser.  This WebApp requires Javascript to be enabled. Please enable and return. Thank You! </h1>
-    		<img src="<?echo IMAGE_ROOT.'/no_js.gif'; ?>" style="display:none" alt="Javascript not enabled" />
-	</noscript>
-
-    </div>
-      <div class="second">
-        <div class="facepile">
-		<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
-		<p>We take your privacy seriously. Unless you ask us to, We'll never post on your behalf.</p>
-		<?php echo $this->Facebook->friendpile(array('size'=>'large', 'width'=>'310px')); ?>
-	</div>
-      </div>
-    </div>
-	 <div class="infographic interactive">
-		<div class="shadow">
-	        <div id="slides">
-			<div class="slides_container">
-			    <?php if (!isset($this->request->query['gift_id'])): ?>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/homeslide1.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/homeslide2.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/homeslide3.jpg">
-			    </div>
-			    <?php else: ?>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/giftrecv_homeslide1.jpg">
-			    </div>
-			    <?php endif; ?>
-			</div>
-			<div id="slideprevnext">
-			<a href="#" class="prev"><img src="<?=IMAGE_ROOT;?>arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
-			<a href="#" class="next"><img src="<?=IMAGE_ROOT;?>arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
-			</div>
-		</div>
-		</div>
-	  </div>
-  </div>
-	<?php if (isset($this->request->query['gift_id'])): ?>
-
-  	<div id="reco" class="landingbottomboxes">
-		<h2>User chatter</h2>
-		<div class="recoslides">
-			<div class="slides_container">
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/reco1.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/reco2.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/reco3.jpg">
-			    </div>
-			</div>
-		</div>
-	</div>
-	<!--div id="coverage" class="landingbottomboxes">
-		<h2>Recommended By</h2>
-		<div class="recoslides">
-			<div class="slides_container">
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/media1.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/media2.jpg">
-			    </div>
-			    <div>
-				<img src="<?= FULL_BASE_URL; ?>/img/media3.jpg">
-			    </div>
-			</div>
-		</div>
-	</div-->
-
-	<div id="recent" class="landingbottomboxes">
-		<h2>Whats happening</h2>
-       <!--div id="news-items"-->
-        <!--div class="shadow-wrapper right items"-->
-                <div class="frame">
-                       <ul>
-                        <?php foreach($gifts_sent as $gift): ?>
-                                <li>
-                                <div>
-                                <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
-                                <p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
-                                </p></div></li>
-                        <?php endforeach; ?>
-                        </ul>
-                 </div>
-        <!--/div-->
-    <!--/div-->
-	</div>
-	<?php endif; ?>
 	
-	
-		
-	
-</div>
+  <div id="wrapper">
+  	<div class="banner-block">
+    	<div class="banner-content" style="height: 363px;">
+        <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="../img/logo.png" alt=""></a></div>
+         <p>The <span>fun and easy</span> way to give <span>free and</span><br>  <span>paid gifts</span> to your <span>Facebook friends.</span></p>
+         
+        
 
-<!-- Main page close -->
-<div id="footer">
-			<div class="footer-line">
-			
-			<ul>
-		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'AboutUs')); ?></li>
-		<li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'TermsOfServices'));?></li>
-
-          <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
-           <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
-         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'Retailers')); ?> </li>
-           <li class="f"><?= $this->Html->link('Careers', array('controller' => 'pages', 'action' => 'Careers')); ?> </li>
-           <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
-           
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
-
-
-                          
-            </ul>
-            <div class="span1"><p>Copyright ©2013 Sama Web Innovation Pvt. Ltd. All Rights Reserved.</p>
-            </div>
+  <div class="fbconect"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+        <div class="clear">&nbsp;</div>
         </div>
+    </div>
+    <section class="slider">
+        <div class="flexslider">
+          <ul class="slides">
+            <li style="display: list-item;">
+  	    	    <img src="../img/slides.jpg">
+  	    		</li>
+  	    		
+          </ul>
+        </div>
+      </section>
+           <section class="show-case">
+            <div class="showcase-wrap">
+                <ul>
+                    <li><img src="../img/carat-lane.jpg" alt=""></li>
+                    <li><img src="../img/firstcry.jpg" alt=""></li>
+                    <li><img src="../img/jabong.jpg" alt=""></li>
+                    <li><img src="../img/nirulas.jpg" alt=""></li>
+                </ul>
+            </div>
+         </section>
+         <section class="content-wrap">
+            <div class="content-region">
+                <span class="block-title">See how it works</span>
+                
+                <div class="how-it-work">
+                    <ul>
+                        <li>
+                            <span class="title">1. Choose a Friend</span>
+                            <div class="box-block"><img src="../img/chose-frnd.png" alt=""></div>
+                            <p>You don't need a reason but we<br> notify you of friends birthdays</p>
+                        </li>
+                        <li>
+                            <span class="title">2. Select a Gift</span>
+                            <div class="box-block"><img src="../img/select-gift.png" alt=""></div>
+                            <p>Choose the right gift foryour<br>  friend or loved one</p>
+                        </li>
+                        <li>
+                            <span class="title">3. Share the Joy!</span>
+                            <div class="box-block"><img src="../img/share-joy.png" alt=""></div>
+                            <p>That's right! The gift notification is<br> delivered instantly via Facebook</p>
+                        </li>
+                    </ul>
+                </div>
+                  <div class="clear">&nbsp;</div>
+            </div>
+            <div class="featured-logo">
+            	<div class="flogo-block">
+                    <span class="block-title">As featured in</span>
+                    	<div class="featured-in">
+                            <a href="javascript:void(0);" class="l1" style="outline: none;">&nbsp;</a>
+                            <a href="javascript:void(0);" class="l2" style="outline: none;">&nbsp;</a>
+                            <a href="javascript:void(0);" class="l3" style="outline: none;">&nbsp;</a>
+                            <a href="javascript:void(0);" class="l4" style="outline: none;">&nbsp;</a>
+                              
+                     </div>
+                     </div>
+                </div>
+           </section>
+          <footer>
+            <div class="footer-wrap">
+                <nav class="footer-nav">
+                   
+                    <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
+                    <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'AboutUs')); ?>
+                    <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'TermsOfServices')); ?>
+                    <?= $this->Html->link('PRIVACY', array('controller' => 'pages', 'action' =>  'Privacy')); ?>
+                    <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?>
+                    
+                    <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' =>  'Retailers')); ?>
+                    <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' =>  'ContactUs')); ?> 
+                    <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'Media')); ?>
+                                      
+                     
+                 </nav>
+                <div class="copyright">©giftology 2013. All rights reserved</div>
+             </div>
+          </footer>
+
 		<?php if (isset($this->request->query['utm_source']) &&
 		$this->request->query['utm_source'] == 'swaransoft'): ?>
 			<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">
 		<?php endif; ?>
-	</div>
+   	 </div>
+ 		<script src="../js/jquery-1.9.0.min.js"></script>
+        <script src="../js/jquery.easing-1.3.js"></script>
+        <script src="../js/jquery.flexslider-min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
+       <script type="text/javascript">
+	   $(window).resize(function(){
+		   setTimeout(function(){
+				$('.banner-content').height($('.flexslider').height());
+				},50);
+			
+		   });
+  		$(window).load(function(){
+ 			setTimeout(function(){
+				$('.banner-content').height($('.flexslider').height());
+				},100);
+ 		  $('.flexslider').flexslider({
+			animation: "fade",
+			controlNav: false,
+			start: function(slider){
+			  $('body').removeClass('loading');
+			}
+		  });
+		});
+	</script> 
+ <?php echo $this->Mixpanel->embed(); ?>
 
-	<script type="text/javascript">
-		var clicky_site_ids = clicky_site_ids || [];
-		clicky_site_ids.push(66489932);
-		(function() {
-			var s = document.createElement('script');
-			s.type = 'text/javascript';
-			s.async = true;
-			s.src = '//static.getclicky.com/js';
-			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
-})();
-	</script>
-
-<?php echo $this->Mixpanel->embed(); ?>
-</body>
-</html>
+</body></html>

@@ -49,8 +49,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: Privacy Policy');
           
    <div id="foot_content" >
 	<div class="content">
-		
-	<h3>1. Privacy Policy </h3>
+		<center><h3>PRIVACY POLICY </h3></center>
+		<br>
+	<h3>1. Privacy </h3>
 
 <p>&nbsp;&nbsp;1.1  <strong> Types of information we collect:</strong> You agree that we may electronically collect, store and/or use the following of your information:</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;1.1.1    name and surname, birth date, location and other details provided through your Facebook account <strong> ("Personal Details")</strong>;</p>

@@ -1,0 +1,280 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600);
+@font-face {
+    font-family: 'blanchcondensed';
+    src: url('../fonts/blanch-condensed/blanch_condensed-webfont.eot');
+    src: url('../fonts/blanch-condensed/blanch_condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/blanch-condensed/blanch_condensed-webfont.woff') format('woff'),
+         url('../fonts/blanch-condensed/blanch_condensed-webfont.ttf') format('truetype'),
+         url('../fonts/blanch-condensed/blanch_condensed-webfont.svg#blanchcondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/*@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/OpenSans-Regular-webfont.eot');
+    src: url('../fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OpenSansItalic';
+    src: url('../fonts/OpenSans-Italic-webfont.eot');
+    src: url('../fonts/OpenSans-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Italic-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Italic-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Italic-webfont.svg#OpenSansItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family:  'OpenSansSemibold';
+    src: url('../fonts/OpenSans-Semibold-webfont.eot');
+    src: url('../fonts/OpenSans-Semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Semibold-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Semibold-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Semibold-webfont.svg#OpenSansSemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('../fonts/OpenSans-Bold-webfont.eot');
+    src: url('../fonts/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Bold-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Bold-webfont.svg#OpenSansBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}*/
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles:opinionated defaults
+   ========================================================================== */
+html, button, input, select, textarea {color:#222;}
+body {font-size:13px; line-height:1.4; font-family: 'Open Sans', sans-serif; color:#333;}
+a {color:#3787C1; text-decoration:none; outline:none; -moz-transition:color 0.3s ease 0s; -webkit-transition:color 0.3s ease 0s; -o-transition:color 0.3s ease 0s; -ms-transition:color 0.3s ease 0s; transition:color 0.3s ease 0s;}
+a:hover {color:#2C3B58; /*text-decoration:underline;*/}
+:focus {outline:0;}
+::-moz-selection {background:#b3d4fc; text-shadow:none;}
+::selection {background:#b3d4fc; text-shadow:none;}
+hr {display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0;}
+img {vertical-align:middle;}
+fieldset {border:0; margin:0; padding:0;}
+/** Allow only vertical resizing of textareas.
+*/
+textarea {resize:vertical;}
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+.chromeframe {margin:0.2em 0; background:#ccc; color:#000; padding:0.2em 0;}
+/* ==========================================================================
+   Author's custom styles
+
+   ========================================================================== */
+/* ==========================================================================
+	Helper classes
+========================================================================== */
+/** Image replacement */
+.ir {background-color:transparent; border:0; overflow:hidden; /* IE 6/7 fallback */ *text-indent:-9999px;}
+.ir:before {content:""; display:block; width:0; height:100%;}
+/** Hide from both screenreaders and browsers:h5bp.com/u */
+.hidden {display:none !important; visibility:hidden;}
+/** Hide only visually, but have it available for screenreaders:h5bp.com/v */
+.visuallyhidden {border:0; clip:rect(0 0 0 0); height:1px; margin:-1px; overflow:hidden; padding:0; position:absolute; width:1px;}
+/** Extends the .visuallyhidden class to allow the element to be focusable * when navigated to via the keyboard:h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {clip:auto; height:auto; margin:0; overflow:visible; position:static; width:auto;}
+/** Hide visually and from screenreaders, but maintain layout */
+
+.invisible {visibility:hidden;}
+/** clear:contain floats
+** For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clear` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+.clear:before, .clear:after {content:" "; /* 1 */ display:table; /* 2 */ }
+.clear:after {clear:both;}
+/** For IE 6/7 only * Include this rule to trigger hasLayout and contain floats. */
+.clear {*zoom:1; clear:both; height:0;}
+/*------------Only for library uses-----------*/
+.left {float:left !important;}
+.right {float:right !important;}
+.mleft10 {margin-left:10px !important;}
+.mleft20 {margin-left:20px !important;}
+.mright10 {margin-right:10px !important;}
+.mright20 {margin-right:20px !important;}
+.mtop5 {margin-top:5px !important;}
+.mtop10 {margin-top:10px !important;}
+.mtop20 {margin-top:20px !important;}
+.mbot10 {margin-bottom:10px !important;}
+.mbot20 {margin-bottom:20px !important;}
+
+
+.pleft10 {padding-left:10px !important;}
+.pleft20 {padding-left:20px !important;}
+.pright10 {padding-right:10px !important;}
+.pright20 {padding-right:20px !important;}
+.ptop10 {padding-top:10px !important;}
+.ptop20 {padding-top:20px !important;}
+.pbot10 {padding-bottom:10px !important;}
+.pbot20 {padding-bottom:20px !important;}
+
+.star {display:inline-block; font-size:14px; color:#E7383D; font-family:  'OpenSansSemibold', sans-serif; vertical-align:middle; margin-left:3px;}
+h1 ,h2, h3, h4, h5, h6 {font-size:100%; font-weight:400; line-height:normal; font-family:'Open Sans', sans-serif; margin:0; color:#3787C1;}
+h1 {font-size:38px; line-height:46px;}
+h2 {font-size:28px; line-height:36px;}
+h3 {font-size:28px; line-height:36px;}
+h4 {font-size:24px; line-height:30px;}
+h5 {font-size:18px; line-height:22px;}
+h6 {font-size:14px; line-height:18px;}
+b, strong {font-family:  'OpenSansSemibold', sans-serif;}
+p {margin:0 0 10px;}
+ul, ol {margin:0; padding:0; list-style:none;}
+
+#wrapper {width:100%; position:relative; float:left;}
+
+.show-case {float:left; width:100%; min-width:980px; background:#EFEFEF;}
+.showcase-wrap {width:980px; margin:0 auto; overflow:hidden; padding:27px 0;}
+.showcase-wrap ul {float:left; width:100%;}
+.showcase-wrap ul li {float:left; width:199px; height:102px; padding:17px; margin:0 0 0 15px; background:url(../img/showcasebg.png) no-repeat 0 0; transition:linear all 0.3s; -moz-transition:linear all 0.3s; -webkit-transition:linear all 0.3s;  -o-transition: linear all 0.3s; position:relative;}
+.showcase-wrap ul li:first-child {margin-left:0;}
+.showcase-wrap ul li:hover {top:-5px;  transition:linear all 0.3s;  -moz-transition:linear all 0.3s; -webkit-transition:linear all 0.3s; -o-transition:  linear all 0.3s;}
+.content-wrap {float:left; width:100%; background:#FFF; padding:20px 0 0;}
+.content-region {width:980px; margin:0 auto;}
+.block-title {width:100%; float:left; display:block; padding:0 0 25px 0; background:url(../img/title-bg.png) no-repeat bottom center; font-size:24px; text-align:center; text-shadow:0 1px 0 #D9D9D9; font-weight:300;}
+.how-it-work {float:left; width:100%; padding:40px 0 25px;}
+.how-it-work ul {float:left; width:100%;}
+.how-it-work ul li {float:left; width:312px; margin:0 0 0 20px; text-align:center;}
+.how-it-work ul li .title {display:block; width:100%; font-size:22px; font-weight:300; text-shadow:2px 2px 0 rgba(255,255,255,0.1);}
+.how-it-work ul li:first-child {margin-left:0;}
+.how-it-work ul li  p {font-size:16px; line-height:23px; font-weight:300;}
+ 
+.box-block {background:#E5E5E5; width:312px; height:130px; margin:23px 0 28px 0; overflow:hidden; text-align:center; position:relative; border-radius:65px; box-shadow:inset 0 0 3px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02);}
+.box-block img {position:absolute; left:58px; top:25px; transition:linear all 0.3s; -webkit-transition:linear all 0.3s; -moz-transition:linear all 0.3s; -o-transition: linear all 0.3s;}
+.box-block:hover img {top:17px;}
+.featured-in {float:left; width:100%; text-align:center; padding:20px 0 0 0; }
+.featured-in a {display:inline-block; height:50px; margin: 0 0 0 42px; transition:linear all 0.3s; -webkit-transition:linear all 0.3s; -moz-transition:linear all 0.3s; -o-transition: linear all 0.3s;}
+footer {width:100%; min-width:980px; float:left; background:#333; border-top:1px solid #8C8C8C; padding:35px 0; box-shadow: inset 0 1px 6px rgba(0,0,0,0.3);}
+
+.footer-wrap {width:980px; margin:0 auto; overflow:hidden;}
+.footer-nav {width:100%; float:left; text-align:center;}
+.footer-nav a {display:inline-block; padding:0 13px; background:url(../img/nav-list-bg.png) no-repeat left 10px; color:#999; text-shadow:1px 1px 0 #303030; font-size:14px;}
+.footer-nav a:hover {color:#FFF;}
+.footer-nav a:first-child {background:none;}
+.copyright {float:left; width:100%; min-width:980px; text-align:center; color:#999; text-shadow:1px 1px 0 #303030; font-size:14px; padding:13px 0;}
+.banner-block {float:left; width:100%; position:absolute; top:0; left:0;}
+.banner-content {width:980px; margin:0 auto; position:relative; z-index:2; text-align:center; min-height:340px;}
+.logo-block {float:left; width:100%; position:relative;}
+.logo {float:left; position:relative; margin:-5px 0 0;   transition:linear all 0.3s; -webkit-transition:linear all 0.3s; -moz-transition:linear all 0.3s; -o-transition: linear all 0.3s;}
+.logo:hover {opacity:0.9; margin:0;}
+.slider {float:left; width:100%; text-align:center; position:relative;  min-height:300px;}
+.banner-content p {color:#FFF; font-size:35px; float:left; width:100%; text-align:center; margin:0; position:absolute; top:35%; font-weight:300; text-shadow:0 0 5px rgba(0,0,0,0.8);}
+.banner-content p span {font-weight:normal;}
+
+.fbconect {width:300px; height:40px; padding:0; display:inline-block; position:absolute; left:50%; top:65%; margin:0 0 0 -165px; font-size:36px; color:#FFF;  text-align:left; border:1px solid #243559; border-radius:3px; user-select:none; -webkit-user-select:none; -moz-user-select:none; -o-user-select:none; 
+box-shadow:2px 2px 0 rgba(0,0,0,0.2), inset 0 1px 0 #637BAD; overflow:hidden; 
+background: rgb(66,100,170);
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQyNjRhYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzNDRmODUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  rgba(66,100,170,1) 0%, rgba(52,79,133,1) 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(66,100,170,1)), color-stop(100%,rgba(52,79,133,1)));
+background: -webkit-linear-gradient(top,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 100%);
+background: -o-linear-gradient(top,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 100%);
+background: -ms-linear-gradient(top,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 100%);
+background: linear-gradient(to bottom,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4264aa', endColorstr='#344f85',GradientType=0 );
+}
+/*.fbconect .icon {display:inline-block; width:63px; height:62px; margin:0 27px 0 0; background:url(../img/icon.png) no-repeat -6px -133px;} */
+
+/*.fbconect:hover {color:#FFF; border-color:#1A2640;
+
+background: rgb(60,91,154);
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzNjNWI5YSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNzNhNjMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  rgba(60,91,154,1) 0%, rgba(39,58,99,1) 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(60,91,154,1)), color-stop(100%,rgba(39,58,99,1)));
+background: -webkit-linear-gradient(top,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
+background: -o-linear-gradient(top,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
+background: -ms-linear-gradient(top,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
+background: linear-gradient(to bottom,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c5b9a', endColorstr='#273a63',GradientType=0 );
+ } 
+.fbconect:active {left:50.2%;} 
+html.filternone .fbconect  { filter: none;} */
+
+.featured-logo {float:left; width:100%; background:#F7F7F7; min-width:980px; padding:25px 0 32px 0;}
+.flogo-block {width:980px; margin:0 auto;}
+.l1 {width:98px; height:50px; background:url(../img/afaqs.jpg) no-repeat left top; }
+.l1:hover {background:url(../img/afaqs-hover.jpg) no-repeat 0 0;}
+
+.l2 {width:150px; background:url(../img/techcircle.jpg) no-repeat left top; }
+.l2:hover {background:url(../img/techcircle-hover.jpg) no-repeat 0 0;}
+.l3 {width:138px; background:url(../img/watblog.jpg) no-repeat left top; }
+.l3:hover {background:url(../img/watblog-hover.jpg) no-repeat 0 0;}
+.l4 {width:177px; background:url(../img/yourstory.jpg) no-repeat left top; }
+.l4:hover {background:url(../img/yourstory-hover.jpg) no-repeat 0 0;}
+
+/* ==========================================================================
+	EXAMPLE Media Queries for Responsive Design.
+	Theses examples override the primary ('mobile first') styles.
+	Modify as content requires.
+========================================================================== */
+
+@media only screen and (max-width:320px) {
+	
+ 	}
+	
+@media screen and (max-width:490px) {
+  .banner-content, .showcase-wrap, .content-region, .footer-wrap {width:100%;}
+  .show-case, footer, .copyright {min-width:100%;}
+  .logo {width:136px; position:relative; left:100px;}
+  .logo  img {max-width:100%;}
+  .showcase-wrap ul li:first-child {margin-left:45px;}
+  .showcase-wrap ul li {margin-bottom:15px; margin-left:45px;}
+  .banner-content p {font-size:13px; top:50%;}
+  .fbconect {width:300px; height:50px; line-height:50px;  left:55%; top:112%; text-align:left; font-size:33px;}
+  .fbconect:active {left:55.5%;}
+  .showcase-wrap ul {margin-top:60px;}
+  .how-it-work ul li, .how-it-work ul li:first-child  {margin-left:8px;}
+  .slider {min-height:auto}
+  .banner-content {min-height:110px;}
+  .fbconect .icon {background-position: -6px -138px; height:50px;}
+  .featured-logo {min-width:100%;}
+  .flogo-block  {width:100%;}
+   }	
+	
+ @media only screen and (-webkit-min-device-pixel-ratio:1.5), only screen and (min-resolution:144dpi) {/* Style adjustments for high resolution devices */}
+/* ==========================================================================
+	Print styles.
+	Inlined to avoid required HTTP connection:h5bp.com/r
+========================================================================== */
+
+@media print {* {background:transparent !important; color:#000 !important; /* Black prints faster:h5bp.com/s */ box-shadow:none !important; text-shadow:none !important;}
+a, a:visited {text-decoration:underline;}
+a[href]:after {content:" (" attr(href) ")";}
+abbr[title]:after {content:" (" attr(title) ")";}
+/** Don't show links for images, or javascript/internal links */
+.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {content:"";}
+pre, blockquote {border:1px solid #999; page-break-inside:avoid;}
+thead {display:table-header-group; /* h5bp.com/t */}
+tr, img {page-break-inside:avoid;}
+img {max-width:100% !important;}
+@page {margin:0.5cm;}
+p, h2, h3 {orphans:3; widows:3;}
+h2, h3 {page-break-after:avoid;}
+}
+
+Related Searches:Web Usability Studies|Design Company|Flash Usability|Freelance Web Design Jobs|Freelance Designer|Freelance Website Designer|Custom Web Development|Web Design Firm|Web Design And Usability|Website Design Company|Professional Website Design Company|
