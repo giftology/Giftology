@@ -122,7 +122,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 
           <div class="content">
                 <center><h2>Partner with us!</h2></center>
-            <p>   Giftology is the new age, social gifting platform that presents your brand/products to 71 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. </p>
+            <p>   Giftology is the new age, social gifting platform that presents your brand/products to 61 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. </p>
             <br>
              <p>We help generate in person and online traffic for top brands by letting customers send free and paid gifts to their friends and family via Facebook. Learn how we can work together to help you increase sales with Giftology by filling out the form below: </p>
                 <!-- <p>Email us at partner@giftology.com</p> -->
@@ -156,7 +156,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                 </div>
                        <!--no constraints for web portal-->
                 <div class="input email" style="margin-top:10px">
-                    <label for="email">Website</label>
+                    <label for="email">Company/Website</label>
                     <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "www.example.com" ))?>
                     </div>
                    
@@ -168,7 +168,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                     <label for="email">It Deals with</label>
               
                     <!--strict field -->
-                     <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Book/music/Entertainemt'=> 'Book/music/Entertainemt', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelery/accessories'=>'Jewelery/accessories','Restaurants/cafes'=>'Restaurants/cafes','Spoorting Goods'=>'Spoorting Goods','id9'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
+                     <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Books/Music/Entertainment'=> 'Books/Music/Entertainment', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelry/Accessories'=>'Jewelry/Accessories','Restaurants/cafes'=>'Restaurants/cafes','Sporting Goods'=>'Sporting Goods','Toys'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
                   
                       </div>
 
@@ -195,7 +195,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                    <!--mandatory input for city-->
                <div class="input email" style="margin-top:10px">
                 <label for="email">City</label>
-                  <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "city"))?>
+                  <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "City"))?>
                   </div>
                   <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
                     <span style="color:#808080">*please enter the city.</span>
@@ -213,7 +213,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                    <!--Contact no. constraint-->
               <div class="input email" style="margin-top:10px">
                   <label for="email">Contact me</label>
-                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "contant no." ))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contactt no." ))?>
                     </div>
                     <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
                        <span style="color:#808080">*please enter the 10 digit mobile no.</span>
@@ -221,7 +221,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
               </div>
                  <!--no constraints for mail id -->
              <div class="input email" style="margin-top:10px">
-                          <label for="email">Mail me</label>
+                          <label for="email">Email</label>
                           <div class="input email" ><?php echo $this->Form->input("r_mail" ,array('name'=>'mail_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "abc@example.com" ))?>
                           </div>
                     
