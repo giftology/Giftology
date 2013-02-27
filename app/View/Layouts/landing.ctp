@@ -123,7 +123,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                         <li>
                             <span class="title">2. Select a Gift</span>
                             <div class="box-block"><img src="../img/select-gift.png" alt=""></div>
-                            <p>Choose the right gift foryour<br>  friend or loved one</p>
+                            <p>Choose the right gift for your<br>  friend or loved one</p>
                         </li>
                         <li>
                             <span class="title">3. Share the Joy!</span>
