@@ -213,7 +213,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                    <!--Contact no. constraint-->
               <div class="input email" style="margin-top:10px">
                   <label for="email">Contact me</label>
-                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contactt no." ))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ))?>
                     </div>
                     <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
                        <span style="color:#808080">*please enter the 10 digit mobile no.</span>
