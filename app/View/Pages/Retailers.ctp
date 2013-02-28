@@ -149,14 +149,14 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                       <label for="email">Hi! My name is</label>
                       <div class="input email" ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name"))?> 
                       </div>
-                       <div class="error_message" id="error_name" style="display:none; margin-left:120px;">
+                       <div class="error_message" id="error_name" style="display:none; margin-left:180px;">
                          <span style="color:#808080">*please enter the name</span>
                         </div>
                 
                 </div>
                        <!--no constraints for web portal-->
                 <div class="input email" style="margin-top:10px">
-                    <label for="email">Website</label>
+                    <label for="email">Website/Company</label>
                     <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "www.example.com" ))?>
                     </div>
                    
@@ -165,7 +165,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
             
           
                <div class="input email" style="margin-top:10px">
-                    <label for="email">It Deals with</label>
+                    <label for="email">We Deal with</label>
               
                     <!--strict field -->
                      <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Books/Music/Entertainment'=> 'Books/Music/Entertainment', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelry/Accessories'=>'Jewelry/Accessories','Restaurants/cafes'=>'Restaurants/cafes','Sporting Goods'=>'Sporting Goods','Toys'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
@@ -197,7 +197,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                 <label for="email">City</label>
                   <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "City"))?>
                   </div>
-                  <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
+                  <div class="error_message" id="error_city" style="display:none; margin-left:180px;">
                     <span style="color:#808080">*please enter the city.</span>
                  </div>
               </div>
@@ -215,7 +215,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                   <label for="email">Contact me</label>
                     <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ))?>
                     </div>
-                    <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
+                    <div class="error_message" id="error_phone" style="display:none; margin-left:180px;">
                        <span style="color:#808080">*please enter the 10 digit mobile no.</span>
                     </div>
               </div>
@@ -228,7 +228,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
               </div>
 
                           
-             
+             <br>
                 
             
                <div class="retail_submit">

@@ -80,7 +80,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   	<div class="banner-block">
     	<div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="../img/logo.png" alt=""></a></div>
-         <p>The <span>fun and easy</span> way to give <span>free and</span><br>  <span>paid gifts</span> to your <span>Facebook friends.</span></p>
+         <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
          
         
 

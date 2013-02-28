@@ -1135,7 +1135,7 @@ ul.voucher-details li {
     background-color: rgba(173, 46, 13, 0.86);
     background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
     color: #FFFFFF;
-    margin-left: 160px;
+    margin-left: 180px;
 }
 .retail{
 
@@ -1155,8 +1155,8 @@ ul.voucher-details li {
     margin-bottom: 5px;
     overflow: hidden;
     padding-top: 18px;
-    padding-left:50px;
-    width: 392px;
+    padding-left:40px;
+    width: 450px;
 }
 
 
@@ -1191,7 +1191,7 @@ ul.voucher-details li {
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
     padding: 11px;
-    margin-left:30px;
+    margin-left:82px;
     width:268px;
 
 
