@@ -126,7 +126,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
                           
             </ul>
-            <div class="span1"><p>©giftology 2013. All rights reserved</p>
+            <div class="span1"><p>© Giftology 2013. All rights reserved</p>
             </div>
         </div>
 		<?php if (isset($this->request->query['utm_source']) &&

@@ -163,7 +163,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                                       
                      
                  </nav>
-                <div class="copyright">©giftology 2013. All rights reserved</div>
+                <div class="copyright">© Giftology 2013. All rights reserved</div>
              </div>
           </footer>
 

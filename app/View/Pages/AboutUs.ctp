@@ -77,15 +77,15 @@ $("img[rel]").overlay({mask: '#000'});
                                 <!-- person details -->
                               
 
-                               <p><strong>Kiran Shiddhu</strong></p>
+                               <p><strong>Kiran Shidhu</strong></p>
                           <p><strong>Chairman</strong></p>
-                          <p> Kiran Siddhu is Chairman of Transact Network which he founded in 2006  Mr. Sidhu a seedinvestor in start-up in various technology and biotechnology ventures.  Mr. Sidhu funded and oversaw the development of BuzzDash that was sold to the Tribune Group in 2009.  Mr. Sidhu was also an early stage investor in two biotechnology companies: </p>
+                          <p> Kiran Sidhu is Chairman of Transact Network which he founded in 2006  Mr. Sidhu a seedinvestor in start-up in various technology and biotechnology ventures.  Mr. Sidhu funded and oversaw the development of BuzzDash that was sold to the Tribune Group in 2009.  Mr. Sidhu was also an early stage investor in two biotechnology companies: </p>
                           <p>Vasgene Therapeutics and Inovio Biomedical Corporation. Mr Sidhu was also a co-founder of, Nano Universe, an early stage Internet incubator, which he led through a successful AIM listing acting as Finance Director.</p>
                           <p> Previously, Mr. Sidhu was Chief Financial Officer at On Stage Entertainment. He led On Stage through a successful NASDAQ small company listing. Mr. Sidhu has been a senior associate with Merrill Lynch Investment Banking in Mergers and Acquisitions and a manager with Price Waterhouse's Strategic Consulting Group.  Mr. Sidhu has a Masters in Business Administration with a concentration in Finance from the Wharton School of Business and a B.A. with Honours in Computer Science from Brown University.</p>
     
                                 
                          </div>
-                          <p><strong>Kiran Shiddhu</strong></p>
+                          <p><strong>Kiran Shidhu</strong></p>
                           <p>Chairman</p>
                </div>
 
