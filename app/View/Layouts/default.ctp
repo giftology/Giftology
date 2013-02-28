@@ -112,14 +112,14 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			
 			<ul>
 				<li class="f"> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
-		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'AboutUs')); ?></li>
-		<li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
+		<li class="f"><?= $this->Html->link('About Us','/AboutUs', array('controller' => 'pages', 'action' =>  'About_Us')); ?></li>
+		<li class="f"><?= $this->Html->link('Terms Of Services','/TermsOfServices', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
 
-            <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
-            <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
-         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'Retailers')); ?> </li>
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
-           <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
+            <li class="f"><?= $this->Html->link('Privacy','/Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
+            <li class="f"><?= $this->Html->link('FAQ','/Faq', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
+         <li class="f"><?= $this->Html->link('Retailers','/Retailers', array('controller' => 'pages', 'action' => 'Retailers')); ?> </li>
+           <li class="f"><?= $this->Html->link('Contact Us','/ContactUs', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
+           <li class="f"><?= $this->Html->link('Media','/Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
            
           
 

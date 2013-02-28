@@ -1283,7 +1283,7 @@ ul.voucher-details li {
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
     margin-bottom: 30px;
     margin-top:20px;
-    padding: 7px;
+   /* padding: 7px; */
     position: relative;
     width: 800px;
     min-height: 300px;
