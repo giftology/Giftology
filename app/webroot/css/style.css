@@ -251,9 +251,9 @@ ul.nav li a.wallet:hover {
 }
 .event:hover {
     background-color: #F2F2F2;
-   /* border: 1px solid #CCCCCC; 
-    border-radius: 5px 5px 5px 5px; */
-   /* margin: 0 auto 10px; */
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    margin: 0 auto 10px;
 
 }
 
@@ -495,7 +495,7 @@ a:hover.f-link {text-decoration:underline;}
 
 #news-items {
     float: right;
-    margin: 60px 0;
+     margin: 60px 0 -70px 0;
     width: 294px;
 }
 #news-items .items {
@@ -534,6 +534,15 @@ a:hover.f-link {text-decoration:underline;}
     margin: 10px;
     text-align: center;
 }
+#news-items .items input {
+    padding: 0 15px;
+    display: inline-block;
+    line-height: 30px;
+    font-size: 20px;
+    margin-bottom: 5px;
+    width: 100%;
+    
+    }
 #news-items .items li {
     font-family: Adelle,"Helvetica Neue",Arial,sans-serif;
     font-size: 14px;
@@ -589,7 +598,6 @@ input {
     border-radius: 5px 5px 5px 5px;
     padding: 11px;
 }
-
 
 .left-container > .friends ul li {
     border-bottom: 1px solid #E5E5E5;
@@ -886,7 +894,6 @@ textarea {
     
     
 }
-
 .delivery-message .shadow-wrapper {
     float: right;
     margin-top: 50px;
@@ -1067,7 +1074,7 @@ ul.voucher-details li {
 
 .simple_overlay {
  
-    /* must be hidden initially */
+    /* must be initially hidden */
     display:none;
    
     /* place overlay on top of other elements */
@@ -1077,7 +1084,7 @@ ul.voucher-details li {
  
     /* styling */
     
-    background-image:url("../img/whiinitially te-edge1.png") no-repeat; /* not used but can be */
+    background-image:url("../img/white-edge1.png") no-repeat; /* not used but can be */
  
     width:500px;
     min-height:250px;
@@ -1117,106 +1124,13 @@ ul.voucher-details li {
     margin: 5px 5px 5px 5px;
 }
 .mainpage #foot_content .content p{
-    font-size:15px;
-    font-weight:lighter;
-    margin-bottom: 7px;
-
-    }
-
-
-
-/* designed for retailers form */
-.retail_submit input[type="submit"]{
-     -moz-border-bottom-colors: none;
-    -moz-border-image: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background-color: rgba(173, 46, 13, 0.86);
-    background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
-    color: #FFFFFF;
-    margin-left: 180px;
-}
-.retail{
-
-    padding-left:90px;
-    background-image:url("../img/retailer.png");
-    background-repeat:no-repeat;
-    height:1100px;
-    width:754px;
-}
- .retail h3{
-    padding-top: 50px;
-    padding-left: 200px
- }
-
- .retail .retail-form {
-    
-    margin-bottom: 5px;
-    overflow: hidden;
-    padding-top: 18px;
-    padding-left:40px;
-    width: 450px;
-}
-
-
-.retail .retail-form div.input label {
-    float: left;
-}
-.retail .retail-form div.input {
-    font-size: 16px;
-    font-weight: bold;
-    overflow: hidden;
-    
-
-}
-.retail .retail-form div.input.email label {
-    margin-top: 14px;
-    
-}
-
-.retail .retail-form div.input.email input:-moz-placeholder {
-    text-transform: lowercase;
-}
-.retail .retail-form div.input.email input {
-    float: right;
-    width: 245px;
-    }
-
-.retail .retail-form div.input.email select
-    {
-    font-color:#FAFAFA;
     font-size:16px;
-    
-    border: 1px solid #CCCCCC;
-    border-radius: 5px 5px 5px 5px;
-    padding: 11px;
-    margin-left:82px;
-    width:268px;
+    font-weight:lighter;
+
+    }
 
 
-
-
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    
-    outline:none;
-    display: inline-block;
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-    cursor:pointer;
-}
-.retail .retail-form div.input.email select option{
-    
-    
-   
-    width:auto;
-}
-
+ 
   .simply p {
   color:#aba;
   font-size:15px;
@@ -1250,7 +1164,6 @@ ul.voucher-details li {
 .mainpage #foot_content .content .press p{
     margin-top:70px;
     float:right;
-    
 
 
 }
@@ -1264,7 +1177,6 @@ ul.voucher-details li {
     margin-right: 30px;
     float:left;
 }
-
 .mainpage #foot_content .content .images .span p{
     margin-left:10px;
 }
@@ -1304,7 +1216,7 @@ ul.voucher-details li {
 }
 .media #foot_content1 .bag .press{
     
-    
+    padding-bottom:5px;
     width:660px;
     height:50px;
     float:right;
@@ -1321,10 +1233,10 @@ ul.voucher-details li {
 
 }
 .media #foot_content1 .bag .press p{
-    font-size:14px;
+    font-size:16px;
     font-color:#202020;
     margin-bottom:2px;
-    margin-left:25px;
+    margin-left:40px;
     max-width:620px;
    font-weight:lighter;
 
@@ -1921,31 +1833,9 @@ button, input[type="submit"] {
     left:50%;
 }
 /* Infinite paginator */
-/*.ias_loader {
+.ias_loader {
     text-align:center;
     margin: 5px 0;
-}*/
-.ias_loader, .ias_trigger {
-    text-align:center;
-    margin: 30px 0 40px;
-}
-
-.ias_trigger a:link,
-.ias_trigger a:visited {
-    padding: 4px 50px;
-
-    background-color: #f9f9f9;
-    border: solid 1px #ddd;
-    border-radius: 2px;
-
-    font: bold 12px Arial, sans-serif;
-    color: #555;
-    text-decoration: none;
-}
-
-.ias_trigger a:hover,
-.ias_trigger a:active {
-    border-color: #ccc;
 }
 
 .message {
@@ -2104,7 +1994,7 @@ margin-left: 180px;
             
             
             margin-top: 6px;
-            background: url(../img/divider.gif) no-repeat; /*have not used */ 
+            background: url(../img/divider.gif) no-repeat;
         }
 
        .footer-line ul li.f{
@@ -2199,13 +2089,11 @@ font-size:12px;
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
     margin-top: 1px;
-    margin-bottom:5px;
-    width: 152px;
-    height: 20px;
+    width: 150px;
+    height: 17px;
 }
 #search_friend div.submit {
     float: right;
-    margin-top:2px;
 }
 #search_friend input {
     border: none;
