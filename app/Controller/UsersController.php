@@ -322,12 +322,12 @@ public function retailer_mail(){
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
 	
-    	if ($daysSinceUpdate > 15) {
+    	if ($daysSinceUpdate > 0) {
     	    $access_token = $this->get_new_long_lived_access_token();
     	} else {
     	    $access_token = FB::getAccessToken();
     	}
-        if ($daysSinceUpdate > 15 || $numReminders < 10) {
+        if ($daysSinceUpdate > 0 || $numReminders < 10) {
 	       // Refresh old reminders
             $this->refreshReminders($user['id']);
         }
