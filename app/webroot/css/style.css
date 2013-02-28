@@ -251,9 +251,9 @@ ul.nav li a.wallet:hover {
 }
 .event:hover {
     background-color: #F2F2F2;
-    border: 1px solid #CCCCCC;
+   /* border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
-    margin: 0 auto 10px;
+    margin: 0 auto 10px;*/
 
 }
 
@@ -938,7 +938,7 @@ body:not(#foo) input[type="checkbox"]:checked + label {
 }
 
 .submit{
-    margin-top: 10px;
+   /* margin-top: 10px; */
     height: 65px;
 }
 body:not(#foo) input[type="checkbox"] + label {
@@ -1124,10 +1124,103 @@ ul.voucher-details li {
     margin: 5px 5px 5px 5px;
 }
 .mainpage #foot_content .content p{
-    font-size:16px;
+    font-size:15px;
     font-weight:lighter;
+    margin-bottom:7px;
 
     }
+
+/* designed for retailers form */
+.retail_submit input[type="submit"]{
+     -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: rgba(173, 46, 13, 0.86);
+    background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
+    color: #FFFFFF;
+    margin-left: 180px;
+}
+.retail{
+
+    padding-left:90px;
+    background-image:url("../img/retailer.png");
+    background-repeat:no-repeat;
+    height:1100px;
+    width:754px;
+}
+ .retail h3{
+    padding-top: 50px;
+    padding-left: 200px
+ }
+
+ .retail .retail-form {
+    
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding-top: 18px;
+    padding-left:40px;
+    width: 450px;
+}
+
+
+.retail .retail-form div.input label {
+    float: left;
+}
+.retail .retail-form div.input {
+    font-size: 16px;
+    font-weight: bold;
+    overflow: hidden;
+    
+
+}
+.retail .retail-form div.input.email label {
+    margin-top: 14px;
+    
+}
+
+.retail .retail-form div.input.email input:-moz-placeholder {
+    text-transform: lowercase;
+}
+.retail .retail-form div.input.email input {
+    float: right;
+    width: 245px;
+    }
+
+.retail .retail-form div.input.email select
+    {
+    font-color:#FAFAFA;
+    font-size:16px;
+    
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    padding: 11px;
+    margin-left:82px;
+    width:268px;
+
+
+
+
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+.retail .retail-form div.input.email select option{
+    
+    
+   
+    width:auto;
+}
 
 
  
@@ -1195,7 +1288,7 @@ ul.voucher-details li {
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
     margin-bottom: 30px;
     margin-top:20px;
-    padding: 7px;
+   /* padding: 7px;*/
     position: relative;
     width: 800px;
     min-height: 300px;
@@ -1216,7 +1309,7 @@ ul.voucher-details li {
 }
 .media #foot_content1 .bag .press{
     
-    padding-bottom:5px;
+   /* padding-bottom:5px;*/
     width:660px;
     height:50px;
     float:right;
@@ -1233,7 +1326,7 @@ ul.voucher-details li {
 
 }
 .media #foot_content1 .bag .press p{
-    font-size:16px;
+    font-size:14px;
     font-color:#202020;
     margin-bottom:2px;
     margin-left:40px;
@@ -2111,8 +2204,8 @@ font-size:12px;
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
     margin-top: 1px;
-    width: 150px;
-    height: 17px;
+    width: 152px;
+    height: 20px;
 }
 #search_friend div.submit {
     float: right;
