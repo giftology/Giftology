@@ -50,7 +50,7 @@
 </tr>
 <tr>
 <td align="center" colspan="2" valign="top" style="border-collapse:collapse">
-<table border="0" cellpadding="10" cellspacing="0" width="670" style="border-collapse:collapse;height:1000px">
+<table border="0" cellpadding="10" cellspacing="0" width="670" style="border-collapse:collapse">
 <tr>
 <td valign="middle" width="50%" style="padding-top:0px;border-collapse:collapse">
 <div style="color:#e86848;font-family:Helvetica;font-size:48px;font-weight:bold;line-height:150%;text-align:center">
