@@ -65,28 +65,6 @@ class PagesController extends AppController {
 			$this->set('user', $this->Auth->user());
 		}
 	}
-	public function AboutUs(){
-
-	}
-	public function TermsOfServices(){
-		
-	}
-	public function Privacy(){
-		
-	}
-
-	public function Faq(){
-		
-	}
-	public function Retailers(){
-		
-	}
-	public function ContactUs(){
-		
-	}
-	public function Media(){
-		
-	}
 	public function display() {
 		$path = func_get_args();
 
