@@ -4,7 +4,10 @@ $(document).ready(function(){
 		item: '.image-wrapper',
 		pagination: '#paginator_nav',
 		next: '.next a',
-		loader: '<img src="img/loader.gif"/>'
+		loader: '<img src="img/loader.gif"/>',
+        loaderDelay: 100,
+        triggerPageThreshold: 2,
+        trigger: 'Find more friends to celebrate'
 	});
 	jQuery.ias({
 		container : "#campaigns",
