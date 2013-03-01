@@ -137,6 +137,7 @@ ul.nav li a.wallet:hover {
     border-radius: 2px 2px 2px 2px;
     border-style: solid;
     border-width: 1px;
+    padding-bottom: 10px;
 }
 
 .image-wrapper {
