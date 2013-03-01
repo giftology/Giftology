@@ -102,14 +102,11 @@
             <div id="fb-root"></div>
             <script src="http://connect.facebook.net/en_US/all.js"></script>
             <h4>Like Giftology ? Invite your friends!</h4>
-              
-           
-            <input type="button"
+            <button id="SendButtonForNoPerms"class="buy showtransbox"
               onclick="sendRequestViaMultiFriendSelector(); return false;"
               value="Spread the Joy"
-            />
-            
-            
+            >Spread the Joy       
+            </button>
             <script>
               FB.init({
                 appId  : '105463376223556',
