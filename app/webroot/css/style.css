@@ -139,6 +139,10 @@ ul.nav li a.wallet:hover {
     border-width: 1px;
     padding-bottom: 10px;
 }
+#SendButtonForNoPerms:hover {
+  background-color: #0404B4;
+}
+
 
 .image-wrapper {
     margin-left: -26px;
