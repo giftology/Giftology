@@ -1,6 +1,6 @@
 #!/bin/bash
 
-users=$(echo "select id from users where id % 5 = (DAYOFWEEK(CURDATE())-2);" | mysql -h giftology.cck6cwihhy4y.ap-southeast-1.rds.amazonaws.com -u root -pgiftology251 -B --disable-column-names giftology)
+users=$(echo "SELECT DISTINCT user_id FROM  reminders  WHERE DAYOFWEEK( CURDATE( ) ) - DAYOFWEEK(  friend_birthday ) = -2 and user_id > 0 AND MONTH(  friend_birthday ) = MONTH( CURDATE( ) ) and WEEK(friend_birthday >= week(CURDATE());" | mysql -h giftology.cck6cwihhy4y.ap-southeast-1.rds.amazonaws.com -u root -pgiftology251 -B --disable-column-names giftology)
 
 for user in $users
 do
