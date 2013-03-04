@@ -285,18 +285,18 @@ public $uses = array( 'Reminder','Product' );
 		'contain'=>array('UserProfile')));
 	if (!$user['UserProfile']['email']) {
 		$this->log ("ERROR: User without an email ID:".$id);
-		exit();
+		return;
 	}
 	else {
 		if ($user['UserProfile']['email_unsubscribed']==1) {
-			exit();
+			return;
 		}
 	}
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
 	        $this->send_reminder_email($user, $reminders);
 	}
-	exit();
+	return;
     }
     function send_reminder_email($user,$reminders) {
 	$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0)));

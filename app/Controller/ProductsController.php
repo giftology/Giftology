@@ -149,7 +149,7 @@ class ProductsController extends AppController {
 		$age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
 		
 		$this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
-		$this->paginate['order']= 'Product.min_price ASC';
+		$this->paginate['order']= 'Product.min_price, Product.display_order ASC';
 		$this->Product->recursive = 0;
 		//$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
 		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
