@@ -113,7 +113,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			<ul>
 				<li class="f"> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
 		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'AboutUs')); ?></li>
-		<li class="f"><?= $this->Html->link('Terms Of Services', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
+		<li class="f"><?= $this->Html->link('Terms Of Service', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
 
             <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
             <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
