@@ -97,7 +97,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<?php } 
 
 		else { ?>
-		<div style="padding:0; display:inline-block; position:absolute; left:50%; top:2%;">	<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+		<div style="padding:0; display:inline-block; position:absolute; left:50%; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
 							'redirect' => array('controller'=>'Reminders', 'action'=>'view_friends'))); 
 			 echo $this->Facebook->init(); ?> </div>
 		<?php } ?>
