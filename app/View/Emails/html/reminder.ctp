@@ -47,7 +47,12 @@ border-width:15px;border-color:#f7f5ae">
     <table align="center" width="600px" cellpadding="0" cellspacing="0" border="0" style="font-family:Helvetica, Arial, sans-serif; font-size:14px">
        
         <tr><td height="30px"></td></tr>
-        <?php for ($i = 0; $i < $num_birthdays; $i += 3): ?>
+        <?php 
+            if($num_birthdays > 9)
+                $no_of_birthday = 9;
+            else $no_of_birthday = $num_birthdays;
+        ?>
+        <?php for ($i = 0; $i < $no_of_birthday; $i += 3): ?>
         <tr>
             <td>
                 <table width="570px" cellpadding="0" align="center" cellspacing="0" border="0" >
@@ -134,6 +139,10 @@ border-width:15px;border-color:#f7f5ae">
         </tr>
         <tr><td height="50px"></td></tr>
         <?php endfor; ?>
+
+        <?php //if($num_birthdays > 0): ?>
+        <tr><td height="30px" colspan='2' align="center" valign="top"><span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms">Yipee! You have more friends with birthdays coming up this week...</span></td></tr>
+        <?php //endif ?>
         
 </td></tr></table>
 
