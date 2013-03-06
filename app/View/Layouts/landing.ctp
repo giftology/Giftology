@@ -152,12 +152,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                 <nav class="footer-nav">
                    
                     <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
-                    <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'AboutUs')); ?>
+                    <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' => 'display', 'AboutUs')); ?>
                     <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'TermsOfServices')); ?>
                     <?= $this->Html->link('PRIVACY', array('controller' => 'pages', 'action' =>  'Privacy')); ?>
                     <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?>
                     
-                    <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' =>  'Retailers')); ?>
+                    <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' =>  'display','Retailers')); ?>
                     <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' =>  'ContactUs')); ?> 
                     <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'Media')); ?>
                                       
