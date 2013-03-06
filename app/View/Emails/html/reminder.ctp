@@ -140,9 +140,9 @@ border-width:15px;border-color:#f7f5ae">
         <tr><td height="50px"></td></tr>
         <?php endfor; ?>
 
-        <?php //if($num_birthdays > 0): ?>
+        <?php if($num_birthdays > 9): ?>
         <tr><td height="30px" colspan='2' align="center" valign="top"><span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms">Yipee! You have more friends with birthdays coming up this week...</span></td></tr>
-        <?php //endif ?>
+        <?php endif ?>
         
 </td></tr></table>
 
