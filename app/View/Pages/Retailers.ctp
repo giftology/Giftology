@@ -141,7 +141,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                <?php echo $this->Form->create( 'retailers', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'retailers', 'action' => 'retailer_mail') );   ?> 
                 <!--name with input mandatory constraint-->
                  <div class="input email">
-                      <label for="email">Hi! My name is</label>
+                      <label for="email">Hi! My Name Is</label>
                       <div class="input email" ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name"))?> 
                       </div>
                        <div class="error_message" id="error_name" style="display:none; margin-left:180px;">
@@ -160,7 +160,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
             
           
                <div class="input email" style="margin-top:10px">
-                    <label for="email">We Deal with</label>
+                    <label for="email">We Deal With</label>
               
                     <!--strict field -->
                      <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Books/Music/Entertainment'=> 'Books/Music/Entertainment', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelry/Accessories'=>'Jewelry/Accessories','Restaurants/cafes'=>'Restaurants/cafes','Sporting Goods'=>'Sporting Goods','Toys'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
@@ -181,7 +181,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                     -->
                     <!--no constraints for no. of outlets-->
               <div class="input email" style="margin-top:10px">
-                  <label for="email">No. Of outlets</label>
+                  <label for="email">No. Of Outlets</label>
                    <div class="input email" ><?php echo $this->Form->input("r_outlet" ,array('name'=>'outlet_r','id' => 'r_outlet', 'label' => false,'div' => false,'class'=>"umstyle5",'placeholder' => "Outlets" ))?>
                    </div>
                    

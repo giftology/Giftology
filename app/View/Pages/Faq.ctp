@@ -75,7 +75,7 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 <h4>I've sent a gift, how do I know my friend has received it?</h4>
 <p>&nbsp;•	Your friend will be notified they've received a gift using the notification methods you choose: by email, on Facebook, or both.</p>
 <p>&nbsp;•	It's up to your friends to then login to Giftology and "accept" their gift. If they haven't done this yet, you'll have to remind them.</p>
-<p>&nbsp;•	Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via gharpay).</p>
+<p>&nbsp;•	Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via gharpay) - Comming soon.</p>
 
 <h4>Where are these gift accepted?</h4>
 <p>You can use these gifts at our online and offline merchants, as specified in the offer descriptions. Any specific condition/restriction will be also available in the description only.</p>
@@ -90,11 +90,11 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 
 <h4>How do I pay for the paid gifts?</h4>
 <p>Following are the payment methods we provide at Giftology:</p>
-<p>&nbsp;	Credit cards</p>
-<p>&nbsp;	Debit cards</p>
-<p>&nbsp;	Net banking</p>
-<p>&nbsp;	Cash cards</p>
-<p>&nbsp;	Gharpay (Make payment at your doorstep)</p>
+<p>&nbsp;-	Credit cards</p>
+<p>&nbsp;-	Debit cards</p>
+<p>&nbsp;-	Net banking</p>
+<p>&nbsp;-	Cash cards</p>
+<p>&nbsp;-	Gharpay (Make payment at your doorstep)</p>
 
 <h4>Are there any hidden charges?</h4>
 <p>At Giftology, what you see is what you pay for with absolutely no hidden charges!!</p>
