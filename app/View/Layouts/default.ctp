@@ -36,6 +36,8 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		echo $this->Html->script('jquery.ias.min');		
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
+				//echo $this->Html->css('main');
+
 		echo $this->fetch('script');
 	?>
 <style>
@@ -59,13 +61,15 @@ ul.left-menu li a { font-size:13px;  color:#fff}
   })();
 
 </script>
+
 </head>
 <body>
 <div class="mainpage">
 	<div class="header">
-		<a href=<?= FULL_BASE_URL; ?>>
+		<div class="logo-block"><a href="<?= FULL_BASE_URL; ?>" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+		<!--<a href=<?= FULL_BASE_URL; ?>> -
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
-		</a>
+		</a>-->
 		<?php if($user){ ?>
 		<ul class="nav float-l">
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
@@ -92,13 +96,14 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		</div>
 		<?php } 
 
-		else{
-			echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+		else { ?>
+		<div style="padding:0; display:inline-block; position:absolute; left:50%; top:2%;">	<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
 							'redirect' => array('controller'=>'Reminders', 'action'=>'view_friends'))); 
-		} ?>
+			 echo $this->Facebook->init(); ?> </div>
+		<?php } ?>
 	</div>
 				
-		<!--div class="transbox"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div-->
+		<!-- <div class="transbox"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div> -->
 
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
@@ -107,7 +112,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		
 		
 	</div>
-	<div id="footer">
+	<!--<div id="footer">
 			<div class="footer-line">
 			
 			<ul>
@@ -128,7 +133,26 @@ ul.left-menu li a { font-size:13px;  color:#fff}
             </ul>
             <div class="span1"><p>© Giftology 2013. All rights reserved</p>
             </div>
-        </div>
+        </div> -->
+        <footer>
+            <div class="footer-wrap">
+                <nav class="footer-nav">
+                   
+                    <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
+                    <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?>
+                    <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'display','TermsOfServices')); ?>
+                    <?= $this->Html->link('PRIVACY', array('controller' => 'pages', 'action' => 'display', 'Privacy')); ?>
+                    <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
+                    
+                    <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' => 'display', 'Retailers')); ?>
+                    <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?> 
+                    <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'display','Media')); ?>
+                                      
+                     
+                 </nav>
+                <div class="copyright">© Giftology 2013. All rights reserved</div>
+             </div>
+          </footer>
 		<?php if (isset($this->request->query['utm_source']) &&
 		$this->request->query['utm_source'] == 'swaransoft'): ?>
 			<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">

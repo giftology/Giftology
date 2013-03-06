@@ -34,11 +34,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	<?php endif; ?>
 	<?php
 		echo $this->Html->meta('icon');
-
+echo $this->Html->css('main');
 		echo $this->Html->css('normalize');
-		echo $this->Html->css('style');
+		
 		echo $this->Html->css('flexslider');
-		echo $this->Html->css('main');
+		
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -101,12 +101,26 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       </section>
            <section class="show-case">
             <div class="showcase-wrap">
-                <ul>
-                    <li><img src="<?= FULL_BASE_URL; ?>/img/carat-lane.jpg" alt=""></li>
-                    <li><img src="<?= FULL_BASE_URL; ?>/img/firstcry.jpg" alt=""></li>
-                    <li><img src="<?= FULL_BASE_URL; ?>/img/jabong.jpg" alt=""></li>
-                    <li><img src="<?= FULL_BASE_URL; ?>/img/nirulas.jpg" alt=""></li>
-                </ul>
+               <div id="giftVouchers">
+                <?php
+                            if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
+                         {
+                           $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
+                             // print_r($filecount);
+                           for($i=1;$i<=2;$i++){
+                           foreach($filecount as $img)
+                           { ?>
+                             <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
+               
+                       <?php   }}
+
+                                }
+                                    else
+                                     {
+ 
+                                     echo 0;} ?>
+                
+              </div>
             </div>
          </section>
          <section class="content-wrap">
@@ -117,7 +131,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <ul>
                         <li>
                             <span class="title">1. Choose a Friend</span>
-                            <div class="box-block"><img src="<?= FULL_BASE_URL; ?>/img/chose-frnd.png" alt=""></div>
+                                      <div class="box-block"><img src="<?= FULL_BASE_URL; ?>/img/chose-frnd.png" alt=""></div>
                             <p>You don't need a reason but we<br> notify you of friends birthdays</p>
                         </li>
                         <li>
@@ -153,13 +167,13 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                    
                     <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
                     <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' => 'display', 'AboutUs')); ?>
-                    <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'TermsOfServices')); ?>
-                    <?= $this->Html->link('PRIVACY', array('controller' => 'pages', 'action' =>  'Privacy')); ?>
-                    <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?>
+                    <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' => 'display', 'TermsOfServices')); ?>
+                    <?= $this->Html->link('PRIVACY', array('controller' => 'pages', 'action' =>  'display','Privacy')); ?>
+                    <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
                     
                     <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' =>  'display','Retailers')); ?>
-                    <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' =>  'ContactUs')); ?> 
-                    <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'Media')); ?>
+                    <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?> 
+                    <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' => 'display', 'Media')); ?>
                                       
                      
                  </nav>
@@ -177,25 +191,129 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <script src="../js/jquery.flexslider-min.js"></script>
         <script src="../js/plugins.js"></script>
         <script src="../js/main.js"></script>
+        <script src="../js/carouFredSel.js"></script>
+      
        <script type="text/javascript">
-	   $(window).resize(function(){
-		   setTimeout(function(){
-				$('.banner-content').height($('.flexslider').height());
-				},50);
-			
-		   });
-  		$(window).load(function(){
- 			setTimeout(function(){
-				$('.banner-content').height($('.flexslider').height());
-				},100);
- 		  $('.flexslider').flexslider({
-			animation: "fade",
-			controlNav: false,
-			start: function(slider){
-			  $('body').removeClass('loading');
-			}
-		  });
-		});
+       !function(window){
+  var $q = function(q, res){
+        if (document.querySelectorAll) {
+          res = document.querySelectorAll(q);
+        } else {
+          var d=document
+            , a=d.styleSheets[0] || d.createStyleSheet();
+          a.addRule(q,'f:b');
+          for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
+            l[b].currentStyle.f && c.push(l[b]);
+
+          a.removeRule(0);
+          res = c;
+        }
+        return res;
+      }
+    , addEventListener = function(evt, fn){
+        window.addEventListener
+          ? this.addEventListener(evt, fn, false)
+          : (window.attachEvent)
+            ? this.attachEvent('on' + evt, fn)
+            : this['on' + evt] = fn;
+      }
+    , _has = function(obj, key) {
+        return Object.prototype.hasOwnProperty.call(obj, key);
+      }
+    ;
+
+  function loadImage (el, fn) {
+    var img = new Image()
+      , src = el.getAttribute('data-src');
+    img.onload = function() {
+      if (!! el.parent)
+        el.parent.replaceChild(img, el)
+      else
+        el.src = src;
+
+      fn? fn() : null;
+    }
+    img.src = src;
+  }
+
+  function elementInViewport(el) {
+    var rect = el.getBoundingClientRect()
+
+    return (
+       rect.top    >= 0
+    && rect.left   >= 0
+    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+    )
+  }
+
+    var images = new Array()
+      , query = $q('img.lazy')
+      , processScroll = function(){
+          for (var i = 0; i < images.length; i++) {
+            if (elementInViewport(images[i])) {
+              loadImage(images[i], function () {
+                images.splice(i, i);
+              });
+            }
+          };
+        }
+      ;
+    // Array.prototype.slice.call is not callable under our lovely IE8 
+    for (var i = 0; i < query.length; i++) {
+      images.push(query[i]);
+    };
+
+    processScroll();
+    addEventListener('scroll',processScroll);
+
+}(this);
+         $(function(){
+       var testimer
+       $('#giftVouchers div').bind('mouseenter',function(){
+         var ths = $(this);
+         testimer = setTimeout(function(){
+          ths.animate({top:'-5px'});   
+           },100);
+         
+        });
+         $('#giftVouchers div').bind('mouseleave',function(){
+           $(this).animate({top:'0px'});
+        });
+       
+       $('#giftVouchers').carouFredSel({
+          width: 1200,
+          items: 4,
+          scroll: 1,
+          'responsive': true,
+          auto: {
+            duration: 1250,
+            timeoutDuration: 4000
+          },
+          prev: '',
+          next: '',
+          pagination: ''
+        });
+    });
+     
+     $(window).resize(function(){
+       setTimeout(function(){
+        $('.banner-content').height($('.flexslider').height());
+        },50);
+      
+       });
+      $(window).load(function(){
+      setTimeout(function(){
+        $('.banner-content').height($('.flexslider').height());
+        },100);
+    $('.flexslider').flexslider({
+      animation: "fade",
+      controlNav: false,
+      start: function(slider){
+        $('body').removeClass('loading');
+      }
+      });
+      
+});
 	</script> 
  <?php echo $this->Mixpanel->embed(); ?>
 
