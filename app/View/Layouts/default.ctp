@@ -112,12 +112,12 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			
 			<ul>
 				<li class="f"> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
-		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'AboutUs')); ?></li>
+		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'display', 'AboutUs')); ?></li>
 		<li class="f"><?= $this->Html->link('Terms Of Service', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
 
             <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
             <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
-         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'Retailers')); ?> </li>
+         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'display', 'Retailers')); ?> </li>
            <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
            <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
            
