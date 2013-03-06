@@ -19,7 +19,6 @@
 
 $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php echo $this->Facebook->html(); ?>
 
   <?php echo $this->Html->charset(); ?>
@@ -122,7 +121,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 
           <div class="content">
                 <center><h2>Partner with us!</h2></center>
-            <p>   Giftology is the new age, social gifting platform that presents your brand/products to 61 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. </p>
+            <p>   Giftology is the new age, social gifting platform that presents your brand/products to 71 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. </p>
             <br>
              <p>We help generate in person and online traffic for top brands by letting customers send free and paid gifts to their friends and family via Facebook. Learn how we can work together to help you increase sales with Giftology by filling out the form below: </p>
                 <!-- <p>Email us at partner@giftology.com</p> -->
@@ -137,20 +136,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
               <div class="retail-form">
   
                     <br>
-                    <?php if($user){ ?>
-             <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'retailer_mail') ); ?>
+                  
 
-               <?php } 
-               else{ ?>
-
-               <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'pages', 'action' => 'test') );  } ?>
+               <?php echo $this->Form->create( 'retailers', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'retailers', 'action' => 'retailer_mail') );   ?> 
                 <!--name with input mandatory constraint-->
                  <div class="input email">
                       <label for="email">Hi! My name is</label>
                       <div class="input email" ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name"))?> 
                       </div>
                        <div class="error_message" id="error_name" style="display:none; margin-left:180px;">
-                         <span style="color:#808080">*please enter the name</span>
+                         <span style="color:#808080">*please enter the name.</span>
                         </div>
                 
                 </div>
@@ -216,7 +211,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                     <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ))?>
                     </div>
                     <div class="error_message" id="error_phone" style="display:none; margin-left:180px;">
-                       <span style="color:#808080">*please enter the 10 digit mobile no.</span>
+                       <span style="color:#808080">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
                     </div>
               </div>
                  <!--no constraints for mail id -->

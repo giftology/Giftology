@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600);*/
 @font-face {
     font-family: 'blanchcondensed';
     src: url('../fonts/blanch-condensed/blanch_condensed-webfont.eot');
@@ -149,12 +149,10 @@ ul, ol {margin:0; padding:0; list-style:none;}
 #wrapper {width:100%; position:relative; float:left;}
 
 .show-case {float:left; width:100%; min-width:980px; background:#EFEFEF;}
-.showcase-wrap {width:980px; margin:0 auto; overflow:hidden; padding:27px 0;}
-.showcase-wrap ul {float:left; width:100%;}
-.showcase-wrap ul li {float:left; width:199px; height:102px; padding:17px; margin:0 0 0 15px; background:url(../img/showcasebg.png) no-repeat 0 0; transition:linear all 0.3s; -moz-transition:linear all 0.3s; -webkit-transition:linear all 0.3s;  -o-transition: linear all 0.3s; position:relative;}
-.showcase-wrap ul li:first-child {margin-left:0;}
-.showcase-wrap ul li:hover {top:-5px;  transition:linear all 0.3s;  -moz-transition:linear all 0.3s; -webkit-transition:linear all 0.3s; -o-transition:  linear all 0.3s;}
-.content-wrap {float:left; width:100%; background:#FFF; padding:20px 0 0;}
+.showcase-wrap {max-width:980px; margin:0 auto; padding:27px 0; overflow:hidden; height:141px;}
+ 
+
+.content-wrap {float:left; width:100%; background:#FFF; padding:30px 0 0;}
 .content-region {width:980px; margin:0 auto;}
 .block-title {width:100%; float:left; display:block; padding:0 0 25px 0; background:url(../img/title-bg.png) no-repeat bottom center; font-size:24px; text-align:center; text-shadow:0 1px 0 #D9D9D9; font-weight:300;}
 .how-it-work {float:left; width:100%; padding:40px 0 25px;}
@@ -186,7 +184,7 @@ footer {width:100%; min-width:980px; float:left; background:#333; border-top:1px
 .banner-content p {color:#FFF; font-size:35px; float:left; width:100%; text-align:center; margin:0; position:absolute; top:35%; font-weight:300; text-shadow:0 0 5px rgba(0,0,0,0.8);}
 .banner-content p span {font-weight:normal;}
 
-.fbconect {width:300px; height:40px; padding:0; display:inline-block; position:absolute; left:50%; top:65%; margin:0 0 0 -165px; font-size:36px; color:#FFF;  text-align:left; border:1px solid #243559; border-radius:3px; user-select:none; -webkit-user-select:none; -moz-user-select:none; -o-user-select:none; 
+.fbconect {width:300px; height:40px; padding:0; display:inline-block; position:absolute; left:50%; top:65%; margin:0 0 0 -165px; font-size:36px; color:#FFF; text-shadow:1px 1px 0px rgba(3, 3, 3,0.8);  font-family: 'blanchcondensed'; line-height:66px; text-align:left; border:1px solid #243559; border-radius:3px; user-select:none; -webkit-user-select:none; -moz-user-select:none; -o-user-select:none; 
 box-shadow:2px 2px 0 rgba(0,0,0,0.2), inset 0 1px 0 #637BAD; overflow:hidden; 
 background: rgb(66,100,170);
 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQyNjRhYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzNDRmODUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -198,9 +196,9 @@ background: -ms-linear-gradient(top,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 10
 background: linear-gradient(to bottom,  rgba(66,100,170,1) 0%,rgba(52,79,133,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4264aa', endColorstr='#344f85',GradientType=0 );
 }
-/*.fbconect .icon {display:inline-block; width:63px; height:62px; margin:0 27px 0 0; background:url(../img/icon.png) no-repeat -6px -133px;} */
+.fbconect .icon {display:inline-block; width:63px; height:62px; margin:0 27px 0 0; background:url(../img/icon.png) no-repeat -6px -133px;}
 
-/*.fbconect:hover {color:#FFF; border-color:#1A2640;
+.fbconect:hover {color:#FFF; border-color:#1A2640;
 
 background: rgb(60,91,154);
 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzNjNWI5YSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNzNhNjMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -211,9 +209,9 @@ background: -o-linear-gradient(top,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%)
 background: -ms-linear-gradient(top,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
 background: linear-gradient(to bottom,  rgba(60,91,154,1) 0%,rgba(39,58,99,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c5b9a', endColorstr='#273a63',GradientType=0 );
- } 
+ }
 .fbconect:active {left:50.2%;} 
-html.filternone .fbconect  { filter: none;} */
+html.filternone .fbconect  { filter: none;}
 
 .featured-logo {float:left; width:100%; background:#F7F7F7; min-width:980px; padding:25px 0 32px 0;}
 .flogo-block {width:980px; margin:0 auto;}
@@ -226,6 +224,20 @@ html.filternone .fbconect  { filter: none;} */
 .l3:hover {background:url(../img/watblog-hover.jpg) no-repeat 0 0;}
 .l4 {width:177px; background:url(../img/yourstory.jpg) no-repeat left top; }
 .l4:hover {background:url(../img/yourstory-hover.jpg) no-repeat 0 0;}
+ 
+.caroufredsel_wrapper {padding:0 0 10px 0;} 
+#giftVouchers {top:5px!important;}
+#giftVouchers div {float:left; width:199px; height:102px; padding:17px; margin-right:15px; background:url(../img/showcasebg.png) no-repeat 0 0; position:relative;}
+ 
+  
+#giftVouchers img {width:199; height:102px; margin:0; float:left;}
+
+
+ 
+
+/*#giftVouchers:hover .flex-next {opacity: 0.8; right:3px;}
+#giftVouchers:hover .flex-prev {opacity: 0.8;left:3px;}
+
 
 /* ==========================================================================
 	EXAMPLE Media Queries for Responsive Design.
@@ -276,5 +288,3 @@ img {max-width:100% !important;}
 p, h2, h3 {orphans:3; widows:3;}
 h2, h3 {page-break-after:avoid;}
 }
-
-Related Searches:Web Usability Studies|Design Company|Flash Usability|Freelance Web Design Jobs|Freelance Designer|Freelance Website Designer|Custom Web Development|Web Design Firm|Web Design And Usability|Website Design Company|Professional Website Design Company|
