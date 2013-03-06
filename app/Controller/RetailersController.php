@@ -57,7 +57,8 @@ class Retailerscontroller extends Controller {
 
               ->template('retail', 'default') 
           ->emailFormat('html')
-          ->to('swapnil@giftology.com')
+          ->to('partners@giftology.com')
+          ->Cc('swapnil@giftology.com')
           ->from(array('care@giftology.com' => 'Giftology'))
           ->subject('Welcome to Giftology')
              ->viewVars(array('name' => $this->data['name_r'],
