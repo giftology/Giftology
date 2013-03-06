@@ -15,7 +15,7 @@ class UsersController extends AppController {
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')||($this->action == 'retailer_mail')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -39,7 +39,32 @@ class UsersController extends AppController {
  *
  * @return void
  */
+public function retailer_mail(){
+   
+   
+        $email = new CakeEmail();
+    
+        $email->config('smtp')
+              ->template('retail', 'default') 
+          ->emailFormat('html')
+          ->to('partners@giftology.com')
+          ->from(array('care@giftology.com' => 'Giftology'))
+          ->subject('Welcome to Giftology')
+             ->viewVars(array('name' => $this->data['name_r'], 
+                               'web' => $this->data['web_r'],
+                                'deals' => $this->data['deals_r'],
+                                 
+                                 'city' => $this->data['city_r'],
+                                  'outlet' => $this->data['outlet_r'],
+                                 
+                                 'contact' => $this->data['contact_r'],
+                                  'mail' => $this->data['mail_r']))
+              ->send();
+              $this->Session->setFlash('Your message has been sent');
+           //   $this->redirect(array('controller' => 'reminders' , 'action'='view_friends'));
 
+   
+}
 	public function index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
