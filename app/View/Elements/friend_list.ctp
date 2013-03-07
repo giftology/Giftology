@@ -22,11 +22,17 @@
                                                                     <p><?= date('d', strtotime($reminder['Reminder']['friend_birthday'])); ?></p>
                                                             </div>
                                                         <?php endif; ?>
+                                                        <?php if($reminder['count'] != 0): ?>
+                        <div class="count" ><p><?= $reminder['count']; ?></p></div>
+                         <?php else: ?>
+                         <div ></div>
+                          <?php endif; ?>
                                                 </div>
                                         </div>
                                 </div>
                         </div>
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
+                         
                         <?php if(isset($ocasion)): ?>
                                 <p class="occasion"><?= $ocasion; ?></p>
                         <?php endif; ?>

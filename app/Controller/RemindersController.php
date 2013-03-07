@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class RemindersController extends AppController {
 
-public $uses = array( 'Reminder','Product' );
+public $uses = array( 'Reminder','Product','Gift');
 	
 	public $paginate = array(
 	        'limit' => 24,
@@ -317,6 +317,7 @@ public $uses = array( 'Reminder','Product' );
     }
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
+                    
 		if ($whose == 'mine') {
 		    $conditions = array(
 			'user_id' => $this->Auth->user('id'));
@@ -355,8 +356,21 @@ public $uses = array( 'Reminder','Product' );
 			    array('conditions' => $conditions,
 		  		  'order' => 'friend_birthday ASC'
 			));
+
 		}
-		return $reminders;
+		$receiver_info = array();
+		foreach ($reminders as $reminder) {
+			$fb_id=$reminder['Reminder']['friend_fb_id'];
+			$receiver_info[]['count'] = $this->Gift->find('count',array('conditions' => array('AND'=>array('Gift.receiver_fb_id' => $fb_id,'Gift.sender_id' =>$this->Auth->user('id')))));
+			
+		}
+		$result = array();
+				foreach($reminders as $key=>$val){ // Loop though one array
+				    $val2 = $receiver_info[$key]; // Get the values from the other array
+				    $result[$key] = $val + $val2; // combine 'em
+				}
+				
+		return $result;
     }
 	function setGiftsSent() {
 		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count'));

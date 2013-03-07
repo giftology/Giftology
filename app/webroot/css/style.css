@@ -70,6 +70,46 @@ ul.nav li a {
     text-align: center;
     width: 50px;}
 
+    ul.nav1 li {
+    display: inline;
+    float: left;
+    margin-right: 60px;}
+
+    ul.nav1 li a {
+    background-image: url("../img/Received_Gifts_Icon.png");
+    background-repeat: no-repeat;
+    color: #6A6C6F;
+    display: block;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 42px;
+    position: relative;
+    text-align: center;
+    width: 59px;
+    height: 10px;
+}
+
+     ul.nav2 li {
+    display: inline;
+    float: left;
+    margin-right: 60px;}
+
+    ul.nav2 li a {
+    background-image: url("../img/Sent_Gift_Icon.png");
+    background-repeat: no-repeat;
+    color: #6A6C6F;
+    display: block;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 42px;
+    position: relative;
+    text-align: center;
+    width: 59px;}
+
+
+
 ul.nav li a.events.active, ul.nav li a.events.active:hover {
     background-position: 0 -111px;
 }
@@ -218,10 +258,33 @@ ul.nav li a.wallet:hover {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     height: 26px;
     position: absolute;
-    right: -9px;
+   
     width: 23px;
 }
-
+.line-header .count {
+    right: 10px;
+}
+.count {
+    background-image: url("../img//icon_new.png");
+    background-repeat: no-repeat;
+    
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    height: 35px;
+    position: absolute;
+    top: -5px;
+    right:-20px;
+    width: 40px;
+}
+ .count p {
+    float: right;
+    font-color:#000000;
+    font-size: 13px;
+    font-weight: bold;
+    top: 11px;
+    right: 2px;
+    text-align: center;
+    width: 100%;
+}
 .calendar p {
     float: left;
     font-size: 13px;
@@ -722,6 +785,9 @@ ul, ol {
 #campaigns {
     margin: 0 -45px 0 -33px;
 }
+#campaign {
+    margin: 0 -45px 0 -33px;
+}
 .small-voucher {
     display: inline-block;
     height: 90px;
@@ -813,6 +879,10 @@ a .free.voucher .image-frame {
 }
 a .free.voucher .label {
     color: #F5F7F2;
+    background-color: crimson;
+}
+a .free.voucher .expirelabel {
+    color: #4D4D4D;
     background-color: crimson;
 }
 
@@ -2360,4 +2430,19 @@ left: 750px;
 #timeago {
     font-size: 10px;
     color: grey;
+}
+.popbox {
+    display:none;
+   
+    
+}
+.popbox h2
+{
+    background-color: #4D4F53;
+    color:  #E3E5DD;
+    font-size: 14px;
+    display: block;
+    width: 170px;
+    margin-top: -75px;
+    padding: 5px 10px;
 }

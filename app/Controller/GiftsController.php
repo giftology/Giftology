@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
-	public $uses = array( 'Gift','UserAddress','User','ProductType','UserProfile' );
+	public $uses = array( 'Gift','UserAddress','User','ProductType','UserProfile','Reminder');
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -24,7 +24,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -238,7 +238,7 @@ class GiftsController extends AppController {
 	}
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $date_to_send = null,$reciever_name = null) {
-		
+		   
 		$this->redirectIfNotAllowedToSend();
 		
 		$this->Gift->create();
@@ -523,6 +523,7 @@ class GiftsController extends AppController {
 		$this->set('gift', $gift);	
 	}
 	public function view_gifts() {
+       
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('sender_id' => $this->Auth->user('id'));
 		} else {
@@ -534,8 +535,62 @@ class GiftsController extends AppController {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
+		$gifts = $this->Gift->find('all', array(
+			'contain' => array(
+				'Product' => array('Vendor')),
+			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_SCHEDULED, 'Gift.receiver_id' => $this->Auth->user('id')))));
+		
+		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
+		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
+		$birthday = isset($User['Reminder']['friend_birthday']) ? $User['Reminder']['friend_birthday']: NULL;
+		if($birthday <= date("Y-m-d"))
+		{
+			$this->Gift->updateAll(
+                array('gift_status_id' => 1), 
+                array('receiver_id' => $this->Auth->user('id')));
+			
+		}
+
 		$this->paginate['conditions'] = $conditions;
 		$this->set('gifts', $this->paginate());
+		$this->set('gifts_active', 'active');
+		$this->Mixpanel->track('Viewing Gifts', array(
+		));
+	}
+
+	public function sent_gifts() {
+        
+		if (isset($this->request->params['named']['sent'])) {
+			$conditions = array('receiver_id' => $this->Auth->user('id'));
+		} else {
+			$conditions = array('sender_id' => $this->Auth->user('id'));
+		}
+		$gift_sent = $this->Gift->find('all', array(
+			'contain' => array(
+				'Product' => array('Vendor')),
+			'conditions' => array('Gift.sender_id' => $this->Auth->user('id'))));
+		//print_r($gift_sent);
+		$fb_name = array();
+		foreach ($gift_sent as $gift) {
+			$fb_id=$gift['Gift']['receiver_fb_id'];
+			$User_info = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
+			$fb_name[]['name']=$User_info['Reminder']['friend_name'];
+			# code...
+		}
+		if($fb_name!=null){
+		$name = array_reverse($fb_name);
+		}
+		
+		$this->paginate['conditions'] = $conditions;
+		//$this->set('gifts', $this->paginate());
+		$set = $this->paginate();
+		$result = array();
+				foreach($set as $key=>$val){ // Loop though one array
+				    $val2 = $name[$key]; // Get the values from the other array
+				    $result[$key] = $val + $val2; // combine 'em
+				}
+				
+		$this->set('gifts', $result);
 		$this->set('gifts_active', 'active');
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
