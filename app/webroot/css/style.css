@@ -186,9 +186,10 @@ ul.nav li a.wallet:hover {
     border-width: 1px;
     padding-bottom: 10px;
 }
-#SendButtonForNoPerms:hover 
-{   background-color: rgb(248, 63, 47); 
-}
+    #SendButtonForNoPerms:hover 
+    {   background-color: rgb(248, 63, 47); 
+    }
+
 button.spread, button.use, button.single-use, button.yellow, input.buy[type="submit"], input.use[type="submit"], input.single-use[type="submit"], input.yellow[type="submit"] {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
@@ -1624,14 +1625,16 @@ button, input[type="submit"] {
     text-align: center;
   /*  text-shadow: 0 1px rgba(255, 255, 255, 0.5);*/
 }
+.parent_submit input[type="submit"]:hover 
+{   background-color: rgb(248, 63, 47); 
+}
 .parent_submit input[type="submit"]{
      -moz-border-bottom-colors: none;
     -moz-border-image: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    background-color: rgba(173, 46, 13, 0.86);
-    background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
+    background-color: #BE1304;
     color: #FFFFFF;
     margin-left: 60px;
 }
