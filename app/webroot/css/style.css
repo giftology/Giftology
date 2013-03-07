@@ -183,8 +183,18 @@ ul.nav li a.wallet:hover {
     border-width: 1px;
     padding-bottom: 10px;
 }
-#SendButtonForNoPerms:hover {
-  background-color: #0404B4;
+#SendButtonForNoPerms:hover 
+{   background-color: rgb(248, 63, 47); 
+}
+button.spread, button.use, button.single-use, button.yellow, input.buy[type="submit"], input.use[type="submit"], input.single-use[type="submit"], input.yellow[type="submit"] {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #BE1304;
+    color: #FFFFFF;
+    margin-left: 60px;
 }
 
 
@@ -1588,7 +1598,6 @@ button, input[type="submit"] {
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
     background-color: #F7F7F7;
-    background-image: -moz-linear-gradient(#FFFFFF, #FAFAFA 50%, #F3F3F3 50%, #F2F2F2);
     border-color: #B7B7B7 #AAAAAA #999999;
     border-left: 1px solid #AAAAAA;
     border-radius: 5px 5px 5px 5px;
