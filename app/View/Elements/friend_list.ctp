@@ -23,7 +23,7 @@
                                                             </div>
                                                         <?php endif; ?>
                                                         <?php if($reminder['count'] != 0): ?>
-                        <div class="count" ><p><?= $reminder['count']; ?></p></div>
+                        <div class="count" ><p style="font-color:#000000"><?= $reminder['count']; ?></p></div>
                          <?php else: ?>
                          <div ></div>
                           <?php endif; ?>

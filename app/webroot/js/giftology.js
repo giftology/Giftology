@@ -17,7 +17,7 @@ $(document).ready(function(){
 		loader: '<img src="img/loader.gif"/>',
         loaderDelay: 100,
         triggerPageThreshold: 2,
-        trigger: 'Find more received gifts'
+        trigger: 'View more received gifts'
 	});
     jQuery.ias({
         container : '#campaign',
@@ -27,7 +27,7 @@ $(document).ready(function(){
         loader: '<img src="img/loader.gif"/>',
         loaderDelay: 100,
         triggerPageThreshold: 2,
-        trigger: 'More sent gifts'
+        trigger: 'View more sent gifts'
     });
 
 

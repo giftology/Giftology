@@ -69,44 +69,47 @@ ul.nav li a {
     position: relative;
     text-align: center;
     width: 50px;}
-
     ul.nav1 li {
     display: inline;
     float: left;
     margin-right: 60px;}
-
-    ul.nav1 li a {
-    background-image: url("../img/Received_Gifts_Icon.png");
+    
+ul.nav1 li a {
+    
     background-repeat: no-repeat;
     color: #6A6C6F;
     display: block;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
     font-weight: bold;
-    padding-top: 42px;
+    padding-top: 34px;
     position: relative;
     text-align: center;
-    width: 59px;
-    height: 10px;
-}
+    width: 50px;}
 
      ul.nav2 li {
     display: inline;
     float: left;
     margin-right: 60px;}
-
-    ul.nav2 li a {
-    background-image: url("../img/Sent_Gift_Icon.png");
+    
+ul.nav2 li a {
+    
     background-repeat: no-repeat;
     color: #6A6C6F;
     display: block;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
     font-weight: bold;
-    padding-top: 42px;
+    padding-top: 34px;
     position: relative;
     text-align: center;
-    width: 59px;}
+    width: 50px;}
+
+
+   
+
+
+
 
 
 
@@ -275,22 +278,24 @@ button.spread, button.use, button.single-use, button.yellow, input.buy[type="sub
     right: 10px;
 }
 .count {
-    background-image: url("../img//icon_new.png");
+    background-image: url("../img//badge_new.png");
     background-repeat: no-repeat;
     
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     height: 35px;
     position: absolute;
     top: -5px;
-    right:-20px;
+    right:-17px;
     width: 40px;
+    color:#FFFFFF;
 }
+
  .count p {
     float: right;
-    font-color:#000000;
+    font-color:#FFFFFF;
     font-size: 13px;
     font-weight: bold;
-    top: 11px;
+    top: 9px;
     right: 2px;
     text-align: center;
     width: 100%;

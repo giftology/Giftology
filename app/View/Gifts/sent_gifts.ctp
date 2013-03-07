@@ -64,14 +64,14 @@ $(function() {
 </div>
 <br><br>
 
-<ul class="nav2 float-l" style="float:right">
-            <li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>Sent Gifts</span></a></li>
+<div style="float:right;margin-top:15px">
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>  style=" text-decoration:none"><span>Sent<br> Gifts</span></a>
            
-        </ul>
-        <ul class="nav1 float-l" style="float:right">
-            <li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>Received Gifts</span></a></li>
-</ul>
-<br><br>
+       </div>
+        <div style="float:right;margin-right:20px;margin-top:15px">
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?>  style=" text-decoration:none"><span>Received<br>&nbsp;&nbsp; Gifts</span></a>
+</div>
+<br>
 <div>
         <h3 class="line-header">
                 <span><?= $facebook_user['name'].'\'s sent gifts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -122,7 +122,7 @@ $(function() {
                                     <span class="label" style="margin-top:43px;font-size:11px;background-color: #FFFFFF;color: #000000">Sent On : <?= $newDate ?></span>
                                     <span class="label" style="margin-top:25px;font-size:11px;background-color: #FFFFFF;color: #000000">To : <?= $gift['name'] ?></span>
                                     <?php if ($gift['Gift']['gift_status_id']==GIFT_STATUS_SCHEDULED): ?>
-                                            <span class="label" style="margin-top:-20px;font-size:11px;background-color: #FFFFFF;color: #000000">SCHEDULED GIFT</span>
+                                            <span class="label" style="margin-top:-40px;font-size:11px;background-color: #FFFFFF;color: #000000">SCHEDULED GIFT</span>
                                      <?php endif; ?> 
 
                                     

@@ -9,14 +9,14 @@
 </div>
 <br><br>
 
-<ul class="nav2 float-l" style="float:right">
-            <li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>Sent Gifts</span></a></li>
+<div style="float:right;margin-top:15px">
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>  style=" text-decoration:none"><span>Sent<br> Gifts</span></a>
            
-        </ul>
-        <ul class="nav1 float-l" style="float:right">
-            <li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>Received Gifts</span></a></li>
-</ul>
-<br><br>
+       </div>
+        <div style="float:right;margin-right:20px;margin-top:15px">
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> style=" text-decoration:none"><span>Received<br>&nbsp;&nbsp; Gifts</span></a>
+</div>
+<br>
 <div>
         <h3 class="line-header">
                 <span><?= $facebook_user['name'].'\'s received gifts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -46,7 +46,7 @@
 
              <?php if ($gift['Gift']['expiry_date'] < date("Y-m-d")): ?>
             <a href="<?= $this->Html->url(array('controller' => 'pages',
-                    'action' => 'faq')); ?>" title="Click to redeem">
+                    'action' => 'display','faq')); ?>" title="Click to redeem">
                  <div class="small-voucher">
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
@@ -91,14 +91,14 @@
                                     <span class="value"><span id="WebRupee" class="WebRupee">Rs.</span>
                                     <?= isset($gift['Product']['min_value']) ?
                                         $gift['Product']['min_value'] :
-                                        $gift['min_value']; ?></span>
-                                    <?= (isset($gift['Product']['min_price']) && ($gift['Product']['max_price'] > $gift['Product']['min_price'])) ? 'or more':'' ?>
+                                        $gift['min_value']; ?>
+                                    <?= (isset($gift['Product']['min_price']) && ($gift['Product']['max_price'] > $gift['Product']['min_price'])) ? 'or more':'' ?></span>
 
                                    <?php
                                    $originalDate = $gift['Gift']['expiry_date'];
                                    $newDate = date("j F Y", strtotime($originalDate)); ?>
 
-                                    <span class="label" style="margin-top:35px;font-size:11px;background-color: #FFFFFF;color: #000000">Expires On : <?=$newDate; ?></span>
+                                    <span class="label" style="margin-top:41px;font-size:11px;background-color: #FFFFFF;color: #000000">Expires On : <?=$newDate; ?></span>
                                      <span class="label" style="font-size: 14px">REDEEM</span>
                                     
 
