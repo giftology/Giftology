@@ -81,6 +81,26 @@
 			<?php echo h($product['Product']['display_order']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('sender_gift_limit'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['sender_gift_limit']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('sender_time_limit'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['sender_time_limit']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('receiver_gift_limit'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['receiver_gift_limit']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('receiver_time_limit'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['receiver_time_limit']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['created']); ?>

@@ -13,7 +13,7 @@ class ProductsController extends AppController {
             'Product.display_order' => 'asc'
 	    )
 	);
-	public $uses = array( 'Product','User','UserAddress');
+	public $uses = array( 'Product','User','UserAddress','Gift');
 	public function isAuthorized($user) {
 	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
 	        return true;
@@ -133,35 +133,85 @@ class ProductsController extends AppController {
 	
 	public function view_products () {
 		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
-		$gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
-		$year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
-		$today = date("Y"); 
-		$gender=strtoupper($gender);
-		$age=$today-$year;
+        $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
+        $year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
+        $today = date("Y"); 
+        $gender=strtoupper($gender);
+        $age=$today-$year;
 
-		$gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
-		$location = $this->Product->CitySegment->find('all',array('conditions' => array('CitySegment.city' => $location)));
-		$age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
-		
-		
-		$gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
-		$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
-		$age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
-		
-		$this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
-		$this->paginate['order']= 'Product.min_price, Product.display_order ASC';
-		$this->Product->recursive = 0;
-		//$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
-		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
-		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
-		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
-		$this->set('products', $this->paginate());
-		$this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
-		$this->Mixpanel->track('Viewing Product List ', array(
-	            'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
-	            $this->request->params['named']['receiver_name'] : null,
-        	));
+        $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
+        $location = $this->Product->CitySegment->find('all',array('conditions' => array('CitySegment.city' => $location)));
+        $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
+
+
+        $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
+        $location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
+        $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
+
+        $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
+        $this->paginate['order']= 'Product.min_price, Product.display_order ASC';
+        $this->Product->recursive = 0;
+        //DebugBreak();
+        $product_array=$this->paginate();
+        
+         $show_product = array();
+         $unpaid_product =array();
+        foreach($product_array as $product)
+        {  
+        $product_id= NULL; 
+         if($product['Product']['min_price']== 0)
+        {
+            $product_id=$product['Product']['id'];
+            $sender_id = $this->Auth->user('id');
+            $current_date= date("Y-m-d") ;
+            $receiver_gift_limit  = $product['Product']['receiver_gift_limit'];
+            $receiver_time_limit =$product['Product']['receiver_time_limit'];
+            $receiver_id=$this->request->params['named']['receiver_id'];
+            $sender_gift_limit = $product['Product']['sender_gift_limit'];
+            $sender_time_limit = $product['Product']['sender_time_limit'];
+            $tomorrow = date("Y-m-d",mktime(0,0,0,date("m"),date("d")+1,date("Y")));
+            $sender_end_date=date('Y-m-d', strtotime('-'.$sender_time_limit.'days', strtotime($tomorrow)));
+            $receiver_end_date=date('Y-m-d', strtotime('-'.$receiver_time_limit.'days', strtotime($tomorrow)));
+            $total_send_gift_acc_limit_sender = $this->Gift->query("select count(*)as cou from gifts where created between '".$sender_end_date."' and '".$tomorrow."'
+                AND product_id = '".$product_id."'
+                AND sender_id = '".$sender_id."'
+            ");
+            $total_gift_rec_acc_limit_receiver = $this->Gift->query("select count(*)as cou from gifts where created between '".$receiver_end_date."' and '".$tomorrow."'
+                AND product_id = '".$product_id."'
+                AND receiver_fb_id = '".$receiver_id."'
+            ");
+            if(($total_send_gift_acc_limit_sender[0][0]['cou']< $sender_gift_limit))
+            {
+                if(($total_gift_rec_acc_limit_receiver[0][0]['cou']< $receiver_gift_limit))
+                {
+                    $show_product[]=$product_id;
+                }
+            }
+        }
+        else{
+            $unpaid_product[]=$product['Product']['id'];
+            }
+         
+        
+            }
+                 
+            $result = array_merge((array)$show_product, (array)$unpaid_product);
+            $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.min_price','Product.display_order')));
+             $this->set('products',$proddd);
+
+            //$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
+            $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+            $this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
+            $this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
+            $this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+            //$this->set('products', $this->paginate());
+            $this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
+            $this->Mixpanel->track('Viewing Product List ', array(
+                'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
+                $this->request->params['named']['receiver_name'] : null,
+            ));
+            
+    
 	
 	}
 	public function view_product($id=null) {

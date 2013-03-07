@@ -32,6 +32,10 @@
 		echo $this->Form->input('gender_segment_id');
 		echo $this->Form->input('city_segment_id');
 		echo $this->Form->input('display_order');
+		echo $this->Form->input('sender_gift_limit');
+		echo $this->Form->input('sender_gift_limit');
+		echo $this->Form->input('receiver_gift_limit');
+		echo $this->Form->input('receiver_time_limit');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
