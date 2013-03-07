@@ -34,11 +34,11 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; 
-                        if($age>0): {?>
-                                Turns <? echo $age;
-                                            } ?></p>
-                        <?php endif; ?>
+                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0) : 
+                                echo $age ;
+                            else: ?>
+                                Birthday
+                            <?php endif; ?></p>
                 </div>
                 </a>
         </div>
