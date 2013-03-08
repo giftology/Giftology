@@ -23,7 +23,8 @@
                                                             </div>
                                                         <?php endif; ?>
                                                         <?php if($reminder['count'] != 0): ?>
-                        <div class="count" ><p style="font-color:#000000"><?= $reminder['count']; ?></p></div>
+                        <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>><div class="count" ><p style="font-color:#000000"><?= $reminder['count']; ?></p></div></a>
+
                          <?php else: ?>
                          <div ></div>
                           <?php endif; ?>
