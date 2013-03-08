@@ -35,7 +35,7 @@
                          
                         <p class="occasion">
                         <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0) : 
-                                echo $age ;
+                               ?>Turns <?php echo $age ;
                             else: ?>
                                 Birthday
                             <?php endif; ?></p>
