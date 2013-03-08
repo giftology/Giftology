@@ -45,8 +45,7 @@
 			<?php $gift['Vendor'] = &$gift['Product']['Vendor']; ?>
 
              <?php if ($gift['Gift']['expiry_date'] < date("Y-m-d")): ?>
-            <a href="<?= $this->Html->url(array('controller' => 'pages',
-                    'action' => 'display','faq')); ?>" title="Click to redeem">
+            <a href="<?= $this->Html->url('/faq'); ?>" >
                  <div class="small-voucher">
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
