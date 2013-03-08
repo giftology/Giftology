@@ -190,6 +190,7 @@ ul.nav li a.wallet:hover {
     {   background-color: rgb(248, 63, 47); 
     }
 
+ 
 button.spread, button.use, button.single-use, button.yellow, input.buy[type="submit"], input.use[type="submit"], input.single-use[type="submit"], input.yellow[type="submit"] {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
@@ -279,7 +280,7 @@ button.spread, button.use, button.single-use, button.yellow, input.buy[type="sub
     right: 10px;
 }
 .count {
-    background-image: url("../img//badge_new.png");
+    background-image: url("../img//Badge_icons.png");
     background-repeat: no-repeat;
     
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
