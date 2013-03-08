@@ -9,27 +9,7 @@ $(document).ready(function(){
         triggerPageThreshold: 2,
         trigger: 'Find more friends to celebrate'
 	});
-	jQuery.ias({
-		container : '#campaigns',
-		item: '.small-voucher',
-		pagination: '#paginator_nav',
-		next: '.next a',
-		loader: '<img src="img/loader.gif"/>',
-        loaderDelay: 100,
-        triggerPageThreshold: 2,
-        trigger: 'View more received gifts'
-	});
-    jQuery.ias({
-        container : '#campaign',
-        item: '.small-voucher',
-        pagination: '#paginator_nav',
-        next: '.next a',
-        loader: '<img src="img/loader.gif"/>',
-        loaderDelay: 100,
-        triggerPageThreshold: 2,
-        trigger: 'View more sent gifts'
-    });
-
+	
 
         $('#flashMessage').delay(8000).slideUp(1000);
         

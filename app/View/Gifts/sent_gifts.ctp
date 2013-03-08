@@ -25,7 +25,7 @@
 		//echo $this->Html->link('  View Expired/Used gifts', array('controller' => 'gifts', 'action' => 'view_gifts', 'invalid' => 1));?></span>
         </h3>
         
-        <div id="campaign">
+        <div id="campaigns">
 		<div id='paginator_nav'>
                                 
                         <?php

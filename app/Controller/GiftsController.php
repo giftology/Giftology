@@ -14,7 +14,8 @@ class GiftsController extends AppController {
     public $paginate = array(
 	'contain' => array(
 		'Product' => array('Vendor')),
-	'order' => 'Gift.created DESC'
+	'order' => 'Gift.created DESC',
+	'limit' => 52,
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
