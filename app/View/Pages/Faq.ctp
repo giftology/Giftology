@@ -73,9 +73,9 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 <p>&nbsp;4.	Press the send button and voila, you are done!!</p>
 
 <h4>I've sent a gift, how do I know my friend has received it?</h4>
-<p>&nbsp;•	Your friend will be notified they've received a gift using the notification methods you choose: by email, on Facebook, or both.</p>
-<p>&nbsp;•	It's up to your friends to then login to Giftology and "accept" their gift. If they haven't done this yet, you'll have to remind them.</p>
-<p>&nbsp;•	Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via gharpay) - Comming soon.</p>
+<p>&nbsp; 1-	Your friend will be notified they've received a gift using the notification methods you choose: by email, on Facebook, or both.</p>
+<p>&nbsp; 2-	It's up to your friends to then login to Giftology and "accept" their gift. If they haven't done this yet, you'll have to remind them.</p>
+<p>&nbsp; 3-	Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via gharpay) - Comming soon.</p>
 
 <h4>Where are these gift accepted?</h4>
 <p>You can use these gifts at our online and offline merchants, as specified in the offer descriptions. Any specific condition/restriction will be also available in the description only.</p>
@@ -84,6 +84,14 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 <p>Depending upon the time frame given to Giftology by the merchants, gifts are typically valid from 15 days to 365 days.</p>
 <h4>Are there any terms and conditions associated with the gifts? </h4>
 <p>Terms and conditions associated with each gift vary. Hence we request you to go through the complete T&C as well as the procedure of redeeming them to avoid any ambiguity as well as to ensure the entire gifting process is smooth.</p>
+
+<h4>It says ‘expired’ in my received gifts section. What does that mean?</h4>
+
+<p>You may not be able to redeem your gift because of one of the following reasons:</p>
+
+<p>&nbsp; 1.       The gift might have surpassed its expiry date. </p>
+
+<p>&nbsp; 2.      The gift offered by the merchant /brand may have been removed/replaced.</p>
 
 
 <center><h2>Payment Methods </h2></center>
@@ -102,6 +110,8 @@ Giftology offers brands a platform to market themselves using Facebook - we allo
 <h4>Will I receive an invoice along with the order? Who should I contact in case of payment related issues?</h4>
 <p>Yes, an email regarding the complete order details will be sent at the email id supplied to Giftology at the time of registration. Please retain this for any future claims/clarifications, if any.<p>
 <p>Kindly email us at <b>payments@giftology.com</b> mentioning your order id and nature of concern. We will try our best to attend to it as quickly as we can.</p>
+
+
 
 </div>
 </div>
