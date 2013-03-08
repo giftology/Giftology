@@ -66,61 +66,7 @@ $("img[rel]").overlay({mask: '#000'});
                           you have to do is log on to Giftology & connect with Facebook, 
                           Select a friend then select a gift and… whoosh… it’s sent. Hey 
                           look out, there’s some awesome karma coming your way.</P>
-        <div class="images">
-
-               <div class="span">
-                      <IMG SRC="../img/kiran.png" rel="#mies4">
-                        <div class="simple_overlay" id="mies4">
-                           <!-- large image -->
-                           
- 
-                                <!-- person details -->
-                              
-
-                               <p><strong>Kiran Shidhu</strong></p>
-                          <p><strong>Chairman</strong></p>
-                          <p> Kiran Sidhu is Chairman of Transact Network which he founded in 2006  Mr. Sidhu a seedinvestor in start-up in various technology and biotechnology ventures.  Mr. Sidhu funded and oversaw the development of BuzzDash that was sold to the Tribune Group in 2009.  Mr. Sidhu was also an early stage investor in two biotechnology companies: </p>
-                          <p>Vasgene Therapeutics and Inovio Biomedical Corporation. Mr Sidhu was also a co-founder of, Nano Universe, an early stage Internet incubator, which he led through a successful AIM listing acting as Finance Director.</p>
-                          <p> Previously, Mr. Sidhu was Chief Financial Officer at On Stage Entertainment. He led On Stage through a successful NASDAQ small company listing. Mr. Sidhu has been a senior associate with Merrill Lynch Investment Banking in Mergers and Acquisitions and a manager with Price Waterhouse's Strategic Consulting Group.  Mr. Sidhu has a Masters in Business Administration with a concentration in Finance from the Wharton School of Business and a B.A. with Honours in Computer Science from Brown University.</p>
-    
-                                
-                         </div>
-                          <p><strong>Kiran Shidhu</strong></p>
-                          <p>Chairman</p>
-               </div>
-
-               <div class="span">
-                      <IMG SRC="../img/nikhil.png" rel="#mies3">
-                        <div class="simple_overlay" id="mies3">
-                           <!-- large image -->
-                           
- 
-                                <!-- person details -->
-                               
-                                <p><strong>Nikhil Sama</strong></p>
-                        <p><strong>Founder & Non-Executive Director</strong></p>
-                        <p>Nikhil Sama is a passionate technologist and seasoned professional with over 12 years of experience in the Technology industry. </p>
-                              <p>   He has proven his capabilities as an exceptional visionary, and is also founder and director for SnapLion, a mobile app creation engine for musicians. </p>
-                              <p>   Previously, Nikhil was Director at Rocket Internet GmbH where he incubated several start-ups (including Jabong.com, FabFurnish.com, Printvenue.com among others) from the ground up. He has been instrumental in hiring senior management team and setting up operations that scale efficiently. He is also proficient in Team and Organizational Leadership, P& L Responsibilities, Online Marketing and Sales Growth.</p>  
-                                 <p> Prior to moving to India in 2011 to run Rocket Internet, Nikhil was a strategy consultant with Bain & Co in Chicago IL. </p>
-                                <p> Nikhil’s expertise as an early stage investor and budding entrepreneur reviewing opportunities in the online consumer space led to the inception of Giftology.com alongwith co-founder Aman Narang. His essential knowledge of Technology, Internet, Strategy, eCommerce and General Management have helped refine the concept of social gifting to give consumers an easy, cost effective and convenient way to wish loved ones for special occasions online. He aims at customizing the power of gifting with a variety of brands, free offers and smooth browsing at people’s fingertips. </p>
-                                <p>Nikhil is an MBA in Organisational Behaviour, Finance & Entrepreneurship from The University of Chicago – Booth School of Business and an MS, EE with concentration in Data Networking from the University of Southern California. While offline, Nikhil loves to play poker, golf and cricket. </p>
-
-
-    
-                                
-                         </div>
-                        <p><strong>Nikhil Sama</strong></p>
-                        <p>Founder & Non-Executive Director</p>
-
-
-                    </div>
-
-
-
-
-
-      </div>
+       
 
          <div class="images">
 	              <div class="span">
@@ -202,6 +148,61 @@ $("img[rel]").overlay({mask: '#000'});
         </div>
 
 <!-- new div for next row -->
+           <div class="images">
+
+               <div class="span">
+                      <IMG SRC="../img/kiran.png" rel="#mies4">
+                        <div class="simple_overlay" id="mies4">
+                           <!-- large image -->
+                           
+ 
+                                <!-- person details -->
+                              
+
+                               <p><strong>Kiran Shidhu</strong></p>
+                          <p><strong>Chairman</strong></p>
+                          <p> Kiran Sidhu is Chairman of Transact Network which he founded in 2006  Mr. Sidhu a seedinvestor in start-up in various technology and biotechnology ventures.  Mr. Sidhu funded and oversaw the development of BuzzDash that was sold to the Tribune Group in 2009.  Mr. Sidhu was also an early stage investor in two biotechnology companies: </p>
+                          <p>Vasgene Therapeutics and Inovio Biomedical Corporation. Mr Sidhu was also a co-founder of, Nano Universe, an early stage Internet incubator, which he led through a successful AIM listing acting as Finance Director.</p>
+                          <p> Previously, Mr. Sidhu was Chief Financial Officer at On Stage Entertainment. He led On Stage through a successful NASDAQ small company listing. Mr. Sidhu has been a senior associate with Merrill Lynch Investment Banking in Mergers and Acquisitions and a manager with Price Waterhouse's Strategic Consulting Group.  Mr. Sidhu has a Masters in Business Administration with a concentration in Finance from the Wharton School of Business and a B.A. with Honours in Computer Science from Brown University.</p>
+    
+                                
+                         </div>
+                          <p><strong>Kiran Shidhu</strong></p>
+                          <p>Chairman</p>
+               </div>
+
+               <div class="span">
+                      <IMG SRC="../img/nikhil.png" rel="#mies3">
+                        <div class="simple_overlay" id="mies3">
+                           <!-- large image -->
+                           
+ 
+                                <!-- person details -->
+                               
+                                <p><strong>Nikhil Sama</strong></p>
+                        <p><strong>Founder & Non-Executive Director</strong></p>
+                        <p>Nikhil Sama is a passionate technologist and seasoned professional with over 12 years of experience in the Technology industry. </p>
+                              <p>   He has proven his capabilities as an exceptional visionary, and is also founder and director for SnapLion, a mobile app creation engine for musicians. </p>
+                              <p>   Previously, Nikhil was Director at Rocket Internet GmbH where he incubated several start-ups (including Jabong.com, FabFurnish.com, Printvenue.com among others) from the ground up. He has been instrumental in hiring senior management team and setting up operations that scale efficiently. He is also proficient in Team and Organizational Leadership, P& L Responsibilities, Online Marketing and Sales Growth.</p>  
+                                 <p> Prior to moving to India in 2011 to run Rocket Internet, Nikhil was a strategy consultant with Bain & Co in Chicago IL. </p>
+                                <p> Nikhil’s expertise as an early stage investor and budding entrepreneur reviewing opportunities in the online consumer space led to the inception of Giftology.com alongwith co-founder Aman Narang. His essential knowledge of Technology, Internet, Strategy, eCommerce and General Management have helped refine the concept of social gifting to give consumers an easy, cost effective and convenient way to wish loved ones for special occasions online. He aims at customizing the power of gifting with a variety of brands, free offers and smooth browsing at people’s fingertips. </p>
+                                <p>Nikhil is an MBA in Organisational Behaviour, Finance & Entrepreneurship from The University of Chicago – Booth School of Business and an MS, EE with concentration in Data Networking from the University of Southern California. While offline, Nikhil loves to play poker, golf and cricket. </p>
+
+
+    
+                                
+                         </div>
+                        <p><strong>Nikhil Sama</strong></p>
+                        <p>Founder & Non-Executive Director</p>
+
+
+                    </div>
+
+
+
+
+
+      </div>
 
          
 
