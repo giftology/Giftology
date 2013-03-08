@@ -252,6 +252,7 @@ class GiftsController extends AppController {
 		$gift['Gift']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
+		$gift['Gift']['date_to_send'] = $receiver_birthday;
 		if ($receiver_email) {
 			$gift['Gift']['receiver_email'] = $receiver_email;
 		}
@@ -288,7 +289,7 @@ class GiftsController extends AppController {
         $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		if (!$send_now) {
-		    $gift['Gift']['date_to_send'] = $date_to_send;
+		    $gift['Gift']['date_to_send'] = $receiver_birthday;
 		}
 		if ($product['Product']['min_price'] == 0) {
 			$payment_needed = $gift['Gift']['gift_amount'] - 
@@ -711,7 +712,7 @@ class GiftsController extends AppController {
 		echo 'Sending gift id '.$gift['Gift']['id'].'/n ';
 		$this->Gift->updateAll(array('Gift.gift_status_id' => GIFT_STATUS_VALID),
 				       array('Gift.id' => $gift['Gift']['id']));
-		$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token']);
+		$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
 	    }
 	    $this->autoRender = $this->autoLayout = false;
 	}
