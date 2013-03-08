@@ -111,11 +111,11 @@ $(function() {
                                     <img src="<?= FULL_BASE_URL.'/'.$gift['Vendor']['thumb_image']; ?>">                     </span>
                             <span class="details">
                                     <span class="issuer"><?= $gift['Vendor']['name']; ?></span>
-                                    <span class="value"><span id="WebRupee" class="WebRupee">Rs.</span>
+                                    <span class="value" style="width:119px;font-size: 16px"><span id="WebRupee" class="WebRupee">Rs.</span>
                                     <?= isset($gift['Product']['min_value']) ?
                                         $gift['Product']['min_value'] :
-                                        $gift['min_value']; ?></span>
-                                    <?= (isset($gift['Product']['min_price']) && ($gift['Product']['max_price'] > $gift['Product']['min_price'])) ? 'or more':'' ?>
+                                        $gift['min_value']; ?>
+                                    <?= (isset($gift['Product']['min_price']) && ($gift['Product']['max_price'] > $gift['Product']['min_price'])) ? 'or more':'' ?></span>
                                      <?php
                                    $originalDate = $gift['Gift']['created'];
                                    $newDate = date("j F ", strtotime($originalDate)); ?>
@@ -127,7 +127,7 @@ $(function() {
 
                                     
                                             <?php if ($gift['Product']['min_price'] == 0): ?>
-                                                    <span class="label">FREE</span>
+                                                    <span class="label" style="margin-left:40px">FREE</span>
                                             <?php else: ?>
                                                     <span class="label">PAID <span id="WebRupee" class="WebRupee">Rs.</span>
                                                     <?= $gift['Product']['min_price']; ?>
