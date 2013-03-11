@@ -131,6 +131,28 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
+    public function send_product_expiry_reminder(){   //this function return product id which is going to expire after 30 days.
+        $reminder_for_expire_product_id = array();
+        $product_array= $this->Product->find('all');
+        foreach($product_array as $product)
+        {  
+
+            $product_id=$product['Product']['id'];
+            $current_date= date("Y-m-d") ;
+            $product_created_date=$product['Product']['created'];
+            $product_expire_days=$product['Product']['days_valid'];
+            $product_expire_date=date('Y-m-d', strtotime('+'.$product_expire_days.'days', strtotime($product_created_date)));
+
+            $days = round((strtotime($product_expire_date) - strtotime($current_date)) / (60 * 60 * 24));
+            if($days == "30")
+            {
+                $reminder_for_expire_product_id[]=$product['Product']['id'];
+            }
+
+
+        }
+        return   $reminder_for_expire_product_id;
+    }
 	public function view_products () {
 		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
         $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
@@ -151,7 +173,7 @@ class ProductsController extends AppController {
         $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
         $this->paginate['order']= 'Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
-        //DebugBreak();
+       
         $product_array=$this->paginate();
         
          $show_product = array();
