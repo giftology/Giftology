@@ -300,21 +300,21 @@ public $uses = array( 'Reminder','Product','Gift','User');
 	return;
     }
     function send_reminder_email($user,$reminders) {
-	$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0)));
+		$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
         $email = new CakeEmail();
-	$email->config('smtp')
-              ->template('reminder', 'default') 
-	      ->emailFormat('html')
-	      ->to($user['UserProfile']['email'])
-	      ->from(array('noreply@giftology.com' => 'Giftology'))
-	      ->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': '.sizeof($reminders).' Birthdays this week')
+		$email->config('smtp')
+        	->template('reminder', 'default') 
+	      	->emailFormat('html')
+	    	->to($user['UserProfile']['email'])
+	    	->from(array('noreply@giftology.com' => 'Giftology'))
+	    	->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].': '.sizeof($reminders).' Birthdays this week')
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
 			       'num_birthdays' => sizeof($reminders),
 			       'products' => $product,
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
-              ->send();
-	$this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
+             ->send();
+			$this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
     }
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
