@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property User $User
  */
 class UsersController extends AppController {
-    public $uses = array( 'User','Vendor');
+    public $uses = array( 'User','Vendor','Product');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -136,8 +136,16 @@ class UsersController extends AppController {
         } else {
 	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
 
-        $Image = $this->Vendor->find('all',array('fields' => array('wide_image')));
-        $this->set('Images', $Image);
+        $Image = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+        $Image_new = array();
+        foreach ($Image as $Images) {
+            $id=$Images['Product']['vendor_id'];
+            
+        $Image_new[] = $this->Vendor->find('all',array('conditions' => array('Vendor.id '=>$id)));
+        $this->set('Images', $Image_new);
+        }
+
+         
         
 	    $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {

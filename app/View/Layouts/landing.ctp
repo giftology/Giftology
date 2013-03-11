@@ -101,7 +101,7 @@ echo $this->Html->css('main');
       </section>
        
       
-           <section class="show-case">
+          <section class="show-case">
             <div class="showcase-wrap">
                <div id="giftVouchers">
                 <?php
@@ -112,7 +112,7 @@ echo $this->Html->css('main');
                            for($i=1;$i<=2;$i++){
                            foreach($Images as $Image)
                            { ?>
-                             <div><img width="200" height="64" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['Vendor']['wide_image'];
+                             <div><img width="200" height="64" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image'];
             ?>" class="lazy" alt=""></div>
                
                        <?php   }}
