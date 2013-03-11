@@ -218,6 +218,8 @@ class UsersController extends AppController {
         //$this->redirect($this->referer());
 
      //   $this->redirect($this->Auth->logout());
+         $Image = $this->Vendor->find('all',array('fields' => array('wide_image')));
+        $this->set('Images', $Image);
     }
 
     public function setting()
