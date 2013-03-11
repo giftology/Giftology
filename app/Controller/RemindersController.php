@@ -420,7 +420,7 @@ public $uses = array( 'Reminder','Product','Gift','User');
 		return $reminders;
     }
 */
-    public function send_reminder(){
+   /* public function send_reminder(){
     	$users = $this->User->find('list', 
             array(
                 'fields' => array('id'), 
@@ -446,5 +446,5 @@ public $uses = array( 'Reminder','Product','Gift','User');
 			        $this->send_reminder_email($user, $reminders);
 			}
     	}
-    }
+    } */
 }
