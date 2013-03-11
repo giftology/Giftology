@@ -136,14 +136,7 @@ class UsersController extends AppController {
         } else {
 	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
 
-        $Image = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
-        $Image_new = array();
-        foreach ($Image as $Images) {
-            $id=$Images['Product']['vendor_id'];
-            
-        $Image_new[] = $this->Vendor->find('all',array('conditions' => array('Vendor.id '=>$id)));
-        $this->set('Images', $Image_new);
-        }
+        
 
          
         
