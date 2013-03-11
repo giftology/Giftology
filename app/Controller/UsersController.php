@@ -8,6 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property User $User
  */
 class UsersController extends AppController {
+    public $uses = array( 'User','Vendor');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -134,6 +135,10 @@ class UsersController extends AppController {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
 	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
+
+        $Image = $this->Vendor->find('all',array('fields' => array('wide_image')));
+        $this->set('Images', $Image);
+        
 	    $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
