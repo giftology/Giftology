@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class RemindersController extends AppController {
 
-public $uses = array( 'Reminder','Product','Gift');
+public $uses = array( 'Reminder','Product','Gift','User');
 	
 	public $paginate = array(
 	        'limit' => 24,
@@ -18,10 +18,11 @@ public $uses = array( 'Reminder','Product','Gift');
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('send_reminder_email_for_user');
+        $this->Auth->allow('send_reminder');
 	}
 
 	public function isAuthorized($user) {
-	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user') {
+	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder') {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -419,4 +420,31 @@ public $uses = array( 'Reminder','Product','Gift');
 		return $reminders;
     }
 */
+    public function send_reminder(){
+    	$users = $this->User->find('list', 
+            array(
+                'fields' => array('id'), 
+                'conditions' => array('(id % 5) - (DAYOFWEEK(CURDATE())-2)' => 0),
+                'order' => array('id' => 'ASC')
+            ));
+
+    	foreach($users as $id){
+    		set_time_limit(300);
+    		$user = $this->Reminder->User->find('first', array(
+				'conditions' => array('User.id' => $id),
+				'contain'=>array('UserProfile')));
+			if (!$user['UserProfile']['email']) {
+				$this->log ("ERROR: User without an email ID:".$id);
+			}
+			else {
+				if ($user['UserProfile']['email_unsubscribed']==1) {
+					$this->log ("ERROR: User has unsubscribed for reminder email, ID:".$id);
+				}
+			}
+		        $reminders = $this->get_birthdays($id, 'thisweek');
+			if ($reminders && sizeof($reminders)) {
+			        $this->send_reminder_email($user, $reminders);
+			}
+    	}
+    }
 }
