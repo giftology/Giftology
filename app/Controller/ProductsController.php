@@ -133,6 +133,9 @@ class ProductsController extends AppController {
 	
     public function send_product_expiry_reminder(){   //this function return product id which is going to expire after 30 days.
         $reminder_for_expire_product_id = array();
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'), 
+            								'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+		
         $product_array= $this->Product->find('all');
         foreach($product_array as $product)
         {  
@@ -154,6 +157,7 @@ class ProductsController extends AppController {
         return   $reminder_for_expire_product_id;
     }
 	public function view_products () {
+		
 		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
         $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
         $year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
