@@ -40,7 +40,7 @@ class GiftsController extends AppController {
 		foreach($gifts as $k => $g){
 			$sender_id = $g['Sender']['id'];      
 			$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
-            $gifts[$k]['UserProfile'] = $user_profile['UserProfile'];
+            $gifts[$k]['SenderProfile'] = $user_profile['UserProfile'];
             unset($user_profile);
             $vendor_id = $g['Product']['vendor_id'];      
             $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
