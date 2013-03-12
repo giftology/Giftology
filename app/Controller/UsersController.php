@@ -138,7 +138,7 @@ class UsersController extends AppController {
 
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0),'limit' =>5));
+        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
         
         $Image_new = array();
         foreach ($Image as $Images) {
@@ -224,13 +224,25 @@ class UsersController extends AppController {
         session_destroy();
         session_start();
         $this->layout = 'landing';
-	$this->set('slidePlaySpeed', '8000');
+	    $this->set('slidePlaySpeed', '8000');
         $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
         //$this->redirect($this->referer());
 
      //   $this->redirect($this->Auth->logout());
-         $Image = $this->Vendor->find('all',array('fields' => array('wide_image')));
-        $this->set('Images', $Image);
+         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+        
+        $Image_new = array();
+        foreach ($Image as $Images) {
+            $id=$Images['Product']['vendor_id'];
+           
+        $this->Vendor->unbindModel(array('hasMany' => array('Product')));
+            
+        $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+        $this->set('Images', $Image_new);
+        }
+         
     }
 
     public function setting()

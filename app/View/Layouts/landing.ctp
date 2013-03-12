@@ -109,7 +109,7 @@ echo $this->Html->css('main');
                            
                            foreach($Images as $Image)
                            { ?>
-                             <div><img width="200" height="64" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image'];
+                             <div><img width="200px" height="64px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image'];
             ?>" class="lazy" alt=""></div>
                
                        <?php   }
