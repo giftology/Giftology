@@ -1,4 +1,3 @@
-
 <?php
 /**
  *
@@ -41,7 +40,6 @@ echo $this->Html->css('main');
 		echo $this->Html->css('flexslider');
 		
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
-    echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
@@ -107,17 +105,22 @@ echo $this->Html->css('main');
             <div class="showcase-wrap">
                <div id="giftVouchers">
                 <?php
-                            
-                           
-                           foreach($Images as $Image)
+                            if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
+                         {
+                           $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
+                             // print_r($filecount);
+                           for($i=1;$i<=2;$i++){
+                           foreach($filecount as $img)
                            { ?>
-                             <div><img width="200" height="64" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['Vendor']['wide_image'];
-            ?>" class="lazy" alt=""></div>
+                             <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
                
-                       <?php   }
+                       <?php   }}
 
-                               
-                                     ?>
+                                }
+                                    else
+                                     {
+ 
+                                     echo 0;} ?>
                 
               </div>
             </div>
@@ -192,7 +195,6 @@ echo $this->Html->css('main');
         <script src="../js/plugins.js"></script>
         <script src="../js/main.js"></script>
         <script src="../js/carouFredSel.js"></script>
-        
       
        <script type="text/javascript">
        !function(window){
