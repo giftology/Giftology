@@ -30,9 +30,14 @@ class ProductsController extends AppController {
 	}
 	//WEB SERVICES
 	public function ws_list () {
-		$this->Product->recursive = 0;
-		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-		$this->set('products', $this->Product->find('all'));
+        $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+        $e = $this->wsListProductsException($receiver_fb_id );
+        if(isset($e) && !empty($e)) $this->set('products', array('error' => $e));
+        else{
+            $this->Product->recursive = 0;
+            $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+            $this->set('products', $this->Product->find('all'));
+        }
 		$this->set('_serialize', array('products'));
 	}
 /**
@@ -296,5 +301,11 @@ class ProductsController extends AppController {
 
 
 	}
+
+    public function wsListProductsException($receiver_fb_id){
+        $error = array();
+        if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
+        return $error; 
+    }
 	
 }
