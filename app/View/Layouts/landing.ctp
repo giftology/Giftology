@@ -105,22 +105,17 @@ echo $this->Html->css('main');
             <div class="showcase-wrap">
                <div id="giftVouchers">
                 <?php
-                            if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
-                         {
-                           $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
-                             // print_r($filecount);
-                           for($i=1;$i<=2;$i++){
-                           foreach($filecount as $img)
+                            
+                           
+                           foreach($Images as $Image)
                            { ?>
-                             <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
+                             <div><img width="200" height="64" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image'];
+            ?>" class="lazy" alt=""></div>
                
-                       <?php   }}
+                       <?php   }
 
-                                }
-                                    else
-                                     {
- 
-                                     echo 0;} ?>
+                               
+                                     ?>
                 
               </div>
             </div>
