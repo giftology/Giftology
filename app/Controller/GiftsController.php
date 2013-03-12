@@ -55,8 +55,8 @@ class GiftsController extends AppController {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
 		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
-        $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : 0;
-        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id);
+        $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : null;
+        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb);
         
         if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
         else{
@@ -729,7 +729,7 @@ class GiftsController extends AppController {
 	    $this->autoRender = $this->autoLayout = false;
 	}
     
-    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id){
+    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb){
         $error = array();
         $product = $this->Gift->Product->read(null, $product_id);
         
@@ -748,6 +748,14 @@ class GiftsController extends AppController {
         
         $receiver_fb_id_exists = $this->Gift->Reminder->find('count', array('conditions' => array('Reminder.friend_fb_id' => $receiver_fb_id, 'Reminder.user_id' => $sender_id)));
         if(!$receiver_fb_id_exists) $error[5] = 'Receiver friend facebook id could not be found for this particular sender';  // the reciever's facebook id should be in reminders table for the correspoing sender id.
+
+        if(isset($post_to_fb)){
+        	if(!($post_to_fb == "0" || $post_to_fb == "1"))
+        		$error[6] = "Wrong value for explicity";
+        }
+		else{
+			$error[7] = "Parameter for explicitly sharing is missing";
+        }
         
         return $error;
     }
