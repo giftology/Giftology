@@ -16,6 +16,12 @@ class ProductsController extends AppController {
 	    )
 	);
 	public $uses = array( 'Product','User','UserAddress','Gift');
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('send_product_expiry_reminder');
+    }
+
 	public function isAuthorized($user) {
 	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
 	        return true;
