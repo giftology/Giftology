@@ -138,7 +138,7 @@ class UsersController extends AppController {
 
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0),'limit' =>5));
         
         $Image_new = array();
         foreach ($Image as $Images) {
