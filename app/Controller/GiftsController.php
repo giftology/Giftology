@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
-	public $uses = array( 'Gift','UserAddress','User','ProductType','UserProfile','Reminder');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor');
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -36,7 +36,18 @@ class GiftsController extends AppController {
 		if (!$receiver_fb_id) return;
 		$conditions = array('receiver_fb_id' => $receiver_fb_id);
 		$this->Gift->recursive = 0;
-		$this->set('gifts', $this->Gift->find('all', array('conditions' => $conditions)));
+		$gifts = $this->Gift->find('all', array('conditions' => $conditions));
+		foreach($gifts as $k => $g){
+			$sender_id = $g['Sender']['id'];      
+			$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
+            $gifts[$k]['UserProfile'] = $user_profile['UserProfile'];
+            unset($user_profile);
+            $vendor_id = $g['Product']['vendor_id'];      
+            $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
+		    $gifts[$k]['Vendor'] = $vendor['Vendor'];
+            unset($vendor);
+        }
+		$this->set('gifts', $gifts);
 		$this->set('_serialize', array('gifts'));
 	}
 	public function ws_send () {
