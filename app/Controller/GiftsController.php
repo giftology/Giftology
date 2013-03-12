@@ -33,21 +33,26 @@ class GiftsController extends AppController {
 	public function ws_list () {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
-		if (!$receiver_fb_id) return;
-		$conditions = array('receiver_fb_id' => $receiver_fb_id);
-		$this->Gift->recursive = 0;
-		$gifts = $this->Gift->find('all', array('conditions' => $conditions));
-		foreach($gifts as $k => $g){
-			$sender_id = $g['Sender']['id'];      
-			$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
-            $gifts[$k]['SenderProfile'] = $user_profile['UserProfile'];
-            unset($user_profile);
-            $vendor_id = $g['Product']['vendor_id'];      
-            $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
-		    $gifts[$k]['Vendor'] = $vendor['Vendor'];
-            unset($vendor);
-        }
-		$this->set('gifts', $gifts);
+		$e = $this->wsListGiftException($receiver_fb_id );
+		if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+		else{
+			$conditions = array('receiver_fb_id' => $receiver_fb_id);
+			$this->Gift->recursive = 0;
+			$gifts = $this->Gift->find('all', array('conditions' => $conditions));
+			foreach($gifts as $k => $g){
+				$sender_id = $g['Sender']['id'];      
+				$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
+	            $gifts[$k]['SenderProfile'] = $user_profile['UserProfile'];
+	            unset($user_profile);
+	            $vendor_id = $g['Product']['vendor_id'];      
+	            $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
+			    $gifts[$k]['Vendor'] = $vendor['Vendor'];
+	            unset($vendor);
+	        }
+			$this->set('gifts', $gifts);	
+		}
+		//if (!$receiver_fb_id) return;
+		
 		$this->set('_serialize', array('gifts'));
 	}
 	public function ws_send () {
@@ -758,5 +763,11 @@ class GiftsController extends AppController {
         }
         
         return $error;
+    }
+
+    public function wsListGiftException($receiver_fb_id){
+    	$error = array();
+    	if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
+		return $error; 
     }
 }
