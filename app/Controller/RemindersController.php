@@ -439,11 +439,11 @@ public $uses = array( 'Reminder','Product','Gift','User');
         fclose($fp1);
     	$fp = fopen(ROOT.'/app/tmp/send_reminder.csv', 'a+');
         
-        if(count($users) > 10 && empty($csv_users))
-            $sliced_user_array = array_slice($users,0,10);
+        if(count($users) > 100 && empty($csv_users))
+            $sliced_user_array = array_slice($users,0,100);
         else{
             $remaining_user_list = array_diff($users,$csv_users);
-            $sliced_user_array = array_slice($remaining_user_list,0,10);
+            $sliced_user_array = array_slice($remaining_user_list,0,100);
         }
 
     	foreach($sliced_user_array as $id){
