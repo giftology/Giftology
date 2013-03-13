@@ -135,7 +135,17 @@ class UsersController extends AppController {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         } else {
 	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
-
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+        $Image_new = array();
+        foreach ($Image as $Images) 
+        {
+            $id=$Images['Product']['vendor_id'];
+            $this->Vendor->unbindModel(array('hasMany' => array('Product')));
+            $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+            $this->set('Images', $Image_new);
+        }
         
         $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
@@ -208,16 +218,29 @@ class UsersController extends AppController {
     }
 
     public function logout() {
-        
+
         session_destroy();
         session_start();
+        $this->redirect("http://www.facebook.com");
         $this->layout = 'landing';
 	    $this->set('slidePlaySpeed', '8000');
+        
         $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
         //$this->redirect($this->referer());
 
      //   $this->redirect($this->Auth->logout());
-        
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+        $Image_new = array();
+        foreach ($Image as $Images) 
+        {
+            $id=$Images['Product']['vendor_id'];
+            $this->Vendor->unbindModel(array('hasMany' => array('Product')));
+            $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+            $this->set('Images', $Image_new);
+        }
+         
          
     }
 
