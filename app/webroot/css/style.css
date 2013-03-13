@@ -602,7 +602,7 @@ a:hover.f-link {text-decoration:underline;}
     background-image: url("../img//frame-shadow-right.png");
 }
 .shadow-wrapper.right .frame {
-    background-image: url("../img/white-edge.png");
+  /*  background-image: url("../img/white-edge.png"); commented because it gives odd feed color variation */ 
     background-position: right bottom;
     background-repeat: no-repeat;
 }

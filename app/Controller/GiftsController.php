@@ -33,21 +33,26 @@ class GiftsController extends AppController {
 	public function ws_list () {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
-		if (!$receiver_fb_id) return;
-		$conditions = array('receiver_fb_id' => $receiver_fb_id);
-		$this->Gift->recursive = 0;
-		$gifts = $this->Gift->find('all', array('conditions' => $conditions));
-		foreach($gifts as $k => $g){
-			$sender_id = $g['Sender']['id'];      
-			$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
-            $gifts[$k]['SenderProfile'] = $user_profile['UserProfile'];
-            unset($user_profile);
-            $vendor_id = $g['Product']['vendor_id'];      
-            $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
-		    $gifts[$k]['Vendor'] = $vendor['Vendor'];
-            unset($vendor);
-        }
-		$this->set('gifts', $gifts);
+		$e = $this->wsListGiftException($receiver_fb_id );
+		if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+		else{
+			$conditions = array('receiver_fb_id' => $receiver_fb_id);
+			$this->Gift->recursive = 0;
+			$gifts = $this->Gift->find('all', array('conditions' => $conditions));
+			foreach($gifts as $k => $g){
+				$sender_id = $g['Sender']['id'];      
+				$user_profile = $this->UserProfile->find('first', array('conditions' => array('UserProfile.user_id' => $sender_id)));
+	            $gifts[$k]['SenderProfile'] = $user_profile['UserProfile'];
+	            unset($user_profile);
+	            $vendor_id = $g['Product']['vendor_id'];      
+	            $vendor = $this->Vendor->find('first', array('conditions' => array('Vendor.id' => $vendor_id)));
+			    $gifts[$k]['Vendor'] = $vendor['Vendor'];
+	            unset($vendor);
+	        }
+			$this->set('gifts', $gifts);	
+		}
+		//if (!$receiver_fb_id) return;
+		
 		$this->set('_serialize', array('gifts'));
 	}
 	public function ws_send () {
@@ -55,12 +60,13 @@ class GiftsController extends AppController {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
 		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
-        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id);
+        $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : null;
+        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb);
         
         if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
         else{
             $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
-            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount);
+            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,'','','',$post_to_fb);
             $this->set('gifts', array('result' => '1'));    
         }
 		$this->set('_serialize', array('gifts'));
@@ -728,7 +734,7 @@ class GiftsController extends AppController {
 	    $this->autoRender = $this->autoLayout = false;
 	}
     
-    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id){
+    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb){
         $error = array();
         $product = $this->Gift->Product->read(null, $product_id);
         
@@ -747,7 +753,21 @@ class GiftsController extends AppController {
         
         $receiver_fb_id_exists = $this->Gift->Reminder->find('count', array('conditions' => array('Reminder.friend_fb_id' => $receiver_fb_id, 'Reminder.user_id' => $sender_id)));
         if(!$receiver_fb_id_exists) $error[5] = 'Receiver friend facebook id could not be found for this particular sender';  // the reciever's facebook id should be in reminders table for the correspoing sender id.
+
+        if(isset($post_to_fb)){
+        	if(!($post_to_fb == "0" || $post_to_fb == "1"))
+        		$error[6] = "Wrong value for explicity";
+        }
+		else{
+			$error[7] = "Parameter for explicitly sharing is missing";
+        }
         
         return $error;
+    }
+
+    public function wsListGiftException($receiver_fb_id){
+    	$error = array();
+    	if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
+		return $error; 
     }
 }
