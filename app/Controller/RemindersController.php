@@ -461,7 +461,7 @@ public $uses = array( 'Reminder','Product','Gift','User');
 			}
 		        $reminders = $this->get_birthdays($id, 'thisweek');
 			if ($reminders && sizeof($reminders)) {
-			        //$this->send_reminder_email($user, $reminders);
+			        $this->send_reminder_email($user, $reminders);
 			}
             fputcsv($fp,array($id));
     	}
