@@ -101,30 +101,37 @@ echo $this->Html->css('main');
       </section>
        
       
-           <section class="show-case">
-            <div class="showcase-wrap">
-               <div id="giftVouchers">
+     <section class="show-case">
+        <div class="showcase-wrap">
+           <div id="giftVouchers">
+            <?php if(CAROUSEL_CODE == 1): ?>
                 <?php
-                            if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
+                      if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
                          {
                            $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
-                             // print_r($filecount);
-                           for($i=1;$i<=2;$i++){
-                           foreach($filecount as $img)
-                           { ?>
-                             <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
-               
-                       <?php   }}
+                             
+                             foreach($filecount as $img)
+                                { ?>
+                                    <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
+                              <?php   }
 
-                                }
-                                    else
-                                     {
- 
-                                     echo 0;} ?>
-                
-              </div>
-            </div>
-         </section>
+                          }
+                        else
+                                 {
+                          echo 0;} 
+                ?>
+            <?php else: ?>
+                  <?php
+                      foreach($Images as $Image)
+                          { ?>
+                              <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div>
+
+                                      <?php   }
+                      ?>
+            <?php endif; ?>
+          </div>
+        </div>
+    </section>
   
          <section class="content-wrap">
             <div class="content-region">
