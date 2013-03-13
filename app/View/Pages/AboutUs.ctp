@@ -159,7 +159,7 @@ $("img[rel]").overlay({mask: '#000'});
                                 <!-- person details -->
                               
 
-                               <p><strong>Kiran Shidhu</strong></p>
+                               <p><strong>Kiran Sidhu</strong></p>
                           <p><strong>Chairman</strong></p>
                           <p> Kiran Sidhu is Chairman of Transact Network which he founded in 2006  Mr. Sidhu a seedinvestor in start-up in various technology and biotechnology ventures.  Mr. Sidhu funded and oversaw the development of BuzzDash that was sold to the Tribune Group in 2009.  Mr. Sidhu was also an early stage investor in two biotechnology companies: </p>
                           <p>Vasgene Therapeutics and Inovio Biomedical Corporation. Mr Sidhu was also a co-founder of, Nano Universe, an early stage Internet incubator, which he led through a successful AIM listing acting as Finance Director.</p>
@@ -167,7 +167,7 @@ $("img[rel]").overlay({mask: '#000'});
     
                                 
                          </div>
-                          <p><strong>Kiran Shidhu</strong></p>
+                          <p><strong>Kiran Sidhu</strong></p>
                           <p>Chairman</p>
                </div>
 
