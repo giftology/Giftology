@@ -437,9 +437,9 @@ public $uses = array( 'Reminder','Product','Gift','User');
         }
         
         fclose($fp1);
-    	$fp = fopen(ROOT.'/app/tmp/send_reminder.csv', 'a');
+    	$fp = fopen(ROOT.'/app/tmp/send_reminder.csv', 'a+');
         
-        if(count($users) > 20 && !$csv_users)
+        if(count($users) > 20 && empty($csv_users))
             $sliced_user_array = array_slice($users,0,20);
         else{
             $remaining_user_list = array_diff($users,$csv_users);
@@ -461,9 +461,10 @@ public $uses = array( 'Reminder','Product','Gift','User');
 			}
 		        $reminders = $this->get_birthdays($id, 'thisweek');
 			if ($reminders && sizeof($reminders)) {
-			        $this->send_reminder_email($user, $reminders);
+			        //$this->send_reminder_email($user, $reminders);
 			}
             fputcsv($fp,array($id));
     	}
+    	fclose($fp);
     }
 }
