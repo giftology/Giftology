@@ -459,9 +459,39 @@ public $uses = array( 'Reminder','Product','Gift','User');
 					$this->log ("ERROR: User has unsubscribed for reminder email, ID:".$id);
 				}
 			}
+
 		        $reminders = $this->get_birthdays($id, 'thisweek');
 			if ($reminders && sizeof($reminders)) {
-			        $this->send_reminder_email($user, $reminders);
+                
+                 $last_mail=$this->User->UserProfile->find('first',array('conditions' => array('UserProfile.id' => '$id'),'fields' => array('UserProfile.mail_date')));
+                 $last_log=$this->User->find('first',array('conditions' => array('User.id' => '$id'),'fields' => array('User.last_login'))); 
+                      
+                 $last_log_date = strtotime($last_log['User']['last_login']);
+
+                      
+                 $last_mail_date = strtotime($last_mail['UserProfile']['mail_date']);
+                      
+
+
+
+                 $date_to_compare = strtotime(date('Y-m-d H:s:i'));
+             
+                 $last_log_date_diff = floor(abs($date_to_compare - $last_log_date) / 86400);
+                 $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+
+                 if(($last_mail_date_diff>=15) && ($last_log_date_diff<=30) ){
+	                 $this->User->UserProfile->saveField('mail_date', date('Y-m-d H:i:s'));
+	                 $this->send_reminder_email($user, $reminders);
+                     
+                  }
+                 if(($last_mail_date_diff>=10) && ($last_log_date_diff>30) ){
+     	             $this->User->UserProfile->saveField('mail_date', date('Y-m-d H:i:s'));
+     	             $this->send_reminder_email($user, $reminders);
+                                  
+                  }
+
+                 
+			        
 			}
             fputcsv($fp,array($id));
     	}
