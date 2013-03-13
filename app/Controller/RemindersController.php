@@ -420,16 +420,33 @@ public $uses = array( 'Reminder','Product','Gift','User');
 		return $reminders;
     }
 */
- /*   public function send_reminder(){
-        DebugBreak();
+ 	public function send_reminder(){
+        $dw = date( "w", time());
     	$users = $this->User->find('list', 
             array(
                 'fields' => array('id'), 
-                'conditions' => array('(id % 5) - (DAYOFWEEK(CURDATE())-2)' => 0),
+                'conditions' => array('(id % 5)' => $dw),
                 'order' => array('id' => 'ASC')
             ));
+        $sliced_user_array = array();
+        $csv_users = array();
+        $fp1 = fopen(ROOT.'/app/tmp/send_reminder.csv', 'rb');
+        $temp = sizeof($fp1);
+        while($linearray = fgetcsv($fp1)) {
+            $csv_users[] = $linearray[0];
+        }
+        
+        fclose($fp1);
+    	$fp = fopen(ROOT.'/app/tmp/send_reminder.csv', 'a');
+        
+        if(count($users) > 20 && !$csv_users)
+            $sliced_user_array = array_slice($users,0,20);
+        else{
+            $remaining_user_list = array_diff($users,$csv_users);
+            $sliced_user_array = array_slice($remaining_user_list,0,20);
+        }
 
-    	foreach($users as $id){
+    	foreach($sliced_user_array as $id){
     		set_time_limit(300);
     		$user = $this->Reminder->User->find('first', array(
 				'conditions' => array('User.id' => $id),
@@ -446,6 +463,7 @@ public $uses = array( 'Reminder','Product','Gift','User');
 			if ($reminders && sizeof($reminders)) {
 			        $this->send_reminder_email($user, $reminders);
 			}
+            fputcsv($fp,array($id));
     	}
-    } */
+    }
 }
