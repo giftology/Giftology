@@ -104,7 +104,7 @@ Consequently, it is your responsibility to ensure that you read the Gift Conditi
 <p>9.1.3   your payment for the Gift has been successfully authorised;</h5>
 <p>9.1.4   Giftology sends you a confirmation email that the transaction has been concluded.</h5>
 <p>9.2  <strong> Limited availability:</strong> Stocks of all Gifts are limited.  You cannot reserve a Gift for purchase later.  Unless and until we confirm the purchase has been completed, no purchase shall have occurred.</h5>
-<p>9.3  <strong> Cancelling a Gift purchase:</strong></p>
+<p>9.3  <strong> Cancelling a Gift purchase:<strong></p>
 <p>9.3.1   By Giftology:  Giftology reserves the right, for purposes of preventing suspected fraud, to refuse to accept or process payment on any Gift purchase, on notice to you.   Giftology shall only be liable to refund monies already paid by you and accepts no other liability which may arise as a result of such refusal to process your Gift purchase.</p>
 <h4>10. Delivery of Gifts</h4>
 <p>10.1   Any Gift purchased by you will be delivered in the manner required by that particular gift, this may be:</p>
@@ -125,8 +125,7 @@ Consequently, it is your responsibility to ensure that you read the Gift Conditi
 <p>11.2    The following uses of the Website, Services, and Gifts are expressly prohibited and you undertake not to do (or to permit anyone else to do) any of the following:</p>
 <p>11.2.1   furnishing false data including false names, addresses and contact details and fraudulent use of credit/debit card numbers;
 <p>11.2.2   reselling the Website, Services or any Gift;</p>
-<p>11.2.3   attempting to circumvent our security or network including accessing data not intended for you, logging into a server or account you 
-	        are not expressly authorised to access, or probing the security of other networks (such as running a port scan);</p>
+<p>11.2.3   attempting to circumvent our security or network including accessing data not intended for you, logging into a server or account you are not expressly authorised to access, or probing the security of other networks (such as running a port scan);</p>
 <p>11.2.4   accessing the Service (or Website) in such a way as to, or commit any act that would or does, impose an unreasonable or disproportionately large load on our infrastructure;</p>
 <p>11.2.5   executing any form of network monitoring which will intercept data not intended for you;</p>
 <p>11.2.6   sending unsolicited mail messages, including the sending of "junk mail" or other advertising material to individuals who did not specifically request such material. You are explicitly prohibited fromsending unsolicited bulk mail messages. This includes bulk mailing of commercial advertising, promotional,or informational announcements, and political or religious tracts. Such material may only be sent to those who have explicitly requested it. If a recipient asks to stop receiving email of this nature, you may not send that person any further email;</p>
