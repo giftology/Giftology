@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class RemindersController extends AppController {
 
-public $uses = array( 'Reminder','Product','Gift','User');
+	public $uses = array( 'Reminder','Product','Gift','User');
 	
 	public $paginate = array(
 	        'limit' => 24,
@@ -492,6 +492,33 @@ public $uses = array( 'Reminder','Product','Gift','User');
                         $this->send_reminder_email($user, $reminders);
                 }
                 fputcsv($fp,array($id));    
+            }
+    	}
+    	fclose($fp);
+    }
+
+    public function inactive_users_list(){
+    	$users = $this->User->find('list', 
+            array(
+                'fields' => array('id'),
+                'order' => array('id' => 'ASC')
+            ));
+    	$fp = fopen(ROOT.'/app/tmp/inactive_users_list.csv', 'a+');
+    	foreach($users as $id){
+    		set_time_limit(300);
+    		$user = $this->Reminder->User->find('first', array(
+				'conditions' => array('User.id' => $id),
+				'contain'=>array('UserProfile')));
+			
+            if($user['UserProfile']['email'] && $user['UserProfile']['email_unsubscribed']!=1){
+                $reminders = $this->get_birthdays($id, 'thisweek');
+                if(!$reminders){
+                    $reminder_count = $this->Reminder->find('count', array(
+                    'conditions' => array('user_id' => $id)));
+                    if(!$reminder_count){
+                        fputcsv($fp,array($user['User']['id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
+                    }
+                }
             }
     	}
     	fclose($fp);
