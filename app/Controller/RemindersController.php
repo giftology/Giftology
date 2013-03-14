@@ -316,6 +316,25 @@ public $uses = array( 'Reminder','Product','Gift','User');
              ->send();
 			$this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
     }
+
+    function send_reminder_email_missing_you($user,$last_login) {
+		$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
+        $email = new CakeEmail();
+		$email->config('smtp')
+        	->template('missing_email', 'default') 
+	      	->emailFormat('html')
+	    	//->to($user['UserProfile']['email'])
+	    	->to('alok@giftology.com')
+	    	->from(array('noreply@giftology.com' => 'Giftology'))
+	    	->subject($user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'].', We miss you online. More gifts to send!')
+            ->viewVars(array(
+            		'name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+			       	'products' => $product,
+			       	'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
+                   	'last_login' => $last_login))
+             ->send();
+			$this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
+    }
 	
 	function get_birthdays ($whose, $when, $do_pagination=0) {
                     
@@ -454,16 +473,26 @@ public $uses = array( 'Reminder','Product','Gift','User');
 			if (!$user['UserProfile']['email']) {
 				$this->log ("ERROR: User without an email ID:".$id);
 			}
-			else {
-				if ($user['UserProfile']['email_unsubscribed']==1) {
+			else if ($user['UserProfile']['email_unsubscribed']==1) {
 					$this->log ("ERROR: User has unsubscribed for reminder email, ID:".$id);
-				}
 			}
-		        $reminders = $this->get_birthdays($id, 'thisweek');
-			if ($reminders && sizeof($reminders)) {
-			        $this->send_reminder_email($user, $reminders);
-			}
-            fputcsv($fp,array($id));
+            else{
+                $reminders = $this->get_birthdays($id, 'thisweek');
+                if(!$reminders){
+                    $reminder_count = $this->Reminder->find('count', array(
+                    'conditions' => array('user_id' => $id)));
+                    if(!$reminder_count){
+                        if($user['User']['last_login'] && !trim($user['User']['last_login'],'-0:')) $last_login = $user['User']['last_login'];
+                        else $last_login = $user['User']['modified'];
+                        $this->send_reminder_email_missing_you($user, $last_login);
+                    }
+                }
+
+                if ($reminders && sizeof($reminders)) {
+                        $this->send_reminder_email($user, $reminders);
+                }
+                fputcsv($fp,array($id));    
+            }
     	}
     	fclose($fp);
     }
