@@ -82,9 +82,16 @@ echo $this->Html->css('main');
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
          <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
          
-        
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $("#fb").click(function(){
+        $("a").attr("href",$("a").attr("href").replace(/#/, "")); 
+    return false; /* This prevents url from # */
+});
+  });
+    </script>    
 
-  <div class="fbconect"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+  <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
         <div class="clear">&nbsp;</div>
         </div>

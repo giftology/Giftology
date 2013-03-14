@@ -24,13 +24,34 @@
 <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><img align="right" height="89" src="<?= IMAGE_ROOT; ?>GiftologyDOTCOM_COMPLETE_Logo.jpg" style="font-size:48px;letter-spacing:-4px;line-height:53.333335876464844px;text-align:center;min-height:89px;width:200px;border:0;outline:none;text-decoration:none;display:inline" width="200"></a></h1>
     <br>
      <br>
-<span style="font-size:26px"><span style="color:#696969">Hey (Recipient) !</span>
+<span style="font-size:26px"><span style="color:#696969">Hey <?= $name; ?> !</span>
     <br> <br>     <span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">Welcome to Giftology</span><br>
 <h2 style="text-align:left;color:#ac8e75;font-family:Helvetica;font-size:30px;letter-spacing:-1px;line-height:100%;margin-top:0;margin-right:0;margin-bottom:1px;margin-left:0">
 </h2>
 <!--<span style="color:rgb(105,105,105);font-size:16px;text-align:left; font-family:comic sans ms">(user123) has sent you an awesome gift via <a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"><span style="color:rgb(178,34,34)">giftology.com</span></a></span>--><br><br>
+<?php
+                                   $originalDate = $last_login;
+                                   $newDate = date("j F, Y ", strtotime($originalDate)); ?>
+        <span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"><a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"></a><span style="color:#696969;font-size:16px"> You haven't logged in to <span style="color:#b22222;font-size:16px">Giftology</span> since<span style="color:#b22222;font-size:16px"> <?= $newDate; ?></span>. Please login and share the joy with your friends. </span><br><br><span style="font-size:32px"><span style="color:rgb(178,34,34) ; font-family:comic sans ms">Recommended Gifts</span><br><br><!--<br>(The recomended gifts show here)<br><br><br><br><br><span style="font-size:32px">-->
 
-        <span style="font-family:&#39;comic sans ms&#39;,&#39;marker felt-thin&#39;,arial,sans-serif"><a href="http://www.giftology.com/?utm_source=mandrillapp&utm_medium=email&utm_campaign=welcome" style="color:#e86848;font-weight:normal;text-decoration:none" target="_blank"></a><span style="color:#696969;font-size:16px"> You haven't logged in to <span style="color:#b22222;font-size:16px">Giftology</span> since<span style="color:#b22222;font-size:16px"> 11-March-2013</span>. Please login and share the joy with your friends. </span><br><br><span style="color:#b22222;font-size:16px">Just 3 simple clicks to send amazing gifts.</span><br><br>
+
+        <table width="570px" cellpadding="0" align="center" cellspacing="0" border="0" >
+					<tr>
+						<td>
+						<!--<td width="33%" align="center" valign="top">
+							<a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="http://graph.facebook.com/<?= $reminders[$i]['Reminder']['friend_fb_id']; ?>/picture/?type=large" /></a>
+						</td>-->
+						  <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[0]['Vendor']['wide_image']; ?>" /></a>
+
+						  <a href="<?= $linkback; ?> style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[1]['Vendor']['wide_image']; ?>" /></a>
+
+						  <a href="<?= $linkback; ?>" style="border:0"><img style="max-width:150px; max-height:150px; padding:4px; border:1px solid #d2d2d2" src="<?= FULL_BASE_URL.'/'.$products[2]['Vendor']['wide_image']; ?>" /></a><br>
+
+						  
+
+						</td>
+					</tr>
+					<span style="color:#b22222;font-size:16px">Just 3 simple clicks to send amazing gifts.</span><br><br>
             <span style="color:#696969;font-size:16px">
 Log on to giftology.com & connect to facebook.<br>
 Select the friend you want to send the gift to.<br>

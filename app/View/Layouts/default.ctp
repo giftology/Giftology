@@ -98,8 +98,16 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<?php } 
 
 		else { ?>
-		<div style="padding:0; display:inline-block; position:absolute; left:50%; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-							'redirect' => array('controller'=>'Reminders', 'action'=>'view_friends'))); 
+		<script type="text/javascript">
+    		$(document).ready(function(){
+    				$("#fb").click(function(){
+      					$("a").attr("href",$("a").attr("href").replace(/#/, "")); 
+   							return false; /* This prevents url from # */
+						});
+ 					 });
+   	 </script>
+		<div class="fbconect" id="fb" style="padding:0; display:inline-block; position:absolute; left:50%; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); 
 			 echo $this->Facebook->init(); ?> </div>
 		<?php } ?>
 	</div>
