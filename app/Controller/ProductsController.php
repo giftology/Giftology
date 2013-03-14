@@ -145,7 +145,7 @@ class ProductsController extends AppController {
 	}
 	
     public function send_product_expiry_reminder(){
-
+          
         //this function return product id which is going to expire after 30 days.
         $reminder_for_expire_product_id = array();
         $this->Product->unbindModel(array('hasMany' => array('Gift',), 
@@ -165,6 +165,8 @@ class ProductsController extends AppController {
         $reminder_for_expire_product_id[]=array($product['Product']['id'],$product['Vendor']['name']);
 
         }
+        if (!empty($reminder_for_expire_product_id))
+        {
         $file =fopen(ROOT.'/app/tmp/product_code_expire_reminder.csv', 'w');
         fputcsv($file,array('Product Id','Vendor Name'));
         foreach ($reminder_for_expire_product_id as $l)
@@ -182,11 +184,11 @@ class ProductsController extends AppController {
         ->subject('Products Code Expire Reminder')
         ->viewVars(array('name' => $this->Connect->user('name')))
         ->send();
+    }
 
     }
 	public function view_products () {
-     
-        //$this->send_product_expiry_reminder();
+         
 		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
         $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
         $year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
