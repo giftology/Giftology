@@ -221,6 +221,7 @@ define('CCAV_WORKING_KEY', "71bnwtt3evuy3upx8c");
 define('CCAV_MERCHANT_ID', "M_dmIndia_13508");
 
 define('DAILY_MAX_GIFTS_PER_USER', 10);
+define('CAROUSEL_CODE', 1);
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));
