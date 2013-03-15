@@ -39,7 +39,7 @@ echo $this->Minify->css('main');
 		
 		echo $this->Minify->css('flexslider');
 		
-		echo $this->Minify->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
