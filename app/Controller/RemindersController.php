@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Reminder $Reminder
  */
 class RemindersController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 	public $uses = array( 'Reminder','Product','Gift','User');
 	
 	public $paginate = array(

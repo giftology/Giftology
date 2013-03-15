@@ -8,6 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Gift $Gift
  */
 class GiftsController extends AppController {
+	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor');
 
     public $components = array('Giftology', 'CCAvenue');
