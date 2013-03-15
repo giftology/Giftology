@@ -281,5 +281,3 @@ define('REQUEST_MOBILE_UA', '(Android|iPhone|MIDP|AvantGo|BlackBerry|J2ME|Opera 
 
 Configure::write('Mixpanel.token', '05d40cfba829ad894e6f2c2e0784a124');
 Configure::write('MinifyAsset', true);
-
-
