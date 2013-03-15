@@ -1,6 +1,3 @@
 [submodule "app/Plugin/Mixpanel"]
 	path = app/Plugin/Mixpanel
 	url = git://github.com/noahm/CakePHP-Mixpanel.git
-[submodule "app/Plugin/Minify"]
-	path = app/Plugin/Minify
-	url = git://github.com/maurymmarques/minify-cakephp.git
