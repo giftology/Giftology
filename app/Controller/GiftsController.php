@@ -25,7 +25,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -632,6 +632,31 @@ class GiftsController extends AppController {
 		$this->render();
 
     } 
+
+    public function sms($id) 
+    { 
+    	
+    	$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$id)));
+    	$this->set('gift', $gift);
+    	
+    } 
+    public function send_sms(){
+    	$gift_id=$this->data['gifts']['id'];
+    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
+           $this->Gift->updateAll (array('Gift.sms' => 1),
+						array('Gift.id' => $gift_id)); 
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        
+
+        }
+		
+
+    
 
 	public function news() {
 		$this->layout = 'ajax';

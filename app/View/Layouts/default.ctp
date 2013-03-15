@@ -143,6 +143,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
             <div class="span1"><p>© Giftology 2013. All rights reserved</p>
             </div>
         </div> -->
+         </div>
         <footer>
             <div class="footer-wrap">
                 <nav class="footer-nav">
