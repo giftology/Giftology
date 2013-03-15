@@ -13,7 +13,7 @@
         });
       
       </script>
-      <div style="min-height:400px">
+      
  <div style="margin-top:100px">
  	<center>
            <?php //DebugBreak();
@@ -39,5 +39,5 @@
             <?php echo $this->Form->Submit(__('Send sms'), array('id'=>'form_shipping')); ?>
                
             </div> </center>
-            <div>
+            </div>
             
