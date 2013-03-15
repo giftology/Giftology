@@ -28,12 +28,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->css('http://cdn.webrupee.com/font');
-		echo $this->Html->css('style');
+		echo $this->Minify->css('http://cdn.webrupee.com/font');
+		echo $this->Minify->css('style');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
-		echo $this->Html->script('giftology');
-		echo $this->Html->script('jquery.ias.min');		
+		echo $this->Minify->script('giftology');
+		echo $this->Minify->script('jquery.ias.min');		
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 				//echo $this->Html->css('main');
@@ -143,6 +143,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
             <div class="span1"><p>© Giftology 2013. All rights reserved</p>
             </div>
         </div> -->
+         </div>
         <footer>
             <div class="footer-wrap">
                 <nav class="footer-nav">

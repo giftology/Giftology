@@ -8,6 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property User $User
  */
 class UsersController extends AppController {
+    public $helpers = array('Minify.Minify');
     public $uses = array( 'User','Vendor','Product');
 
     public function beforeFilter() {

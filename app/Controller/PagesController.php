@@ -51,7 +51,7 @@ class PagesController extends AppController {
  * @param mixed What page to display
  * @return void
  */
-
+	public $helpers = array('Minify.Minify');
 	public function beforeFilter(){
 		if ($this->Auth->user()) {
 	    // if a user is logged in
