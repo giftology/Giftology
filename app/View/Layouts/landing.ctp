@@ -34,12 +34,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	<?php endif; ?>
 	<?php
 		echo $this->Html->meta('icon');
-echo $this->Html->css('main');
-		echo $this->Html->css('normalize');
+echo $this->Minify->css('main');
+		echo $this->Minify->css('normalize');
 		
-		echo $this->Html->css('flexslider');
+		echo $this->Minify->css('flexslider');
 		
-		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		echo $this->Minify->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
@@ -203,12 +203,15 @@ echo $this->Html->css('main');
 			<img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">
 		<?php endif; ?>
    	 </div>
- 		<script src="../js/jquery-1.9.0.min.js"></script>
-        <script src="../js/jquery.easing-1.3.js"></script>
-        <script src="../js/jquery.flexslider-min.js"></script>
-        <script src="../js/plugins.js"></script>
-        <script src="../js/main.js"></script>
-        <script src="../js/carouFredSel.js"></script>
+    <?php
+      echo $this->Minify->script('../js/jquery-1.9.0.min');
+      echo $this->Minify->script('../js/jquery.easing-1.3');
+      echo $this->Minify->script('.../js/jquery.flexslider-min');
+      echo $this->Minify->script('../js/plugins');
+      echo $this->Minify->script('../js/main');   
+      echo $this->Minify->script('../js/carouFredSel');      
+      echo $this->fetch('script');
+    ?>
       
        <script type="text/javascript">
        !function(window){
