@@ -1,21 +1,6 @@
 
 <?php
-/**
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.View.Layouts
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
+
 
 $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 ?>
@@ -118,13 +103,26 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 
 
 
-
+          
           <div class="content">
+
                 <center><h2>Partner with us!</h2></center>
-            <p>   Giftology is the new age, social gifting platform that presents your brand/products to 71 million FB fans. Its innovative, unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family. </p>
-            <br>
-             <p>We help generate in person and online traffic for top brands by letting customers send free and paid gifts to their friends and family via Facebook. Learn how we can work together to help you increase sales with Giftology by filling out the form below: </p>
-                <!-- <p>Email us at partner@giftology.com</p> -->
+             <p> Giftology is the new age, social gifting platform that presents your brand and products to 71 million Facebook fans. Our innovative and unique ‘try-n-buy’ concept allows prospective customers to discover your brand and also introduce it to their friends and family.</p>
+
+
+                <p><strong>What do we do?</strong></p>
+  
+                  <p>We help generate store traffic, increase footfalls for brick and mortar stores, and web traffic for your business!</p>
+  
+                 <p><strong>How?</strong></p>
+  
+                  <p>By letting customers send free gifts to their friends and family via Facebook. Or, purchase paid vouchers that can be easily gifted to friends and family over Facebook.</p>
+  
+                  <p><strong>Does this help?</strong></p>
+  
+                   <p>Of course it does! Your brand gets massive visibility with high number of unique viewers of the brand. Increased goodwill among existing users and a huge potential to bring in new users!</p>
+  
+                  <p><strong>Convinced?Learn how we can work together to help you increase sales with performance marketingby filling out the form below.</strong></p>
 
           </div>
            <div class="retail">

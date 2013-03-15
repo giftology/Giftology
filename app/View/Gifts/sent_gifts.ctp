@@ -10,12 +10,23 @@
 </div>
 <br><br>
 
+<style>
+#bt_list{left:71px;width:68px;height:66px;list-style: none;}
+#bt_list{background:url('../img/btn.png') -70px 0px;}
+
+
+#bt_list1{left:0px;width:69px;height:66px;list-style: none;}
+#bt_list1{background:url('../img/btn.png') 0px 0px;}
+#bt_list1:hover{background: url('../img/btn.png') 0px -66px;}
+
+</style>
+
 <div style="float:right;margin-top:15px">
-            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>  style=" text-decoration:none"><span>Sent<br> Gifts</span></a>
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>  style=" text-decoration:none;width:69px;height:66px"><li id="bt_list"></li></a>
            
        </div>
         <div style="float:right;margin-right:20px;margin-top:15px">
-            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?>  style=" text-decoration:none"><span>Received<br>&nbsp;&nbsp; Gifts</span></a>
+            <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?>  style=" text-decoration:none"><li id="bt_list1"></li></a>
 </div>
 <br>
 <div>

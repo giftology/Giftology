@@ -55,17 +55,21 @@ ul.left-menu li a { font-size:13px;  color:#fff}
           
    <div id="foot_content" >
 	<div class="content">
-		<center><h3>CONTACT US</h3></center>
-		<p>We always look for creative people so email us at <strong>career@giftology.com</strong></p>
+		     	<center><h3>CAREERS</h3></center>
+		     	 	<p>We are hiring for roles in Technology (PHP) and Sales, across India!</p>
+		     	 	<img>
 
+		     	 		<p>We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
+	           	<center><h3>CONTACT</h3></center>
+		
 
 
 
 <h4>Looking for us?</h4>
 <p>We are based out of Gurgaon and here’s the address:<br>
 27, Nathupur Road,<br>
-DLF Phse 3<br>
-Phone: +911244008363<br>
+DLF Phase 3<br>
+Phone: +91-9717881110<br>
 Email: cs@giftology.com<br>
 Registered address: 8, Siri Fort road, New Delhi – 110049<br></p>
 </div>
