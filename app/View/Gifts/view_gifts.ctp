@@ -35,7 +35,7 @@
         </h3>
         
         <div id="campaigns">
-		        <div id='paginator_nav'>
+		<div id='paginator_nav'>
                                 
                         <?php
                                 //Set paginator options for AJAX
@@ -79,8 +79,8 @@
                                     
                             </span>
                     </span>
-                </div> 
-      </div>
+    </div> 
+</div>
 
  <?php else: ?>
 
@@ -114,7 +114,7 @@
                                     
                             </span>
                     </span>
-                 </div> 
+    </div> 
      </a>
 <?php endif; ?> 
 
@@ -126,7 +126,7 @@
 			<br><br>
 			<div class='no_data'>Nothing here yet.  <br><br>Start some good Karma.  Send gifts to some friends, and they'll send you some in return. </div>
 		<?php endif; ?>
-        
+        </div>
         
         
 </div>	
