@@ -578,11 +578,10 @@ class GiftsController extends AppController {
 	}
 
 	public function sent_gifts() {
-        
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
-			$conditions = array('sender_id' => $this->Auth->user('id'));
+			$conditions = array('sender_id' => $this->Auth->user('id'), 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING);
 		}
 		$gift_sent = $this->Gift->find('all', array(
 			'contain' => array(
