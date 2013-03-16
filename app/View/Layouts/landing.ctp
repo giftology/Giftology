@@ -38,7 +38,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		//echo $this->Minify->css('normalize');
 		
 		//echo $this->Minify->css('flexslider');
-		echo $this->Minify->script(array('jquery-1.7.2.min.js','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel'));
+		echo $this->Minify->script(array('jquery-1.7.2.min.js','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','ga','modernizr-2.6.2.min'));
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -71,7 +71,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/normalize.css">
         <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/main.css">
         <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/flexslider.css"> -->
-        <script type="text/javascript" async="" src="../js/ga.js"></script><script src="../js/modernizr-2.6.2.min.js"></script>
+        <!--<script type="text/javascript" async="" src="../js/ga.js"></script><script src="../js/modernizr-2.6.2.min.js"></script>-->
 <body style="zoom: 1; margin-bottom: 0px;">
 <?php echo $this->Facebook->init(); ?>
 	<div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
