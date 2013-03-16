@@ -37,7 +37,7 @@ class GiftsController extends AppController {
 		$e = $this->wsListGiftException($receiver_fb_id );
 		if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
 		else{
-			$conditions = array('receiver_fb_id' => $receiver_fb_id);
+			$conditions = array('receiver_fb_id' => $receiver_fb_id, 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING);
 			$this->Gift->recursive = 0;
 			$gifts = $this->Gift->find('all', array('conditions' => $conditions));
 			foreach($gifts as $k => $g){
