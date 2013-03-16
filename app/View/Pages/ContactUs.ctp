@@ -69,8 +69,8 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 <p>We are based out of Gurgaon and here’s the address:<br>
 27, Nathupur Road,<br>
 DLF Phase 3<br>
-Phone: +91-9717881110<br>
-Email: cs@giftology.com<br>
+Phone: +91-9717881110<br><br>
+Email: cs@giftology.com<br><br>
 Registered address: 8, Siri Fort road, New Delhi – 110049<br></p>
 </div>
 </div>
