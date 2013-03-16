@@ -646,7 +646,7 @@ class GiftsController extends AppController {
     public function send_sms(){
     	$gift_id=$this->data['gifts']['id'];
     	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
-           $this->Gift->updateAll (array('Gift.sms' => 1),
+           $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
 						array('Gift.id' => $gift_id)); 
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));

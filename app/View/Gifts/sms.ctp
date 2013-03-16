@@ -7,6 +7,19 @@
             		alert("Plese enter 10 digit mobile number");
             		return false;
             	}
+            	if($("#mobile_number").val().length ==10 )
+            	{
+            		
+            		x = confirm("This can be Done once.The Number " +mobile_number.value +" is Right ?");   
+if (x == true)  
+{  
+ return true;  
+}  
+else  
+{  
+return false; }   
+            		
+            	}
                 
             });
            
@@ -28,7 +41,7 @@
              <div class="input email">
              	<br><br>
                 
-                <div class="input email" ><label for="email">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5"))?></div>
+                <div class="input email" ><label for="email">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "10 Digit Mobile Number"))?></div>
                 <div class="error_message" id="error_mobile" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the 10 digit Mobile Number</h5>
                 </div>

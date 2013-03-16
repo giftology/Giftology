@@ -101,7 +101,7 @@
       
             <div id="fb-root"></div>
             <script src="http://connect.facebook.net/en_US/all.js"></script>
-            <h4>Like Giftology? Invite your friends!</h4>
+            <h4>Like Giftology ? Invite your friends!</h4>
             <button id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestViaMultiFriendSelector(); return false;"
               value="Spread the Joy"
