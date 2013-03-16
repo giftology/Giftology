@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property ProductSegment $ProductSegment
  */
 class ProductSegmentsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

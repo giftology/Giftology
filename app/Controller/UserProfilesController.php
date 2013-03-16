@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property UserProfile $UserProfile
  */
 class UserProfilesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property GiftStatus $GiftStatus
  */
 class GiftStatusesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

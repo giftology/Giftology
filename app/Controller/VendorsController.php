@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Vendor $Vendor
  */
 class VendorsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

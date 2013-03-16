@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property TransactionStatus $TransactionStatus
  */
 class TransactionStatusesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

@@ -35,6 +35,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class Retailerscontroller extends Controller {
+  public $helpers = array('Minify.Minify');
 	/*public function beforeFilter(){
 		if ($this->Auth->user()) {
 	    // if a user is logged in

@@ -6,6 +6,7 @@ App::uses('AppController', 'Controller');
  * @property UploadedProductCode $UploadedProductCode
  */
 class UploadedProductCodesController extends AppController {
+	public $helpers = array('Minify.Minify');
 	public $components = array('Giftology');
 
 /**

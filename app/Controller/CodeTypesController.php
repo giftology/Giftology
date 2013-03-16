@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property CodeType $CodeType
  */
 class CodeTypesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

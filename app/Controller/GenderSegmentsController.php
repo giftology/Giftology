@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property GenderSegment $GenderSegment
  */
 class GenderSegmentsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

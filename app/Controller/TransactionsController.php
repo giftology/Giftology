@@ -6,6 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Transaction $Transaction
  */
 class TransactionsController extends AppController {
+	public $helpers = array('Minify.Minify');
 	public $components = array('CCAvenue');
 
 	public function isAuthorized($user) {

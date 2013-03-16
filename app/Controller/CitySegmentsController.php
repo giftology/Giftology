@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property CitySegment $CitySegment
  */
 class CitySegmentsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

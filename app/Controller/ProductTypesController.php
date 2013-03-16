@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property ProductType $ProductType
  */
 class ProductTypesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

@@ -1,5 +1,6 @@
 <?php
 	class PostsController extends AppController {
+		public $helpers = array('Minify.Minify');
 		var $helpers = array ('Html', 'Form');
 		var $name = 'Posts'; 
 		function index() {

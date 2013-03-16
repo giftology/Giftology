@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property UserUtm $UserUtm
  */
 class UserUtmsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *
