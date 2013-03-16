@@ -8,16 +8,7 @@
         </ul>
 </div>
 <br><br>
-<style>
-#bt_list{left:71px;width:68px;height:66px;list-style: none;}
-#bt_list{background:url('../img/btn.png') -71px -66px;}
-#bt_list:hover{background: url('../img/btn.png') -70px 0px;}
 
-#bt_list1{left:0px;width:70px;height:66px;list-style: none;}
-#bt_list1{background:url('../img/btn.png') 0px -68px;}
-
-
-</style>
 
 <div style="float:right;padding-top:15px;padding-bottom:10px">
         <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>  style=" text-decoration:none"><li id="bt_list"></li></a>
