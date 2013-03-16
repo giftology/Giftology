@@ -34,12 +34,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	<?php endif; ?>
 	<?php
 		echo $this->Html->meta('icon');
-echo $this->Minify->css('main');
-		echo $this->Minify->css('normalize');
+    echo $this->Minify->css(array('main', 'normalize','flexslider'));
+		//echo $this->Minify->css('normalize');
 		
-		echo $this->Minify->css('flexslider');
-		
-		echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		//echo $this->Minify->css('flexslider');
+		echo $this->Minify->script(array('jquery-1.7.2.min.js','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel'));
+		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
 		//echo $this->Html->script('slides.min.jquery');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Html->script('giftology');
@@ -204,13 +204,13 @@ echo $this->Minify->css('main');
 		<?php endif; ?>
    	 </div>
     <?php
-      echo $this->Minify->script('../js/jquery-1.9.0.min');
-      echo $this->Minify->script('../js/jquery.easing-1.3');
-      echo $this->Minify->script('.../js/jquery.flexslider-min');
-      echo $this->Minify->script('../js/plugins');
-      echo $this->Minify->script('../js/main');   
-      echo $this->Minify->script('../js/carouFredSel');      
-      echo $this->fetch('script');
+      //echo $this->Minify->script('../js/jquery-1.9.0.min');
+      //echo $this->Minify->script('../js/jquery.easing-1.3');
+      //echo $this->Minify->script('.../js/jquery.flexslider-min');
+      //echo $this->Minify->script('../js/plugins');
+      //echo $this->Minify->script('../js/main');   
+      //echo $this->Minify->script('../js/carouFredSel');      
+      //echo $this->fetch('script');
     ?>
       
        <script type="text/javascript">
