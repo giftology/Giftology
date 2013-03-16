@@ -103,7 +103,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
 
 
 
-          
+          <div id="foot_content">
           <div class="content">
 
                 <center><h2>Partner with us!</h2></center>
@@ -125,6 +125,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                   <p><strong>Convinced?Learn how we can work together to help you increase sales with performance marketingby filling out the form below.</strong></p>
 
           </div>
+        </div>
            <div class="retail">
     
     

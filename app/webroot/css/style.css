@@ -1252,6 +1252,7 @@ ul.voucher-details li {
 .retail{
 
     padding-left:90px;
+    margin-left:20px;
     background-image:url("../img/retailer.png");
     background-repeat:no-repeat;
     height:1100px;
