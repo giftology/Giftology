@@ -8,7 +8,7 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Product $Product
  */
 class ProductsController extends AppController {
-	
+    public $helpers = array('Minify.Minify');	
 	public $paginate = array(
         'limit' => 100,
         'order' => array(
