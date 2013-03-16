@@ -958,7 +958,7 @@ a .free.voucher .expirelabel {
     float: left;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     padding: 16px 0 0 6px;
-    width: 100px;
+    width: 120px;
 }
 .voucher {
     height: 250px;
