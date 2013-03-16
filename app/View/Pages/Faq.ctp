@@ -65,12 +65,12 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
 	<h4>What is Giftology?</h4>
 	
-	<p>Giftology serves as a ‘discovery platform’ where users can explore a plethora of brands and exciting gifts which they can sendto Facebook registered friends and family anywhere in India. Our free gift cards save your time, money and effort to choose the right gift.
+	<p>Giftology serves as a ‘discovery platform’ where users can explore a plethora of brands and exciting gifts which they can send to Facebook registered friends and family anywhere in India. Our free gift cards save your time, money and effort to choose the right gift.
 	You can make it even bigger (in value) by contributing towards gifts to your dear ones!!</p>
 	
 	<h4>What? Are there free gifts? Is this real?</h4>
 	
-	<p>Yes, this is real!Pinky swear.Giftology offers this service for free, with no charge to the user.Our partners use Giftology as a platform to market themselves using Facebook. We bring them closer to users and they offer users free gifts, simple.</p>
+	<p>Yes, this is real! Pinky swear.Giftology offers this service for free, with no charge to the user.Our partners use Giftology as a platform to market themselves using Facebook. We bring them closer to users and they offer users free gifts, simple.</p>
 	
 	
 	<h4>I've sent a gift, how do I know my friend has received it?</h4>
@@ -82,7 +82,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 	<p>Some gifts are used on partner websites and others in the specific store or location.If there are any conditions please refer to the offer details.</p>
 	
 	<h4>Do these gifts have an expiry date?</h4>
-	 <p>Yes, they do. Partners’ gifts are typically valid from 15 days to 365 days.</p>
+	 <p>Yes, they do. Partners gifts are typically valid from 15 days to 365 days.</p>
 	
 	<h4>Are there any terms and conditions associated with the gifts?</h4> 
 	<p>Terms and conditions associated with each gift vary. Hence we request you to go through the complete T&C as well as the procedure of redeeming them to avoid any ambiguity as well as to ensure the entire gifting process is smooth.</p>
@@ -94,16 +94,16 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 	
 	<h4>How can I pay for gifts?</h4>
 	<p>Paying is simple on Giftology. We offer the following payment modes:</p>
-	<p>&nbsp; - Credit cards</p>
+	 <p>&nbsp;- Credit cards</p>
 	 <p>&nbsp;- Debit cards</p>
 	 <p>&nbsp;- Net banking</p>
-	 <p> &nbsp;- Prepaid Cash cards</p>
+	 <p>&nbsp;- Prepaid Cash cards</p>
 	
 	<h4>Are there any hidden charges?</h4>
 	<p>There is no fine print. Everything is clearly specified on the website.</p>
 	
 	<h4>Will I receive an invoice along with the order? </h4>
-	<p>Yes, an email containingthe order details will be sent to the email id registered on Facebook. If you haven’t received one, please contact us on <strong>cs@giftology.com.</strong>This is to be retained for any future clarity.</p>
+	<p>Yes, an email containing the order details will be sent to the email id registered on Facebook. If you haven’t received one, please contact us on <strong>cs@giftology.com.</strong>This is to be retained for any future clarity.</p>
 	
 	<h4>Who should I contact for payment related issues?</h4>
 	<p>Kindly email us at <strong>cs@giftology.com </strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>

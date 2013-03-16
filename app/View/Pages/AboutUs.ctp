@@ -110,7 +110,7 @@ $("img[rel]").overlay({mask: '#000'});
                                 
                                  	<p><strong>Varun Vummidi</strong></p>
                                             	<p><strong>CEO</strong></p>
-                                        <p>Varun Vummidi comes off a successful stint at Jabong.comas part of the founding team. He was a key player in helping it become one of the fastest growing e-commerce companies in India.</p>
+                                        <p>Varun Vummidi comes off a successful stint at Jabong.com as part of the founding team. He was a key player in helping it become one of the fastest growing e-commerce companies in India.</p>
   
                                         <p>Previously,Varun has been an Entrepreneur in Residence at Jabong.com, a Product Specialist at Merrill Lynch and Relationship Manager at HDFC Bank Ltd. He has also worked as a freelance Radio DJ for All India Radio in Chennai and as an M.C.</p>
   
