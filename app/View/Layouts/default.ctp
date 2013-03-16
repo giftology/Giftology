@@ -154,8 +154,8 @@ ul.left-menu li a { font-size:13px;  color:#fff}
                       <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' => 'display', 'Retailers')); ?>
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
                        <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?>
-                    
-                     <a href="<?= $this->Html->url('http://mygiftology.wordpress.com/'); ?>">BLOG<a>
+                        <?= $this->Html->link('BLOG', 'http://mygiftology.wordpress.com/'); ?>
+                     
                      <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'display','TermsOfServices')); ?>
                                       
                                       

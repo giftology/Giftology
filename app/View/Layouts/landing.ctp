@@ -189,7 +189,7 @@ echo $this->Minify->css('main');
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
                        <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?>
                     
-                     <a href="<?= $this->Html->url('http://mygiftology.wordpress.com/'); ?>">BLOG<a>
+                     <?= $this->Html->link('BLOG', 'http://mygiftology.wordpress.com/'); ?>
                      <?= $this->Html->link('TERMS OF SERVICE', array('controller' => 'pages', 'action' =>  'display','TermsOfServices')); ?>
                                       
                      
