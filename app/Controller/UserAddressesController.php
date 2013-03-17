@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property UserAddress $UserAddress
  */
 class UserAddressesController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *

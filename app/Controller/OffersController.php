@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Offer $Offer
  */
 class OffersController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * index method
  *
