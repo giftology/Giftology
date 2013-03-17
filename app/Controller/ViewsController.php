@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
  *
  */
 class ViewsController extends AppController {
-
+	public $helpers = array('Minify.Minify');
 /**
  * Scaffold
  *
