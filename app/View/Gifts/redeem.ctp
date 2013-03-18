@@ -18,15 +18,7 @@
 
 <div style="float:right;margin-top:50px;margin-left:800px">
             
-           <a href="<?= $this->Html->url(array('controller'=>'gifts',
-                                                      'action'=>'print_pdf',
-                    $gift['Gift']['id'])); ?>" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
-                    <?php if($gift['Gift']['sms']=="0"){?>
-                    <a href="<?= $this->Html->url(array('controller'=>'gifts',
-                                                      'action'=>'sms',
-                    $gift['Gift']['id'])); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
-                    
-                    <?php } ?></div>
+           </div>
 
 
 <div id="gift-details">
@@ -43,6 +35,17 @@
         <div id="gift-redemption-details">
             <div id="redemption-code-title">Redemption Code</div>
             <div id="redemption-code"><?= $gift['Gift']['code']; ?></div>
+            <div style="float:right;margin-top:40px;margin-left:200px">
+                <a href="<?= $this->Html->url(array('controller'=>'gifts',
+                                                      'action'=>'print_pdf',
+                    $gift['Gift']['id'])); ?>" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
+                    <?php if($gift['Gift']['sms']=="0"){?>
+                    <a href="<?= $this->Html->url(array('controller'=>'gifts',
+                                                      'action'=>'sms',
+                    $gift['Gift']['id'])); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
+                    
+                    <?php } ?>
+            </div>
         </div>
         <div id="redeem-instr" class="disclosure opened">
             <p class="heading">How to Redeem</p>
