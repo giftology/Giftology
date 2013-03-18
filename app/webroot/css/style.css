@@ -1382,6 +1382,7 @@ ul.voucher-details li {
     margin-left:10px;
 }
 .mainpage #foot_content .content .images .span img{
+    cursor:pointer;
     margin-left:5px;
     margin-right:4px;
     margin-top:4px;

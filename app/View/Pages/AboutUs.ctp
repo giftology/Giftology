@@ -216,7 +216,7 @@ $("img[rel]").overlay({mask: '#000'});
                         <p><strong> Finance Director</strong></p>
                            <p>Shailesh brings over 18 years of global experience within Finance and Operations. He hasin-depth knowledge of corporate accounting taxation, MIS and e-commerce.</p>
   
-                           <p>Previously,Shailesh has worked with Transact Network Ltd. as V.P Finance managingthe financial operations of its prepaid card business.  He has also worked with leading Indian business houses such as DLF and Reliance with scope of business in to construction, power, service, education, ITES and finance sector.</p>
+                           <p>Previously,Shailesh has worked with Transact Network Ltd. as V.P Finance managing the financial operations of its prepaid card business.  He has also worked with leading Indian business houses such as DLF and Reliance with scope of business in to construction, power, service, education, ITES and finance sector.</p>
   
                            <p>Shailesh is a fellow member of Institute of Chartered Accountants of India, New Delhi and holds a M.Com from Agra University.</p>
 
