@@ -52,4 +52,53 @@ class GiftologyComponent extends Component {
 		//close connection
 		curl_close($ch);
 	}
+
+	function welcomePostToFB($sender_fb_id, $access_token, $url, $message, $post_to_fb = null) {
+		// go with exec curl, as the return here is quicker (asynchronous) NS
+		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
+		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
+		/*if($post_to_fb){
+			$fields = array(
+				'access_token'=> $access_token,
+		        'gift'=>$url,
+		        'message'=>$message,
+		        'fb:explicitly_shared'=>true
+		    );	
+		}
+		else{
+			$fields = array(
+				'access_token'=> $access_token,
+		        'gift'=>$url,
+		        'message'=>$message
+		    );	
+		}*/
+
+		$fields = array(
+		  'access_token'=> $access_token,
+	          'message'=>$message,
+	          'link'=>$url,
+	          'place'=>'185972794801597',
+	    );
+		
+		$ch = curl_init();
+
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$sender_fb_id.'/feed');
+		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+		
+		//execute post
+		$result = curl_exec($ch);
+		$error = curl_error($ch);
+
+		if ($error) {
+			$this->log($sender_fb_id." token action tag".$access_token.$error, 'ns');
+		}
+		//close connection
+		curl_close($ch);
+	}
 }
