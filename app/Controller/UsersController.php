@@ -26,14 +26,19 @@ class UsersController extends AppController {
     public function ws_add () {
         //parse json
         //Add User, Profile, Reminders
-	$this->User->create();
-	if ($this->User->saveAssociated($this->request->data)) {
-            $status = array('Status' => 'OK', 'user_id' => $this->User->getLastInsertID());
-	} else {
-	    $status = array('Status' => 'Failed');
-	}
+        if(isset($this->request->data) && !empty($this->request->data))
+            $json_data = $this->request->data;
+        else $json_data = $this->request->input('json_decode');
+        //$e = $this->wsAddException($json_data);
+        $this->User->create();
+    	if ($this->User->saveAssociated($json_data)) {
+                $status = array('Status' => 'OK', 'user_id' => $this->User->getLastInsertID());
+    	} else {
+    	    $status = array('Status' => 'Failed');
+    	}
         $this->set('status', $status);
-	$this->set('request', $this->request->data);
+    	$this->set('request', $json_data);
+        unset($json_data);
         $this->set('_serialize', array('status', 'request'));
     }
 /**
@@ -615,4 +620,12 @@ class UsersController extends AppController {
     }
 
     */
+
+    /*public function wsAddException($json_data){
+        $json_data = 
+        $error = array();
+        if(!isset($json_data) && empty($json_data))
+            $error[1] = "Input json data missing";
+        if()
+    }*/
 }
