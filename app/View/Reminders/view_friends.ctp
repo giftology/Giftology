@@ -149,7 +149,7 @@
 
                             <div>
                                 <img src="https://graph.facebook.com/<?= $gifts_open['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
-                                <p></p><?= $this->Facebook->name($gifts_open['Gift']['receiver_fb_id']); ?> opened <?= $this->Facebook->name($gifts_open['Sender']['facebook_id']); ?> <?= $gifts_open['Product']['Vendor']['name']; ?> gift.
+                                <p></p><?= $this->Facebook->name($gifts_open['Gift']['receiver_fb_id']); ?> opened your <?= $gifts_open['Product']['Vendor']['name']; ?> gift.
                                 <span id="timeago"><?= $this->Time->timeAgoInWords($gifts_open['Gift']['gift_open_date']); ?></span>
                             </div>
                     </li>
@@ -159,7 +159,7 @@
                         <li>
                             <div>
                                 <img src="https://graph.facebook.com/<?= $gift_expire['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
-                                <p></p><?= $this->Facebook->name($gift_expire['Gift']['receiver_fb_id']); ?> <?= $gift_expire['Product']['Vendor']['name']; ?> gift expires in 7 days.
+                                <p></p>Your <?= $gift_expire['Product']['Vendor']['name']; ?> gift expires in 7 days.
                                 
                                 
                             </div>

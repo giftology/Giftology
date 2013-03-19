@@ -404,7 +404,7 @@ class RemindersController extends AppController {
 		$gift_open = $this->Gift->find('all',
 			      array('order'=>'Gift.gift_open_date DESC',
 				    'limit'=>5,
-				    'conditions' => array('Gift.gift_open'=>1),
+				    'conditions' => array('AND'=>array('Gift.gift_open'=>1,'sender_id' => $this->Auth->user('id'))),
 				    'order'=>'Gift.gift_open_date DESC',
 					//'group'=> $group,
 				    'contain' => array(
@@ -416,7 +416,7 @@ class RemindersController extends AppController {
 		$gift_expires = $this->Gift->find('all',
 			      array(
 				    'limit'=>5,
-				    'conditions' => array('Gift.expiry_date'=>$product_expire_date),
+				    'conditions' => array('AND'=>array('Gift.expiry_date'=>$product_expire_date,'receiver_id' => $this->Auth->user('id'))),
 				    
 					//'group'=> $group,
 				    'contain' => array(
