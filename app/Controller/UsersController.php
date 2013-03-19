@@ -29,15 +29,19 @@ class UsersController extends AppController {
         if(isset($this->request->data) && !empty($this->request->data))
             $json_data = $this->request->data;
         else $json_data = $this->request->input('json_decode');
-        //$e = $this->wsAddException($json_data);
-        $this->User->create();
-    	if ($this->User->saveAssociated($json_data)) {
-                $status = array('Status' => 'OK', 'user_id' => $this->User->getLastInsertID());
-    	} else {
-    	    $status = array('Status' => 'Failed');
-    	}
-        $this->set('status', $status);
-    	$this->set('request', $json_data);
+        $e = $this->wsAddException($json_data);
+        if(isset($e) && !empty($e)) $this->set('status', array('error' => $e));
+        else{
+            $this->User->create();
+            if ($this->User->saveAssociated($json_data)) {
+                    $status = array('Status' => 'OK', 'user_id' => $this->User->getLastInsertID());
+            } else {
+                $status = array('Status' => 'Failed');
+            }
+            $this->set('status', $status);    
+        }
+        
+        $this->set('request', $json_data);
         unset($json_data);
         $this->set('_serialize', array('status', 'request'));
     }
@@ -621,11 +625,43 @@ class UsersController extends AppController {
 
     */
 
-    /*public function wsAddException($json_data){
-        $json_data = 
+    public function wsAddException($json_data){
         $error = array();
         if(!isset($json_data) && empty($json_data))
             $error[1] = "Input json data missing";
-        if()
-    }*/
+
+        if(!isset($json_data->User) && empty($json_data->User)){
+            $error[2] = "User data is missing";    
+        }
+        else{
+            if(!$json_data->User->username)
+                $error[3] = "Username in User data is missing";
+            if(!$json_data->User->facebook_id)
+                $error[4] = "User facebook id is missing";        
+        }
+
+        if(!isset($json_data->UserProfile) && empty($json_data->UserProfile))
+            $error[5] = "User profile data is missing";
+
+        if(!isset($json_data->UserUtm) && empty($json_data->UserUtm))
+            $error[6] = "User utm data is missing";
+        else{
+            if(!$json_data->UserUtm->utm_source)
+                $error[7] = "User utm source is missing";    
+        }
+
+        if(!isset($json_data->Reminders) && empty($json_data->Reminders)){
+            $error[8] = "User reminder data is missing";        
+        }
+
+        if(!count($json_data->Reminders))
+                $error[9] = "User friends data is empty";
+        
+        if($json_data->User->facebook_id){
+            $user_exists = $this->User->find('count', array('conditions' => array('facebook_id' => $json_data->User->facebook_id)));
+            if($user_exists) $error[10] = "User already exists";        
+        }
+                
+        return $error;
+    }
 }
