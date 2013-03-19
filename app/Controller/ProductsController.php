@@ -36,7 +36,7 @@ class ProductsController extends AppController {
         else{
             $this->Product->recursive = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $this->set('products', $this->Product->find('all'));
+            $this->set('products', $this->Product->find('all', array('conditions' => array('Product.display_order >' => 0))));
         }
 		$this->set('_serialize', array('products'));
 	}
