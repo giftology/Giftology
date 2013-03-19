@@ -134,7 +134,7 @@
         </div>
     </div>
 </div>
-<div id="news-items" >
+<div id="news-items" style="margin-top:-20px" >
         <div class="shadow-wrapper right items">
                 <div class="frame">
                         <h3>News</h3><ul>
@@ -144,7 +144,7 @@
 
                
                    
-                        <?php if ($gifts_open['Gift']['gift_open'] == 1): ?>
+                        
                     <li>
 
                             <div>
@@ -153,18 +153,18 @@
                                 <span id="timeago"><?= $this->Time->timeAgoInWords($gifts_open['Gift']['gift_open_date']); ?></span>
                             </div>
                     </li>
-                    <?php endif; ?>
+                     <?php endforeach; ?>
                 
-                        <?php if ($gifts_open['Gift']['expiry_date'] == $product_expire_date): ?>
+                        <?php foreach($gift_expires as $gift_expire):  ?>
                         <li>
                             <div>
-                                <img src="https://graph.facebook.com/<?= $gifts_open['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
-                                <p></p><?= $this->Facebook->name($gifts_open['Gift']['receiver_fb_id']); ?> <?= $gifts_open['Product']['Vendor']['name']; ?> gift expires in 7 days.
+                                <img src="https://graph.facebook.com/<?= $gift_expire['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
+                                <p></p><?= $this->Facebook->name($gift_expire['Gift']['receiver_fb_id']); ?> <?= $gift_expire['Product']['Vendor']['name']; ?> gift expires in 7 days.
                                 
                                 
                             </div>
                           </li>  
-                        <?php endif; ?>
+                        
                
                 <!--<?php $last_sender_id = $gift['Sender']['facebook_id']; ?>-->
                 
@@ -175,7 +175,7 @@
         </div>
     </div>
  
-    <div id="news-items" >
+    <div id="news-items" style="margin-top:-20px">
         <div class="shadow-wrapper right items">
                 <div class="frame">
                         <h3>Total Gifts Sent</h3><ul>
