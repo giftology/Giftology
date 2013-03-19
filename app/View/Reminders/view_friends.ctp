@@ -134,12 +134,11 @@
         </div>
     </div>
 </div>
-<div id="news-items" style="margin-top:-20px" >
+<!--<div id="news-items" style="margin-top:-20px" >
         <div class="shadow-wrapper right items">
                 <div class="frame">
                         <h3>News</h3><ul>
-                       <!--<h4><?= $this->Number->format($num_gifts_sent); ?></h4>
-                       <h3>Whats happening now</h3>--><ul>
+                       
             <?php foreach($gifts_opens as $gifts_open):  ?>
 
                
@@ -166,14 +165,14 @@
                           </li>  
                         
                
-                <!--<?php $last_sender_id = $gift['Sender']['facebook_id']; ?>-->
+              
                 
                  <?php endforeach; ?>
                         
                         </ul>
                  </div>
         </div>
-    </div>
+    </div>-->
  
     <div id="news-items" style="margin-top:-20px">
         <div class="shadow-wrapper right items">

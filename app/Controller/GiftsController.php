@@ -539,12 +539,12 @@ class GiftsController extends AppController {
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
+		// will implement later when we have perfect UI
+		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
 		
-		$redeem_date = "'".date('Y-m-d H:i:s')."'";
-		//$update_array = array('gift_open' => 1,'gift_open_date' => $redeem_date); 
 		$this->Gift->updateAll(
                 array('gift_open' => 1,'gift_open_date' => $redeem_date), 
-                array('Gift.id'=>$id));
+                array('Gift.id'=>$id));*/
 		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
 		$this->set('gift', $gift);	
 	}

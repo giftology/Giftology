@@ -399,11 +399,12 @@ class RemindersController extends AppController {
 			GiftsReceived.product_id, GiftsReceived.created');
 		$group = array('GiftsReceived.sender_id');
 		$conditions = array('gift_status_id' => GIFT_STATUS_VALID);
-		$days_before_mail = "7";
+		// will implement later when we have perfect UI
+		/*$days_before_mail = "7";
 		$product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime(date('Y-m-d'))));
 		$gift_open = $this->Gift->find('all',
 			      array('order'=>'Gift.gift_open_date DESC',
-				    'limit'=>5,
+				    'limit'=>3,
 				    'conditions' => array('AND'=>array('Gift.gift_open'=>1,'sender_id' => $this->Auth->user('id'))),
 				    'order'=>'Gift.gift_open_date DESC',
 					//'group'=> $group,
@@ -415,7 +416,7 @@ class RemindersController extends AppController {
 							'fields' => array('facebook_id')))));
 		$gift_expires = $this->Gift->find('all',
 			      array(
-				    'limit'=>5,
+				    'limit'=>2,
 				    'conditions' => array('AND'=>array('Gift.expiry_date'=>$product_expire_date,'receiver_id' => $this->Auth->user('id'))),
 				    
 					//'group'=> $group,
@@ -427,7 +428,7 @@ class RemindersController extends AppController {
 							'fields' => array('facebook_id')))));
 		
 		$this->set('gifts_opens', $gift_open);
-		$this->set('gift_expires', $gift_expires);
+		$this->set('gift_expires', $gift_expires);*/
 		
 		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
