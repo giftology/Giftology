@@ -1,4 +1,4 @@
-    <div class="left-container">
+<div class="left-container">
             <?php if(isset($today_users) && $today_users): ?>
             <div>
                     <h4 class="line-header">Celebrate today<div class="calendar"><p><?= date('d'); ?></p></div></h4>
@@ -134,6 +134,46 @@
         </div>
     </div>
 </div>
+<div id="news-items" >
+        <div class="shadow-wrapper right items">
+                <div class="frame">
+                        <h3>News</h3><ul>
+                       <!--<h4><?= $this->Number->format($num_gifts_sent); ?></h4>
+                       <h3>Whats happening now</h3>--><ul>
+            <?php foreach($gifts_opens as $gifts_open):  ?>
+
+               
+                   
+                        <?php if ($gifts_open['Gift']['gift_open'] == 1): ?>
+                    <li>
+
+                            <div>
+                                <img src="https://graph.facebook.com/<?= $gifts_open['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
+                                <p></p><?= $this->Facebook->name($gifts_open['Gift']['receiver_fb_id']); ?> opened <?= $this->Facebook->name($gifts_open['Sender']['facebook_id']); ?> <?= $gifts_open['Product']['Vendor']['name']; ?> gift.
+                                <span id="timeago"><?= $this->Time->timeAgoInWords($gifts_open['Gift']['gift_open_date']); ?></span>
+                            </div>
+                    </li>
+                    <?php endif; ?>
+                
+                        <?php if ($gifts_open['Gift']['expiry_date'] == $product_expire_date): ?>
+                        <li>
+                            <div>
+                                <img src="https://graph.facebook.com/<?= $gifts_open['Gift']['receiver_fb_id']; ?>/picture?type=square"/>
+                                <p></p><?= $this->Facebook->name($gifts_open['Gift']['receiver_fb_id']); ?> <?= $gifts_open['Product']['Vendor']['name']; ?> gift expires in 7 days.
+                                
+                                
+                            </div>
+                          </li>  
+                        <?php endif; ?>
+               
+                <!--<?php $last_sender_id = $gift['Sender']['facebook_id']; ?>-->
+                
+                 <?php endforeach; ?>
+                        
+                        </ul>
+                 </div>
+        </div>
+    </div>
  
     <div id="news-items" >
         <div class="shadow-wrapper right items">
@@ -142,6 +182,7 @@
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
                        <h3>Whats happening now</h3><ul>
             <?php $last_sender_id = 0; ?>
+            
                         <?php foreach($gifts_sent as $gift): ?>
                         <?php echo $gift['Gift']['sender_id']; ?>
 
@@ -151,6 +192,8 @@
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
                                 <p></p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
+
+                                
                 </p></div></li>
                 <?php $last_sender_id = $gift['Sender']['facebook_id']; ?>
                 <?php endif; ?>

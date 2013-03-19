@@ -53,7 +53,7 @@ class GiftologyComponent extends Component {
 		curl_close($ch);
 	}
 
-	function welcomePostToFB($sender_fb_id, $access_token, $url, $message, $post_to_fb = null) {
+	function welcomePostToFB($sender_fb_id, $access_token, $url, $message) {
 		// go with exec curl, as the return here is quicker (asynchronous) NS
 		//exec('curl -F \'access_token='.$access_token.'\' -F \'message='.$message.'\' -F \'link='.$url.'\' https://graph.facebook.com/'.$fb_id.'/feed  > /dev/null 2>&1 &');
 		// Issue with exec multiple threads, doesnt work, switching back to curl_exec
@@ -72,7 +72,7 @@ class GiftologyComponent extends Component {
 		        'message'=>$message
 		    );	
 		}*/
-
+		
 		$fields = array(
 		  'access_token'=> $access_token,
 	          'message'=>$message,

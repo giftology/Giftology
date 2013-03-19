@@ -10,6 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     public $helpers = array('Minify.Minify');
     public $uses = array( 'User','Vendor','Product');
+    public $components = array('Giftology');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -319,11 +320,13 @@ class UsersController extends AppController {
         }
     }
     function afterFacebookLogin($first_login) {
+        
     if ($first_login) 
         {
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
+        
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
@@ -488,7 +491,19 @@ class UsersController extends AppController {
 	      ->subject('Welcome to Giftology')
               ->viewVars(array('name' => $this->Connect->user('name')))
               ->send();
+              $this->welcome_post_to_fb();
     }
+
+    function welcome_post_to_fb() {
+       
+        $url = "http://www.giftology.com";
+        $message = "I have joined the gifting revolution on Giftology.com! Have you?";
+        $access_token = FB::getAccessToken();
+        $sender_fb_id = $this->Connect->user('id');
+        $this->Giftology->welcomePostToFB($sender_fb_id, $access_token, $url, $message);
+
+    }
+
     public function view_gifts() {
 /*        $this->User->id = $this->Auth->user('id');
         if (!$this->User->exists()) {
