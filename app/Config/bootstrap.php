@@ -184,7 +184,7 @@ CakePlugin::load('Facebook');
 
 
 // Giftology Constants
-define('IMAGE_ROOT', "http://localhost/img/");
+define('IMAGE_ROOT', "http://www.giftology.com/img/");
 define('UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID', 1);
 
 // GIft Statuses
