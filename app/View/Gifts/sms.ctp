@@ -9,8 +9,8 @@
             	}
             	if($("#mobile_number").val().length ==10 )
             	{
-            		
-            		x = confirm("This can be Done once.The Number " +mobile_number.value +" is Right ?");   
+            		 
+            		x = confirm("Please verify that your mobile # " +mobile_number.value +" is correct? SMS can be sent only once.");   
 if (x == true)  
 {  
  return true;  
