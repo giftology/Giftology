@@ -17,8 +17,7 @@ class RemindersController extends AppController {
 	);
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_reminder_email_for_user');
-        $this->Auth->allow('send_reminder');
+		$this->Auth->allow('send_reminder_email_for_user','send_reminder','inactive_users_list');
 	}
 
 	public function isAuthorized($user) {
@@ -529,6 +528,7 @@ class RemindersController extends AppController {
     }
 
     public function inactive_users_list(){
+    	ini_set("max_execution_time",0);
     	$users = $this->User->find('list', 
             array(
                 'fields' => array('id'),
@@ -542,16 +542,15 @@ class RemindersController extends AppController {
 				'contain'=>array('UserProfile')));
 			
             if($user['UserProfile']['email'] && $user['UserProfile']['email_unsubscribed']!=1){
-                $reminders = $this->get_birthdays($id, 'thisweek');
-                if(!$reminders){
-                    $reminder_count = $this->Reminder->find('count', array(
-                    'conditions' => array('user_id' => $id)));
-                    if(!$reminder_count){
-                        fputcsv($fp,array($user['User']['id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
-                    }
-                }
+                
+                $reminder_count = $this->Reminder->find('count', array(
+                'conditions' => array('user_id' => $id)));
+                if(!$reminder_count){
+                	fputcsv($fp,array($user['User']['id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
+               	}
             }
     	}
     	fclose($fp);
+    	$this->autoRender = $this->autoLayout = false;
     }
 }
