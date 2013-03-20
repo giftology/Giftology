@@ -85,6 +85,7 @@ class UploadedProductCodesController extends AppController {
             	$csv_data[] = $new_array;
                 unset($new_arryay, $line_array);
         	}
+        	fclose($fp);
         	$results = $this->UploadedProductCode->saveMany($csv_data);
         	//echo debug($results);
 		}
