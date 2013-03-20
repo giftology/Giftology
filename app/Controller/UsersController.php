@@ -232,7 +232,7 @@ class UsersController extends AppController {
 
         session_destroy();
         session_start();
-        $this->redirect("http://www.facebook.com");
+        /*$this->redirect("http://www.facebook.com");*/
         $this->layout = 'landing';
 	    $this->set('slidePlaySpeed', '8000');
         
