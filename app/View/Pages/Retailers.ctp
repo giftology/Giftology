@@ -122,7 +122,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
   
                    <p>Of course it does! Your brand gets massive visibility with high number of unique viewers of the brand. Increased goodwill among existing users and a huge potential to bring in new users!</p>
   
-                  <p><strong>Convinced?Learn how we can work together to help you increase sales with performance marketingby filling out the form below.</strong></p>
+                  <p><strong>Convinced? Learn how we can work together to help you increase sales with performance marketing by filling out the form below.</strong></p>
 
           </div>
         </div>
