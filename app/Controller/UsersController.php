@@ -319,10 +319,8 @@ class UsersController extends AppController {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
     }
-    function afterFacebookLogin($first_login) {
-        
-    if ($first_login) 
-        {
+    function afterFacebookLogin($first_login) {    
+        if ($first_login) {
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
@@ -335,7 +333,7 @@ class UsersController extends AppController {
         $reminderUpdateDate = $this->User->Reminders->find('first', array(
                 'conditions' => array('user_id' => $user['id'])));
 
-        $daysSinceUpdate =round ((strtotime(date('Y-m-d')) - strtotime($reminderUpdateDate['Reminders']['created']))/86400);
+        $daysSinceUpdate =round ((time() - strtotime($reminderUpdateDate['Reminders']['created']))/86400);
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
 	
