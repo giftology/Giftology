@@ -34,8 +34,10 @@ App::uses('CakeEmail', 'Network/Email');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class Retailerscontroller extends Controller {
+class Retailerscontroller extends AppController {
+  public $components = array('AboutUs');
   public $helpers = array('Minify.Minify');
+ 
 	/*public function beforeFilter(){
 		if ($this->Auth->user()) {
 	    // if a user is logged in
@@ -78,6 +80,14 @@ class Retailerscontroller extends Controller {
            //   $this->redirect(array('controller' => 'reminders' , 'action'='view_friends'));
 
    
-}
+    }
 
+
+
+  public function ws_about_us(){
+    $about_us_content=$this->AboutUs->about_us();
+    $this->set('about_us_content', $about_us_content);
+    $this->set('_serialize', array('about_us_content'));
+           // print_r(json_encode($arg));       
+  }
 }
