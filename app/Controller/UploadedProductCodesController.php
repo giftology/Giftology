@@ -79,13 +79,14 @@ class UploadedProductCodesController extends AppController {
 			while($line_array = fgetcsv($fp)) {
                 $new_array = array();
                 $new_array['product_id'] = $line_array[0];
-                $new_array['code'] = $line_array[1];
+                $new_array['code'] = trim($line_array[1]);
                 $new_array['value'] = $line_array[2];
                 $new_array['expiry'] = $line_array[3];
             	$csv_data[] = $new_array;
                 unset($new_arryay, $line_array);
         	}
         	fclose($fp);
+        	//var_dump($csv_data);
         	$results = $this->UploadedProductCode->saveMany($csv_data);
         	//echo debug($results);
 		}
