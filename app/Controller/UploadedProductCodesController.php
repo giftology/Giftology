@@ -69,10 +69,24 @@ class UploadedProductCodesController extends AppController {
 			}
 			$new_file_name = 'files/'.$this->request->data['UploadedProductCode']['product_id'].$this->request->data['UploadedProductCode']['upload']['name'];
 			copy($this->request->data['UploadedProductCode']['upload']['tmp_name'], $new_file_name);
-			$query = "load data local infile '".WWW_ROOT.'/'.$new_file_name."' into table uploaded_product_codes fields terminated by ',' lines terminated by '\n' (product_id, code, value, expiry);";
+			/*$query = "load data local infile '".WWW_ROOT.'/'.$new_file_name."' into table uploaded_product_codes fields terminated by ',' lines terminated by '\n' (product_id, code, value, expiry);";
 			echo debug($query);
 			$results = $this->UploadedProductCode->query($query);
-			echo debug($results);
+			echo debug($results);*/
+			$fp = fopen(WWW_ROOT.'/'.$new_file_name, 'r');
+            $new_array = NULL;
+            $line_array = NULL;
+			while($line_array = fgetcsv($fp)) {
+                $new_array = array();
+                $new_array['product_id'] = $line_array[0];
+                $new_array['code'] = $line_array[1];
+                $new_array['value'] = $line_array[2];
+                $new_array['expiry'] = $line_array[3];
+            	$csv_data[] = $new_array;
+                unset($new_arryay, $line_array);
+        	}
+        	$results = $this->UploadedProductCode->saveMany($csv_data);
+        	//echo debug($results);
 		}
 		$products = $this->UploadedProductCode->Product->find('list');
 		$this->set(compact('products'));
