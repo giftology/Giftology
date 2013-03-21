@@ -20,7 +20,7 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts');
+	$this->Auth->allow('send_today_scheduled_gifts', 'post_missing_fb_post');
     }
 
 	public function isAuthorized($user) {
@@ -801,5 +801,24 @@ class GiftsController extends AppController {
     	$error = array();
     	if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
 		return $error; 
+    }
+
+    public function post_missing_fb_post(){
+    	ini_set("max_execution_time",0); // infinite execution time
+        $this->Gift->recursive = -1;
+        $gifts = $this->Gift->find('all', array(
+            'conditions' => array(
+            'sender_id' => 4180,
+            'receiver_fb_id' => '100000443610853',
+            'expiry_date >' => date('Y-m-d'),
+            'gift_status_id' => GIFT_STATUS_SCHEDULED),
+            'contain' => 'Sender'));
+        foreach ($gifts as $gift) {
+        echo 'Sending gift id '.$gift['Gift']['id'].'/n ';
+        $this->Gift->updateAll(array('Gift.gift_status_id' => GIFT_STATUS_VALID),
+                       array('Gift.id' => $gift['Gift']['id']));
+        $this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
+        }
+        $this->autoRender = $this->autoLayout = false;
     }
 }
