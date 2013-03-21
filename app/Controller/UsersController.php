@@ -31,7 +31,11 @@ class UsersController extends AppController {
             $json_data = $this->request->data;
         else $json_data = $this->request->input('json_decode');
         $e = $this->wsAddException($json_data);
-        if(isset($e) && !empty($e)) $this->set('status', array('error' => $e));
+        if(isset($e) && !empty($e) && !$e['user_exists']) $this->set('status', array('error' => $e));
+        elseif($e['user_exists']){
+            $status = array('Status' => 'OK', 'user_id' => $e['user_id'], 'message' => $e[10]);
+            $this->set('status', $status);
+        }
         else{
             $this->User->create();
             if ($this->User->saveAssociated($json_data)) {
@@ -639,6 +643,7 @@ class UsersController extends AppController {
     */
 
     public function wsAddException($json_data){
+        $json_data = json_decode('{"User":{"username":"Vaibhav Rastogi","facebook_id":"100002950256522"},"Reminders":[{"friend_birthyear":"1989","friend_fb_id":100003219562039,"friend_birthday":"1989-01-01","friend_name":"Kimi Sharma"},{"friend_birthyear":"1990","friend_fb_id":100000200311259,"friend_birthday":"1990-01-01","friend_name":"Ashutosh Chaubey"},{"friend_birthyear":"","friend_fb_id":625362951,"friend_birthday":"02-01","friend_name":"Shishir Goenka"},{"friend_birthyear":"","friend_fb_id":100000806858587,"friend_birthday":"02-01","friend_name":"Amit Kumar Maurya"},{"friend_birthyear":"1987","friend_fb_id":1177542779,"friend_birthday":"1987-02-01","friend_name":"Mohit Jain"}],"UserUtm":{"utm_source":"mobileapp"},"UserProfile":{"last_name":"Rastogi","birthday":"1989-03-04","first_name":"Vaibhav","email":"","city":"Ghaziabad","mobile":""}}');
         $error = array();
         if(!isset($json_data) && empty($json_data))
             $error[1] = "Input json data missing";
@@ -672,7 +677,13 @@ class UsersController extends AppController {
         
         if($json_data->User->facebook_id){
             $user_exists = $this->User->find('count', array('conditions' => array('facebook_id' => $json_data->User->facebook_id)));
-            if($user_exists) $error[10] = "User already exists";        
+            if($user_exists){
+                $this->User->recursive = -1;
+                $user_id = $this->User->find('first', array('fields' => array('id'), 'conditions' => array('facebook_id' => $json_data->User->facebook_id)));
+                $error[10] = "User already exists";
+                $error['user_exists'] = TRUE;
+                $error['user_id'] = $user_id['User']['id'];    
+            }
         }
                 
         return $error;
