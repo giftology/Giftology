@@ -25,7 +25,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -173,7 +173,56 @@ class GiftsController extends AppController {
 		$this->Session->setFlash(__('Gift was not deleted'));
 		$this->redirect(array('action' => 'index'));exit();
 	}
+	public function send_campaign(){
+	//print_r($this->data['gifts']);die();
+
+		if(isset($this->data['chk1']))
+        {
+
+        	
+        	foreach($this->data['chk1'] as $camp_rec_id)
+        	{
+        		//print_r($camp_rec_id);die();
+            $receiver_fb_id=$camp_rec_id;
+            $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
+
+            if (!$receiver) 
+            {
+                //Create a User for the receiver            
+                /* Dont create User for receiver, just set the receiver_fb_id  */
+                $this->Gift->Receiver->create();
+                $data['Receiver']['facebook_id'] = $receiver_fb_id;
+                if (!$this->Gift->Receiver->save($data)) {
+                $this->Session->setFlash(__('Cant create new receipient. Gift not sent'));
+                return;
+                }
+                $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
+            }
+           
+             $vendor_id = $this->data['gifts']['vendor_id'];          
+            $sender_id = $this->Auth->user('id');
+            $receiver_fb_id = $receiver['User']['facebook_id'];
+            $product_id = $this->data['gifts']['product_id'];
+            $amount = $this->data['gifts']['contribution_amount']; 
+            $send_now = 1;
+            $reciever_email = "shubham150@gmail.com";
+            $gift_message = $this->data['gifts']['gift-message'];
+            $post_to_fb = "ture";
+            $reciever_name = "Shubham AGarwal";
+            $receiver_birthday = "";
+
+           
+            
+            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
+            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name); 
+            
+        }
+         $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$vendor_id));
+        }	
+
+	}
 	public function send() {
+		
 
 		if(isset($this->data['gifts']))
         {
@@ -257,7 +306,7 @@ class GiftsController extends AppController {
 	}
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $date_to_send = null,$reciever_name = null) {
-		   
+		  
 		$this->redirectIfNotAllowedToSend();
 		
 		$this->Gift->create();
@@ -347,8 +396,10 @@ class GiftsController extends AppController {
 			$this->Session->setFlash(__('Unable to send gift.  Try again'));
 			$this->redirect($this->referer);
 		}
-		if($this->params['ext'] != 'json')
+		
+		if($this->params['ext'] != 'json' && $this->action != 'send_campaign')
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+        
 	}
 
         function getCode($product, $gift_amount,$reciever_name,$receiver_fb_id,$receiver_birthday) {
@@ -394,6 +445,7 @@ class GiftsController extends AppController {
 	}
 
 	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
+	
 		$product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
 		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
