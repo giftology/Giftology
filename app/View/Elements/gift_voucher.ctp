@@ -14,8 +14,8 @@
                 <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>
                     <?= $product['Product']['min_price']; ?></center></div>
                 <div class="minus-plus">
-                        <button type="hidden" class="disabled minus"></button>
-                        <button type="hidden" class="plus"></button>
+                        <span type="hidden" class="disabled minus"></span>
+                        <span type="hidden" class="plus"></span>
                 </div>
             </div>
         <?php else: ?>
@@ -24,8 +24,8 @@
                     <div id="contrib-text"><center>You pay: <span id="WebRupee" class="WebRupee">Rs.</span></span>
                         <?= $product['Product']['min_price']; ?></center></div>
                     <div class="minus-plus">
-                            <button type="hidden" class="disabled minus"></button>
-                            <button type="hidden" class="disabled plus"></button>
+                            <span type="hidden" class="disabled minus"></span>
+                            <span type="hidden" class="disabled plus"></span>
                     </div>
                 </div>
             <?php endif; ?>

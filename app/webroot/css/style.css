@@ -1523,7 +1523,7 @@ ul.voucher-details li {
     background-position: -48px -144px;
     cursor: auto;
 }
-.minus-plus > button.minus, .minus-plus > button.plus {
+.minus-plus > span.minus, .minus-plus > span.plus {
     background-color: transparent;
     background-image: url("../img/minus-plus.png");
     background-repeat: no-repeat;
