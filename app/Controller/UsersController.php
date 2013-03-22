@@ -643,7 +643,6 @@ class UsersController extends AppController {
     */
 
     public function wsAddException($json_data){
-        $json_data = json_decode('{"User":{"username":"Vaibhav Rastogi","facebook_id":"100002950256522"},"Reminders":[{"friend_birthyear":"1989","friend_fb_id":100003219562039,"friend_birthday":"1989-01-01","friend_name":"Kimi Sharma"},{"friend_birthyear":"1990","friend_fb_id":100000200311259,"friend_birthday":"1990-01-01","friend_name":"Ashutosh Chaubey"},{"friend_birthyear":"","friend_fb_id":625362951,"friend_birthday":"02-01","friend_name":"Shishir Goenka"},{"friend_birthyear":"","friend_fb_id":100000806858587,"friend_birthday":"02-01","friend_name":"Amit Kumar Maurya"},{"friend_birthyear":"1987","friend_fb_id":1177542779,"friend_birthday":"1987-02-01","friend_name":"Mohit Jain"}],"UserUtm":{"utm_source":"mobileapp"},"UserProfile":{"last_name":"Rastogi","birthday":"1989-03-04","first_name":"Vaibhav","email":"","city":"Ghaziabad","mobile":""}}');
         $error = array();
         if(!isset($json_data) && empty($json_data))
             $error[1] = "Input json data missing";
