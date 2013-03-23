@@ -29,7 +29,7 @@ class CampaignsController extends AppController {
     		$this->Auth->allow('view_products');
 
 
-    	         } 
+    	         }
     }
 
 	public function isAuthorized($user) {
@@ -44,12 +44,13 @@ class CampaignsController extends AppController {
 		//print_r($vendor_id);die();
 		//$vendor_image=$this->Product->find('all', array('fields'=>array('Vendor.wide_image'),'conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
             
-             $this->set('campaign_id',$vendor_id);
-
+        $this->set('campaign_id',$vendor_id);
 		$this->layout = 'landing';
 		
 	}
 	public function view_products () {
+		$this->set('user', $this->Auth->user());
+        $this->set('facebook_user', $this->Connect->user());
 		$product_id = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
         
 

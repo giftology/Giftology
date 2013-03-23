@@ -6,7 +6,7 @@
                 </li>
                 <li class="breadcrumb">                   
                     <span class="left"></span>
-                    Share Surprise<span class="arrow"></span></a>
+                    Share! Surprise!<span class="arrow"></span></a>
                 </li>
                 <li>Send a gift</li>
             </ul>
