@@ -2502,3 +2502,25 @@ left: 750px;
 #bt_list3{left:0px;width:70px;height:66px;list-style: none;}
 #bt_list3{background:url('../img/btn.png') 0px 0px;}
 #bt_list3:hover{background: url('../img/btn.png') 0px -64px;}
+
+#searc_campaign {
+   float:left;
+   width: 300px;
+}
+#searc_campaign div.input.text {
+   float: left;
+   border: 1px solid #CCCCCC;
+   border-radius: 5px 5px 5px 5px;
+   margin-top: 1px;
+   width: 270px;
+   height: 30px;
+}
+#searc_campaign div.submit {
+   width:20px;
+   height:20px;
+   float: right;
+}
+#searc_campaign input {
+   border: none;
+   padding: 0px;
+}

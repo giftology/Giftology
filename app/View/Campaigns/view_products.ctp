@@ -39,12 +39,15 @@
             </a>
             <?php endforeach; ?>
         </div>-->
-            <div id='search_friend'  style="float:left;margin-left:2px">
+        <h3 class="line-header" style="margin-top:1px">
+            <span>Choose Friends</span>
+        </h3>
+            <div id='searc_campaign'  style="float:left;margin-left:2px">
                                 <?php echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
-                                <?php echo $this->Form->end(__('search_button_small.jpg')); ?>
+                               <!-- <?php echo $this->Form->end(__('search_button_small.jpg')); ?>-->
             </div>
-                <div id="pra" style="float:left;overflow-y:scroll;height:450px;margin-top:70px;margin-left:-170px">
+                <div id="pra" style="float:left;overflow-y:scroll;height:450px;margin-top:70px;margin-left:-310px">
 
                     <table style="width:300px" class="friend_result" cellpadding="0" cellspacing="0">
                            
@@ -53,9 +56,9 @@
                                 
                                     foreach ($data as $data): ?>
                                     <tr>
-                                    <td style="" class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/> 
+                                    <td style="" class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>" name="<?php echo $data['Reminder']['friend_name'];?>"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/> 
                                     <?php echo $data['Reminder']['friend_name']; ?></td>
-                                    <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_fb_id'];?>"></td>
+                                    <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
                                     </tr>
                                     <?php endforeach; ?>
                             </tbody>
@@ -93,7 +96,7 @@
            <div> -->
  <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
  
-         <div class="delivery-details" style="float:right">
+         <div class="delivery-details" style="float:left;margin-left:2px">
             <div class="delivery-message">
                      <!--<div class="greeting-bubble">
                         <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message1','label' => false,'div' => false,'placeholder' => "Write something nice ",'class'=>"gift-message", 'disabled' => 'disabled'))?>
@@ -169,13 +172,18 @@
     });
     $(document).ready(function(){
         $(".campaign_checkbox").click(function(){
-            //alert(this.id);
+            
             $('<input>').attr({
                     type: 'hidden',
                     id: this.id,
                     name: 'chk2['+this.id+']',
                     value: this.id,
             }).appendTo('#campaign');
+            var name=this.value;
+            var myTextArea = document.getElementById('text_message').getAttribute('placeholder');
+
+            var hello = $("#text_message").attr("placeholder", myTextArea +' '+ name).placeholder();
+            
             //$('.text_message1').val(this.text);
         });
 
