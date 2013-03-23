@@ -174,13 +174,14 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
-	//print_r($this->data['gifts']);die();
-
-		if(isset($this->data['chk1']))
+	//print_r($this->data);die();
+		
+		//DebugBreak();
+		if(isset($this->data['chk2']))
         {
 
         	
-        	foreach($this->data['chk1'] as $camp_rec_id)
+        	foreach($this->data['chk2'] as $camp_rec_id)
         	{
         		//print_r($camp_rec_id);die();
             $receiver_fb_id=$camp_rec_id;
@@ -205,16 +206,24 @@ class GiftsController extends AppController {
             $product_id = $this->data['gifts']['product_id'];
             $amount = $this->data['gifts']['contribution_amount']; 
             $send_now = 1;
-            $reciever_email = "shubham150@gmail.com";
+            $reciever_email = "";
             $gift_message = $this->data['gifts']['gift-message'];
             $post_to_fb = "ture";
-            $reciever_name = "Shubham AGarwal";
+            $reciever_name = "";
             $receiver_birthday = "";
-
+            $scheduled = false;
+            $date_to_schedule = null;
+            if(date('Y-m-d') != '2013-03-25' || date('Y-m-d') != '2013-03-26'){
+            	$scheduled = true;
+                if(date('Y-m-d') != '2013-03-26')
+            	    $date_to_schedule = '2013-03-25';
+                else $date_to_schedule = '2013-03-26'; 
+            }
+            else $date_to_schedule = date('Y-m-d'); 
            
-            
+           	//DebugBreak();
             $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
-            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name); 
+            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$date_to_schedule, $reciever_name, $scheduled, $date_to_schedule); 
             
         }
          $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$vendor_id));
@@ -305,8 +314,8 @@ class GiftsController extends AppController {
         }
 	}
 
-	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $date_to_send = null,$reciever_name = null) {
-		  
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $date_to_send = null,$reciever_name = null, $scheduled_for_campaign = null, $date_to_schedule) {
+	
 		$this->redirectIfNotAllowedToSend();
 		
 		$this->Gift->create();
@@ -371,7 +380,11 @@ class GiftsController extends AppController {
 			$gift['Gift']['gift_status_id'] = GIFT_STATUS_TRANSACTION_PENDING;
 		} else {
 			if ($send_now) {
-				$gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
+				if($scheduled_for_campaign){
+					$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
+					$gift['Gift']['date_to_send'] = $date_to_schedule;
+				}
+				else $gift['Gift']['gift_status_id'] = GIFT_STATUS_VALID;
 			} else {
 				$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
 			}

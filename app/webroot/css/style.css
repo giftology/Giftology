@@ -2180,6 +2180,16 @@ p.error em {
     margin-top: 285px;
 }
 
+.friend-picker input {
+  background-image: url("https://d3vp9zdgypbf1g.cloudfront.net/assets/search-8fcfa1c3b306799954961bdbc409175a.gif");
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  margin-bottom: 20px;
+  padding-left: 45px;
+  width: 450px;
+}
+
 /* for footer by-swapnil*/
 
 

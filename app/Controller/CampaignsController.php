@@ -63,7 +63,7 @@ class CampaignsController extends AppController {
           // 'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
         
             $proddd=$this->Product->find('all', array('conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
-             $friend_list=$this->Reminder->find('all', array('limit'=>15,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
+             $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
              $this->set('data',$friend_list);
 
             //print_r($friend_list)  ;die();
