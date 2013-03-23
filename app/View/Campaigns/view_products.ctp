@@ -45,7 +45,7 @@
             <div id='searc_campaign'  style="float:left;margin-left:2px">
                                 <?php echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
-                               <!-- <?php echo $this->Form->end(__('search_button_small.jpg')); ?>-->
+                               <?php echo $this->Form->end(); ?>
             </div>
                 <div id="pra" style="float:left;overflow-y:scroll;height:450px;margin-top:70px;margin-left:-310px">
 
@@ -94,15 +94,11 @@
            <br><br><br><br>
        <!--</div>
            <div> -->
- <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
- 
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
          <div class="delivery-details" style="float:left;margin-left:2px">
             <div class="delivery-message">
-                     <!--<div class="greeting-bubble">
-                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message1','label' => false,'div' => false,'placeholder' => "Write something nice ",'class'=>"gift-message", 'disabled' => 'disabled'))?>
-                    </div><br>-->
                     <div class="greeting-bubble">
-                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice ",'class'=>"gift-message" ))?>
+                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
                     </div>
                     <div class="shadow-wrapper">
                         <div class="frame">
@@ -121,11 +117,10 @@
                         <h5 style="color:#FF0000">*please enter the message.</h5>
                     </div>
             </div>
-                    <?php  echo $this->Form->Submit(__('Send'), array('id'=>'form_shipping'));?>  
-          
+            <div class="parent_submit">
+            <?php  echo $this->Form->Submit(__('Send'), array('id'=>'form_shipping'));?>
+            </div>      
     </div> 
-        
-
 
     <script type="text/javascript">
 
@@ -176,7 +171,6 @@
                             }
                         }
                         $('.campaign_checkbox').show();
-                        //alert(new_row); tobnd("tr:last"));
                     }
                 });
             },1000);   
@@ -195,19 +189,9 @@
             var myTextArea = document.getElementById('text_message').getAttribute('placeholder');
 
             var hello = $("#text_message").attr("placeholder", myTextArea +' '+ name).placeholder();
-            
-            //$('.text_message1').val(this.text);
         });
+    });
 
-
-    /*$('<input>').attr({
-        type: 'hidden',
-        id: this.id,
-        name: 'chk2['+this.value()+']',
-        value: 'chk',
-}).appendTo('#campaign');*/
- });
-
- $('.campaign_checkbox').show();
-</script>
+    $('.campaign_checkbox').show();
+    </script>
     

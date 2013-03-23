@@ -39,9 +39,8 @@ class CampaignsController extends AppController {
 	    return parent::isAuthorized($user);
 	}
 	public function index() {
-		//DebugBreak();
         $this->Product->recursive=-2;
-		$vendor_id = $_GET["vendor_id"];
+		$vendor_id = $_GET["product_id"];
 		//print_r($vendor_id);die();
 		//$vendor_image=$this->Product->find('all', array('fields'=>array('Vendor.wide_image'),'conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
             
@@ -51,9 +50,7 @@ class CampaignsController extends AppController {
 		
 	}
 	public function view_products () {
-
-		//DebugBreak();
-		$vendor_id = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
+		$product_id = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
         
 
        // $product_array = $this->Product->Vendor->find('all',array('conditions' => array('Vendor.id' => "1")));
@@ -62,7 +59,7 @@ class CampaignsController extends AppController {
        //$this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'), 
           // 'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
         
-            $proddd=$this->Product->find('all', array('conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
+            $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
              $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
              $this->set('data',$friend_list);
 
@@ -102,9 +99,7 @@ array (
 	
 	}
 
-	public function view_product($id=1) {
-		
-
+	public function view_product($id) {
 		$this->Product->id = $id;
 		if (!$this->Product->exists()) {
 			throw new NotFoundException(__('Invalid product'));
