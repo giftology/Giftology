@@ -42,7 +42,7 @@
         <h3 class="line-header" style="margin-top:1px">
             <span>Choose Friends</span>
         </h3>
-            <div id='searc_campaign'  style="float:left;margin-left:2px">
+            <div id='searc_campaign'>
                                 <?php echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
                                <?php echo $this->Form->end(); ?>

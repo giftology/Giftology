@@ -2523,4 +2523,6 @@ left: 750px;
 #searc_campaign input {
    border: none;
    padding: 0px;
+   width:270px;
+   height: 30px;
 }
