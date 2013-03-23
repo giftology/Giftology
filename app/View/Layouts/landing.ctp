@@ -125,7 +125,7 @@ $url = $_SERVER["REQUEST_URI"];
                                      </ul>
                                     
                               <?php   } }
-                              else echo ;
+                              else echo null;
 
                           
                         else : ?>
