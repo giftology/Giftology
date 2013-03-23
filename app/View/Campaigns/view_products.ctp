@@ -55,8 +55,8 @@
                                 <?php
                                 
                                     foreach ($data as $data): ?>
-                                    <tr>
-                                    <td style="" class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>" name="<?php echo $data['Reminder']['friend_name'];?>"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/> 
+                                    <tr class="friends">
+                                    <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/> 
                                     <?php echo $data['Reminder']['friend_name']; ?></td>
                                     <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
                                     </tr>
@@ -144,35 +144,47 @@
 
     <script type='text/javascript'>
     $(document).ready(function(){
-        $('input').keyup(function() {
+        var delay = (function(){
+          var timer = 0;
+          return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+          };
+        })();
+        $('#CampaignsFriendName').keyup(function() {
         // interrupt form submission
-            //var key_value = this.value;
-            $.ajax({
-                type: "POST",
-                dataType: 'html',
-                async: false,
-                url: "/campaigns/search_friend",
-                data: "search_key="+this.value,
-                success: function(data) {
-                    //alert(data);
-                    var res_data = jQuery.parseJSON(data);;
-                    var count = res_data.length;
-                    var new_row = '';
-                    for(var i = 0; i < count; i++){
-                        check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
-                        if(!check){
-                            new_row = "<tr><td><input c;ass='campaign_checkbox' type='checkbox' name='chk1[]' id='"+res_data[i]["Reminder"]["friend_fb_id"]+"' value='"+res_data[i]["Reminder"]["friend_fb_id"]+"'  >"+res_data[i]["Reminder"]["friend_name"]+"</td></tr>";
-                            $('.friend_result > tbody:last').last().append(new_row);
+            var key_value = this.value;
+            delay(function(){
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/campaigns/search_friend",
+                    data: "search_key="+key_value,
+                    success: function(data) {
+                        //alert(data);
+                        var res_data = jQuery.parseJSON(data);;
+                        var count = res_data.length;
+                        var new_row = '';
+                        $('.friends').empty();
+                        for(var i = 0; i < count; i++){
+                            check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
+                            if(!check){
+                                new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
+                                
+                                $('.friend_result').append(new_row);
+                            }
                         }
+                        $('.campaign_checkbox').show();
+                        //alert(new_row); tobnd("tr:last"));
                     }
-                    //alert(new_row); tobnd("tr:last"));
-                }
-            });
+                });
+            },1000);   
         });
     });
     $(document).ready(function(){
-        $(".campaign_checkbox").click(function(){
-            
+        $(".campaign_checkbox").live("click", function(){
+            //alert('alok');
             $('<input>').attr({
                     type: 'hidden',
                     id: this.id,
