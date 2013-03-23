@@ -125,7 +125,7 @@ $url = $_SERVER["REQUEST_URI"];
                                      </ul>
                                     
                               <?php   } }
-                              else echo 0;
+                              else echo ;
 
                           
                         else : ?>
@@ -133,15 +133,15 @@ $url = $_SERVER["REQUEST_URI"];
                           <li style="display: list-item;">
                           <img src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
-                         </ul>} 
+                         </ul>
               <?php endif;  ?>
         </div>
       </section>
 
-     <?php if(isset($campaign_Images)): ?>
+     <!--<?php if(isset($campaign_Images)): ?>
          <section class="show-case">
         <div class="showcase-wrap"><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$campaign_Images['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div></section>
-      <?php else: ?>
+      <?php else: ?>-->
       
      <section class="show-case">
         <div class="showcase-wrap">
@@ -174,7 +174,7 @@ $url = $_SERVER["REQUEST_URI"];
           </div>
         </div>
     </section>
-   <?php endif; ?>
+   <!--<?php endif; ?>-->
          <section class="content-wrap">
             <div class="content-region">
                 <span class="block-title">See how it works</span>
