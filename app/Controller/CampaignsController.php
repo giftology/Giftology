@@ -32,13 +32,13 @@ class CampaignsController extends AppController {
 	    }
 	    return parent::isAuthorized($user);
 	}
-	public function index() {
-        $this->Product->recursive=-2;
-		$vendor_id = $_GET["product_id"];
+	public function index($product_id) {
+        //$this->Product->recursive=-2;
+		//$vendor_id = $_GET["product_id"];
 		//print_r($vendor_id);die();
 		//$vendor_image=$this->Product->find('all', array('fields'=>array('Vendor.wide_image'),'conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
             
-        $this->set('campaign_id',$vendor_id);
+        $this->set('campaign_id',$product_id);
         session_start();
 		//$this->layout = 'landing';
 		$this->render(false, 'landing');
