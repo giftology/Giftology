@@ -20,7 +20,7 @@ class CampaignsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if($this->params['controller']=='campaigns'){
-    		$this->Auth->allow('index');
+    		$this->Auth->allow('index','view_products');
 
 
     	         }
