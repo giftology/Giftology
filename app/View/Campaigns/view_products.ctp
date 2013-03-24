@@ -163,9 +163,12 @@
                         var new_row = '';
                         $('.friends').empty();
                         for(var i = 0; i < count; i++){
-                            check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
+                            var check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
                             if(!check){
-                                new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
+                                if($("#"+res_data[i]["Reminder"]["friend_fb_id"]+"_hidden").is( "*" ))
+                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'" checked="checked"></td></tr>';
+
+                                else new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
                                 
                                 $('.friend_result').append(new_row);
                             }
@@ -177,21 +180,52 @@
         });
     });
     $(document).ready(function(){
+        var count_friend = 0;
+        var names = new Object();
         $(".campaign_checkbox").live("click", function(){
-            //alert('alok');
-            $('<input>').attr({
+            var key_value = this.id;
+            //alert($(".campaign_checkbox").is(":checked"));
+            //if($(".campaign_checkbox").is(':checked')){
+            if ($(this).prop('checked')==true){
+                count_friend = count_friend + 1;
+                if(count_friend > 10){
+                    count_friend = count_friend - 1;
+                    alert('You can select only max 10');
+                    $(this).attr('checked', false);
+                    return;
+                }
+                
+                $('<input>').attr({
                     type: 'hidden',
-                    id: this.id,
+                    id: this.id+'_hidden',
                     name: 'chk2['+this.id+']',
                     value: this.id,
-            }).appendTo('#campaign');
-            var name=this.value;
-            var myTextArea = document.getElementById('text_message').getAttribute('placeholder');
+                }).appendTo('#campaign');
+                names[key_value] = this.value;
+                //alert(names[key_value]);
+                //var name=this.value;
+                //var myTextArea = document.getElementById('text_message').getAttribute('placeholder');
 
-            var hello = $("#text_message").attr("placeholder", myTextArea +' '+ name).placeholder();
+                //var hello = $("#text_message").attr("placeholder", myTextArea +' '+ name).placeholder();
+            }
+            else{
+                $(this).attr('checked', false);
+                count_friend = count_friend - 1;
+                if($("#"+this.id+"_hidden").is( "*" )) $("#"+this.id+"_hidden").remove();
+                delete names[key_value];
+            }
+
+            var placeholder_message = "Write something nice to";
+            if(count_friend > 0)
+                placeholder_message = placeholder_message+ " selected "+ count_friend + " friends : ";
+
+            for (var i in names) {
+               placeholder_message = placeholder_message + " " + names[i];         
+            }
+
+            $("#text_message").attr("placeholder", placeholder_message).placeholder(); 
         });
     });
 
     $('.campaign_checkbox').show();
     </script>
-    
