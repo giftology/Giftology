@@ -34,7 +34,7 @@
         </div>
         <div id="gift-redemption-details">
             <div id="redemption-code-title">Redemption Code</div>
-            <div id="redemption-code"><?= $gift['Gift']['code']; ?></div>
+            <div id="redemption-code"><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></div>
             <div style="float:right;margin-top:40px;margin-left:200px">
                 <a href="<?= $this->Html->url(array('controller'=>'gifts',
                                                       'action'=>'print_pdf',

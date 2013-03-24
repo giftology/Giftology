@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
 
     public $components = array('Giftology', 'CCAvenue');
     public $paginate = array(
@@ -595,6 +595,7 @@ class GiftsController extends AppController {
 			throw new NotFoundException(__('Invalid gift'));
 		}
 	        $this->Gift->Behaviors->attach('Containable');
+	    
 		$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
@@ -607,7 +608,14 @@ class GiftsController extends AppController {
                 array('gift_open' => 1,'gift_open_date' => $redeem_date), 
                 array('Gift.id'=>$id));*/
 		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
-		$this->set('gift', $gift);	
+		$this->UploadedProductCode->recursive = -2;
+		$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+			'UploadedProductCode.code' => $gift['Gift']['code']
+			)
+		));
+		$this->set('gift', $gift);
+		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 	public function view_gifts() {
        
