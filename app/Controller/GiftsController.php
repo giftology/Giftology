@@ -212,13 +212,18 @@ class GiftsController extends AppController {
             $receiver_birthday = "";
             $scheduled = false;
             $date_to_schedule = null;
-            if(date('Y-m-d') != '2013-03-25' || date('Y-m-d') != '2013-03-26'){
+            $date_diff1 = strtotime(date('Y-m-d')) - strtotime('2013-03-25');
+            $date_diff2 = strtotime('2013-03-26') - strtotime(date('Y-m-d'));
+            if($date_diff1 < 0){
             	$send_now = 0;
-                if(date('Y-m-d') != '2013-03-26')
-            	    $date_to_schedule = '2013-03-25';
-                else $date_to_schedule = '2013-03-26'; 
+                $date_to_schedule = '2013-03-25';
             }
-            else $date_to_schedule = date('Y-m-d');
+
+            if($date_diff1 > 0 && $date_diff2 > 0)
+            	 $date_to_schedule = '2013-03-25';
+
+            if($date_diff2 <= 0)
+            	$date_to_schedule = date('Y-m-d');
            
             $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
             $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
