@@ -138,15 +138,15 @@ $url = $_SERVER["REQUEST_URI"];
         </div>
       </section>
 
-     <!--<?php if(isset($campaign_Images)): ?>
+     <!--<?php //if(isset($campaign_Images)): ?>
          <section class="show-case">
         <div class="showcase-wrap"><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$campaign_Images['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div></section>
-      <?php else: ?>-->
+      <?php //else: ?>-->
       
      <section class="show-case">
         <div class="showcase-wrap">
            <div id="giftVouchers">
-            <?php if(CAROUSEL_CODE == 1): ?>
+            <?php if(CAROUSEL_CODE == 1 && !$campaign_id): ?>
                 <?php
                       if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
                          {
@@ -164,17 +164,19 @@ $url = $_SERVER["REQUEST_URI"];
                 ?>
             <?php else: ?>
                   <?php
+                  if(!$campaign_id){
                       foreach($Images as $Image)
                           { ?>
                               <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div>
 
                                       <?php   }
+                  }
                       ?>
             <?php endif; ?>
           </div>
         </div>
     </section>
-   <!--<?php endif; ?>-->
+   <!--<?php //endif; ?>-->
          <section class="content-wrap">
             <div class="content-region">
                 <span class="block-title">See how it works</span>

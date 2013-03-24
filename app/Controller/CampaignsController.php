@@ -19,14 +19,8 @@ class CampaignsController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_product_expiry_reminder');
 		if($this->params['controller']=='campaigns'){
     		$this->Auth->allow('index');
-
-
-    	         } 
-    	         if($this->params['controller']=='campaigns'){
-    		$this->Auth->allow('view_products');
 
 
     	         }
@@ -45,8 +39,8 @@ class CampaignsController extends AppController {
 		//$vendor_image=$this->Product->find('all', array('fields'=>array('Vendor.wide_image'),'conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
             
         $this->set('campaign_id',$vendor_id);
+        session_start();
 		$this->layout = 'landing';
-		
 	}
 	public function view_products () {
 		$this->set('user', $this->Auth->user());
