@@ -82,6 +82,7 @@ class UploadedProductCodesController extends AppController {
                 $new_array['code'] = trim($line_array[1]);
                 $new_array['value'] = $line_array[2];
                 $new_array['expiry'] = $line_array[3];
+                if(count($line_array) == "5") $new_array['pin'] = $line_array[4];
             	$csv_data[] = $new_array;
                 unset($new_arryay, $line_array);
         	}
