@@ -80,8 +80,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+          <?php if(!$campaign_id): ?>
          <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
-         
+         <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
     $("#fb").click(function(){
@@ -146,7 +147,7 @@ $url = $_SERVER["REQUEST_URI"];
      <section class="show-case">
         <div class="showcase-wrap">
            <div id="giftVouchers">
-            <?php if(CAROUSEL_CODE == 1 && !$campaign_id): ?>
+            <?php if(CAROUSEL_CODE == 1): ?>
                 <?php
                       if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
                          {
@@ -164,13 +165,11 @@ $url = $_SERVER["REQUEST_URI"];
                 ?>
             <?php else: ?>
                   <?php
-                  if(!$campaign_id){
                       foreach($Images as $Image)
                           { ?>
                               <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div>
 
                                       <?php   }
-                  }
                       ?>
             <?php endif; ?>
           </div>
@@ -384,5 +383,9 @@ $url = $_SERVER["REQUEST_URI"];
 })();
   </script> 
  <?php echo $this->Mixpanel->embed(); ?>
-
+<?php if($campaign_id):?>
+  <!--<script type="text/javascript">
+    $('.show-case').hide();
+  </script>-->
+<?php endif ?>
 </body></html>

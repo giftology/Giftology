@@ -40,7 +40,8 @@ class CampaignsController extends AppController {
             
         $this->set('campaign_id',$vendor_id);
         session_start();
-		$this->layout = 'landing';
+		//$this->layout = 'landing';
+		$this->render(false, 'landing');
 	}
 	public function view_products () {
 		$this->set('user', $this->Auth->user());
