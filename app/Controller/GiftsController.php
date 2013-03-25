@@ -174,6 +174,7 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
+		DebugBreak();
 	//print_r($this->data);die();
 		
 		if(isset($this->data['chk2']))
@@ -700,6 +701,7 @@ class GiftsController extends AppController {
 	
     public function print_pdf($id) 
     { 
+    	DebugBreak();
     	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
@@ -708,6 +710,12 @@ class GiftsController extends AppController {
     	//print_r($gift['Product']['redeem_instr']);
     	//die();
     	$this->set('gift', $gift);
+    	$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+			'UploadedProductCode.code' => $gift['Gift']['code']
+			)
+		));
+		$this->set('pin', $pin['UploadedProductCode']['pin']);
     	
     	Configure::write('debug',0); //
 		$this->layout = 'pdf'; //this will use the pdf.ctp layout
