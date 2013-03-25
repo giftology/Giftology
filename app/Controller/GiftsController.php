@@ -174,7 +174,7 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
-		DebugBreak();
+		
 	//print_r($this->data);die();
 		
 		if(isset($this->data['chk2']))
