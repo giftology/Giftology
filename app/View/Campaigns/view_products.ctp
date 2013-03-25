@@ -132,7 +132,7 @@
                 }
                 else{
                     $("#error_text").hide();
-                    $(this).attr('disabled', true);
+                    
                 }
             });
         });
