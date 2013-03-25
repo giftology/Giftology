@@ -17,7 +17,7 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['0']['Product']['min_value']?> voucher </h5>
+                <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value']?> voucher </h5>
             </div>
             <div class="image-container">
                 <div class="polaroid"><!--<?= $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?>--><img  src="<?= IMAGE_ROOT; ?>Holi-New-290x200pxl.jpg"></div>
@@ -71,7 +71,7 @@
                 <div class="disclosure opened">
                         <p class="heading">Terms and conditions</p>
                         <div class="wrapper" style="height: 0px;">
-                                <p class="content shown"><?= $product['Product']['terms']; ?></p>
+                                <p class="content shown"><?= $products['Product']['terms']; ?></p>
                         </div>
                         <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                 <span class="arrow"></span>
@@ -81,9 +81,9 @@
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
                     <div class="disclosure opened">
-                            <p class="heading">About <?= $product['Vendor']['name']; ?></p>
+                            <p class="heading">About <?= $products['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown"><?= $product['Vendor']['description']; ?></p>
+                                    <p class="content shown"><?= $products['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
@@ -109,9 +109,9 @@
                         </div>
                     </div>
                 
-                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$product['Product']['min_value'] ))?></div>
-                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['id'] ))?></div>
-                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['vendor_id'] ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$products['Product']['min_value'] ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$products['Product']['id'] ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$products['Product']['vendor_id'] ))?></div>
                     <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>$data['Reminder']['friend_name'] ))?></div>
                      <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
                         <h5 style="color:#FF0000">*please enter the message.</h5>
@@ -182,7 +182,7 @@
     $(document).ready(function(){
         var count_friend = 0;
         var names = new Object();
-        $(".campaign_checkbox").on("click", function(){
+        $(".campaign_checkbox").live("click", function(){
             var key_value = this.id;
             //alert($(".campaign_checkbox").is(":checked"));
             //if($(".campaign_checkbox").is(':checked')){

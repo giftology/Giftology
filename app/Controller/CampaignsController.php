@@ -47,52 +47,12 @@ class CampaignsController extends AppController {
 		$this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
 		$product_id = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
-        
-
-       // $product_array = $this->Product->Vendor->find('all',array('conditions' => array('Vendor.id' => "1")));
-        
-        
-       //$this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'), 
-          // 'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        
-            $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
-             $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
-             $this->set('data',$friend_list);
-
-            //print_r($friend_list)  ;die();
-             $this->set('products',$proddd);
-           
-		if ($this->request->is('post')) {
-			//DebugBreak();
-                        $proddd=$this->Product->find('all', array('conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
-   $friend_list=$this->Reminder->find('all',array('conditions' =>
-array (
-    'Reminder.user_id' => $this->Auth->user('id'),
-    
-        'Reminder.friend_name LIKE' => $this->request->data['Campaigns']['friend_name']."%"
-   
-)
-			            	));
-			
-			           // $friend_list=$this->Reminder->find("all",array('condition'=>array('friend_name LIKE'=>$this->request->data['Campaigns']['friend_name']."%",'Reminder.user_id' => $this->Auth->user('id'))));
-			            $this->set('data',$friend_list);
-			            $this->set('products',$proddd);
-
-		} 
-            //$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
-           /* $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
-            $this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
-            $this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
-            //$this->set('products', $this->paginate());*/
-           // $this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
-           // $this->Mixpanel->track('Viewing Product List ', array(
-             //   'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
-               // $this->request->params['named']['receiver_name'] : null,
-            //));
-            
-    
-	
+        $this->Product->recursive = -2;
+        $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
+        $this->Reminder->recursive = -1;
+        $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
+        $this->set('data',$friend_list);
+        $this->set('products',$proddd);
 	}
 
 	public function view_product($id) {
@@ -107,8 +67,6 @@ array (
 		        $this->request->params['named']['receiver_name'] : null,
 		    'ProductId' => $id
 			));
-
-
 	}
     
     public function search_friend(){

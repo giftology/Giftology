@@ -219,7 +219,7 @@ class GiftsController extends AppController {
                 $date_to_schedule = '2013-03-25';
             }
 
-            if($date_diff1 > 0 && $date_diff2 > 0)
+            if($date_diff1 >= 0 && $date_diff2 > 0)
             	 $date_to_schedule = '2013-03-25';
 
             if($date_diff2 <= 0)
@@ -340,6 +340,8 @@ class GiftsController extends AppController {
 		}
 		$gift['Gift']['post_to_fb'] = $post_to_fb;
 		$gift['Gift']['receiver_fb_id'] = $receiver_fb_id;
+
+		//$gift_check = 
 		
 		$receiver = $this->Gift->User->find('first', array('fields' => array('User.id'), 'conditions' => array('User.facebook_id' => $receiver_fb_id)));
 		
