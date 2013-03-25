@@ -723,15 +723,15 @@ class GiftsController extends AppController {
 
     } 
 
-    public function sms($id) 
+    public function sms($id,$pin) 
     { 
-    	
-    	$gift = $this->Gift->find('first', array(
+     $gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
     	$this->set('gift', $gift);
+    	$this->set('pin',$pin);
     	
     } 
     public function send_sms(){
