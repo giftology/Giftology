@@ -28,6 +28,7 @@
 	</div>
 	<div class="dash"style="border:1px dotted ;margin-top:25px"></div>
 	<div id="" style="margin-left:50px;margin-top:25px;width:400px"><b>Giftology code : <?=$gift['Gift']['code']; ?></b></div>
+	<div id="" style="margin-left:50px;margin-top:25px;width:400px"><b><?php if($pin) echo "PIN: ".$pin;?></b></div>
 	<div id="" style="margin-left:50px;margin-top:25px;width:400px"><b>Valid from : <?= substr($gift['Gift']['created'], 0, -8); ?> to <?=$gift['Gift']['expiry_date']; ?> </b></div>
 
 	<div class="dash"style="border:1px dotted ;margin-top:25px"></div>

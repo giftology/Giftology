@@ -42,7 +42,7 @@
                     <?php if($gift['Gift']['sms']=="0"){?>
                     <a href="<?= $this->Html->url(array('controller'=>'gifts',
                                                       'action'=>'sms',
-                    $gift['Gift']['id'])); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
+                    $gift['Gift']['id'],$pin)); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
                     
                     <?php } ?>
             </div>

@@ -29,11 +29,13 @@ return false; }
       
  <div style="margin-top:100px">
  	<center>
-           <?php //DebugBreak();
-
+           <?php 
+            $pin;
 			$originalDate = $gift['Gift']['expiry_date'];
 			$newDate = date("d-m-Y", strtotime($originalDate));
-           $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] ." valid upto ".$newDate.". Pls show SMS prior to billing";
+            if($pin)
+                $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin." valid upto ".$newDate.". Pls show SMS prior to billing";
+            else $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing";
            
              echo $this->Form->create('gifts', array('action' => 'send_sms'));
             
