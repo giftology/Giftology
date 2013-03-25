@@ -100,4 +100,23 @@ class UserProfilesController extends AppController {
 		$this->Session->setFlash(__('User profile was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+	public function users_email_list(){
+        ini_set("max_execution_time",0);
+        $this->UserProfile->recursive = -1;
+        $users = $this->UserProfile->find('all', 
+            array(
+                'order' => array('user_id' => 'ASC')
+            ));
+        $fp = fopen(ROOT.'/app/tmp/users_email_list.csv', 'a+');
+        foreach($users as $user){
+            set_time_limit(300);
+            if($user['UserProfile']['email'] && $user['UserProfile']['email_unsubscribed']!=1){
+                fputcsv($fp,array($user['UserProfile']['user_id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
+            }
+        }
+        fclose($fp);
+        echo "Successfully downloaded users email list";
+        $this->autoRender = $this->autoLayout = false;
+    }
 }
