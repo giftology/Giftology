@@ -46,11 +46,6 @@ class AppController extends Controller {
                             'RequestHandler', 'Cookie');
 
     function beforeFilter() {
-    	if($this->params['controller']=='retailers'){
-    		$this->Auth->allow('retailer_mail');
-
-
-    	         } 
 
 	if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
 	    isset($this->params->query['rand']) && isset($this->params->query['key'])) {
