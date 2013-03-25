@@ -2520,7 +2520,13 @@ left: 750px;
    height:20px;
    float: right;
 }
-#searc_campaign input {
+#searc_campaign #friend_search {
+   border: none;
+   padding: 0px;
+   width:30px;
+   height: 30px;
+}
+#searc_campaign #friend_name {
    border: none;
    padding: 0px;
    width:270px;
