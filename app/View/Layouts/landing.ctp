@@ -80,9 +80,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
-          <?php //if(!$campaign_id): ?>
+          <?php if(!$campaign_id): ?>
          <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
-         <?php //endif; ?>
+         <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
     $("#fb").click(function(){
@@ -112,7 +112,7 @@ $url = $_SERVER["REQUEST_URI"];
     <section class="slider">
         <div class="flexslider">
           <?php
-            if(isset($campaign_id) && false): ?>
+            if(isset($campaign_id)): ?>
           <?php 
                       if (glob("img/campaign/$campaign_id*.{jpg,png}",GLOB_BRACE) != false)
                          {
