@@ -701,7 +701,7 @@ class GiftsController extends AppController {
 	
     public function print_pdf($id) 
     { 
-    	DebugBreak();
+    	
     	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
