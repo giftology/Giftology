@@ -73,7 +73,7 @@ class CampaignsController extends AppController {
         if($this->RequestHandler->isAjax()) {
         	 $friend_list=$this->Reminder->find('all',array('conditions' =>array (
     'Reminder.user_id' => $this->Auth->user('id'),
-    'Reminder.friend_name LIKE ' => $this->request->data['search_key'].'%'
+    'Reminder.friend_name LIKE' => "%".$this->request->data['search_key']."%"
    )));
 			
 		//$this->set('data',$friend_list);

@@ -43,9 +43,9 @@
             <span>Choose Friends</span>
         </h3>
             <div id='searc_campaign'>
-                                <?php echo $this->Form->create('Campaigns'); ?>
+                                <?php //echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
-                               <?php echo $this->Form->end(); ?>
+                               <?php echo $this->Form->Submit(__('search_button_small.jpg'), array('id'=>'friend_search')); ?>
             </div>
                 <div id="pra" style="float:left;overflow-y:scroll;height:450px;margin-top:70px;margin-left:-310px">
 
@@ -147,7 +147,7 @@
             timer = setTimeout(callback, ms);
           };
         })();
-        $('#CampaignsFriendName').keyup(function() {
+        $('#friend_name').keyup(function() {
         // interrupt form submission
             var key_value = this.value;
             delay(function(){
@@ -179,6 +179,37 @@
                 });
             },1000);   
         });
+
+        $('#friend_search').click(function() {
+        // interrupt form submission
+            var key_value = $("#friend_name").val();
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/campaigns/search_friend",
+                    data: "search_key="+key_value,
+                    success: function(data) {
+                        //alert(data);
+                        var res_data = jQuery.parseJSON(data);;
+                        var count = res_data.length;
+                        var new_row = '';
+                        $('.friends').empty();
+                        for(var i = 0; i < count; i++){
+                            var check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
+                            if(!check){
+                                if($("#"+res_data[i]["Reminder"]["friend_fb_id"]+"_hidden").is( "*" ))
+                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'" checked="checked"></td></tr>';
+
+                                else new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
+                                
+                                $('.friend_result').append(new_row);
+                            }
+                        }
+                        $('.campaign_checkbox').show();
+                    }
+                });   
+        });        
     });
     $(document).ready(function(){
         var count_friend = 0;
