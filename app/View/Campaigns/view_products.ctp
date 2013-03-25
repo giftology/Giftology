@@ -182,7 +182,7 @@
     $(document).ready(function(){
         var count_friend = 0;
         var names = new Object();
-        $(".campaign_checkbox").live("click", function(){
+        $(".campaign_checkbox").on("click", function(){
             var key_value = this.id;
             //alert($(".campaign_checkbox").is(":checked"));
             //if($(".campaign_checkbox").is(':checked')){
