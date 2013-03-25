@@ -54,7 +54,7 @@ class Retailerscontroller extends AppController {
 	public function retailer_mail(){
    
    
-        $email = new CakeEmail();
+        /*$email = new CakeEmail();
     
         $email->config('smtp')
 
@@ -78,7 +78,7 @@ class Retailerscontroller extends AppController {
               
               $this->Session->setFlash('Your message has been sent');
            //   $this->redirect(array('controller' => 'reminders' , 'action'='view_friends'));
-
+        */
    
     }
 
