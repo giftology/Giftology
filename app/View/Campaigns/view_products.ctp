@@ -132,6 +132,7 @@
                 }
                 else{
                     $("#error_text").hide();
+                    $(this).attr('disabled', true);
                 }
             });
         });
@@ -188,9 +189,9 @@
             //if($(".campaign_checkbox").is(':checked')){
             if ($(this).prop('checked')==true){
                 count_friend = count_friend + 1;
-                if(count_friend > 10){
+                if(count_friend > 30){
                     count_friend = count_friend - 1;
-                    alert('You can select only max 10');
+                    alert('You can select only max 30');
                     $(this).attr('checked', false);
                     return;
                 }
@@ -228,4 +229,5 @@
     });
 
     $('.campaign_checkbox').show();
+    
     </script>
