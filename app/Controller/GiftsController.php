@@ -182,7 +182,8 @@ class GiftsController extends AppController {
                 $this->Gift->recursive = -1;
                 $check_product_for_receiver = $this->Gift->find('count', array('conditions'
                     => array('product_id' => $this->data['gifts']['product_id'],
-                        'receiver_fb_id' => $camp_rec_id
+                        'receiver_fb_id' => $camp_rec_id,
+                        'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING
                     )
                 ));
                 if($check_product_for_receiver){
@@ -236,7 +237,7 @@ class GiftsController extends AppController {
             
         	}
         	if($message) $this->Session->setFlash(__('Friends have already received this gift'));
-         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$product_id));
+         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$this->data['gifts']['product_id']));
         }	
 
 	}
