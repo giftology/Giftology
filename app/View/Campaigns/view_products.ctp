@@ -47,7 +47,7 @@
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
                                <?php echo $this->Form->Submit(__('search_button_small.jpg'), array('id'=>'friend_search')); ?>
             </div>
-                <div id="pra" style="float:left;height:450px;margin-top:70px;margin-left:-310px">
+                <div id="pra" style="float:left;height:auto;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 20px; overflow-y:scroll;">
 
                     <table style="width:300px" class="friend_result" cellpadding="0" cellspacing="0">
                            
@@ -56,8 +56,8 @@
                                 
                                     foreach ($data as $data): ?>
                                     <tr class="friends">
-                                    <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/> 
-                                    <?php echo $data['Reminder']['friend_name']; ?></td>
+                                    <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/></div></td> 
+                                    <td><?php echo $data['Reminder']['friend_name']; ?></td>
                                     <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
                                     </tr>
                                     <?php endforeach; ?>
