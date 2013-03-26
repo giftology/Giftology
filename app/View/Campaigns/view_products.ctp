@@ -187,7 +187,7 @@
                     type: "POST",
                     dataType: 'html',
                     async: false,
-                    url: "/campaigns/search_friend",
+                    url: "campaigns/search_friend",
                     data: "search_key="+key_value,
                     success: function(data) {
                         //alert(data);
