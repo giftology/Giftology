@@ -197,14 +197,14 @@ class UsersController extends AppController {
 	    if (isset($vendor_name)) {
         $this->set('fb_title', " Surprise! (Sender) has sent a gift to (recipient). Visit Giftology to unwrap the gift, ");
         } else {
-        $this->set('fb_title', "Giftology I Don't just post on Facebook make it a gift post! ");
+        $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
         }
         if (isset($image)) {
         $this->set('fb_image', FULL_BASE_URL.'/'.$image);
         } else {
         $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
         }
-        $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends. Awesome. Free. Gifts. Signed up yet?");
+        $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
 	    //set utm source if set
 	    if (isset($this->request->query['utm_source'])) {
 		$this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
