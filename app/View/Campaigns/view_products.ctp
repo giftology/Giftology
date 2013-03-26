@@ -47,7 +47,7 @@
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
                                <?php echo $this->Form->Submit(__('search_button_small.jpg'), array('id'=>'friend_search')); ?>
             </div>
-                <div id="pra" style="float:left;height:auto;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 20px; overflow-y:scroll;">
+                <div id="pra" style="float:left;height:auto;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 5px; overflow-y:scroll;">
 
                     <table style="width:300px" class="friend_result" cellpadding="0" cellspacing="0">
                            
