@@ -236,7 +236,7 @@ class GiftsController extends AppController {
 	            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
             
         	}
-        	if($message) $this->Session->setFlash(__('Friends have already received this gift'));
+        	if($message) $this->Session->setFlash(__('Awesome Karma! Friend has received this gift'));
          	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$this->data['gifts']['product_id']));
         }	
 
