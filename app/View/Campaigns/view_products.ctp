@@ -140,7 +140,7 @@
 
     <script type='text/javascript'>
     $(document).ready(function(){
-        var delay = (function(){
+        /*var delay = (function(){
           var timer = 0;
           return function(callback, ms){
             clearTimeout (timer);
@@ -178,7 +178,7 @@
                     }
                 });
             },1000);   
-        });
+        });*/
 
         $('#friend_search').click(function() {
         // interrupt form submission
@@ -187,7 +187,7 @@
                     type: "POST",
                     dataType: 'html',
                     async: false,
-                    url: "campaigns/search_friend",
+                    url: "/campaigns/search_friend",
                     data: "search_key="+key_value,
                     success: function(data) {
                         //alert(data);
@@ -209,7 +209,8 @@
                         $('.campaign_checkbox').show();
                     }
                 });   
-        });        
+        });
+                
     });
     $(document).ready(function(){
         var count_friend = 0;

@@ -71,6 +71,7 @@ class CampaignsController extends AppController {
     
     public function search_friend(){
         if($this->RequestHandler->isAjax()) {
+        	$this->Reminder->recursive = -1;
         	 $friend_list=$this->Reminder->find('all',array('conditions' =>array (
     'Reminder.user_id' => $this->Auth->user('id'),
     'Reminder.friend_name LIKE' => "%".$this->request->data['search_key']."%"
