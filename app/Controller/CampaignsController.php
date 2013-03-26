@@ -50,7 +50,11 @@ class CampaignsController extends AppController {
         $this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
         $this->Reminder->recursive = -1;
-        $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
+        $friend_list=$this->Reminder->find('all', 
+        	array('limit'=>8,
+        		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
+        		'order' => array('RAND()'),
+        		));
         $this->set('data',$friend_list);
         $this->set('products',$proddd);	
     	}
