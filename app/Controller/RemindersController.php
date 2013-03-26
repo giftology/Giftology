@@ -380,9 +380,10 @@ class RemindersController extends AppController {
 		$receiver_info = array();
 		foreach ($reminders as $reminder) {
 			$fb_id=$reminder['Reminder']['friend_fb_id'];
-			$receiver_info[]['count'] = $this->Gift->find('count',array('conditions' => array('AND'=>array('Gift.receiver_fb_id' => $fb_id,'Gift.sender_id' =>$this->Auth->user('id')))));
+			$receiver_info[]['count'] = $this->Gift->find('count',array('conditions' => array('AND'=>array('Gift.receiver_fb_id' => $fb_id,'Gift.sender_id' =>$this->Auth->user('id'),'Gift.gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING))));
 			
 		}
+		
 		$result = array();
 				foreach($reminders as $key=>$val){ // Loop though one array
 				    $val2 = $receiver_info[$key]; // Get the values from the other array
