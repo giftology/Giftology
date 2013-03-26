@@ -174,8 +174,7 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
-		
-		if(isset($this->data['chk2']))
+		if(isset($this->data['chk2']) && $this->request->is('post'))
         {
         	$message = null;
 	       	foreach($this->data['chk2'] as $camp_rec_id){

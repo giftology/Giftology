@@ -20,7 +20,7 @@ class CampaignsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if($this->params['controller']=='campaigns'){
-    		$this->Auth->allow('index','view_products','search_friend');
+    		$this->Auth->allow('index');
 
 
     	         }
@@ -39,11 +39,11 @@ class CampaignsController extends AppController {
 		//$vendor_image=$this->Product->find('all', array('fields'=>array('Vendor.wide_image'),'conditions' => array('Vendor.id' => $vendor_id),'order'=>array('Product.min_price','Product.display_order')));
             
         $this->set('campaign_id',$product_id);
-        session_start();
 		//$this->layout = 'landing';
 		$this->render(false, 'landing');
 	}
 	public function view_products () {
+		if ($this->Connect->user()) {
 		$this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
 		$product_id = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
@@ -52,7 +52,8 @@ class CampaignsController extends AppController {
         $this->Reminder->recursive = -1;
         $friend_list=$this->Reminder->find('all', array('limit'=>50,'conditions' => array('Reminder.user_id' => $this->Auth->user('id'))));
         $this->set('data',$friend_list);
-        $this->set('products',$proddd);
+        $this->set('products',$proddd);	
+    	}
 	}
 
 	public function view_product($id) {
