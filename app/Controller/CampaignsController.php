@@ -20,7 +20,8 @@ class CampaignsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if($this->params['controller']=='campaigns'){
-    		$this->Auth->allow('index');
+			$this->redirect(array(
+                'controller' => 'reminders', 'action'=>'view_friends'));
 
 
     	         }
@@ -33,6 +34,8 @@ class CampaignsController extends AppController {
 	    return parent::isAuthorized($user);
 	}
 	public function index($product_id) {
+		$this->redirect(array(
+                'controller' => 'reminders', 'action'=>'view_friends'));
         //$this->Product->recursive=-2;
 		//$vendor_id = $_GET["product_id"];
 		//print_r($vendor_id);die();
@@ -43,6 +46,8 @@ class CampaignsController extends AppController {
 		$this->render(false, 'landing');
 	}
 	public function view_products () {
+		$this->redirect(array(
+                'controller' => 'reminders', 'action'=>'view_friends'));
 		if ($this->Connect->user()) {
 		$this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());

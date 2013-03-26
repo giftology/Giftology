@@ -93,19 +93,8 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     </script>    
 
 
-<?php 
-//DebugBreak();
-$url = $_SERVER["REQUEST_URI"]; 
-//$url = "http://localhost".$url; ?>
-<?php if("/" == $url): ?>
-
-  <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+<div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
               'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div> 
-<?php else: ?>
-  <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-                'redirect' => array('controller'=>'campaigns', 'action'=>'view_products','id'=>$campaign_id))); ?>
-  </div>
-  <?php endif; ?>
         <div class="clear">&nbsp;</div>
         </div>
     </div>
