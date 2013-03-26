@@ -364,10 +364,12 @@ public $uses = array( 'Reminder','Product' );
 		$fields = array('GiftsReceived.sender_id, GiftsReceived.receiver_fb_id, 
 			GiftsReceived.product_id, GiftsReceived.created');
 		$group = array('GiftsReceived.sender_id');
+		$conditions = array('gift_status_id' => GIFT_STATUS_VALID);
 		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
 				    'limit'=>25,
 				    'fields' => $fields,
+				    'conditions' => $conditions,
 				    'order'=>'GiftsReceived.id DESC',
 					//'group'=> $group,
 				    'contain' => array(
