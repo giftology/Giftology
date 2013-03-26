@@ -175,62 +175,68 @@ class GiftsController extends AppController {
 	}
 	public function send_campaign(){
 		
-	//print_r($this->data);die();
-		
 		if(isset($this->data['chk2']))
         {
+        	$message = null;
+	       	foreach($this->data['chk2'] as $camp_rec_id){
+                $this->Gift->recursive = -1;
+                $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+                    => array('product_id' => $this->data['gifts']['product_id'],
+                        'receiver_fb_id' => $camp_rec_id
+                    )
+                ));
+                if($check_product_for_receiver){
+                	$message = 1;
+                	continue;
+                }
+                else $message = 0;
+            	$receiver_fb_id=$camp_rec_id;
+            	$receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
 
-        	
-        	foreach($this->data['chk2'] as $camp_rec_id)
-        	{
-        		//print_r($camp_rec_id);die();
-            $receiver_fb_id=$camp_rec_id;
-            $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
-
-            if (!$receiver) 
-            {
+            	if (!$receiver) {
                 //Create a User for the receiver            
                 /* Dont create User for receiver, just set the receiver_fb_id  */
-                $this->Gift->Receiver->create();
-                $data['Receiver']['facebook_id'] = $receiver_fb_id;
-                if (!$this->Gift->Receiver->save($data)) {
-                $this->Session->setFlash(__('Cant create new receipient. Gift not sent'));
-                return;
-                }
-                $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
-            }
+                	$this->Gift->Receiver->create();
+                	$data['Receiver']['facebook_id'] = $receiver_fb_id;
+                	if (!$this->Gift->Receiver->save($data)) {
+                		$this->Session->setFlash(__('Cant create new receipient. Gift not sent'));
+                		return;
+                	}
+                	$receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
+            	}
            
-             $vendor_id = $this->data['gifts']['vendor_id'];          
-            $sender_id = $this->Auth->user('id');
-            $receiver_fb_id = $receiver['User']['facebook_id'];
-            $product_id = $this->data['gifts']['product_id'];
-            $amount = $this->data['gifts']['contribution_amount']; 
-            $send_now = 1;
-            $reciever_email = "";
-            $gift_message = $this->data['gifts']['gift-message'];
-            $post_to_fb = 1;
-            $reciever_name = "";
-            $receiver_birthday = "";
-            $scheduled = false;
-            $date_to_schedule = null;
-            $date_diff1 = strtotime(date('Y-m-d')) - strtotime('2013-03-25');
-            $date_diff2 = strtotime('2013-03-26') - strtotime(date('Y-m-d'));
-            if($date_diff1 < 0){
-            	$send_now = 0;
-                $date_to_schedule = '2013-03-25';
-            }
+	            $vendor_id = $this->data['gifts']['vendor_id'];          
+	            $sender_id = $this->Auth->user('id');
+	            $receiver_fb_id = $receiver['User']['facebook_id'];
+	            $product_id = $this->data['gifts']['product_id'];
+	            $amount = $this->data['gifts']['contribution_amount']; 
+	            $send_now = 1;
+	            $reciever_email = "";
+	            $gift_message = $this->data['gifts']['gift-message'];
+	            $post_to_fb = 1;
+	            $reciever_name = "";
+	            $receiver_birthday = "";
+	            $scheduled = false;
+	            $date_to_schedule = null;
+	            $date_diff1 = strtotime(date('Y-m-d')) - strtotime('2013-03-25');
+	            $date_diff2 = strtotime('2013-03-26') - strtotime(date('Y-m-d'));
+	            if($date_diff1 < 0){
+	            	$send_now = 0;
+	                $date_to_schedule = '2013-03-25';
+	            }
 
-            if($date_diff1 >= 0 && $date_diff2 > 0)
-            	 $date_to_schedule = '2013-03-25';
+	            if($date_diff1 >= 0 && $date_diff2 > 0)
+	            	 $date_to_schedule = '2013-03-25';
 
-            if($date_diff2 <= 0)
-            	$date_to_schedule = date('Y-m-d');
-           
-            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
-            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
+	            if($date_diff2 <= 0)
+	            	$date_to_schedule = date('Y-m-d');
+	           
+	            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
+	            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
             
-        }
-         $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$product_id));
+        	}
+        	if($message) $this->Session->setFlash(__('Friends have already received this gift'));
+         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$product_id));
         }	
 
 	}
