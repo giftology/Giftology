@@ -176,6 +176,15 @@ class GiftsController extends AppController {
 	public function send_campaign(){
 		$this->redirect(array(
                 'controller' => 'reminders', 'action'=>'view_friends'));
+		$this->Gift->Product->recursive = -1;
+        $product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $this->data['gifts']['product_id'],
+        		'Product.display_order' => 0
+        	)));
+        if($product_display_off){
+        	$this->Session->setFlash(__('Ooops!, Selected voucher is not available, select any other voucher to send'));
+        	$this->redirect(array(
+                'controller' => 'reminders', 'action'=>'view_friends'));
+        }
 		if(isset($this->data['chk2']) && $this->request->is('post'))
         {
         	$message = null;
