@@ -231,10 +231,33 @@ class GiftsController extends AppController {
 
 	}
 	public function send() {
-		
-
 		if(isset($this->data['gifts']))
         {
+        	$this->Gift->recursive = -1;
+            $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+                => array('product_id' => $this->data['gifts']['product_id'],
+                    'receiver_fb_id' => $this->data['gifts']['user_id'],
+                    'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING
+                )
+            ));
+            if($check_product_for_receiver){
+            	$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
+                $this->Reminder->recursive = -1;
+            	$reminder = $this->Reminder->find('first',
+			    	array('conditions' => array('friend_fb_id' => $this->data['gifts']['user_id'])
+				));
+         		$this->redirect(array('controller' => 'products',
+         			'action'=>'view_products',
+         			'receiver_id'=>$this->data['gifts']['user_id'],
+         			'receiver_name' => $reminder['Reminder']['friend_name'],
+                    'receiver_birthday' => $reminder['Reminder']['friend_birthday'],
+                    'receiver_location' => $reminder['Reminder']['current_location'],
+                    'friend_birthyear' => $reminder['Reminder']['friend_birthyear'],
+                    'receiver_sex' => $reminder['Reminder']['sex'],
+                    'ocasion' => isset($ocasion) ? $ocasion : null
+         			));
+            }
+
             $receiver_fb_id=$this->data['gifts']['user_id'];
             $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
 
