@@ -233,6 +233,10 @@ class GiftsController extends AppController {
 	public function send() {
 		if(isset($this->data['gifts']))
         {
+        	$this->Gift->Product->recursive = -1;
+        	$product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $this->data['gifts']['product_id'],
+        			'Product.display_order' => 0
+        		)));
         	$this->Gift->recursive = -1;
             $check_product_for_receiver = $this->Gift->find('count', array('conditions'
                 => array('product_id' => $this->data['gifts']['product_id'],
@@ -240,8 +244,11 @@ class GiftsController extends AppController {
                     'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING
                 )
             ));
-            if($check_product_for_receiver){
-            	$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
+            if($check_product_for_receiver || $product_display_off ){
+            	if($check_product_for_receiver)
+            		$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
+            	if($product_display_off)
+            		$this->Session->setFlash(__('Ooops!, Selected voucher is not available, select any other voucher to send'));
                 $this->Reminder->recursive = -1;
             	$reminder = $this->Reminder->find('first',
 			    	array('conditions' => array('friend_fb_id' => $this->data['gifts']['user_id'])
