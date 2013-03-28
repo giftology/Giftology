@@ -42,9 +42,12 @@
                     <?php if($gift['Gift']['sms']=="0"){?>
                     <a href="<?= $this->Html->url(array('controller'=>'gifts',
                                                       'action'=>'sms',
-                    $gift['Gift']['id'],$pin)); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
+                    $gift['Gift']['id'])); ?>" target=""><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
                     
                     <?php } ?>
+            </div>
+            <div id="redeem-note" style="float:right;margin-top:10px;margin-left:100px">
+                Note - One Code Per Transaction
             </div>
         </div>
         <div id="redeem-instr" class="disclosure opened">
