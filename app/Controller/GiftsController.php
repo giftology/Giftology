@@ -975,15 +975,18 @@ class GiftsController extends AppController {
     	$this->Gift->recursive = -1;
     	ini_set("max_execution_time",0);
     	$gifts = $this->Gift->find('all', array('conditions' => array('product_id' => $id, 'created like' => $date."%"), 'order' => array('id DESC')));
-    	$fp1 = fopen(ROOT.'/app/tmp/'.$id.'_code_allocation'.$date.'.csv', 'w+');
+    	$fp1 = fopen(ROOT.'/app/tmp/'.$id.'_code_allocation_'.$date.'.csv', 'w+');
+    	fputcsv($fp1,array('ID','Product ID', 'Sender ID', 'Receiver ID', 'Receiver Facebook ID', 'Code', 'Gift Amount', 'Gift Status ID',
+    		'Expiry Date', 'FB POST', 'Gift Message', 'Receiver Email', 'Created', 'Modified', 'Date To Send', 'SMS Status','SMS Number','Gift Opened', 'Gift Open Date'));
     	foreach($gifts as $gift) {
             $this->Reminder->recursive = -1;
             $name = NULL;
-            $name = $this->Reminder->find('first', array('fields' => array('friend_name'), 
-            	'conditions' => array('friend_fb_id' => $gift['Gift']['receiver_fb_id'])	
-            	));
-            $gift['Gift']['friend_name'] = $name['Reminder']['friend_name'];
-            fputcsv($fp1,$gift['Gift']);    
+            $line_array = array();
+    		foreach($gift['Gift'] as $field){
+    			$line_array[] = $field;
+    		}
+            fputcsv($fp1,$line_array);
+            unset($line_array);
         }
         fclose($fp1);
         $this->autoRender = $this->autoLayout = false;
