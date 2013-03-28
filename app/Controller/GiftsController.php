@@ -1004,6 +1004,7 @@ class GiftsController extends AppController {
     	$fp = fopen(ROOT.'/app/tmp/'.'duplicate_code_allocation_'.$date_start.'_'.$date_end.'.csv', 'w+');
     	fputcsv($fp, array('Product Id','Gift Id', 'Sender Id', 'Receiver Id', 'Receiver Facebook Id', 'Code', 'Receiver Contact Number','Receiver Email','Created'));
     	foreach($products as $product){
+    		set_time_limit(300);
     		$gifts = $this->Gift->find('all', array(
     			'conditions' => array('product_id' => $product['Gift']['product_id'], 'created >=' => $date_start, 'created <=' => $date_end),
                 'group' => array('sender_id','receiver_id','receiver_fb_id'), 
