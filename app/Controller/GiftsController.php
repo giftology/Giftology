@@ -20,7 +20,7 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts', 'post_missing_fb_post');
+	$this->Auth->allow('send_today_scheduled_gifts');
     }
 
 	public function isAuthorized($user) {
@@ -661,7 +661,7 @@ class GiftsController extends AppController {
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 	public function view_gifts() {
-       
+       	//DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('sender_id' => $this->Auth->user('id'));
 		} else {
@@ -676,7 +676,10 @@ class GiftsController extends AppController {
 		$gifts = $this->Gift->find('all', array(
 			'contain' => array(
 				'Product' => array('Vendor')),
-			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_SCHEDULED, 'Gift.receiver_id' => $this->Auth->user('id')))));
+			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
+			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
+			'order' => array('Gift.id ASC')
+			));
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
@@ -685,7 +688,9 @@ class GiftsController extends AppController {
 		{
 			$this->Gift->updateAll(
                 array('gift_status_id' => 1), 
-                array('receiver_id' => $this->Auth->user('id')));
+                array('receiver_id' => $this->Auth->user('id')),
+                array('gift_status_id' => GIFT_STATUS_SCHEDULED)
+                );
 			
 		}
 
@@ -938,6 +943,30 @@ class GiftsController extends AppController {
                        array('Gift.id' => $gift['Gift']['id']));
         $this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
         }
+        $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function campaign_code_allocation($id){
+    	ini_set("max_execution_time",0);
+    	$fp = fopen(ROOT.'/app/tmp/Check_Card_numbers.csv', 'r');
+    	$fp1 = fopen(ROOT.'/app/tmp/result.csv', 'a+');
+    	while($linearray = fgetcsv($fp)) {
+    		$card = NULL;
+    		$number = NULL;
+            $card = $linearray[0];
+            $this->Gift->recursive = -1;
+            $number = $this->Gift->find('first', array('conditions' => array(
+            	'code like' => $card."%",
+            	'product_id' => $id
+            	)));
+            $this->Reminder->recursive = -1;
+            $fname = NULL;
+            $fname = $this->Reminder->find('first', array('fields' => array('friend_name'), 
+            	'conditions' => array('friend_fb_id' => $number['Gift']['receiver_fb_id'])));
+            fputcsv($fp1,array($card, $number['Gift']['sms_number'], $number['Gift']['receiver_email'], $fname['Reminder']['friend_name']));    
+        }
+        fclose($fp1);
+        fclose($fp);
         $this->autoRender = $this->autoLayout = false;
     }
 }
