@@ -678,7 +678,7 @@ class GiftsController extends AppController {
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
-			'order' => array('Gift.id ASC')
+			'order' => array('Gift.id DESC')
 			));
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
@@ -946,10 +946,11 @@ class GiftsController extends AppController {
         $this->autoRender = $this->autoLayout = false;
     }
 
-    public function campaign_code_allocation($id){
+    public function voucher_code_allocation($id){
     	ini_set("max_execution_time",0);
-    	$fp = fopen(ROOT.'/app/tmp/Check_Card_numbers.csv', 'r');
-    	$fp1 = fopen(ROOT.'/app/tmp/result.csv', 'a+');
+    	$fp = fopen(ROOT.'/app/tmp/check_code_allocation_'.$id.'.csv', 'r');
+    	$fp1 = fopen(ROOT.'/app/tmp/'.$id.'_check_code_allocation.csv', 'w+');
+    	fputcsv($fp1,array('Voucher Code', 'Receiver Contact Number', 'Receiver Email', 'Receiver Name'));    
     	while($linearray = fgetcsv($fp)) {
     		$card = NULL;
     		$number = NULL;
@@ -967,6 +968,24 @@ class GiftsController extends AppController {
         }
         fclose($fp1);
         fclose($fp);
+        $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function voucher_code_gift_details($id,$date){
+    	$this->Gift->recursive = -1;
+    	ini_set("max_execution_time",0);
+    	$gifts = $this->Gift->find('all', array('conditions' => array('product_id' => $id, 'created like' => $date."%"), 'order' => array('id DESC')));
+    	$fp1 = fopen(ROOT.'/app/tmp/'.$id.'_code_allocation'.$date.'.csv', 'w+');
+    	foreach($gifts as $gift) {
+            $this->Reminder->recursive = -1;
+            $name = NULL;
+            $name = $this->Reminder->find('first', array('fields' => array('friend_name'), 
+            	'conditions' => array('friend_fb_id' => $gift['Gift']['receiver_fb_id'])	
+            	));
+            $gift['Gift']['friend_name'] = $name['Reminder']['friend_name'];
+            fputcsv($fp1,$gift['Gift']);    
+        }
+        fclose($fp1);
         $this->autoRender = $this->autoLayout = false;
     }
 }
