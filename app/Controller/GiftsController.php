@@ -661,7 +661,6 @@ class GiftsController extends AppController {
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 	public function view_gifts() {
-       	//DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('sender_id' => $this->Auth->user('id'));
 		} else {
@@ -994,6 +993,44 @@ class GiftsController extends AppController {
             unset($line_array);
         }
         fclose($fp1);
+        $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function download_duplicate_allocated_voucher($date_start,$date_end){
+    	$this->Gift->recursive = -1;
+    	$products = $this->Gift->find('all', array('fields' => array('DISTINCT Gift.product_id'),
+    		'conditions' => array('created >=' => $date_start, 'created <=' => $date_end)
+    		));
+    	$fp = fopen(ROOT.'/app/tmp/'.'duplicate_code_allocation_'.$date_start.'_'.$date_end.'.csv', 'w+');
+    	fputcsv($fp, array('Product Id','Gift Id', 'Sender Id', 'Receiver Id', 'Receiver Facebook Id', 'Code', 'Receiver Contact Number','Receiver Email','Created'));
+    	foreach($products as $product){
+    		$gifts = $this->Gift->find('all', array(
+    			'conditions' => array('product_id' => $product['Gift']['product_id'], 'created >=' => $date_start, 'created <=' => $date_end),
+                'group' => array('sender_id','receiver_id','receiver_fb_id'), 
+    			'order' => array('id DESC')));
+    		foreach($gifts as $receiver_fb_id){
+                $codes = $this->Gift->find('all', array(
+                'fields' => array('product_id','id', 'sender_id', 'receiver_id', 'receiver_fb_id', 'code', 'sms_number','receiver_email','created'),
+                'conditions' => array(
+                	'product_id' => $product['Gift']['product_id'],
+                	'created >=' => $date_start, 
+                	'created <=' => $date_end,
+                	'receiver_fb_id' => $receiver_fb_id['Gift']['receiver_fb_id']
+                )));
+                if(count($codes) > 1){
+                    foreach($codes as $code){
+                        $line_array = array();
+                        foreach($code['Gift'] as $field){
+                            $line_array[] = $field;   
+                        }
+                        fputcsv($fp,$line_array);
+                        unset($line_array);
+                    }   
+                }
+    		}
+    	}
+    	fclose($fp);
+    	unset($products, $gifts);
         $this->autoRender = $this->autoLayout = false;
     }
 }
