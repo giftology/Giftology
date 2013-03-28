@@ -1007,7 +1007,7 @@ class GiftsController extends AppController {
     		set_time_limit(300);
     		$gifts = $this->Gift->find('all', array(
     			'conditions' => array('product_id' => $product['Gift']['product_id'], 'created >=' => $date_start, 'created <=' => $date_end),
-                'group' => array('sender_id','receiver_id','receiver_fb_id'), 
+                'group' => array('sender_id','receiver_id','receiver_fb_id','product_id'), 
     			'order' => array('id DESC')));
     		foreach($gifts as $receiver_fb_id){
                 $codes = $this->Gift->find('all', array(
@@ -1030,6 +1030,46 @@ class GiftsController extends AppController {
                 }
     		}
     	}
+    	fclose($fp);
+    	unset($products, $gifts);
+        $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function defaulter_list($date_start, $date_end){
+    	$this->Gift->recursive = -1;
+    	$products = $this->Gift->find('all', array('fields' => array('DISTINCT Gift.product_id'),
+    		'conditions' => array('created >=' => $date_start, 'created <=' => $date_end)
+    		));
+    	$fp = fopen(ROOT.'/app/tmp/'.'defaulters.csv', 'w+');
+    	$line_array = array();
+    	foreach($products as $product){
+    		set_time_limit(300);
+    		$gifts = $this->Gift->find('all', array(
+    			'conditions' => array('product_id' => $product['Gift']['product_id'],
+    				'created >=' => $date_start,
+    				'created <=' => $date_end,
+    				'gift_status_id' => GIFT_STATUS_VALID
+    			),
+                'group' => array('sender_id','receiver_id','receiver_fb_id','product_id'), 
+    			'order' => array('id DESC')));
+    		foreach($gifts as $receiver_fb_id){
+                $codes = $this->Gift->find('all', array(
+                'fields' => array('product_id','id', 'sender_id', 'receiver_id', 'receiver_fb_id', 'code', 'sms_number','receiver_email','created','gift_message'),
+                'conditions' => array(
+                	'product_id' => $product['Gift']['product_id'],
+                	'created >=' => $date_start, 
+                	'created <=' => $date_end,
+                	'receiver_fb_id' => $receiver_fb_id['Gift']['receiver_fb_id']
+                )));
+                if(count($codes) > 1){
+                	$line_array[] = $receiver_fb_id['Gift']['sender_id'];
+                    $line_array[] = $receiver_fb_id['Gift']['receiver_id'];          
+                }
+    		}
+    	}
+
+    	fputcsv($fp,array_unique($line_array));
+        unset($line_array);
     	fclose($fp);
     	unset($products, $gifts);
         $this->autoRender = $this->autoLayout = false;

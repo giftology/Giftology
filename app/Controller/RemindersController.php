@@ -10,6 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
 class RemindersController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array( 'Reminder','Product','Gift','User');
+	public $components = array('Defaulter');
 	
 	public $paginate = array(
 	        'limit' => 24,
@@ -215,7 +216,9 @@ class RemindersController extends AppController {
 		$this->Session->setFlash(__('Reminder was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-	public function view_friends($type=null) { 
+	public function view_friends($type=null) {
+		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
+			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;
         $this->set('title_for_layout', 'Select a friend');
 
