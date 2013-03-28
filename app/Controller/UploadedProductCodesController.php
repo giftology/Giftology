@@ -270,4 +270,24 @@ class UploadedProductCodesController extends AppController {
 		$this->Session->setFlash(__('Updated.  Please verify operation by listing Uploading product Codes'));
 		$this->redirect($this->referer());
 	}
+
+    public function unused_voucher_code_details($id,$available){
+    	$this->UploadedProductCode->recursive = -1;
+    	ini_set("max_execution_time",0);
+    	$codes = $this->UploadedProductCode->find('all', array('conditions' => array('product_id' => $id, 'available' => $available)));
+    	$fp1 = fopen(ROOT.'/app/tmp/'.$id.'_unused_voucher_code_details.csv', 'w+');
+    	fputcsv($fp1, array('ID','Product ID','Vocher Code','Value', 'Available', 'Expiry', 'Pin'));
+    	foreach($codes as $code) {
+    		$line_array = array();
+    		foreach($code['UploadedProductCode'] as $field){
+    			$line_array[] = $field;
+    		}
+            fputcsv($fp1,$line_array);
+            unset($line_array);    
+        }
+        fclose($fp1);
+        unset($codes);
+        $this->autoRender = $this->autoLayout = false;
+    }
+                                                       
 }
