@@ -330,3 +330,69 @@
         </div>
         
     <div class="clear"></div>
+    <script type='text/javascript'>
+    $(document).ready(function(){
+        $('#form_free').click(function(){
+            $('#form_free').attr('disabled',true);    
+        });
+
+         $('#form_shipping').click(function(){
+            $('#form_shipping').attr('disabled',true);    
+        });
+
+        $('.umstyle5').blur(function(){
+            var field_value = $(this).val();
+            if(field_value != ''){
+                $('#form_free').removeAttr('disabled');
+                $('#form_shipping').removeAttr('disabled');      
+            }
+            else{
+                $('#form_free').attr('disabled',true);     
+                $('#form_shipping').attr('disabled',true);    
+            }
+            var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+            var valid = emailRegex.test($("#email").val());
+
+            if ($(this).val().length == 0)
+            {
+                /*$("#error_email").show();
+                    e = true;*/
+                var r=confirm("continue without email address!");
+                if (r==true){
+                        return true;
+                }
+                else{
+                    e = true;
+                }
+            }
+            else if(!valid){
+                $("#error_email").show();
+                e = true;  
+            }
+            else if(valid){
+                $("#error_email").hide();
+            }
+            if(e){
+                $('#form_free').attr('disabled',true);     
+                $('#form_shipping').attr('disabled',true); 
+                return false;
+            }
+            else{
+                $('#form_free').removeAttr('disabled');
+                $('#form_shipping').removeAttr('disabled');    
+            }
+        });
+
+        $('.gift-message').blur(function(){
+            var field_value = $(this).val();
+            if(field_value != ''){
+                $('#form_free').removeAttr('disabled');
+                $('#form_shipping').removeAttr('disabled');      
+            }
+            else{
+                $('#form_free').attr('disabled',true);     
+                $('#form_shipping').attr('disabled',true);    
+            }
+        });  
+    });
+    </script>
