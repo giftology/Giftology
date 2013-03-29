@@ -1062,12 +1062,16 @@ class GiftsController extends AppController {
                 	'receiver_fb_id' => $receiver_fb_id['Gift']['receiver_fb_id']
                 )));
                 if(count($codes) > 1){
-                	$line_array[] = $receiver_fb_id['Gift']['sender_id'];
-                    $line_array[] = $receiver_fb_id['Gift']['receiver_id'];          
+                	$this->User->recursive = -1;
+                	$sender_fb_id = $this->User->find('first',array('fields' => array('facebook_id'),
+                		'conditions' => array('id' => $receiver_fb_id['Gift']['sender_id'])
+                		));
+                	$line_array[] = $sender_fb_id['User']['facebook_id'];
+                    $line_array[] = $receiver_fb_id['Gift']['receiver_fb_id'];          
                 }
     		}
     	}
-
+    	
     	fputcsv($fp,array_unique($line_array));
         unset($line_array);
     	fclose($fp);
