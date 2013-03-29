@@ -310,6 +310,9 @@
                     <label for="email">Send email to</label>
                     <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
                 </div>
+                <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
+                    <h5 style="color:#FF0000">*please enter valid email address.</h5>
+                </div>
             </div>
             <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
 
@@ -351,14 +354,15 @@
                 $('#form_shipping').attr('disabled',true);    
             }
             var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-            var valid = emailRegex.test($("#email").val());
+            var valid = emailRegex.test(field_value);
 
-            if ($(this).val().length == 0)
-            {
+            if (field_value.length == 0){
                 /*$("#error_email").show();
                     e = true;*/
                 var r=confirm("continue without email address!");
                 if (r==true){
+                        $('#form_free').removeAttr('disabled');
+                        $('#form_shipping').removeAttr('disabled');
                         return true;
                 }
                 else{
@@ -370,7 +374,9 @@
                 e = true;  
             }
             else if(valid){
+                e = false;
                 $("#error_email").hide();
+                
             }
             if(e){
                 $('#form_free').attr('disabled',true);     
