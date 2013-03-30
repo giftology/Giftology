@@ -343,7 +343,7 @@
             $('#form_shipping').attr('disabled',true);    
         });
 
-        $('.umstyle5').blur(function(){
+        /*$('.umstyle5').blur(function(){
             var field_value = $(this).val();
             if(field_value != ''){
                 $('#form_free').removeAttr('disabled');
@@ -357,8 +357,6 @@
             var valid = emailRegex.test(field_value);
 
             if (field_value.length == 0){
-                /*$("#error_email").show();
-                    e = true;*/
                 var r=confirm("continue without email address!");
                 if (r==true){
                         $('#form_free').removeAttr('disabled');
@@ -399,6 +397,6 @@
                 $('#form_free').attr('disabled',true);     
                 $('#form_shipping').attr('disabled',true);    
             }
-        });  
+        });*/  
     });
     </script>
