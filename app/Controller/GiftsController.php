@@ -193,7 +193,8 @@ class GiftsController extends AppController {
                 $check_product_for_receiver = $this->Gift->find('count', array('conditions'
                     => array('product_id' => $this->data['gifts']['product_id'],
                         'receiver_fb_id' => $camp_rec_id,
-                        'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING
+                        'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                    	'expiry_date >' => date('Y-m-d') 
                     )
                 ));
                 if($check_product_for_receiver){
@@ -247,16 +248,17 @@ class GiftsController extends AppController {
         			'Product.display_order' => 0
         		)));
         	$this->Gift->recursive = -1;
-            $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+            /*$check_product_for_receiver = $this->Gift->find('count', array('conditions'
                 => array('product_id' => $this->data['gifts']['product_id'],
                     'receiver_fb_id' => $this->data['gifts']['user_id'],
                     'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
                     'expiry_date >' => date('Y-m-d') 
                 )
             ));
-            if($check_product_for_receiver || $product_display_off ){
-            	if($check_product_for_receiver)
-            		$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
+            if($check_product_for_receiver || $product_display_off ){*/
+            if($product_display_off ){
+            	//if($check_product_for_receiver)
+            		//$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
             	if($product_display_off)
             		$this->Session->setFlash(__('Ooops!, Selected voucher is not available, select any other voucher to send'));
                 $this->Reminder->recursive = -1;
@@ -1080,4 +1082,45 @@ class GiftsController extends AppController {
     	unset($products, $gifts);
         $this->autoRender = $this->autoLayout = false;
     }
+
+    /*public function campaign_analysis(){
+    	DebugBreak();
+    	$id = 90;
+    	//$this->Gift->recursive = -1;
+    	$this->User->recursive = -1;
+        $day1_gifts_array = $this->Gift->find('all', array(
+            'conditions' => array('Gift.product_id' => $id, 'Gift.created like' => "2013-03-25%")));
+        $day2_gifts_array = $this->Gift->find('all', array(
+            'conditions' => array('Gift.product_id' => $id, 'GIft.created like' => "2013-03-26%")));
+        $day3_gifts_array = $this->Gift->find('all', array(
+            'conditions' => array('Gift.product_id' => $id, 'Gift.created like' => "2013-03-27%")));
+        $day1_gifts = count($day1_gifts_array);
+        $day2_gifts = count($day2_gifts_array) + count($day3_gifts_array);
+    	$sender_receiver = $this->Gift->find('all', array(
+    		'conditions' => array('Gift.product_id' => $id)
+    		));
+    	$users_array = array();
+    	$location_array = array();
+        $this->UserProfile->recursive = -1;
+    	foreach($sender_receiver as $sender){
+    		$users_array[] = $sender['Gift']['receiver_fb_id'];
+    		$users_array[] = $sender['Sender']['facebook_id'];
+            $location_sender = $this->UserProfile->find('first', array('fields' => array('city'),'conditions' => array('user_id' => $sender['Gift']['sender_id'])));
+            $location_receiver = $this->Reminder->find('first', array('fields' => array('city'),'conditions' => array('user_id' => $sender['Gift']['sender_id'])));
+            $location = NULL;
+            $loc = explode(','.$sender['UserProfile']['city']);
+            $location = $loc[0];
+    	}
+    	$unique_users = array_unique($users_array);
+        $unique_users_count =  count($unique_users);
+        $total_users = count($sender_receiver);
+        $repeat_users = $total_users - $unique_users_count;
+    	echo "No. of Gifts Day1 - ".$day1_gifts;
+        echo "No. of Gifts Day2 - ".$day2_gifts;
+        echo "Unique Users - ". $unique_users_count;
+        echo "Total Users - ". $total_users;
+        echo "Repeated Users - ". $repeat_users;
+    	$this->autoRender = $this->autoLayout = false;
+        exit;
+    }*/
 }
