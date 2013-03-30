@@ -335,13 +335,13 @@
     <div class="clear"></div>
     <script type='text/javascript'>
     $(document).ready(function(){
-        $('#form_free').click(function(){
+        /*$('#form_free').click(function(){
             $('#form_free').attr('disabled',true);    
         });
 
          $('#form_shipping').click(function(){
             $('#form_shipping').attr('disabled',true);    
-        });
+        });*/
 
         /*$('.umstyle5').blur(function(){
             var field_value = $(this).val();
