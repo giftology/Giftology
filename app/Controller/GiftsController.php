@@ -247,13 +247,13 @@ class GiftsController extends AppController {
         			'Product.display_order' => 0
         		)));
         	$this->Gift->recursive = -1;
-        	$check_product_for_receiver = false;
-            /*$check_product_for_receiver = $this->Gift->find('count', array('conditions'
+            $check_product_for_receiver = $this->Gift->find('count', array('conditions'
                 => array('product_id' => $this->data['gifts']['product_id'],
                     'receiver_fb_id' => $this->data['gifts']['user_id'],
-                    'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING
+                    'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                    'expiry_date >' => date('Y-m-d') 
                 )
-            ));*/
+            ));
             if($check_product_for_receiver || $product_display_off ){
             	if($check_product_for_receiver)
             		$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
@@ -702,6 +702,7 @@ class GiftsController extends AppController {
 	}
 
 	public function sent_gifts() {
+		DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
