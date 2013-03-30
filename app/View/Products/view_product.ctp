@@ -335,13 +335,19 @@
     <div class="clear"></div>
     <script type='text/javascript'>
     $(document).ready(function(){
-        /*$('#form_free').click(function(){
-            $('#form_free').attr('disabled',true);    
+        $('#form_free').click(function(){
+            $(this).attr('disabled','disabled');
+            if( $('.gift-message').val() !='') 
+                $(this).parents('form').submit();
+            else $(this).removeAttr('disabled');  
         });
 
          $('#form_shipping').click(function(){
-            $('#form_shipping').attr('disabled',true);    
-        });*/
+            $(this).attr('disabled','disabled');
+            if( $('.gift-message').val() !='') 
+                $(this).parents('form').submit();
+            else $(this).removeAttr('disabled');    
+        });
 
         /*$('.umstyle5').blur(function(){
             var field_value = $(this).val();
@@ -384,18 +390,6 @@
             else{
                 $('#form_free').removeAttr('disabled');
                 $('#form_shipping').removeAttr('disabled');    
-            }
-        });
-
-        $('.gift-message').blur(function(){
-            var field_value = $(this).val();
-            if(field_value != ''){
-                $('#form_free').removeAttr('disabled');
-                $('#form_shipping').removeAttr('disabled');      
-            }
-            else{
-                $('#form_free').attr('disabled',true);     
-                $('#form_shipping').attr('disabled',true);    
             }
         });*/  
     });
