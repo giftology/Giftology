@@ -26,6 +26,7 @@
         </h3>
         
         <div id="campaigns">
+        <?php  echo $this->Form->create('gifts', array('action' => 'redeem'));?>
 		<div id='paginator_nav'>
                                 
                         <?php
@@ -70,15 +71,12 @@
                                     
                             </span>
                     </span>
-    </div> 
-
+                </div> 
+            </a>
  <?php else: ?>
+ <a>       
 
-			<a href="<?= $this->Html->url(array('controller' => 'gifts',
-				    'action' => 'redeem',
-				    $gift['Gift']['id'])); ?>" title="Click to redeem">
-
-                    <div class="small-voucher">
+                <div class="small-voucher" id="<?php echo $gift['Gift']['id'];?>">
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
                             <span class="selected-overlay"></span>
@@ -104,7 +102,7 @@
                                     
                             </span>
                     </span>
-    </div> 
+                </div> 
      </a>
 <?php endif; ?> 
 
@@ -117,9 +115,24 @@
 			<div class='no_data'>Nothing here yet.  <br><br>Start some good Karma.  Send gifts to some friends, and they'll send you some in return. </div>
 		<?php endif; ?>
         </div>
-        
+<?php echo $this->Form->end(); ?>         
         
 </div>	
+<script type="text/javascript">
+
+      $(document).ready(function(){
+            $(".small-voucher").click(function (){
+                var gift_value = this.id;
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'id',
+                    value: gift_value,
+                }).appendTo('#giftsRedeemForm');
+                $("#giftsRedeemForm").submit()
+            });
+        });
+</script>
 
 
 

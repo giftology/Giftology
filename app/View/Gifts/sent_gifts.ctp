@@ -47,8 +47,7 @@
                 <?php foreach ($gifts as $gift): ?>
 			<?php $gift['Vendor'] = &$gift['Product']['Vendor']; ?>
 			<a href="<?= $this->Html->url(array('controller' => 'gifts',
-                    'action' => 'sent_gifts',
-                    $gift['Gift']['id'])); ?>"  class="popper" data-popbox="<?=$gift['Gift']['id'];?>">
+                    'action' => 'sent_gifts')); ?>"  class="popper" data-popbox="<?=$gift['Gift']['id'];?>">
 
                 <div class="small-voucher">
                     <span class="free  voucher">

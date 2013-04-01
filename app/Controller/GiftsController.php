@@ -662,7 +662,8 @@ class GiftsController extends AppController {
 		}
 		return null;
 	}
-	public function redeem($id) {
+	public function redeem() {
+		$id=$this->data['id'];
 		$this->Gift->id = $id;
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
@@ -771,9 +772,9 @@ class GiftsController extends AppController {
 	}
 
 	
-    public function print_pdf($id) 
-    { 
-    	
+    public function print_pdf() 
+    { 	
+    	$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
     	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
@@ -795,13 +796,19 @@ class GiftsController extends AppController {
 
     } 
 
-    public function sms($id) 
+    public function sms() 
     { 
-     $gift = $this->Gift->find('first', array(
+    	$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+     	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
+     	if($id == "")
+     	{
+     		$this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));	
+     	}
      $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
