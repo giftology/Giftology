@@ -647,6 +647,9 @@ class GiftsController extends AppController {
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
+		if($this->Auth->User('id') != $gift['Gift']['receiver_id'])
+			$this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
 		// will implement later when we have perfect UI
 		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
 		
@@ -679,7 +682,7 @@ class GiftsController extends AppController {
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
-			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
+			'group' => array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id'),
 			'order' => array('Gift.id DESC')
 			));
 		
