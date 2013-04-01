@@ -704,7 +704,6 @@ class GiftsController extends AppController {
 	}
 
 	public function sent_gifts() {
-		DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
@@ -1083,9 +1082,7 @@ class GiftsController extends AppController {
         $this->autoRender = $this->autoLayout = false;
     }
 
-    /*public function campaign_analysis(){
-    	DebugBreak();
-    	$id = 90;
+    public function campaign_analysis($id){
     	//$this->Gift->recursive = -1;
     	$this->User->recursive = -1;
         $day1_gifts_array = $this->Gift->find('all', array(
@@ -1101,26 +1098,84 @@ class GiftsController extends AppController {
     		));
     	$users_array = array();
     	$location_array = array();
+        $age_array = array();
+        $gender_array = array();
         $this->UserProfile->recursive = -1;
+        $this->Reminder->recursive = -1;
     	foreach($sender_receiver as $sender){
+            set_time_limit(300);
     		$users_array[] = $sender['Gift']['receiver_fb_id'];
     		$users_array[] = $sender['Sender']['facebook_id'];
-            $location_sender = $this->UserProfile->find('first', array('fields' => array('city'),'conditions' => array('user_id' => $sender['Gift']['sender_id'])));
-            $location_receiver = $this->Reminder->find('first', array('fields' => array('city'),'conditions' => array('user_id' => $sender['Gift']['sender_id'])));
-            $location = NULL;
-            $loc = explode(','.$sender['UserProfile']['city']);
-            $location = $loc[0];
     	}
+        //$location_sender = $this->UserProfile->query("SELECT distinct user_id, city, birthyear, gender FROM user_profiles WHERE user_id IN (SELECT distinct sender_id FROM gifts WHERE product_id = $id)");
+        $location_receiver = $this->Gift->query("SELECT distinct  reminders.friend_fb_id, reminders.current_location, reminders.friend_birthyear, reminders.sex FROM reminders JOIN gifts ON gifts.receiver_fb_id = reminders.friend_fb_id WHERE gifts.product_id = $id");
+        
+        /*foreach($location_sender as $l_sender){
+            $loc_sender = explode(',',$l_sender['user_profiles']['city']);
+            $age = NULL;
+            $location_array[] = $loc_sender[0];
+            $gender_array[] = $l_sender['user_profiles']['gender'];
+            if($l_sender['user_profiles']['birthyear'])
+                $age_array[] = date('Y') - $l_sender['user_profiles']['birthyear'];;       
+        }*/
+        
+        foreach($location_receiver as $l_receiver){
+            $age = NULL;
+            $location_array[] = $l_receiver['reminders']['current_location'];
+            $gender_array[] = $l_receiver['reminders']['sex'];
+            if($l_receiver['reminders']['friend_birthyear'])        
+                $age_array[] = date('Y') - $l_receiver['reminders']['friend_birthyear'];
+        }
+
     	$unique_users = array_unique($users_array);
         $unique_users_count =  count($unique_users);
         $total_users = count($sender_receiver);
         $repeat_users = $total_users - $unique_users_count;
-    	echo "No. of Gifts Day1 - ".$day1_gifts;
-        echo "No. of Gifts Day2 - ".$day2_gifts;
-        echo "Unique Users - ". $unique_users_count;
-        echo "Total Users - ". $total_users;
-        echo "Repeated Users - ". $repeat_users;
+        $age_group = array_unique($age_array);
+    	
+        $fp = fopen(ROOT.'/app/tmp/'.$id.'_campaign_analysis.csv', 'w+');
+        fputcsv($fp,array('No. of Gifts Day1', $day1_gifts));
+        fputcsv($fp,array('No. of Gifts Day2', $day2_gifts));
+        fputcsv($fp,array('Unique Users', $unique_users_count));
+        fputcsv($fp,array('Age Groups'));
+        fputcsv($fp,$age_group);
+        fputcsv($fp,array('Age Groups', 'No. of Users'));
+        $age_count = array();
+        foreach($age_group as $group){
+        	$count = 0;
+        	foreach($age_array as $age){
+        		if($group == $age) $count++;
+        	}
+        	fputcsv($fp, array($group,$count));
+        }
+        $unique_location = array_unique($location_array);
+        fputcsv($fp,array('Locations'));
+        fputcsv($fp,$unique_location);
+        fputcsv($fp,array('Location', 'No. of Users'));
+        $location_count = array();
+        foreach($unique_location as $location){
+        	$count = 0;
+        	foreach($location_array as $loc){
+        		if($location == $loc) $count++;
+        	}
+        	fputcsv($fp, array($location,$count));
+        }
+        $unique_gender = array_unique($gender_array);
+        fputcsv($fp,array('Gender'));
+        fputcsv($fp,$unique_gender);
+        fputcsv($fp,array('Gender', 'No. of Users'));
+        $gender_count = array();
+        foreach($unique_gender as $gender){
+        	$count = 0;
+        	foreach($gender_array as $gen){
+        		if($gender == $gen) $count++;
+        	}
+        	fputcsv($fp, array($gender,$count));
+        }
+        fputcsv($fp,$gender_count);
+        //print_r($unique_location);
+        //print_r($age_group);
     	$this->autoRender = $this->autoLayout = false;
         exit;
-    }*/
+    }
 }
