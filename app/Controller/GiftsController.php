@@ -1226,4 +1226,19 @@ class GiftsController extends AppController {
     	if(!$gift_receiver_product) $error[1] = "Gift does not belong to this receiver";
     	return $error;
     }
+
+    public function relay_missing_fb_post_for_user($sender_id,$product_id,$gift_status_id){
+    	ini_set("max_execution_time",0); // infinite execution time
+        $this->Gift->recursive = -1;
+        $gifts = $this->Gift->find('all', array(
+            'conditions' => array(
+            'sender_id' => $sender_id,
+            'product_id' => $product_id,
+            'gift_status_id' => $gift_status_id),
+            'contain' => 'Sender'));
+        foreach ($gifts as $gift) {
+        	$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
+        }
+        $this->autoRender = $this->autoLayout = false;
+    }
 }
