@@ -269,7 +269,15 @@ class ProductsController extends AppController {
 	
 	}
 	public function view_product($id=null) {
-		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$this->request->params['named']['receiver_id'])));
+        if ($this->request->is('post')) {
+        //print_r($this->data['products']);die();
+        $receiver_id=$this->data['products']['receiver_id'];
+        $receiver_name=$this->data['products']['receiver_name'];
+        $receiver_birthday=$this->data['products']['receiver_birthday'];
+        $ocasion=$this->data['products']['ocasion'];
+        $id=$this->data['products']['product_id'];
+    }
+		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
         $reciever_address=$this->UserAddress->find('first',array('conditions'=>array('UserAddress.user_id'=>$reciever_id_user_table)));
         $this->set('id',$reciever_address['UserAddress']['id']);
@@ -288,15 +296,15 @@ class ProductsController extends AppController {
 			throw new NotFoundException(__('Invalid product'));
 		}
 		$this->set('title_for_layout', "Send Gift"); // This is read in FacebookHelper to check for sending permissions on facebook. read that before changing XXHACK NS
-		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-		$this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
-		$this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
-		$this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+		$this->set('receiver_id', isset($receiver_id) ? $receiver_id : null);
+		$this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
+		$this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
+		$this->set('ocasion', isset($ocasion) ? $ocasion : null);
 		$this->Product->contain(array('Vendor'));
 		$this->set('product', $this->Product->read(null, $id));
 		$this->Mixpanel->track('Viewing Product', array(
-	        'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
-		        $this->request->params['named']['receiver_name'] : null,
+	        'Receiver' => isset($receiver_name) ? 
+		        $receiver_name : null,
 		    'ProductId' => $id
 			));
 

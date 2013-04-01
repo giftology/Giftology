@@ -136,10 +136,12 @@
         </div>
     
         <div id="gift-details">
-            <?php         if (isset($this->request->params['named']['receiver_birthday']) &&
-                        !$this->Time->isToday($this->request->params['named']['receiver_birthday']) &&
-                        isset($this->request->params['named']['ocasion']) &&
-                        $this->request->params['named']['ocasion'] == 'Birthday') {
+            <?php 
+                
+                    if (isset($receiver_birthday) &&
+                        !$this->Time->isToday($receiver_birthday) &&
+                        isset($ocasion) &&
+                        $ocasion == 'Birthday') {
                         $send_now = 0;
                     } else {
                         $send_now = 1;
