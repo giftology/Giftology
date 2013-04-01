@@ -50,7 +50,7 @@ class AppController extends Controller {
 	if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
 	    isset($this->params->query['rand']) && isset($this->params->query['key'])) {
 		//json call
-	    $allowed_json_methods = array('ws_list', 'ws_add', 'ws_send','ws_about_us');
+	    $allowed_json_methods = array('ws_list', 'ws_add', 'ws_send','ws_about_us', 'ws_redeem');
 	    if (in_array($this->action, $allowed_json_methods)) {
 		//authenticate json
 		if (md5('GiftologyMobile422'.$this->params->query['rand']) == $this->params->query['key']) {

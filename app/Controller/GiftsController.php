@@ -56,6 +56,33 @@ class GiftsController extends AppController {
 		
 		$this->set('_serialize', array('gifts'));
 	}
+
+	public function ws_redeem(){
+		$gift_id = isset($this->params->query['gift_id']) ? $this->params->query['gift_id'] : null;
+		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+		$e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
+		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
+		else{
+			$this->Gift->id = $gift_id;
+			$this->Gift->Behaviors->attach('Containable');
+			$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$gift_id)));
+			$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
+			$this->UploadedProductCode->recursive = -2;
+			$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+				'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+				'UploadedProductCode.code' => $gift['Gift']['code']
+				)
+			));
+			$gift['pin'] = $pin['UploadedProductCode']['pin'];
+			$this->set('gift', $gift);
+		}
+		$this->set('_serialize', array('gift'));	
+	}
+
 	public function ws_send () {
 		$sender_id = isset($this->params->query['sender_id']) ? $this->params->query['sender_id'] : null;
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
@@ -1180,5 +1207,16 @@ class GiftsController extends AppController {
         //print_r($age_group);
     	$this->autoRender = $this->autoLayout = false;
         exit;
+    }
+
+    public function wsRdeemGiftException($gift_id, $receiver_fb_id){
+    	$error = array();
+    	$this->Gift->recursive = -1;
+    	$gift_exists = $this->Gift->find('count', array('conditions' => array('id' => $gift_id)));
+    	if(!$gift_exists) $error[1] = "Gift corresponding to gift id does not exists";
+    	$gift_receiver_product = $this->Gift->find('count', array('conditions' => array('id' => $gift_id,
+    		'receiver_fb_id' => $receiver_fb_id)));
+    	if(!$gift_receiver_product) $error[1] = "Gift does not belong to this receiver";
+    	return $error;
     }
 }
