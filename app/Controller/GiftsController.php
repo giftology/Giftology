@@ -707,13 +707,13 @@ class GiftsController extends AppController {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-		/*$gifts = $this->Gift->find('all', array(
+		$gifts = $this->Gift->find('all', array(
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id'),
 			'order' => array('Gift.id DESC')
-			));*/
+			));
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
@@ -730,11 +730,7 @@ class GiftsController extends AppController {
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id');
 		$this->paginate['conditions'] = $conditions;
-		$gifts = $this->paginate();
-		foreach($gifts as $k => $gift){
-			$gifts[$k]['Gift']['encrypted_gift_id'] = AesCrypt::encrypt( $gift['Gift']['id'] );
-		}
-		$this->set('gifts', $gifts); 
+		$this->set('gifts', $this->paginate());
 		$this->set('gifts_active', 'active');
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
