@@ -663,8 +663,7 @@ class GiftsController extends AppController {
 		return null;
 	}
 	public function redeem() {
-		$decrypted_id = AesCrypt::decryptStr($this->data['id']);
-		$id = unserialize($decrypted_id);
+		$id = $this->data['id'];
 		$this->Gift->id = $id;
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
