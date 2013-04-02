@@ -4,3 +4,6 @@
 [submodule "app/Plugin/Minify"]
 	path = app/Plugin/Minify
 	url = git://github.com/maurymmarques/minify-cakephp.git
+[submodule "app/Plugin/AesCrypt"]
+	path = app/Plugin/AesCrypt
+	url = git://github.com/slaven/AesCrypt.git

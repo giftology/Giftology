@@ -76,7 +76,7 @@
  <?php else: ?>
  <a>       
 
-                <div class="small-voucher" id="<?php echo $gift['Gift']['id'];?>">
+                <div class="small-voucher" id="<?php echo AesCrypt::encrypt( $gift['Gift']['id'] );?>">
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
                             <span class="selected-overlay"></span>

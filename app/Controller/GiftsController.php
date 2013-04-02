@@ -663,7 +663,8 @@ class GiftsController extends AppController {
 		return null;
 	}
 	public function redeem() {
-		$id=$this->data['id'];
+		$decrypted_id = AesCrypt::decryptStr($this->data['id']);
+		$id = unserialize($decrypted_id);
 		$this->Gift->id = $id;
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
@@ -727,6 +728,7 @@ class GiftsController extends AppController {
 			
 		}
 
+		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id');
 		$this->paginate['conditions'] = $conditions;
 		$this->set('gifts', $this->paginate());
 		$this->set('gifts_active', 'active');

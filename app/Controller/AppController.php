@@ -22,6 +22,7 @@
 
 App::uses('Controller', 'Controller');
 App::uses('FB', 'Facebook.Lib');
+App::uses('AesCrypt', 'AesCrypt.Lib');
 
 
 /**
