@@ -11,7 +11,7 @@ class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
 
-    public $components = array('Giftology', 'CCAvenue');
+    public $components = array('Giftology', 'CCAvenue', 'AesCrypt');
     public $paginate = array(
 	'contain' => array(
 		'Product' => array('Vendor')),
@@ -663,7 +663,7 @@ class GiftsController extends AppController {
 		return null;
 	}
 	public function redeem() {
-		$id = $this->data['id'];
+		$id = $this->AesCrypt->decrypt($this->data['id']);
 		$this->Gift->id = $id;
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
@@ -706,13 +706,13 @@ class GiftsController extends AppController {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-		$gifts = $this->Gift->find('all', array(
+		/*$gifts = $this->Gift->find('all', array(
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id'),
 			'order' => array('Gift.id DESC')
-			));
+			));*/
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
@@ -729,7 +729,11 @@ class GiftsController extends AppController {
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id, Gift.sender_id');
 		$this->paginate['conditions'] = $conditions;
-		$this->set('gifts', $this->paginate());
+		$gifts = $this->paginate();
+		foreach($gifts as $k => $gift){
+			$gifts[$k]['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($gift['Gift']['id']);
+		}
+		$this->set('gifts', $gifts);
 		$this->set('gifts_active', 'active');
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
