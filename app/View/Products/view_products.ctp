@@ -19,7 +19,7 @@
                         <?php foreach ($products as $product): ?>
 
  
-<a style="display: inline-block;height: 90px;margin: 0 32px 20px;padding-top: 18px;width: 250px">
+<a style="display: inline-block;height: 90px;margin: 0 32px 20px;padding-top: 18px;width: 250px; cursor:pointer;">
 
 <?php  echo $this->Form->create('products', array('action' => 'view_product','id'=>$product['Product']['id']));?>
  
