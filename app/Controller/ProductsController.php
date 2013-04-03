@@ -273,19 +273,18 @@ class ProductsController extends AppController {
 	
 	}
 	public function view_product($id=null) {
-        
         $t=time();
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));
 
         if ($this->request->is('post')) {
        
-        $receiver_id=$this->data['products']['receiver_id'];
-        $receiver_name=$this->data['products']['receiver_name'];
-        $receiver_birthday=$this->data['products']['receiver_birthday'];
-        $ocasion=$this->data['products']['ocasion'];
-        $id=$this->AesCrypt->decrypt($this->data['id']);
-    }
+            $receiver_id=$this->data['products']['receiver_id'];
+            $receiver_name=$this->data['products']['receiver_name'];
+            $receiver_birthday=$this->data['products']['receiver_birthday'];
+            $ocasion=$this->data['products']['ocasion'];
+            $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
+        }
 		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
         $reciever_address=$this->UserAddress->find('first',array('conditions'=>array('UserAddress.user_id'=>$reciever_id_user_table)));

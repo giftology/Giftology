@@ -53,7 +53,7 @@ array('cache' => array(
                 $('<input>').attr({
                     type: 'hidden',
                     id: gift_value+'_hidden',
-                    name: 'id',
+                    name: 'encrypted_product_id',
                     value: gift_value,
                 }).appendTo('#productsViewProductForm');
                 $("#productsViewProductForm").submit()
