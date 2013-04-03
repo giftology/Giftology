@@ -242,7 +242,8 @@
             <div class="input email" ><?php echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['id'] ))?></div>
+            <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
+             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
              
@@ -298,7 +299,8 @@
             <h4>Deliver your gift</h4>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['id'] ))?></div>
+            <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
+            <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
             <div class="delivery-sharing">

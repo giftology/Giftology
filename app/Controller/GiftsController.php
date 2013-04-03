@@ -268,6 +268,13 @@ class GiftsController extends AppController {
 
 	}
 	public function send() {
+		
+		$session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
+		$green =$this->Session->read('session_time');
+		if($session_time != $green){
+        	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+
+		}
 		if(isset($this->data['gifts']))
         {
         	$this->Gift->Product->recursive = -1;
@@ -339,7 +346,7 @@ class GiftsController extends AppController {
                           
             $sender_id = $this->Auth->user('id');
             $receiver_fb_id = $receiver['User']['facebook_id'];
-            $product_id = $this->data['gifts']['product_id'];
+            $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
             $amount = $this->data['contribution_amount']; 
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
@@ -381,6 +388,7 @@ class GiftsController extends AppController {
             $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name); 
 
         }
+        $this->Session->delete('session_time');
 	}
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $reciever_name = null,$date_to_send = null) {

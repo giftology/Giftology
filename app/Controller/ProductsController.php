@@ -16,7 +16,7 @@ class ProductsController extends AppController {
 	    )
 	);
 	public $uses = array( 'Product','User','UserAddress','Gift');
-
+    public $components = array('AesCrypt');
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('send_product_expiry_reminder');
@@ -186,6 +186,7 @@ class ProductsController extends AppController {
 
     }
 	public function view_products () {
+       
 		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
         $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
         $year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
@@ -248,9 +249,12 @@ class ProductsController extends AppController {
          
         
             }
-                 
             $result = array_merge((array)$show_product, (array)$unpaid_product);
             $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.min_price','Product.display_order')));
+             
+             foreach($proddd as $k => $product){
+                $proddd[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($product['Product']['id']);
+             }
              $this->set('products',$proddd);
 
             //$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
@@ -270,13 +274,17 @@ class ProductsController extends AppController {
 	}
 	public function view_product($id=null) {
         
+        $t=time();
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+
         if ($this->request->is('post')) {
        
         $receiver_id=$this->data['products']['receiver_id'];
         $receiver_name=$this->data['products']['receiver_name'];
         $receiver_birthday=$this->data['products']['receiver_birthday'];
         $ocasion=$this->data['products']['ocasion'];
-        $id=$this->data['id'];
+        $id=$this->AesCrypt->decrypt($this->data['id']);
     }
 		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
@@ -302,7 +310,9 @@ class ProductsController extends AppController {
 		$this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
 		$this->set('ocasion', isset($ocasion) ? $ocasion : null);
 		$this->Product->contain(array('Vendor'));
-		$this->set('product', $this->Product->read(null, $id));
+        $proddd=$this->Product->read(null, $id);
+        $proddd['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);
+		$this->set('product', $proddd);
 		$this->Mixpanel->track('Viewing Product', array(
 	        'Receiver' => isset($receiver_name) ? 
 		        $receiver_name : null,
