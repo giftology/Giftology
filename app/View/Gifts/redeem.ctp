@@ -46,7 +46,7 @@
                        
                  <?php echo $this->Form->end(); ?>
              </div>
-                 <div id = "sms" style="margin-left:40px;margin-top:-40px" >
+                 <div id = "sms" style="margin-left:80px;margin-top:-36px" >
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                         
                             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
@@ -57,6 +57,16 @@
                        
                 <?php echo $this->Form->end(); ?>
             </div>
+              <div id = "email_voucher"style="margin-left:40px;margin-top:-40px">
+                <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
+                        <?php /*if($gift['Gift']['email']=="0"){?>
+                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
+                            <?php }*/ ?>
+                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
+                                <!---->
+                       
+                 <?php echo $this->Form->end(); ?>
+             </div>
         </div>
 
 
@@ -91,6 +101,14 @@
       $(document).ready(function(){
             $("#sms").click(function (){
                 $("#sms1").submit()
+            });
+        });
+        </script>
+        <script type="text/javascript">
+
+      $(document).ready(function(){
+            $("#email_voucher").click(function (){
+                $("#email1").submit()
             });
         });
         </script>

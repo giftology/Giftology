@@ -25,7 +25,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -623,7 +623,61 @@ class GiftsController extends AppController {
             }
 		}
 	}
+	public function email_voucher(){
 
+		$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+		if($id == "")
+     	{
+     		$this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));	
+     	}
+		$gift = $this->Gift->find('first', array(
+		'contain' => array(
+		'Product' => array('Vendor'),
+		'Receiver' => array('UserProfile')),
+		'conditions' => array('Gift.id'=>$id)));
+		$this->set('email',$gift['Receiver']['UserProfile']['email']) ;
+		$this->set('gift', $gift);
+	}
+	function send_voucher_email()
+	{
+	DebugBreak();	
+		$receiver_email=$this->data['gifts']['email'];
+		$receiver_name =$this->data['gifts']['user_name'];
+		$id=isset($this->data['gifts']['id']) ? $this->data['gifts']['id'] : NULL;
+    	$gift = $this->Gift->find('first', array(
+			'contain' => array(
+				'Product' => array('Vendor'),
+				'Sender' => array('UserProfile')),
+			'conditions' => array('Gift.id'=>$id)));
+    	 $vendor_name = $gift['Product']['Vendor']['name'];
+    	$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+			'UploadedProductCode.code' => $gift['Gift']['code']
+			)
+		));
+$email = new CakeEmail();
+			    $email->config('smtp')
+			    ->template('email_voucher', 'default') 
+			    ->emailFormat('html')
+			    ->to($receiver_email)
+			    ->from('prabhat@giftology.com')
+			    ->subject($receiver_name.',Your '.$vendor_name.' voucher is here')
+			    ->viewVars(array(
+					     'receiver' => $receiver_name,
+					     'pin' =>$pin['UploadedProductCode']['pin'],
+					     'gift' => $gift,
+					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+			    ->send();	
+			    $this->Gift->recursive= -2; 
+                $this->Gift->id= $id;
+                $this->Gift->saveField('email_address',$receiver_email);
+			   $this->Gift->updateAll (array('Gift.email' => 1),
+						array('Gift.id' => $id)); 
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+
+	}
 	function send_email ($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$template)
 	{
 		$gift = $this->Gift->find('first', array(
@@ -690,7 +744,8 @@ class GiftsController extends AppController {
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
-		));
+		));  
+        $this->set('email',$gift['Sender']['UserProfile']['email']) ;
 		$this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
@@ -775,7 +830,7 @@ class GiftsController extends AppController {
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
 	}
-
+	
 	
     public function print_pdf() 
     { 	

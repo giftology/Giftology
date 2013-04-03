@@ -59,7 +59,7 @@
     <input type="hidden" id="max-voucher-price" value=<?= $product['Product']['max_price']; ?>></input>
 
 <?php else: ?>
-    <div class="small-voucher">
+    <div class="small-voucher" id=<?= $product['Product']['id']; ?> >
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
                             <span class="selected-overlay"></span>

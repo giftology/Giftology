@@ -269,13 +269,14 @@ class ProductsController extends AppController {
 	
 	}
 	public function view_product($id=null) {
+        
         if ($this->request->is('post')) {
-        //print_r($this->data['products']);die();
+       
         $receiver_id=$this->data['products']['receiver_id'];
         $receiver_name=$this->data['products']['receiver_name'];
         $receiver_birthday=$this->data['products']['receiver_birthday'];
         $ocasion=$this->data['products']['ocasion'];
-        $id=$this->data['products']['product_id'];
+        $id=$this->data['id'];
     }
 		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
