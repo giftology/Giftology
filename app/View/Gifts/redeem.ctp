@@ -41,7 +41,7 @@
                 <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
                        
                             <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
-                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
+                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
                                 <!---->
                        
                  <?php echo $this->Form->end(); ?>
@@ -49,7 +49,7 @@
                  <div id = "sms" style="margin-left:80px;margin-top:-36px" >
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                         
-                            <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
+                            <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
                             <?php if($gift['Gift']['sms']=="0"){?>
                                 <a><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
                                 

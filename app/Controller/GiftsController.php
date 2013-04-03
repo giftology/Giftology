@@ -744,7 +744,8 @@ $email = new CakeEmail();
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
-		));  
+		));
+		$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
         $this->set('email',$gift['Sender']['UserProfile']['email']) ;
 		$this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
@@ -834,7 +835,8 @@ $email = new CakeEmail();
 	
     public function print_pdf() 
     { 	
-    	$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+    	$gift_id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+    	$id = $this->AesCrypt->decrypt($gift_id);
     	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
@@ -858,7 +860,8 @@ $email = new CakeEmail();
 
     public function sms() 
     { 
-    	$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+    	$gift_id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+     	$id = $this->AesCrypt->decrypt($gift_id);
      	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
@@ -874,12 +877,13 @@ $email = new CakeEmail();
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
+     	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
     	$this->set('pin',$pin['UploadedProductCode']['pin']);
     	
     } 
     public function send_sms(){
-    	$gift_id=$this->data['gifts']['id'];
+    	$gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
     	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
            $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
 						array('Gift.id' => $gift_id)); 

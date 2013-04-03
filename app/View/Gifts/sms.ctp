@@ -39,7 +39,7 @@ return false; }
            
              echo $this->Form->create('gifts', array('action' => 'send_sms'));
             
-             echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id']))?>
+             echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id']))?>
              <div class="input email">
              	<br><br>
                 
