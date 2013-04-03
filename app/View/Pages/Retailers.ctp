@@ -163,7 +163,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                     <label for="email">We deal with</label>
               
                     <!--strict field -->
-                     <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Books/Music/Entertainment'=> 'Books/Music/Entertainment', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelry/Accessories'=>'Jewelry/Accessories','Restaurants/Cafes'=>'Restaurants/cafes','Sporting Goods'=>'Sporting Goods','Toys'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
+                     <div class="input email" ><?php echo $this->Form->input("last_name" ,array('name'=>'deals_r','type' => 'select','options' => array('Books/Music/Entertainment'=> 'Books/Music/Entertainment', 'Fashion' => 'Fashion','Department Stores'=>'Department Stores','Furniture/Home Interior'=>'Furniture/Home Interior','Health/Beauty/Bodycare'=>'Health/Beauty/Bodycare','Jewelry/Accessories'=>'Jewelry/Accessories','Restaurants/Cafes'=>'Restaurants/Cafes','Sporting Goods'=>'Sporting Goods','Toys'=>'Toys','Travel'=>'Travel','Others'=>'Others'),'label' => false,'div' => false,'class'=>"umstyle5" ))?> </div>
                   
                       </div>
 
