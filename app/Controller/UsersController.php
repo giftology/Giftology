@@ -146,23 +146,25 @@ class UsersController extends AppController {
 	}
     
     public function login() {
-        if ($this->Connect->user() && $this->Auth->User('id')) {
+        //DebugBreak();
+
+        if ($this->Connect->user() && $this->Auth->User('id')){
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
-        } else {
-	    $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
-        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
-        $Image_new = array();
-        foreach ($Image as $Images) 
-        {
-            $id=$Images['Product']['vendor_id'];
-            $this->Vendor->unbindModel(array('hasMany' => array('Product')));
-            $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
-            $this->set('Images', $Image_new);
         }
+        else{
+            $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
+            $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+            $Image_new = array();
+            foreach ($Image as $Images) {
+                $id=$Images['Product']['vendor_id'];
+                $this->Vendor->unbindModel(array('hasMany' => array('Product')));
+                $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+                $this->set('Images', $Image_new);
+            }
         
-        $slidePlaySpeed = 8000;
+            $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
                     'GiftId' => $this->request->query['gift_id']
@@ -178,62 +180,74 @@ class UsersController extends AppController {
                                 'Vendor' => array('fields' => array('name','facebook_image'))),
 			    'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
                         ));
-                if ($gift) {
-		    $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
-            $this->Reminder->recursive = -1;
-            $receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
-            if($receiver_name['Reminder']['friend_name'])
-                $receiver_name = $receiver_name['Reminder']['friend_name'];
-            else $receiver_name = 'you';
-		    $vendor_name = $gift['Product']['Vendor']['name'];
-		    $image = $gift['Product']['Vendor']['facebook_image'];
-		    $value = $gift['GiftsReceived']['gift_amount'];
-	    	    $message = "Welcome to the Giftology family!<br><br><strong>".$sender_name."</strong> has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
-		    $slidePlaySpeed = 4000;
-		    $this->setGiftsSent();
-		}
+                
+                if($gift){
+                    $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
+                    $this->Reminder->recursive = -1;
+                    $receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
+                    if($receiver_name['Reminder']['friend_name'])
+                        $receiver_name = $receiver_name['Reminder']['friend_name'];
+                    else $receiver_name = 'you';
+                    $vendor_name = $gift['Product']['Vendor']['name'];
+                    $image = $gift['Product']['Vendor']['facebook_image'];
+                    $value = $gift['GiftsReceived']['gift_amount'];
+                    $message = "Welcome to the Giftology family!<br><br><strong>".$sender_name."</strong> has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
+                    $slidePlaySpeed = 4000;
+                    $this->setGiftsSent();
+                }
+            }
+            else{
+                $this->Mixpanel->track('Landing Page', array());
+            }
+            if (isset($sender_name)) 
+            {
+                $this->set('sender_name', $sender_name);
+            }
+            if (isset($receiver_name)) 
+            {
+                $this->set('receiver_name', $receiver_name);
+            }
+            
+            $this->set('slidePlaySpeed', $slidePlaySpeed);
+            $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
+            if (isset($vendor_name)) {
+                $this->set('fb_title', " Surprise! ". $sender_name." has sent a gift to ".$receiver_name.". Visit Giftology to unwrap the gift.");
             } else {
-                $this->Mixpanel->track('Landing Page', array(
-                ));
+                $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
+            }
 
-		}
-	    $this->set('slidePlaySpeed', $slidePlaySpeed);
-	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
-	    if (isset($vendor_name)) {
-        $this->set('fb_title', " Surprise! ". $sender_name." has sent a gift to ".$receiver_name.". Visit Giftology to unwrap the gift.");
-        } else {
-        $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
-        }
-        if (isset($image)) {
-        $this->set('fb_image', FULL_BASE_URL.'/'.$image);
-        } else {
-        $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
-        }
-        $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
-	    //set utm source if set
-	    if (isset($this->request->query['utm_source'])) {
-		$this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
-	    }
-	    if (isset($this->request->query['utm_medium'])) {
-		$this->Cookie->write('utm_medium', $this->request->query['utm_medium'], false, '2 days');
-	    }
-	    if (isset($this->request->query['utm_campaign'])) {
-		$this->Cookie->write('utm_campaign', $this->request->query['utm_campaign'], false, '2 days');
-	    }
-	    if (isset($this->request->query['utm_term'])) {
-		$this->Cookie->write('utm_term', $this->request->query['utm_term'], false, '2 days');
-	    }
-	    if (isset($this->request->query['utm_content'])) {
-		$this->Cookie->write('utm_content', $this->request->query['utm_content'], false, '2 days');
-	    }
+            if (isset($image)) {
+                $this->set('fb_image', FULL_BASE_URL.'/'.$image);
+            } else {
+                $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
+            }
+            $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+	        //set utm source if set
+	        if (isset($this->request->query['utm_source'])) {
+		      $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
+	        }
+	        if (isset($this->request->query['utm_medium'])) {
+                $this->Cookie->write('utm_medium', $this->request->query['utm_medium'], false, '2 days');
+	        }
+	        if (isset($this->request->query['utm_campaign'])) {
+                $this->Cookie->write('utm_campaign', $this->request->query['utm_campaign'], false, '2 days');
+	        }
+	        if (isset($this->request->query['utm_term'])) {
+                $this->Cookie->write('utm_term', $this->request->query['utm_term'], false, '2 days');
+	        }
+	        if (isset($this->request->query['utm_content'])) {
+                $this->Cookie->write('utm_content', $this->request->query['utm_content'], false, '2 days');
+	        }
 
             $this->set('message', $message);
 	    //if (!$this->RequestHandler->isMobile()) {
-               $this->layout = 'landing';
+               //$this->layout = 'landing_redeem';
 	    //} else {
 		//$this->layout = 'mobile_landing';
 	    //}
-       }
+            if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
+            else $this->layout = 'landing';
+        }
     }
 
     public function logout() {
