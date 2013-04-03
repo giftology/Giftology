@@ -74,7 +74,7 @@
                 </div> 
             </a>
  <?php else: ?>
- <a>       
+ <a style="cursor:pointer">       
 
                 <div class="small-voucher" id="<?php echo $gift['Gift']['encrypted_gift_id'];?>">
                     <span class="free  voucher">

@@ -36,7 +36,7 @@
             <div id="redemption-code-title">Redemption Code</div>
             <div id="redemption-code"><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></div>
 
-            <div style="float:right;margin-top:40px;margin-left:200px">
+            <div style="float:right;margin-top:40px;margin-left:200px;cursor:pointer">
                 <div id = "print">
                 <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
                        
