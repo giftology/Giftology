@@ -74,9 +74,9 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 	
 	
 	<h4>I've sent a gift, how do I know my friend has received it?</h4>
-	 <p>&nbsp; 1- Your friend will be notified they've received a gift using the notification methods you choose: by email, on Facebook, or both.</p>
-	  <p>&nbsp;2- It's up to your friends to then login to Giftology and "accept" their gift. If they haven't done this yet, you'll have to remind them.</p>
-	  <p>&nbsp;3- Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via Gharpay) – Coming soon.</p>
+	  <p>&nbsp;1. Your friend will be notified that they've received a gift using the notification methods you choose: by email, on Facebook, or both.</p>
+	  <p>&nbsp;2. It's up to your friends to then login to Giftology and "accept" their gift. If they haven't done this yet, you'll have to remind them.</p>
+	  <p>&nbsp;3. Sometimes gifts need to be delivered to the recipient. In this case we'll send it to them once we have received the payment (in case of cash payment via Gharpay–coming soon).</p>
 	
 	<h4>Where are these gift accepted?</h4>
 	<p>Some gifts are used on partner websites and others in the specific store or location.If there are any conditions please refer to the offer details.</p>
@@ -89,7 +89,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 	
 	<h4>Why does my voucher show as Expired?</h4>
 	 <p>Oh no! This means the gift voucher is no more redeemable due to the following reasons:</p>
-	 <p>&nbsp; 1. The gift may have surpassed its “valid up-to” date</p>
+	  <p>&nbsp;1. The gift may have surpassed its “valid up-to” date</p>
 	  <p>&nbsp;2. The gift offered by our partner has been withdrawn</p>
 	
 	<h4>How can I pay for gifts?</h4>
