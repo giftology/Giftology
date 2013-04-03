@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class UsersController extends AppController {
     public $helpers = array('Minify.Minify');
-    public $uses = array( 'User','Vendor','Product');
+    public $uses = array( 'User','Vendor','Product','Reminder');
     public $components = array('Giftology');
 
     public function beforeFilter() {
@@ -176,10 +176,15 @@ class UsersController extends AppController {
                             'Product' => array(
                                 'fields' => array('Product.id'),
                                 'Vendor' => array('fields' => array('name','facebook_image'))),
-			    'Sender' => array('UserProfile'))
+			    'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
                         ));
                 if ($gift) {
 		    $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
+            $this->Reminder->recursive = -1;
+            $receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
+            if($receiver_name['Reminder']['friend_name'])
+                $receiver_name = $receiver_name['Reminder']['friend_name'];
+            else $receiver_name = 'you';
 		    $vendor_name = $gift['Product']['Vendor']['name'];
 		    $image = $gift['Product']['Vendor']['facebook_image'];
 		    $value = $gift['GiftsReceived']['gift_amount'];
@@ -195,7 +200,7 @@ class UsersController extends AppController {
 	    $this->set('slidePlaySpeed', $slidePlaySpeed);
 	    $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
 	    if (isset($vendor_name)) {
-        $this->set('fb_title', " Surprise! ". $sender_name." has sent a gift to you. Visit Giftology to unwrap the gift, ");
+        $this->set('fb_title', " Surprise! ". $sender_name." has sent a gift to ".$receiver_name.". Visit Giftology to unwrap the gift.");
         } else {
         $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
         }
