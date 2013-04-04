@@ -46,7 +46,7 @@
                        
                  <?php echo $this->Form->end(); ?>
              </div>
-                 <div id = "sms" style="margin-left:40px;margin-top:-36px" >
+                 <div id = "sms" style="margin-left:40px;margin-top:-37px" >
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                         
                             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
