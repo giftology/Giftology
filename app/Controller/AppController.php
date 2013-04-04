@@ -93,6 +93,12 @@ class AppController extends Controller {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         }
+
+    function afterFilter(){
+    	if($this->params['controller']=='gifts' && $this->action=='view_gifts')
+    		$this->Auth->allow($this->action);
+    }
+
     function isAuthorized($user) {
         // Admin can access every action
         if (isset($user['role']) && $user['role'] === 'admin') {
