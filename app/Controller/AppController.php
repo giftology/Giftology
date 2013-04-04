@@ -59,6 +59,10 @@ class AppController extends Controller {
 		}
 	    }
 	}
+
+	if($this->name == 'view_gifts' && $this->Auth->user()){
+		$this->redirect(array('controller' => 'gifts', 'action'=> 'view_gifts'));
+	}
 	if ($this->name == 'CakeError') {  
 		   $this->redirect(array('controller' => 'reminders', 'action'=> 'view_friends'));
 	}
