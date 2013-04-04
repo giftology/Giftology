@@ -25,6 +25,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js filternone"> <![endif]-->
     <head>
+      <title>
+        Giftology | The Social Gifting Company | Homepage
+      </title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>giftology</title>
@@ -36,7 +39,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          <script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
          <?php
     echo $this->Html->meta('icon');
-    echo $this->Minify->css(array('main_redeem', 'normalize'));
+    echo $this->Minify->css(array('main_redeem','flexslider','normalize','style'));
     echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology')); 
     echo $this->fetch('meta');
     echo $this->fetch('css');
@@ -55,8 +58,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 </script>
     </head>
-    <body>
+    <body style="zoom: 1; margin-bottom: 0px;">
         <?php echo $this->Facebook->init(); ?>
+        <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -75,7 +79,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                 'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
                     </div>
                  </div>
-                <div class="fblike"><img src="<?= FULL_BASE_URL; ?>/img/fblike.jpg" alt=""></div>
+                <div class="fblike"><!--<img src="<?= FULL_BASE_URL; ?>/img/fblike.jpg" alt="">--></div>
                 
             </div>
             <?php $name = explode(" ", $sender_name);

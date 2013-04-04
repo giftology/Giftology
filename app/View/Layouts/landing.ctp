@@ -34,7 +34,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   <?php endif; ?>
   <?php
     echo $this->Html->meta('icon');
-    echo $this->Minify->css(array('main', 'normalize','flexslider'));
+    echo $this->Minify->css(array('main','normalize','flexslider','style'));
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
