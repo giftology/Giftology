@@ -146,8 +146,6 @@ class UsersController extends AppController {
 	}
     
     public function login() {
-        //DebugBreak();
-
         if ($this->Connect->user() && $this->Auth->User('id')){
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         }
@@ -245,8 +243,9 @@ class UsersController extends AppController {
 	    //} else {
 		//$this->layout = 'mobile_landing';
 	    //}
-            if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
-            else $this->layout = 'landing';
+            //if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
+            //else $this->layout = 'landing';
+            $this->layout = 'landing';
         }
     }
 
