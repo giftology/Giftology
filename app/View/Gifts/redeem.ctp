@@ -36,8 +36,8 @@
             <div id="redemption-code-title">Redemption Code</div>
             <div id="redemption-code"><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></div>
 
-            <div style="float:right;margin-top:40px;margin-left:200px;cursor:pointer">
-                <div id = "print">
+            <div style="float:right;margin-top:0px;margin-left:200px;cursor:pointer">
+                <div id = "print" >
                 <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
                        
                             <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
@@ -46,7 +46,7 @@
                        
                  <?php echo $this->Form->end(); ?>
              </div>
-                 <div id = "sms" style="margin-left:80px;margin-top:-36px" >
+                 <div id = "sms" style="margin-left:40px;margin-top:-40px" >
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                         
                             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
@@ -70,8 +70,8 @@
         </div>
 
 
-            <div id="redeem-note" style="float:right;margin-top:40px;margin-left:100px">
-                Note - One Code Per Transaction
+            <div id="redeem-note" style="margin-top:40px;margin-left:5px">
+               <h5>Please note: Only one code will be accepted per transaction</h5>
             </div>
         </div>
         <div id="redeem-instr" class="disclosure opened">
