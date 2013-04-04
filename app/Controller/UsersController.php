@@ -243,9 +243,8 @@ class UsersController extends AppController {
 	    //} else {
 		//$this->layout = 'mobile_landing';
 	    //}
-            //if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
-            //else $this->layout = 'landing';
-            $this->layout = 'landing';
+            if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
+            else $this->layout = 'landing';
         }
     }
 
