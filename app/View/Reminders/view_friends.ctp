@@ -79,7 +79,7 @@
                                 }
                         ?>
                         </div>
-                    <?= $this->element('friend_list',
+                    <?= $this->element('friend_list_all',
                                         array('reminders' => $all_users,
                                               'no_calendar' => true),
                                         array('cache' => array(
