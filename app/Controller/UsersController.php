@@ -517,7 +517,7 @@ class UsersController extends AppController {
         $email->config('smtp')
               ->template('reminder_new', 'default') 
           ->emailFormat('html')
-          ->to('varun@giftology.com')
+          ->to('shubham@giftology.com')
           ->from(array('care@giftology.com' => 'Giftology'))
           ->subject('Welcome to Giftology')
               ->viewVars(array('name' => $this->Connect->user('name')))
