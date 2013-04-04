@@ -23,6 +23,12 @@ class GiftsController extends AppController {
 	$this->Auth->allow('send_today_scheduled_gifts');
     }
 
+    public function afterFilter(){
+    	parent::afterFilter();
+    	if($this->params['controller']=='gifts' && $this->action=='view_gifts')
+    		$this->Auth->allow($this->action);
+    }
+
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
 		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')) {
