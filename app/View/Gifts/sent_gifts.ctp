@@ -47,7 +47,7 @@
                 <?php foreach ($gifts as $gift): ?>
 			<?php $gift['Vendor'] = &$gift['Product']['Vendor']; ?>
 			<a href="<?= $this->Html->url(array('controller' => 'gifts',
-                    'action' => 'sent_gifts')); ?>"  class="popper" data-popbox="<?=$gift['Gift']['id'];?>">
+                    'action' => 'sent_gifts')); ?>"  class="popper" >
 
                 <div class="small-voucher">
                     <span class="free  voucher">
@@ -57,7 +57,7 @@
                                     <span class="image-frame"></span>
                                     <img src="<?= FULL_BASE_URL.'/'.$gift['Vendor']['thumb_image']; ?>">                     </span>
                             <span class="details">
-                                    <span class="issuer"><?= $gift['Vendor']['name']; ?></span>
+                                    <span class="issuer" style="margin-top:-9px"><?= $gift['Vendor']['name']; ?></span>
                                     <span class="value" style="width:119px;font-size: 16px"><span id="WebRupee" class="WebRupee">Rs.</span>
                                     <?= isset($gift['Product']['min_value']) ?
                                         $gift['Product']['min_value'] :
@@ -71,7 +71,7 @@
                                     <span class="label" style="margin-top:25px;font-size:11px;background-color: #FFFFFF;color: #000000">To : <?= $this->Facebook->name($gift['Gift']['receiver_fb_id']); ?></span>
 
                                     <?php if ($gift['Gift']['gift_status_id']==GIFT_STATUS_SCHEDULED): ?>
-                                            <span class="label" style="margin-top:-40px;font-size:11px;background-color: #FFFFFF;color: #000000">SCHEDULED GIFT</span>
+                                            <span class="label" style="margin-top:-42px;font-size:11px;background-color: #FFFFFF;color: #000000">SCHEDULED GIFT</span>
                                      <?php endif; ?> 
 
                                     
