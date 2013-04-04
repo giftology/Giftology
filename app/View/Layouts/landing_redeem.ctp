@@ -71,14 +71,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <p> Hi  <span><?= $receiver_name ?></span>
                     <p>You've received a gift from <span><?= $sender_name ?></span></p>
                      <!--<a href="javascript:void(0);" class="fb-btn">&nbsp;</a>-->
-                     <div class="fbconect"  id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-btn.png',
+                     <div  id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-btn.png',
                 'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?>
                     </div>
                  </div>
                 <div class="fblike"><img src="<?= FULL_BASE_URL; ?>/img/fblike.jpg" alt=""></div>
                 
             </div>
-            
+            <?php $name = explode(" ", $sender_name);
+            $last_name = isset($name[0]) ? $name[0] : NULL;
+             ?>
             
             <div class="gift-block animated">
                 <div class="gift-content">
@@ -91,7 +93,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <div class="tag-content animated ">
                         <a href="javascript:void(0);" class="tag-logo"><!--<img src="img/tag-logo.png" alt="">--></a>
                         <span class="withlove">With Love...</span>
-                        <span class="name"><a href="javascript:void(0);">-<?= $sender_name ?></a></span>
+                        <span class="name"><a href="javascript:void(0);">-<?= $last_name ?></a></span>
                     </div>
                 </div>
              </div>
@@ -163,7 +165,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                         },700);
                 });
         </script> 
-         <script type="text/javascript">
+         <!--<script type="text/javascript">
        !function(window){
   var $q = function(q, res){
         if (document.querySelectorAll) {
@@ -263,7 +265,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
           next: '',
           pagination: ''
         });
-    });
+    )};
      
      $(window).resize(function(){
        setTimeout(function(){
@@ -284,7 +286,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       });
       
 });
-  </script>
+  </script>-->
   <script type="text/javascript">
     var clicky_site_ids = clicky_site_ids || [];
     clicky_site_ids.push(66489932);
@@ -296,12 +298,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
   </script> 
-   <script type="text/javascript">
+  <script type="text/javascript">
     $(document).ready(function(){
     $("#fb").click(function(){
         $("a").attr("href",$("a").attr("href").replace(/#/, "")); 
     return false; /* This prevents url from # */
-});
+    });
   });
     </script>
   
