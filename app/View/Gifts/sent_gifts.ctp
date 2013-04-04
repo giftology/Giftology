@@ -67,7 +67,9 @@
                                    $originalDate = $gift['Gift']['created'];
                                    $newDate = date("j F ", strtotime($originalDate)); ?>
                                     <span class="label" style="margin-top:43px;font-size:11px;background-color: #FFFFFF;color: #000000">Sent On : <?= $newDate ?></span>
-                                    <span class="label" style="margin-top:25px;font-size:11px;background-color: #FFFFFF;color: #000000">To : <?= $gift['name'] ?></span>
+
+                                    <span class="label" style="margin-top:25px;font-size:11px;background-color: #FFFFFF;color: #000000">To : <?= $this->Facebook->name($gift['Gift']['receiver_fb_id']); ?></span>
+
                                     <?php if ($gift['Gift']['gift_status_id']==GIFT_STATUS_SCHEDULED): ?>
                                             <span class="label" style="margin-top:-40px;font-size:11px;background-color: #FFFFFF;color: #000000">SCHEDULED GIFT</span>
                                      <?php endif; ?> 
@@ -99,6 +101,9 @@
         
         
 </div>	
+<style>
+.fb_link{background-color: #FFFFFF;color: #000000}
+</style>
 
 
 

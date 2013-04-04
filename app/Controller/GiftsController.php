@@ -804,37 +804,15 @@ $email = new CakeEmail();
 	}
 
 	public function sent_gifts() {
+		//DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
 			$conditions = array('sender_id' => $this->Auth->user('id'), 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING);
 		}
-		$gift_sent = $this->Gift->find('all', array(
-			'contain' => array(
-				'Product' => array('Vendor')),
-			'conditions' => array('Gift.sender_id' => $this->Auth->user('id'))));
-		//print_r($gift_sent);
-		$fb_name = array();
-		foreach ($gift_sent as $gift) {
-			$fb_id=$gift['Gift']['receiver_fb_id'];
-			$User_info = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
-			$fb_name[]['name']=$User_info['Reminder']['friend_name'];
-			# code...
-		}
-		if($fb_name!=null){
-		$name = array_reverse($fb_name);
-		}
-		
 		$this->paginate['conditions'] = $conditions;
-		//$this->set('gifts', $this->paginate());
-		$set = $this->paginate();
-		$result = array();
-				foreach($set as $key=>$val){ // Loop though one array
-				    $val2 = $name[$key]; // Get the values from the other array
-				    $result[$key] = $val + $val2; // combine 'em
-				}
-				
-		$this->set('gifts', $result);
+		$gifts = $this->paginate();
+		$this->set('gifts', $gifts);
 		$this->set('gifts_active', 'active');
 		$this->Mixpanel->track('Viewing Gifts', array(
 		));
