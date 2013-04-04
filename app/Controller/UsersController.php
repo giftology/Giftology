@@ -18,7 +18,7 @@ class UsersController extends AppController {
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop') || ($this->action == 'send_rem_email')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -511,20 +511,7 @@ class UsersController extends AppController {
               ->send();
               $this->welcome_post_to_fb();
     }
-    function send_rem_email() {
-        //DebugBreak();
-        $email = new CakeEmail();
-        $email->config('smtp')
-              ->template('reminder_new', 'default') 
-          ->emailFormat('html')
-          ->to('shubham@giftology.com')
-          ->from(array('care@giftology.com' => 'Giftology'))
-          ->subject('Welcome to Giftology')
-              ->viewVars(array('name' => $this->Connect->user('name')))
-              ->send();
-              //$this->welcome_post_to_fb();
-    }
-
+    
     function welcome_post_to_fb() {
        
         $url = "http://www.giftology.com";
