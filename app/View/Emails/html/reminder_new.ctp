@@ -7,11 +7,11 @@
 
 <body style="background:#D3D3D3; margin:0; padding:0; line-height:1;font-family:Georgia, 'Times New Roman', Times, serif; font-size:13px;">
 <div style="width:650px; margin:0 auto;">	
-	<div style="width:630px; margin:0 auto; padding:0 10px 10px 10px; background:#E14C41 url(images/main-bg.jpg) no-repeat 0 0; min-height:430px; position:relative; overflow:hidden;">
+	<div style="width:630px; margin:0 auto; padding:0 10px 10px 10px; background:#E14C41 url(localhost/img/main-bg.jpg) no-repeat 0 0; min-height:430px; position:relative; overflow:hidden;">
 	<div style="width:100%; float:left;">
 	<table style="width:100%; margin:0; padding:0;" cellpadding="0" cellspacing="0">
 	<tr>
-    	<td align="center"><a href="javascript:void(0);"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt="" style="outline:none;"></a></td>
+    	<td align="center"><a href="javascript:void(0);"><img src="https://lh4.googleusercontent.com/-mz4MAIV4-UU/UVFyWcVtOZI/AAAAAAAAAE4/BfUDTiRoeVg/w689-h253-p-o/logo.png" alt="" style="outline:none;" width="266px" height="98px"></a></td>
     </tr>
     <tr>
     	<td align="center"><h2 style="font:Georgia, 'Times New Roman', Times, serif; margin:0; padding:40px 0 24px 0;"><font style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px; color:#FFF; font-style:italic; font-weight:300;">Dear Snehil Khanor</font></h2> </td>
@@ -26,9 +26,9 @@
             
             <table style="width:530px; margin:0; padding:20px 0; display:inline-block;">
             	<tr>
-                	<td style="width:180px;"><a href="javascript:void(0);"><img src="<?= FULL_BASE_URL; ?>/img/carat-lane.png" alt="" style="outline:none;"></a></td>
-                    <td style="width:180px;"><a href="javascript:void(0);"><img src="<?= FULL_BASE_URL; ?>/img/firstcry.png" alt="" style="outline:none;"> </a></td>
-                    <td width="165"><a href="javascript:void(0);"><img src="<?= FULL_BASE_URL; ?>/img/jabong.png" alt="" style="outline:none;"></a></td>
+                	<td style="width:180px;"><a href="javascript:void(0);"><img src="https://lh3.googleusercontent.com/-sOOLYLquCOQ/UVFyZwPuqzI/AAAAAAAAAFU/ld-dhzfjZ3Q/w708-h414-p-o/carat-lane.png" alt="" style="outline:none;" width="164px" height="96px"></a></td>
+                    <td style="width:180px;"><a href="javascript:void(0);"><img src="https://lh5.googleusercontent.com/-yFOt-59fZq0/UVFyVgvNfoI/AAAAAAAAAEo/aVLSR-sBBkM/w368-h214-p-o/firstcry.png" alt="" style="outline:none;" width="164px" height="96px"> </a></td>
+                    <td width="165"><a href="javascript:void(0);"><img src="https://lh3.googleusercontent.com/-kRuVvIgko2U/UVFyWZa8fTI/AAAAAAAAAE8/d3Q4fYcl-10/w434-h253-p-o/jabong.png" alt="" style="outline:none;" width="164px" height="96px"></a></td>
                 </tr>
              </table>
         
@@ -48,40 +48,40 @@
             <div style="background:#FFF; padding:0 75px 35px 75px; overflow:hidden; margin:0 auto; width:480px;">
                 <ul style="list-style-type:none; margin:0; padding:0; float:left;">
                     <li style="width:140px;   float:left; margin:0 0 24px 0;">
-                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" style="outline:none;" width="120px" height="120px"></a>
                     <a href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Manjulika Chouhan</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                     <li style="width:140px; float:left; margin:0 0 24px 30px;">
                     <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0;">
-                    	<img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt="" style="outline:none;">
+                    	<img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" width="120px" height="120px" style="outline:none;">
                     </a>
                     <a  href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Anjali Sharma</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                       <li style="width:140px;   float:left; margin:0 0 24px 30px;">
-                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" width="120px" height="120px" style="outline:none;"></a>
                     <a href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Anjali Sharma</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                      <li style="width:140px;   float:left; margin:0 0 24px 0;">
-                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt=""></a>
+                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" width="120px" height="120px"></a>
                     <a href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Manjulika Chouhan</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                     <li style="width:140px;   float:left; margin:0 0 24px 30px;">
-                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" style="outline:none;" width="120px" height="120px"></a>
                     <a  href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Anjali Sharma</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                       <li style="width:140px;   float:left; margin:0 0 24px 30px;">
-                    <a  href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="<?= FULL_BASE_URL; ?>/img/dummy-img.jpg" alt="" style="outline:none;"></a>
+                    <a  href="javascript:void(0);" style="display:block; width:120px; height:120px; border:1px solid #CCC; padding:4px; background:#F0F0F0; "><img src="https://lh3.googleusercontent.com/-0a-KtcNy2GE/UVFyU0xy9II/AAAAAAAAAEY/Pf-wxserdIE/s414-p-o/dummy-img.jpg" alt="" style="outline:none;" width="120px" height="120px"></a>
                     <a href="javascript:void(0);" style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;">Anjali Sharma</font></a> <span style="display:block; width:100%; padding:8px 0 11px 0;">Tomorrow</span>
-                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="<?= FULL_BASE_URL; ?>/img/gift-btn.png" alt="" style="outline:none;"></a>
+                    <a href="javascript:void(0);" style="display:block; width:100%; text-align:center;"><img src="https://lh4.googleusercontent.com/-l7Tr_3eyeQg/UVFyVpVEy6I/AAAAAAAAAEs/A_R78vI57bE/w755-h214-p-o/gift-btn.png" alt="" style="outline:none;" width="122px" height="31px"></a>
                      </li>
                  </ul>
-                 <div style="width:100%; float:left; text-align:center; height:57px;"> <a href="javascript:void(0);" style="text-decoration:none;" ><img src="<?= FULL_BASE_URL; ?>/img/fb-btn.png" alt="" style="outline:none;"></a></div>
-                 <div style="width:100%; float:left; height:19px; text-align:center; margin:21px 0 0;"><img src="<?= FULL_BASE_URL; ?>/img/shad-bg.png" alt=""></div>
+                 <div style="width:100%; float:left; text-align:center; height:57px;"> <a href="javascript:void(0);" style="text-decoration:none;" ><img src="https://lh6.googleusercontent.com/-STvmJXnWlwc/UVFyU9S5BzI/AAAAAAAAAEc/_lvAFLP81M0/w1131-h322-p-o/fb-btn.png" alt="" style="outline:none;" width="326px" height="57px"></a></div>
+                 <div style="width:100%; float:left; height:19px; text-align:center; margin:21px 0 0;"><img src="https://lh6.googleusercontent.com/-EHozick5Cs4/UVFyXHWUsgI/AAAAAAAAAFI/s2j9U_wkXxo/w774-h221-p-o/shad-bg.png" alt="" width="428px" height="19px"></div>
                  <div style="width:100%; font-size:18px; font-style:italic; line-height:22px;"><font style="font-family:Georgia, 'Times New Roman', Times, serif;"><a href="javascript:void(0);" style="text-decoration:none; color:#9F2027;" >Yipee! You have more friends with birthdays<br>  coming up this week...</a></font></div>
                <div style="clear:both; width:100%; height:0px;">&nbsp;</div>  
             </div>

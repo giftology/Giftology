@@ -180,7 +180,7 @@ class UsersController extends AppController {
                         ));
                 
                 if($gift){
-                    $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
+                    $sender_name = $gift['Sender']['UserProfile']['first_name'];
                     $this->Reminder->recursive = -1;
                     $receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
                     if($receiver_name['Reminder']['friend_name'])

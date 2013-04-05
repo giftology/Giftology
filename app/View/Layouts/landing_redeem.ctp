@@ -46,7 +46,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          <script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
          <?php
     echo $this->Html->meta('icon');
-    echo $this->Minify->css(array('main_redeem','flexslider','normalize','style'));
+    echo $this->Minify->css(array('main_redeem','flexslider','normalize','style','main'));
     echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology')); 
     echo $this->fetch('meta');
     echo $this->fetch('css');
@@ -75,11 +75,14 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   <div id="wrapper">
         <section class="inner-content gift-bg">
             <div class="wrap-inner">
-            <div class="logo-block"><a href="javascript:void(0);" class="logo"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+            <div class="logo-block"><a href="<?= FULL_BASE_URL; ?>" class="logo"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
             <div class="giftology"><img src="<?= FULL_BASE_URL; ?>/img/giftology-log.jpg" alt=""></div>
+            <?php $name = explode(" ", $receiver_name);
+            $first_name = isset($name[0]) ? $name[0] : NULL;
+             ?>
             <div class="recive-by">
                 <div class="recive-by-content">
-                    <p> Hi  <span><?= $receiver_name ?></span>
+                    <p> Hi  <span><?= $first_name ?></span>
                     <p>You've received a gift from <span><?= $sender_name ?></span></p>
                      <!--<a href="javascript:void(0);" class="fb-btn">&nbsp;</a>-->
                      <div  id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-btn.png',
@@ -88,10 +91,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                  </div>
                 <div class="fblike"><!--<img src="<?= FULL_BASE_URL; ?>/img/fblike.jpg" alt="">--></div>
                 
+                
             </div>
-            <?php $name = explode(" ", $sender_name);
-            $last_name = isset($name[0]) ? $name[0] : NULL;
-             ?>
+            <?php echo $this->Facebook->friendpile(); ?>
             
             <div class="gift-block animated">
                 <div class="gift-content">
@@ -104,7 +106,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <div class="tag-content animated ">
                         <a href="javascript:void(0);" class="tag-logo"><!--<img src="img/tag-logo.png" alt="">--></a>
                         <span class="withlove">With Love...</span>
-                        <span class="name"><a href="javascript:void(0);">-<?= $last_name ?></a></span>
+                        <span class="name"><a href="javascript:void(0);">-<?= $sender_name ?></a></span>
                     </div>
                 </div>
              </div>
