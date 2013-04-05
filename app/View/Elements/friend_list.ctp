@@ -51,7 +51,10 @@
                 var gift_year = $(this).attr('year-data');
                 var gift_sex = $(this).attr('sex-data');
                 var gift_ocasion = $(this).attr('ocasion-data');
+<<<<<<< HEAD
                 alert(gift_value);
+=======
+>>>>>>> 0665763b71d997277769f196bf9a301b4e0d26cf
                 
                   $('<input>').attr({
                     type: 'hidden',
