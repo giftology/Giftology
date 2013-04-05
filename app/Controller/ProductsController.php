@@ -204,7 +204,7 @@ class ProductsController extends AppController {
         $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
 
         $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
-        $this->paginate['order']= 'Product.min_price, Product.display_order ASC';
+        $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
        
         $product_array=$this->paginate();
@@ -250,7 +250,7 @@ class ProductsController extends AppController {
         
             }
             $result = array_merge((array)$show_product, (array)$unpaid_product);
-            $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.min_price','Product.display_order')));
+            $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.show_on_top','Product.min_price','Product.display_order')));
              
              foreach($proddd as $k => $product){
                 $proddd[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($product['Product']['id']);
