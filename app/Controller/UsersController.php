@@ -10,7 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     public $helpers = array('Minify.Minify');
     public $uses = array( 'User','Vendor','Product','Reminder');
-    public $components = array('Giftology');
+    public $components = array('Giftology', 'AesCrypt');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -237,6 +237,7 @@ class UsersController extends AppController {
                 $this->Cookie->write('utm_content', $this->request->query['utm_content'], false, '2 days');
 	        }
 
+            $this->set('encrypted_gift_id', $this->AesCrypt->encrypt($this->request->query['gift_id']));
             $this->set('message', $message);
 	    //if (!$this->RequestHandler->isMobile()) {
                //$this->layout = 'landing_redeem';
