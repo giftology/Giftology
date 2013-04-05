@@ -725,7 +725,11 @@ $email = new CakeEmail();
 		return null;
 	}
 	public function redeem() {
-		$id = $this->AesCrypt->decrypt($this->data['id']);
+		DebugBreak();
+		if($this->request->params['named']['enc_id'])
+			$id = $this->AesCrypt->decrypt($this->request->params['named']['enc_id']);
+		else
+			$id = $this->AesCrypt->decrypt($this->data['id']);
 		$this->Gift->id = $id;
 		if (!$this->Gift->exists()) {
 			throw new NotFoundException(__('Invalid gift'));
