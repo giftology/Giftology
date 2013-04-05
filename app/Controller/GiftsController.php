@@ -725,7 +725,6 @@ $email = new CakeEmail();
 		return null;
 	}
 	public function redeem() {
-		DebugBreak();
 		if($this->request->params['named']['enc_id'])
 			$id = $this->AesCrypt->decrypt($this->request->params['named']['enc_id']);
 		else
