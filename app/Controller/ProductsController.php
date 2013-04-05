@@ -186,10 +186,7 @@ class ProductsController extends AppController {
 
     }
     public function view_products () {
-<<<<<<< HEAD
-        DebugBreak();
-=======
->>>>>>> 0665763b71d997277769f196bf9a301b4e0d26cf
+
                      
         if($this->request->is('post')){
             $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
