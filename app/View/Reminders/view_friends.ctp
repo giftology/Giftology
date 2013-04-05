@@ -1,3 +1,21 @@
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("input").keyup(function(){
+                var value = this.value;
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url:'/reminders/view_friends/'+value,
+                    data: "search_key="+value,
+                    success:function(data){
+                        //alert(value);
+                    }
+
+                    })
+                });
+            });
+       </script>
 <div class="left-container">
             <?php if(isset($today_users) && $today_users): ?>
             <div>

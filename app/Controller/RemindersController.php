@@ -281,6 +281,9 @@ class RemindersController extends AppController {
             $this->send_reminder_email($user);
         }
     }*/ //no longer works
+    public function ajax_search() {
+    	DebugBreak();
+    }
     
     public function send_reminder_email_for_user($id) {
 	$user = $this->Reminder->User->find('first', array(
