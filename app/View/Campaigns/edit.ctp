@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Edit Campaign'); ?></legend>
 	<?php
-		echo $this->Form->input('productid');
+		echo $this->Form->input('product_id', array('label' => 'Product ID', 'type' => 'text'));
 		echo $this->Form->input('enable');
 		echo $this->Form->input('start_date');
 		echo $this->Form->input('end_date');

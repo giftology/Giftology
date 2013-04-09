@@ -32,7 +32,6 @@ class CampaignsController extends AppController {
         return parent::isAuthorized($user);
     }
     public function index($encrypted_product_id) {
-       // DebugBreak();
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
        if($campaign){
@@ -76,7 +75,7 @@ class CampaignsController extends AppController {
 
     }
     public function view_products () {
-    	DebugBreak();
+    	
         if ($this->Connect->user()) {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
@@ -154,36 +153,34 @@ class CampaignsController extends AppController {
  * @return void
  */
     public function add() {
-       //DebugBreak();
-        //
         if ($this->request->is('post')) {
+            if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="")&& ($this->request->data['Campaign']['product_id']!="") )
+            {
             $product_id=$this->request->data['Campaign']['product_id'];
-
             $this->request->data['Campaign']['product_enc_id']=$this->AesCrypt->encrypt($product_id);
-                      
             $this->Campaign->create();
            	$this->request->data['Campaign']['thumb_file']['name']
-                = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
+                = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
             $this->request->data['Campaign']['wide_file']['name']
-                = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
-               
+                = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
             $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
             copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
-
             $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
             copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
-            
-            
-            if ($this->Campaign->save($this->request->data)) {
+         if ($this->Campaign->save($this->request->data)) {
                 $this->Session->setFlash(__('The Campaign has been saved'));
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
             } else {
-                                $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-
-                $this->Session->setFlash(__('The Campaign could not be saved. Please, try again.'));
+                    $this->Session->setFlash(__('Please enter all input fields'));
+                    $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
             }
         }
+        else
+            $this->Session->setFlash(__('Please enter all fields...'));
+            $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
         }
+        }
+        
 public function delete($id = null) {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
@@ -200,24 +197,7 @@ public function delete($id = null) {
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
     }
 
-   /*public function edit($id = null) {
-        $this->Campaign->id = $id;
-        if (!$this->Campaign->exists()) {
-            throw new NotFoundException(__('Invalid Campaign'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Campaign->save($this->request->data)) {
-                $this->Session->setFlash(__('The Campaign has been saved'));
-                $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-            } else {
-                $this->Session->setFlash(__('The Campaign could not be saved. Please, try again.'));
-            }
-        } else {
-            $this->request->data = $this->Campaign->read(null, $id);
-        }
-        }*/
         public function edit($id = null) {
-           //DebugBreak();
         $this->Campaign->id = $id;
         if (!$this->Campaign->exists()) {
             throw new NotFoundException(__('Invalid Campaign'));
@@ -225,16 +205,18 @@ public function delete($id = null) {
         if ($this->request->is('post') || $this->request->is('put')) {
 
             if (isset($this->request->data['Campaign']['thumb_file']['name']) && $this->request->data['Campaign']['thumb_file']['name']) {
-                $this->request->data['Campaign']['thumb_file']['name']
-                    = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['productid']);
-                $this->request->data['Campaign']['thumb_file'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['productid'];
-                copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
+              $this->request->data['Campaign']['thumb_file']['name']
+                = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
+                $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
+            copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
+
             }
-            if (isset($this->request->data['Campaign']['wide_file']['productid']) && $this->request->data['Campaign']['wide_file']['productid']) {
-                $this->request->data['Campaign']['wide_file']['productid']
-                    = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['productid']);
-                $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['productid'];
-                copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
+            if (isset($this->request->data['Campaign']['wide_file']['name']) && $this->request->data['Campaign']['wide_file']['name']) {
+              $this->request->data['Campaign']['wide_file']['name']
+                = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
+                $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
+            copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
+            
             }
             
             if ($this->Campaign->save($this->request->data)) {
