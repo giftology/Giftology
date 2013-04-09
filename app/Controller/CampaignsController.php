@@ -8,7 +8,8 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Product $Product
  */
 class CampaignsController extends AppController {
-    public $helpers = array('Minify.Minify');	
+    public $helpers = array('Minify.Minify');
+    public $components = array('Defaulter', 'AesCrypt');	
 	public $paginate = array(
         'limit' => 100,
         'order' => array(
@@ -19,12 +20,8 @@ class CampaignsController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		if($this->params['controller']=='campaigns'){
-			$this->redirect(array(
-                'controller' => 'reminders', 'action'=>'view_friends'));
-
-
-    	         }
+		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
+			$this->redirect(array('controller'=>'users', 'action'=>'logout'));
     }
 
 	public function isAuthorized($user) {
@@ -33,9 +30,13 @@ class CampaignsController extends AppController {
 	    }
 	    return parent::isAuthorized($user);
 	}
-	public function index($product_id) {
-		$this->redirect(array(
+	public function index($encrypted_product_id) {
+		$product_id = $this->AesCrypt->decrypt($encrypted_product_id);
+		$product_exist = $this->Product->find('count', array('conditions' => array('id' => $product_id)));
+		if(!$product_exist){
+			$this->redirect(array(
                 'controller' => 'reminders', 'action'=>'view_friends'));
+		}
         //$this->Product->recursive=-2;
 		//$vendor_id = $_GET["product_id"];
 		//print_r($vendor_id);die();
