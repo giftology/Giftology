@@ -94,7 +94,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 
 <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products','id'=>$campaign_id))); ?></div>
+              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_id))); ?></div>
         <div class="clear">&nbsp;</div>
         </div>
     </div>
