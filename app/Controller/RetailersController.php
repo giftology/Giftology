@@ -35,26 +35,44 @@ App::uses('CakeEmail', 'Network/Email');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class Retailerscontroller extends AppController {
-  public $components = array('AboutUs');
+  public $components = array('AboutUs','MathCaptcha','AesCrypt');
   public $helpers = array('Minify.Minify');
  
 	/*public function beforeFilter(){
-		if ($this->Auth->user()) {
+    
+      if($this->params['controller']=='retailers'){
+      $this->Auth->Allow($this->action);
+      $this->set('user', $this->Auth->user());
+    }
+		/*if ($this->Auth->user()) {
 	    // if a user is logged in
 
 		    $this->set('user', $this->Auth->user());
 	        $this->set('facebook_user', $this->Connect->user());
 		}
         
-		if($this->params['controller']=='retailers'){
-			$this->Auth->Allow($this->action);
-			$this->set('user', $this->Auth->user());
-		} 
-	}*/
+		 
+	} */
+public function beforeFilter() {
+    parent::beforeFilter();
+    $this->Auth->allow('index','retailer_mail');
+    }
+   
+  public function index(){
+        $t=time();
+        $session_time=$this->Session->write('session_time_retailer', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+        $this->set('captcha', $this->MathCaptcha->getCaptcha());  
+  }
 	public function retailer_mail(){
-   
-   
-        /*$email = new CakeEmail();
+    $session_time=$this->AesCrypt->decrypt($this->data['retailers']['gift_id']);
+    $green =$this->Session->read('session_time_retailer');
+    if($session_time != $green){
+$this->redirect(array(
+        'controller' => 'retailers', 'action'=>'index'));   
+    }
+      if ($this->MathCaptcha->validate($this->request->data['retailers']['captcha'])) {
+      $email = new CakeEmail();
     
         $email->config('smtp')
 
@@ -76,9 +94,17 @@ class Retailerscontroller extends AppController {
              
               ->send();
               
-              $this->Session->setFlash('Your message has been sent');
-           //   $this->redirect(array('controller' => 'reminders' , 'action'='view_friends'));
-        */
+              $this->Session->setFlash('Thank you for contacting us. We will get in touch shortly.');
+$this->redirect(array(
+        'controller' => 'retailers', 'action'=>'index'));       
+   }
+   else {
+          $this->Session->setFlash('Oops. Wrong captcha.Please submit your request again.');
+$this->redirect(array(
+        'controller' => 'retailers', 'action'=>'index'));          
+   }
+            $this->Session->delete('session_time_retailer');
+    
    
     }
 

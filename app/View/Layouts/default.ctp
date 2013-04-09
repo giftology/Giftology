@@ -135,7 +135,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
             <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
             <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
-         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'pages', 'action' => 'display', 'Retailers')); ?> </li>
+         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?> </li>
            <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
            <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
            
@@ -155,7 +155,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
                      <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
                     <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?>
                       <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'display','Media')); ?>
-                      <?= $this->Html->link('RETAILERS', array('controller' => 'pages', 'action' => 'display', 'Retailers')); ?>
+                      <?= $this->Html->link('RETAILERS', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?>
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
                        <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?>
                         <?= $this->Html->link('BLOG', 'http://mygiftology.wordpress.com/'); ?>

@@ -699,6 +699,11 @@ input {
     padding: 11px;
 }
 
+.captha1{margin:20px 10px -10px 10px; width:250px; border-bottom:1px solid #CCCCCC;}
+
+
+
+
 .left-container > .friends ul li {
     border-bottom: 1px solid #E5E5E5;
     cursor: pointer;
