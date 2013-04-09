@@ -89,12 +89,13 @@ class GiftsController extends AppController {
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
 		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
         $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : null;
-        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb);
+        $gift_message = isset($this->params->query['gift_message']) ? $this->params->query['gift_message'] : null;
+        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message);
         
         if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
         else{
             $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
-            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,'','','',$post_to_fb);
+            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,'','',$gift_message,$post_to_fb);
             $this->set('gifts', array('result' => '1'));    
         }
 		$this->set('_serialize', array('gifts'));
@@ -987,7 +988,7 @@ $email = new CakeEmail();
 	    $this->autoRender = $this->autoLayout = false;
 	}
     
-    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb){
+    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message){
         $error = array();
         $product = $this->Gift->Product->read(null, $product_id);
         
@@ -1013,6 +1014,10 @@ $email = new CakeEmail();
         }
 		else{
 			$error[7] = "Parameter for explicitly sharing is missing";
+        }
+
+        if(!$gift_message){
+        	$error[7] = "Gift message is missing";	
         }
         
         return $error;
