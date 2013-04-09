@@ -76,7 +76,6 @@ $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
 
     }
     public function view_products () {
-        DebugBreak();
         if ($this->Connect->user()) {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
