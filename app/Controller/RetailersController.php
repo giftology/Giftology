@@ -95,8 +95,7 @@ $this->redirect(array(
               ->send();
               
               $this->Session->setFlash('Thank you for contacting us. We will get in touch shortly.');
-$this->redirect(array(
-        'controller' => 'retailers', 'action'=>'index'));       
+      
    }
    else {
           $this->Session->setFlash('Oops. Wrong captcha.Please submit your request again.');
