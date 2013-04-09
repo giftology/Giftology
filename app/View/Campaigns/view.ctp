@@ -8,7 +8,7 @@
 		</dd>
 		<dt><?php echo __('Product Id'); ?></dt>
 		<dd>
-			<?php echo h($campaign['Campaign']['productid']); ?>
+			<?php echo h($campaign['Campaign']['product_id']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Product Encrypted Id'); ?></dt>

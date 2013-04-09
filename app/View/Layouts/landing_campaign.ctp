@@ -94,7 +94,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 
 <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_id))); ?></div>
+              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_id,))); ?></div>
         <div class="clear">&nbsp;</div>
         </div>
     </div>
@@ -102,8 +102,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <div class="flexslider">
                           <ul class="slides">
                           <li style="display: list-item;">
-                          <!--<img src="<?= FULL_BASE_URL; ?>/img/campaign/<?= $campaign_image; ?>">-->
-                          <img src="<?= FULL_BASE_URL; ?>/img/campaign/90.jpG">
+                          <img src="<?= FULL_BASE_URL; ?>/<?= $campaign_wide_image; ?>">
                            </li>
                          </ul>
         </div>

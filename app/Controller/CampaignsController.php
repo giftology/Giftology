@@ -36,14 +36,14 @@ class CampaignsController extends AppController {
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
        if($campaign){
-        $camp_start_date=new DateTime($campaign[0]['Campaign']['start_date']) ;
-        $camp_end_date=new DateTime($campaign[0]['Campaign']['end_date']) ;
-        $today_date= new DateTime (date("Y-m-d"));
+        $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
+        $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
+        $today_date= strtotime(date('Y-m-d H:i:s'));
         if((($campaign[0]['Campaign']['enable']== 1))&&(($today_date > $camp_start_date)||($camp_start_date == $today_date) )&&(($today_date < $camp_end_date)||($camp_end_date == $today_date)))
         {
-           // $this->set('campaign_image','');
-            $this->set('campaign_id',$this->AesCrypt->encrypt($product_id));
-            $this->layout='landing_campaign';
+           $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
+           $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
+           $this->layout='landing_campaign';
         }
          else
         {
@@ -70,18 +70,22 @@ class CampaignsController extends AppController {
 
 }else{
    $this->Session->setFlash(__('This campaign is not active.'));
-$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
+	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
 }
  
 
     }
     public function view_products () {
+    	DebugBreak();
         if ($this->Connect->user()) {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         //$product_id_enc = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
-        $product_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
-       $this->Product->recursive = -2;
+        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
+        $this->Campaign->recursive = -1;
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
+       	$product_id = $campaign['Campaign']['product_id'];
+       	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
         $this->Reminder->recursive = -1;
         $friend_list=$this->Reminder->find('all', 
@@ -90,7 +94,8 @@ $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
                 'order' => array('RAND()'),
                 ));
         $this->set('data',$friend_list);
-        $this->set('products',$proddd); 
+        $this->set('products',$proddd);
+        $this->set('campaign_thumb_image',$campaign['Campaign']['thumb_image']);  
         }
     }
 
@@ -152,12 +157,12 @@ $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
        //DebugBreak();
         //
         if ($this->request->is('post')) {
-            $product_id=$this->request->data['Campaign']['productid'];
+            $product_id=$this->request->data['Campaign']['product_id'];
 
             $this->request->data['Campaign']['product_enc_id']=$this->AesCrypt->encrypt($product_id);
                       
             $this->Campaign->create();
-           $this->request->data['Campaign']['thumb_file']['name']
+           	$this->request->data['Campaign']['thumb_file']['name']
                 = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
             $this->request->data['Campaign']['wide_file']['name']
                 = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
