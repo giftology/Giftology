@@ -20,7 +20,7 @@
                 <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value']?> voucher </h5>
             </div>
             <div class="image-container">
-                <div class="polaroid"><!--<?= $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?>--><img  src="<?= IMAGE_ROOT; ?>Holi-New-290x200pxl.jpg"></div>
+                <div class="polaroid"><!--<?= $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?>--><img  src="<?= FULL_BASE_URL.'/'.$campaign_thumb_image;?>"></div>
                 <div class="paperclip"></div>
                 
             </div>

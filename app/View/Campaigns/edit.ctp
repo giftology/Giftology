@@ -3,12 +3,11 @@
 	<fieldset>
 		<legend><?php echo __('Edit Campaign'); ?></legend>
 	<?php
-		echo $this->Form->input('product_id', array('label' => 'Product ID', 'type' => 'text'));
 		echo $this->Form->input('enable');
 		echo $this->Form->input('start_date');
 		echo $this->Form->input('end_date');
-		 echo $this->Form->input('thumb_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
-        echo $this->Form->input('wide_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file'));
+		echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));
+        echo $this->Form->input('wide_file', array('label' => 'Landing Page Image', 'type' => 'file'));
        
 
 	?>

@@ -32,13 +32,14 @@ class CampaignsController extends AppController {
         return parent::isAuthorized($user);
     }
     public function index($encrypted_product_id) {
+        DebugBreak();
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
        if($campaign){
         $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
         $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
-        $today_date= strtotime(date('Y-m-d H:i:s'));
-        if((($campaign[0]['Campaign']['enable']== 1))&&(($today_date > $camp_start_date)||($camp_start_date == $today_date) )&&(($today_date < $camp_end_date)||($camp_end_date == $today_date)))
+        $today_date= date('Y-m-d H:i:s');
+        if((($campaign[0]['Campaign']['enable']== 1))&&(($today_date > $camp_start_date))&&(($today_date < $camp_end_date)))
         {
            $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
            $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
