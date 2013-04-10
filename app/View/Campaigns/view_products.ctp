@@ -114,6 +114,7 @@
                      <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
                         <h5 style="color:#FF0000">*please enter the message.</h5>
                     </div>
+                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
             </div>
             <div class="parent_submit">
             <?php  echo $this->Form->Submit(__('Send'), array('id'=>'form_shipping'));?>

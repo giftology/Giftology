@@ -202,6 +202,12 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
+		$session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
+		$green =$this->Session->read('session_time');
+		if($session_time != $green){
+        	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+		}
+
 		$this->Gift->Product->recursive = -1;
 		$decrypted_product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
 		$this->data['gifts']['product_id'] = $decrypted_product_id;
@@ -263,6 +269,7 @@ class GiftsController extends AppController {
 	            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
             
         	}
+        	$this->Session->delete('session_time');
         	if($message) $this->Session->setFlash(__('Awesome Karma! Friend has received this gift'));
          	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products',$this->AesCrypt->encrypt($decrypted_product_id)));
         }	
@@ -274,7 +281,6 @@ class GiftsController extends AppController {
 		$green =$this->Session->read('session_time');
 		if($session_time != $green){
         	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-
 		}
 		if(isset($this->data['gifts']))
         {

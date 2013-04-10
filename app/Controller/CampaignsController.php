@@ -95,7 +95,10 @@ class CampaignsController extends AppController {
         $this->set('friend_data',$friend_list);
         $this->set('products',$proddd);
         $this->set('encrypted_product_id',$this->AesCrypt->encrypt($product_id));
-        $this->set('campaign_thumb_image',$campaign['Campaign']['thumb_image']);  
+        $this->set('campaign_thumb_image',$campaign['Campaign']['thumb_image']);
+        $t=time();
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));  
         }
     }
 
