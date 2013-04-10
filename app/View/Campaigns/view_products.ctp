@@ -6,7 +6,7 @@
                 </li>
                 <li class="breadcrumb">                   
                     <a><span class="left"></span>
-                    Share! Surprise!<span class="arrow"></span></a>
+                    Share. Surprise.<span class="arrow"></span></a>
                 </li>
                 <li>Send a gift</li>
             </ul>
@@ -48,7 +48,7 @@
             </div>
                 <div id="pra" style="float:left;height:350px;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 5px; overflow-y:scroll;">
 
-                    <table style="width:300px" class="friend_result" cellpadding="0" cellspacing="0">
+                    <table style="width:320px" class="friend_result" cellpadding="0" cellspacing="0">
                            
                             <tbody>             
                                 <?php
@@ -56,7 +56,7 @@
                                     <tr class="friends">
                                     <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"></div></td> 
                                     <td><?php echo $data['Reminder']['friend_name']; ?></td>
-                                    <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
+                                    <td align="left"><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
                                     </tr>
                                     <?php endforeach; ?>
                             </tbody>
