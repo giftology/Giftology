@@ -50,7 +50,7 @@
  */
 	Configure::write('Error', array(
 		'handler' => 'ErrorHandler::handleError',
-		'level' => E_ALL & ~E_DEPRECATED,
+		'level' => E_ALL & ~E_DEPRECATED & ~E_NOTICE,
 		'trace' => true
 	));
 
@@ -66,7 +66,7 @@
  *   including anonymous functions.
  * - `renderer` - string - The class responsible for rendering uncaught exceptions.  If you choose a custom class you
  *   should place the file for that class in app/Lib/Error. This class needs to implement a render method.
- * - `log` - boolean - Should Exceptions be logged?
+ * - `log` - boolean - Should Exceptions be zged?
  *
  * @see ErrorHandler for more information on exception handling and configuration.
  */

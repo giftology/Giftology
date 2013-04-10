@@ -1,16 +1,15 @@
-     <div>
+        <div>
             <ul id="breadcrumbs">
                 <li class="breadcrumb home events">
                     <span class="left"></span>
                     <a href="<?= FULL_BASE_URL; ?>"><span class="arrow"></span></a>
                 </li>
                 <li class="breadcrumb">                   
-                    <span class="left"></span>
+                    <a><span class="left"></span>
                     Share! Surprise!<span class="arrow"></span></a>
                 </li>
                 <li>Send a gift</li>
             </ul>
-        
         </div>  
         <div id="celebration-details">
             <div class="details-container">
@@ -20,7 +19,7 @@
                 <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value']?> voucher </h5>
             </div>
             <div class="image-container">
-                <div class="polaroid"><!--<?= $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?>--><img  src="<?= FULL_BASE_URL.'/'.$campaign_thumb_image;?>"></div>
+                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$campaign_thumb_image; ?>"></div>
                 <div class="paperclip"></div>
                 
             </div>
@@ -47,16 +46,15 @@
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
                                <?php echo $this->Form->Submit(__('search_button_small.jpg'), array('id'=>'friend_search')); ?>
             </div>
-                <div id="pra" style="float:left;height:auto;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 5px; overflow-y:scroll;">
+                <div id="pra" style="float:left;height:350px;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 5px; overflow-y:scroll;">
 
                     <table style="width:300px" class="friend_result" cellpadding="0" cellspacing="0">
                            
                             <tbody>             
                                 <?php
-                                
-                                    foreach ($data as $data): ?>
+                                    foreach ($friend_data as $data): ?>
                                     <tr class="friends">
-                                    <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"/></div></td> 
+                                    <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"></div></td> 
                                     <td><?php echo $data['Reminder']['friend_name']; ?></td>
                                     <td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
                                     </tr>
@@ -110,7 +108,7 @@
                     </div>
                 
                     <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$products['Product']['min_value'] ))?></div>
-                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$products['Product']['id'] ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_product_id ))?></div>
                     <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$products['Product']['vendor_id'] ))?></div>
                     <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>$data['Reminder']['friend_name'] ))?></div>
                      <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
@@ -134,13 +132,17 @@
                     $("#error_text").hide();
                     
                 }
+                if($("#text_message").val().length != 0){
+                    $(this).attr('disabled','disabled');
+                     $(this).parents('form').submit();    
+                }           
+                else $(this).removeAttr('disabled');
             });
         });
     </script>
-
     <script type='text/javascript'>
     $(document).ready(function(){
-        /*var delay = (function(){
+        var delay = (function(){
           var timer = 0;
           return function(callback, ms){
             clearTimeout (timer);
@@ -158,18 +160,17 @@
                     url: "/campaigns/search_friend",
                     data: "search_key="+key_value,
                     success: function(data) {
-                        //alert(data);
                         var res_data = jQuery.parseJSON(data);;
                         var count = res_data.length;
                         var new_row = '';
-                        $('.friends').empty();
+                        $('.friends').remove();
                         for(var i = 0; i < count; i++){
                             var check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
                             if(!check){
                                 if($("#"+res_data[i]["Reminder"]["friend_fb_id"]+"_hidden").is( "*" ))
-                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'" checked="checked"></td></tr>';
+                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"></div></td><td>'+ res_data[i]["Reminder"]["friend_name"] + '</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"] +'" checked="checked"></td></tr>';
 
-                                else new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
+                                else new_row = '<tr class="friends"><td class="friend_row" id="' + res_data[i]["Reminder"]["friend_fb_id"] +'"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/'+ res_data[i]["Reminder"]["friend_fb_id"] + '/picture?type=square"></div></td><td>' + res_data[i]["Reminder"]["friend_name"] + '</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+ res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"] +'"></td></tr>';
                                 
                                 $('.friend_result').append(new_row);
                             }
@@ -178,8 +179,9 @@
                     }
                 });
             },1000);   
-        });*/
-
+        });
+    });
+    $(document).ready(function(){
         $('#friend_search').click(function() {
         // interrupt form submission
             var key_value = $("#friend_name").val();
@@ -194,14 +196,16 @@
                         var res_data = jQuery.parseJSON(data);;
                         var count = res_data.length;
                         var new_row = '';
-                        $('.friends').empty();
+                        $('.friends').remove();
+                        //$('.friends').hide();
                         for(var i = 0; i < count; i++){
                             var check = $("#"+res_data[i]["Reminder"]["friend_fb_id"]).is( "*" );
                             if(!check){
                                 if($("#"+res_data[i]["Reminder"]["friend_fb_id"]+"_hidden").is( "*" ))
-                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'" checked="checked"></td></tr>';
+                                    new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"></div></td><td>'+ res_data[i]["Reminder"]["friend_name"] + '</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"] +'" checked="checked"></td></tr>';
 
-                                else new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"/>'+res_data[i]["Reminder"]["friend_name"]+'</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"]+'"></td></tr>';
+
+                                else new_row = '<tr class="friends"><td class="friend_row" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/'+res_data[i]["Reminder"]["friend_fb_id"]+'/picture?type=square"></div></td><td>'+ res_data[i]["Reminder"]["friend_name"] + '</td><td><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="'+res_data[i]["Reminder"]["friend_fb_id"]+'" value="'+res_data[i]["Reminder"]["friend_name"] +'"></td></tr>';
                                 
                                 $('.friend_result').append(new_row);
                             }
@@ -215,15 +219,14 @@
     $(document).ready(function(){
         var count_friend = 0;
         var names = new Object();
-        $(".campaign_checkbox").live("click", function(){
+        $(document).on("click",".campaign_checkbox", function(){
             var key_value = this.id;
-            //alert($(".campaign_checkbox").is(":checked"));
             //if($(".campaign_checkbox").is(':checked')){
             if ($(this).prop('checked')==true){
                 count_friend = count_friend + 1;
-                if(count_friend > 30){
+                if(count_friend > 10){
                     count_friend = count_friend - 1;
-                    alert('You can select only max 30');
+                    alert('You can select max 10 friends');
                     $(this).attr('checked', false);
                     return;
                 }
@@ -259,7 +262,7 @@
             $("#text_message").attr("placeholder", placeholder_message).placeholder(); 
         });
     });
-
-    $('.campaign_checkbox').show();
-    
+    $(document).ready(function(){
+        $('.campaign_checkbox').show();
+    });
     </script>

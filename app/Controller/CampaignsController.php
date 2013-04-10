@@ -20,8 +20,9 @@ class CampaignsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-         if($this->Defaulter->defaulters_list($this->Connect->user('id')))
+        if($this->Defaulter->defaulters_list($this->Connect->user('id')))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
+        $this->Auth->Allow('index');
         
     }
 
@@ -32,7 +33,6 @@ class CampaignsController extends AppController {
         return parent::isAuthorized($user);
     }
     public function index($encrypted_product_id) {
-        DebugBreak();
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
        if($campaign){
@@ -76,7 +76,6 @@ class CampaignsController extends AppController {
 
     }
     public function view_products () {
-    	
         if ($this->Connect->user()) {
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
@@ -89,12 +88,13 @@ class CampaignsController extends AppController {
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
         $this->Reminder->recursive = -1;
         $friend_list=$this->Reminder->find('all', 
-            array('limit'=>7,
+            array('limit'=>20,
                 'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
-                'order' => array('RAND()'),
+                'order' => array('RAND()')
                 ));
-        $this->set('data',$friend_list);
+        $this->set('friend_data',$friend_list);
         $this->set('products',$proddd);
+        $this->set('encrypted_product_id',$this->AesCrypt->encrypt($product_id));
         $this->set('campaign_thumb_image',$campaign['Campaign']['thumb_image']);  
         }
     }
@@ -118,7 +118,7 @@ class CampaignsController extends AppController {
     public function search_friend(){
         if($this->RequestHandler->isAjax()) {
             $this->Reminder->recursive = -1;
-             $friend_list=$this->Reminder->find('all',array('conditions' =>array (
+             $friend_list=$this->Reminder->find('all',array('fields' => array('friend_name','friend_fb_id'),'conditions' =>array (
     'Reminder.user_id' => $this->Auth->user('id'),
     'Reminder.friend_name LIKE' => "%".$this->request->data['search_key']."%"
    )));

@@ -202,10 +202,10 @@ class GiftsController extends AppController {
 		$this->redirect(array('action' => 'index'));exit();
 	}
 	public function send_campaign(){
-		$this->redirect(array(
-                'controller' => 'reminders', 'action'=>'view_friends'));
 		$this->Gift->Product->recursive = -1;
-        $product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $this->data['gifts']['product_id'],
+		$decrypted_product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
+		$this->data['gifts']['product_id'] = $decrypted_product_id;
+        $product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $decrypted_product_id,
         		'Product.display_order' => 0
         	)));
         if($product_display_off){
@@ -219,7 +219,7 @@ class GiftsController extends AppController {
 	       	foreach($this->data['chk2'] as $camp_rec_id){
                 $this->Gift->recursive = -1;
                 $check_product_for_receiver = $this->Gift->find('count', array('conditions'
-                    => array('product_id' => $this->data['gifts']['product_id'],
+                    => array('product_id' => $decrypted_product_id,
                         'receiver_fb_id' => $camp_rec_id,
                         'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
                     	'expiry_date >' => date('Y-m-d') 
@@ -248,7 +248,7 @@ class GiftsController extends AppController {
 	            $vendor_id = $this->data['gifts']['vendor_id'];          
 	            $sender_id = $this->Auth->user('id');
 	            $receiver_fb_id = $receiver['User']['facebook_id'];
-	            $product_id = $this->data['gifts']['product_id'];
+	            $product_id = $decrypted_product_id;
 	            $amount = $this->data['gifts']['contribution_amount']; 
 	            $send_now = 1;
 	            $reciever_email = "";
@@ -259,12 +259,12 @@ class GiftsController extends AppController {
 	            $scheduled = false;
 	            $date_to_schedule = null;
 	           
-	            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
+	            $this->send_base($sender_id, $receiver_fb_id, $decrypted_product_id, $amount, $send_now, 
 	            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday, $reciever_name, $date_to_schedule); 
             
         	}
         	if($message) $this->Session->setFlash(__('Awesome Karma! Friend has received this gift'));
-         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products','id'=>$this->data['gifts']['product_id']));
+         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products',$this->AesCrypt->encrypt($decrypted_product_id)));
         }	
 
 	}
@@ -650,7 +650,6 @@ class GiftsController extends AppController {
 	}
 	function send_voucher_email()
 	{
-	DebugBreak();	
 		$receiver_email=$this->data['gifts']['email'];
 		$receiver_name =$this->data['gifts']['user_name'];
 		$id=isset($this->data['gifts']['id']) ? $this->data['gifts']['id'] : NULL;
