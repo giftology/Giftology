@@ -271,7 +271,7 @@ class GiftsController extends AppController {
         	}
         	$this->Session->delete('session_time');
         	if($message) $this->Session->setFlash(__('Awesome Karma! Friend has received this gift'));
-         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products',$this->AesCrypt->encrypt($decrypted_product_id)));
+         	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products',$this->Session->read('campaign_id')));
         }	
 
 	}

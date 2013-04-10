@@ -97,6 +97,7 @@ class CampaignsController extends AppController {
         $this->set('encrypted_product_id',$this->AesCrypt->encrypt($product_id));
         $this->set('campaign_thumb_image',$campaign['Campaign']['thumb_image']);
         $t=time();
+        $this->Session->write('campaign_id', $this->AesCrypt->encrypt($campaign_id));
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));  
         }
