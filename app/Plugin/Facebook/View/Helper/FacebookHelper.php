@@ -516,7 +516,7 @@ class FacebookHelper extends AppHelper {
 			$afterLoginURL = Router::url(array('controller' => 'reminders', 'action'=>'view_friends'));
 
 			$init = '<div id="fb-root"></div>';
-			$init .= '<script src="//connect.facebook.net/'.$this->locale.'/all.js"></script>';
+			//$init .= '<script src="//connect.facebook.net/'.$this->locale.'/all.js"></script>';
 			$init .= $this->Html->scriptBlock("
 	window.fbAsyncInit = function() {
 		FB.init({
