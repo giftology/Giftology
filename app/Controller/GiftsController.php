@@ -90,12 +90,15 @@ class GiftsController extends AppController {
 		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
         $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : null;
         $gift_message = isset($this->params->query['gift_message']) ? $this->params->query['gift_message'] : null;
+        $send_now = isset($this->params->query['send_now']) ? $this->params->query['send_now'] : null;
+        $receiver_birthday = isset($this->params->query['receiver_birthday']) ? $this->params->query['receiver_birthday'] : null;
+        $date_to_send = isset($this->params->query['date_to_send']) ? $this->params->query['date_to_send'] : null;
         $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message);
         
         if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
         else{
             $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
-            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,'','',$gift_message,$post_to_fb);
+            $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,$send_now,'',$gift_message,$post_to_fb,$receiver_birthday,'',$date_to_send);
             $this->set('gifts', array('result' => '1'));    
         }
 		$this->set('_serialize', array('gifts'));
