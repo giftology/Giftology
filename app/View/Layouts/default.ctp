@@ -36,7 +36,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Minify->script('giftology');
 		//echo $this->Minify->script('jquery.ias.min');		
-		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology','all'));
+		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology'));
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 				//echo $this->Html->css('main');

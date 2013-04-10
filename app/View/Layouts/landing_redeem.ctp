@@ -47,7 +47,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          <?php
     echo $this->Html->meta('icon');
     echo $this->Minify->css(array('main_redeem','flexslider','normalize','style','main'));
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology','all')); 
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology')); 
     echo $this->fetch('meta');
     echo $this->fetch('css');
     echo $this->fetch('script'); ?>
