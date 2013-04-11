@@ -279,31 +279,32 @@ class GiftsController extends AppController {
 
 	}
 	public function send() {
-		
 		$session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
 		$green =$this->Session->read('session_time');
+        $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
 		if($session_time != $green){
         	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
 		}
 		if(isset($this->data['gifts']))
         {
         	$this->Gift->Product->recursive = -1;
-        	$product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $this->data['gifts']['product_id'],
+        	$product_display_off = $this->Gift->Product->find('count', array('conditions' => array('Product.id' => $product_id,
         			'Product.display_order' => 0
         		)));
         	$this->Gift->recursive = -1;
-            /*$check_product_for_receiver = $this->Gift->find('count', array('conditions'
-                => array('product_id' => $this->data['gifts']['product_id'],
+            $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+                => array('product_id' => $product_id,
                     'receiver_fb_id' => $this->data['gifts']['user_id'],
                     'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
                     'expiry_date >' => date('Y-m-d') 
                 )
             ));
-            if($check_product_for_receiver || $product_display_off ){*/
-            if($product_display_off ){
-            	//if($check_product_for_receiver)
-            		//$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
-            	if($product_display_off)
+            if($check_product_for_receiver || $product_display_off ){
+            	if($check_product_for_receiver && !$product_display_off)
+            		$this->Session->setFlash(__('Your Friend has already received this gift, select any other voucher to send'));
+                if($check_product_for_receiver && $product_display_off)
+                    $this->Session->setFlash(__('Ooops! Your Friend has already received this gift and selected voucher is not available. Select any other voucher to send'));
+            	if(!$check_product_for_receiver && $product_display_off)
             		$this->Session->setFlash(__('Ooops!, Selected voucher is not available, select any other voucher to send'));
                 $this->Reminder->recursive = -1;
             	$reminder = $this->Reminder->find('first',
@@ -356,7 +357,6 @@ class GiftsController extends AppController {
                           
             $sender_id = $this->Auth->user('id');
             $receiver_fb_id = $receiver['User']['facebook_id'];
-            $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
             $amount = $this->data['contribution_amount']; 
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
