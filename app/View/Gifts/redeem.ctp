@@ -34,19 +34,16 @@
         </div>
         <div id="gift-redemption-details">
             <div id="redemption-code-title">Redemption Code</div>
-            <div id="redemption-code"><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></div>
+            <?php if(strlen($gift['Gift']['code'])<=12) : ?>
+              <div id="redemption-code"><center><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></center></div>
+            <?php else : ?>
+              <div id="redemption-code-small"><center><?php $newtext = wordwrap($gift['Gift']['code'], 8, "\n", true); echo"$newtext"; ?><br><?php if($pin) echo "Pin: ".$pin;?></center></div>
+            <?php endif ; ?>
 
-            <div style="float:right;margin-top:0px;margin-left:200px;cursor:pointer">
-                <div id = "print" >
-                <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
-                       
-                            <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
-                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
-                                <!---->
-                       
-                 <?php echo $this->Form->end(); ?>
-             </div>
-                 <div id = "sms" style="margin-left:40px;margin-top:-37px" >
+            <div style="float:right;margin-top:0px;margin-left:200px;margin-right:5px;cursor:pointer;width:120;height:40px;">
+                
+             
+              <div id = "sms" style="width:35px;height:35px;margin-top:0px;float:left;">
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                         
                             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
@@ -56,12 +53,22 @@
                                 <?php } ?>
                        
                 <?php echo $this->Form->end(); ?>
-            </div>
-              <div id = "email_voucher"style="margin-left:40px;margin-top:-40px">
+             </div>
+             <div id = "print" style="float:left">
+                <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
+                       
+                            <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
+                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
+                                <!---->
+                       
+                 <?php echo $this->Form->end(); ?>
+             </div>
+                
+             <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">
                 <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
-                        <?php /*if($gift['Gift']['email']=="0"){?>
-                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
-                            <?php }*/ ?>
+                        <?php if($gift['Gift']['email']=="0"){?>
+                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="../img/Email_Icon_2.png" /></span></a>
+                            <?php }?>
                                  <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
                                 <!---->
                        
