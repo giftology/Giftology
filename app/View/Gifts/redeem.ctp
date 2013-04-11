@@ -67,7 +67,7 @@
              <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">
                 <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
                         <?php if($gift['Gift']['email']=="0"){?>
-                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="../img/Email_Icon_2.png" /></span></a>
+                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>Email_Icon_2.png" /></span></a>
                             <?php }?>
                                  <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
                                 <!---->
