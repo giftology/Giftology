@@ -247,10 +247,10 @@ class RemindersController extends AppController {
 				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
 				if (empty($today_users) && empty($tommorrow_users) &&
 				    empty($thismonth_users) && empty($nextmonth_users)) {
-					//below line has been commented because of incosistent redirection when there is no birthday reminder from today to till next month.
-					/*if ($this->requestAction('users/refreshReminders/'.$this->Auth->user('id'))) {
+					$refresh_reminders = $this->requestAction('users/refreshReminders/'.$this->Auth->user('id'));
+					if (!$refresh_reminders) {
 						$this->redirect('/reminders/view_friends');
-					}*/
+					}
 
 					//type = all
 					$this->set('all_users', $this->get_birthdays('mine','all', 1));
