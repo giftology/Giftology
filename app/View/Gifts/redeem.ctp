@@ -22,7 +22,7 @@
 
 
 <div id="gift-details">
-        <h3 style="margin-left:40px"><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
+        <h3 style="margin-left:50px"><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
 
         <div class="purchase voucher-container">
             <?= $this->element('gift_voucher',
