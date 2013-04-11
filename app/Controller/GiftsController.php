@@ -804,7 +804,6 @@ $email = new CakeEmail();
 		}
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id');
-		$this->paginate['order'] = 'Gift.id DESC';
 		$this->paginate['conditions'] = $conditions;
 		$gifts = $this->paginate();
 		foreach($gifts as $k => $gift){
