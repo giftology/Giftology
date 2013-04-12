@@ -2550,3 +2550,15 @@ left: 750px;
    width:270px;
    height: 30px;
 }
+.demo-htmlselect{
+    -moz-box-sizing: border-box;
+     -webkit-box-sizing: border-box;
+    background-color: #FAFAFA;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;
+    margin-bottom: 5px;
+    padding: 7px;
+    position: relative;
+    width: 288px;
+}

@@ -133,12 +133,13 @@
                                                                 'ocasion' => $ocasion),
                               array('cache' => array('key'=>$receiver_name.$ocasion))
                    ); ?>
+
         </div>
+        
     
         <div id="gift-details">
             <?php 
-                
-                    if (isset($receiver_birthday) &&
+                if (isset($receiver_birthday) &&
                         !$this->Time->isToday($receiver_birthday) &&
                         isset($ocasion) &&
                         $ocasion == 'Birthday') {
@@ -147,9 +148,40 @@
                         $send_now = 1;
                     }
             ?>
-            <h3>Will be delivered: <strong><?= $send_now ? 'Today' :
-                substr($this->Time->niceShort($receiver_birthday), 0, -7); ?></strong></h3>
+             <h3>Will be delivered: 
+                    <strong>
+                        <select id="demo-html" class="demo-htmlselect" style="width:110px">
+                            <?php if($send_now == 0 ): ?>
+                            <option value="0" class="send" id="schedule"><!--<?= 
+                            date("d-m-Y", strtotime($receiver_birthday)); ?>-->On Birthday</option> 
+                             <?php endif; ?>
+                             
+                            <option value="0" class="send" id="today">Now</option>
+
+                             <option value="0" id="later" class=c1>Later</option>
+                        </select>
+                        
+                        
+
+                    </strong>
+                    <?php if($send_now == 0 ): ?>
+                            <span id = "birthday_date" style="margin-left:10px;font-size: 20px"><?= 
+                            date("d-m-Y", strtotime($receiver_birthday)); ?></span>
+                        <?php endif; ?>
+                    <span id = "date" style="margin-left:60px;font-size: 20px"></span>
+
+                </h3>
+             
+
+               
+
              </div>
+               
+
+             <div id="myDropdown">
+                 
+            </div>
+
               <?php 
            // DebugBreak(); 
             $str1 = SHIPPED;
@@ -239,12 +271,13 @@
                     <h5 style="color:#FF0000">*please enter country.</h5>
                 </div>
             </div>
+            <span style="float:right;display:none;top:320px;left:32%;position:absolute" id="datepicker1"><?php echo $this->Form->hidden("date_to_send_later" ,array('style'=>'top:20%','label' => false,'div' => false,'id'=>'datepicker' ))?></span>
             <div class="input email" ><?php echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
              <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
+            <div class="input email" id="input_email"><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
              
                 <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
@@ -297,12 +330,14 @@
             </div>
 
             <h4>Deliver your gift</h4>
+            <span style="float:right;display:none;top:320px;left:32%;position:absolute" id="datepicker1"><?php echo $this->Form->hidden("date_to_send_later" ,array('style'=>'top:20%','label' => false,'div' => false,'id'=>'datepicker' ))?></span>
             <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
+            <div class="input email" id="input_email"><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
             <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
+            
             <div class="delivery-sharing">
                 <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
                     <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
@@ -398,3 +433,105 @@
         });*/  
     });
     </script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+   
+   <script>
+$(document).ready(function(){
+    $(".demo-htmlselect").change(function(){
+        var id = $(this).find(':selected')[0].id;
+        
+       if(id=="later"){
+        //alert(formattedDate);
+      $("#datepicker1").show();
+      $("#datepicker").show();
+      $("#date").show();
+       $("#birthday_date").hide();
+      var vall= $("#input_email > #giftsSendNow").val('0');
+      var vall= $("#datepicker1 > #datepicker").val(formattedDate);
+      }
+      else{
+        $("#datepicker1").hide();
+      $("#datepicker").hide();
+      $("#date").hide();
+      //var vall= $("#datepicker1 > #datepicker").attr('value');
+      var vall= $("#datepicker1 > #datepicker").val('');
+      var vall= $("#input_email > #giftsSendNow").val('1');
+
+      }
+      if(id=="today"){
+        var vall= $("#input_email > #giftsSendNow").val('1');
+        $("#birthday_date").hide();
+    }
+    if(id=="schedule"){
+       var vall= $("#input_email > #giftsSendNow").val('0');
+        $("#birthday_date").show();
+    }
+      
+
+      
+    });
+    
+      
+});
+  </script>
+  <script>
+  var formattedDate;
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showOn: "button",
+      buttonImage: "http://giftology.com/img/Calender.png",
+      buttonImageOnly: true,
+      dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+      onClose: function() {
+    var dateText = new Date($(this).val());
+    var  date = new Date($(this).val());
+    if (dateText) {
+
+        formattedDate = (date.getDate() ) + "-" + 
+                            (date.getMonth() +1) + "-" + 
+                            date.getFullYear();
+        var selected = new Date(dateText).getTime();
+        
+       var today = new Date(new Date().getFullYear(), new Date().getMonth()+2, new Date().getDate()).getTime();
+      
+       if(today > selected){
+        
+        document.getElementById("date").innerHTML = "On"+" "+formattedDate; 
+       }
+       else{
+        var name = '<?php echo $receiver_name;?>';
+        var name = name.split(" ");
+        
+        alert("Oops.. You're thinking too far ahead! Surprise " +name[0]+ " earlier."); 
+       }
+                         
+        if(formattedDate == "NaN-NaN-NaN")
+        {
+            document.getElementById("date").innerHTML = "";
+        }
+    }
+}
+    });
+
+  });
+
+  </script>
+  <style>
+    div.ui-datepicker
+    {
+    font-size:10px;
+    }
+
+</style>
+
+
+
+
+
+    
+     
+
+    

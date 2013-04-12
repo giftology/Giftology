@@ -354,7 +354,6 @@ class GiftsController extends AppController {
                 $data1['country'] = $this->data['gifts']['country'];
             }
             $this->Gift->set($data1);
-                          
             $sender_id = $this->Auth->user('id');
             $receiver_fb_id = $receiver['User']['facebook_id'];
             $amount = $this->data['contribution_amount']; 
@@ -363,8 +362,19 @@ class GiftsController extends AppController {
             $gift_message = $this->data['gifts']['gift-message'];
             $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
-            $receiver_birthday = $this->data['gifts']['receiver_birthday'];
+            $date_to_send_later = $this->data['gifts']['date_to_send_later'];
 
+            if($date_to_send_later=="")
+            {
+            	$receiver_birthday = $this->data['gifts']['receiver_birthday'];
+            }
+            else
+            {	
+
+            	$receiver_birthday = date("Y-m-d", strtotime( $date_to_send_later));
+            }
+            
+            
             if (!$this->Gift->validates())
             {
                  $errors1 = $this->Gift->validationErrors;
@@ -415,7 +425,7 @@ class GiftsController extends AppController {
 		$gift['Gift']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
-		$gift['Gift']['date_to_send'] = $receiver_birthday;
+		//$gift['Gift']['date_to_send'] = $receiver_birthday;
 		if ($receiver_email) {
 			$gift['Gift']['receiver_email'] = $receiver_email;
 		}
@@ -453,11 +463,16 @@ class GiftsController extends AppController {
 		$gift['Gift']['gift_amount'] = $amount;
         $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
+		
 		if (!$send_now) {
 		    $gift['Gift']['date_to_send'] = $receiver_birthday;
 		}
 
-		if($date_to_send) $gift['Gift']['date_to_send'] = $date_to_send;
+		if($date_to_send) 
+			{
+				
+				$gift['Gift']['date_to_send'] = $date_to_send;
+			}
 
 		if ($product['Product']['min_price'] == 0) {
 			$payment_needed = $gift['Gift']['gift_amount'] - 
