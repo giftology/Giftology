@@ -800,7 +800,7 @@ $email = new CakeEmail();
 		$gifts = $this->Gift->find('all', array(
 			'contain' => array(
 				'Product' => array('Vendor')),
-			'conditions' => array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id')),
+			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
 			'order' => array('Gift.id DESC')
 			));
