@@ -249,7 +249,17 @@ class ProductsController extends AppController {
          
         
             }
-            $result = array_merge((array)$show_product, (array)$unpaid_product);
+            
+            $free_paid_result = array_merge((array)$show_product, (array)$unpaid_product);
+            $this->Gift->recursive = -1;
+            $received_gifts = $this->Gift->find('all', array('fields' => array('DISTINCT product_id'),
+                'conditions' => array('receiver_fb_id' => $this->request->params['named']['receiver_id'],'expiry_date >' => date('Y-m-d'))));
+            $gifts = array();
+            foreach($received_gifts as $gift){
+                $gifts[] = $gift['Gift']['product_id'];
+            }
+            $result = array_diff($free_paid_result, $gifts);
+            unset($received_gifts);
             $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.show_on_top','Product.min_price','Product.display_order')));
              
              foreach($proddd as $k => $product){
