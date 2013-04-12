@@ -434,10 +434,10 @@
     });
     </script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ 
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
    
-   <script>
+   <script  type='text/javascript'>
 $(document).ready(function(){
     $(".demo-htmlselect").change(function(){
         var id = $(this).find(':selected')[0].id;
@@ -476,7 +476,7 @@ $(document).ready(function(){
       
 });
   </script>
-  <script>
+  <script  type='text/javascript'>
   var formattedDate;
   $(function() {
     $( "#datepicker" ).datepicker({

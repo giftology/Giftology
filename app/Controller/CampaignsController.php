@@ -22,7 +22,7 @@ class CampaignsController extends AppController {
         parent::beforeFilter();
         if($this->Defaulter->defaulters_list($this->Connect->user('id')))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
-        $this->Auth->Allow('index','search_friend');
+        $this->Auth->Allow('index','search_friend','view_products');
         
     }
 
@@ -39,7 +39,7 @@ class CampaignsController extends AppController {
         $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
         $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
         $today_date= strtotime(date('Y-m-d H:i:s'));
-        if((($campaign[0]['Campaign']['enable']== 1))&&(($today_date > $camp_start_date))&&(($today_date < $camp_end_date)))
+        if(($campaign[0]['Campaign']['enable']== 1) && ($today_date > $camp_start_date) && ($today_date < $camp_end_date))
         {
            $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
            $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
