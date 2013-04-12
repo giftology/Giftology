@@ -224,7 +224,7 @@ define('CCAV_MERCHANT_ID', "M_dmIndia_13508");
 define('SHIPPED',2);
 define('DIGITAL',1);
 
-define('DAILY_MAX_GIFTS_PER_USER', 200);
+define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);
 
 CakePlugin::load('Mixpanel'); 
