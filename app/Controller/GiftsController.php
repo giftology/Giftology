@@ -797,18 +797,18 @@ $email = new CakeEmail();
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-		$gifts = $this->Gift->find('all', array(
+		/*$gifts = $this->Gift->find('all', array(
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
 			'order' => array('Gift.id DESC')
-			));
+			));*/
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
 		$birthday = isset($User['Reminder']['friend_birthday']) ? $User['Reminder']['friend_birthday']: NULL;
-		if($birthday <= date("Y-m-d"))
+		/*if($birthday <= date("Y-m-d"))
 		{
 			$this->Gift->updateAll(
                 array('gift_status_id' => 1), 
@@ -816,11 +816,11 @@ $email = new CakeEmail();
                 array('gift_status_id' => GIFT_STATUS_SCHEDULED)
                 );
 			
-		}
+		}*/
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id');
 		$this->paginate['conditions'] = $conditions;
-		//$gifts = $this->paginate();
+		$gifts = $this->paginate();
 		foreach($gifts as $k => $gift){
 			$gifts[$k]['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($gift['Gift']['id']);
 		}
