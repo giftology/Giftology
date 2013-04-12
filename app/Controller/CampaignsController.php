@@ -22,7 +22,7 @@ class CampaignsController extends AppController {
         parent::beforeFilter();
         if($this->Defaulter->defaulters_list($this->Connect->user('id')))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
-        $this->Auth->Allow('index','search_friend');
+        $this->Auth->Allow('index','search_friend','view_products');
         
     }
 
