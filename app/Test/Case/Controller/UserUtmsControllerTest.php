@@ -1,11 +1,11 @@
 <?php
-App::uses('CitySegmentsController', 'Controller');
+App::uses('UserUtmsController', 'Controller');
 
 /**
- * CitySegmentsController Test Case
+ * UserUtmsController Test Case
  *
  */
-class CitySegmentsControllerTest extends ControllerTestCase {
+class UserUtmsControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -13,23 +13,23 @@ class CitySegmentsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.city_segment',
+		'app.user_utm',
+		'app.user',
+		'app.user_profile',
+		'app.user_address',
+		'app.gift',
 		'app.product',
 		'app.vendor',
 		'app.product_type',
 		'app.gender_segment',
 		'app.age_segment',
+		'app.city_segment',
 		'app.code_type',
-		'app.gift',
+		'app.uploaded_product_code',
 		'app.gift_status',
-		'app.user',
-		'app.user_profile',
-		'app.user_utm',
-		'app.user_address',
 		'app.reminder',
 		'app.transaction',
-		'app.transaction_status',
-		'app.uploaded_product_code'
+		'app.transaction_status'
 	);
 
 /**

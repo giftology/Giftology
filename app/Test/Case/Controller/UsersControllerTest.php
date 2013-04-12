@@ -14,8 +14,22 @@ class UsersControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'app.user',
+		'app.user_profile',
+		'app.user_utm',
+		'app.user_address',
 		'app.gift',
-		'app.offer'
+		'app.product',
+		'app.vendor',
+		'app.product_type',
+		'app.gender_segment',
+		'app.age_segment',
+		'app.city_segment',
+		'app.code_type',
+		'app.uploaded_product_code',
+		'app.gift_status',
+		'app.reminder',
+		'app.transaction',
+		'app.transaction_status'
 	);
 
 /**
@@ -58,44 +72,96 @@ class UsersControllerTest extends ControllerTestCase {
 	public function testDelete() {
 	}
 
-/**
- * testAdminIndex method
- *
- * @return void
- */
-	public function testAdminIndex() {
+	public function testWs_add() {
+
 	}
 
-/**
- * testAdminView method
- *
- * @return void
- */
-	public function testAdminView() {
+
+
+
+	public function testLogin(){
+
 	}
 
-/**
- * testAdminAdd method
- *
- * @return void
- */
-	public function testAdminAdd() {
+	public function testLogout(){
+
 	}
 
-/**
- * testAdminEdit method
- *
- * @return void
- */
-	public function testAdminEdit() {
+	public function testSetting(){
+
 	}
 
-/**
- * testAdminDelete method
- *
- * @return void
- */
-	public function testAdminDelete() {
+	public function testEmail_stop(){
+
 	}
 
-}
+	public function testBeforeFacebookSave(){
+
+	}
+
+	public function testAfterFacebookSave(){
+
+	}
+
+	public function testAfterfacebooksavelast_insert_id(){
+
+	}
+
+	public function testRefreshRemindersid(){
+
+	}
+
+	public function testupdatePlaceholderGiftslast_insert_id(){
+
+
+	}
+
+	public function testupdateUTMForReferredUserupdatedgiftiduser_id(){
+
+	}
+
+
+	public function testSetuserprofile(){
+
+	}
+
+
+	public function testSetuserreminders(){
+
+
+	}
+
+	public function testGetUserFriends(){
+
+	}
+
+	public function testSend_welcome_email(){
+
+	}
+
+	public function testWelcome_post_to_fb(){
+
+	}
+
+	public function testView_gifts(){
+
+	}
+
+	public function testNoutmuserlist(){
+
+	}
+
+	public function testGet_new_long_lived_access_token(){
+
+	}
+
+	public function testWsAddexception(){
+
+	}
+
+
+
+
+}	
+
+

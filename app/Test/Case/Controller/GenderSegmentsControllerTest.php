@@ -1,11 +1,11 @@
 <?php
-App::uses('CitySegmentsController', 'Controller');
+App::uses('GenderSegmentsController', 'Controller');
 
 /**
- * CitySegmentsController Test Case
+ * GenderSegmentsController Test Case
  *
  */
-class CitySegmentsControllerTest extends ControllerTestCase {
+class GenderSegmentsControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -13,12 +13,12 @@ class CitySegmentsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.city_segment',
+		'app.gender_segment',
 		'app.product',
 		'app.vendor',
 		'app.product_type',
-		'app.gender_segment',
 		'app.age_segment',
+		'app.city_segment',
 		'app.code_type',
 		'app.gift',
 		'app.gift_status',
