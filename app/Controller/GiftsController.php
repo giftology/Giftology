@@ -688,12 +688,12 @@ class GiftsController extends AppController {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-$email = new CakeEmail();
+				$email = new CakeEmail();
 			    $email->config('smtp')
 			    ->template('email_voucher', 'default') 
 			    ->emailFormat('html')
 			    ->to($receiver_email)
-			    ->from('prabhat@giftology.com')
+           		->from(array('care@giftology.com' => 'Giftology'))
 			    ->subject($receiver_name.',Your '.$vendor_name.' voucher is here')
 			    ->viewVars(array(
 					     'receiver' => $receiver_name,
@@ -704,7 +704,7 @@ $email = new CakeEmail();
 			    $this->Gift->recursive= -2; 
                 $this->Gift->id= $id;
                 $this->Gift->saveField('email_address',$receiver_email);
-			   $this->Gift->updateAll (array('Gift.email' => 1),
+			   $this->Gift->updateAll (array('Gift.email_status' => 1),
 						array('Gift.id' => $id)); 
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
