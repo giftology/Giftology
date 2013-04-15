@@ -62,8 +62,15 @@ return false; }
             <?php echo $this->Form->hidden("user_name" ,array('label' => false,'div' => false,'value'=>$facebook_user['first_name'] ))?>
              <br><br>
             <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send Email'), array('id'=>'form_shipping')); ?>
-               
+            <?php echo $this->Form->Submit(__('Send Email'), array('id'=>'form_free')); ?>
+                 
             </div> </center>
             </div>
+             <script type='text/javascript'>
+    $(document).ready(function(){
+        $('#form_free').click(function(){
+            $(this).attr('disabled','disabled');
+             
+        });
+        </script>
             
