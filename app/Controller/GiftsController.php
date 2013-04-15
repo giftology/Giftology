@@ -749,6 +749,16 @@ class GiftsController extends AppController {
 		return null;
 	}
 	public function redeem() {
+		if(SUSPICIOUS_USER_CHECK){
+			$Facebook = new FB();
+        	$friends_count = $Facebook->api(array('method' => 'fql.query',
+                                        'query' => 'SELECT friend_count FROM user WHERE uid ='.$this->Connect->user('id')));
+        	if($friends_count[0]['friend_count'] < MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT){
+        		$this->Session->setFlash('Suspcious user! Please contact customer support - cs@giftology.com.', 'default', array(), 'suspicious_activity_message');
+        		$this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        	}
+		}
+        	
 		if($this->request->params['named']['enc_id'])
 			$id = $this->AesCrypt->decrypt($this->request->params['named']['enc_id']);
 		else
@@ -764,9 +774,11 @@ class GiftsController extends AppController {
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
-		if($this->Auth->User('id') != $gift['Gift']['receiver_id'])
+		if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
+			$this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
 			$this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
+		}
 		// will implement later when we have perfect UI
 		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
 		
