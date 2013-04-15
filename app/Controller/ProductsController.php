@@ -144,21 +144,24 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-    public function send_product_expiry_reminder(){
+    public function send_product_expiry_reminder($date = null, $days = null){
        //this function return product id which is going to expire after 30 days.
         $reminder_for_expire_product_id = array();
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'), 
             'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $product_id[]=array(); 
+        $product_id[]=array();
         $email_product_id=array();
         $product_array1= $this->Product->find('all',array('fields'=>array('Product.id','Product.days_valid','Vendor.name')));
         foreach($product_array1 as $product)
         {
-            $product_expire_date= $this->Product->UploadedProductCode->find('first',array('fields'=>array('UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.product_id' => $product['Product']['id'])));
-            $days_before_mail="30";
+            $product_expire_date= $this->Product->UploadedProductCode->find('first',array('fields'=>array('UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.product_id' => $product['Product']['id'], 'UploadedProductCode.available' => 1)));
+            if(isset($days)) $days_before_mail = $days;
+            else $days_before_mail="30";
             $product_expire_date_minus_days_valid=date('Y-m-d', strtotime('-'.$product['Product']['days_valid'].'days', strtotime($product_expire_date['UploadedProductCode']['expiry'])));
             $product_expire_date_minus_days_valid_minus_thirty=date('Y-m-d', strtotime('-'.$days_before_mail.'days', strtotime($product_expire_date_minus_days_valid)));
-            if($product_expire_date_minus_days_valid_minus_thirty == date('Y-m-d'))
+            if($date) $expiry_date_start_range = $date;
+            else $expiry_date_start_range = date('Y-m-d');
+            if($product_expire_date_minus_days_valid_minus_thirty == $expiry_date_start_range)
             {
                 $email_product_id[]=array($product['Product']['id'],$product['Vendor']['name']) ; 
             }
@@ -176,14 +179,16 @@ class ProductsController extends AppController {
             $email->config('smtp')
             ->template('code_expire_reminder') 
             ->emailFormat('html')
-            ->to('prabhat@giftology.com')
+            ->to(GIFT_CODE_EXPIRY_REMINDER_EMAIL)
             ->from(array('care@giftology.com' => 'Giftology'))
             ->attachments(ROOT.'/app/tmp/product_code_expire_reminder.csv') 
             ->subject('Products Code Expire Reminder')
             ->viewVars(array('name' => $this->Connect->user('name')))
             ->send();
         }
-
+        if(isset($date) && isset($days))
+            echo "List of product to be expired has been generated. Please check your mail ".GIFT_CODE_EXPIRY_REMINDER_EMAIL.".";
+        $this->autoRender = $this->autoLayout = false;
     }
 	public function view_products () {
        
