@@ -60,7 +60,7 @@ class CampaignsController extends AppController {
                 }
                 else{
                     if($today_date > $camp_end_date){
-                    $this->Session->setFlash(__('This campaign ended.'));
+                    $this->Session->setFlash(__('This campaign has ended.'));
                     $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
                 }
                 }
