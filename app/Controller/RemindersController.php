@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class RemindersController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array( 'Reminder','Product','Gift','User');
+	public $uses = array( 'Reminder','Product','Gift','User','UserProfile');
 	public $components = array('Defaulter');
 	
 	public $paginate = array(
@@ -433,8 +433,7 @@ class RemindersController extends AppController {
 		
 		$this->set('gifts_opens', $gift_open);
 		$this->set('gift_expires', $gift_expires);*/
-		
-		$this->set('gifts_sent', $this->Reminder->User->GiftsReceived->find('all',
+		$gift_sent_details = $this->Reminder->User->GiftsReceived->find('all',
 			      array('order'=>'GiftsReceived.id DESC',
 				    'limit'=>25,
 				    'fields' => $fields,
@@ -446,8 +445,20 @@ class RemindersController extends AppController {
 							'fields' => array('id'),
 							'Vendor' => array('name')),
 						'Sender' => array(
-							'fields' => array('facebook_id'))))));
+							'fields' => array('facebook_id')))));
+		$this->UserProfile->recursive = -1;
+		$this->Reminder->recursive = -1;
+
+		foreach($gift_sent_details as $k => $gift){
+			$sender_namer = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'),'conditions' => array('UserProfile.user_id' => $gift['GiftsReceived']['sender_id'])));
+			$receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
+			$gift_sent_details[$k]['sender_name'] = $sender_namer;
+			$gift_sent_details[$k]['receiver_name'] = $receiver_name;
+		}
+
 		
+		$this->set('gifts_sent', $gift_sent_details);
+		unset($gift_sent_details);
     }
 /*
  delete

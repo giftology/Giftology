@@ -189,7 +189,7 @@
                                 <li>
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
-                                <p></p><?= $this->Facebook->name($gift['Sender']['facebook_id']); ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $this->Facebook->name($gift['GiftsReceived']['receiver_fb_id']); ?>
+                                <p></p><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $gift['receiver_name']['Reminder']['friend_name']; ?>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
 
                                 
