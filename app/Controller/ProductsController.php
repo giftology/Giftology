@@ -35,8 +35,14 @@ class ProductsController extends AppController {
         if(isset($e) && !empty($e)) $this->set('products', array('error' => $e));
         else{
             $this->Product->recursive = 0;
+            $conditions = array();
+            $conditions['Product.display_order >'] = 0;
+            if(PAID_PRODUCT_DISABLED)
+                $conditions['Product.min_price'] = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $this->set('products', $this->Product->find('all', array('conditions' => array('Product.display_order >' => 0))));
+            $products = $this->Product->find('all', array('conditions' => $conditions));
+            $this->set('products', $products);
+            unset($products);
         }
 		$this->set('_serialize', array('products'));
 	}
