@@ -209,7 +209,7 @@
                                 ));*/
 
                                 if ($this->Paginator->hasPrev()) {
-                                        echo $this->Paginator->prev($this->html->image('35x35_prev.png'), array('escape' => false), null, array('class' => 'prev disabled'));
+                                        echo $this->Paginator->prev($this->html->image('35x35_prev.png' , array("title" => "Prev")), array('escape' => false), null, array('class' => 'prev disabled'));
                                 } ?>
                                 <?php 
                                     $page = isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1;
@@ -218,7 +218,7 @@
                                     $count = $count + 1; ?>
                                 <span class="pages"><span id="prev"><?= intval($page) ?></span>/<span id="next"><?= intval($count) ?></span></span>
                                 <?php if ($this->Paginator->hasNext()) {
-                                        echo $this->Paginator->next($this->html->image('35x35_next.png'), array('escape' => false), null, array('class' => 'next disabled'));
+                                        echo $this->Paginator->next($this->html->image('35x35_next.png' , array("title" => "Next")), array('escape' => false), null, array('class' => 'next disabled'));
                                 }
                         ?>
                         </div>
