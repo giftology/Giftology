@@ -28,7 +28,7 @@
         </h3>
         
         <div id="campaigns">
-		<div id='paginator_nav'>
+		<!--<div id='paginator_nav'>
                                 
                         <?php
                                 //Set paginator options for AJAX
@@ -42,7 +42,7 @@
                                         echo $this->Paginator->prev(' << ', array(), null, array('class' => 'prev disabled'));
                                         echo $this->Paginator->next(' >> ', array(), null, array('class' => 'next disabled'));
                         ?>
-                </div>
+                </div>-->
 
                 <?php foreach ($gifts as $gift): ?>
 			<?php $gift['Vendor'] = &$gift['Product']['Vendor']; ?>

@@ -310,7 +310,7 @@ class GiftsController extends AppController {
             	$reminder = $this->Reminder->find('first',
 			    	array('conditions' => array('friend_fb_id' => $this->data['gifts']['user_id'])
 				));
-         		$this->redirect(array('controller' => 'products',
+         		/*$this->redirect(array('controller' => 'products',
          			'action'=>'view_products',
          			'receiver_id'=>$this->data['gifts']['user_id'],
          			'receiver_name' => $reminder['Reminder']['friend_name'],
@@ -319,7 +319,9 @@ class GiftsController extends AppController {
                     'friend_birthyear' => $reminder['Reminder']['friend_birthyear'],
                     'receiver_sex' => $reminder['Reminder']['sex'],
                     'ocasion' => isset($ocasion) ? $ocasion : null
-         			));
+         			));*/
+				$this->redirect(array('controller' => 'reminders',
+         			'action'=>'view_friends'));
             }
 
             $receiver_fb_id=$this->data['gifts']['user_id'];

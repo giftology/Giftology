@@ -2407,6 +2407,10 @@ Pagination for homepage slider
 
 .next {
     float: right;
+
+}
+.prev{
+    float: left;
 }
 #slideprevnext {
     position:absolute;
@@ -2561,4 +2565,18 @@ left: 750px;
     padding: 7px;
     position: relative;
     width: 288px;
+}
+#paginator_nav
+{
+    margin-bottom:5px ;
+     width:540px ; 
+     height:35px;
+     /*background-color:#f2f2f2;*/
+
+}
+.pages
+{   margin-top:20px;
+    position: relative !important;
+    margin-left: 219px;
+
 }
