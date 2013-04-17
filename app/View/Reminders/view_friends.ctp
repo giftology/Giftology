@@ -348,7 +348,7 @@
 
     <?= $this->Js->writeBuffer(); ?>
     
-        <? /*php echo "<h1> welcome to giftology ".$user['UserProfile']['first_name']." ".$user['UserProfile']['last_name']." </h1>"; ?>
+        <?php /*php echo "<h1> welcome to giftology ".$user['UserProfile']['first_name']." ".$user['UserProfile']['last_name']." </h1>"; ?>
     <?php if(isset($user['Reminders'])): ?>
     <?php foreach($user['Reminders'] as $reminder): ?>
         <?php if ($reminder['friend_birthday']): //filter out NULL brithdays?>

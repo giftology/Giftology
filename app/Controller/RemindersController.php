@@ -246,8 +246,7 @@ class RemindersController extends AppController {
 				$this->set('friends_active', 'active');			
 		} else {
 			if ($type) {//type = all
-				//DebugBreak();
-				  $all_users=$this->get_birthdays('mine','all', 1);
+				$all_users=$this->get_birthdays('mine','all', 1);
 				  foreach($all_users as $k => $all_user){
 			           $all_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($all_user['Reminder']['friend_fb_id']);
 		             }
@@ -318,8 +317,7 @@ class RemindersController extends AppController {
 	}
 
 	 public function search_friend(){
-	 	//DebugBreak();
-        if($this->RequestHandler->isAjax()) {
+	 	if($this->RequestHandler->isAjax()) {
             $this->Reminder->recursive = -1;
              $friend_list=$this->Reminder->find('all',array('conditions' =>array (
 				    'Reminder.user_id' => $this->Auth->user('id'),
