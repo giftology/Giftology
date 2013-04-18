@@ -32,68 +32,61 @@ class CampaignsController extends AppController {
         }
         return parent::isAuthorized($user);
     }
-    public function index($encrypted_product_id) {
-       
+    public function index($encrypted_product_id) {   
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
-       if($campaign){
-        $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
-        $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
-        $today_date= strtotime(date('Y-m-d H:i:s'));
-        if(($campaign[0]['Campaign']['enable']== 1) && ($today_date > $camp_start_date) && ($today_date < $camp_end_date))
+        if($campaign)
         {
-           $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
-           $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
-           $this->layout='landing_campaign';
-        }
-         else
-        {
-            if($campaign[0]['Campaign']['enable']== 0){
-                    $this->Session->setFlash(__('This campaign is not active.'));
-                $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
-
+            $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
+            $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
+            $today_date= strtotime(date('Y-m-d H:i:s'));
+            if(($campaign[0]['Campaign']['enable']== 1) && ($today_date > $camp_start_date) && ($today_date < $camp_end_date))
+            {
+               $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
+               $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
+               $this->layout='landing_campaign';
             }
-            else{
-                if($today_date < $camp_start_date){
-                    $this->Session->setFlash(__('This campaign will start soon'));
-                   $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
- 
+            else
+            {
+                if($campaign[0]['Campaign']['enable']== 0){
+                        $this->Session->setFlash(__('This campaign is not active.'));
+                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
+
                 }
                 else{
-                    if($today_date > $camp_end_date){
-                        //session_destroy();
-                        //session_start();
-                       // $this->Auth->logout();
-                        $this->set('campaign_end_image',$campaign[0]['Campaign']['end_image']);
-                        $this->layout='landing_campaign';
-                       
-                    //$this->Session->setFlash(__('This campaign has ended.'));
-                   // $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    //$this->redirect(array('controller' => 'users', 'action'=>'logout')); 
-                }
-                }
+                    if($today_date < $camp_start_date){
+                        $this->Session->setFlash(__('This campaign will start soon'));
+                       $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
+     
+                    }
+                    else{
+                        if($today_date > $camp_end_date){
+                            $this->set('campaign_end_image',$campaign[0]['Campaign']['end_image']);
+                            $this->layout='landing_campaign';
+                        }
+                    }
+                }    
             }
-            
+        }
+        else
+        {
+            $this->Session->setFlash(__('This campaign is not active.'));
+            $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products'));  
         }
 
-}else{
-   $this->Session->setFlash(__('This campaign is not active.'));
-	$this->redirect(array('controller' => 'campaigns', 'action'=>'view_products'));  
-}
- 
-
     }
+
     public function view_products () {
+        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
+        $this->Campaign->recursive = -1;
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
        
-       if (!$this->Connect->user()) {
-            $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$this->params['pass'][0]));
+        if (!$this->Connect->user()) {
+            $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
         }
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         //$product_id_enc = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
-        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
-        $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
        	$product_id = $campaign['Campaign']['product_id'];
        	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
@@ -136,11 +129,6 @@ class CampaignsController extends AppController {
     'Reminder.user_id' => $this->Auth->user('id'),
     'Reminder.friend_name LIKE' => "%".$this->request->data['search_key']."%"
    )));
-            
-        //$this->set('data',$friend_list);
-        //$this->set('friends', $friend_list);
-        //$this->set('_serialize', array('result'));
-        //    echo $search_string;
         }
 
         echo json_encode($friend_list);
