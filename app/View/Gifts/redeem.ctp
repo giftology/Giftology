@@ -67,7 +67,7 @@
              </div>
                 
              <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">
-                <?php if(TRUE){?>
+                <?php if($gift['Gift']['email_status']=="0"){?>
                 <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
                             <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>Email_Icon_2.png" /></span></a>
                            

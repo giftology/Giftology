@@ -111,7 +111,7 @@
             <div class="frame-wrapper">
                 <div class="shadow-wrapper">
                     <div class="frame">
-                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?type=normal">
+                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?width=100&height=100">
                     </div>
                 </div>
             </div>
@@ -216,7 +216,9 @@
 
                                     $count = $total_friends/24;
                                     $count = $count + 1; ?>
+                                <?php if ($page != 1): ?>
                                 <span class="pages"><span id="prev"><?= intval($page) ?></span>/<span id="next"><?= intval($count) ?></span></span>
+                                 <?php endif; ?>
                                 <?php if ($this->Paginator->hasNext()) {
                                         echo $this->Paginator->next($this->html->image('35x35_next.png' , array("title" => "Next")), array('escape' => false), null, array('class' => 'next disabled'));
                                 }
