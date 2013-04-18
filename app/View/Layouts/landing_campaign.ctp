@@ -81,8 +81,25 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   });
     </script>    
 
-
+<?php if($campaign_end_image) {?>
 <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+        <div class="clear">&nbsp;</div>
+        </div>
+    </div>
+    <section class="slider">
+        <div class="flexslider">
+                          <ul class="slides">
+                          <li style="display: list-item;">
+                          <img src="<?= FULL_BASE_URL; ?>/<?= $campaign_end_image; ?>">
+                           </li>
+                         </ul>
+        </div>
+      </section>
+      <?php } 
+      else {
+        ?>
+      <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
               'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_id,))); ?></div>
         <div class="clear">&nbsp;</div>
         </div>
@@ -96,6 +113,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                          </ul>
         </div>
       </section>
+      <?php } ?>
       
      <section class="show-case">
         <div class="showcase-wrap">
