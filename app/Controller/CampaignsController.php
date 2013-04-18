@@ -22,7 +22,7 @@ class CampaignsController extends AppController {
         parent::beforeFilter();
         if($this->Defaulter->defaulters_list($this->Connect->user('id')))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
-        $this->Auth->Allow('index','search_friend','view_products');
+        $this->Auth->Allow('index','search_friend','view_products','campaign_gift_to_sender');
         
     }
 
@@ -202,7 +202,7 @@ public function delete($id = null) {
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
     }
 
-        public function edit($id = null) {
+    public function edit($id = null) {
         $this->Campaign->id = $id;
         if (!$this->Campaign->exists()) {
             throw new NotFoundException(__('Invalid Campaign'));
@@ -235,6 +235,59 @@ public function delete($id = null) {
         }
     }
 
+    public function campaign_gift_to_sender($campaign_id){
+        $this->Campaign->recursive = -1;
+        $product_id = $this->Campaign->find('first', array('fields' => array('product_id', 'start_date', 'end_date'),'conditions' => array('id' => $campaign_id)));
+        $this->Product->recursive = -1;
+        $product_details = $this->Product->find('first', array('fields' => array('min_price', 'max_price', 'min_value'),'conditions' => array('id' => $product_id['Campaign']['product_id'])));
+        $this->Gift->recursive = -1;
+        $sender_list = $this->Gift->find('all',array('fields' => array('DISTINCT sender_id'), 
+            'conditions' => array('product_id' => $product_id['Campaign']['product_id'], 'created >' => $product_id['Campaign']['start_date'],
+                'created <' => $product_id['Campaign']['end_date'])
+            ));
+        $receiver_list = $this->Gift->find('all',array('fields' => array('DISTINCT receiver_id'),
+            'conditions' => array('product_id' => $product_id['Campaign']['product_id'], 'created >' => $product_id['Campaign']['start_date'],
+                'created <' => $product_id['Campaign']['end_date'])
+            ));
+        $senders = array();
+        $receivers = array();
 
-    
+        foreach($sender_list as $sender){
+            $senders[] = $sender['Gift']['sender_id'];
+        }
+
+        unset($sender_list);
+
+        foreach($receiver_list as $receiver){
+            $receivers[] = $receiver['Gift']['receiver_id'];
+        }
+
+        unset($receiver_list);
+
+        $unique_sender_list = array_diff($senders, $receivers);
+
+        $this->User->recursive = -1;
+        $unique_sender_fb_id = $this->User->find('all', array('fields' => array('id','facebook_id'), 'conditions' => array('id' => $unique_sender_list)));
+
+        $fb_id = array();
+        foreach($unique_sender_fb_id as $fb_user){
+            $fb_id[$fb_user['User']['id']] = $fb_user['User']['facebook_id'];
+        }
+
+        unset($unique_sender_fb_id);
+
+        $product_id = $product_id['Campaign']['product_id'];
+        $sender_id = UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
+        if($product_details['Product']['min_price'] == 0 && $product_details['Product']['max_price'] == 0){
+            foreach($unique_sender_list as $sender){
+                set_time_limit('120');
+                $receiver_id = $sender;
+                $receiver_fb_id = $fb_id[$sender];
+                $send_now = 1;
+                $amount = $product_details['Product']['min_value'];
+                $this->requestAction('gifts/gift_to_campaign_senders_from_giftology/'.$sender_id.'/'.$receiver_fb_id.'/'.$product_id.'/'.$amount.'/'.$send_now);
+            }
+        }
+        $this->autoRender = $this->autoLayout = false;
+    }
 }

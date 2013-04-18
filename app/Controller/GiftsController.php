@@ -413,8 +413,8 @@ class GiftsController extends AppController {
         $this->Session->delete('session_time');
 	}
 
-	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $reciever_name = null,$date_to_send = null) {
-		$this->redirectIfNotAllowedToSend();
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
+        $this->redirectIfNotAllowedToSend();
 		
 		$this->Gift->create();
 		$this->Gift->Product->id = $product_id;
@@ -514,9 +514,9 @@ class GiftsController extends AppController {
 			$this->redirect($this->referer);
 		}
 		
-		if($this->params['ext'] != 'json' && $this->action != 'send_campaign')
+		if($this->params['ext'] != 'json' && $this->action != 'send_campaign' && $this->action != 'gift_to_campaign_senders_from_giftology')
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-        
+        if($this->action == 'gift_to_campaign_senders_from_giftology') return;
 	}
 
         function getCode($product, $gift_amount,$reciever_name,$receiver_fb_id,$receiver_birthday) {
@@ -1335,5 +1335,10 @@ class GiftsController extends AppController {
         	$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
         }
         $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function gift_to_campaign_senders_from_giftology($sender_id, $receiver_fb_id, $product_id, $amount, $send_now){
+    	$this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now);
+    	return;
     }
 }

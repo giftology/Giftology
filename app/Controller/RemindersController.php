@@ -458,12 +458,12 @@ class RemindersController extends AppController {
 		return $result;
     }
 	function setGiftsSent() {
-		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count'));
+		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID))));
 		$this->Reminder->User->GiftsReceived->recursive = 2;
 		$fields = array('GiftsReceived.sender_id, GiftsReceived.receiver_fb_id, 
 			GiftsReceived.product_id, GiftsReceived.created');
 		$group = array('GiftsReceived.sender_id');
-		$conditions = array('gift_status_id' => GIFT_STATUS_VALID);
+		$conditions = array('gift_status_id' => GIFT_STATUS_VALID, 'GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID);
 		// will implement later when we have perfect UI
 		/*$days_before_mail = "7";
 		$product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime(date('Y-m-d'))));
