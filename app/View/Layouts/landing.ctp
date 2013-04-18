@@ -155,6 +155,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </section>
    <!--<?php //endif; ?>-->
+   <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
                 <span class="block-title">See how it works</span>
