@@ -6,6 +6,11 @@
 			<?php  echo h($campaign['Campaign']['id']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Campaign URL'); ?></dt>
+		<dd>
+			www.giftology.com/campaigns/index/<?php echo h($campaign['Campaign']['product_enc_id']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Product Id'); ?></dt>
 		<dd>
 			<?php echo h($campaign['Campaign']['product_id']); ?>
