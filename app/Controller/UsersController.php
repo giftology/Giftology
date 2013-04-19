@@ -153,7 +153,7 @@ class UsersController extends AppController {
             $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1,'Campaign.enable'=>1)));
             $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
             $this->set('campaign_image',$check_on_campaign['Campaign']['wide_image']);
-            $this->set('campaign_enc_id',$check_on_campaign['Campaign']['product_enc_id']);
+            $this->set('campaign_enc_id',$this->AesCrypt->encrypt($check_on_campaign['Campaign']['id']));
             $this->set('campaign_check_on',$check_on_campaign['Campaign']['on_landing_page']);
             //$this->set('redirect',$check_on_campaign['Campaign']['redirect']);
 

@@ -32,7 +32,7 @@ class CampaignsController extends AppController {
         }
         return parent::isAuthorized($user);
     }
-    public function index($encrypted_product_id) { // DebugBreak(); 
+    public function index($encrypted_product_id) {
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
         if($campaign)
