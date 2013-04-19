@@ -31,6 +31,11 @@
 			<?php echo h($campaign['Campaign']['on_landing_page']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Redirect'); ?></dt>
+		<dd>
+			<?php echo h($campaign['Campaign']['redirect_to']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Start Date'); ?></dt>
 		<dd>
 			<?php echo h($campaign['Campaign']['start_date']); ?>

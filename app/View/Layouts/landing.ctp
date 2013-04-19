@@ -81,20 +81,20 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 });
   });
     </script>    
-<?php if($campaign_check_on) {?>
-
+    <?php if(($campaign_check_on) &&($redirect_to == CAMPAIGN) )
+        {?>
          <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
-       
-              
-<?php } else { ?>
- <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
-<?php } ?>              
+         'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
+ <?php } 
+        else 
+        { ?>
+            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
+  <?php } ?>              
         <div class="clear">&nbsp;</div>
         </div>
     </div>
-    <section class="slider">
+    <section class="slider">  
         <div class="flexslider">
           <?php
             if($campaign_check_on): ?>
@@ -103,9 +103,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                          {
                            ?> <ul class="slides">
                                      <li style="display: list-item;">
-                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>">
+                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>"> 
                                      </li>
-                                     </ul>
+                                     </ul> 
                                     
                               <?php    }
                               else echo null;
@@ -118,7 +118,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                            </li>
                          </ul>
               <?php endif;  ?>
-        </div>
+        </div> 
       </section>
 
      <!--<?php //if(isset($campaign_Images)): ?>
