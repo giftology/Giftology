@@ -159,12 +159,12 @@ class UsersController extends AppController {
 
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+            $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0),'limit'=>10,'order' => array('RAND()')));
             $Image_new = array();
             foreach ($Image as $Images) {
                 $id=$Images['Product']['vendor_id'];
                 $this->Vendor->unbindModel(array('hasMany' => array('Product')));
-                $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+                $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.carousel_image'),'conditions' => array('Vendor.id '=>$id)));
                 $this->set('Images', $Image_new);
             }
         

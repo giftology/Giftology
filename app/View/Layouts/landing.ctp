@@ -149,7 +149,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                   <?php
                       foreach($Images as $Image)
                           { ?>
-                              <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div>
+                              <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['carousel_image']; ?>" class="lazy" alt=""></div>
 
                                       <?php   }
                       ?>

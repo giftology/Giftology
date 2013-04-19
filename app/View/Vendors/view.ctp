@@ -21,6 +21,11 @@
 			<?php echo $this->Html->image('../'.$vendor['Vendor']['wide_image']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('carousel'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$vendor['Vendor']['carousel_image']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($vendor['Vendor']['created']); ?>

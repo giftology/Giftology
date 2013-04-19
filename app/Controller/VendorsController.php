@@ -48,6 +48,8 @@ class VendorsController extends AppController {
 				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['wide_file']['name']);
 			$this->request->data['Vendor']['facebook_file']['name']
 				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['facebook_file']['name']);
+			$this->request->data['Vendor']['carousel_image']['name']
+				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['carousel_image']['name']);
 					
 			$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
 			copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
@@ -57,6 +59,9 @@ class VendorsController extends AppController {
 			
 			$this->request->data['Vendor']['facebook_image'] = 'files/'.$this->request->data['Vendor']['facebook_file']['name'];
 			copy($this->request->data['Vendor']['facebook_file']['tmp_name'], $this->request->data['Vendor']['facebook_image']);
+
+			$this->request->data['Vendor']['carousel_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
+			copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['carousel_image']);
 
 
 			if ($this->Vendor->save($this->request->data)) {
@@ -99,6 +104,12 @@ class VendorsController extends AppController {
 					= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['facebook_file']['name']);
 				$this->request->data['Vendor']['facebook_image'] = 'files/'.$this->request->data['Vendor']['facebook_file']['name'];
 				copy($this->request->data['Vendor']['facebook_file']['tmp_name'], $this->request->data['Vendor']['facebook_image']);
+			}
+			if (isset($this->request->data['Vendor']['carousel_image']['name']) && $this->request->data['Vendor']['carousel_image']['name']) {
+				$this->request->data['Vendor']['carousel_image']['name']	
+					= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['carousel_image']['name']);
+				$this->request->data['Vendor']['carousel_image'] = 'files/'.$this->request->data['Vendor']['carousel_image']['name'];
+				copy($this->request->data['Vendor']['carousel_image']['tmp_name'], $this->request->data['Vendor']['carousel_image']);
 			}
 			if ($this->Vendor->save($this->request->data)) {
 				$this->Session->setFlash(__('The vendor has been saved'));
