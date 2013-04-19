@@ -26,6 +26,11 @@
 			<?php echo h($campaign['Campaign']['enable']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Enable on landing Page'); ?></dt>
+		<dd>
+			<?php echo h($campaign['Campaign']['on_landing_page']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Start Date'); ?></dt>
 		<dd>
 			<?php echo h($campaign['Campaign']['start_date']); ?>

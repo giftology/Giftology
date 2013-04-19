@@ -32,7 +32,7 @@ class CampaignsController extends AppController {
         }
         return parent::isAuthorized($user);
     }
-    public function index($encrypted_product_id) {   
+    public function index($encrypted_product_id) { // DebugBreak(); 
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
         if($campaign)
@@ -160,6 +160,7 @@ class CampaignsController extends AppController {
         if ($this->request->is('post')) {
             if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="")&& ($this->request->data['Campaign']['product_id']!="") )
             {
+              //  DebugBreak();
                 $error_array= array();
                 $allowed =  array('png' ,'jpg');
                 foreach($_FILES['data']['name']['Campaign'] as $file)
@@ -191,12 +192,18 @@ class CampaignsController extends AppController {
 
                     $this->request->data['Campaign']['end_image'] = 'files/campaign/'.$this->request->data['Campaign']['end_file']['name'];
                     copy($this->request->data['Campaign']['end_file']['tmp_name'], $this->request->data['Campaign']['end_image']);
-
-
+                    $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
+                    if(($check_on_campaign)&&($this->request->data['Campaign']['on_landing_page']!=0)){
+                        $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));
+                        $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+                       
+                    }
+                    else{
                     if ($this->Campaign->save($this->request->data)) {
                         $this->Session->setFlash(__('The Campaign has been saved'));
                         $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
                     } 
+                }
                 }
                 else{
                     $err1;
@@ -242,7 +249,7 @@ public function delete($id = null) {
         if (!$this->Campaign->exists()) {
             throw new NotFoundException(__('Invalid Campaign'));
         }
-        if ($this->request->is('post') || $this->request->is('put')) {
+        if ($this->request->is('post') || $this->request->is('put')) { //DebugBreak();
                    $error_array= array();    
                 $allowed =  array('png' ,'jpg');
                 foreach($_FILES['data']['name']['Campaign'] as $file)
@@ -303,12 +310,21 @@ public function delete($id = null) {
                     $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
                     $this->redirect(array('controller' => 'campaigns', 'action'=>'edit',$id));   
                 }
+                 $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
+                    if(($check_on_campaign)&&($id !=$check_on_campaign['Campaign']['id'] )){
+                        $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));
+                        $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+                       
+                    }
+                    else{
             if ($this->Campaign->save($this->request->data)) {
                 $this->Session->setFlash(__('The campaign has been saved'));
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-            } else {
+            }
+                     else {
                 $this->Session->setFlash(__('The campaign could not be saved. Please, try again.'));
             }
+                    }
         } else {
             $this->request->data = $this->Campaign->read(null, $id);
         }

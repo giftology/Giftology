@@ -81,30 +81,33 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 });
   });
     </script>    
+<?php if(isset($campaign_check_on)) {?>
 
-
-<div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div> 
+         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+              'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
+       
+              
+<?php } else { ?>
+ <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
+<?php } ?>              
         <div class="clear">&nbsp;</div>
         </div>
     </div>
     <section class="slider">
         <div class="flexslider">
           <?php
-            if(isset($campaign_id)): ?>
+            if(isset($campaign_check_on)): ?>
           <?php 
-                      if (glob("img/campaign/$campaign_id*.{jpg,png}",GLOB_BRACE) != false)
+                      if (isset($campaign_image))
                          {
-                           $filecount = glob("img/campaign/$campaign_id*.{jpg,png}",GLOB_BRACE);
-                             
-                             foreach($filecount as $img)
-                                { ?> <ul class="slides">
+                           ?> <ul class="slides">
                                      <li style="display: list-item;">
-                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt="">
+                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>">
                                      </li>
                                      </ul>
                                     
-                              <?php   } }
+                              <?php    }
                               else echo null;
 
                           
