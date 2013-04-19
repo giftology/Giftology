@@ -9,6 +9,7 @@ CAMPAIGN ADMIN PANEL
 			<th><?php echo $this->Paginator->sort('end_date'); ?></th>
 			<th><?php echo $this->Paginator->sort('enable'); ?></th>
 			<th><?php echo $this->Paginator->sort('On Landing Page'); ?></th>
+			<th><?php echo $this->Paginator->sort('Redirect'); ?></th>
 
 
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -27,6 +28,16 @@ CAMPAIGN ADMIN PANEL
 		
 		<td><?php echo h($campaign['Campaign']['enable']); ?>&nbsp;</td>
 		<td><?php echo h($campaign['Campaign']['on_landing_page']); ?>&nbsp;</td>
+		<td><?php 
+			if($campaign['Campaign']['redirect_to'] == 2 )
+			{
+				echo "Campaign";?>&nbsp;</td><?php
+			}
+			else
+			{
+				echo "Reminder";?>&nbsp;</td><?php
+			}?>
+		
 		
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $campaign['Campaign']['id'])); ?>

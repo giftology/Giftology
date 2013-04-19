@@ -243,13 +243,14 @@ public function delete($id = null) {
     }
 
     public function edit($id = null) {
+       
         $this->Campaign->id = $id;
         $campaign=$this->Campaign->find('first', array('fields' => array('wide_image','thumb_image','end_image'),'conditions' => array('Campaign.id' => $id)));
 
         if (!$this->Campaign->exists()) {
             throw new NotFoundException(__('Invalid Campaign'));
         }
-        if ($this->request->is('post') || $this->request->is('put')) { //DebugBreak();
+        if ($this->request->is('post') || $this->request->is('put')) { 
                    $error_array= array();    
                 $allowed =  array('png' ,'jpg');
                 foreach($_FILES['data']['name']['Campaign'] as $file)
@@ -311,7 +312,7 @@ public function delete($id = null) {
                     $this->redirect(array('controller' => 'campaigns', 'action'=>'edit',$id));   
                 }
                  $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
-                    if(($check_on_campaign)&&($id !=$check_on_campaign['Campaign']['id'] )){
+                    if(($check_on_campaign)&&($id !=$check_on_campaign['Campaign']['id'] )&&(($this->request->data['Campaign']['on_landing_page']=='1'))){
                         $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));
                         $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
                        
