@@ -813,31 +813,38 @@ class GiftsController extends AppController {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-		/*$gifts = $this->Gift->find('all', array(
+		$gift_count = $this->Gift->find('all', array(
+			'fields' => array('COUNT(Gift.id) as product_gift'),
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
 			'order' => array('Gift.id DESC')
-			));*/
+			));
+
+		$gift_product_count = array();
+		foreach($gift_count as $c){
+			$gift_product_count[$c['Product']['id']] = $c[0]['product_gift'];
+		}
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
 		$birthday = isset($User['Reminder']['friend_birthday']) ? $User['Reminder']['friend_birthday']: NULL;
-		/*if($birthday <= date("Y-m-d"))
-		{
-			$this->Gift->updateAll(
-                array('gift_status_id' => 1), 
-                array('receiver_id' => $this->Auth->user('id')),
-                array('gift_status_id' => GIFT_STATUS_SCHEDULED)
-                );
-			
-		}*/
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id');
 		$this->paginate['conditions'] = $conditions;
 		$gifts = $this->paginate();
 		foreach($gifts as $k => $gift){
+            if($gift_product_count[$gift['Gift']['product_id']] > 1){
+                $gift_new = $this->Gift->find('first', 
+                    array('conditions' => array('Gift.product_id' => $gift['Gift']['product_id'], 'Gift.gift_status_id' => GIFT_STATUS_VALID),
+                        'contain' => array(
+							'Product' => array('Vendor')),
+                        'order' => 'Gift.id DESC',
+                        'limit' => 1
+                    ));
+                $gifts[$k] = $gift_new;
+            }
 			$gifts[$k]['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($gift['Gift']['id']);
 		}
 		$this->set('gifts', $gifts);
@@ -847,7 +854,6 @@ class GiftsController extends AppController {
 	}
 
 	public function sent_gifts() {
-		//DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
