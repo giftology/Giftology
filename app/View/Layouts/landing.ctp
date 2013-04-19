@@ -70,7 +70,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
-          <?php if(!$campaign_id): ?>
+          <?php if(!$campaign_check_on): ?>
          <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
          <?php endif; ?>
     <script type="text/javascript">
@@ -81,7 +81,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 });
   });
     </script>    
-<?php if(isset($campaign_check_on)) {?>
+<?php if($campaign_check_on) {?>
 
          <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
               'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
@@ -97,7 +97,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <section class="slider">
         <div class="flexslider">
           <?php
-            if(isset($campaign_check_on)): ?>
+            if($campaign_check_on): ?>
           <?php 
                       if (isset($campaign_image))
                          {
