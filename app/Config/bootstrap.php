@@ -230,7 +230,7 @@ define('REMINDER',1);
 
 
 define('DAILY_MAX_GIFTS_PER_USER', 10);
-define('CAROUSEL_CODE', 2);
+define('CAROUSEL_CODE', 1);
 define('GIFT_CODE_EXPIRY_REMINDER_EMAIL', 'aman.narang@giftology.com');
 define('SUSPICIOUS_USER_CHECK', FALSE);
 define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 5);
