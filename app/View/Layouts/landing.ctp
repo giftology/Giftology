@@ -373,7 +373,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   </script>
   <?php if($campaign_check_on){ ?>
     <map name="planetmap">
-      <area shape="rect" coords="1000,315,1237,370" href="/contest_tnc" alt="click to see contest terms and conditions">
+      <area shape="rect" coords="1204,347,1355,375" href="/contest_tnc" alt="click to see contest terms and conditions">
     </map>
   <?php } ?>
  <?php echo $this->Mixpanel->embed(); ?>
