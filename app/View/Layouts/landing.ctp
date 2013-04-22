@@ -85,7 +85,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         {?>
          <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
          'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
- <?php } 
+ <?php }
+        elseif (($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
+           <div class="fbconect" id="fb" style="margin: 0 0 0 -480px"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+  <?php       } 
         else 
         { ?>
             <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
@@ -103,7 +107,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                          {
                            ?> <ul class="slides">
                                      <li style="display: list-item;">
-                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>"> 
+                                     <img id="banner_image" src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>" usemap="#planetmap"> 
                                      </li>
                                      </ul> 
                                     
@@ -114,7 +118,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                         else : ?>
                           <ul class="slides">
                           <li style="display: list-item;">
-                          <img src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
+                          <img id="banner_image" src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
                          </ul>
               <?php endif;  ?>
@@ -364,7 +368,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       s.src = '//static.getclicky.com/js';
       ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
-  </script> 
+  </script>
+  <?php if($campaign_check_on){ ?>
+    <map name="planetmap">
+      <area shape="rect" coords="1000,315,1237,370" href="/contest_tnc" alt="click to see contest terms and conditions">
+    </map>
+  <?php } ?>
  <?php echo $this->Mixpanel->embed(); ?>
 <?php if($campaign_id):?>
   <!--<script type="text/javascript">
