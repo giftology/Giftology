@@ -19,7 +19,7 @@ class RemindersController extends AppController {
 	);
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_reminder_email_for_user','send_reminder','inactive_users_list','search_friend');
+		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend');
 	}
 
 	public function isAuthorized($user) {
@@ -604,7 +604,7 @@ class RemindersController extends AppController {
     	fclose($fp);
     }
 
-    public function inactive_users_list(){
+    public function active_inactive_users_list(){
     	ini_set("max_execution_time",0);
     	$users = $this->User->find('list', 
             array(
@@ -612,6 +612,7 @@ class RemindersController extends AppController {
                 'order' => array('id' => 'ASC')
             ));
     	$fp = fopen(ROOT.'/app/tmp/inactive_users_list.csv', 'a+');
+    	$fp1 = fopen(ROOT.'/app/tmp/active_users_list.csv', 'a+');
     	foreach($users as $id){
     		set_time_limit(300);
     		$user = $this->Reminder->User->find('first', array(
@@ -625,9 +626,13 @@ class RemindersController extends AppController {
                 if(!$reminder_count){
                 	fputcsv($fp,array($user['User']['id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
                	}
+               	else{
+               		fputcsv($fp1,array($user['User']['id'],$user['UserProfile']['first_name'], $user['UserProfile']['last_name'], $user['UserProfile']['email'], $user['User']['last_login']));    
+               	}
             }
     	}
     	fclose($fp);
+    	fclose($fp1);
     	$this->autoRender = $this->autoLayout = false;
     }
 }
