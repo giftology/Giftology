@@ -22,12 +22,12 @@ class CampaignsController extends AppController {
         parent::beforeFilter();
         if($this->Defaulter->defaulters_list($this->Connect->user('id')))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
-        $this->Auth->Allow('index','search_friend','view_products');
+            $this->Auth->Allow('index','view_products','campaign_gift_to_sender');
         
     }
 
     public function isAuthorized($user) {
-        if (($this->action == 'view_products') || ($this->action == 'view_product') || ($this->action == 'index')) {
+        if (($this->action == 'view_products') || ($this->action == 'view_product') || ($this->action == 'index') || ($this->action =='search_friend')) {
             return true;
         }
         return parent::isAuthorized($user);
@@ -35,54 +35,58 @@ class CampaignsController extends AppController {
     public function index($encrypted_product_id) {
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
-       if($campaign){
-        $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
-        $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
-        $today_date= strtotime(date('Y-m-d H:i:s'));
-        if(($campaign[0]['Campaign']['enable']== 1) && ($today_date > $camp_start_date) && ($today_date < $camp_end_date))
+        if($campaign)
         {
-           $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
-           $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
-           $this->layout='landing_campaign';
-        }
-         else
-        {
-            if($campaign[0]['Campaign']['enable']== 0){
-                    $this->Session->setFlash(__('This campaign is not active.'));
-                $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
-
+            $camp_start_date= strtotime($campaign[0]['Campaign']['start_date']) ;
+            $camp_end_date= strtotime($campaign[0]['Campaign']['end_date']);
+            $today_date= strtotime(date('Y-m-d H:i:s'));
+            if(($campaign[0]['Campaign']['enable']== 1) && ($today_date > $camp_start_date) && ($today_date < $camp_end_date))
+            {
+               $this->set('campaign_wide_image',$campaign[0]['Campaign']['wide_image']);
+               $this->set('campaign_id',$this->AesCrypt->encrypt($campaign[0]['Campaign']['id']));
+               $this->layout='landing_campaign';
             }
-            else{
-                if($today_date < $camp_start_date){
-                    $this->Session->setFlash(__('This campaign will start soon'));
-                   $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
- 
+            else
+            {
+                if($campaign[0]['Campaign']['enable']== 0){
+                        $this->Session->setFlash(__('This campaign is not active.'));
+                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
+
                 }
                 else{
-                    if($today_date > $camp_end_date){
-                    $this->Session->setFlash(__('This campaign ended.'));
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
-                }
-                }
+                    if($today_date < $camp_start_date){
+                        $this->Session->setFlash(__('This campaign will start soon'));
+                       $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends')); 
+     
+                    }
+                    else{
+                        if($today_date > $camp_end_date){
+                            $this->set('campaign_end_image',$campaign[0]['Campaign']['end_image']);
+                            $this->layout='landing_campaign';
+                        }
+                    }
+                }    
             }
-            
+        }
+        else
+        {
+            $this->Session->setFlash(__('This campaign is not active.'));
+            $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products'));  
         }
 
-}else{
-   $this->Session->setFlash(__('This campaign is not active.'));
-	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
-}
- 
-
     }
+
     public function view_products () {
-        if ($this->Connect->user()) {
+        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
+        $this->Campaign->recursive = -1;
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
+       
+        if (!$this->Connect->user()) {
+            $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
+        }
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         //$product_id_enc = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
-        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
-        $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
        	$product_id = $campaign['Campaign']['product_id'];
        	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
@@ -100,12 +104,11 @@ class CampaignsController extends AppController {
         $this->Session->write('campaign_id', $this->AesCrypt->encrypt($campaign_id));
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));  
-        }
+        
     }
 
     public function view_product($id) {
-
-       
+          
         $this->Product->id = $id;
         if (!$this->Product->exists()) {
             throw new NotFoundException(__('Invalid product'));
@@ -126,11 +129,6 @@ class CampaignsController extends AppController {
     'Reminder.user_id' => $this->Auth->user('id'),
     'Reminder.friend_name LIKE' => "%".$this->request->data['search_key']."%"
    )));
-            
-        //$this->set('data',$friend_list);
-        //$this->set('friends', $friend_list);
-        //$this->set('_serialize', array('result'));
-        //    echo $search_string;
         }
 
         echo json_encode($friend_list);
@@ -157,34 +155,76 @@ class CampaignsController extends AppController {
  *
  * @return void
  */
-    public function add() {
+ public function add() {
+
         if ($this->request->is('post')) {
             if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="")&& ($this->request->data['Campaign']['product_id']!="") )
             {
-            $product_id=$this->request->data['Campaign']['product_id'];
-            $this->request->data['Campaign']['product_enc_id']=$this->AesCrypt->encrypt($product_id);
-            $this->Campaign->create();
-           	$this->request->data['Campaign']['thumb_file']['name']
-                = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
-            $this->request->data['Campaign']['wide_file']['name']
-                = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
-            $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
-            copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
-            $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
-            copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
-         if ($this->Campaign->save($this->request->data)) {
-                $this->Session->setFlash(__('The Campaign has been saved'));
-                $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-            } else {
-                    $this->Session->setFlash(__('Please enter all input fields'));
-                    $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+              //  DebugBreak();
+                $error_array= array();
+                $allowed =  array('png' ,'jpg');
+                foreach($_FILES['data']['name']['Campaign'] as $file)
+                {
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    if(!in_array($ext,$allowed) ) 
+                    {
+                        $error_array[]=  $file;
+                    }      
+                } if(!$error_array) {
+                    $product_id=$this->request->data['Campaign']['product_id'];
+                    $this->request->data['Campaign']['product_enc_id']=$this->AesCrypt->encrypt($product_id);
+                    $this->Campaign->create();
+
+                    $this->request->data['Campaign']['thumb_file']['name']
+                    = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
+
+                    $this->request->data['Campaign']['wide_file']['name']
+                    = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
+
+                    $this->request->data['Campaign']['end_file']['name']
+                    = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['end_file']['name']);
+
+                    $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
+                    copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
+
+                    $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
+                    copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
+
+                    $this->request->data['Campaign']['end_image'] = 'files/campaign/'.$this->request->data['Campaign']['end_file']['name'];
+                    copy($this->request->data['Campaign']['end_file']['tmp_name'], $this->request->data['Campaign']['end_image']);
+                    $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
+                    if(($check_on_campaign)&&($this->request->data['Campaign']['on_landing_page']!=0)){
+                        $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));
+                        $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+                       
+                    }
+                    else{
+                    if ($this->Campaign->save($this->request->data)) {
+                        $this->Session->setFlash(__('The Campaign has been saved'));
+                        $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+                    } 
+                }
+                }
+                else{
+                    $err1;
+                    foreach($error_array as $err){
+                        $err1= $err1.' ';
+                        $err1= $err1.$err.' ' ;
+                        
+                        
+                        
+                    }
+                    $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
+                    $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));   
+                }
+
             }
+            else {
+                $this->Session->setFlash(__('Please enter all input fields'));
+                $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+            }  
         }
-        else
-            $this->Session->setFlash(__('Please enter all fields...'));
-            $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-        }
-        }
+ }
         
 public function delete($id = null) {
         if (!$this->request->is('post')) {
@@ -202,39 +242,148 @@ public function delete($id = null) {
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
     }
 
-        public function edit($id = null) {
+    public function edit($id = null) {
+       
         $this->Campaign->id = $id;
+        $campaign=$this->Campaign->find('first', array('fields' => array('wide_image','thumb_image','end_image'),'conditions' => array('Campaign.id' => $id)));
+
         if (!$this->Campaign->exists()) {
             throw new NotFoundException(__('Invalid Campaign'));
         }
-        if ($this->request->is('post') || $this->request->is('put')) {
-
-            if (isset($this->request->data['Campaign']['thumb_file']['name']) && $this->request->data['Campaign']['thumb_file']['name']) {
-              $this->request->data['Campaign']['thumb_file']['name']
+        if ($this->request->is('post') || $this->request->is('put')) { 
+                   $error_array= array();    
+                $allowed =  array('png' ,'jpg');
+                foreach($_FILES['data']['name']['Campaign'] as $file)
+                {
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    if(!in_array($ext,$allowed) ) 
+                    {
+                        $error_array[]=  $file;
+                    }      
+                } if((empty($error_array[0]))&&(empty($error_array[1]))&&(empty($error_array[1]))) {
+                    
+            
+            if (isset($this->request->data['Campaign']['thumb_file']['name']) && $this->request->data['Campaign']['thumb_file']['name']) { 
+                $this->request->data['Campaign']['thumb_file']['name']
                 = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['thumb_file']['name']);
                 $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
-            copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
+                copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
 
             }
             if (isset($this->request->data['Campaign']['wide_file']['name']) && $this->request->data['Campaign']['wide_file']['name']) {
-              $this->request->data['Campaign']['wide_file']['name']
+                $this->request->data['Campaign']['wide_file']['name']
                 = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['wide_file']['name']);
                 $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
-            copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
-            
+                copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
+
             }
-            
+
+            if (isset($this->request->data['Campaign']['end_file']['name']) && $this->request->data['Campaign']['end_file']['name']) {
+                $this->request->data['Campaign']['end_file']['name']
+                = $this->request->data['Campaign']['productid'].str_replace(" ","_", $this->request->data['Campaign']['end_file']['name']);
+                $this->request->data['Campaign']['end_image'] = 'files/campaign/'.$this->request->data['Campaign']['end_file']['name'];
+                copy($this->request->data['Campaign']['end_file']['tmp_name'], $this->request->data['Campaign']['end_image']);
+
+            }
+            if($this->request->data['Campaign']['thumb_image']){
+                $del_url_thumb= $campaign['Campaign']['thumb_image'];
+                unlink($del_url_thumb); 
+            }
+            if($this->request->data['Campaign']['wide_image']){
+                $del_url_wide= $campaign['Campaign']['wide_image'];
+                unlink($del_url_wide); 
+            }
+            if($this->request->data['Campaign']['end_image']){
+                $del_url= $campaign['Campaign']['end_image'];
+                $b = unlink($del_url); 
+
+            }
+                }
+                else{
+                    $err1;
+                    foreach($error_array as $err){
+                        $err1= $err1.' ';
+                        $err1= $err1.$err.' ' ;
+                        
+                        
+                        
+                    }
+                    $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
+                    $this->redirect(array('controller' => 'campaigns', 'action'=>'edit',$id));   
+                }
+                 $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
+                    if(($check_on_campaign)&&($id !=$check_on_campaign['Campaign']['id'] )&&(($this->request->data['Campaign']['on_landing_page']=='1'))){
+                        $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));
+                        $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
+                       
+                    }
+                    else{
             if ($this->Campaign->save($this->request->data)) {
                 $this->Session->setFlash(__('The campaign has been saved'));
                 $this->redirect(array('controller' => 'campaigns', 'action'=>'admin'));  
-            } else {
+            }
+                     else {
                 $this->Session->setFlash(__('The campaign could not be saved. Please, try again.'));
             }
+                    }
         } else {
             $this->request->data = $this->Campaign->read(null, $id);
         }
     }
 
+    public function campaign_gift_to_sender($campaign_id){
+        $this->Campaign->recursive = -1;
+        $product_id = $this->Campaign->find('first', array('fields' => array('product_id', 'start_date', 'end_date'),'conditions' => array('id' => $campaign_id)));
+        $this->Product->recursive = -1;
+        $product_details = $this->Product->find('first', array('fields' => array('min_price', 'max_price', 'min_value'),'conditions' => array('id' => $product_id['Campaign']['product_id'])));
+        $this->Gift->recursive = -1;
+        $sender_list = $this->Gift->find('all',array('fields' => array('DISTINCT sender_id'), 
+            'conditions' => array('product_id' => $product_id['Campaign']['product_id'], 'created >' => $product_id['Campaign']['start_date'],
+                'created <' => $product_id['Campaign']['end_date'])
+            ));
+        $receiver_list = $this->Gift->find('all',array('fields' => array('DISTINCT receiver_id'),
+            'conditions' => array('product_id' => $product_id['Campaign']['product_id'], 'created >' => $product_id['Campaign']['start_date'],
+                'created <' => $product_id['Campaign']['end_date'])
+            ));
+        $senders = array();
+        $receivers = array();
 
-    
+        foreach($sender_list as $sender){
+            $senders[] = $sender['Gift']['sender_id'];
+        }
+
+        unset($sender_list);
+
+        foreach($receiver_list as $receiver){
+            $receivers[] = $receiver['Gift']['receiver_id'];
+        }
+
+        unset($receiver_list);
+
+        $unique_sender_list = array_diff($senders, $receivers);
+
+        $this->User->recursive = -1;
+        $unique_sender_fb_id = $this->User->find('all', array('fields' => array('id','facebook_id'), 'conditions' => array('id' => $unique_sender_list)));
+
+        $fb_id = array();
+        foreach($unique_sender_fb_id as $fb_user){
+            $fb_id[$fb_user['User']['id']] = $fb_user['User']['facebook_id'];
+        }
+
+        unset($unique_sender_fb_id);
+
+        $product_id = $product_id['Campaign']['product_id'];
+        $sender_id = UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
+        if($product_details['Product']['min_price'] == 0 && $product_details['Product']['max_price'] == 0){
+            foreach($unique_sender_list as $sender){
+                set_time_limit('120');
+                $receiver_id = $sender;
+                $receiver_fb_id = $fb_id[$sender];
+                $send_now = 1;
+                $amount = $product_details['Product']['min_value'];
+                $this->requestAction('gifts/gift_to_campaign_senders_from_giftology/'.$sender_id.'/'.$receiver_fb_id.'/'.$product_id.'/'.$amount.'/'.$send_now);
+            }
+        }
+        $this->autoRender = $this->autoLayout = false;
+    }
 }

@@ -224,8 +224,17 @@ define('CCAV_MERCHANT_ID', "M_dmIndia_13508");
 define('SHIPPED',2);
 define('DIGITAL',1);
 
+//Campaign Rediredct path
+define('CAMPAIGN',2);
+define('REMINDER',1);
+
+
 define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);
+define('GIFT_CODE_EXPIRY_REMINDER_EMAIL', 'aman.narang@giftology.com');
+define('SUSPICIOUS_USER_CHECK', FALSE);
+define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 5);
+define('PAID_PRODUCT_DISABLED', TRUE);
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));

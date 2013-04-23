@@ -3,12 +3,15 @@
 	<fieldset>
 		<legend><?php echo __('Edit Campaign'); ?></legend>
 	<?php
-		echo $this->Form->input('enable');
+		echo $this->Form->input('product_id', array('label' => 'Product ID', 'type' => 'text','disabled' => true));
+         echo $this->Form->input('enable', array('type' => 'select', 'options' =>array('1'=>'Enable','0'=>'Disable')));
 		echo $this->Form->input('start_date');
 		echo $this->Form->input('end_date');
+		echo $this->Form->input('on_landing_page', array('type' => 'select', 'options' =>array('1'=>'YES','0'=>'NO')));
+		echo $this->Form->input('redirect_to', array('type' => 'select', 'options' =>array('1'=>'REMINDER','2'=>'CAMPAIGN')));
 		echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));
         echo $this->Form->input('wide_file', array('label' => 'Landing Page Image', 'type' => 'file'));
-       
+        echo $this->Form->input('end_file', array('label' => 'Campaign End Page Image', 'type' => 'file'));
 
 	?>
 	</fieldset>

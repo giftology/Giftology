@@ -38,7 +38,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -48,19 +48,8 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     echo $this->fetch('script');
   ?>
 <!-- saved from url=(0044)http://vikasmakwana.com/giftology/index.html -->
-<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24851185-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script><head>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<head>
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -81,7 +70,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
           <?php if(!$campaign_id): ?>
-         <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+         <!--<p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p> -->
          <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -92,8 +81,25 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   });
     </script>    
 
-
+<?php if($campaign_end_image) {?>
 <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+        <div class="clear">&nbsp;</div>
+        </div>
+    </div>
+    <section class="slider">
+        <div class="flexslider">
+                          <ul class="slides">
+                          <li style="display: list-item;">
+                          <img src="<?= FULL_BASE_URL; ?>/<?= $campaign_end_image; ?>">
+                           </li>
+                         </ul>
+        </div>
+      </section>
+      <?php } 
+      else {
+        ?>
+      <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
               'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_id,))); ?></div>
         <div class="clear">&nbsp;</div>
         </div>
@@ -107,6 +113,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                          </ul>
         </div>
       </section>
+      <?php } ?>
       
      <section class="show-case">
         <div class="showcase-wrap">

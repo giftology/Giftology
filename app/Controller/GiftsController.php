@@ -310,7 +310,7 @@ class GiftsController extends AppController {
             	$reminder = $this->Reminder->find('first',
 			    	array('conditions' => array('friend_fb_id' => $this->data['gifts']['user_id'])
 				));
-         		$this->redirect(array('controller' => 'products',
+         		/*$this->redirect(array('controller' => 'products',
          			'action'=>'view_products',
          			'receiver_id'=>$this->data['gifts']['user_id'],
          			'receiver_name' => $reminder['Reminder']['friend_name'],
@@ -319,7 +319,9 @@ class GiftsController extends AppController {
                     'friend_birthyear' => $reminder['Reminder']['friend_birthyear'],
                     'receiver_sex' => $reminder['Reminder']['sex'],
                     'ocasion' => isset($ocasion) ? $ocasion : null
-         			));
+         			));*/
+				$this->redirect(array('controller' => 'reminders',
+         			'action'=>'view_friends'));
             }
 
             $receiver_fb_id=$this->data['gifts']['user_id'];
@@ -411,8 +413,8 @@ class GiftsController extends AppController {
         $this->Session->delete('session_time');
 	}
 
-	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday, $reciever_name = null,$date_to_send = null) {
-		$this->redirectIfNotAllowedToSend();
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
+        $this->redirectIfNotAllowedToSend();
 		
 		$this->Gift->create();
 		$this->Gift->Product->id = $product_id;
@@ -512,9 +514,9 @@ class GiftsController extends AppController {
 			$this->redirect($this->referer);
 		}
 		
-		if($this->params['ext'] != 'json' && $this->action != 'send_campaign')
+		if($this->params['ext'] != 'json' && $this->action != 'send_campaign' && $this->action != 'gift_to_campaign_senders_from_giftology')
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-        
+        if($this->action == 'gift_to_campaign_senders_from_giftology') return;
 	}
 
         function getCode($product, $gift_amount,$reciever_name,$receiver_fb_id,$receiver_birthday) {
@@ -688,12 +690,12 @@ class GiftsController extends AppController {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-$email = new CakeEmail();
+				$email = new CakeEmail();
 			    $email->config('smtp')
 			    ->template('email_voucher', 'default') 
 			    ->emailFormat('html')
 			    ->to($receiver_email)
-			    ->from('prabhat@giftology.com')
+           		->from(array('care@giftology.com' => 'Giftology'))
 			    ->subject($receiver_name.',Your '.$vendor_name.' voucher is here')
 			    ->viewVars(array(
 					     'receiver' => $receiver_name,
@@ -704,7 +706,7 @@ $email = new CakeEmail();
 			    $this->Gift->recursive= -2; 
                 $this->Gift->id= $id;
                 $this->Gift->saveField('email_address',$receiver_email);
-			   $this->Gift->updateAll (array('Gift.email' => 1),
+			   $this->Gift->updateAll (array('Gift.email_status' => 1),
 						array('Gift.id' => $id)); 
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
@@ -749,6 +751,18 @@ $email = new CakeEmail();
 		return null;
 	}
 	public function redeem() {
+		if(SUSPICIOUS_USER_CHECK){
+			$friend_list=$this->Gift->Reminder->find('count',array('conditions' =>array (
+    		'Reminder.user_id' => $this->Auth->user('id'))));
+			/*$Facebook = new FB();
+        	$friends_count = $Facebook->api(array('method' => 'fql.query',
+                                        'query' => 'SELECT friend_count FROM user WHERE uid ='.$this->Connect->user('id')));*/
+        	if($friend_list < MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT){
+        		$this->Session->setFlash('Suspcious user! Please contact customer support - cs@giftology.com.', 'default', array(), 'suspicious_activity_message');
+        		$this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        	}
+		}
+        	
 		if($this->request->params['named']['enc_id'])
 			$id = $this->AesCrypt->decrypt($this->request->params['named']['enc_id']);
 		else
@@ -764,9 +778,11 @@ $email = new CakeEmail();
 				'Product' => array('Vendor'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
-		if($this->Auth->User('id') != $gift['Gift']['receiver_id'])
+		if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
+			$this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
 			$this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
+		}
 		// will implement later when we have perfect UI
 		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
 		
@@ -797,31 +813,38 @@ $email = new CakeEmail();
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-		/*$gifts = $this->Gift->find('all', array(
+		$gift_count = $this->Gift->find('all', array(
+			'fields' => array('COUNT(Gift.id) as product_gift'),
 			'contain' => array(
 				'Product' => array('Vendor')),
 			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
 			'order' => array('Gift.id DESC')
-			));*/
+			));
+
+		$gift_product_count = array();
+		foreach($gift_count as $c){
+			$gift_product_count[$c['Product']['id']] = $c[0]['product_gift'];
+		}
 		
 		$fb_id = isset($gifts[0]['Gift']['receiver_fb_id']) ? $gifts[0]['Gift']['receiver_fb_id'] : NULL;
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
 		$birthday = isset($User['Reminder']['friend_birthday']) ? $User['Reminder']['friend_birthday']: NULL;
-		/*if($birthday <= date("Y-m-d"))
-		{
-			$this->Gift->updateAll(
-                array('gift_status_id' => 1), 
-                array('receiver_id' => $this->Auth->user('id')),
-                array('gift_status_id' => GIFT_STATUS_SCHEDULED)
-                );
-			
-		}*/
 
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id');
 		$this->paginate['conditions'] = $conditions;
 		$gifts = $this->paginate();
 		foreach($gifts as $k => $gift){
+            if($gift_product_count[$gift['Gift']['product_id']] > 1){
+                $gift_new = $this->Gift->find('first', 
+                    array('conditions' => array('Gift.product_id' => $gift['Gift']['product_id'], 'Gift.gift_status_id' => GIFT_STATUS_VALID),
+                        'contain' => array(
+							'Product' => array('Vendor')),
+                        'order' => 'Gift.id DESC',
+                        'limit' => 1
+                    ));
+                $gifts[$k] = $gift_new;
+            }
 			$gifts[$k]['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($gift['Gift']['id']);
 		}
 		$this->set('gifts', $gifts);
@@ -831,7 +854,6 @@ $email = new CakeEmail();
 	}
 
 	public function sent_gifts() {
-		//DebugBreak();
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('receiver_id' => $this->Auth->user('id'));
 		} else {
@@ -1321,5 +1343,10 @@ $email = new CakeEmail();
         	$this->informSenderReceipientOfGiftSent($gift['Gift']['id'], $gift['Sender']['access_token'], 1);
         }
         $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function gift_to_campaign_senders_from_giftology($sender_id, $receiver_fb_id, $product_id, $amount, $send_now){
+    	$this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now);
+    	return;
     }
 }

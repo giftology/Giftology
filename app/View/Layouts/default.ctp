@@ -36,7 +36,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		//echo $this->Minify->script('giftology');
 		//echo $this->Minify->script('jquery.ias.min');		
-		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology'));
+		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 				//echo $this->Html->css('main');
@@ -50,20 +50,6 @@ ul.left-menu li {margin:5px 0px; border-bottom:1px dashed #fad5ff; padding:2px 0
 ul.left-menu li a { font-size:13px;  color:#fff}
 
 </style>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24851185-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 
 </head>
 <body style="zoom: 1; margin-bottom: 0px;">
@@ -120,6 +106,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
+			<?php echo $this->Session->flash('suspicious_activity_message')?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		

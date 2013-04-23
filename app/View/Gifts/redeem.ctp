@@ -44,16 +44,17 @@
             <div style="float:right;margin-top:0px;margin-left:200px;margin-right:5px;cursor:pointer;width:120;height:40px;">
                 
              
-              <div id = "sms" style="width:35px;height:35px;margin-top:0px;float:left;">
+              <div id = "sms" style="width:35px;height:35px;margin-top:0px;float:left;"> <?php if($gift['Gift']['sms']=="0"){?>
                  <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
-                        
+                       
                             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
-                            <?php if($gift['Gift']['sms']=="0"){?>
+                            
                                 <a><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
                                 
-                                <?php } ?>
+                                
                        
                 <?php echo $this->Form->end(); ?>
+                <?php } ?>
              </div>
              <div id = "print" style="float:left">
                 <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
@@ -66,14 +67,15 @@
              </div>
                 
              <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">
+                <?php if($gift['Gift']['email_status']=="0"){?>
                 <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
-                        <?php if($gift['Gift']['email']=="0"){?>
                             <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>Email_Icon_2.png" /></span></a>
-                            <?php }?>
+                           
                                  <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
                                 <!---->
                        
                  <?php echo $this->Form->end(); ?>
+                  <?php }?>
              </div>
         </div>
 

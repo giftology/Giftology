@@ -8,48 +8,54 @@ App::uses('CakeEmail', 'Network/Email');
  * @property Product $Product
  */
 class ProductsController extends AppController {
-    public $helpers = array('Minify.Minify');	
-	public $paginate = array(
+    public $helpers = array('Minify.Minify');   
+    public $paginate = array(
         'limit' => 100,
         'order' => array(
             'Product.display_order' => 'asc'
-	    )
-	);
-	public $uses = array( 'Product','User','UserAddress','Gift');
+        )
+    );
+    public $uses = array( 'Product','User','UserAddress','Gift');
     public $components = array('AesCrypt');
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->Auth->allow('send_product_expiry_reminder');
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('send_product_expiry_reminder');
     }
 
-	public function isAuthorized($user) {
-	    if (($this->action == 'view_products') || ($this->action == 'view_product')) {
-	        return true;
-	    }
-	    return parent::isAuthorized($user);
-	}
-	//WEB SERVICES
-	public function ws_list () {
+    public function isAuthorized($user) {
+        if (($this->action == 'view_products') || ($this->action == 'view_product')) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    }
+    //WEB SERVICES
+    public function ws_list () {
         $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
         $e = $this->wsListProductsException($receiver_fb_id );
         if(isset($e) && !empty($e)) $this->set('products', array('error' => $e));
         else{
             $this->Product->recursive = 0;
+            $conditions = array();
+            $conditions['Product.display_order >'] = 0;
+            if(PAID_PRODUCT_DISABLED)
+                $conditions['Product.min_price'] = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $this->set('products', $this->Product->find('all', array('conditions' => array('Product.display_order >' => 0))));
+            $products = $this->Product->find('all', array('conditions' => $conditions));
+            $this->set('products', $products);
+            unset($products);
         }
-		$this->set('_serialize', array('products'));
-	}
+        $this->set('_serialize', array('products'));
+    }
 /**
  * index method
  *
  * @return void
  */
-	public function index() {
-		$this->Product->recursive = 0;
-		$this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-		$this->set('products', $this->paginate());
-	}
+    public function index() {
+        $this->Product->recursive = 0;
+        $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
+        $this->set('products', $this->paginate());
+    }
 /**
  * view method
  *
@@ -57,38 +63,38 @@ class ProductsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
-		$this->Product->id = $id;
-		if (!$this->Product->exists()) {
-			throw new NotFoundException(__('Invalid product'));
-		}
-		$this->set('receiver_id', $this->request->params['named']['receiver_id']);
-		$this->set('product', $this->Product->read(null, $id));
-	}
+    public function view($id = null) {
+        $this->Product->id = $id;
+        if (!$this->Product->exists()) {
+            throw new NotFoundException(__('Invalid product'));
+        }
+        $this->set('receiver_id', $this->request->params['named']['receiver_id']);
+        $this->set('product', $this->Product->read(null, $id));
+    }
 
 /**
  * add method
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Product->create();
-			if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('The product has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
-			}
-		}
-		$vendors = $this->Product->Vendor->find('list');
-		$productTypes = $this->Product->ProductType->find('list');
-		$codeTypes = $this->Product->CodeType->find('list');
-		$genderSegments = $this->Product->GenderSegment->find('list');
-		$ageSegments = $this->Product->AgeSegment->find('list');
-		$citySegments = $this->Product->CitySegment->find('list');
-		$this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));
-	}
+    public function add() {
+        if ($this->request->is('post')) {
+            $this->Product->create();
+            if ($this->Product->save($this->request->data)) {
+                $this->Session->setFlash(__('The product has been saved'));
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The product could not be saved. Please, try again.'));
+            }
+        }
+        $vendors = $this->Product->Vendor->find('list');
+        $productTypes = $this->Product->ProductType->find('list');
+        $codeTypes = $this->Product->CodeType->find('list');
+        $genderSegments = $this->Product->GenderSegment->find('list');
+        $ageSegments = $this->Product->AgeSegment->find('list');
+        $citySegments = $this->Product->CitySegment->find('list');
+        $this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));
+    }
 
 /**
  * edit method
@@ -97,28 +103,28 @@ class ProductsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		$this->Product->id = $id;
-		if (!$this->Product->exists()) {
-			throw new NotFoundException(__('Invalid product'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('The product has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->Product->read(null, $id);
-		}
-		$codeTypes = $this->Product->CodeType->find('list');
-		$vendors = $this->Product->Vendor->find('list');
-		$productTypes = $this->Product->ProductType->find('list');
-		$genderSegments = $this->Product->GenderSegment->find('list');
-		$ageSegments = $this->Product->AgeSegment->find('list');
-		$citySegments = $this->Product->CitySegment->find('list');
-		$this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));	}
+    public function edit($id = null) {
+        $this->Product->id = $id;
+        if (!$this->Product->exists()) {
+            throw new NotFoundException(__('Invalid product'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Product->save($this->request->data)) {
+                $this->Session->setFlash(__('The product has been saved'));
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The product could not be saved. Please, try again.'));
+            }
+        } else {
+            $this->request->data = $this->Product->read(null, $id);
+        }
+        $codeTypes = $this->Product->CodeType->find('list');
+        $vendors = $this->Product->Vendor->find('list');
+        $productTypes = $this->Product->ProductType->find('list');
+        $genderSegments = $this->Product->GenderSegment->find('list');
+        $ageSegments = $this->Product->AgeSegment->find('list');
+        $citySegments = $this->Product->CitySegment->find('list');
+        $this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));   }
 
 /**
  * delete method
@@ -128,7 +134,7 @@ class ProductsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+    public function delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -144,21 +150,24 @@ class ProductsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-    public function send_product_expiry_reminder(){
-       //this function return product id which is going to expire after 30 days.
+    public function send_product_expiry_reminder($date = null, $days = null){
+        //this function return product id which is going to expire after 30 days.
         $reminder_for_expire_product_id = array();
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'), 
             'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $product_id[]=array(); 
+        $product_id[]=array();
         $email_product_id=array();
         $product_array1= $this->Product->find('all',array('fields'=>array('Product.id','Product.days_valid','Vendor.name')));
         foreach($product_array1 as $product)
         {
-            $product_expire_date= $this->Product->UploadedProductCode->find('first',array('fields'=>array('UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.product_id' => $product['Product']['id'])));
-            $days_before_mail="30";
+            $product_expire_date= $this->Product->UploadedProductCode->find('first',array('fields'=>array('UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.product_id' => $product['Product']['id'], 'UploadedProductCode.available' => 1)));
+            if(isset($days)) $days_before_mail = $days;
+            else $days_before_mail="30";
             $product_expire_date_minus_days_valid=date('Y-m-d', strtotime('-'.$product['Product']['days_valid'].'days', strtotime($product_expire_date['UploadedProductCode']['expiry'])));
             $product_expire_date_minus_days_valid_minus_thirty=date('Y-m-d', strtotime('-'.$days_before_mail.'days', strtotime($product_expire_date_minus_days_valid)));
-            if($product_expire_date_minus_days_valid_minus_thirty == date('Y-m-d'))
+            if($date) $expiry_date_start_range = $date;
+            else $expiry_date_start_range = date('Y-m-d');
+            if($product_expire_date_minus_days_valid_minus_thirty == $expiry_date_start_range)
             {
                 $email_product_id[]=array($product['Product']['id'],$product['Vendor']['name']) ; 
             }
@@ -176,20 +185,40 @@ class ProductsController extends AppController {
             $email->config('smtp')
             ->template('code_expire_reminder') 
             ->emailFormat('html')
-            ->to('prabhat@giftology.com')
+            ->to(GIFT_CODE_EXPIRY_REMINDER_EMAIL)
             ->from(array('care@giftology.com' => 'Giftology'))
             ->attachments(ROOT.'/app/tmp/product_code_expire_reminder.csv') 
             ->subject('Products Code Expire Reminder')
             ->viewVars(array('name' => $this->Connect->user('name')))
             ->send();
         }
-
+        if(isset($date) && isset($days))
+            echo "List of product to be expired has been generated. Please check your mail ".GIFT_CODE_EXPIRY_REMINDER_EMAIL.".";
+        $this->autoRender = $this->autoLayout = false;
     }
-	public function view_products () {
+    public function view_products () {
+        if(!$this->request->is('post'))
+        {
+            $this->Session->setFlash(__('No friends was selected. Please select a friend'));
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+
+        }
+                     
+        if($this->request->is('post')){
+            $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
+            $receiver_name=$this->data['friend_name'];
+            $receiver_birthday=$this->data['friend_birth'];
+            $receiver_location=$this->data['friend_loc'];
+            $rcvrbirth_year=$this->data['friend_year'];
+            $receiver_gender=$this->data['friend_sex'];
+            $ocasion=$this->data['friend_ocasion'];
+            
+        }
        
-		$location = isset($this->request->params['named']['receiver_location']) ? $this->request->params['named']['receiver_location'] : NULL;
-        $gender = isset($this->request->params['named']['receiver_sex']) ? $this->request->params['named']['receiver_sex'] : NULL ;
-        $year = isset($this->request->params['named']['friend_birthyear']) ? $this->request->params['named']['friend_birthyear'] : NULL;
+        
+        $location=isset($receiver_location) ? $receiver_location : NULL;
+        $gender=isset($receiver_gender) ? $receiver_gender : NULL;
+        $year = isset($rcvrbirth_year) ? $rcvrbirth_year : NULL;
         $today = date("Y"); 
         $gender=strtoupper($gender);
         $age=$today-$year;
@@ -221,7 +250,7 @@ class ProductsController extends AppController {
             $current_date= date("Y-m-d") ;
             $receiver_gift_limit  = $product['Product']['receiver_gift_limit'];
             $receiver_time_limit =$product['Product']['receiver_time_limit'];
-            $receiver_id=$this->request->params['named']['receiver_id'];
+            $receiver_id= isset($receiver_id) ? $receiver_id : NULL;
             $sender_gift_limit = $product['Product']['sender_gift_limit'];
             $sender_time_limit = $product['Product']['sender_time_limit'];
             $tomorrow = date("Y-m-d",mktime(0,0,0,date("m"),date("d")+1,date("Y")));
@@ -268,21 +297,21 @@ class ProductsController extends AppController {
              $this->set('products',$proddd);
 
             //$this->paginate['conditions'] = array('Product.display_order >' => 0); //display_order = 0 is for disabled products
-            $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $this->set('receiver_name', isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null);
-            $this->set('receiver_birthday', isset($this->request->params['named']['receiver_birthday']) ? $this->request->params['named']['receiver_birthday'] : null);
-            $this->set('ocasion', isset($this->request->params['named']['ocasion']) ? $this->request->params['named']['ocasion'] : null);
+            $this->set('receiver_id', isset($receiver_id) ? $receiver_id : null);
+            $this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
+            $this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
+            $this->set('ocasion', isset($ocasion) ? $ocasion : null);
             //$this->set('products', $this->paginate());
-            $this->set('title_for_layout', 'Send a gift voucher to '.(isset($this->request->params['named']['receiver_name']) ? $this->request->params['named']['receiver_name'] : null));
+            $this->set('title_for_layout', 'Send a gift voucher to '.(isset($receiver_name) ? $receiver_name : null));
             $this->Mixpanel->track('Viewing Product List ', array(
-                'Receiver' => isset($this->request->params['named']['receiver_name']) ? 
-                $this->request->params['named']['receiver_name'] : null,
+                'Receiver' => isset($receiver_name) ? 
+                $receiver_name : null,
             ));
             
     
-	
-	}
-	public function view_product($id=null) {
+    
+    }
+    public function view_product($id=null) {
         $t=time();
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));
@@ -295,11 +324,11 @@ class ProductsController extends AppController {
             $ocasion=$this->data['products']['ocasion'];
             $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
         }
-		$rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
+        $rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
         $reciever_address=$this->UserAddress->find('first',array('conditions'=>array('UserAddress.user_id'=>$reciever_id_user_table)));
         $this->set('id',$reciever_address['UserAddress']['id']);
-		$this->set('address1',$reciever_address['UserAddress']['address1']);
+        $this->set('address1',$reciever_address['UserAddress']['address1']);
         $this->set('address2',$reciever_address['UserAddress']['address2']);
         $this->set('city',$reciever_address['UserAddress']['city']);
         $this->set('pin_code',$reciever_address['UserAddress']['pin_code']);
@@ -309,32 +338,32 @@ class ProductsController extends AppController {
         $this->set('reciever_email',$reciever_address['UserAddress']['reciever_email']);
 
 
-		$this->Product->id = $id;
-		if (!$this->Product->exists()) {
-			throw new NotFoundException(__('Invalid product'));
-		}
-		$this->set('title_for_layout', "Send Gift"); // This is read in FacebookHelper to check for sending permissions on facebook. read that before changing XXHACK NS
-		$this->set('receiver_id', isset($receiver_id) ? $receiver_id : null);
-		$this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
-		$this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
-		$this->set('ocasion', isset($ocasion) ? $ocasion : null);
-		$this->Product->contain(array('Vendor'));
+        $this->Product->id = $id;
+        if (!$this->Product->exists()) {
+            throw new NotFoundException(__('Invalid product'));
+        }
+        $this->set('title_for_layout', "Send Gift"); // This is read in FacebookHelper to check for sending permissions on facebook. read that before changing XXHACK NS
+        $this->set('receiver_id', isset($receiver_id) ? $receiver_id : null);
+        $this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
+        $this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
+        $this->set('ocasion', isset($ocasion) ? $ocasion : null);
+        $this->Product->contain(array('Vendor'));
         $proddd=$this->Product->read(null, $id);
         $proddd['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);
-		$this->set('product', $proddd);
-		$this->Mixpanel->track('Viewing Product', array(
-	        'Receiver' => isset($receiver_name) ? 
-		        $receiver_name : null,
-		    'ProductId' => $id
-			));
+        $this->set('product', $proddd);
+        $this->Mixpanel->track('Viewing Product', array(
+            'Receiver' => isset($receiver_name) ? 
+                $receiver_name : null,
+            'ProductId' => $id
+            ));
 
 
-	}
+    }
 
     public function wsListProductsException($receiver_fb_id){
         $error = array();
         if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
         return $error; 
     }
-	
+    
 }

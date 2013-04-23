@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	jQuery.ias({
+	/*jQuery.ias({
 		container : '#friend_list',
 		item: '.image-wrapper',
 		pagination: '#paginator_nav',
@@ -8,7 +8,7 @@ $(document).ready(function(){
         loaderDelay: 100,
         triggerPageThreshold: 2,
         trigger: 'Find more friends to celebrate'
-	});
+	});*/
 	
 
         $('#flashMessage').delay(8000).slideUp(1000);

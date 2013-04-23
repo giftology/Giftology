@@ -6,6 +6,11 @@
 			<?php  echo h($campaign['Campaign']['id']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Campaign URL'); ?></dt>
+		<dd>
+			www.giftology.com/campaigns/index/<?php echo h($campaign['Campaign']['product_enc_id']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Product Id'); ?></dt>
 		<dd>
 			<?php echo h($campaign['Campaign']['product_id']); ?>
@@ -19,6 +24,16 @@
 		<dt><?php echo __('Enable'); ?></dt>
 		<dd>
 			<?php echo h($campaign['Campaign']['enable']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Enable on landing Page'); ?></dt>
+		<dd>
+			<?php echo h($campaign['Campaign']['on_landing_page']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Redirect'); ?></dt>
+		<dd>
+			<?php echo h($campaign['Campaign']['redirect_to']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Start Date'); ?></dt>

@@ -21,6 +21,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php echo $this->Facebook->html(); ?>
 <head>
+  <script src="//cdn.optimizely.com/js/182331063.js"></script>
   <?php echo $this->Html->charset(); ?>
   <title>
     Giftology | The Social Gifting Company | Homepage
@@ -38,7 +39,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','ga','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -48,19 +49,8 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     echo $this->fetch('script');
   ?>
 <!-- saved from url=(0044)http://vikasmakwana.com/giftology/index.html -->
-<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24851185-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script><head>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<head>
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -80,8 +70,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
-          <?php if(!$campaign_id): ?>
-         <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+          <?php if(($campaign_check_on) &&($redirect_to == REMINDER)): ?>
+         <p style="margin-left: -370px;  font-size: 30px;">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+       <?php else:?>
+       <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
          <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -91,41 +83,48 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 });
   });
     </script>    
-
-
-<div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
-              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div> 
+    <?php if(($campaign_check_on) &&($redirect_to == CAMPAIGN) )
+        {?>
+         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+         'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
+ <?php }
+        elseif (($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
+           <div class="fbconect" id="fb" style="margin: -27px 0 0 -518px;"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+  <?php       } 
+        else 
+        { ?>
+            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
+  <?php } ?>              
         <div class="clear">&nbsp;</div>
         </div>
     </div>
-    <section class="slider">
+    <section class="slider">  
         <div class="flexslider">
           <?php
-            if(isset($campaign_id)): ?>
+            if($campaign_check_on): ?>
           <?php 
-                      if (glob("img/campaign/$campaign_id*.{jpg,png}",GLOB_BRACE) != false)
+                      if (isset($campaign_image))
                          {
-                           $filecount = glob("img/campaign/$campaign_id*.{jpg,png}",GLOB_BRACE);
-                             
-                             foreach($filecount as $img)
-                                { ?> <ul class="slides">
+                           ?> <ul class="slides">
                                      <li style="display: list-item;">
-                                     <img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt="">
+                                     <img id="banner_image" src="<?= FULL_BASE_URL; ?>/<?php echo $campaign_image; ?>" usemap="#planetmap"> 
                                      </li>
-                                     </ul>
+                                     </ul> 
                                     
-                              <?php   } }
+                              <?php    }
                               else echo null;
 
                           
                         else : ?>
                           <ul class="slides">
                           <li style="display: list-item;">
-                          <img src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
+                          <img id="banner_image" src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
                          </ul>
               <?php endif;  ?>
-        </div>
+        </div> 
       </section>
 
      <!--<?php //if(isset($campaign_Images)): ?>
@@ -156,7 +155,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                   <?php
                       foreach($Images as $Image)
                           { ?>
-                              <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div>
+                              <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['carousel_image']; ?>" class="lazy" alt=""></div>
 
                                       <?php   }
                       ?>
@@ -165,6 +164,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </section>
    <!--<?php //endif; ?>-->
+   <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
                 <span class="block-title">See how it works</span>
@@ -370,7 +370,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       s.src = '//static.getclicky.com/js';
       ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
-  </script> 
+  </script>
+  <?php if($campaign_check_on){ ?>
+    <map name="planetmap">
+      <area shape="rect" coords="1204,347,1355,375" href="/contest_tnc" alt="click to see contest terms and conditions">
+    </map>
+  <?php } ?>
  <?php echo $this->Mixpanel->embed(); ?>
 <?php if($campaign_id):?>
   <!--<script type="text/javascript">
