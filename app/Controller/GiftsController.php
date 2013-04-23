@@ -1349,4 +1349,32 @@ class GiftsController extends AppController {
     	$this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now);
     	return;
     }
+
+    public function gift_sender_list($product_id, $search_on_date = FALSE, $date_start = null,$date_end = null){
+        $condition = array();
+        $condition['Gift.product_id'] = $product_id;
+        if($search_on_date){
+            $condition['Gift.created >'] = $date_start;
+            $condition['Gift.created <'] = $end_date;
+        }
+        if($search_on_date && $date_start && !$date_end){
+            $condition['Gift.created like'] = $date_start."%";    
+        }
+        $this->Gift->recursive = -1;
+        $sender_list = $this->Gift->find('all', array('fields' => array('DISTINCT Gift.sender_id'),'conditions' => $condition));
+        $senders = array();
+        foreach($sender_list as $sender){
+            $senders[] = $sender['Gift']['sender_id'];   
+        }
+        $this->UserProfile->recursive = -1;
+
+        $emails = $this->UserProfile->find('all', array('fields' => array('email'),'conditions' => array('user_id' => $senders, 'email_unsubscribed !=' => 1, 'email !=' => '')));
+        
+        $fp = fopen(ROOT.'/app/tmp/'.$product_id.'_'.time().'.csv', 'w+');
+        foreach($emails as $email){
+            fputcsv($fp, array($email['UserProfile']['email']));
+        }
+        fclose($fp);
+        $this->autoRender = $this->autoLayout = false;
+    }
 }
