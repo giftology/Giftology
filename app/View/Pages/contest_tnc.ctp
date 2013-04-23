@@ -32,16 +32,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: Terms Of Services');
 
 		<h2 style="margin:0 ;padding:20px 0 24px 0;color: black;display: block;text-align: center;font:bold 22px/100% Georgia, 'Times New Roman', Times, serif;">T-20 Terms and Conditions</h2>
 
-		<img src="<?=IMAGE_ROOT?>aaa.jpg" width="690" height="430">
+		<p style="padding:0 0 0 5px;" ><img src="<?=IMAGE_ROOT?>contest_img.jpg" width="700" height="430"></p>
 		<p style="padding:20px 0 0 5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:justify;">Be a 20-20 Gifting Champ with Giftology! Play your Gifting Innings between 20 April- 20 May 2013! </p>
 		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:justify;">Giftology is the fun new way to GIFT your facebook friends FREE &amp; paid Gifts from  trending Brands. </p>
-		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:justify;">Become the Top Gifter  by sending free Gifts from <a href="www.giftology.com" style="color:#9f2027; text-decoration:underline;">www.giftology.com</a> &amp; get a chance to win 4 IPL Final Match Tickets** or Jabong Vouchers worth Rs. 2000/-(Yes, you read it right) starting  April 20.</p>
+		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:justify;">Become the Top Gifter  by sending free Gifts from <a href="www.giftology.com" style="color:#9f2027; text-decoration:underline;">www.giftology.com</a> &amp; get a chance to win 4 T-20 Final Match Tickets** or Jabong Vouchers worth Rs. 2000/-(Yes, you read it right) starting  April 20.</p>
 
 		<h2 style="margin:0 ;padding:20px 0 24px 0;color: black;display: block;text-align: left;font: 20px/100% Georgia, 'Times New Roman', Times, serif;">How it works:</h2>
-		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">1. Start and become eligible by sending at least 5 FREE gifts to your FB friends*</p>
+		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">1.To be eligible, start by sending at least 5 FREE gifts to your FB friends*</p>
 		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">2. Be sure to be the TOP GIFTER, because only the top 10% stand a chance to win.</p>
-		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">3. One Weekly Prize: 2 IPL Match Tickets or Jabong Shopping Vouchers worth Rs. 1000  to be won</p>
-		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">4. Winner of the GRAND Prize will stand a chance to win either 4 IPL Final Match tickets** or Jabong Voucher worth Rs. 2000 .</p>
+		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">3. One Weekly Prize: 2 T-20 Match Tickets or Jabong Shopping Vouchers worth Rs. 1000  to be won</p>
+		<p style="padding-left:5px;font:normal 14px/24px Georgia, 'Times New Roman', Times, serif;color:black;text-align:left;">4. Winner of the GRAND Prize will stand a chance to win either 4 T-20 Final Match tickets** or Jabong Voucher worth Rs. 2000 .</p>
 
 		<h2 style="margin:0 ;padding:20px 0 24px 0;color:black;display: block;text-align: left;font: 20px/100% Georgia, 'Times New Roman', Times, serif;">You Get Free Hits - Increase Your Chance To Win - When:</h2>
 
