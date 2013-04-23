@@ -71,7 +71,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       <div class="banner-content" style="height: 363px;">
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
           <?php if(($campaign_check_on) &&($redirect_to == REMINDER)): ?>
-         <p style="margin-left: -370px;  font-size: 30px;">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+         <p></p>
        <?php else:?>
        <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
          <?php endif; ?>
@@ -89,7 +89,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
  <?php }
         elseif (($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
-           <div class="fbconect" id="fb" style="margin: -27px 0 0 -518px;"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+           <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
             'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
   <?php       } 
         else 
