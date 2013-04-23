@@ -158,6 +158,8 @@ class UsersController extends AppController {
             $this->set('campaign_enc_id',$this->AesCrypt->encrypt($check_on_campaign['Campaign']['id']));
             $this->set('campaign_check_on',$check_on_campaign['Campaign']['on_landing_page']);
             $this->set('redirect_to',$check_on_campaign['Campaign']['redirect_to']);
+            $this->set('type',$check_on_campaign['Campaign']['type']);
+
 
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));

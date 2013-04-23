@@ -1,9 +1,13 @@
 <div class="vendors form">
 <?php echo $this->Form->create('Campaign', array('type' => 'file')); ?>
-    <fieldset>
-        <legend><?php echo __('Add Campaign'); ?></legend>
+   
     <?php
-        echo $this->Form->input('product_id', array('label' => 'Product ID', 'type' => 'text'));
+   echo $this->Form->input('type', array('type' => 'select','id'=>'type', 'options' =>array('1'=>'Campaign','2'=>'Contest')));?><div id="prod1">
+       <?php echo $this->Form->input('product_id', array('label' => 'Product ID','id'=>'prod', 'type' => 'text'));?></div>
+         <div class="error_message" id="error_city" style="display:none; margin-left:20px;">
+                    <span style="color:#FF0000">*Please enter the Product ID.</span>
+                 </div>
+       <?php
          echo $this->Form->input('enable', array('type' => 'select', 'options' =>array('1'=>'Enable','0'=>'Disable')));
         echo $this->Form->input('start_date') ;
         echo $this->Form->input('end_date') ;
@@ -17,7 +21,7 @@
 
     ?>
     </fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->Submit(__('Submit'), array('id'=>'form_shipping'));?> 
 </div>
 
 
@@ -29,3 +33,29 @@
 		
 	</ul>
 </div>
+ <script  type='text/javascript'>
+$(document).ready(function(){
+    $("#type").click(function(){
+        if($(this).val() == 2){
+             $("#prod1").hide();
+             $("#error_city").hide();
+        }
+        else{
+            $("#prod1").show(); 
+            
+       }
+        });
+
+    $(".submit").click(function(){
+        //$("#prod1").hide();
+        if($('#prod1').is(':visible') && $("#prod").val().length == 0){
+            $("#error_city").show();
+             return false;
+        }
+        
+        });
+        
+});
+
+
+</script>

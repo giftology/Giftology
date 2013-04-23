@@ -158,9 +158,9 @@ class CampaignsController extends AppController {
  public function add() {
 
         if ($this->request->is('post')) {
-            if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="")&& ($this->request->data['Campaign']['product_id']!="") )
+            if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="") )
             {
-              //  DebugBreak();
+              // 
                 $error_array= array();
                 $allowed =  array('png' ,'jpg');
                 foreach($_FILES['data']['name']['Campaign'] as $file)
@@ -171,7 +171,12 @@ class CampaignsController extends AppController {
                         $error_array[]=  $file;
                     }      
                 } if(!$error_array) {
+                     
                     $product_id=$this->request->data['Campaign']['product_id'];
+                    if($product_id==""){
+                        $product_id=-1;
+                        $this->request->data['Campaign']['product_id']=-1;
+                    }
                     $this->request->data['Campaign']['product_enc_id']=$this->AesCrypt->encrypt($product_id);
                     $this->Campaign->create();
 
