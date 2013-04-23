@@ -147,6 +147,8 @@ class UsersController extends AppController {
     
     public function login() {
         if ($this->Connect->user() && $this->Auth->User('id')){
+            $this->User->id = $this->Auth->User('id');
+            $this->User->saveField('last_login', date('Y-m-d H:i:s'));
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         }
         else{
