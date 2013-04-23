@@ -100,4 +100,33 @@ class UserProfilesController extends AppController {
 		$this->Session->setFlash(__('User profile was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+	public function update_user_name(){
+        $this->UserProfile->recursive = -1;
+        $users = $this->UserProfile->find('all', array('fields' => array('id','user_id'), 'conditions' => array('OR' => array('first_name IS NULL','last_name IS NULL','first_name' => '', 'last_name' => ''))));
+        $this->User->recursive = -1;
+        $user_id_array = array();
+        foreach($users as $user){
+            $user_id_array[$user['UserProfile']['id']] = $user['UserProfile']['user_id'];    
+        }
+        unset($users);
+        $user_facebook_id = $this->User->find('all',array('fields' => array('id','facebook_id'),'conditions' => array('id' => $user_id_array)));
+        $Facebook = new FB();
+        $this->UserProfile->recursive = -1;
+        foreach($user_facebook_id as $fb_id){
+            set_time_limit(120);
+            $fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
+                                        'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$fb_id['User']['facebook_id']));
+            if(isset($fb_first_last_name) && !empty($fb_first_last_name)){
+                $data = array(
+                    'UserProfile.first_name' => "'".$fb_first_last_name[0]['first_name']."'",
+                    'UserProfile.last_name' => "'".$fb_first_last_name[0]['last_name']."'"
+                );
+                $condition = NULL;
+                $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
+                $result = $this->UserProfile->updateAll($data, $condition);         
+            }
+        }
+        $this->autoRender = $this->autoLayout = false;    
+    }
 }
