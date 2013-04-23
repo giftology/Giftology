@@ -322,12 +322,13 @@
             
                         <?php foreach($gifts_sent as $gift): ?>
                         <?php echo $gift['Gift']['sender_id']; ?>
-
+                        
                 <?php if ($gift['Sender']['facebook_id'] != $last_sender_id): ?>
                                 <li>
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
-                                <p></p><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <?= $gift['receiver_name']['Reminder']['friend_name']; ?>
+                              
+                                <p></p><a href="https://facebook.com/profile.php?id= <?php echo $gift['Sender']['facebook_id']; ?>"><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> </a>sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <a href="https://facebook.com/profile.php?id= <?php echo  $gift['GiftsReceived']['receiver_fb_id']; ?>"><?= $gift['receiver_name']['Reminder']['friend_name']; ?> </a>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
 
                                 
