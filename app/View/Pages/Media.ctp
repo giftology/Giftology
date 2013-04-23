@@ -51,7 +51,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Privacy Policy');
     <center><h3>Media</h3></center>
 
        <div class="bag">
-                <img src="../img/go_social.jpg">
+                <img src="../img/go_social.JPG">
                   <div class="press">
 
                     <p><a href="http://gosocialnow.in/2013/04/giftology-com-cost-effective-and-convenient-way-to-wish/">Giftology.com, Cost effective and convenient way to Wish!</a></p>
