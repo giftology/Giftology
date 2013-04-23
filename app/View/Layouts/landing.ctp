@@ -98,9 +98,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
   <?php } ?>              
         <div class="clear">&nbsp;</div>
-		<div style="float:right; width:150px; height:35px; background:#900; position:absolute; top:340px; border:1px solid #aeaeae; right:0px; ">
+		<?php if(($campaign_check_on) &&($redirect_to == REMINDER)){?>   
+        <div style="float:right; width:150px; height:35px; background:#900; position:absolute; top:340px; border:1px solid #aeaeae; right:0px; ">
         <a href="/contest_tnc" style="font:16px/35px Arial, Helvetica, sans-serif;  color:#FFF; text-shadow: 1px 0.5px 0.5px #fff; text-decoration:none; "> Click here for T&C </a>
          </div>
+    <?php } ?>
         </div>
     </div>
     <section class="slider">  
