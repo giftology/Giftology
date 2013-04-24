@@ -16,7 +16,7 @@ class CampaignsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder');
+    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder','User');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -32,7 +32,9 @@ class CampaignsController extends AppController {
         }
         return parent::isAuthorized($user);
     }
-    public function index($encrypted_product_id) {
+
+    public function index($encrypted_product_id) {  
+
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
         if($campaign)
@@ -70,17 +72,44 @@ class CampaignsController extends AppController {
         }
         else
         {
-            $this->Session->setFlash(__('This campaign is not active.'));
+            /*$this->Session->setFlash(__('This campaign is not active.'));*/
             $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products'));  
         }
 
     }
 
     public function view_products () {
+        if (!$this->Reminder->find('count', array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'))))) 
+        {
+            $id = $this->Auth->user('id');
+            $Facebook = new FB();
+            $friends = $Facebook->api(array('method' => 'fql.query',
+                                            'query' => 'SELECT uid, current_location, birthday, pic_big, name, sex FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
+            if ($friends) {
+                $this->Connect->authUser['Reminders'] = array();
+                foreach($friends as $friend) {
+                    array_push($this->Connect->authUser['Reminders'], array (
+                            'user_id' => $id,
+                            'friend_fb_id' => $friend['uid'],
+                            'friend_name' => $friend['name'],
+                            'friend_birthday' => $friend['birthday'],
+                            'current_location' => $friend['current_location']['city'],
+                            'country' => $friend['current_location']['country'],
+                            'sex' => $friend['sex']
+                        ));
+                }
+                $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+                    
+                }
+        }
+        
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
-       
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date'),'conditions' => array('Campaign.id' => $campaign_id)));
+        if($campaign['Campaign']['enable'] == 0 || $campaign['Campaign']['end_date'] < date('Y-m-d'))
+        {
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
+        }
         if (!$this->Connect->user()) {
             $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
         }
@@ -90,10 +119,11 @@ class CampaignsController extends AppController {
        	$product_id = $campaign['Campaign']['product_id'];
        	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
-        $this->Reminder->recursive = -1;
+        $this->Campaign->recursive = 2;
+        //$this->Campaign->recursive = 2;
         $friend_list=$this->Reminder->find('all', 
             array('limit'=>20,
-                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
+                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
                 'order' => array('RAND()')
                 ));
         $this->set('friend_data',$friend_list);
