@@ -2582,3 +2582,18 @@ left: 750px;
     margin-left: 219px;
 
 }
+.tnc
+{
+float:right; width:120px; height:30px; background:#900; position:absolute; top:85%; border:1px solid #aeaeae; right:0px;
+}
+
+.tnc_a
+{
+font:13px/30px Arial, Helvetica, sans-serif;  color:#FFF; text-shadow: 1px 0.5px 0.5px #fff; text-decoration:none;
+ }
+ .tnc a{
+
+ }
+ .tnc a:hover{
+    color: #FFF;
+ }
