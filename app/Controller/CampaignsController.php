@@ -119,8 +119,6 @@ class CampaignsController extends AppController {
        	$product_id = $campaign['Campaign']['product_id'];
        	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
-        $this->Campaign->recursive = 2;
-        //$this->Campaign->recursive = 2;
         $friend_list=$this->Reminder->find('all', 
             array('limit'=>20,
                 'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
