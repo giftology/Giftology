@@ -79,6 +79,17 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
+        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
+        $this->Campaign->recursive = -1;
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date'),'conditions' => array('Campaign.id' => $campaign_id)));
+        if($campaign['Campaign']['enable'] == 0 || $campaign['Campaign']['end_date'] < date('Y-m-d'))
+        {
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
+        }
+        if (!$this->Connect->user()) {
+            $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
+        }
+
         if (!$this->Reminder->find('count', array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'))))) 
         {
             $id = $this->Auth->user('id');
@@ -103,16 +114,6 @@ class CampaignsController extends AppController {
                 }
         }
         
-        $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
-        $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date'),'conditions' => array('Campaign.id' => $campaign_id)));
-        if($campaign['Campaign']['enable'] == 0 || $campaign['Campaign']['end_date'] < date('Y-m-d'))
-        {
-            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
-        }
-        if (!$this->Connect->user()) {
-            $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
-        }
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
         //$product_id_enc = isset($this->request->params['named']['id']) ? $this->request->params['named']['id'] : NULL;
