@@ -352,12 +352,23 @@ class UsersController extends AppController {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
     }
-    function afterFacebookLogin($first_login) {    
+    function afterFacebookLogin($first_login) { 
+    //DebugBreak();  
+    
         if ($first_login) {
+            
+            $fb_id = $this->Auth->user('facebook_id');
+            $reminderUpdateDate = $this->User->Reminder->find('all', array(
+                'conditions' => array('friend_fb_id' => $fb_id)));
+            DebugBreak();
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
         
+         $fb_id = $this->Auth->user('facebook_id');
+            $reminderUpdateDate = $this->User->Reminders->find('all', array(
+                'conditions' => array('friend_fb_id' => $fb_id)));
+            print_r($reminderUpdateDate); die();
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
