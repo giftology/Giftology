@@ -2,7 +2,8 @@
 <?php echo $this->Form->create('Campaign', array('type' => 'file')); ?>
    
     <?php
-   echo $this->Form->input('type', array('type' => 'select','id'=>'type', 'options' =>array('1'=>'Campaign','2'=>'Contest')));?><div id="prod1">
+   echo $this->Form->input('type', array('type' => 'select','id'=>'type', 'options' =>array('1'=>'Campaign','2'=>'Contest')));?>
+   <div id="prod1">
        <?php echo $this->Form->input('product_id', array('label' => 'Product ID','id'=>'prod', 'type' => 'text'));?></div>
          <div class="error_message" id="error_city" style="display:none; margin-left:20px;">
                     <span style="color:#FF0000">*Please enter the Product ID.</span>
@@ -12,8 +13,8 @@
         echo $this->Form->input('start_date') ;
         echo $this->Form->input('end_date') ;
         echo $this->Form->input('on_landing_page', array('type' => 'select', 'options' =>array('1'=>'YES','0'=>'NO')));
-        echo $this->Form->input('redirect_to', array('type' => 'select', 'options' =>array('1'=>'REMINDER','2'=>'CAMPAIGN')));
-        echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));
+       ?> <div id="redirect1"><?php echo $this->Form->input('redirect_to', array('type' => 'select', 'id'=>'redirect','options' =>array('1'=>'REMINDER','2'=>'CAMPAIGN'))); ?> </div> 
+        <?php echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));
         echo $this->Form->input('wide_file', array('label' => 'Landing Page Image', 'type' => 'file'));
          echo $this->Form->input('end_file', array('label' => 'Campaign End Page Image', 'type' => 'file'));
        
@@ -38,10 +39,12 @@ $(document).ready(function(){
     $("#type").click(function(){
         if($(this).val() == 2){
              $("#prod1").hide();
+              $("#redirect1").hide();
              $("#error_city").hide();
         }
         else{
             $("#prod1").show(); 
+             $("#redirect1").show(); 
             
        }
         });

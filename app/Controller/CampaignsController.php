@@ -184,8 +184,10 @@ class CampaignsController extends AppController {
  * @return void
  */
  public function add() {
+    
 
         if ($this->request->is('post')) {
+           
             if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="") )
             {
               // 
