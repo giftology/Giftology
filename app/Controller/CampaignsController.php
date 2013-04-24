@@ -77,6 +77,24 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
+        //DebugBreak();
+        $Facebook = new FB();
+        $friends = $Facebook->api(array('method' => 'fql.query',
+                                        'query' => 'SELECT current_location FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
+        //$this->Reminder->recursive  = -2;
+        if ($friends) {
+            foreach ($friends as $friend) {
+
+                 /*$this->Reminder->user_id= $this->Auth->User('id');
+                 $country = $friend['current_location']['country'];
+                $x = $this->Campaign->Reminder->saveField('Reminder.country', $country);*/
+               
+                $this->Reminder->updateAll(
+                array('country' => "'".$friend['current_location']['country']."'"), 
+                array('user_id' => $this->Auth->user('id')));
+            }
+            return true;
+        }
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
         $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
@@ -93,7 +111,7 @@ class CampaignsController extends AppController {
         $this->Reminder->recursive = -1;
         $friend_list=$this->Reminder->find('all', 
             array('limit'=>20,
-                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
+                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'), 'Reminder.country' => India)),
                 'order' => array('RAND()')
                 ));
         $this->set('friend_data',$friend_list);

@@ -484,6 +484,7 @@ class UsersController extends AppController {
                         'friend_name' => $friend['name'],
                         'friend_birthday' => $friend['birthday'],
                         'current_location' => $friend['current_location']['city'],
+                        'country' => $friend['current_location']['country'],
                         'sex' => $friend['sex']
                     ));
             }
