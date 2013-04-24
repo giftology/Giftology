@@ -189,20 +189,27 @@ class CampaignsController extends AppController {
 
         if ($this->request->is('post')) {
            
-            if(($this->request->data['Campaign']['thumb_file']['name']!="")&& ($this->request->data['Campaign']['wide_file']['name']!="") )
+            if(($this->request->data['Campaign']['thumb_file']['name']!="" || $this->request->data['Campaign']['type']==TYPE_CONTEST)&& ($this->request->data['Campaign']['wide_file']['name']!="") )
             {
               // 
                 $error_array= array();
                 $allowed =  array('png' ,'jpg');
-                foreach($_FILES['data']['name']['Campaign'] as $file)
-                {
-                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                if($this->request->data['Campaign']['type']==TYPE_CAMPAIGN){
+                    foreach($_FILES['data']['name']['Campaign'] as $file){
+                        $ext = pathinfo($file, PATHINFO_EXTENSION);
+                        if(!in_array($ext,$allowed) ) {
+                            $error_array[]=  $file;
+                        }      
+                    }
+                }
+                else if($this->request->data['Campaign']['type']==TYPE_CONTEST){
+                    $ext = pathinfo($_FILES['data']['name']['Campaign']['wide_file'], PATHINFO_EXTENSION);
                     if(!in_array($ext,$allowed) ) 
                     {
                         $error_array[]=  $file;
-                    }      
-                } if(!$error_array) {
-                     
+                    }
+                }
+                if(!$error_array) { 
                     $product_id=$this->request->data['Campaign']['product_id'];
                     if($product_id==""){
                         $product_id=-1;
@@ -220,14 +227,18 @@ class CampaignsController extends AppController {
                     $this->request->data['Campaign']['end_file']['name']
                     = $this->request->data['Campaign']['product_id'].str_replace(" ","_", $this->request->data['Campaign']['end_file']['name']);
 
-                    $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
-                    copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
-
-                    $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
-                    copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
-
-                    $this->request->data['Campaign']['end_image'] = 'files/campaign/'.$this->request->data['Campaign']['end_file']['name'];
-                    copy($this->request->data['Campaign']['end_file']['tmp_name'], $this->request->data['Campaign']['end_image']);
+                    if($this->request->data['Campaign']['thumb_file']['size']){
+                        $this->request->data['Campaign']['thumb_image'] = 'files/campaign/'.$this->request->data['Campaign']['thumb_file']['name'];
+                        copy($this->request->data['Campaign']['thumb_file']['tmp_name'], $this->request->data['Campaign']['thumb_image']);
+                    }
+                    if($this->request->data['Campaign']['wide_file']['size']){
+                        $this->request->data['Campaign']['wide_image'] = 'files/campaign/'.$this->request->data['Campaign']['wide_file']['name'];
+                        copy($this->request->data['Campaign']['wide_file']['tmp_name'], $this->request->data['Campaign']['wide_image']);
+                    }
+                    if($this->request->data['Campaign']['end_file']['size']){
+                        $this->request->data['Campaign']['end_image'] = 'files/campaign/'.$this->request->data['Campaign']['end_file']['name'];
+                        copy($this->request->data['Campaign']['end_file']['tmp_name'], $this->request->data['Campaign']['end_image']);
+                    }
                     $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1)));
                     if(($check_on_campaign)&&($this->request->data['Campaign']['on_landing_page']!=0)){
                         $this->Session->setFlash(__('Another Campaign is already enable on landing Page!'));

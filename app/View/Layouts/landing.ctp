@@ -378,11 +378,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
   </script>
-  <?php if($campaign_check_on){ ?>
-    <map name="planetmap">
-      <area shape="rect" coords="1204,347,1355,375" href="/contest_tnc" alt="click to see contest terms and conditions">
-    </map>
-  <?php } ?>
+  
  <?php echo $this->Mixpanel->embed(); ?>
 <?php if($campaign_id):?>
   <!--<script type="text/javascript">
