@@ -21,7 +21,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php echo $this->Facebook->html(); ?>
 <head>
-  <script src="//cdn.optimizely.com/js/182331063.js"></script>
+  <!--<script src="//cdn.optimizely.com/js/182331063.js"></script>-->
   <?php echo $this->Html->charset(); ?>
   <title>
     Giftology | The Social Gifting Company | Homepage
@@ -85,16 +85,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     </script>    
     <?php if(($campaign_check_on) &&($redirect_to == CAMPAIGN) )
         {?>
-         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
          'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
  <?php }
         elseif (($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
-           <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+           <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
             'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
   <?php       } 
         else 
         { ?>
-            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png',
+            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
             'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
   <?php } ?>              
         <div class="clear">&nbsp;</div>
