@@ -193,14 +193,14 @@ gifts<br>
 	 <br><br>Warm regards, 
 	 <br>Your Giftology Team</p>
            
-             <a href="https://www.giftology.com/" style="text-decoration:none;">  <div style="height:58px; width:286px; background:#4162a7; overflow:hidden; border:1px solid #243559; border-radius:4px; color:#FFF; padding-left:10px; font:32px/180% bold Arial, Helvetica, sans-serif ; margin:10px 50px; box-shadow:0 0 5px #4162a7;">
+             <a href="http://bit.ly/welcome_giftology" style="text-decoration:none;">  <div style="height:58px; width:286px; background:#4162a7; overflow:hidden; border:1px solid #243559; border-radius:4px; color:#FFF; padding-left:10px; font:32px/180% bold Arial, Helvetica, sans-serif ; margin:10px 50px; box-shadow:0 0 5px #4162a7;">
            <span style="border-right:1px #f2f2f2 solid; margin:0 5px 0 10px; "><b> f </b></span> <span> Get started here</span>
            
           </div>
           </a>
           </div>
           
-           <div style="float:left; position:relative;margin:0px;" >  <a href="https://www.giftology.com/" style="cursor: pointer;text-decoration:none;color:#666;"> <img align="none" height="100" alt="Welcome to Giftology" title="Welcome to Giftology" src="<?= IMAGE_ROOT; ?>giftbox.png"  width="180" style="border:0;height:200px;line-height:100%;"></a><br><br><br><br /><br></div>
+           <div style="float:left; position:relative;margin:0px;" >  <a href="http://bit.ly/welcome_giftology" style="cursor: pointer;text-decoration:none;color:#666;"> <img align="none" height="100" alt="Welcome to Giftology" title="Welcome to Giftology" src="<?= IMAGE_ROOT; ?>giftbox.png"  width="180" style="border:0;height:200px;line-height:100%;"></a><br><br><br><br /><br></div>
   
    <p style="margin:0 50px;padding:10px 0 16px 0;font:  normal 14px/150% Georgia, 'Times New Roman', Times, serif;color: #333;text-align: left;">Giftology is the hip, new way to gift someone. Don't just post on Facebook, you can now make it a gift post!</p>
             </div></td>
