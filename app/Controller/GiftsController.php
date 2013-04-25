@@ -89,7 +89,8 @@ class GiftsController extends AppController {
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
 		$amount = isset($this->params->query['gift_amount']) ? $this->params->query['gift_amount'] : null;
         $post_to_fb = isset($this->params->query['post_to_fb']) ? $this->params->query['post_to_fb'] : null;
-        $gift_message = isset($this->params->query['gift_message']) ? $this->params->query['gift_message'] : null;
+        $gift_message_temp = isset($this->params->query['gift_message']) ? $this->params->query['gift_message'] : null;
+        $gift_message = urldecode($gift_message_temp);
         $send_now = isset($this->params->query['send_now']) ? $this->params->query['send_now'] : null;
         $receiver_birthday = isset($this->params->query['receiver_birthday']) ? $this->params->query['receiver_birthday'] : null;
         $date_to_send = isset($this->params->query['date_to_send']) ? $this->params->query['date_to_send'] : null;
