@@ -116,7 +116,7 @@ class CampaignsController extends AppController {
 
         $users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
         $id = $users['UserProfile']['user_id'];
-        $fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('user.id' => $users['UserProfile']['user_id'])));
+        $fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
         $Facebook = new FB();
         $fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
                                     'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$fb_id['User']['facebook_id']));
