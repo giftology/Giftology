@@ -4,10 +4,13 @@ class AboutUsComponent extends Component {
 	
 	 function about_us(){
 	 	$about_us = array();
-	 	$about_us['headline'] = array("head" => "ABOUT US","head_val" => "<p> Do away with your gifting woes, because Giftology is here to make your life a lot simpler!! We’re a social gifting platform. In simple words, we enable you to send gifts to your friends on Facebook! Now isn’t that awesome? </p><br>
+        $about_us = array(
+            'about_us' => "Do away with your gifting woes, because Giftology is here to make your life a lot simpler!! We’re a social gifting platform. In simple words, we enable you to send gifts to your friends on Facebook! Now isn’t that awesome? And it gets better. We’ve got free gifts for you to send! So instead of writing the plain ol’ Happy Birthday of your friend’s wall, send them a gift from giftology.com! All you have to do is connect with Facebook, select a friend then select a gift and… whoosh… it’s sent. Hey look out, there’s some awesome karma coming your way."
+        );
+	 	/*$about_us['headline'] = array("head" => "ABOUT US","head_val" => "<p> Do away with your gifting woes, because Giftology is here to make your life a lot simpler!! We’re a social gifting platform. In simple words, we enable you to send gifts to your friends on Facebook! Now isn’t that awesome? </p><br>
   
-                               <p> And it gets better. We’ve got free gifts for you to send! So instead of writing the plain ol’ Happy Birthday of your friend’s wall, send them a gift from giftology.com! All you have to do is connect with Facebook, select a friend then select a gift and… whoosh… it’s sent. Hey look out, there’s some awesome karma coming your way.</p>");
-         $about_us['team'] = array(
+                               <p> And it gets better. We’ve got free gifts for you to send! So instead of writing the plain ol’ Happy Birthday of your friend’s wall, send them a gift from giftology.com! All you have to do is connect with Facebook, select a friend then select a gift and… whoosh… it’s sent. Hey look out, there’s some awesome karma coming your way.</p>");*/
+         /*$about_us['team'] = array(
          	'head' => 'The Team',
          	'team_val'=> array(
          		'team_member1'=> array(
@@ -52,7 +55,7 @@ class AboutUsComponent extends Component {
                  	'info'=>'<p>Shailesh brings over 18 years of global experience within Finance and Operations. He hasin-depth knowledge of corporate accounting taxation, MIS and e-commerce.</p>
                              <p>Previously,Shailesh has worked with Transact Network Ltd. as V.P Finance managing the financial operations of its prepaid card business.  He has also worked with leading Indian business houses such as DLF and Reliance with scope of business in to construction, power, service, education, ITES and finance sector.</p>
                              <p>Shailesh is a fellow member of Institute of Chartered Accountants of India, New Delhi and holds a M.Com from Agra University.</p>',
-                    'mail'=>'','image'=>FULL_BASE_URL.'/img/SB.jpg')));
+                    'mail'=>'','image'=>FULL_BASE_URL.'/img/SB.jpg')));*/
        
            
 
@@ -60,7 +63,4 @@ class AboutUsComponent extends Component {
             return $about_us;
 
      	}
-	
-
-	
 }
