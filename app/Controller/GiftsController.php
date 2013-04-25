@@ -714,6 +714,7 @@ class GiftsController extends AppController {
 	}
 	function send_email ($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$template)
 	{
+		DebugBreak();
 		$gift = $this->Gift->find('first', array(
 				'conditions' => array('Gift.id' => $gift_id),
 				'contain' => array(

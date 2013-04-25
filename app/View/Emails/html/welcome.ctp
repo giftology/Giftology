@@ -185,7 +185,7 @@ gifts<br>
           <td ><div  style="background:#FFF;padding:30px 0 0 0;">
           <div style="float:left; position:relative;">   
            <p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:0 10px 0 50px;padding:0;color:#333; text-align: left;" >
-           Dear, <?=$name ?><br><br>
+           Dear <?=$name ?>,<br><br>
    We're delighted that you've decided to sign up with <br><font color="#9f2027">giftology.com! </font> Your account was successfully created<br> and you can now start sending awesome gifts to your friends.
 
 
