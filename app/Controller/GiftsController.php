@@ -758,7 +758,7 @@ class GiftsController extends AppController {
         	$friends_count = $Facebook->api(array('method' => 'fql.query',
                                         'query' => 'SELECT friend_count FROM user WHERE uid ='.$this->Connect->user('id')));*/
         	if($friend_list < MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT){
-        		$this->Session->setFlash('Suspcious user! Please contact customer support - cs@giftology.com.', 'default', array(), 'suspicious_activity_message');
+        		$this->Session->setFlash('Oops! There seems to be some problem with your facebook profile. Try again later.! If the problem persists try changing your profile settings.', 'default', array(), 'suspicious_activity_message');
         		$this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         	}
 		}
