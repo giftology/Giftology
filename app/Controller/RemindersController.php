@@ -218,7 +218,19 @@ class RemindersController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	public function view_friends($type=null) {
-		
+		$users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('user.id' => $users['UserProfile']['user_id'])));
+		$Facebook = new FB();
+		$fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
+                                    'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$fb_id['User']['facebook_id']));
+		$data = array(
+                'UserProfile.first_name' => "'".$fb_first_last_name[0]['first_name']."'",
+                'UserProfile.last_name' => "'".$fb_first_last_name[0]['last_name']."'"
+            );
+        $condition = NULL;
+        $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
+        $result = $this->UserProfile->updateAll($data, $condition);     
+
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;

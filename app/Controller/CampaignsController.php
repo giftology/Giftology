@@ -16,7 +16,7 @@ class CampaignsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder','User');
+    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder','User','UserProfile');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -113,6 +113,20 @@ class CampaignsController extends AppController {
                     
                 }
         }
+
+        $users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+        $id = $users['UserProfile']['user_id'];
+        $fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('user.id' => $users['UserProfile']['user_id'])));
+        $Facebook = new FB();
+        $fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
+                                    'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$fb_id['User']['facebook_id']));
+        $data = array(
+                'UserProfile.first_name' => "'".$fb_first_last_name[0]['first_name']."'",
+                'UserProfile.last_name' => "'".$fb_first_last_name[0]['last_name']."'"
+            );
+        $condition = NULL;
+        $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
+        $result = $this->UserProfile->updateAll($data, $condition); 
         
         $this->set('user', $this->Auth->user());
         $this->set('facebook_user', $this->Connect->user());
