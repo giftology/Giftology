@@ -174,7 +174,7 @@ gifts<br>
    
       <table cellpadding="0" cellspacing="0">
         <tr>
-          <td align="center"><a href="http://www.giftology.com" style="cursor: pointer;text-decoration:none;color:#666;"><img src="<?= IMAGE_ROOT; ?>logo_email.png" height="98" width="266" alt="giftology.com" title="giftology"></a></td>
+          <td align="center"><a href="http://bit.ly/welcome_giftology" style="cursor: pointer;text-decoration:none;color:#666;"><img src="<?= IMAGE_ROOT; ?>logo_email.png" height="98" width="266" alt="giftology.com" title="giftology"></a></td>
         </tr>
          <tr>
         <td align="left"><h2  style="margin:0 ;padding:40px 0 44px 0;color:white;text-align:center; display: block;font:bold 30px/100% Georgia, 'Times New Roman', Times, serif;" >ThankYou !!</h2></td>

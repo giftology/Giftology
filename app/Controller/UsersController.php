@@ -357,7 +357,7 @@ class UsersController extends AppController {
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
-        //$this->send_welcome_email();
+        $this->send_welcome_email();
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
