@@ -144,9 +144,17 @@
                         isset($ocasion) &&
                         $ocasion == 'Birthday') {
                         $send_now = 0;
+                        $message = array("A little something to get the party started. Happy birthday!","Now, that’s just for being the best. Happy birthday!","You got this gift to celebrate. Happy birthday!","Today lets celebrate YOU. Happy birthday!");
+                        $mess = array_rand($message,1);
+                      $message_random = $message[$mess];
                     } else {
                         $send_now = 1;
+                        $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!"," I hope this gift makes you feel as great as you are.");
+                        $mess = array_rand($message,1);
+                          $message_random = $message[$mess];
+                        //print_r($message[$mess]);
                     }
+                    $receiver = explode(" ", $receiver_name);
             ?>
              <h3>Will be delivered: 
                     <strong>
@@ -195,7 +203,7 @@
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
-                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$receiver[0],$message_random ",'class'=>"gift-message" ))?>
                 </div>
                 
                 <div class="shadow-wrapper">
@@ -313,7 +321,8 @@
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
-                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to $receiver_name",'class'=>"gift-message" ))?>
+                   
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$receiver[0],$message_random ",'class'=>"gift-message" ))?>
                 </div>
                 
                 <div class="shadow-wrapper">
