@@ -516,7 +516,7 @@ class GiftsController extends AppController {
 		}
 		
 		if($this->params['ext'] != 'json' && $this->action != 'send_campaign' && $this->action != 'gift_to_campaign_senders_from_giftology')
-            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            $this->redirect(array('controller' => 'reminders', 'action'=>'send_success'));
         if($this->action == 'gift_to_campaign_senders_from_giftology') return;
 	}
 
@@ -976,9 +976,9 @@ class GiftsController extends AppController {
 			$this->informSenderReceipientOfGiftSent($Order_Id, FB::getAccessToken());
 			
 			// Redirect
-			$this->Session->setFlash(__('Awesome Karma ! Your gift has been sent. Want to send another one?'));
+			$this->Session->setFlash(__('Awesome Karma! Your gift has been sent. Want to send another one?'));
 			$this->redirect(array(
-				'controller' => 'reminders', 'action'=>'view_friends'));
+				'controller' => 'reminders', 'action'=>'send_success'));
 		}
 		else if($Checksum=="true" && $AuthDesc=="B")
 		{
@@ -990,7 +990,7 @@ class GiftsController extends AppController {
 		}
 		else if($Checksum=="true" && $AuthDesc=="N")
 		{			
-			$this->Session->setFlash(__('Ouch ! Your transaction failed. Maybe a typing error ? Try again ? '));
+			$this->Session->setFlash(__('Ouch! Your transaction failed. Maybe a typing error ? Try again ? '));
 			$this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
