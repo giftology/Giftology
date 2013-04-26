@@ -179,7 +179,11 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
-
+    CakeLog::config('path', array(
+    'engine' => 'FileLog',
+    'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+    'file' => 'path',
+));
 CakePlugin::load('Facebook');
 
 
@@ -229,7 +233,7 @@ define('CAMPAIGN',2);
 define('REMINDER',1);
 
 
-define('DAILY_MAX_GIFTS_PER_USER', 10);
+define('DAILY_MAX_GIFTS_PER_USER', 100);
 define('CAROUSEL_CODE', 1);
 define('GIFT_CODE_EXPIRY_REMINDER_EMAIL', 'aman.narang@giftology.com');
 define('SUSPICIOUS_USER_CHECK', TRUE);

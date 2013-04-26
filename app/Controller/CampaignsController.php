@@ -79,6 +79,12 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
+        $user_id=$this->Auth->user('id');
+       $last_path=$_SERVER['HTTP_REFERER'];
+       //$id=$this->Connect->user('id');
+       $name=$this->Connect->user('name');
+        $this->log($name." User Id is " .$user_id." and come from the ".$last_path."","Path");
+        
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
         $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date'),'conditions' => array('Campaign.id' => $campaign_id)));
