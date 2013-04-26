@@ -601,7 +601,7 @@ class GiftsController extends AppController {
 			$User_id = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
 	
 
-			$sender_name = $gift['Sender']['UserProfile']['first_name'].$gift['Sender']['UserProfile']['last_name'];
+			$sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
@@ -622,17 +622,17 @@ class GiftsController extends AppController {
 		// Send email to receipients about gifts sent
 		if ($receiver_email && $User_id=="" && $receiver_birthday==date("Y-m-d")) 
 			{
-				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_newuser_birthday');
+				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 
 		else if ($receiver_email && $User_id=="") 
 			{
-				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_newuser');
+				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 
 		else if ($receiver_email && $receiver_birthday==date("Y-m-d") && $User_id!="") 
 			{
-			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_olduser_birthday');
+			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 
 		else if ($receiver_email)
@@ -714,7 +714,6 @@ class GiftsController extends AppController {
 	}
 	function send_email ($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$template)
 	{
-		DebugBreak();
 		$gift = $this->Gift->find('first', array(
 				'conditions' => array('Gift.id' => $gift_id),
 				'contain' => array(
