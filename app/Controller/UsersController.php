@@ -190,16 +190,16 @@ class UsersController extends AppController {
                                 'Vendor' => array('fields' => array('name','facebook_image'))),
 			    'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
                         ));
-                
-                if($gift){
+                     
+                if($gift){  
                     $sender_name = $gift['Sender']['UserProfile']['first_name'];
                     $this->Reminder->recursive = -1;
                     $receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name','friend_birthday'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
                     if($receiver_name['Reminder']['friend_name'])
-                        $receiver_name = $receiver_name['Reminder']['friend_name'];
+                        $name = $receiver_name['Reminder']['friend_name'];
                       else $receiver_name = 'you';
                     if($receiver_name['Reminder']['friend_birthday'])
-                        $receiver_birthday = $receiver_name['Reminder']['friend_birthday'];
+                        $birthday = $receiver_name['Reminder']['friend_birthday'];
                     $vendor_name = $gift['Product']['Vendor']['name'];
                     $image = $gift['Product']['Vendor']['facebook_image'];
                     $value = $gift['GiftsReceived']['gift_amount'];
@@ -215,18 +215,19 @@ class UsersController extends AppController {
             {
                 $this->set('sender_name', $sender_name);
             }
-            if (isset($receiver_name)) 
+            if (isset($name)) 
             {
-                $this->set('receiver_name', $receiver_name);
+                $this->set('receiver_name', $name);
             }
             
             $this->set('slidePlaySpeed', $slidePlaySpeed);
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
-            if (isset($vendor_name) && $receiver_birthday == date('Y-m-d')) {
-                $this->set('fb_title', $receiver_name.", Here's a gift to celebrate your wisest year yet. Happy birthday!");
+            
+            if (isset($vendor_name) && $birthday == date('Y-m-d')) {
+                $this->set('fb_title', $name.", Here's a gift to celebrate your wisest year yet. Happy birthday!");
             }
             else if (isset($vendor_name)) {
-                $this->set('fb_title', $receiver_name.", I hope this gift makes you feel as great as you are.");
+                $this->set('fb_title', $name.", I hope this gift makes you feel as great as you are.");
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
             }
