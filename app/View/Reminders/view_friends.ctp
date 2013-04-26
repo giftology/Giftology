@@ -238,7 +238,7 @@
                 xmlns:fb="https://www.facebook.com/2008/fbml">
       
             <div id="fb-root"></div>
-            <script src="http://connect.facebook.net/en_US/all.js"></script>
+            <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
             <h4>Like Giftology ? Invite your friends!</h4>
             <button id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestViaMultiFriendSelector(); return false;"
