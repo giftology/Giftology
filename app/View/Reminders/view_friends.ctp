@@ -272,12 +272,21 @@
         </div>
     </div>
 </div>
-<!--<div id="news-items" style="margin-top:-20px" >
+<div id="news-items" style="margin-top:-20px" >
         <div class="shadow-wrapper right items">
                 <div class="frame">
                         <h3>News</h3><ul>
-                       
-            <?php foreach($gifts_opens as $gifts_open):  ?>
+                    <?php if($latest_friend['UserProfile']['latest_friend'] != ""):  ?>
+                        <li>
+
+                            <div>
+                                <img src="https://graph.facebook.com/<?= $latest_friend['UserProfile']['latest_friend']; ?>/picture?type=square"/>
+                                <p></p><?= $this->Facebook->name($latest_friend['UserProfile']['latest_friend']); ?> just joined Giftology. Celebrate with Giftology.
+                                
+                            </div>
+                    </li>
+                     <?php endif; ?>  
+            <!--<?php foreach($gifts_opens as $gifts_open):  ?>
 
                
                    
@@ -305,12 +314,12 @@
                
               
                 
-                 <?php endforeach; ?>
+                 <?php endforeach; ?>-->
                         
                         </ul>
                  </div>
         </div>
-    </div>-->
+    </div>
  
     <div id="news-items" style="margin-top:-20px">
         <div class="shadow-wrapper right items">

@@ -353,22 +353,24 @@ class UsersController extends AppController {
         }
     }
     function afterFacebookLogin($first_login) { 
-    //DebugBreak();  
-    
-        if ($first_login) {
-            
+     if ($first_login) {
             $fb_id = $this->Auth->user('facebook_id');
-            $reminderUpdateDate = $this->User->Reminder->find('all', array(
+            $friends = $this->User->Reminders->find('all', array('fields' => array('user_id','friend_fb_id'),
                 'conditions' => array('friend_fb_id' => $fb_id)));
-            DebugBreak();
+            foreach ($friends as $friend) {
+                $user_id = $friend['Reminders']['user_id'];
+                $friend_fb_id = $friend['Reminders']['friend_fb_id'];
+                 $this->User->UserProfile->updateAll(
+                array('latest_friend' => $friend_fb_id), 
+                array('user_id' => $user_id));
+            }
+
+           
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
         
-         $fb_id = $this->Auth->user('facebook_id');
-            $reminderUpdateDate = $this->User->Reminders->find('all', array(
-                'conditions' => array('friend_fb_id' => $fb_id)));
-            print_r($reminderUpdateDate); die();
+            
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))

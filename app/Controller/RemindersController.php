@@ -23,7 +23,7 @@ class RemindersController extends AppController {
 	}
 
 	public function isAuthorized($user) {
-	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend') {
+	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend' ) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -457,13 +457,16 @@ class RemindersController extends AppController {
 				
 		return $result;
     }
-	function setGiftsSent() {
+
+   	function setGiftsSent() {
 		$this->set('num_gifts_sent', $this->Reminder->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID))));
 		$this->Reminder->User->GiftsReceived->recursive = 2;
 		$fields = array('GiftsReceived.sender_id, GiftsReceived.receiver_fb_id, 
 			GiftsReceived.product_id, GiftsReceived.created');
 		$group = array('GiftsReceived.sender_id');
 		$conditions = array('gift_status_id' => GIFT_STATUS_VALID, 'GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID);
+		$latest_friend = $this->UserProfile->find('first', array('fields' => array('latest_friend'),'conditions' => array('UserProfile.user_id' => $this->Auth->user('id'))));
+		$this->set('latest_friend', $latest_friend);
 		// will implement later when we have perfect UI
 		/*$days_before_mail = "7";
 		$product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime(date('Y-m-d'))));
