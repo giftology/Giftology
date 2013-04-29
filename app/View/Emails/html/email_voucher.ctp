@@ -69,8 +69,7 @@
                    <div style="line-height:1.5 !important; margin-left:-11px !important; text-decoration:justify !important;"> <?= strip_tags($gift['Product']['terms'],'<ol><li>'); ?></div>
                
                 
-                <p style="margin:0 35px ; padding:0; color:#333; line-height:22px;"><font style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:14px; font-weight:300; font-style:italic; color:#333;"> For any further queries, mail us :<b> support@thewatchshop.in</b></font></p>
-                <p>&nbsp;</p>
+                
               </div>
             </div>
             </td>
