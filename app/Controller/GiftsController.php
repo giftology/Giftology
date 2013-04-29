@@ -729,7 +729,7 @@ class GiftsController extends AppController {
 			    ->emailFormat('html')
 			    ->to($receiver_email)
 			    ->from(array($sender_email => $sender_name))
-			    ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+			    ->subject($receiver_name.', '.$sender_name.' sent you a  '.$vendor_name.' gift voucher')
 			    ->viewVars(array('sender' => $sender_name,
 					     'receiver' => $receiver_name,
 					     'vendor' => $vendor_name,
