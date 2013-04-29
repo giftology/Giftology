@@ -139,7 +139,7 @@
     
         <div id="gift-details">
             <?php 
-                if (isset($receiver_birthday) &&
+            if (isset($receiver_birthday) &&
                         !$this->Time->isToday($receiver_birthday) &&
                         isset($ocasion) &&
                         $ocasion == 'Birthday') {
@@ -149,10 +149,16 @@
                       $message_random = $message[$mess];
                     } else {
                         $send_now = 1;
-                        $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!"," I hope this gift makes you feel as great as you are.");
+                        $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
                         $mess = array_rand($message,1);
                           $message_random = $message[$mess];
                         //print_r($message[$mess]);
+                    }
+                    if($receiver_birthday == date('Y-m-d'))
+                    {
+                        $message = array("A little something to get the party started. Happy birthday!","Now, that’s just for being the best. Happy birthday!","You got this gift to celebrate. Happy birthday!","Today lets celebrate YOU. Happy birthday!");
+                        $mess = array_rand($message,1);
+                      $message_random = $message[$mess];
                     }
                     $receiver = explode(" ", $receiver_name);
             ?>
@@ -200,10 +206,11 @@
             ?> 
             <?php  echo $this->Form->create('gifts', array('action' => 'send'));
             ?>
+            <h4>Include a Message</h4>
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
-                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$receiver[0],$message_random ",'class'=>"gift-message" ))?>
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$message_random ",'class'=>"gift-message" ))?>
                 </div>
                 
                 <div class="shadow-wrapper">
@@ -318,11 +325,12 @@
             
            echo $this->Form->create('gifts', array('action' => 'send','id'=>'pra'));
             //echo $this->Form->create('Gift'); ?>
+            <h4>Include a Message</h4>
             <div class="delivery-details">
             <div class="delivery-message">
                 <div class="greeting-bubble">
                    
-                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$receiver[0],$message_random ",'class'=>"gift-message" ))?>
+                    <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => "$message_random ",'class'=>"gift-message" ))?>
                 </div>
                 
                 <div class="shadow-wrapper">
