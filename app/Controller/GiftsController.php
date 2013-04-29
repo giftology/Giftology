@@ -620,7 +620,7 @@ class GiftsController extends AppController {
 				if (!$sender_name) $sender_name = 'Giftology';
 			    
 		// Send email to receipients about gifts sent
-		if ($receiver_email && $User_id=="" && $receiver_birthday==date("Y-m-d")) 
+		/*if ($receiver_email && $User_id=="" && $receiver_birthday==date("Y-m-d")) 
 			{
 				$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
@@ -633,8 +633,11 @@ class GiftsController extends AppController {
 		else if ($receiver_email && $receiver_birthday==date("Y-m-d") && $User_id!="") 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
+			}*/
+		if ($receiver_email && $receiver_birthday==date("Y-m-d")) 
+			{
+			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
-
 		else if ($receiver_email)
 		 {	
 		 	$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent');
