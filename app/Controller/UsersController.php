@@ -357,7 +357,6 @@ class UsersController extends AppController {
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
-        $this->send_welcome_email();
         $user = $this->Auth->user(); 
 
         if (!$user || !isset($user['id']))
@@ -523,7 +522,7 @@ class UsersController extends AppController {
 	      ->subject('Welcome to Giftology')
               ->viewVars(array('name' => $this->Connect->user('name')))
               ->send();
-              //$this->welcome_post_to_fb();
+              $this->welcome_post_to_fb();
     }
     
     function welcome_post_to_fb() {
