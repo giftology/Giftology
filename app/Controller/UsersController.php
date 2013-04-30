@@ -222,8 +222,7 @@ class UsersController extends AppController {
             $this->set('slidePlaySpeed', $slidePlaySpeed);
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
             if (isset($vendor_name)) {
-                //$this->set('fb_title', "Rs"." ".$amount." ".$vendor_name."<center></center>"." "."From:"." ". $sender_name. "<center></center>"." "."To:"." ". $receiver_name);
-                $this->set('fb_title', "Rs"." ".$amount." ".$vendor_name);
+                $this->set('fb_title', "Rs"." ".$amount." ".$vendor_name."<center></center>"." "."From:"." ". $sender_name. "<center></center>"." "."To:"." ". $receiver_name);
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
             }
@@ -233,7 +232,7 @@ class UsersController extends AppController {
             } else {
                 $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
             }
-            $this->set('fb_description', "From: ".$sender_name."<BR> To: ".$receiver_name."<BR> Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+            $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
 	        //set utm source if set
 	        if (isset($this->request->query['utm_source'])) {
 		      $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
