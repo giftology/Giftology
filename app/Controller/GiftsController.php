@@ -1381,4 +1381,117 @@ class GiftsController extends AppController {
         fclose($fp);
         $this->autoRender = $this->autoLayout = false;
     }
+
+    public function contest_report_1($date_start, $date_end){
+    	$this->Gift->recursive = -1;
+    	$contest_recipient_ids = $this->Gift->find('all', array(
+    		'fields' => array('DATE(created) as gift_date', 'receiver_fb_id', 'receiver_id','sender_id'),
+    		'conditions' => array('created >' => $date_start.'00:00:00', 'created <' => $date_end.'23:59:59'),
+    		'group' => array('DATE(created)', 'receiver_id', 'sender_id'),
+    		'order' => array('DATE(created) DESC')
+    		));
+    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_1_'.time().'.csv', 'w+');
+        fputcsv($fp, array('Date','Receiver ID', 'Recipient FB ID', 'Recipient Name', 'No. of Gifts', 'Gift Ids', 'Date','Sender ID', 'Sender FB ID', 'Sender Name', 'No. of Gifts', 'Gift Ids'));
+        $this->Reminder->recursive = -1;
+    	foreach($contest_recipient_ids as $recipient){
+    		set_time_limit(120);
+            $sender_fb_id = $this->User->find('first', array('conditions' => array('id' => $recipient['Gift']['sender_id'])));
+            $receiver_name = $this->Reminder->find('first', array('conditions' => array('friend_fb_id' => $recipient['Gift']['receiver_fb_id'])));
+            $sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
+            $gifts_to_receiver = $this->Gift->find('all', array('conditions' => array('created like' => $recipient[0]['gift_date']."%", 'receiver_id' => $recipient['Gift']['receiver_id'],'sender_id' => $recipient['Gift']['sender_id'])));
+            $gifts_to_sender = $this->Gift->find('all', array('conditions' => array('created like' => $recipient[0]['gift_date']."%", 'receiver_id' => $recipient['Gift']['sender_id'])));
+            $receiver_gift = array();
+            $sender_gift = array();
+            $receiver_gift_count = 0;
+            $sender_gift_count = 0;
+            $receiver_gift_ids = NULL;
+            $sender_gift_ids = NULL;
+            $receiver_gift_count = count($gifts_to_receiver);
+            $sender_gift_count = count($gifts_to_sender);
+           
+            foreach($gifts_to_receiver as $gift){
+                $receiver_gift[] = $gift['Gift']['id'];     
+            }
+            
+            
+            foreach($gifts_to_sender as $gift){
+                $sender_gift[] = $gift['Gift']['id'];     
+            }
+            
+            if(isset($receiver_gift) && !empty($receiver_gift))
+            	$receiver_gift_ids = '"'.implode(',',$receiver_gift).'"';
+            if(isset($sender_gift) && !empty($sender_gift))
+            	$sender_gift_ids = "'".implode(',',$sender_gift).'"';
+            fputcsv($fp,array($recipient[0]['gift_date'],$recipient['Gift']['receiver_id'],$recipient['Gift']['receiver_fb_id'], $receiver_name['Reminder']['friend_name'], $receiver_gift_count, $receiver_gift_ids, $recipient[0]['gift_date'], $recipient['Gift']['sender_id'], $sender_fb_id['User']['facebook_id'], $sender_name['UserProfile']['first_name'].' '.$sender_name['UserProfile']['last_name'],$sender_gift_count, $sender_gift_ids));
+    	}
+        fclose($fp);
+        $this->autoRender = $this->autoLayout = false;
+    }
+
+    public function contest_report_2($date_start, $date_end){
+    	//DebugBreak();
+    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_2_'.time().'.csv', 'w+');
+    	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
+    	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
+    	$gifts = $this->Gift->find('all', array('conditions' => array('Gift.created >' => $date_start, 'Gift.created <' => $date_end), 
+    		'order' => array('DATE(created)')));
+    	fputcsv($fp,array('Date', 'User Id', 'Sender FB ID', 'Sender Name','Gift ID', 'Recipient FB ID', 'Receiver Name'));
+    	$this->Reminder->recursive = -1;
+        $this->UserProfile->recursive = -1;
+    	foreach($gifts as $gift){
+    		set_time_limit(120);
+    		$receiver_name = $this->Reminder->find('first', array('conditions' => array('friend_fb_id' => $gift['Gift']['receiver_fb_id'])));
+            $sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
+    		$new_array = array();
+    		$new_array[] = substr($gift['Gift']['created'], 0, 10);
+    		$new_array[] = $gift['Gift']['receiver_id'];
+    		$new_array[] = $gift['Sender']['facebook_id'];
+    		$new_array[] = $sender_name['UserProfile']['first_name'].' '.$sender_name['UserProfile']['last_name'];
+    		$new_array[] = $gift['Gift']['id'];
+    		$new_array[] = $gift['Gift']['receiver_fb_id'];
+    		$new_array[] = $receiver_name['Reminder']['friend_name'];
+    		fputcsv($fp, $new_array);
+    	}
+
+    	$this->autoRender = $this->autoLayout = false;
+    }
+
+    public function contest_report_3($date_start, $date_end){
+    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.time().'.csv', 'w+');
+    	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
+    	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
+    	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up'));
+    	$gifts = $this->Gift->find('all', array(
+    		'fields' => array('count(sender_id) as c', 'sender_id'),
+    		'conditions' => array('Gift.created >' => $date_start, 'Gift.created <' => $date_end), 
+    		'group' => array('sender_id'),
+    		'order' => array('count(sender_id) DESC'),
+            'contain' => array('Sender' => array('facebook_id'))
+            ));
+    	$this->Gift->recursive = -1;
+    	$this->UserProfile->recursive = -1;
+    	foreach($gifts as $gift){
+    		$sender_name = NULL;
+    		$sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
+    		$receivers = $this->Gift->find('all', array('fields'=>array('DISTINCT receiver_id'),
+    			'conditions' => array('Gift.sender_id' => $gift['Gift']['sender_id'],'Gift.created >' => $date_start, 'Gift.created <' => $date_end)
+    			));
+    		$receiver_ids = array();
+    		foreach($receivers as $receiver){
+    			$receiver_ids[] = $receiver['Gift']['receiver_id'];
+    		}
+
+    		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids)));
+    		$new_array = array();
+    		$new_array[] = $sender_name['UserProfile']['first_name'];
+    		$new_array[] = $sender_name['UserProfile']['last_name'];
+    		$new_array[] = $gift['Gift']['sender_id'];
+    		$new_array[] = $gift['Sender']['facebook_id'];
+    		$new_array[] = $gift[0]['c'];
+    		$new_array[] = $friend_signed_up_count;
+    		fputcsv($fp, $new_array);
+    	}
+    	$fclose($fp);
+    	$this->autoRender = $this->autoLayout = false;
+    }
 }

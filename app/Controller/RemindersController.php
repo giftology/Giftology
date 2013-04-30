@@ -633,10 +633,26 @@ class RemindersController extends AppController {
 		$this->UserProfile->recursive = -1;
 		$this->Reminder->recursive = -1;
 
+		$Facebook = new FB();
+		
+
 		foreach($gift_sent_details as $k => $gift){
-			$sender_namer = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'),'conditions' => array('UserProfile.user_id' => $gift['GiftsReceived']['sender_id'])));
+			$sender_name = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'),'conditions' => array('UserProfile.user_id' => $gift['GiftsReceived']['sender_id'])));
 			$receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
-			$gift_sent_details[$k]['sender_name'] = $sender_namer;
+			if(!$receiver_name){
+				set_time_limit(120);
+				$receiver_first_last_name = $Facebook->api(array('method' => 'fql.query',
+                                    'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$gift['GiftsReceived']['receiver_fb_id']));
+				$sender_name['UserProfile'] = $receiver_first_last_name[0];
+			}
+
+			if(!$sender_name){
+				set_time_limit(120);
+				$sender_first_last_name = $Facebook->api(array('method' => 'fql.query',
+                                    'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$gift['Sender']['facebook_id']));	
+				$sender_name['UserProfile'] = $sender_first_last_name[0];
+			}
+			$gift_sent_details[$k]['sender_name'] = $sender_name;
 			$gift_sent_details[$k]['receiver_name'] = $receiver_name;
 		}
 
