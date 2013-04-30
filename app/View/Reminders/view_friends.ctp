@@ -328,7 +328,7 @@
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
                               
-                                <p></p><a href="https://facebook.com/profile.php?id=<?php echo $gift['Sender']['facebook_id']; ?>"><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> </a>sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <a href="https://facebook.com/profile.php?id=<?php echo  $gift['GiftsReceived']['receiver_fb_id']; ?>"><?= $gift['receiver_name']['Reminder']['friend_name']; ?> </a>
+                                <p></p><a target="_new" href="https://facebook.com/profile.php?id=<?php echo $gift['Sender']['facebook_id']; ?>"><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> </a>sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <a target="_new" href="https://facebook.com/profile.php?id=<?php echo  $gift['GiftsReceived']['receiver_fb_id']; ?>"><?= $gift['receiver_name']['Reminder']['friend_name']; ?> </a>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
 
                                 
