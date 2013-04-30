@@ -11,7 +11,7 @@ class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
 
-    public $components = array('Giftology', 'CCAvenue', 'AesCrypt');
+    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList');
     public $paginate = array(
 	'contain' => array(
 		'Product' => array('Vendor')),
@@ -761,9 +761,12 @@ class GiftsController extends AppController {
 			/*$Facebook = new FB();
         	$friends_count = $Facebook->api(array('method' => 'fql.query',
                                         'query' => 'SELECT friend_count FROM user WHERE uid ='.$this->Connect->user('id')));*/
+			$white_list_check = $this->UserWhiteList->white_list($this->Connect->user('id'));
         	if($friend_list < MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT){
-        		$this->Session->setFlash('Oops! There seems to be some problem with your facebook profile. Try again later.! If the problem persists try changing your profile settings.', 'default', array(), 'suspicious_activity_message');
-        		$this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        		if(!$white_list_check){
+        			$this->Session->setFlash('Oops! There seems to be some problem with your facebook profile. Try again later.! If the problem persists try changing your profile settings.', 'default', array(), 'suspicious_activity_message');
+        			$this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        		}
         	}
 		}
         	
