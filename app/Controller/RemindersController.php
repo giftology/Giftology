@@ -298,23 +298,22 @@ class RemindersController extends AppController {
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
 
-		$last_mail=$this->User->UserProfile->find('first',array('conditions' => array('UserProfile.id' => $this->Auth->User('id')),'fields' => array('UserProfile.mail_date')));
-        $last_log=$this->User->find('first',array('conditions' => array('User.id' => $this->Auth->User('id')),'fields' => array('User.last_login')));
-        $last_log_date = strtotime($last_log['User']['last_login']);
-        $last_mail_date = strtotime($last_mail['UserProfile']['mail_date']);
+		 $last_log_info=$this->User->find('first',array('conditions' => array('User.id' => $this->Auth->User('id')),'fields' => array('User.last_login','User.mail_date')));
+         $last_log_date = strtotime($last_log_info['User']['last_login']);
+         $last_mail_date = strtotime($last_log_info['User']['mail_date']);
   			$date_to_compare = strtotime(date('Y-m-d H:s:i'));
-			             
 			$last_log_date_diff = floor(abs($date_to_compare - $last_log_date) / 86400);
-			              $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+		    $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+			$this->User->id = $this->Auth->User('id');
 
-			if(($last_mail_date_diff>=15) && ($last_log_date_diff<=30) ){
-				$this->User->UserProfile->saveField('mail_date', date('Y-m-d H:i:s'));
-				 $this->send_reminder_email($user, $reminders);
+			if(($last_mail_date_diff>=15) && ($last_log_date_diff<=30)){
+                $this->User->saveField('mail_date', date('Y-m-d H:i:s'));
+			    $this->send_reminder_email($user, $reminders);
 
 			}
-			     if(($last_mail_date_diff>=10) && ($last_log_date_diff>30) ){
-			       $this->User->UserProfile->saveField('mail_date', date('Y-m-d H:i:s'));
-			       $this->send_reminder_email($user, $reminders);
+		    if(($last_mail_date_diff>=10) && ($last_log_date_diff>30) ){
+			    $this->User->saveField('mail_date', date('Y-m-d H:i:s'));
+			    $this->send_reminder_email($user, $reminders);
 			}
 	        
 	}
