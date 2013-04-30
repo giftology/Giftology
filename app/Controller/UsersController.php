@@ -202,7 +202,6 @@ class UsersController extends AppController {
                     $image = $gift['Product']['Vendor']['facebook_image'];
                     $value = $gift['GiftsReceived']['gift_amount'];
                     $message = "Welcome to the Giftology family!<br><br><strong>".$sender_name."</strong> has sent you a gift voucher to ".$vendor_name.".<br><br>  Connect with facebook to redeem your gift.";
-                    $amount = $gift['GiftsReceived'] ['gift_amount'];
                     $slidePlaySpeed = 4000;
                     $this->setGiftsSent();
                 }
@@ -222,7 +221,7 @@ class UsersController extends AppController {
             $this->set('slidePlaySpeed', $slidePlaySpeed);
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
             if (isset($vendor_name)) {
-                $this->set('fb_title', "Rs"." ".$amount." ".$vendor_name.'<br>'."From:"." ". $sender_name. '<br>'."To:"." ". $receiver_name);
+                $this->set('fb_title', $vendor_name.'<br>'."From:"." ". $sender_name. '<br>'."To:"." ". $receiver_name);
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
             }
