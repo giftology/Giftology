@@ -32,7 +32,8 @@ class CampaignsController extends AppController {
         }
         return parent::isAuthorized($user);
     }
-    public function index($encrypted_product_id) {   
+    public function index($encrypted_product_id) {  
+  // DebugBreak(); 
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
         if($campaign)
@@ -70,40 +71,46 @@ class CampaignsController extends AppController {
         }
         else
         {
-            $this->Session->setFlash(__('This campaign is not active.'));
+            /*$this->Session->setFlash(__('This campaign is not active.'));*/
             $this->redirect(array('controller' => 'campaigns', 'action'=>'view_products'));  
         }
 
     }
 
     public function view_products () {
-        $id = $this->Auth->user('id');
-        $Facebook = new FB();
-        $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT uid, current_location, birthday, pic_big, name, sex FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
-        if ($friends) {
-            $this->Connect->authUser['Reminders'] = array();
-            foreach($friends as $friend) {
-                array_push($this->Connect->authUser['Reminders'], array (
-                        'user_id' => $id,
-                        'friend_fb_id' => $friend['uid'],
-                        'friend_name' => $friend['name'],
-                        'friend_birthday' => $friend['birthday'],
-                        'current_location' => $friend['current_location']['city'],
-                        'country' => $friend['current_location']['country'],
-                        'sex' => $friend['sex']
-                    ));
-            }
-          if ($this->User->Reminders->deleteAll(array('user_id' => $id), false)) {
-                $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+        if (!$this->Reminder->find('count', array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'))))) 
+        {
+            $id = $this->Auth->user('id');
+            $Facebook = new FB();
+            $friends = $Facebook->api(array('method' => 'fql.query',
+                                            'query' => 'SELECT uid, current_location, birthday, pic_big, name, sex FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
+            if ($friends) {
+                $this->Connect->authUser['Reminders'] = array();
+                foreach($friends as $friend) {
+                    array_push($this->Connect->authUser['Reminders'], array (
+                            'user_id' => $id,
+                            'friend_fb_id' => $friend['uid'],
+                            'friend_name' => $friend['name'],
+                            'friend_birthday' => $friend['birthday'],
+                            'current_location' => $friend['current_location']['city'],
+                            'country' => $friend['current_location']['country'],
+                            'sex' => $friend['sex']
+                        ));
+                }
                 
-            }
+              
+                    $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+                    
+                }
         }
         
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
-       
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date'),'conditions' => array('Campaign.id' => $campaign_id)));
+        if($campaign['Campaign']['enable'] == 0 || $campaign['Campaign']['end_date'] < date('Y-m-d'))
+        {
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
+        }
         if (!$this->Connect->user()) {
             $this->redirect(array('controller'=>'campaigns', 'action'=>'index',$campaign['Campaign']['product_enc_id']));
         }
