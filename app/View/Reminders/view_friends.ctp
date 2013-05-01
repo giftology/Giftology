@@ -258,7 +258,13 @@
               value="Spread the Joy"
             >Spread the Joy       
             </button>
-            <input type="hidden" value="<?php  echo implode(',',$facebook_id);?>" name="user_ids" />
+            <?php 
+                $imploded_facebook_id = NULL;
+                if(isset($facebook_id) && !empty($facebook_id)){
+                    $imploded_facebook_id = implode(',',$facebook_id);
+                }
+            ?>
+            <input type="hidden" value="<?php  echo $imploded_facebook_id;?>" name="user_ids" />
             <script>
               FB.init({
                 appId  : '105463376223556',
