@@ -197,6 +197,18 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </section>
    <!--<?php //endif; ?>-->
+    
+    <?php foreach ($products as $product): ?>
+      <a>
+        <?= $this->element('product_on_landing',
+          array('product' => $product,
+               'small' => true),
+          array('cache' => array(
+        'key' => $product['Product']['id'].'small'))); ?>
+      </a>
+    <?php endforeach; ?>
+   <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span style="float:right">See More</span></a>
+
    <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
