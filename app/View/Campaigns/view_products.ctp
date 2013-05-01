@@ -17,7 +17,7 @@
                 
                 <div class="tag-icons"></div>
                 <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value'] ?> voucher </h5>
-                          <div style="margin-left:120px;width:400px;">   <?= $campaign_desc['Campaign']['campaign_desc'] ?></div>
+                          <div style="margin-left:120px;width:400px;">   <?= $campaign_desc['Campaign']['description'] ?></div>
 
             </div>
             <div class="image-container">

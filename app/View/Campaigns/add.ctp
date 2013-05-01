@@ -12,7 +12,7 @@
          echo $this->Form->input('enable', array('type' => 'select', 'options' =>array('1'=>'Enable','0'=>'Disable')));
         echo $this->Form->input('start_date') ;
         echo $this->Form->input('end_date') ;
-        echo $this->Tinymce->input('Campaign.campaign_desc', array( 
+        echo $this->Tinymce->input('Campaign.description', array( 
                 'label' => 'Campaign Description (Max. 50 words)' 
                     ),array( 
                         'language'=>'en' 

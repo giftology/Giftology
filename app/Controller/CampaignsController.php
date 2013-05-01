@@ -79,10 +79,10 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
-       
+    
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
-        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date','campaign_desc'),'conditions' => array('Campaign.id' => $campaign_id)));
+        $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date','description'),'conditions' => array('Campaign.id' => $campaign_id)));
         if($campaign['Campaign']['enable'] == 0 || $campaign['Campaign']['end_date'] < date('Y-m-d'))
         {
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));  
