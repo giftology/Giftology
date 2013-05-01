@@ -12,6 +12,14 @@
          echo $this->Form->input('enable', array('type' => 'select', 'options' =>array('1'=>'Enable','0'=>'Disable')));
         echo $this->Form->input('start_date') ;
         echo $this->Form->input('end_date') ;
+        echo $this->Tinymce->input('Campaign.campaign_desc', array( 
+                'label' => 'Campaign Description (Max. 50 words)' 
+                    ),array( 
+                        'language'=>'en' 
+                    ), 
+                    'full' 
+            ); 
+        
         echo $this->Form->input('on_landing_page', array('type' => 'select', 'options' =>array('1'=>'YES','0'=>'NO')));
        ?> <div id="redirect1"><?php echo $this->Form->input('redirect_to', array('type' => 'select', 'id'=>'redirect','options' =>array('1'=>'REMINDER','2'=>'CAMPAIGN'))); ?> </div> 
         <?php echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));

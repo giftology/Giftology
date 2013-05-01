@@ -8,7 +8,7 @@
                     <a><span class="left"></span>
                     Share. Surprise.<span class="arrow"></span></a>
                 </li>
-                <li>Send a gift</li>
+                <li><?= $products['Vendor']['name']; ?></li>
             </ul>
         </div>  
         <div id="celebration-details">
@@ -16,14 +16,18 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value']?> voucher </h5>
+                <h5 class="line-header">Celebrate your friends  with a Rs. <?=$products['Product']['min_value'] ?> voucher </h5>
+                          <div style="margin-left:120px;width:400px;">   <?= $campaign_desc['Campaign']['campaign_desc'] ?></div>
+
             </div>
             <div class="image-container">
                 <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$campaign_thumb_image; ?>"></div>
                 <div class="paperclip"></div>
                 
+           
             </div>
         </div>
+       
     <!--<div id="campaigns">
                         <?php foreach ($products as $product):  ?>
             <a href="<?= $this->Html->url(array('controller' => 'campaigns',
@@ -38,26 +42,29 @@
             </a>
             <?php endforeach; ?>
         </div>-->
-        <h3 class="line-header" style="margin-top:1px">
-            <span>Choose Friends</span>
+        <h3 class="camp_line-header" style="margin-top:80px">
+         <p style="font: normal 17px/40px arial;color: #900"> Step 1: Choose Friends</p>
         </h3>
             <div id='searc_campaign'>
                                 <?php //echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
-                               <?php echo $this->Form->Submit(__('search_button_small.jpg'), array('id'=>'friend_search')); ?>
+                               <?php echo $this->Form->Submit(__('image.png'), array('id'=>'friend_search')); ?>
             </div>
-                <div id="pra" style="float:left;height:350px;margin-top:70px;margin-left:-300px; border: 1px solid; border-radius: 5px 5px 5px 5px; padding-left: 5px; padding-top: 5px; padding-right: 5px; overflow-y:scroll;">
+                <div id="pra" style="float:left;height:350px;margin-top:40px;margin-left:-349px; border: 1px solid; border-radius: 5px 5px 5px 5px;overflow-y:scroll; box-shadow: 0 1px 2px 3px #E5E5E5;border: 1px solid #ccc;border-radius: 5px 5px 5px 5px;padding: 5px;">
 
-                    <table style="width:320px" class="friend_result" cellpadding="0" cellspacing="0">
+                    <table style="width:320px" class="friend_result" cellpadding="4" cellspacing="0">
                            
                             <tbody>             
                                 <?php
                                     foreach ($friend_data as $data): ?>
                                     <tr class="friends">
                                     <td class="friend_row" id="<?php echo $data['Reminder']['friend_fb_id'];?>"><div style="padding-bottom: 2px;"><img src="https://graph.facebook.com/<?= $data['Reminder']['friend_fb_id']; ?>/picture?type=square"></div></td> 
-                                    <td><?php echo $data['Reminder']['friend_name']; ?></td>
-                                    <td align="left"><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"></td>
+                                   <td><?php echo $data['Reminder']['friend_name']; ?></td>
+                                    <td class="campaign_checkbo"><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $data['Reminder']['friend_fb_id'];?>" value="<?php echo $data['Reminder']['friend_name'];?>"> </td>
+
                                     </tr>
+                                   
+
                                     <?php endforeach; ?>
                             </tbody>
                        </table>
@@ -67,7 +74,7 @@
             <div class="clear"></div>
             <!--<div style="float:right;margin-left:70px">-->
                 <div class="disclosure opened">
-                        <p class="heading">Terms and conditions</p>
+                        <p class="heading" style="font: normal 17px/20px arial;color: #999;" >Terms and conditions</p>
                         <div class="wrapper" style="height: 0px;">
                                 <p class="content shown"><?= $products['Product']['terms']; ?></p>
                         </div>
@@ -79,9 +86,9 @@
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
                     <div class="disclosure opened">
-                            <p class="heading">About <?= $products['Vendor']['name']; ?></p>
+                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $products['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown"><?= $products['Vendor']['description']; ?></p>
+                                    <p class="content shown" ><?= $products['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
@@ -89,12 +96,14 @@
                     </div>
                <!-- </div>-->
            <div class="clear"></div>
-           <br><br><br><br>
+           
        <!--</div>
            <div> -->
         <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
-         <div class="delivery-details" style="float:left;margin-left:2px">
-            <div class="delivery-message">
+         <div class="delivery-details" style="float:left;margin-left:32px">
+            <p style="font: normal 17px/40px arial;color: #900">
+            Step 2: Include a Message
+        </p><div class="delivery-message" style="margin-bottom:0px;">
                     <div class="greeting-bubble">
                         <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
                     </div>
@@ -115,9 +124,9 @@
                         <h5 style="color:#FF0000">*please enter the message.</h5>
                     </div>
                     <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
-            </div>
-            <div class="parent_submit">
-            <?php  echo $this->Form->Submit(__('Send'), array('id'=>'form_shipping'));?>
+            </div> <p style="font: normal 17px/40px arial;color: #900">
+           </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
+            <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
     </div> 
 

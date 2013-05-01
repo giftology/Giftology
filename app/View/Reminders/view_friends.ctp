@@ -244,7 +244,7 @@
                                 
 
 
- <div id="news-items" >
+<div id="news-items" >
         <div class="shadow-wrapper right items">
                 <div class="frame">
                 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -254,10 +254,11 @@
             <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
             <h4>Like Giftology ? Invite your friends!</h4>
             <button id="SendButtonForNoPerms"class="spread showtransbox"
-              onclick="sendRequestViaMultiFriendSelector(); return false;"
+              onclick="sendRequestToRecipients(); return false;"
               value="Spread the Joy"
             >Spread the Joy       
             </button>
+            <input type="hidden" value="<?php  echo implode(',',$facebook_id);?>" name="user_ids" />
             <script>
               FB.init({
                 appId  : '105463376223556',

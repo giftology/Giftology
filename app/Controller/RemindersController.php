@@ -329,6 +329,15 @@ class RemindersController extends AppController {
         $this->autoRender = $this->autoLayout = false;    
 	}
 	public function view_friends($type=null) {
+		$Facebook = new FB();
+		$friends= array();
+        $friends = $Facebook->api(array('method' => 'fql.query',
+                                        'query' => 'SELECT uid FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
+         $fb_id_array =array();
+         foreach ($friends as $frnd){
+         $fb_id_array[]= $frnd['uid'];    
+         }
+   		 $this->set('facebook_id',$fb_id_array);
 		$users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
 		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
 		$Facebook = new FB();

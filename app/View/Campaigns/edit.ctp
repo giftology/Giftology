@@ -12,6 +12,13 @@
 		echo $this->Form->input('thumb_file', array('label' => 'Product Image', 'type' => 'file'));
         echo $this->Form->input('wide_file', array('label' => 'Landing Page Image', 'type' => 'file'));
         echo $this->Form->input('end_file', array('label' => 'Campaign End Page Image', 'type' => 'file'));
+         echo $this->Tinymce->input('Campaign.campaign_desc', array( 
+                'label' => 'Campaign Description(Max. 50 words)' 
+                    ),array( 
+                        'language'=>'en' 
+                    ), 
+                    'full' 
+            );
 
 	?>
 	</fieldset>
