@@ -77,11 +77,14 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
+        print_r($this->Auth->user('id'));
         //DebugBreak();
-        $Facebook = new FB();
+       //DebugBreak();
+       /* $Facebook = new FB();
         $friends = $Facebook->api(array('method' => 'fql.query',
                                         'query' => 'SELECT current_location FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
         //$this->Reminder->recursive  = -2;
+        DebugBreak();
         foreach($friends as $friend) {
 
                 
@@ -90,7 +93,8 @@ class CampaignsController extends AppController {
                 array('user_id' => $this->Auth->user('id')));
             }
         
-            
+          */  
+       // $this->redirect(array('controller' => 'users', 'action'=>'refreshReminders'));  
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
         $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
@@ -104,10 +108,11 @@ class CampaignsController extends AppController {
        	$product_id = $campaign['Campaign']['product_id'];
        	$this->Product->recursive = -2;
         $proddd=$this->Product->find('first', array('conditions' => array('Product.id' => $product_id),'order'=>array('Product.min_price','Product.display_order')));
-        $this->Reminder->recursive = -1;
+        $this->Campaign->recursive = 2;
+        //$this->Campaign->recursive = 2;
         $friend_list=$this->Reminder->find('all', 
             array('limit'=>20,
-                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'), 'Reminder.country' => India)),
+                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
                 'order' => array('RAND()')
                 ));
         $this->set('friend_data',$friend_list);

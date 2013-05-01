@@ -387,6 +387,7 @@ class UsersController extends AppController {
     
     public function refreshReminders ($id ) {
         //refesh reminders
+       // DebugBreak();
         if ($this->setUserReminders($id)) {
             if ($this->User->Reminders->deleteAll(array('user_id' => $id), false)) {
                 $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
@@ -474,6 +475,7 @@ class UsersController extends AppController {
         }
     }
     function setUserReminders($user_id = null) {
+        //DebugBreak();
         $friends = $this->getUserFriends();
         if ($friends) {
             $this->Connect->authUser['Reminders'] = array();
