@@ -40,9 +40,10 @@ class ProductsController extends AppController {
             if(PAID_PRODUCT_DISABLED)
                 $conditions['Product.min_price'] = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $products = $this->Product->find('all', array('conditions' => $conditions));
+            $products_temp = $this->Product->find('all', array('conditions' => $conditions));
+            $products = $this->product_filter($products_temp, $receiver_fb_id);
             $this->set('products', $products);
-            unset($products);
+            unset($products, $products_temp);
         }
         $this->set('_serialize', array('products'));
     }
@@ -364,6 +365,81 @@ class ProductsController extends AppController {
         $error = array();
         if(!$receiver_fb_id) $error[1] = 'Receiver id is missing';
         return $error; 
+    }
+
+    public function product_filter($product_array, $receiver_fb_id){
+        $show_product = array();
+        $unpaid_product =array();
+        $this->Gift->recursive = -1;
+        foreach($product_array as $product)
+        {  
+            $product_id= NULL; 
+            if($product['Product']['min_price']== 0)
+            {
+                $product_id=$product['Product']['id'];
+                $sender_id = $this->Auth->user('id');
+                $current_date= date("Y-m-d") ;
+                $receiver_gift_limit  = $product['Product']['receiver_gift_limit'];
+                $receiver_time_limit =$product['Product']['receiver_time_limit'];
+                $receiver_id= isset($receiver_id) ? $receiver_id : NULL;
+                $sender_gift_limit = $product['Product']['sender_gift_limit'];
+                $sender_time_limit = $product['Product']['sender_time_limit'];
+                $tomorrow = date("Y-m-d",mktime(0,0,0,date("m"),date("d")+1,date("Y")));
+                $sender_end_date=date('Y-m-d', strtotime('-'.$sender_time_limit.'days', strtotime($tomorrow)));
+                $receiver_end_date=date('Y-m-d', strtotime('-'.$receiver_time_limit.'days', strtotime($tomorrow)));
+                /*$total_send_gift_acc_limit_sender = $this->Gift->query("select count(*)as cou from gifts where gift_status_id !=".GIFT_STATUS_TRANSACTION_PENDING." and created between '".$sender_end_date."' and '".$tomorrow."'
+                    AND product_id = '".$product_id."'
+                    AND sender_id = '".$sender_id."'
+                ");*/
+
+                $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
+                    'conditions' => array(
+                        'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                        'created between' => $sender_end_date." and ".$tomorrow,
+                        'product_id' => $product_id,
+                        'sender_id' => $sender_id
+                        )
+                    ));
+
+                $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
+                    'conditions' => array(
+                        'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                        'created between' => $receiver_end_date." and ".$tomorrow,
+                        'product_id' => $product_id,
+                        'receiver_fb_id' => $receiver_fb_id
+                        )
+                    ));
+                /*$total_gift_rec_acc_limit_receiver = $this->Gift->query("select count(*)as cou from gifts where gift_status_id !=".GIFT_STATUS_TRANSACTION_PENDING." and ccreated between '".$receiver_end_date."' and '".$tomorrow."'
+                    AND product_id = '".$product_id."'
+                    AND receiver_fb_id = '".$receiver_fb_id."'
+                ");*/
+                if(($total_send_gift_acc_limit_sender < $sender_gift_limit))
+                {
+                    if(($total_gift_rec_acc_limit_receiver < $receiver_gift_limit))
+                    {
+                        $show_product[]=$product_id;
+                    }
+                }
+            }
+            else{
+                $unpaid_product[]=$product['Product']['id'];
+            }
+        }
+           
+        $free_paid_result = array_merge((array)$show_product, (array)$unpaid_product);
+        $this->Gift->recursive = -1;
+        $received_gifts = $this->Gift->find('all', array('fields' => array('DISTINCT product_id'),
+            'conditions' => array('gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,'receiver_fb_id' => $receiver_fb_id,'expiry_date >' => date('Y-m-d'))));
+        $gifts = array();
+        foreach($received_gifts as $gift){
+            $gifts[] = $gift['Gift']['product_id'];
+        }
+
+        $result = array_diff($free_paid_result, $gifts);
+
+        //$products = $this->Product->find('all', array('conditions' => $conditions));
+        $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.show_on_top','Product.min_price','Product.display_order')));
+        return $proddd;
     }
     
 }
