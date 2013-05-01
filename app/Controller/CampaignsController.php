@@ -33,7 +33,6 @@ class CampaignsController extends AppController {
         return parent::isAuthorized($user);
     }
     public function index($encrypted_product_id) {  
-  // DebugBreak(); 
         $product_id = $this->AesCrypt->decrypt($encrypted_product_id);
         $campaign=$this->Campaign->find('all', array('conditions' => array('Campaign.product_enc_id' => $encrypted_product_id)));
         if($campaign)
@@ -97,9 +96,7 @@ class CampaignsController extends AppController {
                             'sex' => $friend['sex']
                         ));
                 }
-                
-              
-                    $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+                $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
                     
                 }
         }
