@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class UsersController extends AppController {
     public $helpers = array('Minify.Minify');
-    public $uses = array( 'User','Vendor','Product','Reminder');
+    public $uses = array( 'User','Vendor','Product','Reminder','Campaign');
     public $components = array('Giftology', 'AesCrypt');
 
     public function beforeFilter() {
@@ -150,15 +150,21 @@ class UsersController extends AppController {
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
         }
         else{
+            $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1,'Campaign.enable'=>1)));
             $message = 'The fun and easy way to give <b><u>free</u></b> gift vouchers to facebook friends';
+            $this->set('campaign_image',$check_on_campaign['Campaign']['wide_image']);
+            $this->set('campaign_enc_id',$this->AesCrypt->encrypt($check_on_campaign['Campaign']['id']));
+            $this->set('campaign_check_on',$check_on_campaign['Campaign']['on_landing_page']);
+            $this->set('redirect_to',$check_on_campaign['Campaign']['redirect_to']);
+
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+            $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0),'limit'=>5,'order' => array('RAND()')));
             $Image_new = array();
             foreach ($Image as $Images) {
                 $id=$Images['Product']['vendor_id'];
                 $this->Vendor->unbindModel(array('hasMany' => array('Product')));
-                $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+                $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.carousel_image'),'conditions' => array('Vendor.id '=>$id)));
                 $this->set('Images', $Image_new);
             }
         
@@ -243,7 +249,7 @@ class UsersController extends AppController {
                //$this->layout = 'landing_redeem';
 	    //} else {
 		//$this->layout = 'mobile_landing';
-	    //}
+	    //}  
             if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
             else $this->layout = 'landing';
         }
@@ -387,7 +393,6 @@ class UsersController extends AppController {
     
     public function refreshReminders ($id ) {
         //refesh reminders
-       // DebugBreak();
         if ($this->setUserReminders($id)) {
             if ($this->User->Reminders->deleteAll(array('user_id' => $id), false)) {
                 $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
@@ -475,7 +480,6 @@ class UsersController extends AppController {
         }
     }
     function setUserReminders($user_id = null) {
-        //DebugBreak();
         $friends = $this->getUserFriends();
         if ($friends) {
             $this->Connect->authUser['Reminders'] = array();

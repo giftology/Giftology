@@ -16,7 +16,7 @@ class CampaignsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder');
+    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder','User');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -77,24 +77,29 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
-        print_r($this->Auth->user('id'));
-        //DebugBreak();
-       //DebugBreak();
-       /* $Facebook = new FB();
+        $id = $this->Auth->user('id');
+        $Facebook = new FB();
         $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT current_location FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
-        //$this->Reminder->recursive  = -2;
-        DebugBreak();
-        foreach($friends as $friend) {
-
-                
-                $this->Reminder->updateAll(
-                array('country' => "'".$friend['current_location']['country']."'"), 
-                array('user_id' => $this->Auth->user('id')));
+                                        'query' => 'SELECT uid, current_location, birthday, pic_big, name, sex FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) ORDER BY birthday'));
+        if ($friends) {
+            $this->Connect->authUser['Reminders'] = array();
+            foreach($friends as $friend) {
+                array_push($this->Connect->authUser['Reminders'], array (
+                        'user_id' => $id,
+                        'friend_fb_id' => $friend['uid'],
+                        'friend_name' => $friend['name'],
+                        'friend_birthday' => $friend['birthday'],
+                        'current_location' => $friend['current_location']['city'],
+                        'country' => $friend['current_location']['country'],
+                        'sex' => $friend['sex']
+                    ));
             }
+          if ($this->User->Reminders->deleteAll(array('user_id' => $id), false)) {
+                $this->User->Reminders->saveMany($this->Connect->authUser['Reminders']);
+                
+            }
+        }
         
-          */  
-       // $this->redirect(array('controller' => 'users', 'action'=>'refreshReminders'));  
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
         $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image'),'conditions' => array('Campaign.id' => $campaign_id)));
@@ -112,7 +117,7 @@ class CampaignsController extends AppController {
         //$this->Campaign->recursive = 2;
         $friend_list=$this->Reminder->find('all', 
             array('limit'=>20,
-                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),
+                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
                 'order' => array('RAND()')
                 ));
         $this->set('friend_data',$friend_list);
