@@ -607,7 +607,7 @@ class GiftsController extends AppController {
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
 				$email_message = $gift['Gift']['gift_message'];
-				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
+				$message = $gift['Gift']['gift_message']."\r\n From: ".$sender_name."\r\n To: ".'@['.$receiver_fb_id.']';
 			} else {
 				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 				$message = $sender_name.' sent '.'@['.$receiver_fb_id.']'.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
@@ -1463,7 +1463,7 @@ class GiftsController extends AppController {
     	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.time().'.csv', 'w+');
     	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
     	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
-    	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up'));
+    	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up', 'Friends FB ID (Joining Date)'));
     	$gifts = $this->Gift->find('all', array(
     		'fields' => array('count(sender_id) as c', 'sender_id'),
     		'conditions' => array('Gift.created >' => $date_start, 'Gift.created <' => $date_end), 
@@ -1476,12 +1476,13 @@ class GiftsController extends AppController {
     	foreach($gifts as $gift){
     		$sender_name = NULL;
     		$sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
-    		$receivers = $this->Gift->find('all', array('fields'=>array('DISTINCT receiver_id'),
+    		$receivers = $this->Gift->find('all', array('fields'=>array('DISTINCT receiver_fb_id', 'receiver_id'),
     			'conditions' => array('Gift.sender_id' => $gift['Gift']['sender_id'],'Gift.created >' => $date_start, 'Gift.created <' => $date_end)
     			));
     		$receiver_ids = array();
     		foreach($receivers as $receiver){
-    			$receiver_ids[] = $receiver['Gift']['receiver_id'];
+    			$receiver_joining_date = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
+    			$receiver_ids[] = $receiver['Gift']['receiver_fb_id'] ."(".date('Y-m-d',$receiver_joining_date['UserProfile']['created']).")";
     		}
 
     		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids)));
@@ -1492,9 +1493,21 @@ class GiftsController extends AppController {
     		$new_array[] = $gift['Sender']['facebook_id'];
     		$new_array[] = $gift[0]['c'];
     		$new_array[] = $friend_signed_up_count;
+    		$new_array[] = '"'.implode(',',$receiver_ids).'"';
     		fputcsv($fp, $new_array);
     	}
     	$fclose($fp);
     	$this->autoRender = $this->autoLayout = false;
     }
+
+    /*public function test_new_line_fb_post(){
+    	DebugBreak();
+    	$message = "From: Alok"."
+                "."To: Shubham"."
+                "."
+                ". "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?";
+    	$this->Giftology->test_new_line_in_message($this->Connect->user('id'),FB::getAccessToken(),$message);
+    	echo "posted";
+    	$this->autoRender = $this->autoLayout = false;
+    }*/
 }
