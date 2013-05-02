@@ -256,7 +256,17 @@ class UsersController extends AppController {
 		//$this->layout = 'mobile_landing';
 	    //}  
             if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
-            else $this->layout = 'landing';
+           else{
+            if(!$this->RequestHandler->isMobile()){
+                $this->layout='landing';
+            }else{
+                $this->layout='mobile_landing';
+            }
+
+           }
+
+
+           // else $this->layout = 'landing';
         }
     }
 
@@ -265,7 +275,13 @@ class UsersController extends AppController {
         session_destroy();
         session_start();
         /*$this->redirect("http://www.facebook.com");*/
-        $this->layout = 'landing';
+        if($this->RequestHandler->isMobile()){
+                $this->layout='mobile_landing';
+            }else{
+                $this->layout='landing';
+            
+
+       // $this->layout = 'landing';
 	    $this->set('slidePlaySpeed', '8000');
         
         $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
@@ -283,7 +299,7 @@ class UsersController extends AppController {
             $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
             $this->set('Images', $Image_new);
         }
-         
+        }
          
     }
 
