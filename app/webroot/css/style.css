@@ -2345,12 +2345,13 @@ font-size:12px;
     opacity: .1;
     filter: alpha(opacity=10);
     position: absolute;
-    z-index: 10;
+    z-index: 109999;
 }
 .spinner {
     position:absolute;
     left: 240px;
     top: 100px;
+    z-index: 12211278!important;
 }
 #search_friend {
     float:right;
