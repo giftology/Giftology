@@ -338,6 +338,14 @@ class RemindersController extends AppController {
         $this->autoRender = $this->autoLayout = false;    
 	}
 	public function view_friends($type=null) {
+        if($this->Connect->user()){
+            $this->User->id = $this->Auth->User('id');
+            $this->User->updateAll(
+            	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+            	array('User.id' => $this->Auth->User('id'))
+            	);
+        }
+		
 		$Facebook = new FB();
 		$friends= array();
         $friends = $Facebook->api(array('method' => 'fql.query',
