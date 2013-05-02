@@ -241,9 +241,10 @@
             <?php endif; ?>
     </div>
 
-                                
-
-
+<div class="image-wrapper" id="gift_myself">
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;padding-top:30px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>icon_send.png"/></div>
+     <?php echo $this->Form->end();?>    
+</div>
 <div id="news-items" >
         <div class="shadow-wrapper right items">
                 <div class="frame">
@@ -381,5 +382,63 @@
         <?php endif; ?>
     <?php endforeach; ?>
     <?php endif; */?>
+    <?php 
+    if($send_date == "")
+    {
+        $date = "";
+    } 
+    else{
+        //$date =date("Y-m-d", strtotime($send_date['Gift']['created']));
+        $days_before_mail = "7";
+        $product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime($send_date['Gift']['created'])));
+        print_r($product_expire_date);
+    }
     
+    //print_r($date) ?>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+       var new_date = '<?php echo $product_expire_date;?>';
+       var total_time = new Date(new_date).getTime();
+       if(new_date){
+        
+         var current = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+        if(total_time > current){
+            $("#gift_myself").hide();
+        }
+        else{
+            $("#gift_myself").show();
+        }
+            
+
+       }
+       else{
+       
+            $("#gift_myself").show();
+        }
+        $('Form > .eve').click(function (){
+
+                var gift_value = $(this).attr('id');
+                var gift_name = $(this).attr('name');
+                //alert(gift_value + " "+gift_name );
+
+                
+                  $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'friend_id',
+                    value: gift_value,
+                }).appendTo('#productsViewProductsForm');
+
+                   $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_name+'_hidden',
+                    name: 'friend_name',
+                    value: gift_name,
+                }).appendTo('#productsViewProductsForm');
+
+                $("#productsViewProductsForm").submit() 
+            }); 
+        });
+  </script>
     

@@ -238,7 +238,8 @@ class RemindersController extends AppController {
         $condition = NULL;
         $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
         $result = $this->UserProfile->updateAll($data, $condition);     
-
+        $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
+        $this->set('send_date', $gift_send_date);
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;
@@ -361,8 +362,12 @@ class RemindersController extends AppController {
             );
         $condition = NULL;
         $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
-        $result = $this->UserProfile->updateAll($data, $condition);     
-
+        $result = $this->UserProfile->updateAll($data, $condition);
+        $enc_fb_id = $this->AesCrypt->encrypt($fb_id['User']['facebook_id']); 
+        $this->set('id', $enc_fb_id);
+        $this->set('name', $fb_first_last_name); 
+        $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
+        $this->set('send_date', $gift_send_date);
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;
