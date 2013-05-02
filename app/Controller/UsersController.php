@@ -222,8 +222,7 @@ class UsersController extends AppController {
             $this->set('slidePlaySpeed', $slidePlaySpeed);
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
             if (isset($vendor_name)) {
-                //$this->set('fb_title', "Rs"." ".$amount." ".$vendor_name."<center></center>"." "."From:"." ". $sender_name. "<center></center>"." "."To:"." ". $receiver_name);
-                $this->set('fb_title', "Rs. ".$amount." gift voucher ".$vendor_name);
+                $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
             }
