@@ -160,30 +160,36 @@
                         $mess = array_rand($message,1);
                       $message_random = $message[$mess];
                     }
+                    if($receiver_id == $facebook_id)
+                    {
+                        $message_random ="Thank you Giftology for my gift! Can't wait to unwrap it :)";
+                    }
                     $receiver = explode(" ", $receiver_name);
             ?>
              <h3>Will be delivered: 
-                    <strong>
-                        <select id="demo-html" class="demo-htmlselect" style="width:110px">
-                            <?php if($send_now == 0 ): ?>
-                            <option value="0" class="send" id="schedule"><!--<?= 
-                            date("d-m-Y", strtotime($receiver_birthday)); ?>-->On Birthday</option> 
-                             <?php endif; ?>
-                             
-                            <option value="0" class="send" id="today">Now</option>
+           <?php 
+               if($receiver_id == $facebook_id ):?>
+               <strong>Today</strong>
+           <?php else: ?>
 
-                             <option value="0" id="later" class=c1>Later</option>
-                        </select>
-                        
-                        
+                <strong>
+                    <select id="demo-html" class="demo-htmlselect" style="width:110px">
+                        <?php if($send_now == 0 ): ?>
+                        <option value="0" class="send" id="schedule"><!--<?= 
+                        date("d-m-Y", strtotime($receiver_birthday)); ?>-->On Birthday</option> 
+                         <?php endif; ?>
+                         
+                        <option value="0" class="send" id="today">Now</option>
 
-                    </strong>
-                    <?php if($send_now == 0 ): ?>
-                            <span id = "birthday_date" style="margin-left:10px;font-size: 20px"><?= 
-                            date("d-m-Y", strtotime($receiver_birthday)); ?></span>
-                        <?php endif; ?>
-                    <span id = "date" style="margin-left:60px;font-size: 20px"></span>
-
+                         <option value="0" id="later" class=c1>Later</option>
+                    </select>
+                </strong>
+                <?php if($send_now == 0 ): ?>
+                        <span id = "birthday_date" style="margin-left:10px;font-size: 20px"><?= 
+                        date("d-m-Y", strtotime($receiver_birthday)); ?></span>
+                    <?php endif; ?>
+                <span id = "date" style="margin-left:60px;font-size: 20px"></span>
+         <?php endif; ?>
                 </h3>
              
 

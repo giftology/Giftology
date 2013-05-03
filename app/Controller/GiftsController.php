@@ -586,7 +586,7 @@ class GiftsController extends AppController {
 		} 
 		else
 		 {
-			$gift = $this->Gift->find('first', array('conditions' => array ('Gift.id' => $gift_id),
+		 	$gift = $this->Gift->find('first', array('conditions' => array ('Gift.id' => $gift_id),
 					'contain' => array('Sender' => array('UserProfile')))); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
 			$receiver_fb_id = $gift['Gift']['receiver_fb_id'];
 			$receiver_email = $gift['Gift']['receiver_email'];
@@ -608,6 +608,10 @@ class GiftsController extends AppController {
 			if ($gift['Gift']['gift_message']) {
 				$email_message = $gift['Gift']['gift_message'];
 				$message = $gift['Gift']['gift_message']."\r\n From: ".$sender_name."\r\n To: ".'@['.$receiver_fb_id.']';
+				if($receiver_id['User']['facebook_id'] == $this->Auth->user('facebook_id') )
+		            {
+		                $message = $gift['Gift']['gift_message'];
+		            }
 			} else {
 				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 				$message = $sender_name.' sent '.'@['.$receiver_fb_id.']'.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
