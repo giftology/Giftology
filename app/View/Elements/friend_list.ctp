@@ -27,10 +27,11 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y")) : 
+                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && $reminder['count']) : 
                                ?>Turns <?php echo $age ;
-                            else: ?>
-                                Birthday
+                            elseif(!array_key_exists('count', $reminder)): ?>
+                                Suggested
+                            <?php else: ?>Birthday
                             <?php endif; ?></p>
                 </div>
                 

@@ -338,7 +338,7 @@ class RemindersController extends AppController {
         $this->autoRender = $this->autoLayout = false;    
 	}
 	public function view_friends($type=null) {
-        if($this->Connect->user()){
+		if($this->Connect->user()){
             $this->User->id = $this->Auth->User('id');
             $this->User->updateAll(
             	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
@@ -407,7 +407,17 @@ class RemindersController extends AppController {
 				
 				$this->set('friends_active', 'active');
 			    } else {
+			    	
 				$today_users = $this->get_birthdays('mine','today');
+				$no_todya_users = count($today_users);
+				if($no_todya_users < 6)
+				{
+					 $friend_list=$this->Reminder->find('all', array('limit'=>2,
+                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
+					 		$today_users = array_merge($today_users,  $friend_list);
+				}
+
+				//print_r($today_users);
 				$tommorrow_users = $this->get_birthdays('mine','tommorrow');
 				$thismonth_users = $this->get_birthdays('mine','thismonth');
 				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
