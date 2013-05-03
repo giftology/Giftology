@@ -37,7 +37,7 @@
   
   <div class="logo" align="center"><img src="<?= FULL_BASE_URL; ?>/img/mobile/brand-logo-mobile.png"  alt="" /></div>
   <div class="clear"></div>
-  <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'mobile/spinner.gif'; ?>"/></div>
+  <div class="transbox" id="transbox" style="display:none"></div>
   <div class="home-content h" >
     <p>The fun and easy way to give 
       gifts to your facebook friends</p>
