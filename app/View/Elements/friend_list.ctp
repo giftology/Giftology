@@ -9,10 +9,11 @@
                                         <div class="shadow-wrapper">
                                                 <div class="frame">
                                                         <img src="https://graph.facebook.com/<?= $reminder['Reminder']['friend_fb_id']; ?>/picture?width=100&height=100"/>
-                                                        <?php if (!isset($no_calendar)): ?>
+                                                        <?php if (!isset($no_calendar) && array_key_exists('count', $reminder) ): ?>
                                                             <div class="calendar">
                                                                     <p><?= date('d', strtotime($reminder['Reminder']['friend_birthday'])); ?></p>
                                                             </div>
+                                                            <?php else: ?>
                                                         <?php endif; ?>
                                                         <?php if($reminder['count'] != 0): ?>
                         <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>><div class="count" ><p style="font-color:#000000"><?= $reminder['count']; ?></p></div></a>
@@ -27,9 +28,12 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && $reminder['count']) : 
+                        <?php //DebugBreak();
+                        $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && $reminder['count']) : 
                                ?>Turns <?php echo $age ;
-                            elseif(!array_key_exists('count', $reminder)): ?>
+                            elseif($reminder['Reminder']['encrypted_user_id']): ?>
+                                Return Gift
+                            <?php elseif(!array_key_exists('count', $reminder)): ?>
                                 Suggested
                             <?php else: ?>Birthday
                             <?php endif; ?></p>

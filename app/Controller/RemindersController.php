@@ -410,14 +410,23 @@ class RemindersController extends AppController {
 			    	
 				$today_users = $this->get_birthdays('mine','today');
 				$no_todya_users = count($today_users);
-				if($no_todya_users < 6)
+				if($no_todya_users < 6 && SUGGESTED == 1)
 				{
+					//DebugBreak();
 					 $friend_list=$this->Reminder->find('all', array('limit'=>2,
-                'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
-					 		$today_users = array_merge($today_users,  $friend_list);
+                		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
+					 $gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
+				 	 $facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
+					 $friend_list_reminders=$this->Reminder->find('all', array(
+                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
+					 foreach($friend_list_reminders as $k => $friend_list_reminder){
+			           $friend_list_reminders[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($friend_list_reminder['Reminder']['user_id']);
+		             }
+			 		$suggested_list = array_merge($friend_list_reminders,  $friend_list);
+			 		$today_users = array_merge($today_users,  $suggested_list);
+			 		$today_users = array_slice($today_users, 0, 6);
 				}
 
-				//print_r($today_users);
 				$tommorrow_users = $this->get_birthdays('mine','tommorrow');
 				$thismonth_users = $this->get_birthdays('mine','thismonth');
 				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
