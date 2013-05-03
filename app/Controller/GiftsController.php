@@ -1473,19 +1473,23 @@ class GiftsController extends AppController {
             ));
     	$this->Gift->recursive = -1;
     	$this->UserProfile->recursive = -1;
+    	
     	foreach($gifts as $gift){
     		$sender_name = NULL;
     		$sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
     		$receivers = $this->Gift->find('all', array('fields'=>array('DISTINCT receiver_fb_id', 'receiver_id'),
     			'conditions' => array('Gift.sender_id' => $gift['Gift']['sender_id'],'Gift.created >' => $date_start, 'Gift.created <' => $date_end)
     			));
+    		$receiver_ids_with_joining_date = array();
+    		$receiver_ids = array();
     		$receiver_ids = array();
     		foreach($receivers as $receiver){
+    			$receiver_ids[] = $receiver['Gift']['receiver_id'];
     			$receiver_joining_date = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
-    			$receiver_ids[] = $receiver['Gift']['receiver_fb_id'] ."(".date('Y-m-d',$receiver_joining_date['UserProfile']['created']).")";
+    			$receiver_ids_with_joining_date[] = $receiver['Gift']['receiver_fb_id'] ."(".substr($receiver_joining_date['UserProfile']['created'], 0, 10).")";
     		}
 
-    		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids)));
+    		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids, 'created >' => $date_start, 'created <' => $date_end)));
     		$new_array = array();
     		$new_array[] = $sender_name['UserProfile']['first_name'];
     		$new_array[] = $sender_name['UserProfile']['last_name'];
@@ -1493,7 +1497,7 @@ class GiftsController extends AppController {
     		$new_array[] = $gift['Sender']['facebook_id'];
     		$new_array[] = $gift[0]['c'];
     		$new_array[] = $friend_signed_up_count;
-    		$new_array[] = '"'.implode(',',$receiver_ids).'"';
+    		$new_array[] = '"'.implode(',',$receiver_ids_with_joining_date).'"';
     		fputcsv($fp, $new_array);
     	}
     	$fclose($fp);
