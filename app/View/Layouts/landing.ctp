@@ -95,21 +95,23 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     return false; /* This prevents url from # */
 });
   });
-    </script>    
-    <?php  if(($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == CAMPAIGN) )
-        {?>
-         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-         'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
- <?php }
-        elseif (($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
-           <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
-  <?php       } 
-        else 
-        { ?>
-            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
-  <?php } ?>              
+    </script>
+    <?php
+      $redirect_url = array(); 
+      if(($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == CAMPAIGN) ){
+        $redirect_url = array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id);
+      }
+      elseif (($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == REMINDER) ){
+        $redirect_url = array('controller'=>'reminders', 'action'=>'view_friends');  
+      }
+      else{
+        $redirect_url = array('controller'=>'reminders', 'action'=>'view_friends');
+      } 
+    ?>   
+    
+    <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+      'redirect' => $redirect_url)); ?></div>   
+           
         <div class="clear">&nbsp;</div>
 		<?php if(($type==TYPE_CONTEST) &&($campaign_check_on) &&($redirect_to == REMINDER)){?>   
         <p>
