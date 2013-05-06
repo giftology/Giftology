@@ -28,11 +28,15 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php //DebugBreak();
+                        <?php 
                         $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && $reminder['count']) : 
                                ?>Turns <?php echo $age ;
                             elseif($reminder['Reminder']['encrypted_user_id']): ?>
                                 Return Gift
+                              <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "male"): ?>
+                                Welcome him
+                            <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "female"): ?>
+                                Welcome her
                             <?php elseif(!array_key_exists('count', $reminder)): ?>
                                 Suggested
                             <?php else: ?>Birthday

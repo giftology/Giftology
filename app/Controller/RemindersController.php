@@ -412,17 +412,26 @@ class RemindersController extends AppController {
 				$no_todya_users = count($today_users);
 				if($no_todya_users < 6 && SUGGESTED == 1)
 				{
-					//DebugBreak();
-					 $friend_list=$this->Reminder->find('all', array('limit'=>2,
+					$friend_list=$this->Reminder->find('all', array('limit'=>4,
                 		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
+
 					 $gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
-				 	 $facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
-					 $friend_list_reminders=$this->Reminder->find('all', array(
-                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
-					 foreach($friend_list_reminders as $k => $friend_list_reminder){
-			           $friend_list_reminders[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($friend_list_reminder['Reminder']['user_id']);
+				 	 $gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
+					 $gift_send_friend_lists=$this->Reminder->find('all', array(
+                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $gift_send_facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
+					 foreach($gift_send_friend_lists as $k => $gift_send_friend_list){
+			           $gift_send_friend_lists[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($gift_send_friend_list['Reminder']['user_id']);
 		             }
-			 		$suggested_list = array_merge($friend_list_reminders,  $friend_list);
+
+		             $latest_friend = $this->UserProfile->find('first', array('fields' => array('latest_friend'),'conditions' => array('UserProfile.user_id' => $this->Auth->user('id'))));
+		             $latest_friend_data = $this->Reminder->find('all', array(
+                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $latest_friend['UserProfile']['latest_friend'],'Reminder.user_id'=>$this->Auth->user('id')))));
+		             foreach($latest_friend_data as $k => $latest_friend){
+			           $latest_friend_data[$k]['Reminder']['latest_friend_data_id'] = $this->AesCrypt->encrypt($latest_friend['Reminder']['user_id']);
+		             }
+
+			 		$welcome_friend_list =  array_merge($gift_send_friend_lists,$latest_friend_data);
+			 		$suggested_list = array_merge($welcome_friend_list,  $friend_list);
 			 		$today_users = array_merge($today_users,  $suggested_list);
 			 		$today_users = array_slice($today_users, 0, 6);
 				}
