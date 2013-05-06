@@ -242,10 +242,10 @@
     </div>
 
 <div class="send_urself" id="news-items">
-    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>icon_send.png"/></div>
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png"/></div>
      <?php echo $this->Form->end();?>    
 </div>
-<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>Button_app.png"/> </div>
+<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png"/> </div>
 <div id="news-items" >
         <div class="shadow-wrapper right items">
                 
@@ -258,7 +258,7 @@
             <div id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestToRecipients(); return false;"
               value="Spread the Joy" style="background:transparent!important; cursor:pointer;"
-            > <img src="<?= IMAGE_ROOT; ?>f_invitefriendsbutton.png"/>      
+            > <img src="<?= IMAGE_ROOT; ?>FInvite_Button.png"/>      
             </div>
             <?php 
                 $imploded_facebook_id = NULL;
@@ -339,7 +339,7 @@
                 <div class="frame">
                         <h3>Total Gifts Sent</h3><ul>
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
-                       <h3>Whats happening now</h3><ul>
+                       <h3>What's Happening Now</h3><ul>
             <?php $last_sender_id = 0; ?>
             
                         <?php foreach($gifts_sent as $gift): ?>
@@ -443,5 +443,43 @@
             alert("App coming soon, stay tuned!");
         });
         });
+  </script>
+  <script type="text/javascript">
+$(document).ready(function()
+{
+    $(".android_app").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Googleplay_Button_1.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//GooglePlay_Button.png");
+        }                         
+    ); 
+
+    $(".eve").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button_3.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button.png");
+        }                         
+    ); 
+
+    $("#SendButtonForNoPerms").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Finvite_Button_2.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//FInvite_Button.png");
+        }                         
+    );                  
+});
+
   </script>
     
