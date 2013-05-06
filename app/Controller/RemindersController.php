@@ -294,14 +294,17 @@ class RemindersController extends AppController {
 				
 				$this->set('friends_active', 'active');
 			    } else {
-			    	
-				$today_users = $this->get_birthdays('mine','today');
+			    $today_users = $this->get_birthdays('mine','today');
 				$no_today_users = count($today_users);
 				if($no_today_users < 6 && SUGGESTED_FRIENDS)
 				{
 					$friend_list=$this->Reminder->find('all', array('limit'=>5,
                 		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
-
+					if($no_today_users == 0 && SUGGESTED_FRIENDS)
+					{
+						$friend_list=$this->Reminder->find('all', array('limit'=>1,
+	                		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
+					}
 					 $gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
 				 	 $gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
 					 $gift_send_friend_lists=$this->Reminder->find('all', array(

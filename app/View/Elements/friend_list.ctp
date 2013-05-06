@@ -29,7 +29,7 @@
                          
                         <p class="occasion">
                         <?php 
-                        $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && $reminder['count']) : 
+                        $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && array_key_exists('count', $reminder)) : 
                                ?>Turns <?php echo $age ;
                             elseif($reminder['Reminder']['encrypted_user_id']): ?>
                                 Return Gift
