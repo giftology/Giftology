@@ -117,7 +117,7 @@
       
       
       
-                              <div id="<?php echo $product['Product']['vendor_id'];?>" class ="pop-up"><b>Terms and conditions</b>
+                              <div id="<?php echo $product['Product']['vendor_id'];?>" class ="pop-up" ><b>Terms and conditions</b>
                                 <br><br>
                                 
                                  <?= strip_tags($product['Product']['terms'],'<p><span><ol><li>'); ?>
