@@ -74,16 +74,16 @@ class GiftologyComponent extends Component {
 		}*/
 		
 		$fields = array(
-		  'access_token'=> $access_token,
-	          'message'=>$message,
-	          'link'=>$url,
-	          'place'=>'185972794801597',
+			'access_token'=> $access_token,
+	        'message'=>$message,
+	        'giftology'=>$url.'/users/login/?visit=1'
 	    );
 		
 		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$sender_fb_id.'/feed');
+		//curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$sender_fb_id.'/feed');
+		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/'.$sender_fb_id.'/giftology:join');
 		
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);

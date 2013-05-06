@@ -33,6 +33,13 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     <meta property="og:image" content="<?= $fb_image; ?>" /> 
     <meta property="og:description" content="<?= $fb_description; ?>" /> 
   <?php endif; ?>
+  <?php if (isset($first_vist)): ?>
+          <meta property="og:type" content="giftology:join" />
+          <meta property="og:url" content="<?= $fb_url; ?>" />
+    <meta property="og:title" content="<?= $fb_title; ?>" /> 
+    <meta property="og:image" content="<?= $fb_image; ?>" /> 
+    <meta property="og:description" content="<?= $fb_description; ?>" /> 
+  <?php endif; ?>
   <?php
     echo $this->Html->meta('icon');
     echo $this->Minify->css(array('main','normalize','flexslider','style'));
