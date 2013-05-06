@@ -26,14 +26,14 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   <title>
     Giftology | The Social Gifting Company | Homepage
   </title>
-  <?php if (isset($fb_title)): ?>
+  <?php if (isset($fb_title) && !$first_vist): ?>
           <meta property="og:type" content="giftology:gift" />
           <meta property="og:url" content="<?= $fb_url; ?>" />
     <meta property="og:title" content="<?= $fb_title; ?>" /> 
     <meta property="og:image" content="<?= $fb_image; ?>" /> 
     <meta property="og:description" content="<?= $fb_description; ?>" /> 
   <?php endif; ?>
-  <?php if (isset($first_vist)): ?>
+  <?php if ($first_vist): ?>
           <meta property="og:type" content="giftology:join" />
           <meta property="og:url" content="<?= $fb_url; ?>" />
     <meta property="og:title" content="<?= $fb_title; ?>" /> 

@@ -555,8 +555,7 @@ class UsersController extends AppController {
     }
     
     function welcome_post_to_fb() {
-       
-        $url = "http://www.giftology.com";
+        $url = FULL_BASE_URL.'/users/login/?visit=1';
         $message = "I have joined the gifting revolution on Giftology.com! Have you?";
         $access_token = FB::getAccessToken();
         $sender_fb_id = $this->Connect->user('id');

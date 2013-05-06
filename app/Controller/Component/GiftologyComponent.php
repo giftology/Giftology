@@ -76,7 +76,7 @@ class GiftologyComponent extends Component {
 		$fields = array(
 			'access_token'=> $access_token,
 	        'message'=>$message,
-	        'giftology'=>$url.'/users/login/?visit=1'
+	        'giftology'=>$url
 	    );
 		
 		$ch = curl_init();
