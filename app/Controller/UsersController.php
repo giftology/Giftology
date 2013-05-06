@@ -368,9 +368,7 @@ class UsersController extends AppController {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
     }
-    function afterFacebookLogin($first_login) {
-        if($this->Auth->user('facebook_id') == 540263311)
-                $first_login = 1;    
+    function afterFacebookLogin($first_login) {  
         if ($first_login) 
             {
                 $fb_id = $this->Auth->user('facebook_id');
