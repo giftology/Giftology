@@ -296,8 +296,8 @@ class RemindersController extends AppController {
 			    } else {
 			    	
 				$today_users = $this->get_birthdays('mine','today');
-				$no_todya_users = count($today_users);
-				if($no_todya_users < 6 && SUGGESTED_FRIENDS == 1)
+				$no_today_users = count($today_users);
+				if($no_today_users < 6 && SUGGESTED)
 				{
 					$friend_list=$this->Reminder->find('all', array('limit'=>4,
                 		'conditions' => array('Reminder.user_id' => $this->Auth->user('id')),'order' => array('RAND()')));
