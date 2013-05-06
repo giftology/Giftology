@@ -65,7 +65,7 @@
                             <span class="selected-overlay"></span>
                             <span class="image-container">
                                     <span class="image-frame"></span>
-                                    <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">						</span>
+                                    <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">                     </span>
                             <span class="details">
                                     <span class="issuer"><?= $product['Vendor']['name']; ?></span>
                                     <span class="value"><span id="WebRupee" class="WebRupee">Rs.</span>
@@ -113,7 +113,7 @@
                     </span>
                     
     </div>
-    <!--<span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/notice_icon.gif" alt="" style="float:right;margin-top:-25px;margin-left:10px " name="<?php echo $product['Product']['vendor_id'];?>"></span>
+    <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/abc.png" alt="" style="float:right;margin-top:-116px;margin-left:42px; position:absolute;z-index:79; width:200px; height:100px;" name="<?php echo $product['Product']['vendor_id'];?>"></span>
       
       
       
@@ -122,10 +122,10 @@
                                 
                                  <?= strip_tags($product['Product']['terms'],'<p><span><ol><li>'); ?>
                                 
-                              </div>-->
+                              </div>
 <?php endif; ?>
 
-<!--<style type="text/css">
+<style type="text/css">
       body {
         margin: 0;
         padding: 0;
@@ -146,15 +146,15 @@
       }
 
 
-     /* .small-voucher .selected-overlay {
+    /* .small-voucher .selected-overlay {
     background-image: url("/img/small-voucher-hover.png");
     display: none;
     height: 110px;
     margin-top: -10px;
     position: absolute;
     width: 200px;
-    z-index: 10;*/
-}
+    z-index: 10;
+}*/
     </style>
 
 
@@ -163,10 +163,13 @@
     <script type="text/javascript">
       $(function() {
         $('.trigger_tnc').hover(function(e) {
+
             var gift_value = this.name;
             //alert(gift_value);
           $('#'+gift_value).show();
+         
           return false;
+
           //.css('top', e.pageY + moveDown)
           //.css('left', e.pageX + moveLeft)
           //.appendTo('body');
@@ -178,14 +181,9 @@
         });
         
         $('.trigger_tnc').mousemove(function(e) {
+           
           $("div.pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
         });
         
       });
-    </script>-->
-
-
-
-
-
-    
+    </script>
