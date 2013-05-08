@@ -44,6 +44,41 @@ public $presetVars = array(
 	    }
 	    return parent::isAuthorized($user);
 	}
+	public function download_gift_csv(){
+				
+                    $filename = "Gifts ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->Gift->find('first', array('conditions'=>array('Gift.id'=>$id)));
+                            $row = array(
+                            $result['Gift']['id'],
+                            $result['Gift']['product_id'],
+                            $result['Gift']['sender_id'],
+                            $result['Gift']['receiver_id'],
+                            $result['Gift']['receiver_fb_id'],
+                            $result['Gift']['receiver_email'],
+                            $result['Gift']['code'],
+                            $result['Gift']['gift_amount'],
+                            $result['Gift']['gift_status_id'],
+                            $result['Gift']['expiry_date'],
+                            $result['Gift']['created'],
+                            $result['Gift']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+                  	}
+
 	//WEB SERVICES
 	public function ws_list () {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
@@ -124,10 +159,40 @@ public $presetVars = array(
  *
  * @return void
  */
-	public function index() {
+public function index() {
+	//DebugBreak();
+		$this->Prg->commonProcess('Gift');
+		if(($this->passedArgs['created_start'])||($this->passedArgs['expiry_start'])||($this->passedArgs['modified_start']))
+		{
+			if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start'])) )
+            {
+            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$this->passedArgs['expiry_start'],'Gift.expiry_date <' => $this->passedArgs['expiry_end'].'23:59:59'
+                 	));
+            }
+            if(!($this->passedArgs['expiry_start'])&&(!($this->passedArgs['modified_start'])))
+            {
+            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.created >'=>$this->passedArgs['created_start'],'Gift.created <' => $this->passedArgs['created_end'].'23:59:59'
+                 	));
+            }
+            if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['expiry_start'])))
+            {
+            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$this->passedArgs['modified_start'],'Gift.created <' => $this->passedArgs['modified_end'].'23:59:59'
+                 	));
+            }
+                 
+            
+	
+		}
+		else{
+			$conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs)));
+
+		}
+		
+		$this->paginate = $conditions;
 		$this->Gift->recursive = 0;
 		$this->set('gifts', $this->paginate());
 	}
+	
 
 /**
  * view method

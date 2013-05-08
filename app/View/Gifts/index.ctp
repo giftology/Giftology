@@ -66,9 +66,15 @@
         <td><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10'));?></td>
         <td><?php echo $this->Form->input('gift_amount', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
         <td><?php echo $this->Form->input('gift_status_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
-        <td><?php echo $this->Form->input('expiry_date', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker'));?></td>
-        <td><?php echo $this->Form->input('created', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker1'));?></td>
-        <td><?php echo $this->Form->input('modified', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2'));?></td>
+        <<td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date'));?>
+		<?php echo $this->Form->input('expiry_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker1','placeholder'=>'End Date'));?>
+        </td>
+        <<td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Start Date'));?>
+		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'End Date'));?>
+        </td>
+        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Start Date'));?>
+			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'End Date'));?>
+        </td>
         
        <td>
          <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
@@ -164,6 +170,18 @@
       buttonText: "Choose the date",
   });
       $( "#datepicker2" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+         $( "#datepicker3" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+            $( "#datepicker4" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+               $( "#datepicker5" ).datepicker({
      dateFormat: 'yy-mm-dd',
       buttonText: "Choose the date",
   });
