@@ -94,7 +94,7 @@ class GiftsController extends AppController {
         $send_now = isset($this->params->query['send_now']) ? $this->params->query['send_now'] : null;
         $receiver_birthday = isset($this->params->query['receiver_birthday']) ? $this->params->query['receiver_birthday'] : null;
         $date_to_send = isset($this->params->query['date_to_send']) ? $this->params->query['date_to_send'] : null;
-        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message);
+        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday);
         
         if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
         else{
@@ -1040,7 +1040,7 @@ class GiftsController extends AppController {
 	    $this->autoRender = $this->autoLayout = false;
 	}
     
-    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message){
+    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday){
         $error = array();
         $product = $this->Gift->Product->read(null, $product_id);
         
@@ -1069,7 +1069,21 @@ class GiftsController extends AppController {
         }
 
         if(!$gift_message){
-        	$error[7] = "Gift message is missing";	
+        	$error[8] = "Gift message is missing";	
+        }
+
+        $valid_till = date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days"));
+        $code_exists = $this->UploadedProductCode->find('count', array(
+        	'conditions' => array(
+        		'available'=>1, 
+        		'product_id' =>$product_id,
+                'value' => $gift_amount,
+                'expiry >' => $valid_till
+        		)
+        	));
+
+        if(!$code_exists){
+        	$error[9] = "Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?";	
         }
         
         return $error;
