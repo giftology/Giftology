@@ -19,7 +19,31 @@ class Gift extends AppModel {
  *
  * @var array
  */
+   public $actsAs = array('Search.Searchable');
+
   
+    
+ 
+    public $filterArgs = array(
+            array('name' => 'id', 'type' => 'like','field' => 'Gift.id'),
+            array('name' => 'product_id', 'type' => 'like','field' => 'Gift.product_id'),
+            array('name' => 'sender_id', 'type' => 'like','field' => 'Gift.sender_id'),
+            array('name' => 'receiver_id', 'type' => 'like','field' => 'Gift.receiver_id'),
+            array('name' => 'receiver_fb_id', 'type' => 'like','field' => 'Gift.receiver_fb_id'),
+            array('name' => 'receiver_email', 'type' => 'like','field' => 'Gift.receiver_email'),
+            array('name' => 'code', 'type' => 'like','field' => 'Gift.code'),
+            array('name' => 'gift_amount', 'type' => 'like','field' => 'Gift.gift_amount'),
+            array('name' => 'gift_status_id', 'type' => 'like','field' => 'Gift.gift_status_id'),
+            array('name' => 'expiry_date', 'type' => 'like','field' => 'Gift.expiry_date'),
+            array('name' => 'created', 'type' => 'like','field' => 'Gift.created'),
+            array('name' => 'modified', 'type' => 'like','field' => 'Gift.modified'),
+
+
+           
+            
+            
+        );
+        
   public $validate = array(
         'first_name' => array(
             'required' => array(

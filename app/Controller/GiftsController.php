@@ -11,13 +11,27 @@ class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
 
-    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList');
-    public $paginate = array(
+public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');    public $paginate = array(
 	'contain' => array(
 		'Product' => array('Vendor')),
 	'order' => 'Gift.created DESC',
 	'limit' => 52,
 	);
+public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'product_id', 'type' => 'value'),
+            array('field' => 'sender_id', 'type' => 'value'),
+            array('field'=> 'receiver_id','type'=>'value'),
+            array('field'=> 'receiver_fb_id','type'=>'value'),
+            array('field'=> 'receiver_email','type'=>'value'),
+            array('field'=> 'code','type'=>'value'),
+            array('field'=> 'gift_amount','type'=>'value'),
+            array('field'=> 'gift_status_id','type'=>'value'),
+            array('field'=> 'expiry_date','type'=>'value'),
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+        
+        );
     public function beforeFilter() {
 	parent::beforeFilter();
 	$this->Auth->allow('send_today_scheduled_gifts');
@@ -25,7 +39,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')||($this->action == 'download_gift_csv')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
