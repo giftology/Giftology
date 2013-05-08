@@ -1183,16 +1183,11 @@ ul.voucher-details li {
 
 /* for overlay on about_us page  by-swapnil */
 
-.simple_overlay {
- 
+.simple_overlay{
     /* must be initially hidden */
     display:none;
-   
     /* place overlay on top of other elements */
     z-index:10000;
-   
-
- 
     /* styling */
     
     background-image:url("../img/white-edge1.png") no-repeat; /* not used but can be */
@@ -1205,10 +1200,7 @@ ul.voucher-details li {
     background-color: #ffffff;
   font-weight:bolder;
   padding: 10px 10px 10px 10px;
- 
     /* CSS3 styling for latest browsers */
-  
-
 }
 
  
@@ -2639,3 +2631,65 @@ tbody tr.friends td.campaign_checkbo{
     margin-top:13px;
 
    }
+.resources{
+       width:880px;
+        height:auto;
+        background:url(boardofdirector.png);
+        margin-top:40px;
+        font:14px/30px Arial, Helvetica, sans-serif;
+        color:#333;}
+        
+.body1 {
+    padding: 10px 25px;
+    width: 820px;
+    min-height:234px;
+}
+
+.body1 img.none {
+
+    float: none;
+    margin: 0;
+    padding: 2px;
+    width:187px;
+    height: 187px;
+    border:1px double #ccc;
+}
+
+.port{
+        margin:30px 18px 0 0;
+        float: left;
+        padding: 0 23px 0 0;
+        width: 240px;
+}
+
+.text2{
+               
+        font-size:12px;
+        text-align:justify;
+}
+
+
+.teamshadow{
+    text-align: center;
+    width: 100%;
+    margin: 30px auto 20px auto;
+
+}
+
+
+.text3{
+               
+        font-size:14px;
+        
+        color:#900;
+
+}
+
+                
+                
+.last {
+    padding: 0;
+}
+
+
+

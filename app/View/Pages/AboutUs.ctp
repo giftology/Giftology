@@ -30,9 +30,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: AboutUs');
 	
 
 
-<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
-
-	 <script type="text/javascript">
+<script type="text/javascript">
 	  $(document).ready(function(){
 $("img[rel]").overlay({mask: '#000'});
 });
@@ -72,7 +70,7 @@ $("img[rel]").overlay({mask: '#000'});
                                          <center><h3>THE TEAM</h3></center>
 	              <div class="span">
 
-                       <img src="../img/aman.png" rel="#mies1">
+                       <img src="<?php echo FULL_BASE_URL;?>/img/aman.png" rel="#mies1">
                       	<!-- first overlay. id attribute matches our selector -->
                              <div class="simple_overlay" id="mies1">
                                 <!-- large image -->
@@ -101,7 +99,7 @@ $("img[rel]").overlay({mask: '#000'});
                  
                    </div>
                    <div class="span">
-                        <IMG SRC="../img/VARUN.png" rel="#mies2">
+                        <IMG SRC="<?php echo FULL_BASE_URL;?>/img/VARUN.png" rel="#mies2">
                          	<div class="simple_overlay" id="mies2">
                              <!-- large image -->
                                
@@ -124,7 +122,7 @@ $("img[rel]").overlay({mask: '#000'});
                     </div>
 
                     <div class="span">
-                      <IMG SRC="../img/alok.png" rel="#mies5">
+                      <IMG SRC="<?php echo FULL_BASE_URL;?>/img/alok.png" rel="#mies5">
                         <div class="simple_overlay" id="mies5">
                            <!-- large image -->
                            
