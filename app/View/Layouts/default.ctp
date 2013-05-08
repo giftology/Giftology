@@ -96,7 +96,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 						});
  					 });
    	 </script>
-		<div class="fbconect" id="fb" style="padding:0; display:inline-block; position:absolute; left:50%; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+		<div class="fbconect" id="fb" style="padding:0; display:inline-block; position:absolute; right:0; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); 
 			 echo $this->Facebook->init(); ?> </div>
 		<?php } ?>
