@@ -162,7 +162,7 @@
                       $message_random = $message[$mess];
                     }
                     $receiver = explode(" ", $receiver_name);
-                    if ($suggested_friends == TRUE) {
+                    if ($suggested_friends) {
                         $send_now = 1;
                        $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
                         $mess = array_rand($message,1);
