@@ -763,7 +763,7 @@ class RemindersController extends AppController {
                 );
             if($update){
             	$generatedKey = md5(rand(10000,99999).$email_to_update);
-               	$link=FULL_BASE_URL.'/reminders/mail_activation?email='.$email_to_update.'&key='.$generatedKey ;
+               	$link = FULL_BASE_URL.'/reminders/mail_activation?email='.$email_to_update.'&key='.$generatedKey ;
               	$update = $this->User->UserProfile->updateAll(
               		array('UserProfile.verification_passkey' => "'".$generatedKey."'",'UserProfile.mail_verified'=> '2'), 
                     array('User_id' => $this->Auth->user('id')));

@@ -19,7 +19,8 @@ echo "<b>Dear</b>"; echo $name; echo"<br>";   echo $email; echo"<br>";?>
 <?php echo "You're almost there! To complete the Giftology.com registration process, we just need to verify that this email address ".' '.$email.' '." belongs to you.".'  ';?>
 
 
-<a href="<?php echo $link; ?>">click here</a>
+<a href="<?php echo $link; ?>">click here</a> or the use the link <br>
+<?php echo $link; ?> <br>
 <?php echo"to verify and complete the process.";?>
 <?php  echo"<br>";?> <?php  echo"<br>";?>
 
