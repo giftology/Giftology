@@ -242,10 +242,10 @@
     </div>
 
 <div class="send_urself" id="news-items">
-    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png"/></div>
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Gift Yourself" title="Gift Yourself"/></div>
      <?php echo $this->Form->end();?>    
 </div>
-<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png"/> </div>
+<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/> </div>
 <div id="news-items" >
         <div class="shadow-wrapper right items">
                 
@@ -258,7 +258,7 @@
             <div id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestToRecipients(); return false;"
               value="Spread the Joy" style="background:transparent!important; cursor:pointer;"
-            > <img src="<?= IMAGE_ROOT; ?>FInvite_Button.png"/>      
+            > <img src="<?= IMAGE_ROOT; ?>FInvite_Button.png" alt="Invite Friends" title="Invite Your Friends"/>      
             </div>
             <?php 
                 $imploded_facebook_id = NULL;
