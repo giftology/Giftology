@@ -18,11 +18,11 @@ class RemindersController extends AppController {
 	);
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend');
+		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend','mail_activation');
 	}
 
 	public function isAuthorized($user) {
-	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend' || $this->action == 'send_success') {
+	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend' || $this->action == 'send_success' || $this->action == 'email_update') {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -222,6 +222,7 @@ class RemindersController extends AppController {
         $this->autoRender = $this->autoLayout = false;    
 	}
 	public function view_friends($type=null) {
+
 		if($this->Connect->user()){
             $this->User->id = $this->Auth->User('id');
             $this->User->updateAll(
@@ -244,8 +245,13 @@ class RemindersController extends AppController {
         	}
    		 	$this->set('facebook_id',$fb_id_array);	
         }
-        
-		$users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+       
+		$users = $this->UserProfile->find('first', array('fields' => array('user_id','email','created','mail_verified'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+		$this->set('user_mail',$users['UserProfile']['email']);
+		$this->set('user_created',$users['UserProfile']['created']);
+		$this->set('mail_verified',$users['UserProfile']['mail_verified']);
+
+
 		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
 		
 		$fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
@@ -745,5 +751,80 @@ class RemindersController extends AppController {
     	fclose($fp);
     	fclose($fp1);
     	$this->autoRender = $this->autoLayout = false;
+    }
+
+     public function email_update(){
+        if($this->RequestHandler->isAjax()){
+        	$email_to_update = $this->request->data['email'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+            $update = $this->User->UserProfile->updateAll(
+            	array('UserProfile.email_to_verify' => "'".$email_to_update."'"), 
+                array('User_id' => $this->Auth->user('id'))
+                );
+            if($update){
+            	$generatedKey = md5(rand(10000,99999).$email_to_update);
+               	$link=FULL_BASE_URL.'/reminders/mail_activation?email='.$email_to_update.'&key='.$generatedKey ;
+              	$update = $this->User->UserProfile->updateAll(
+              		array('UserProfile.verification_passkey' => "'".$generatedKey."'",'UserProfile.mail_verified'=> '2'), 
+                    array('User_id' => $this->Auth->user('id')));
+				$email = new CakeEmail();
+				$email->config('smtp')
+				  	->template('mail_verification','default') 
+				    ->emailFormat('html')
+				    ->to($email_to_update)
+				    ->from(array('noreply@giftology.com' => 'Giftology'))
+				    ->subject('Welcome')
+				    ->viewVars(array('name' =>$user_data['UserProfile']['first_name'].' '.$user_data['UserProfile']['last_name'],'email' =>$email_to_update,'link' =>$link))
+				    ->send();
+				$this->log("Verification email send to ".$user_data['UserProfile']['first_name'].' '.$email_to_update);
+				//$this->setflash("Activation link has been sent to".' '.$email_to_update);
+	            $response= "Verification mail has been sent to your Id";
+
+			    echo json_encode($response);
+	            $this->autoRender = $this->autoLayout = false;
+	            exit;
+			}else{
+                $response= "failed try again";
+                echo json_encode($response);
+                $this->autoRender = $this->autoLayout = false;
+                exit;			    
+	        }
+        }else{
+        	// $this->setflash('Oops! Wrong action Please Try Again');
+            $response= "failed try again";
+           	echo json_encode($response);
+            $this->autoRender = $this->autoLayout = false;
+            exit;
+        }
+    }
+    public function mail_activation(){
+    // if ($this->Connect->user() && $this->Auth->User('id')){
+    	if((isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['key']) && !empty($_GET['key']))){
+            $email=$_GET['email'];
+    		$passkey=$_GET['key'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('email_to_verify','verification_passkey','first_name','email'), 'conditions' => array('verification_passkey' => $passkey )));
+    		if(($user_data['UserProfile']['verification_passkey']== $passkey && $user_data['UserProfile']['email_to_verify']== $email)){
+                $update = $this->User->UserProfile->updateAll(
+                         array('UserProfile.email' => "'".$email."'"), 
+                         array('verification_passkey' => $passkey));
+                if($update){
+              	 	$this->User->UserProfile->updateAll(
+                        array('UserProfile.verification_passkey' => 'Null','UserProfile.email_to_verify'=> 'Null','UserProfile.mail_verified'=> '1'), 
+                        array('email' => $email));
+              	 	$this->set('id',$email);
+              	 	$this->set('fname',$user_data['UserProfile']['first_name']);
+              	}else{
+                    $this->set('verification_error',"Something is wrong try again or contact to admin. .");
+              	}
+            }else{
+            	$this->set('wrong_url',"Sorry it seems either mail has been verified or does not exists.");
+            }
+    	}else{
+    		$this->set('failed',"Sorry it seems you have tried wrong verification url. Try something new.");
+    	}
+    // }else{
+
+           //   $this->set('login_needed',"Sorry please do login to verify USer id.");
+     // }
     }
 }

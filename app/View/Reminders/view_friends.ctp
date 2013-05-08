@@ -1,4 +1,5 @@
 <script type="text/javascript">
+var res_data;
   var fb_param = {};
   fb_param.pixel_id = '6007399956303';
   fb_param.value = '0.00';
@@ -134,6 +135,44 @@
 </div>
  <?php echo $this->Form->end();?>               
 </script>
+
+
+
+
+<?php 
+
+            $user_created = strtotime($user_created);
+            $date_to_compare = strtotime(date('Y-m-d H:i:s'));
+            $profile_generated_since = floor(abs($date_to_compare - $user_created) / 86400);
+            if( !($user_mail) || ($user_created ==  date('Y-m-d H:i:s')) || (($mail_verified!= '1') && (($profile_generated_since>='180') && ($profile_generated_since <'190'))) || (($profile_generated_since<'5') && ($mail_verified!= '1')  || (($profile_generated_since>='180') && ($profile_generated_since <'190')))){ ?>
+
+
+                      <div id="popup_box"  > <!-- OUR PopupBox DIV-->
+                      <p> "We don't want you to miss upcoming birthdays. Help us keep you informed by confirming your email address"</p>
+                      <p style="display:inline !important;">
+                      <span>Your registered E-mail address is</span>
+                      <input class="u-4" name="email" id="email"  placeholder="Email" style="display:none;" />
+                         <div  id="error_email" style="display:none; ">
+                         <h5 style="color:#FF0000; display:inline;" id="error_email">*please enter valid email address.</h5>
+                        </div>
+                      <span style="color:#b70000; margin:0 20px 0 10;" id="registered"><b><?php echo $user_mail; ?></b></span>
+                      <span id="edit">edit</span>
+                      
+                                 <input type="button" name="submit" title="send" class="submission" id="submitt" value="Confirm Email Address" style="border:2px solid black; margin:10px; cursor:pointer;  "  />
+                                <input type="button" name="" class="reset" value="Ask me later"  id="ask" style=" border:2px solid black; cursor:pointer;"  />
+
+                                <input type="submit" name="submit" title="send" class="submission" id="done" value="Done" style="border:2px solid black; margin:10px; display:none; cursor:pointer; "  />
+                        
+     
+                      </p>
+       
+     
+      
+     
+
+
+                     </div>
+  <?php } ?>
 
 <div class="left-container">
             <?php if(isset($today_users) && $today_users): ?>
@@ -383,3 +422,113 @@
     <?php endif; */?>
     
     
+<script type="text/javascript">
+    
+    $(document).ready( function() {
+        // When site loaded, load the Popupbox First
+        loadPopupBox();
+    
+        $('#ask').click( function() {
+            $('#popup_box').slideUp(1000);
+        });
+        $('#submitt').click( function() {
+            var email_submit= '<?php echo $user_mail; ?>' ;
+
+            if(email_submit){
+                
+         $.ajax({   
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/reminders/email_update",
+                    data: "email="+email_submit,
+                    success: function(data) {
+                        var res_data = jQuery.parseJSON(data);
+                        alert(res_data);
+                        if(res_data == "Verification mail has been sent to your Id"){
+                          $('#popup_box').slideUp(1000);  
+                        } else{
+                          return false;
+                        
+                        }
+                          return false;
+                           
+                    }});
+            $('#popup_box').slideUp(1000);
+        }
+           else{
+            alert("Oops, we are missing your e-mail id.");
+            return false;
+           }
+
+        });
+            $('#edit').click( function() {
+                $(this).hide();
+                $('#submitt').hide();
+                $('#ask').hide();
+                
+            $('#email').fadeIn(1000);
+            $('#done').fadeIn(1000).css('display','inline');
+            $('#registered').css('display','none');
+            
+        });
+        function loadPopupBox() {   // To Load the Popupbox
+            $('#popup_box').fadeIn(1000);
+                    
+        }
+         /**********************************************************/   
+    });
+    
+</script>
+
+<script type="text/javascript">
+
+      $(document).ready(function(){
+            $("#done").click(function (){
+                var e = false;
+                var emailRegex = new RegExp(/^[0-9-+]+$/);
+                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+                var valid = emailRegex.test($("#email").val());
+
+                if ($("#email").val().length == 0)
+                 {
+                     $("#error_email").show();
+                             e = true;  
+                    
+                    }
+               else if(!valid)
+                        {
+                          $("#error_email").show();
+                             e = true;  
+                        }
+                else if(valid)
+                        {
+                            $("#error_email").hide(); 
+                            var email_val= $("#email").val();
+                            $("#done").attr('disabled','disabled');
+         $.ajax({   
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/reminders/email_update",
+                    data: "email="+email_val,
+                    success: function(data) {
+                        var res_data = jQuery.parseJSON(data);
+                        alert(res_data);
+                        if(res_data == "Verification mail has been sent to your Id"){
+                          $('#popup_box').slideUp(1000);  
+                        }else{
+                            var res_data = jQuery.parseJSON(data);
+                            alert(res_data);
+                            return false;
+                        }
+                          return false;
+                    }
+                });
+                        }
+                if(e) return false;
+            });
+           
+        });
+      
+      </script>

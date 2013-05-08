@@ -2610,6 +2610,7 @@ font:13px/30px Arial, Helvetica, sans-serif;  color:#FFF; text-shadow: 1px 0.5px
     color: #FFF;
  }
 
+
  .camp_line-header {
     margin-top: 30px;
     position: relative;
@@ -2640,3 +2641,70 @@ tbody tr.friends td.campaign_checkbo{
     margin-top:13px;
 
    }
+    /*popup Email Varification*/
+
+ #popup_box {
+    display:none;
+    float:left;/* Hide the DIV */
+    _position:absolute; /* hack for internet explorer 6 */
+    height:auto;
+    width:865px;
+    margin:25px 0 0 0;
+    line-height:2;
+    left:200px;
+    z-index:100;
+    border:2px solid #3f70a2;
+    padding:3px 15px 12px 0;
+    font-size:15px;
+    -moz-box-shadow: 0 0 10px #6292c3;
+    -webkit-box-shadow: 0 0 10px #6292c3;
+    box-shadow: 0 0 10px #6292c3;
+    background:#92beea;
+    text-align: center;
+    
+    
+}
+
+#popup_box a {
+    cursor: pointer;
+    text-decoration:underline;
+    color:#333;
+}
+
+
+/*form*/
+
+
+#popup_box input, #popup_box textarea {
+    padding: 6px 10px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+    behavior: url(js/misc/PIE.htc);
+    background: #fff;
+    border:1px solid #c8bbaa;
+    position:relative;
+
+}
+
+#popup_box input.u-4, #popup_box select.u-4, #popup_box textarea.u-4 {
+    width: 200px;
+    margin-left:0px;
+}
+
+#popup_box input[type="submit"]{
+    width: 70px;
+    height: 35px;
+    top: 3px;
+    padding: 0;
+    
+}
+
+#error_email{
+    display:inline;
+}
+ 
+#productsViewProductsForm1{ display: inline;}
+
+#edit{color:#660000; text-decoration: underline; cursor: pointer;}
