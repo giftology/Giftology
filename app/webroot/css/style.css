@@ -2597,3 +2597,16 @@ font:13px/30px Arial, Helvetica, sans-serif;  color:#FFF; text-shadow: 1px 0.5px
  .tnc a:hover{
     color: #FFF;
  }
+ 
+#content{
+    width: 952px;
+}
+.product_label {
+    background-clip: padding-box;
+    border-radius: 2px 2px 2px 2px;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: none;
+    display: inline-block;
+    line-height: 17px;
+}

@@ -14,29 +14,6 @@
                                         $product['min_value']; ?></span>
                                     <?= (isset($product['Product']['min_price']) && ($product['Product']['max_price'] > $product['Product']['min_price'])) ? 'or more':'' ?>
 
-
-
-                                    <!--<ul class="voucher-details">
-                                        <li class="icon"></li>
-                                    </ul>-->
-                                    
-                            <!--<div id="container">
-                                  <p>
-                                        <span  id="trigger"><img src="<?= FULL_BASE_URL; ?>/img/notice.gif" alt="" style="float:right"></span>
-                                  </p>
-
-                                  <div id="pop-up">
-                                    
-                                    <p>
-                                      <?= $product['Product']['terms']; ?>
-                                    </p>
-                                  </div>
-                            </div>-->
-                            
-
-
-
-
                                     <?php if (isset($hide_price) && $hide_price): ?>
                                             <span class="label">REDEEM</span>
                                     <?php else: ?>
@@ -53,3 +30,4 @@
                     </span>
                     
     </div>
+    

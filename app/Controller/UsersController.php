@@ -175,7 +175,7 @@ class UsersController extends AppController {
             }
              $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>3));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>5));
             $this->set('products', $product);
 
             $slidePlaySpeed = 8000;
@@ -295,6 +295,10 @@ class UsersController extends AppController {
             $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
             $this->set('Images', $Image_new);
         }
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $this->set('products', $product);
          
          
     }
