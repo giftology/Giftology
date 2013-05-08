@@ -1,7 +1,7 @@
 <div class="image-wrapper">
     <?php  echo $this->Form->create('products', array('action' => 'view_products'));?>
     <?php foreach($reminders as $reminder): ?>
-        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>">
+        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>" suggested-friend="<?= $reminder['Reminder']['latest_friend_fb_id']; ?>">
               
                 <div class="event suggested">
                         <div class="image-container">
@@ -60,7 +60,8 @@
                 var gift_year = $(this).attr('year-data');
                 var gift_sex = $(this).attr('sex-data');
                 var gift_ocasion = $(this).attr('ocasion-data');
-
+                var gift_suggested = $(this).attr('suggested-friend');
+                
                 
                   $('<input>').attr({
                     type: 'hidden',
@@ -106,6 +107,14 @@
                     name: 'friend_loc',
                     value: gift_loc,
                 }).appendTo('#productsViewProductsForm');
+
+                 $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_suggested+'_hidden',
+                    name: 'friend_suggested',
+                    value: gift_suggested,
+                }).appendTo('#productsViewProductsForm');
+
                  $('<input>').attr({
                     type: 'hidden',
                     id: gift_ocasion+'_hidden',

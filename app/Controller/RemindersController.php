@@ -322,6 +322,9 @@ class RemindersController extends AppController {
 
 			 		$welcome_friend_list =  array_merge($gift_send_friend_lists,$latest_friend_data);
 			 		$suggested_list = array_merge($welcome_friend_list,  $friend_list);
+			 		foreach($suggested_list as $k => $suggested_lists){
+			           $suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+		             }
 			 		$today_users = array_merge($today_users,  $suggested_list);
 			 		$today_users = array_slice($today_users, 0, 6);
 				}

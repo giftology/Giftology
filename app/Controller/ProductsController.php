@@ -206,13 +206,14 @@ class ProductsController extends AppController {
         }
                      
         if($this->request->is('post')){
-            $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
+             $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
             $receiver_name=$this->data['friend_name'];
             $receiver_birthday=$this->data['friend_birth'];
             $receiver_location=$this->data['friend_loc'];
             $rcvrbirth_year=$this->data['friend_year'];
             $receiver_gender=$this->data['friend_sex'];
             $ocasion=$this->data['friend_ocasion'];
+            $suggested=$this->data['friend_suggested'];
             
         }
        
@@ -302,6 +303,7 @@ class ProductsController extends AppController {
             $this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
             $this->set('receiver_birthday', isset($receiver_birthday) ? $receiver_birthday : null);
             $this->set('ocasion', isset($ocasion) ? $ocasion : null);
+            $this->set('suggested_friends', $suggested);
             //$this->set('products', $this->paginate());
             $this->set('title_for_layout', 'Send a gift voucher to '.(isset($receiver_name) ? $receiver_name : null));
             $this->Mixpanel->track('Viewing Product List ', array(
@@ -318,12 +320,12 @@ class ProductsController extends AppController {
         $this->set('session_token',$this->AesCrypt->encrypt($t));
 
         if ($this->request->is('post')) {
-       
             $receiver_id=$this->data['products']['receiver_id'];
             $receiver_name=$this->data['products']['receiver_name'];
             $receiver_birthday=$this->data['products']['receiver_birthday'];
             $ocasion=$this->data['products']['ocasion'];
             $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
+            $suggested=$this->AesCrypt->decrypt($this->data['products']['suggested']);
         }
         $rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
@@ -337,6 +339,7 @@ class ProductsController extends AppController {
         $this->set('state',$reciever_address['UserAddress']['state']);
         $this->set('country',$reciever_address['UserAddress']['country']);
         $this->set('reciever_email',$reciever_address['UserAddress']['reciever_email']);
+        $this->set('suggested_friends',$suggested);
 
 
         $this->Product->id = $id;

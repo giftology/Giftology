@@ -34,6 +34,7 @@ array('cache' => array(
             <?php echo $this->Form->hidden("receiver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?>
             <?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?>
             <?php echo $this->Form->hidden("ocasion" ,array('label' => false,'div' => false,'value'=>$ocasion ))?>
+            <?php echo $this->Form->hidden("suggested" ,array('label' => false,'div' => false,'value'=>$suggested_friends ))?>
           
            
                 

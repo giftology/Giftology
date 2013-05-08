@@ -142,12 +142,13 @@
             if (isset($receiver_birthday) &&
                         !$this->Time->isToday($receiver_birthday) &&
                         isset($ocasion) &&
-                        $ocasion == 'Birthday') {
+                        $ocasion == 'Birthday' ) {
                         $send_now = 0;
                         $message = array("A little something to get the party started. Happy birthday!","Now, that’s just for being the best. Happy birthday!","You got this gift to celebrate. Happy birthday!","Today lets celebrate YOU. Happy birthday!");
                         $mess = array_rand($message,1);
                       $message_random = $message[$mess];
-                    } else {
+                    }
+                     else {
                         $send_now = 1;
                         $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
                         $mess = array_rand($message,1);
@@ -161,6 +162,12 @@
                       $message_random = $message[$mess];
                     }
                     $receiver = explode(" ", $receiver_name);
+                    if ($suggested_friends == TRUE) {
+                        $send_now = 1;
+                       $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
+                        $mess = array_rand($message,1);
+                          $message_random = $message[$mess];
+                    }
             ?>
              <h3>Will be delivered: 
                     <strong>
