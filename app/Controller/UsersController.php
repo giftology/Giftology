@@ -221,8 +221,11 @@ class UsersController extends AppController {
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
             if (isset($vendor_name)) {
                 $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+
+                $this->set('fb_description', "To ".$receiver_name." \r\n From ".$sender_name);
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
+                $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
 
             if (isset($image)) {
@@ -230,7 +233,7 @@ class UsersController extends AppController {
             } else {
                 $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
             }
-            $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+            //$this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
 	        //set utm source if set
             if($this->request->query['visit']==1) $this->set('first_vist', TRUE);
 	        if (isset($this->request->query['utm_source'])) {

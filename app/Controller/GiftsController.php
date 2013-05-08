@@ -607,7 +607,7 @@ class GiftsController extends AppController {
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
 				$email_message = $gift['Gift']['gift_message'];
-				$message = $gift['Gift']['gift_message']."\r\n From: ".$sender_name."\r\n To: ".'@['.$receiver_fb_id.']';
+				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
 			} else {
 				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 				$message = $sender_name.' sent '.'@['.$receiver_fb_id.']'.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
