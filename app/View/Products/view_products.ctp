@@ -47,9 +47,10 @@ array('cache' => array(
 <script type="text/javascript">
 
       $(document).ready(function(){
-            $(".small-voucher").click(function (){
+            $(".trigger_tnc").click(function (){
                 
-                var gift_value = this.id;
+                var gift_value = $(".small-voucher").attr('id');
+               
                 $('<input>').attr({
                     type: 'hidden',
                     id: gift_value+'_hidden',
