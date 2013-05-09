@@ -147,9 +147,9 @@ var res_data;
 
 
                       <div id="popup_box"  > <!-- OUR PopupBox DIV-->
-                      <p> We don't want you to miss upcoming birthdays. Help us keep you informed by confirming your email address.</p>
+                      <p> "We don't want you to miss upcoming birthdays. Help us keep you informed by confirming your email address"</p>
                       <p style="display:inline !important;">
-                      <span>Your registered email address is</span>
+                      <span>Your registered E-mail address is</span>
                       <input class="u-4" name="email" id="email"  placeholder="Email" style="display:none;" />
                          <div  id="error_email" style="display:none; ">
                          <h5 style="color:#FF0000; display:inline;" id="error_email">*please enter valid email address.</h5>
@@ -157,11 +157,10 @@ var res_data;
                       <span style="color:#b70000; margin:0 20px 0 10;" id="registered"><b><?php echo $user_mail; ?></b></span>
                       <span id="edit">edit</span>
                       
-                                 <input type="button" name="submit" title="send" class="submission" id="submitt" value="Confirm email address" style="border:2px solid black; margin:10px; cursor:pointer;  "  />
+                                 <input type="button" name="submit" title="send" class="submission" id="submitt" value="Confirm Email Address" style="border:2px solid black; margin:10px; cursor:pointer;  "  />
                                 <input type="button" name="" class="reset" value="Ask me later"  id="ask" style=" border:2px solid black; cursor:pointer;"  />
 
-                                <input type="button" name="submit" title="send" class="submission" id="done" value="Done" style="width:70px;height: 35px;border:2px solid black; margin:10px; display:none; cursor:pointer; "  />
-                        
+                                <input type="submit" name="submit" title="send" class="submission" id="done" value="Done" style="border:2px solid black; margin:10px; display:none; cursor:pointer; "  />
                         
      
                       </p>
@@ -285,15 +284,14 @@ var res_data;
      <?php echo $this->Form->end();?>    
 </div>-->
 <div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/> </div>
-<div id="news-items" >
-        <div class="shadow-wrapper right items">
+<div id="news-items" style="margin-bottom:35px;cursor:pointer">
+       
                 
                 <html xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:fb="https://www.facebook.com/2008/fbml">
       
-            <div id="fb-root"></div>
-            <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
-            <!--<h4>Like Giftology ? Invite your friends!</h4>-->
+           
+           
             <div id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestToRecipients(); return false;"
               value="Spread the Joy" style="background:transparent!important; cursor:pointer;"
@@ -331,7 +329,7 @@ var res_data;
               }
             </script>
        
-    </div>
+   
 </div>
 <!--<div id="news-items" style="margin-top:-20px" >
         <div class="shadow-wrapper right items">
@@ -384,7 +382,7 @@ var res_data;
                         <?php foreach($gifts_sent as $gift): ?>
                         <?php echo $gift['Gift']['sender_id']; ?>
                         
-                <?php if ($gift['Sender']['facebook_id'] != $last_sender_id): ?>
+                <?php if ($gift['Sender']['facebook_id'] != $last_sender_id && $gift['GiftsReceived']['receiver_fb_id']!=$gift['Sender']['facebook_id']): ?>
                                 <li>
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
