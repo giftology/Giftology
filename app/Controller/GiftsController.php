@@ -601,7 +601,6 @@ class GiftsController extends AppController {
 
 			$User_id = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
 	
-			DebugBreak();
 			$sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
