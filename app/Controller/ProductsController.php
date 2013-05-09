@@ -445,7 +445,25 @@ class ProductsController extends AppController {
                 }
             }
             else{
-                $unpaid_product[]=$product['Product']['id'];
+                $vaild_till = NULL;
+                if(($product['Product']['min_value'] == $product['Product']['min_price']) &&  ($product['Product']['min_price'] == $product['Product']['max_price']) && ($product['Product']['min_value'] == $product['Product']['max_price'])){
+                    $valid_till = date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days"));
+                    $code_exists = $this->UploadedProductCode->find('count', array(
+                        'conditions' => array(
+                            'available'=>1, 
+                            'product_id' =>$product['Product']['id'],
+                            'value' => $product['Product']['min_value'],
+                            'expiry >' => $valid_till
+                            )
+                        ));
+                }
+                else{
+                    $code_exists = TRUE;
+                }
+
+                if($code_exists){
+                    $unpaid_product[]=$product['Product']['id'];
+                }
             }
         }
            
