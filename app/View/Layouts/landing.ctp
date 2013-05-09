@@ -229,7 +229,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             
                <div style="width:960px; margin:auto;">
                         <?php foreach ($products as $product): ?>
-                            <a style="cursor:pointer">
+                            <a>
                               <?= $this->element('product_on_landing',
                                 array('product' => $product,
                                      'small' => true),

@@ -1,5 +1,5 @@
 <?php foreach ($products as $product): ?>
-      <a style="cursor: pointer">
+      <a>
         
 <div class="small-voucher">
                     <span class="free  voucher">
