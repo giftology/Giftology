@@ -446,7 +446,8 @@ class ProductsController extends AppController {
             }
             else{
                 $vaild_till = NULL;
-                if(($product['Product']['min_value'] == $product['Product']['min_price']) &&  ($product['Product']['min_price'] == $product['Product']['max_price']) && ($product['Product']['min_value'] == $product['Product']['max_price'])){
+                if(($product['Product']['min_value'] == $product['Product']['min_price']) &&  ($product['Product']['min_price'] == $product['Product']['max_price']) && ($product['Product']['min_value'] == $product['Product']['max_price']) 
+                    && ($product['Product']['product_type_id' == DIGITAL]) && ($product['Product']['code_type_id'] == UPLOADED_CODE)){
                     $valid_till = date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days"));
                     $code_exists = $this->UploadedProductCode->find('count', array(
                         'conditions' => array(
