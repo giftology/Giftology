@@ -161,7 +161,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <div class="showcase-wrap"><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$campaign_Images['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div></section>
       <?php //else: ?>-->
       
-     <section class="show-case">
+     <!--<section class="show-case">
         <div class="showcase-wrap">
            <div id="giftVouchers">
             <?php if(CAROUSEL_CODE == 1): ?>
@@ -191,7 +191,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             <?php endif; ?>
           </div>
         </div>
-    </section>
+    </section>-->
    <!--<?php //endif; ?>-->
     
    
@@ -222,12 +222,10 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                 </div>
                   <div class="clear">&nbsp;</div>
             </div>
-            <div class="featured-logo">
-                <div class="flogo-block">
+            
                       <span class="block-title">Available Gifts</span>
                        
-                </div>
-            </div>
+                
             
                <div style="width:960px; margin:auto;">
                         <?php foreach ($products as $product): ?>
@@ -241,6 +239,37 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                         <?php endforeach; ?>
                        <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:-10px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
                </div>
+              <section class="show-case">
+                    <div class="showcase-wrap">
+                       <div id="giftVouchers">
+                        <?php if(CAROUSEL_CODE == 1): ?>
+                            <?php
+                                  if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
+                                     {
+                                       $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
+                                         
+                                         foreach($filecount as $img)
+                                            { ?>
+                                                <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
+                                          <?php   }
+
+                                      }
+                                    else
+                                             {
+                                      echo 0;} 
+                            ?>
+                        <?php else: ?>
+                              <?php
+                                  foreach($Images as $Image)
+                                      { ?>
+                                          <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['carousel_image']; ?>" class="lazy" alt=""></div>
+
+                                                  <?php   }
+                                  ?>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                </section>
                
 
             <div class="featured-logo">
