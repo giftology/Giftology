@@ -825,7 +825,7 @@ class RemindersController extends AppController {
                     $this->set('verification_error',"Something is wrong try again or contact to admin. .");
               	}
             }else{
-            	$this->set('wrong_url',"Sorry it seems either mail has been verified or does not exists.");
+            	$this->set('wrong_url',"Sorry it seems either mail has been verified or does not exist.");
             }
     	}else{
     		$this->set('failed',"Sorry it seems you have tried wrong verification url. Try something new.");

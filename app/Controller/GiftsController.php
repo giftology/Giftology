@@ -1074,13 +1074,13 @@ class GiftsController extends AppController {
         if(!$gift_message){
         	$error[8] = "Gift message is missing";	
         }
-
+        
         $valid_till = date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days"));
         $code_exists = $this->UploadedProductCode->find('count', array(
         	'conditions' => array(
         		'available'=>1, 
         		'product_id' =>$product_id,
-                'value' => $gift_amount,
+                'value' => $amount,
                 'expiry >' => $valid_till
         		)
         	));
