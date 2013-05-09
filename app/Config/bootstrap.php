@@ -238,7 +238,7 @@ define('PAID_PRODUCT_DISABLED', TRUE);
 define('TYPE_CAMPAIGN', 1);
 define('TYPE_CONTEST', 2);
 define('SUGGESTED_FRIENDS', TRUE);
-define('DEFAULT_EMAIL_VERIFICATION', TRUE);
+define('DEFAULT_EMAIL_VERIFICATION', fALSE);
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));
