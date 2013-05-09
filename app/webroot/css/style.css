@@ -1175,7 +1175,7 @@ ul.voucher-details li {
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
     margin:20px 0 30px 5px;
     padding: 7px;
-    width: 875px;
+    width: 865px;
     
 
 }
@@ -1388,24 +1388,24 @@ ul.voucher-details li {
 .media{
    
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
-    margin-bottom: 30px;
-    margin-top:20px;
+    margin:30px auto;
    /* padding: 7px;*/
     position: relative;
-    width: 800px;
+    width: 750px;
     min-height: 400px;
 }
 .media #foot_content1 {
    /* margin-top:50px;*/
-    padding:20px 10px 20px 30px;
+    
     -moz-box-sizing: border-box;
     background-color: #FAFAFA;
-    border: 1px solid #CCCCCC;
-    border-radius: 5px 5px 5px 5px;
-    width:850px;
+    
+    width:688px;
     min-height:300px;
-    margin-left:5px;
+    padding:30px;
     float:left;
+    box-shadow:0 0 20px 4px #E3E3E3;
+
 
 
 }
@@ -1414,16 +1414,29 @@ ul.voucher-details li {
     max-width:800px;
     min-height:50px;
 }
+
+.media #foot_content1 .bag .image{
+    
+   /* padding-bottom:5px;*/
+    width:180px;
+    height:50px;
+    float:left;
+    position: absolute;
+    margin-left:30px;
+
+   
+
+}
 .media #foot_content1 .bag .press{
     
    /* padding-bottom:5px;*/
-    width:660px;
+    width:530px;
     height:50px;
     float:right;
 
-    
-    background-image: url("../img/press-cont.png");
 
+
+    
 }
 .media #foot_content1 .bag img{
      
@@ -1435,8 +1448,7 @@ ul.voucher-details li {
 .media #foot_content1 .bag .press p{
     font-size:14px;
     font-color:#202020;
-    margin-bottom:2px;
-    margin-left:40px;
+    margin:-2px 0 2px 40px;
     max-width:620px;
    font-weight:lighter;
 
@@ -2634,13 +2646,15 @@ tbody tr.friends td.campaign_checkbo{
 .resources{
        width:880px;
         height:auto;
-        background:url(boardofdirector.png);
-        margin-top:40px;
+        background:#FAFAFA;
+        margin:40px 0 40px 0;
         font:14px/30px Arial, Helvetica, sans-serif;
-        color:#333;}
+        color:#333;
+        border:1px solid #ccc;
+    }
         
 .body1 {
-    padding: 10px 25px;
+    padding: 10px 60px;
     width: 820px;
     min-height:234px;
 }
@@ -2666,6 +2680,10 @@ tbody tr.friends td.campaign_checkbo{
                
         font-size:12px;
         text-align:justify;
+        color:#000;
+        line-height: 20px;
+        
+
 }
 
 
@@ -2680,6 +2698,8 @@ tbody tr.friends td.campaign_checkbo{
 .text3{
                
         font-size:14px;
+        line-height: 22px;
+        margin-top: -16px;
         
         color:#900;
 
@@ -2689,6 +2709,18 @@ tbody tr.friends td.campaign_checkbo{
                 
 .last {
     padding: 0;
+}
+
+.teamHover {
+position:absolute;
+background-color:#fff;
+margin:-350px 18px 0 -32px;
+float: left;
+padding: 0 12px 0 11px;
+ width: 240px;
+ opacity:0.7;
+ border:1px solid #ccc;
+ box-shadow: 0 0  2px 1px #ccc;
 }
 
 

@@ -122,7 +122,7 @@ $("img[rel]").overlay({mask: '#000'});
                     </div>
 
                     <div class="span">
-                      <IMG SRC="<?php echo FULL_BASE_URL;?>/img/alok.png" rel="#mies5">
+                      <IMG SRC="../img/alok.png" rel="#mies5">
                         <div class="simple_overlay" id="mies5">
                            <!-- large image -->
                            
