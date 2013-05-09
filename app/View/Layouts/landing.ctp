@@ -228,16 +228,18 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                        
                 </div>
             </div>
-                  <?php foreach ($products as $product): ?>
-                      <a style="cursor:pointer">
-                        <?= $this->element('product_on_landing',
-                          array('product' => $product,
-                               'small' => true),
-                          array('cache' => array(
-                        'key' => $product['Product']['id'].'small'))); ?>
-                      </a>
-                  <?php endforeach; ?>
-                 <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:35px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
+               <div style="width:960px; float:right; margin-right:200px">
+                        <?php foreach ($products as $product): ?>
+                            <a style="cursor:pointer">
+                              <?= $this->element('product_on_landing',
+                                array('product' => $product,
+                                     'small' => true),
+                                array('cache' => array(
+                              'key' => $product['Product']['id'].'small'))); ?>
+                            </a>
+                        <?php endforeach; ?>
+                       <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:-10px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
+               </div>
 
             <div class="featured-logo">
               <div class="flogo-block">
