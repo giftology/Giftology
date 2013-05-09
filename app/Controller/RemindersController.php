@@ -12,7 +12,6 @@ class RemindersController extends AppController {
 
 	public $uses = array( 'Reminder','Product','Gift','User','UserProfile');
 	public $components = array('Defaulter','AesCrypt');
-
 	public $paginate = array(
 	        'limit' => 24,
 		'order' => array('friend_name' => 'ASC')
@@ -504,7 +503,25 @@ class RemindersController extends AppController {
 	}
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
-	        $this->send_reminder_email($user, $reminders);
+
+		 $last_login_info=$this->User->find('first',array('conditions' => array('User.id' => $this->Auth->User('id')),'fields' => array('User.last_login','User.mail_date')));
+         $last_login_date = strtotime($last_login_info['User']['last_login']);
+         $last_mail_date = strtotime($last_login_info['User']['mail_date']);
+  			$date_to_compare = strtotime(date('Y-m-d H:i:s'));
+			$last_login_date_diff = floor(abs($date_to_compare - $last_login_date) / 86400);
+		    $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+			$this->User->id = $this->Auth->User('id');
+
+			if(($last_mail_date_diff>=15) && ($last_login_date_diff<=30)){
+                $this->User->saveField('mail_date', date('Y-m-d H:i:s'));
+			    $this->send_reminder_email($user, $reminders);
+
+			}
+		    if(($last_mail_date_diff>=10) && ($last_login_date_diff>30) ){
+			    $this->User->saveField('mail_date', date('Y-m-d H:i:s'));
+			    $this->send_reminder_email($user, $reminders);
+			}
+	        
 	}
 	return;
     }
