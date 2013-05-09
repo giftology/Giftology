@@ -2611,6 +2611,7 @@ font:13px/30px Arial, Helvetica, sans-serif;  color:#FFF; text-shadow: 1px 0.5px
  }
 
 
+
  .camp_line-header {
     margin-top: 30px;
     position: relative;
@@ -2708,3 +2709,11 @@ tbody tr.friends td.campaign_checkbo{
 #productsViewProductsForm1{ display: inline;}
 
 #edit{color:#660000; text-decoration: underline; cursor: pointer;}
+
+ 
+#content{
+    width: 952px;
+}
+
+
+

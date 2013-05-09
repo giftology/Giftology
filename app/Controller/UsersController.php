@@ -14,11 +14,11 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout');
+        $this->Auth->allow('login','logout','product');
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -171,7 +171,11 @@ class UsersController extends AppController {
                 $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.carousel_image'),'conditions' => array('Vendor.id '=>$id)));
                 $this->set('Images', $Image_new);
             }
-        
+             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $this->set('products', $product);
+
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -279,7 +283,13 @@ class UsersController extends AppController {
            // else $this->layout = 'landing';
         }
     }
-
+    public function product() 
+    {
+       $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+            $this->set('products', $product);
+    }
     public function logout() {
 
         session_destroy();
@@ -309,7 +319,15 @@ class UsersController extends AppController {
             $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
             $this->set('Images', $Image_new);
         }
+
         }
+
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $this->set('products', $product);
+         
+
          
     }
 

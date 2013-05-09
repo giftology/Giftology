@@ -193,10 +193,13 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </section>
    <!--<?php //endif; ?>-->
+    
+   
+
    <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
-                <span class="block-title">See how it works</span>
+                <span class="block-title">See How It Works</span>
                 
                 <div class="how-it-work">
                     <ul>
@@ -220,8 +223,25 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                   <div class="clear">&nbsp;</div>
             </div>
             <div class="featured-logo">
+                <div class="flogo-block">
+                      <span class="block-title">Available Gifts</span>
+                       
+                </div>
+            </div>
+                  <?php foreach ($products as $product): ?>
+                      <a style="cursor:pointer">
+                        <?= $this->element('product_on_landing',
+                          array('product' => $product,
+                               'small' => true),
+                          array('cache' => array(
+                        'key' => $product['Product']['id'].'small'))); ?>
+                      </a>
+                  <?php endforeach; ?>
+                 <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:35px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
+
+            <div class="featured-logo">
               <div class="flogo-block">
-                    <span class="block-title">As featured in</span>
+                    <span class="block-title">As Featured In</span>
                       <div class="featured-in">
                             <a href="javascript:void(0);" class="l1" style="outline: none;">&nbsp;</a>
                             <a href="javascript:void(0);" class="l2" style="outline: none;">&nbsp;</a>
