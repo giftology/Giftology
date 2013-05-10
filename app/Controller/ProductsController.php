@@ -70,8 +70,60 @@ class ProductsController extends AppController {
  * @return void
  */
     public function index() {
-      
         $this->Prg->commonProcess('Product');
+        //DebugBreak();
+     if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+               
+               )); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs) ,'Product.created >'=>$created_start,'Product.created <' => $created_end
+               )); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+           ,'Product.created >'=>$created_start,'Product.created <' => $created_end
+            ));  
+             }  
+            
+    
+        }
+        else{
+            $conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs)));
+
+        }
+        
         $vendors = $this->Product->Vendor->find('list');
         $Product_Type = $this->Product->ProductType->find('list');
         $Code_Type = $this->Product->CodeType->find('list');
@@ -79,7 +131,7 @@ class ProductsController extends AppController {
         $Age_Segment = $this->Product->AgeSegment->find('list');
 
         $this->Product->recursive = 0;
-        $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
+        //$conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
         $this->paginate = $conditions;
         $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
         $this->set('products', $this->paginate());
