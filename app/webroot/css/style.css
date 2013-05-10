@@ -1409,6 +1409,8 @@ ul.voucher-details li {
 
 
 }
+
+
 .media #foot_content1 .bag{
     margin-top:10px;
     max-width:800px;
@@ -2721,6 +2723,61 @@ padding: 0 12px 0 11px;
  opacity:0.7;
  border:1px solid #ccc;
  box-shadow: 0 0  2px 1px #ccc;
+}
+
+
+/*contact us page css*/
+
+.media #foot_content_contact {
+   /* margin-top:50px;*/
+    
+    -moz-box-sizing: border-box;
+    background-color: #FAFAFA;
+    
+    width:750px;
+    min-height:300px;
+    padding:30px 0;
+    float:left;
+    box-shadow:0 0 20px 4px #E3E3E3;
+
+
+
+}
+
+.media #foot_content_contact .leftd{position:relative; 
+    width:300px; float:left; 
+     height:300px; margin:0 17px 0 14px;} 
+.media #foot_content_contact .rightd{position:relative; width:400px; 
+    float:left;  height:300px; box-shadow:0 0 10px 6px #d7d7d7;} 
+  
+
+    /* CSS Document */
+
+#contacttext {
+
+font: normal 14px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#666;
+}
+
+#contacttext1 {
+
+font: normal 14px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#C8C8C8;
+}
+
+#contacttexth1 {
+font: normal 16px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#333333;
+}
+
+
+#contacttexth2 {
+font: normal 18px/22px Arial, Helvetica, sans-serif;
+padding:0px 30px 0 40px;
+color:#333333;
 }
 
 
