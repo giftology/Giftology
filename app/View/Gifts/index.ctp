@@ -30,10 +30,7 @@
 <div class="gifts index">
 	<h2><?php echo __('Gifts'); ?></h2>
 	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Gifts', 'action' => 'download_gift_csv', 'onsubmit'=>'return chkValidate();') );?>
-        
-       
-	
-    <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
+        <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
          <?php  echo $this->Form->submit("Download Gift CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
@@ -66,10 +63,10 @@
         <td><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10'));?></td>
         <td><?php echo $this->Form->input('gift_amount', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
         <td><?php echo $this->Form->input('gift_status_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
-        <<td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date'));?>
+        <td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date'));?>
 		<?php echo $this->Form->input('expiry_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker1','placeholder'=>'End Date'));?>
         </td>
-        <<td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Start Date'));?>
+        <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Start Date'));?>
 		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'End Date'));?>
         </td>
         <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Start Date'));?>

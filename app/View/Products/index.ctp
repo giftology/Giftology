@@ -1,7 +1,48 @@
 <div class="products index">
 	<h2><?php echo __('Products'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
+	<div>
+				<button href="#collapse1" class="nav-toggle",sixe='1'>Search</button>
+			</div>
+	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+
+		<?php echo $this->Form->create('Product', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
+?>
+
+        <span><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1','placeholder'=>'ID'));?></span>
+       <span><?php echo $this->Form->input('min_price', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'MIN PRICE'));?></span>
+        <span><?php echo $this->Form->input('max_price', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'MAX PRICE'));?></span>
+      <span><?php echo $this->Form->input('min_value', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'MIN VALUE'));?></span>
+      <span><?php echo $this->Form->input('days_valid', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Days Valid'));?></span>
+       <span><label>Code Type:</label><?php echo $this->Form->select('code_type_id', $code_type);?></span>
+        <span><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Code'));?></span><br>
+       <span><label>Product Type:</label><?php echo $this->Form->select('product_type_id', $product_type);?></span>
+
+       <span><label>Vendor:</label><?php echo $this->Form->select('vendor_id', $vendors);?></span>
+        <span><label>City Segment:</label><?php echo $this->Form->select('city_segment_id', $city_segment);?></span>
+        <span><label>Age Segment:</label><?php echo $this->Form->select('age_segment_id', $age_segment);?></span>
+       <span><?php echo $this->Form->input('display_order', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Display Order'));?></span>
+          <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'10','id'=>'datepicker2',"placeholder"=>'Created Start '));?>
+		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'10','id'=>'datepicker3','placeholder'=>'Created End'));?>
+        </td>
+        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'10','id'=>'datepicker4',"placeholder"=>'Modified Start'));?>
+			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'10','id'=>'datepicker5','placeholder'=>'Modified End'));?>
+        </td>
+        
+       <span><center>
+         <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
+        if (isset($this->params['named']) & !empty($this->params['named'])){ 
+            echo $this->Html->link(_('Reset Filter'), array('controller'=>'Products','action'=>'index'));
+        } 
+        ?></center>
+        </span>
+
+         <?php echo $this->Form->end();?></td>
+
+	</div>
+	<table cellpadding="0" cellspacing="0" border="1">
+
 	<tr>
+
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('min_price'); ?></th>
 			<th><?php echo $this->Paginator->sort('max_price'); ?></th>
@@ -19,6 +60,8 @@
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
+
+
 	<?php
 	foreach ($products as $product): ?>
 	<tr>
@@ -57,12 +100,12 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<p>
+	<span>
 	<?php
 	echo $this->Paginator->counter(array(
 	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
 	));
-	?>	</p>
+	?>	</span>
 
 	<div class="paging">
 	<?php
@@ -94,3 +137,60 @@
 		<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+ 
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <script>
+  $(function() {
+  	
+    $( "#datepicker" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+     $( "#datepicker1" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+      $( "#datepicker2" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+         $( "#datepicker3" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+            $( "#datepicker4" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+               $( "#datepicker5" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+});
+  </script>
+
+<script>
+		$(document).ready(function() {
+			$('#collapse1').hide();
+			
+		  $('.nav-toggle').click(function(){
+
+			//get collapse content selector
+			var collapse_content_selector = $(this).attr('href');					
+ 
+			//make the collapse content to be shown or hide
+			var toggle_switch = $(this);
+			$(collapse_content_selector).toggle(function(){
+			  if($(this).css('display')=='none'){
+                                //change the button label to be 'Show'
+				toggle_switch.html('Search(+)');
+			  }else{
+                                //change the button label to be 'Hide'
+				toggle_switch.html('Search(-)');
+			  }
+			});
+		  });
+ 
+		});	
+		</script>

@@ -15,13 +15,30 @@ class ProductsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array( 'Product','User','UserAddress','Gift');
-    public $components = array('AesCrypt');
+    public $uses = array( 'Product','User','UserAddress','Gift','Vendor','ProductType','CodeType','CitySegment','AgeSegment');
+    public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder');
     }
+    public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'min_price', 'type' => 'value'),
+            array('field' => 'max_price', 'type' => 'value'),
+            array('field'=> 'min_value','type'=>'value'),
+            array('field'=> 'code_type_id','type'=>'value'),
+            array('field'=> 'code','type'=>'value'),
+            array('field'=> 'vendor_id','type'=>'value'),
+            array('field'=> 'product_type_id','type'=>'value'),
+            array('field'=> 'gender_segment_id','type'=>'value'),
+            array('field'=> 'city_segment_id','type'=>'value'),
+            array('field'=> 'age_segment_id','type'=>'value'),
+            array('field'=> 'display_order','type'=>'value'),
 
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+        
+        );
     public function isAuthorized($user) {
         if (($this->action == 'view_products') || ($this->action == 'view_product')) {
             return true;
@@ -53,9 +70,24 @@ class ProductsController extends AppController {
  * @return void
  */
     public function index() {
+      
+        $this->Prg->commonProcess('Product');
+        $vendors = $this->Product->Vendor->find('list');
+        $Product_Type = $this->Product->ProductType->find('list');
+        $Code_Type = $this->Product->CodeType->find('list');
+        $City_Segment = $this->Product->CitySegment->find('list');
+        $Age_Segment = $this->Product->AgeSegment->find('list');
+
         $this->Product->recursive = 0;
+        $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
+        $this->paginate = $conditions;
         $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
         $this->set('products', $this->paginate());
+        $this->set('product_type',$Product_Type);
+        $this->set('code_type',$Code_Type);
+        $this->set('vendors',$vendors) ;
+        $this->set('city_segment',$City_Segment) ;
+        $this->set('age_segment',$Age_Segment) ;
     }
 /**
  * view method
