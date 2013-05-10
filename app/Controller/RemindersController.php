@@ -237,10 +237,11 @@ class RemindersController extends AppController {
 		}
 
 	public function reminder_view_friends($type=null){
+		
 		$Facebook = new FB();
 		$friends= array();
         $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT uid FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
+                                        'query' => 'SELECT uid FROM user WHERE  current_location.country == "india" AND uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
         $fb_id_array =array();
         if(isset($friends) && !empty($friends)){
         	foreach ($friends as $frnd){
