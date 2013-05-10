@@ -105,6 +105,21 @@ class GiftsController extends AppController {
 		$this->set('_serialize', array('gifts'));
 	}
 
+	public function ws_latest_gift(){
+		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+		$e = $this->wsLatestGiftException($receiver_fb_id);
+		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
+        else{
+            $this->log("Searching Lastest gift for facebook id ".$receiver_fb_id);
+            $gift = $this->Gift->find('first', array(
+            	'conditions' => array('receiver_fb_id' => $receiver_fb_id,),
+            	'order' => array('created DESC')
+            	));
+            $this->set('gift', $gift);    
+        }
+		$this->set('_serialize', array('gift'));
+	}
+
 /**
  * index method
  *
@@ -1521,14 +1536,23 @@ class GiftsController extends AppController {
     	$this->autoRender = $this->autoLayout = false;
     }
 
-    /*public function test_new_line_fb_post(){
-    	DebugBreak();
-    	$message = "From: Alok"."
-                "."To: Shubham"."
-                "."
-                ". "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?";
-    	$this->Giftology->test_new_line_in_message($this->Connect->user('id'),FB::getAccessToken(),$message);
-    	echo "posted";
-    	$this->autoRender = $this->autoLayout = false;
-    }*/
+    public function wsLatestGiftException($receiver_fb_id){
+    	$e = array();
+    	if(!$receiver_fb_id){
+    		$e[1] = "Receiver Facebook Id not supplied";
+    	}
+    	else{
+            $this->User->recursive = -1;
+    		$user_exists = $this->User->find('count', array('conditions' => array('facebook_id' => $receiver_fb_id)));
+    		if(!$user_exists){
+    			$e[2] = "User correspoding to facebook id does not exist";	
+    		}
+            $this->Gift->recursive = -1;
+    		$gift_count = $this->Gift->find('count', array('conditions' => array('receiver_fb_id' => $receiver_fb_id)));
+    		if(!$gift_count){
+    			$e[3] = "Facebook Id ".$receiver_fb_id." has not received any gift yet";
+    		}
+    	}
+    	return $e;
+    }
 }
