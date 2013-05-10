@@ -323,10 +323,10 @@
                 </div>
                 </div>
             </div>
-            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
+            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to send</li></ul>
 
             <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_shipping'));?>  
+            <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_shipping'));?>  
                
             </div>    
             </div>
@@ -383,12 +383,20 @@
                     <h5 style="color:#FF0000">*please enter valid email address.</h5>
                 </div>
             </div>
-            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
-
-            <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
+            <?php if($product['Product']['min_price']!=0): ?>
+                <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to Send</li></ul>
+                 <div class="parent_submit">
+                <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_free'));?>  
                
-            </div>     
+                </div>
+            <?else:?>
+                <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
+                 <div class="parent_submit">
+                <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
+                   
+                </div>
+             <?php endif; ?>
+               
             </div>
 
             <?php } ?>
