@@ -15,7 +15,7 @@ class ProductsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array( 'Product','User','UserAddress','Gift','Vendor','ProductType','CodeType','CitySegment','AgeSegment');
+    public $uses = array( 'Product','User','UserAddress','Gift','Vendor','ProductType','CodeType','CitySegment','AgeSegment','download_product_csv');
     public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
@@ -44,6 +44,43 @@ class ProductsController extends AppController {
             return true;
         }
         return parent::isAuthorized($user);
+    }
+    public function download_product_csv(){
+       
+          $filename = "Products ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Min Price','Max Price','Min Value','Days Valid','Code Type','Code','Vendor','Product Type','Gender Segment','City Segment','Age Segment','Display Order','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->Product->find('first', array('conditions'=>array('Product.id'=>$id)));
+                            $row = array(
+                            $result['Product']['id'],
+                            $result['Product']['min_price'],
+                            $result['Product']['max_price'],
+                            $result['Product']['min_value'],
+                            $result['Product']['days_valid'],
+                            $result['Product']['code_type_id'],
+                            $result['Product']['code'],
+                            $result['Product']['vendor_id'],
+                            $result['Product']['product_type_id'],
+                            $result['Product']['gender_segment_id'],
+                            $result['Product']['city_segment_id'],
+                            $result['Product']['age_segment_id'],
+                            $result['Product']['display_order'],
+                            $result['Product']['created'],
+                            $result['Product']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
     }
     //WEB SERVICES
     public function ws_list () {
@@ -81,7 +118,7 @@ class ProductsController extends AppController {
                     $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 
-               $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+               $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
                
                )); 
             }
@@ -92,7 +129,7 @@ class ProductsController extends AppController {
                 if(!$this->passedArgs['created_end']){
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
-             $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs) ,'Product.created >'=>$created_start,'Product.created <' => $created_end
+             $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs) ,'Product.created >'=>$created_start,'Product.created <' => $created_end
                )); 
             }
 
@@ -112,7 +149,7 @@ class ProductsController extends AppController {
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
                 
-          $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+          $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
            ,'Product.created >'=>$created_start,'Product.created <' => $created_end
             ));  
              }  
@@ -120,7 +157,7 @@ class ProductsController extends AppController {
     
         }
         else{
-            $conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs)));
+            $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
 
         }
         

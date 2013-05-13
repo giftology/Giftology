@@ -39,10 +39,15 @@
          <?php echo $this->Form->end();?></td>
 
 	</div>
+	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Products', 'action' => 'download_product_csv', 'onsubmit'=>'return chkValidate();') );?>
+        <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
+         <?php  echo $this->Form->submit("Download Product CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
+              echo $this->Form->end();
+             ?>
 	<table cellpadding="0" cellspacing="0" border="1">
 
 	<tr>
-
+			<td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('min_price'); ?></th>
 			<th><?php echo $this->Paginator->sort('max_price'); ?></th>
@@ -65,6 +70,7 @@
 	<?php
 	foreach ($products as $product): ?>
 	<tr>
+		<td class="campaign_checkbo"><input class="campaign_checkbox" type="checkbox" name="chk1[]" id="<?php echo $product['Product']['id'];?>" value="<?php echo $product['Product']['id'];?>"> </td>
 		<td><?php echo h($product['Product']['id']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['min_price']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['max_price']); ?>&nbsp;</td>
@@ -194,3 +200,32 @@
  
 		});	
 		</script>
+<script>
+    function chkValidate(){
+        if($("[name='chk1[]']:checked").length<1){
+            alert('Please select atleast one record.');
+            return false;
+        }
+        return true;
+    }
+    checked=false;
+ function checkedAll (frm1) {
+ 
+	var aa= document.getElementById('frm1');
+	 if (checked == false)
+        {
+           checked = true
+          }
+        else        {
+          checked = false
+          }
+	for (var i =0; i < aa.elements.length; i++) 
+	{
+		 aa.elements[i].checked = checked;
+	}
+	
+ }
+ $(document).ready(function(){
+        $('.campaign_checkbox').show();
+    });
+</script>
