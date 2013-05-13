@@ -87,6 +87,8 @@ class GiftsController extends AppController {
 	}
 
 	public function ws_send () {
+        $url = array($this->params->query, $this->params->url);
+        $this->log("Logging ws_send url ".$url);
 		$sender_id = isset($this->params->query['sender_id']) ? $this->params->query['sender_id'] : null;
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
