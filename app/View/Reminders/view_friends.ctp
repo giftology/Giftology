@@ -280,7 +280,7 @@ var res_data;
     </div>
 
 <div class="send_urself" id="news-items">
-    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Gift Yourself" title="Gift Yourself"/></div>
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Go On, Spoil Yourself!!" title="Gift Yourself"/></div>
      <?php echo $this->Form->end();?>    
 </div>
 <div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/> </div>

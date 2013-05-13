@@ -65,10 +65,8 @@
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
 
-                if ($("#email").val().length == 0)
+                /*if ($("#email").val().length == 0)
                  {
-                    /*$("#error_email").show();
-                    e = true;*/
                     var r=confirm("continue without email address!");
                     if (r==true)
                       {
@@ -78,17 +76,29 @@
                       {
                         e = true;
                       }
+                    }*/
+                    if($("[id='chk1']:checked").length<1)
+                    {
+                        if(!valid){
+                            alert("please enter valid email id");
+                            return false;
+                        }
+                        else{
+                            return ture;
+                        }
+                        
+                        return false;
                     }
-               else if(!valid)
+                    if(!valid)
                         {
                           $("#error_email").show();
                              e = true;  
                         }
-                else if(valid)
-                        {
-                            $("#error_email").hide();    
-                        }
-                if(e) return false;
+                    else if(valid)
+                            {
+                                $("#error_email").hide();    
+                            }
+                    if(e) return false;
             });
            
         });
@@ -104,6 +114,20 @@
                 }
                 else{
                     $("#error_text").hide();
+                }
+                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+                var valid = emailRegex.test($("#giftsRecieverEmail").val());
+
+                if($("[id='chk1']:checked").length<1){
+                    if(!valid){
+                        alert("Please enter the email id");
+                        return false;
+                    }
+                    else{
+                        return ture;
+                    }
+                    
+                    return false;
                 }
             });
         });
@@ -410,7 +434,7 @@
         </div>
         
     <div class="clear"></div>
-    <script type='text/javascript'>
+    <!--<script type='text/javascript'>
     $(document).ready(function(){
         $('#form_free').click(function(){
             $(this).attr('disabled','disabled');
@@ -470,7 +494,7 @@
             }
         });*/  
     });
-    </script>
+    </script>-->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
  
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
