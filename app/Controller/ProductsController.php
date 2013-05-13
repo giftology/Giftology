@@ -248,7 +248,7 @@ class ProductsController extends AppController {
        
         $product_array=$this->paginate();
         
-        /*$show_product = array();
+        $show_product = array();
         $unpaid_product =array();
         foreach($product_array as $product)
         {  
@@ -300,8 +300,8 @@ class ProductsController extends AppController {
         $result = array_diff($free_paid_result, $gifts);
         unset($received_gifts);
         $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.show_on_top','Product.min_price','Product.display_order')));
-        */
-        $proddd = $this->product_filter($product_array, $receiver_id);     
+        
+        //$proddd = $this->product_filter($product_array, $receiver_id);     
         foreach($proddd as $k => $product){
             $proddd[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($product['Product']['id']);
         }
