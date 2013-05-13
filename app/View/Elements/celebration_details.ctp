@@ -4,11 +4,11 @@
 			<h2>Celebrate <?= $receiver_name; ?>'s <?= $ocasion; ?>!</h2>
 		<?php else: ?>
 			<h2>Send a gift to 
-				<?php 
+				<?php
 					if($receiver_id == $sender_id):
 						echo "Myself";
 					else:
-						$receiver_name;
+						echo $receiver_name;
 					endif;
 				?>
 			</h2>
