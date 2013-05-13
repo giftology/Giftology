@@ -35,7 +35,10 @@ class GiftsController extends AppController {
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
 		$e = $this->wsListGiftException($receiver_fb_id );
-		if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+		if(isset($e) && !empty($e)){
+            $this->log("Logging exception for ".$receiver_fb_id." ".$e);
+            $this->set('gifts', array('error' => $e));
+        }
 		else{
 			$conditions = array('receiver_fb_id' => $receiver_fb_id, 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING);
 			$this->Gift->recursive = 0;
