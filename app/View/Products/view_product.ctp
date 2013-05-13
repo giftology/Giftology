@@ -550,8 +550,9 @@ $(document).ready(function(){
         var selected = new Date(dateText).getTime();
         
        var today = new Date(new Date().getFullYear(), new Date().getMonth()+2, new Date().getDate()).getTime();
+       var today_Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
       
-       if(today > selected){
+       if(today > selected && selected > today_Date){
         
         document.getElementById("date").innerHTML = "On"+" "+formattedDate; 
        }
