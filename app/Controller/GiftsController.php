@@ -36,7 +36,7 @@ class GiftsController extends AppController {
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
 		$e = $this->wsListGiftException($receiver_fb_id );
 		if(isset($e) && !empty($e)){
-            $this->log("Logging exception for ".$receiver_fb_id." ".$e);
+            $this->log("Logging exception for ".$receiver_fb_id." ".serialize($e));
             $this->set('gifts', array('error' => $e));
         }
 		else{
@@ -102,7 +102,7 @@ class GiftsController extends AppController {
         $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday);
         
         if(isset($e) && !empty($e)){
-            $this->log("Logging gift sending exception for ".$receiver_fb_id." ".$e);
+            $this->log("Logging gift sending exception for ".$receiver_fb_id." ".serialize($e));
             $this->set('gifts', array('error' => $e));
         }
         else{
