@@ -89,15 +89,7 @@
                         
                         return false;
                     }
-                    if(!valid)
-                        {
-                          $("#error_email").show();
-                             e = true;  
-                        }
-                    else if(valid)
-                            {
-                                $("#error_email").hide();    
-                            }
+                    
                     if(e) return false;
             });
            
@@ -434,18 +426,18 @@
         </div>
         
     <div class="clear"></div>
-    <!--<script type='text/javascript'>
+    <script type='text/javascript'>
     $(document).ready(function(){
         $('#form_free').click(function(){
             $(this).attr('disabled','disabled');
-            if( $('.gift-message').val() !='') 
+            if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');  
         });
 
          $('#form_shipping').click(function(){
             $(this).attr('disabled','disabled');
-            if( $('.gift-message').val() !='') 
+            if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');    
         });
@@ -494,7 +486,7 @@
             }
         });*/  
     });
-    </script>-->
+    </script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
  
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
