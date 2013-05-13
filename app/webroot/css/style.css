@@ -2758,6 +2758,7 @@ padding: 0 12px 0 11px;
 font: normal 14px/22px Arial, Helvetica, sans-serif;
 padding:0 30px 0 40px;
 color:#666;
+text-align: justify;
 }
 
 #contacttext1 {
@@ -2765,12 +2766,14 @@ color:#666;
 font: normal 14px/22px Arial, Helvetica, sans-serif;
 padding:0 30px 0 40px;
 color:#C8C8C8;
+text-align: justify;
 }
 
 #contacttexth1 {
 font: normal 16px/22px Arial, Helvetica, sans-serif;
 padding:0 30px 0 40px;
 color:#333333;
+text-align: justify;
 }
 
 
@@ -2778,7 +2781,9 @@ color:#333333;
 font: normal 18px/22px Arial, Helvetica, sans-serif;
 padding:0px 30px 0 40px;
 color:#333333;
+text-align: justify;
 }
 
-
-
+#retailer_form {width:430px; margin: auto;}
+#retailers_form input[type="text"] {
+width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px}
