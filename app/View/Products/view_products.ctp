@@ -4,7 +4,11 @@
 <span class="left"></span>
 <a href="<?= FULL_BASE_URL; ?>"><span class="arrow"></span></a>
 </li>
+<?php if($receiver_id == $sender_id): ?>
+<li><?= "Myself"; ?></li>
+<?php else: ?>
 <li><?= $receiver_name; ?></li>
+<?php endif;?>
 </ul>
 <?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
 'ocasion' => $ocasion),
