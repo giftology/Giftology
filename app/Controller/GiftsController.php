@@ -99,7 +99,10 @@ class GiftsController extends AppController {
         $date_to_send = isset($this->params->query['date_to_send']) ? $this->params->query['date_to_send'] : null;
         $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday);
         
-        if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+        if(isset($e) && !empty($e)){
+            $this->log("Logging gift sending exception for ".$receiver_fb_id." ".$e);
+            $this->set('gifts', array('error' => $e));
+        }
         else{
             $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
             $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,$send_now,'',$gift_message,$post_to_fb,$receiver_birthday,'',$date_to_send);
