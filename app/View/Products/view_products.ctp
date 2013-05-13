@@ -6,10 +6,17 @@
 </li>
 <li><?= $receiver_name; ?></li>
 </ul>
+<?php if($sender_id == $receiver_id): ?>
+<?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
+'ocasion' => $ocasion),
+ array('cache' => array('key'=>'myself'.$receiver_name.$ocasion))
+  ); ?>
+<?php else: ?>
 <?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
 'ocasion' => $ocasion),
  array('cache' => array('key'=>$receiver_name.$ocasion))
   ); ?>
+<?php endif; ?>
 </div>
 <div>
 <h3 class="line-header">

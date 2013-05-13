@@ -3,7 +3,15 @@
 		<?php if ($ocasion): ?>
 			<h2>Celebrate <?= $receiver_name; ?>'s <?= $ocasion; ?>!</h2>
 		<?php else: ?>
-			<h2>Send a gift to <?= $receiver_name; ?></h2>
+			<h2>Send a gift to 
+				<?php 
+					if($receiver_id == $sender_id):
+						echo "Myself";
+					else:
+						$receiver_name;
+					endif;
+				?>
+			</h2>
 		<?php endif; ?>
 		<div class="tag-icons"></div>
 	</div>
