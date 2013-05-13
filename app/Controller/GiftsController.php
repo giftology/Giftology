@@ -1103,6 +1103,18 @@ class GiftsController extends AppController {
         if(!$code_exists){
         	$error[9] = "Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?";	
         }
+
+        $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+                => array('product_id' => $product_id,
+                    'receiver_fb_id' => $receiver_fb_id,
+                    'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                    'expiry_date >' => date('Y-m-d') 
+                )
+            ));
+
+        if($check_product_for_receiver){
+        	$error[10] = "Your Friend has already received this gift, select any other voucher to send";	
+        }
         
         return $error;
     }
