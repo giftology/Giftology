@@ -1514,7 +1514,7 @@ class GiftsController extends AppController {
     }
 
     public function contest_report_3($date_start, $date_end){
-    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.time().'.csv', 'w+');
+    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.$date_start.'_to_'.$date_end.'_'.time().'.csv', 'w+');
     	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
     	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
     	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up', 'Friends FB ID (Joining Date)'));
