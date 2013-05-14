@@ -206,7 +206,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     
    
 
-   <?php echo $this->Facebook->friendpile(); ?>
+   
            <section class="show-case" style="
 background: none repeat scroll 0 0 #F7F7F7;">
                 <div class="showcase-wrap">
@@ -239,6 +239,7 @@ background: none repeat scroll 0 0 #F7F7F7;">
                   </div>
                 </div>
               </section>
+              <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
                 <span class="block-title">See How It Works</span>
