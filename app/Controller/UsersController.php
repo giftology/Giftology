@@ -50,6 +50,21 @@ class UsersController extends AppController {
         unset($json_data);
         $this->set('_serialize', array('status', 'request'));
     }
+
+    public function ws_latest_friend_joined(){
+        $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
+        $e = $this->wsLatestFriendException($user_id);
+        if(isset($e) && !empty($e)) $this->set('latest_friend', array('error' => $e));
+        else{
+            $this->log("Searching latest friedn joined for ".$user_id);
+            $latest_friend = $this->User->find('first',
+                array(
+                    'conditions' => array('User.id' => $user_id)
+            ));
+            $this->set('latest_friend_fb_id', $latest_friend['UserProfile']['latest_friend']);    
+        }
+        $this->set('_serialize', array('latest_friend_fb_id'));
+    }
 /**
  * index method
  *
@@ -780,5 +795,18 @@ class UsersController extends AppController {
         }
                 
         return $error;
+    }
+    
+    public function wsLatestFriendException($user_id){
+        $e = array();
+        //$this->UserProfile->recursive = -1;
+        $latest_friend = $this->User->find('count',
+                array(
+                    'conditions' => array('User.id' => $user_id, 'UserProfile.latest_friend IS NOT NULL')
+            ));
+        if(!$latest_friend){
+            $e[1] = "No latest friend joined Giftology";
+        }
+        return $e;
     }
 }
