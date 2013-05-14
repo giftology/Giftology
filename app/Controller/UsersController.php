@@ -14,11 +14,11 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product');
+        $this->Auth->allow('login','logout','product','email_unsubscribed');
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -339,6 +339,16 @@ class UsersController extends AppController {
     $this->set('check',$user_profile['UserProfile']['email_unsubscribed']);
  
     }
+    public function email_unsubscribed()
+    {
+        $reveiver_id = $this->request->params['named']['id'];
+        $id = $this->AesCrypt->decrypt($reveiver_id);
+       $this->User->UserProfile->updateAll(
+                array('email_unsubscribed' => 1), 
+                array('user_id' => $id));
+        $this->Session->setFlash('Successfully unsubscribed from email updates. Sorry to see you go! ');
+    }
+
     public function email_stop()
     {
         $user_profile = $this->User->UserProfile->find('first', array(

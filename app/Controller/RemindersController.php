@@ -470,7 +470,7 @@ class RemindersController extends AppController {
         }
     }*/ //no longer works
     public function send_reminder_email_for_user($id) {
-	$user = $this->Reminder->User->find('first', array(
+    $user = $this->Reminder->User->find('first', array(
 		'conditions' => array('User.id' => $id),
 		'contain'=>array('UserProfile')));
 	if (!$user['UserProfile']['email']) {
@@ -511,7 +511,8 @@ class RemindersController extends AppController {
 	return;
     }
     function send_reminder_email($user,$reminders) {
-		$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
+    	$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
+		$id = $this->AesCrypt->encrypt($user['User']['id']);
         $email = new CakeEmail();
 		$email->config('smtp')
         	->template('reminder', 'default') 
@@ -522,6 +523,7 @@ class RemindersController extends AppController {
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
 			       'num_birthdays' => sizeof($reminders),
 			       'products' => $product,
+			       'id' => $id,
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
              ->send();
