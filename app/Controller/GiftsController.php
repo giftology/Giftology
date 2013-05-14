@@ -36,7 +36,7 @@ class GiftsController extends AppController {
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
 		$e = $this->wsListGiftException($receiver_fb_id );
 		if(isset($e) && !empty($e)){
-            $this->log("Logging exception for ".$receiver_fb_id." ".serialize($e));
+            $this->log("Logging gift received exception for ".$receiver_fb_id." ".serialize($e));
             $this->set('gifts', array('error' => $e));
         }
 		else{
