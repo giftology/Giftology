@@ -125,7 +125,7 @@ var res_data;
             <div class="frame-wrapper">
                 <div class="shadow-wrapper">
                     <div class="frame">
-                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?width=100&height=100">
+                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?width=110&height=110">
                     </div>
                 </div>
             </div>
