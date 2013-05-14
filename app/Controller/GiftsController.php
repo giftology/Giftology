@@ -32,6 +32,8 @@ class GiftsController extends AppController {
 	}
 	//WEB SERVICES
 	public function ws_list () {
+		$url = array($this->params->query, $this->params->url);
+        $this->log("Logging ws_list url ".serialize($url));
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
 		$e = $this->wsListGiftException($receiver_fb_id );
