@@ -29,7 +29,6 @@ class RemindersController extends AppController {
 	}
 
 	public function ws_reminder_today(){
-		DebugBreak();
         $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
         $conditions = array(
             'user_id' => $user_id);
@@ -44,7 +43,6 @@ class RemindersController extends AppController {
                 array('conditions' => $conditions,
                     'order' => 'friend_birthday ASC'
             ));
-            //DebugBreak();
             $this->set('today_birthday', $reminders);    
         }
 		$this->set('_serialize', array('today_birthday'));
