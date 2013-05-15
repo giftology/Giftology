@@ -231,7 +231,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">11. Prohibited Conduct<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Kindly email us at <strong><font style="color:#900;">cs@giftology.com </font></strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
+		<p>Kindly email us at <strong><font style="color:#900;"><u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> </font></strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
 
 					</div>
 				</div>
@@ -254,14 +254,14 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 
 <p>12.2  <strong> How we collect information:</strong> Giftology collects the aforesaid information from you in the following manner:</p>
 <ul style="list-style:none; margin-left:30px;">
- <li>a)  <u> <i><font style="color:#333;"> User-provided Information: </font></i></u>You provide certain of the aforesaid information directly to us as follows: </li>
+ <li>a)  <strong> User-provided Information: </strong>You provide certain of the aforesaid information directly to us as follows: </li>
 <ul style="list-style:none; ">
  <li>-  Your Personal Details and Contact Details are provided by you during your registration for a User Account and/or thereafter by your having actively updated or supplemented your details.</li>
 <li>-   your Card Details will be provided by you each time you purchase a Gift on the Website.</li>
 <li>-   Optional Details may be submitted by you to us if you decide to upload or download certain content (or products) from the Website, enter competitions, take advantage of promotions, respond to surveys, register and subscribe for certain additional services, or otherwise use the optional features and functionality of the Website.</li></ul>
 <li>b)  <strong> "Cookies" Information: </strong> When you access the Website, we may send one or more cookies (small text files containing a string of alphanumeric characters) to your computer to collect certain Usage Details. Giftology may use both session cookies (which disappears after you close your browser) and persistent cookies (which remain after you close your browser which can be removed manually) and may be used by your browser on subsequent visits to the Website. Please note that the use of cookies is standard on the internet and many major websites use them. Please review your web browser "Help" file to learn more about modifying your cookie settings.  <strong>Note:</strong> Some of our business partners (e.g. advertisers) use cookies on our Website. We have no access to or control over these cookies. This clause covers the use of cookies by Giftology only and does not cover the use of cookies by any advertisers.</li>
-<li>c)  <u> <i><font style="color:#333;">Other tracking technology: </font></i></u> When you access the Website or open one of our HTML emails, certain Usage Details may be automatically collected and recorded by us from your system by using different types of tracking technology.</li>
-<li>d)  <u> <i><font style="color:#333;"> Web Beacons:  </font></i></u>Our Website may contain electronic image requests (called a "single-pixel gif" or "web beacon" request) that allow us to count page views and to access cookies. Any electronic image viewed as part of a web page (including an ad banner) can act as a web beacon. Web beacons are typically 1-by-1 pixel files (so small that you would most likely not realize that they are there), but their presence can usually be seen within a browser by clicking on "View" and then on "Source."  We may also include web beacons in HTML-formatted newsletters that we send to opt-in subscribers in order to count how many newsletters have been read. Giftology web beacons do not collect, gather, monitor or share any personally identifiable information about you, they are just the technique we use to compile anonymous information about the Website and Service usage.</li></ul>
+<li>c)  <strong>Other tracking technology:</strong>When you access the Website or open one of our HTML emails, certain Usage Details may be automatically collected and recorded by us from your system by using different types of tracking technology.</li>
+<li>d)  <strong> Web Beacons: </strong>Our Website may contain electronic image requests (called a "single-pixel gif" or "web beacon" request) that allow us to count page views and to access cookies. Any electronic image viewed as part of a web page (including an ad banner) can act as a web beacon. Web beacons are typically 1-by-1 pixel files (so small that you would most likely not realize that they are there), but their presence can usually be seen within a browser by clicking on "View" and then on "Source."  We may also include web beacons in HTML-formatted newsletters that we send to opt-in subscribers in order to count how many newsletters have been read. Giftology web beacons do not collect, gather, monitor or share any personally identifiable information about you, they are just the technique we use to compile anonymous information about the Website and Service usage.</li></ul>
 <p>12.3   <strong>The purposes for which we collect the information: </strong> Giftology uses the information that you provide (or that we collect) to operate, maintain, enhance, and provide all of the Features and Services, to allow us to track user-generated content and Users to the extent necessary to comply with all applicable laws. Giftology uses all of the information collected to understand the usage trends and preferences of our Users, to improve the way the Website or Services work and look, and to create new features and functionality.<strong> More specifically:</strong></p>
 <ul style="list-style:none; margin-left:30px;">
  <li>a)   We use your<strong>Card Details</strong> only in order to process your purchase of a Gift. We only store limited information allowed by law for customer service purposes, which is why you must re-enter such details every time you make a purchase on the Website.</li>
@@ -283,7 +283,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">13. Security<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Kindly email us at <strong>cs@giftology.com </strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
+		<p>Kindly email us at <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
 		<p>13.1   Any person that delivers or attempts to deliver any damaging code to this Website or attempts to gain unauthorised access to any page on this Website shall be prosecuted and civil damages shall be claimed in the event that Giftology suffers any damage or loss.</p>
 <p>13.2   You allow Giftology to take all reasonable steps to ensure the integrity and security of the Website and back-office applications.</p>
 <p>13.3   All credit card transactions are Secure Socket Layers encrypted. Giftology's registration documents and the Website's registered domain name are checked and verified by a respected SSL certificate provider.</p>
@@ -297,7 +297,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">14. Duration of, and change to these T&C<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>14.1   Giftology may, at its sole discretion, change these T&C or any part thereof at any time on notice to you.  It is your responsibility to ensure that you are satisfied with the amendments.  Should you not be satisfied with the amendments, you are entitled to terminate your User Account by notifying Giftology in writing to info@giftology.com and must refrain from making any further purchases on, or using in any way, the Website.</p>
+		<p>14.1   Giftology may, at its sole discretion, change these T&C or any part thereof at any time on notice to you.  It is your responsibility to ensure that you are satisfied with the amendments.  Should you not be satisfied with the amendments, you are entitled to terminate your User Account by notifying Giftology in writing to <u> <i><font style="color:#900;">info@giftology.com </font></i></u>and must refrain from making any further purchases on, or using in any way, the Website.</p>
 <p>14.2   These T&C shall commence from the date on which they are published on the Website and continue indefinitely, as amended by Giftology from time to time (as described above), for so long as the Website exists and is operational, Giftology being entitled to terminate these T&C and/or shut down the Website at any time (subject to still processing any Gift purchases already made).</p>
 
 					</div>
@@ -321,7 +321,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">16. Address for Notices<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Giftology chooses as its address for all purposes under these T&C, whether in respect of court process, notice, or other documents or communication of whatsoever nature, the following address:  8, Siri fort road, New Delhi - 110049, India, with a copy to cs@Giftology.com (the sending of such copy being required in order for any notice to be validly delivered to Giftology).</p>
+		<p>Giftology chooses as its address for all purposes under these T&C, whether in respect of court process, notice, or other documents or communication of whatsoever nature, the following address:  8, Siri fort road, New Delhi - 110049, India, with a copy to <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> (the sending of such copy being required in order for any notice to be validly delivered to Giftology).</p>
 
 					</div>
 				</div>
@@ -332,7 +332,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">17. Breach & termination<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>17.1   You are entitled at any time to terminate your User Account and/or your relationship with Giftology on written notice to Giftology at info@giftology.com provided that any Gift purchases already made by you which have not yet been sent will remain valid and enforceable against the relevant Merchant/s in accordance with these T&C.  Because such Gifts would also have been emailed to the recipient, they will still be able to access them.  PLEASE NOTE HOWEVER that if for some reason you have sent a Gift which failed to reach the recipient, or which they may have deleted from their email inbox, the termination of your User Account will serve to terminate any record of such Gift and you will no longer be able to redeem it.  Consequently, please ensure that all Gifts have been received before terminating your User Account.</p>
+		<p>17.1   You are entitled at any time to terminate your User Account and/or your relationship with Giftology on written notice to Giftology at <u> <i><font style="color:#900;">info@giftology.com</font></i></u> provided that any Gift purchases already made by you which have not yet been sent will remain valid and enforceable against the relevant Merchant/s in accordance with these T&C.  Because such Gifts would also have been emailed to the recipient, they will still be able to access them.  PLEASE NOTE HOWEVER that if for some reason you have sent a Gift which failed to reach the recipient, or which they may have deleted from their email inbox, the termination of your User Account will serve to terminate any record of such Gift and you will no longer be able to redeem it.  Consequently, please ensure that all Gifts have been received before terminating your User Account.</p>
 <p>17.2   Giftology will be entitled to temporarily suspend or permanently terminate your access to your User Account and/or some or all of the Services available via the Website as it in its discretion deems appropriate should you breach any provision of these T&C and fail to remedy such breach (if capable of remedy) within a reasonable period after written notice thereof to you.  In certain circumstances, where immediate suspension or termination is necessary to avoid possible harm to any Merchant/s, other User/s or Giftology itself, Giftology will be entitled to immediately suspend or terminate your access to your User Account and/or some or all Services to you, on notice to you. </p>
 
 					</div>
@@ -345,7 +345,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<div style="display: none;" class="container">
 					<div class="content">
 		<p>18.1   Any and all copyright subsisting in the Website, including these T&C, vests in Giftology and all rights not expressly granted are reserved. </p>
-<p>18.2   You may only download, view and print content from this Website for private and non-commercial purposes.  To obtain permissions for the commercial use of any content on this Website, contact us at cs@giftology.com for assistance.</p>
+<p>18.2   You may only download, view and print content from this Website for private and non-commercial purposes.  To obtain permissions for the commercial use of any content on this Website, contact us at <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> for assistance.</p>
 <p>18.3   Giftology cannot screen or edit all the content available from the Website and does not accept any liability for illegal, defamatory or obscene content.  You are encouraged to inform Giftology of any content that may be offensive or illegal.</p>
 <p>18.4   All the content, trademarks and data on this Website, including but not limited to, software, databases, text, graphics, icons, hyperlinks, private information, designs and agreements, are the property of or licensed to Giftology and as such are protected from infringement by local and international legislation and treaties.</p>
 
@@ -369,11 +369,11 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">20. Hyperlinks, framing, spiders & crawlers<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>20.1   No person, business or web site may link to any page on this Website without the prior written permission of Giftology.  Such permission could be obtained by contacting cs@giftology.com</p>
+		<p>20.1   No person, business or web site may link to any page on this Website without the prior written permission of Giftology.  Such permission could be obtained by contacting <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u></p>
 
 <p>20.2   Hyperlinks provided on this Website to non-Giftology sites are provided as is and Giftology does not necessarily agree with, edit or sponsor the content on such web pages.</p>
 <p>20.3   No person, business or web site may frame this site or any of the pages on this Website in any way whatsoever.</p>
-<p>20.4   No person, business or web site may use any technology to search and gain any information from this Website without the prior written permission of Giftology. Such permission could be obtained from cs@giftology.com
+<p>20.4   No person, business or web site may use any technology to search and gain any information from this Website without the prior written permission of Giftology. Such permission could be obtained from <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u>
 </p>
 
 
