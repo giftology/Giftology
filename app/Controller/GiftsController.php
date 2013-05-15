@@ -122,10 +122,20 @@ class GiftsController extends AppController {
         else{
             $this->log("Searching Lastest gift for receiver id ".$receiver_id);
             $gift = $this->Gift->find('first', array(
+            	'fields' => array('id', 'product_id'),
             	'conditions' => array('receiver_id' => $receiver_id,),
             	'order' => array('created DESC')
             	));
-            $this->set('gift', $gift);    
+            $receiver_name = $this->UserProfile->find('first', array(
+                'fields' => array('first_name','last_name'),
+                'conditions' => array('user_id' => $receiver_id)
+            ));
+            $latest_gift = array(
+                'product_id' => $gift['Gift']['product_id'],
+                'receiver_first_name' => $receiver_name['UserProfile']['first_name'],
+                'receiver_last_name' => $receiver_name['UserProfile']['last_name']
+            );
+            $this->set('gift', $latest_gift);    
         }
 		$this->set('_serialize', array('gift'));
 	}
