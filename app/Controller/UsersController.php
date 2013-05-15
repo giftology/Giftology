@@ -60,12 +60,14 @@ class UsersController extends AppController {
             $latest_friend_fb_id = $this->User->find('first',
                 array(
                     'fields' => array('UserProfile.latest_friend'),
-                    'conditions' => array('User.id' => $user_id)
+                    'conditions' => array('User.id' => $user_id),
+                    'contain' => array('UserProfile')
             ));
             $latest_friend_name = $this->User->find('first',
                 array(
                     'fields' => array('UserProfile.first_name','UserProfile.last_name'),
-                    'conditions' => array('User.facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend'])
+                    'conditions' => array('User.facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend']),
+                    'contain' => array('UserProfile')
             ));
             $latest_friend = array(
                 'facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend'],
