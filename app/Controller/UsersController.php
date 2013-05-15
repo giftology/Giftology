@@ -52,7 +52,11 @@ class UsersController extends AppController {
     }
 
     public function ws_latest_friend_joined(){
-        $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
+        $receiver_fb_id = isset($this->params->query['user_fb_id']) ? $this->params->query['user_fb_id'] : null;
+        $user = $this->User->find('first', array(
+            'fields' => array('id'), 
+            'conditions'=> array('facebook_id' => $receiver_fb_id)));
+        $user_id = $user['User']['id'];
         $e = $this->wsLatestFriendException($user_id);
         if(isset($e) && !empty($e)) $this->set('latest_friend', array('error' => $e));
         else{
@@ -812,7 +816,7 @@ class UsersController extends AppController {
     
     public function wsLatestFriendException($user_id){
         $e = array();
-        //$this->UserProfile->recursive = -1;
+        $this->User->recursive = -2;
         $latest_friend = $this->User->find('count',
                 array(
                     'conditions' => array('User.id' => $user_id, 'UserProfile.latest_friend IS NOT NULL')

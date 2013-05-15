@@ -29,7 +29,7 @@ class RemindersController extends AppController {
 	}
 
 	public function ws_reminder_today(){
-        $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+        $receiver_fb_id = isset($this->params->query['user_fb_id']) ? $this->params->query['user_fb_id'] : null;
         $user = $this->User->find('first', array(
         	'fields' => array('id'), 
         	'conditions'=> array('facebook_id' => $receiver_fb_id)));

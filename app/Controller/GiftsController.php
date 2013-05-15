@@ -116,7 +116,7 @@ class GiftsController extends AppController {
 	}
 
 	public function ws_latest_gift(){
-		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+		$receiver_fb_id = isset($this->params->query['user_fb_id']) ? $this->params->query['user_fb_id'] : null;
 		$e = $this->wsLatestGiftException($receiver_fb_id);
 		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
