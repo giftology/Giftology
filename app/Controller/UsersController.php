@@ -57,10 +57,21 @@ class UsersController extends AppController {
         if(isset($e) && !empty($e)) $this->set('latest_friend', array('error' => $e));
         else{
             $this->log("Searching latest friedn joined for ".$user_id);
-            $latest_friend = $this->User->find('first',
+            $latest_friend_fb_id = $this->User->find('first',
                 array(
+                    'fields' => array('UserProfile.latest_friend'),
                     'conditions' => array('User.id' => $user_id)
             ));
+            $latest_friend_name = $this->User->find('first',
+                array(
+                    'fields' => array('UserProfile.first_name','UserProfile.last_name'),
+                    'conditions' => array('User.facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend'])
+            ));
+            $latest_friend = array(
+                'facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend'],
+                'first_name' => $latest_friend_name['UserProfile']['first_name'],
+                'last_name' => $latest_friend_name['UserProfile']['last_name']
+                );
             $this->set('latest_friend', $latest_friend);    
         }
         $this->set('_serialize', array('latest_friend'));
