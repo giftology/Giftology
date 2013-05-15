@@ -42,7 +42,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Privacy Policy');
 
 
 
-<div id="foot_content">
+<div id="foot_content" style="height:740px">
 <div class="media">
 
 	
@@ -102,6 +102,63 @@ $cakeDescription = __d('cake_dev', 'Giftology: Privacy Policy');
                    </div>
 
         </div>
+
+         <div class="bag">
+          <div class="image">
+                <img src="<?php echo FULL_BASE_URL;?>/img/htcity.jpg"width="60" >
+          </div>
+                  <div class="press">
+                    <img src="<?php echo FULL_BASE_URL;?>/img/arrow.png">
+                    <p><a href="http://paper.hindustantimes.com/epaper/viewer.aspx">Live, Love and Gift It Right- Published in HT City, Delhi Edition Apr 11</a></p>
+                    <!--<img src="<?php echo FULL_BASE_URL;?>/img/htcity1.png" style="margin:10px 0 0 42px;" >!-->
+                  </div>
+
+        </div>
+
+
+        <div class="bag">
+          <div class="image">
+                <img src="<?php echo FULL_BASE_URL;?>/img/ceo.png" width="100">
+          </div>
+                  <div class="press">
+                    <img src="<?php echo FULL_BASE_URL;?>/img/arrow.png">
+                    <p><a href="http://www.theceoinsights.com/joomla/index.php?option=com_content&view=article&id=179 ">Few Words from our CEO</a></p>
+                  </div>
+
+        </div>
+
+
+        <div class="bag">
+          <div class="image">
+                <img src="<?php echo FULL_BASE_URL;?>/img/afaq.jpg" width="60">
+          </div>
+                  <div class="press">
+                    <img src="<?php echo FULL_BASE_URL;?>/img/arrow.png">
+                    <p><a href=" http://www.afaqs.com/media/media_newslets/index.html?id=56190_Be+a+20-20+gifting+champ+with+Giftology">Be a 20-20 Gifting Champ with Giftology</a></p>
+                  </div>
+
+        </div>
+
+
+        <div class="bag" >
+          <div class="image">
+                <img src="<?php echo FULL_BASE_URL;?>/img/wnw.gif" width="60">
+          </div>
+                  <div class="press">
+                    <img src="<?php echo FULL_BASE_URL;?>/img/arrow.png">
+                    <p><a href="http://www.webnewswire.com/content/giftologycom-celebrates-true-essence-being-mother">Giftology celebrates the true essence of being a mother</a></p>
+                    
+                    
+                  </div>
+
+        </div>
+
+       
+
+        
+
+
+        
 
 </div>
 </div>

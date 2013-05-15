@@ -33,23 +33,27 @@ $cakeDescription = __d('cake_dev', 'Giftology: Team');
 	 <script> 
 $(document).ready(function(){
   $(".a").hover(function(){
-    $(".a1").slideToggle("slow");
-    
-  });
+    $(".a1").slideToggle("slow"); 
+    });
+
+ $(".a ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/Aman.jpg");$('.a .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/aman.png");$('.a .text3').show();}); 
+  
+
 
   //////////////
 
 
   $(".b").hover(function(){
     $(".a2").slideToggle("slow");   
-
   });
+  $(".b ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VArun.jpg");$('.b .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/varun.png");$('.b .text3').show();}); 
   /////////////////
 
   $(".c").hover(function(){
     $(".a3").slideToggle("slow");
-    
   });
+
+  $(".c ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/Alok.jpg");$('.c .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/alok.png");$('.c .text3').show();}); 
   //////////////////
 
   $(".d").hover(function(){
@@ -64,18 +68,21 @@ $(document).ready(function(){
 		}
    
   });
+  $(".d ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/Kiran.jpg");$('.d .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/kiran.png");$('.d .text3').show();}); 
   ///////////////////
 
   $(".e").hover(function(){
     $(".a5").slideToggle("slow");
   
   });
+  $(".e ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/NIkhil.jpg");$('.e .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/nikhil.png");$('.e .text3').show();}); 
   /////////////////
 
   $(".f").hover(function(){
     $(".a6").slideToggle("slow");
    
   });
+  $(".f ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/SB1.jpg");$('.f .text3').hide();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/SB.jpg");$('.f .text3').show();}); 
 });
 </script>
 

@@ -375,6 +375,7 @@ p.occasion {
     font-size: 14px;
 }
 
+
 .event p {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin-bottom: 0;
@@ -1284,6 +1285,7 @@ ul.voucher-details li {
     
 }
 
+
 .retail .retail-form div.input.email input:-moz-placeholder {
     text-transform: lowercase;
 }
@@ -1435,6 +1437,8 @@ ul.voucher-details li {
     width:530px;
     height:50px;
     float:right;
+    margin-top: 5px;
+    text-align: justify;
 
 
 
@@ -1984,6 +1988,7 @@ button, input[type="submit"] {
     display: inline-block;
     padding-bottom: 13px;
 }
+
 .infographic.interactive .slides {
     -moz-perspective-origin: center bottom;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -2680,12 +2685,10 @@ tbody tr.friends td.campaign_checkbo{
 
 .text2{
                
-        font-size:12px;
-        text-align:justify;
-        color:#000;
-        line-height: 20px;
-        
-
+        font-size: 14px;
+        text-align: left;
+        color: #000;
+        line-height: 18px;
 }
 
 
@@ -2716,11 +2719,11 @@ tbody tr.friends td.campaign_checkbo{
 .teamHover {
 position:absolute;
 background-color:#fff;
-margin:-350px 18px 0 -32px;
+margin:-340px 18px 0 -26px;
 float: left;
 padding: 0 12px 0 11px;
- width: 240px;
- opacity:0.7;
+ width: 225px;
+ opacity:0.8;
  border:1px solid #ccc;
  box-shadow: 0 0  2px 1px #ccc;
 }
@@ -2757,7 +2760,7 @@ padding: 0 12px 0 11px;
 
 font: normal 14px/22px Arial, Helvetica, sans-serif;
 padding:0 30px 0 40px;
-color:#666;
+color:#4D4D4D;
 text-align: justify;
 }
 
@@ -2785,5 +2788,16 @@ text-align: justify;
 }
 
 #retailer_form {width:430px; margin: auto;}
-#retailers_form input[type="text"] {
-width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px}
+ .arrownav{
+  
+    background:url('../img/arrow-nav.png');
+width: 280px;
+height: 25px;
+padding: 0px 20px;
+margin-left: -20px;
+margin-top: -15px;
+
+}
+
+
+
