@@ -231,7 +231,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">11. Prohibited Conduct<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Kindly email us at <strong><font style="color:#900;"><u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> </font></strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
+		<p>Kindly email us at <strong><font style="color:#900;"><u> <i><font style="color:#900;">cs@giftology.com</font></i></u> </font></strong>with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
 
 					</div>
 				</div>
@@ -283,7 +283,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">13. Security<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Kindly email us at <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
+		<p>Kindly email us at <u> <i><font style="color:#900;">cs@giftology.com</font></i></u> with your concern. Also please mention your full name as on Facebook for us to identify your account with us. </p>
 		<p>13.1   Any person that delivers or attempts to deliver any damaging code to this Website or attempts to gain unauthorised access to any page on this Website shall be prosecuted and civil damages shall be claimed in the event that Giftology suffers any damage or loss.</p>
 <p>13.2   You allow Giftology to take all reasonable steps to ensure the integrity and security of the Website and back-office applications.</p>
 <p>13.3   All credit card transactions are Secure Socket Layers encrypted. Giftology's registration documents and the Website's registered domain name are checked and verified by a respected SSL certificate provider.</p>
@@ -321,7 +321,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">16. Address for Notices<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>Giftology chooses as its address for all purposes under these T&C, whether in respect of court process, notice, or other documents or communication of whatsoever nature, the following address:  8, Siri fort road, New Delhi - 110049, India, with a copy to <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> (the sending of such copy being required in order for any notice to be validly delivered to Giftology).</p>
+		<p>Giftology chooses as its address for all purposes under these T&C, whether in respect of court process, notice, or other documents or communication of whatsoever nature, the following address:  8, Siri fort road, New Delhi - 110049, India, with a copy to <u> <i><font style="color:#900;">cs@giftology.com</font></i></u> (the sending of such copy being required in order for any notice to be validly delivered to Giftology).</p>
 
 					</div>
 				</div>
@@ -345,7 +345,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<div style="display: none;" class="container">
 					<div class="content">
 		<p>18.1   Any and all copyright subsisting in the Website, including these T&C, vests in Giftology and all rights not expressly granted are reserved. </p>
-<p>18.2   You may only download, view and print content from this Website for private and non-commercial purposes.  To obtain permissions for the commercial use of any content on this Website, contact us at <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u> for assistance.</p>
+<p>18.2   You may only download, view and print content from this Website for private and non-commercial purposes.  To obtain permissions for the commercial use of any content on this Website, contact us at <u> <i><font style="color:#900;">cs@giftology.com</font></i></u> for assistance.</p>
 <p>18.3   Giftology cannot screen or edit all the content available from the Website and does not accept any liability for illegal, defamatory or obscene content.  You are encouraged to inform Giftology of any content that may be offensive or illegal.</p>
 <p>18.4   All the content, trademarks and data on this Website, including but not limited to, software, databases, text, graphics, icons, hyperlinks, private information, designs and agreements, are the property of or licensed to Giftology and as such are protected from infringement by local and international legislation and treaties.</p>
 
@@ -373,7 +373,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 
 <p>20.2   Hyperlinks provided on this Website to non-Giftology sites are provided as is and Giftology does not necessarily agree with, edit or sponsor the content on such web pages.</p>
 <p>20.3   No person, business or web site may frame this site or any of the pages on this Website in any way whatsoever.</p>
-<p>20.4   No person, business or web site may use any technology to search and gain any information from this Website without the prior written permission of Giftology. Such permission could be obtained from <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u>
+<p>20.4   No person, business or web site may use any technology to search and gain any information from this Website without the prior written permission of Giftology. Such permission could be obtained from <u> <i><font style="color:#900;">cs@giftology.com</font></i></u>
 </p>
 
 
@@ -385,7 +385,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<div style="display: none;" class="container">
 					<div class="content">
 		<p>
-21.1   Save for Giftology being liable to you, neither Giftology nor any of its agents or representatives shall be liable for any damage, loss or liability of whatsoever nature arising from the use or inability to use this Website or the services or content provided from and through this Website.  Furthermore, Giftology makes no representations or warranties, implied or otherwise, that, amongst others, the content and technology available from this Website are free from errors or omissions or that the service will be 100% uninterrupted and error free.  You are encouraged to report any possible malfunctions and errors to <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u>.</p>
+21.1   Save for Giftology being liable to you, neither Giftology nor any of its agents or representatives shall be liable for any damage, loss or liability of whatsoever nature arising from the use or inability to use this Website or the services or content provided from and through this Website.  Furthermore, Giftology makes no representations or warranties, implied or otherwise, that, amongst others, the content and technology available from this Website are free from errors or omissions or that the service will be 100% uninterrupted and error free.  You are encouraged to report any possible malfunctions and errors to <u> <i><font style="color:#900;">cs@giftology.com</font></i></u>.</p>
 <p>21.2   The Website itself is supplied on an "as is" basis and has not been compiled or supplied to meet your individual requirements.  It is your sole responsibility to satisfy yourself prior to accepting these T&C that the service available from and through this Website will meet your individual requirements and be compatible with your hardware and/or software.</p>
 <p>21.3   Information, ideas and opinions expressed on this Website should not be regarded as professional advice or the official opinion of Giftology and you are encouraged to consult professional advice before taking any course of action related to information, ideas or opinions expressed on this Website</p>
 
