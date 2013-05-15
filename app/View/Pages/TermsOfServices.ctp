@@ -369,7 +369,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<h4 class="accordion accordion-close" id="body-section8">20. Hyperlinks, framing, spiders & crawlers<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
-		<p>20.1   No person, business or web site may link to any page on this Website without the prior written permission of Giftology.  Such permission could be obtained by contacting <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u></p>
+		<p>20.1   No person, business or web site may link to any page on this Website without the prior written permission of Giftology.  Such permission could be obtained by contacting <u> <i><font style="color:#900;">cs@giftology.com</font></i></u></p>
 
 <p>20.2   Hyperlinks provided on this Website to non-Giftology sites are provided as is and Giftology does not necessarily agree with, edit or sponsor the content on such web pages.</p>
 <p>20.3   No person, business or web site may frame this site or any of the pages on this Website in any way whatsoever.</p>
