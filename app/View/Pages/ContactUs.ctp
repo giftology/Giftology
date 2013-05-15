@@ -35,7 +35,7 @@ src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6
 </script>
 
 <script>
-var myCenter=new google.maps.LatLng(28.494153,77.095571);
+var myCenter=new google.maps.LatLng(28.48698,77.105114);
 
 function initialize()
 {
@@ -81,19 +81,19 @@ google.maps.event.addDomListener(window, 'load', initialize);
     
 
       <div class="leftd">
-      <p id="contacttexth2"> <img src="<?php echo FULL_BASE_URL;?>/img/findusat.png" style="margin:0 10px 0 0;"><span >find us </span></p>
-<p id="contacttexth1">we are located at:</p>
+      <p id="contacttexth2"> <img src="<?php echo FULL_BASE_URL;?>/img/findusat.png" style="margin:0 10px 0 0;"><span >Find us </span></p>
+<p id="contacttexth1" style="padding-left:68px;">we are located at:</p>
 
-<p id="contacttext" >27, Nathupur Road,<br>
+<p id="contacttext"style="padding-left:68px;" >27, Nathupur Road,<br>
 DLF Phase 3,<br>
 Gurgaon 122002</p>
 <p id="contacttext1">-----------------------------------------</p>
 <p id="contacttexth2" style="padding-top:5px"><img src="<?php echo FULL_BASE_URL;?>/img/callaticon.png" style="margin:0 10px 0 0;"><span>Phone</span></p>
-<p id="contacttexth1">To reach us on phone you can call:</p>
-<p id="contacttext" >+91-9717881110</p>
+<p id="contacttexth1"style="padding-left:68px;">To reach us on phone, Call:</p>
+<p id="contacttext" style="padding-left:68px;">+91-9717881110</p>
 <p id="contacttext1">-----------------------------------------</p>
 <p id="contacttexth2" style="padding-top:5px"><img src="<?php echo FULL_BASE_URL;?>/img/emailicon.png" style="margin:0 10px 0 0;"><span>Email:</span></p>
-<p id="contacttext">cs@giftology.com</p>
+<p id="contacttext"style="padding-left:68px;">cs@giftology.com</p>
       </div>
        <div class="rightd" id="googleMap">
       
