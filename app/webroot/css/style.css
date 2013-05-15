@@ -375,6 +375,7 @@ p.occasion {
     font-size: 14px;
 }
 
+
 .event p {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin-bottom: 0;
@@ -1173,27 +1174,21 @@ ul.voucher-details li {
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
-    margin-bottom: 30px;
-    margin-top:20px;
+    margin:20px 0 30px 5px;
     padding: 7px;
-    position: relative;
-    width: 770px;
+    width: 865px;
+    
 
 }
 
 
 /* for overlay on about_us page  by-swapnil */
 
-.simple_overlay {
- 
+.simple_overlay{
     /* must be initially hidden */
     display:none;
-   
     /* place overlay on top of other elements */
     z-index:10000;
-   
-
- 
     /* styling */
     
     background-image:url("../img/white-edge1.png") no-repeat; /* not used but can be */
@@ -1206,10 +1201,7 @@ ul.voucher-details li {
     background-color: #ffffff;
   font-weight:bolder;
   padding: 10px 10px 10px 10px;
- 
     /* CSS3 styling for latest browsers */
-  
-
 }
 
  
@@ -1292,6 +1284,7 @@ ul.voucher-details li {
     margin-top: 14px;
     
 }
+
 
 .retail .retail-form div.input.email input:-moz-placeholder {
     text-transform: lowercase;
@@ -1397,42 +1390,60 @@ ul.voucher-details li {
 .media{
    
     /**box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;*/
-    margin-bottom: 30px;
-    margin-top:20px;
+    margin:30px auto;
    /* padding: 7px;*/
     position: relative;
-    width: 800px;
+    width: 750px;
     min-height: 400px;
 }
 .media #foot_content1 {
    /* margin-top:50px;*/
-    padding:20px 10px 20px 30px;
-    -moz-box-sizing: border-box;
+    
+    
     background-color: #FAFAFA;
-    border: 1px solid #CCCCCC;
-    border-radius: 5px 5px 5px 5px;
-    width:850px;
+    
+    width:688px;
     min-height:300px;
-    margin-left:5px;
+    padding:30px;
     float:left;
+    box-shadow:0 0 20px 4px #E3E3E3;
+
 
 
 }
+
+
 .media #foot_content1 .bag{
     margin-top:10px;
     max-width:800px;
     min-height:50px;
 }
+
+.media #foot_content1 .bag .image{
+    
+   /* padding-bottom:5px;*/
+    width:110px;
+    height:50px;
+    float:left;
+    position: absolute;
+    margin-left:30px;
+
+   
+
+}
+
 .media #foot_content1 .bag .press{
     
    /* padding-bottom:5px;*/
-    width:660px;
+    width:475px;
     height:50px;
     float:right;
+    margin-top: 5px;
+    text-align: justify;
+
+
 
     
-    background-image: url("../img/press-cont.png");
-
 }
 .media #foot_content1 .bag img{
      
@@ -1444,8 +1455,7 @@ ul.voucher-details li {
 .media #foot_content1 .bag .press p{
     font-size:14px;
     font-color:#202020;
-    margin-bottom:2px;
-    margin-left:40px;
+    margin:-2px 0 2px 40px;
     max-width:620px;
    font-weight:lighter;
 
@@ -1979,6 +1989,7 @@ button, input[type="submit"] {
     display: inline-block;
     padding-bottom: 13px;
 }
+
 .infographic.interactive .slides {
     -moz-perspective-origin: center bottom;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -2642,6 +2653,7 @@ tbody tr.friends td.campaign_checkbo{
     margin-top:13px;
 
    }
+
     /*popup Email Varification*/
 
  #popup_box {
@@ -2713,6 +2725,155 @@ tbody tr.friends td.campaign_checkbo{
  
 #content{
     width: 952px;
+}
+.resources{
+       width:880px;
+        height:auto;
+        background:#FAFAFA;
+        margin:40px 0 40px 0;
+        font:14px/30px Arial, Helvetica, sans-serif;
+        color:#333;
+        border:1px solid #ccc;
+    }
+        
+.body1 {
+    padding: 10px 60px;
+    width: 820px;
+    min-height:234px;
+}
+
+.body1 img.none {
+
+    float: none;
+    margin: 0;
+    padding: 2px;
+    width:187px;
+    height: 187px;
+    border:1px double #ccc;
+}
+
+.port{
+        margin:30px 18px 0 0;
+        float: left;
+        padding: 0 23px 0 0;
+        width: 240px;
+}
+
+.text2{
+               
+        font-size: 12px;
+        text-align: left;
+        color: #000;
+        line-height: 18px;
+}
+
+
+.teamshadow{
+    text-align: center;
+    width: 100%;
+    margin: 30px auto 20px auto;
+
+}
+
+
+.text3{
+               
+        font-size:14px;
+        line-height: 22px;
+        margin-top: -16px;
+        
+        color:#900;
+
+}
+
+                
+                
+.last {
+    padding: 0;
+}
+
+.teamHover {
+position:absolute;
+background-color:#fff;
+margin:-340px 18px 0 -26px;
+float: left;
+padding: 0 12px 0 11px;
+ width: 225px;
+ opacity:0.8;
+ border:1px solid #ccc;
+ box-shadow: 0 0  2px 1px #ccc;
+}
+
+
+/*contact us page css*/
+
+.media #foot_content_contact {
+   /* margin-top:50px;*/
+    
+    -moz-box-sizing: border-box;
+    background-color: #FAFAFA;
+    
+    width:750px;
+    min-height:300px;
+    padding:30px 0;
+    float:left;
+    box-shadow:0 0 20px 4px #E3E3E3;
+
+
+
+}
+
+.media #foot_content_contact .leftd{position:relative; 
+    width:300px; float:left; 
+     height:300px; margin:0 17px 0 14px;} 
+.media #foot_content_contact .rightd{position:relative; width:400px; 
+    float:left;  height:300px; box-shadow:0 0 10px 6px #d7d7d7;} 
+  
+
+    /* CSS Document */
+
+#contacttext {
+
+font: normal 14px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#4D4D4D;
+text-align: justify;
+}
+
+#contacttext1 {
+
+font: normal 14px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#C8C8C8;
+text-align: justify;
+}
+
+#contacttexth1 {
+font: normal 16px/22px Arial, Helvetica, sans-serif;
+padding:0 30px 0 40px;
+color:#333333;
+text-align: justify;
+}
+
+
+#contacttexth2 {
+font: normal 18px/22px Arial, Helvetica, sans-serif;
+padding:0px 30px 0 40px;
+color:#333333;
+text-align: justify;
+}
+
+#retailer_form {width:430px; margin: auto;}
+ .arrownav{
+  
+    background:url('../img/arrow-nav.png');
+width: 280px;
+height: 25px;
+padding: 0px 20px;
+margin-left: -20px;
+margin-top: -15px;
+
+
 }
 
 

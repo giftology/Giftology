@@ -1,4 +1,3 @@
-
 <?php
 /**
  *
@@ -28,17 +27,35 @@ $cakeDescription = __d('cake_dev', 'Giftology: ContactUs');
 		<?php echo $title_for_layout; ?>
 	</title>
 	
-<style>
-	
-ul.left-menu{list-style:none; padding:0px; margin:50px 10px 10px 20px}
-ul.left-menu li {margin:5px 0px; border-bottom:1px dashed #fad5ff; padding:2px 0px 6px 0px; }
-ul.left-menu li a { font-size:13px;  color:#fff}
-
-</style>
 
 
 
-	 
+	 <script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+</script>
+
+<script>
+var myCenter=new google.maps.LatLng(28.48698,77.105114);
+
+function initialize()
+{
+var mapProp = {
+  center:myCenter,
+  zoom:15,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+var marker=new google.maps.Marker({
+  position:myCenter,
+  });
+
+marker.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 		
 		
 	
@@ -50,27 +67,42 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
 
 
+<div id="foot_content" style="height:630px;">
+<div class="media">
+
+	
+<center><h3>Careers</h3></center>
+            <p id="contacttext" style="margin:0 15px;">We are hiring for roles in Technology (PHP) and Sales, across India!</p>
+            
+              <p id="contacttext" style="margin-left:15px;">We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
+
+    <center><h3>Conact US</h3></center>      
+   <div id="foot_content_contact" >
+    
+
+      <div class="leftd">
+      <p id="contacttexth2"> <img src="<?php echo FULL_BASE_URL;?>/img/findusat.png" style="margin:0 10px 0 0;"><span >Find us </span></p>
+<p id="contacttexth1" style="padding-left:68px;">we are located at:</p>
+
+<p id="contacttext"style="padding-left:68px;" >27, Nathupur Road,<br>
+DLF Phase 3,<br>
+Gurgaon 122002</p>
+<p id="contacttext1">-----------------------------------------</p>
+<p id="contacttexth2" style="padding-top:5px"><img src="<?php echo FULL_BASE_URL;?>/img/callaticon.png" style="margin:0 10px 0 0;"><span>Phone</span></p>
+<p id="contacttexth1"style="padding-left:68px;">To reach us on phone, Call:</p>
+<p id="contacttext" style="padding-left:68px;">+91-9717881110</p>
+<p id="contacttext1">-----------------------------------------</p>
+<p id="contacttexth2" style="padding-top:5px"><img src="<?php echo FULL_BASE_URL;?>/img/emailicon.png" style="margin:0 10px 0 0;"><span>Email:</span></p>
+<p id="contacttext"style="padding-left:68px;">cs@giftology.com</p>
+      </div>
+       <div class="rightd" id="googleMap">
+      
+      </div>
+     
 
 
-          
-   <div id="foot_content" >
-	<div class="content">
-		     	<center><h3>CAREERS</h3></center>
-		     	 	<p>We are hiring for roles in Technology (PHP) and Sales, across India!</p>
-		     	 	<img>
 
-		     	 		<p>We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
-	           	<center><h3>CONTACT</h3></center>
-		
-
-
-
-<h4>Looking for us?</h4>
-<p>We are based out of Gurgaon and here’s the address:<br>
-27, Nathupur Road,<br>
-DLF Phase 3<br>
-Phone: +91-9717881110<br><br>
-Email: cs@giftology.com<br><br>
-Registered address: 8, Siri Fort road, New Delhi – 110049<br></p>
+      
+</div>
 </div>
 </div>
