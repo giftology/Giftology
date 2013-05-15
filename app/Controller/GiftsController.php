@@ -116,19 +116,19 @@ class GiftsController extends AppController {
 	}
 
 	public function ws_latest_gift(){
-		$receiver_id = isset($this->params->query['receiver_id']) ? $this->params->query['receiver_id'] : null;
-		$e = $this->wsLatestGiftException($receiver_id);
+		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+		$e = $this->wsLatestGiftException($receiver_fb_id);
 		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
-            $this->log("Searching Lastest gift for receiver id ".$receiver_id);
+            $this->log("Searching Lastest gift for receiver fb id ".$receiver_fb_id);
             $gift = $this->Gift->find('first', array(
-            	'fields' => array('id', 'product_id'),
-            	'conditions' => array('receiver_id' => $receiver_id,),
+            	'fields' => array('id', 'product_id', 'receiver_id'),
+            	'conditions' => array('receiver_fb_id' => $receiver_fb_id),
             	'order' => array('created DESC')
             	));
             $receiver_name = $this->UserProfile->find('first', array(
                 'fields' => array('first_name','last_name'),
-                'conditions' => array('user_id' => $receiver_id)
+                'conditions' => array('user_id' => $gift['Gift']['receiver_id'])
             ));
             $latest_gift = array(
                 'product_id' => $gift['Gift']['product_id'],
@@ -1568,19 +1568,19 @@ class GiftsController extends AppController {
     	$this->autoRender = $this->autoLayout = false;
     }
 
-    public function wsLatestGiftException($receiver_id){
+    public function wsLatestGiftException($receiver_fb_id){
     	$e = array();
-    	if(!$receiver_id){
-    		$e[1] = "Receiver Facebook Id not supplied";
+    	if(!$receiver_fb_id){
+    		$e[1] = "Receiver Facebook id is not supplied";
     	}
     	else{
             $this->User->recursive = -1;
-    		$user_exists = $this->User->find('count', array('conditions' => array('id' => $receiver_id)));
+    		$user_exists = $this->User->find('count', array('conditions' => array('facebook_id' => $receiver_fb_id)));
     		if(!$user_exists){
     			$e[2] = "User correspoding to facebook id does not exist";	
     		}
             $this->Gift->recursive = -1;
-    		$gift_count = $this->Gift->find('count', array('conditions' => array('receiver_id' => $receiver_id)));
+    		$gift_count = $this->Gift->find('count', array('conditions' => array('receiver_fb_id' => $receiver_fb_id)));
     		if(!$gift_count){
     			$e[3] = "Facebook Id ".$receiver_id." has not received any gift yet";
     		}
