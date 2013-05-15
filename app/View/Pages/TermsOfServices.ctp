@@ -310,7 +310,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<div style="display: none;" class="container">
 					<div class="content">
 		<p>15.1  <strong> Between you and Giftology:</strong>  Save for urgent or interim relief which may be granted by a competent court, in the event of any dispute of any nature whatsoever arising between you and Giftology on any matter provided for in, or arising out of these T&C, and not resolved through the Customer Relations Department of Giftology, then such a dispute shall be submitted to confidential arbitration in terms of the expedited rules of the Arbitration Foundation of India. </p> 
-<p>15.2  <strong> between you and a Merchant:</strong>  Giftology is not your, nor any Merchant's agent, nor will it act as either of your agent in connection with resolving any disputes between you.</p>
+<p>15.2  <strong> Between you and a Merchant:</strong>  Giftology is not your, nor any Merchant's agent, nor will it act as either of your agent in connection with resolving any disputes between you.</p>
 
 					</div>
 				</div>
