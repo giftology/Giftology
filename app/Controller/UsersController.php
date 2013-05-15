@@ -10,8 +10,28 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     public $helpers = array('Minify.Minify');
     public $uses = array( 'User','Vendor','Product','Reminder','Campaign');
-    public $components = array('Giftology', 'AesCrypt');
-
+    public $components = array('Giftology', 'AesCrypt','Search.Prg');
+    public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'username', 'type' => 'value'),
+            array('field' => 'first_name', 'type' => 'value'),
+            array('field' => 'last_name', 'type' => 'value'),
+            array('field' => 'email', 'type' => 'value'),
+            array('field' => 'mobile', 'type'=> 'value'),
+            array('field' => 'city', 'type'=>'value'),
+            array('field' => 'gender', 'type'=>'value'),
+            array('field' => 'birthday','type'=>'value'),
+            array('field' => 'birthyear','type'=>'value'),
+            array('field' => 'password', 'type' => 'value'),
+            array('field'=> 'role','type'=>'value'),
+            array('field' => 'facebook_id', 'type' => 'value'),           
+            array('field'=> 'last_login','type'=>'value'),
+            array('field'=> 'access_token','type'=>'value'),
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+            array('field'=> 'last_mail_date','type'=>'value'),
+           
+        );
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('login','logout');
@@ -22,6 +42,37 @@ class UsersController extends AppController {
             return true;
         }
 	return parent::isAuthorized($user);
+    }
+    public function download_user_csv(){
+       
+          $filename = "Users ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','User Name','Password','Role','Facebook Id','Last Login','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
+                            $row = array(
+                            $result['User']['id'],
+                            $result['User']['username'],
+                            $result['User']['password'],
+                            $result['User']['role'],
+                            $result['User']['facebook_id'],
+                            $result['User']['last_login'],
+                            $result['User']['created'],
+                            $result['User']['modified'],
+                            
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
     }
     //WEB SERVICES
     public function ws_add () {
@@ -57,8 +108,144 @@ class UsersController extends AppController {
  */
 
 	public function index() {
+     
+        $this->setUserProfile();
+         $this->Prg->commonProcess('User');
+      
+      if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start'])||($this->passedArgs['last_login_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $last_login_end=$this->passedArgs['last_login_end'].' 23:59:59';
+                 $last_login_start=$this->passedArgs['last_login_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['last_login_end']){
+                    $last_login_end=$this->passedArgs['last_login_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs),'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+               ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+               )); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                 $last_login_end=$this->passedArgs['last_login_end'].' 23:59:59';
+                 $last_login_start=$this->passedArgs['last_login_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['last_login_end']){
+                    $last_login_end=$this->passedArgs['last_login_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs) ,'User.created >'=>$created_start,'User.created <' => $created_end
+                             ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+
+              )); 
+            }
+            if(!($this->passedArgs['last_login_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs) ,'User.created >'=>$created_start,'User.created <' => $created_end
+                             ,'User.modified >'=>$modified,'User.modified <' => $modified
+
+              )); 
+            }
+            if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start']))){
+                 
+                 $last_login_end=$this->passedArgs['last_login_end'].' 23:59:59';
+                 $last_login_start=$this->passedArgs['last_login_start'].' 00:00:00';
+                
+                if(!$this->passedArgs['last_login_end']){
+                    $last_login_end=$this->passedArgs['last_login_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
+               ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+               )); 
+            }
+         if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['last_login_start']))){
+                 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
+               ,'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+               )); 
+            }
+           if(!($this->passedArgs['modified_start'])&&(!($this->passedArgs['last_login_start']))){
+                 
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
+               ,'User.created >'=>$created_start,'User.created <' => $created_end
+               )); 
+            }
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['last_login_start'])))
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                 $last_login_end=$this->passedArgs['last_login_end'].' 23:59:59';
+                 $last_login_start=$this->passedArgs['last_login_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['last_login_end']){
+                    $last_login_end=$this->passedArgs['last_login_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs),'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+           ,'User.created >'=>$created_start,'User.created <' => $created_end
+            ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+
+            ));  
+             }  
+            
+    
+        }
+        else{
+                $conditions= array('conditions' => array($this->User->parseCriteria($this->passedArgs)));
+  
+            }
+        
 		$this->User->recursive = 0;
-		$this->set('users', $this->paginate());
+
+        $this->User->recursive = 0;
+        //$conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
+        $this->paginate = $conditions;
+        $users=$this->paginate();
+        foreach($users as $k => $uid) {
+            $users[$k]['User']['count'] =$this->Reminder->find('count',array('conditions' => array('Reminder.user_id '=>$uid['User']['id'])));
+
+        }
+        
+		$this->set('users', $users);
 	}
 
 /**
@@ -417,11 +604,12 @@ class UsersController extends AppController {
         }
         
         // Update Access token and last_login
-        $this->User->updateAll(array(
-            'User.last_login' => date('Y-m-d'),
-            'User.access_token' => '"'.$access_token.'"'
-        ), array(
-            'User.id' => $user['id']));
+         $this->User->updateAll(array(
+           'User.username' => '"'.$this->Connect->user('username').'"',
+           'User.last_login' => '"'.date('Y-m-d H:i:s').'"',
+           'User.access_token' => '"'.$access_token.'"'
+       ), array(
+           'User.id' => $user['id']));
     }
 
     
