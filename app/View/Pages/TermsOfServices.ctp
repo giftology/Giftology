@@ -189,7 +189,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 						<p>8.1   The price for each Gift is payable into Giftology's bank account.</p>
 <p>8.2   You will be able to make payment into Giftology's bank account in any one of the following ways:</p>
 <ul style="list-style:none; margin-left:30px;">
- <li>a)  <strong> Credit card payments:</strong>  Giftology currently accepts VISA and Mastercard credit cards, net banking options, debit cards, cash cards etc...  At the time of making your Gift purchase, the transaction details are; presented to the bank and an authorization is obtained for the Gift price.  If such authorisation is not obtained, the purchase will be cancelled.  If authorisation is obtained, payment in respect of the Gift may be collected immediately.</li></ul>
+ <li>a)  <strong> Credit/Debit card payments:</strong>  Giftology currently accepts VISA and Mastercard <b>credit cards</b>, <b>net banking</b> options, <b>debit cards</b>, <b>cash cards</b> etc...  At the time of making your Gift purchase, the transaction details are; presented to the bank and an authorization is obtained for the Gift price.  If such authorisation is not obtained, the purchase will be cancelled.  If authorisation is obtained, payment in respect of the Gift may be collected immediately.</li></ul>
 					</div>
 				</div>
 				<!-- end panel --><!-- panel -->
@@ -267,7 +267,7 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
  <li>a)   We use your<strong>Card Details</strong> only in order to process your purchase of a Gift. We only store limited information allowed by law for customer service purposes, which is why you must re-enter such details every time you make a purchase on the Website.</li>
 <li>b)  We use your <strong>Personal Details</strong> to greet you when you access your User Account, to manage and administer your use of the Services and fulfil our contractual obligations.  More specifically, you acknowledge and agree that your full names and contact number if relevant may be disclosed to Merchants from whom you have purchased Gifts to facilitate communication between you in relation to your use of the Gifts.</li>
 <li>c)   We use your<strong> Contact Details</strong> to verify your identity and to inform you of facts relating to your use of the Services (eg. notifications regarding major updates or content you have posted or downloaded from the Website, customer service notifications, and to address copyright infringement or defamation issues) as well as to inform you, subject to obtaining your prior consent, of competitions, promotions and special offers form us and/or our partners and/or affiliates. We may also provide your email address and physical address details to Merchants from whom you have purchased Gifts to facilitate communication between you in relation to the usage of your Gift.</li>
-<li>d)12.3.4   We may use your<strong> Usage Details</strong> to:</li>
+<li>d)  We may use your<strong> Usage Details</strong> to:</li>
 <ul style="list-style:none; ">
  <li>-   remember your information so that you will not have to re-enter it during your visit or the next time you access the Website;</li>
 <li>-  monitor aggregate Website usage metrics such as total number of visitors and pages accessed; and</p>
@@ -385,10 +385,8 @@ Consequently, it is your responsibility to ensure that &nbsp; &nbsp; you read th
 				<div style="display: none;" class="container">
 					<div class="content">
 		<p>
-21.1   Save for Giftology being liable to you 
-<strong>
-Neither Giftology nor any of its agents or representatives shall be liable for any damage, loss or liability of whatsoever nature arising from the use or inability to use this Website or the services or content provided from and through this Website.  Furthermore, Giftology makes no representations or warranties, implied or otherwise, that, amongst others, the content and technology available from this Website are free from errors or omissions or that the service will be 100% uninterrupted and error free.  You are encouraged to report any possible malfunctions and errors to <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u>.</strong></p>
-<p>21.2   <strong>The Website itself is supplied on an "as is" basis and has not been compiled or supplied to meet your individual requirements. </strong> It is your sole responsibility to satisfy yourself prior to accepting these T&C that the service available from and through this Website will meet your individual requirements and be compatible with your hardware and/or software.</p>
+21.1   Save for Giftology being liable to you, neither Giftology nor any of its agents or representatives shall be liable for any damage, loss or liability of whatsoever nature arising from the use or inability to use this Website or the services or content provided from and through this Website.  Furthermore, Giftology makes no representations or warranties, implied or otherwise, that, amongst others, the content and technology available from this Website are free from errors or omissions or that the service will be 100% uninterrupted and error free.  You are encouraged to report any possible malfunctions and errors to <u> <i><font style="color:#900;">cs@Giftology.com</font></i></u>.</p>
+<p>21.2   The Website itself is supplied on an "as is" basis and has not been compiled or supplied to meet your individual requirements.  It is your sole responsibility to satisfy yourself prior to accepting these T&C that the service available from and through this Website will meet your individual requirements and be compatible with your hardware and/or software.</p>
 <p>21.3   Information, ideas and opinions expressed on this Website should not be regarded as professional advice or the official opinion of Giftology and you are encouraged to consult professional advice before taking any course of action related to information, ideas or opinions expressed on this Website</p>
 
 					</div>
