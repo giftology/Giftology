@@ -61,9 +61,9 @@ class UsersController extends AppController {
                 array(
                     'conditions' => array('User.id' => $user_id)
             ));
-            $this->set('latest_friend_fb_id', $latest_friend['UserProfile']['latest_friend']);    
+            $this->set('latest_friend', $latest_friend);    
         }
-        $this->set('_serialize', array('latest_friend_fb_id'));
+        $this->set('_serialize', array('latest_friend'));
     }
 /**
  * index method
