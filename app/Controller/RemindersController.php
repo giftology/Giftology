@@ -29,7 +29,11 @@ class RemindersController extends AppController {
 	}
 
 	public function ws_reminder_today(){
-        $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
+        $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+        $user = $this->User->find('first', array(
+        	'fields' => array('id'), 
+        	'conditions'=> array('facebook_id' => $receiver_fb_id)));
+        $user_id = $user['User']['id'];
         $conditions = array(
             'user_id' => $user_id);
 
@@ -38,10 +42,12 @@ class RemindersController extends AppController {
 		$e = $this->wsReminderTodayException($user_id, $conditions);
 		if(isset($e) && !empty($e)) $this->set('today_birthday', array('error' => $e));
         else{
-            $this->log("Searching today birthday reminder for ".$user_id);
+            $this->log("Searching today birthday reminder for user id".$user_id);
             $reminders = $this->Reminder->find('all',
-                array('conditions' => $conditions,
-                    'order' => 'friend_birthday ASC'
+                array(
+                	'fields' => array('Reminder.friend_fb_id', 'Reminder.friend_name'),
+                	'conditions' => $conditions,
+                    'order' => 'friend_birthday ASC',
             ));
             $this->set('today_birthday', $reminders);    
         }
