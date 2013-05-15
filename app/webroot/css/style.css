@@ -1422,7 +1422,7 @@ ul.voucher-details li {
 .media #foot_content1 .bag .image{
     
    /* padding-bottom:5px;*/
-    width:180px;
+    width:110px;
     height:50px;
     float:left;
     position: absolute;
@@ -1431,10 +1431,11 @@ ul.voucher-details li {
    
 
 }
+
 .media #foot_content1 .bag .press{
     
    /* padding-bottom:5px;*/
-    width:530px;
+    width:475px;
     height:50px;
     float:right;
     margin-top: 5px;
