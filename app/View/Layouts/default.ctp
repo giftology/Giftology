@@ -141,7 +141,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
                    
                      <?= $this->Html->link('HOME', array('controller' => 'reminders', 'action' =>  'view_friends')); ?>
                     <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?>
-                    <?= $this->Html->link('TEAM', array('controller' => 'pages', 'action' => 'display', 'Team')); ?>
+                    <?= $this->Html->link('TEAM', array('controller' => 'pages', 'action' => 'display', 'team')); ?>
                       <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'display','Media')); ?>
                       <?= $this->Html->link('RETAILERS', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?>
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
