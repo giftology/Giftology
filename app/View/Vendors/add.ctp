@@ -15,6 +15,13 @@
 		            ), 
 		            'full' 
 	        ); 
+		echo $this->Tinymce->input('Vendor.short_description', array( 
+	            'label' => 'short About' 
+		            ),array( 
+		                'language'=>'en' 
+		            ), 
+		            'full' 
+	        ); 
 
 
 	?>

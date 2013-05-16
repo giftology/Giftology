@@ -36,6 +36,11 @@
 			<?php echo h($product['Product']['terms']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Short Terms'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['short_terms']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Redeem Instr'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['redeem_instr']); ?>

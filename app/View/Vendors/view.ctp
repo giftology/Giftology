@@ -60,6 +60,7 @@
 		<th><?php echo __('Image'); ?></th>
 		<th><?php echo __('Days Valid'); ?></th>
 		<th><?php echo __('Terms'); ?></th>
+		<th><?php echo __('short_description'); ?></th>
 		<th><?php echo __('Code'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
