@@ -392,10 +392,10 @@
         //$date =date("Y-m-d", strtotime($send_date['Gift']['created']));
         $days_before_mail = "7";
         $product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime($send_date['Gift']['created'])));
-        print_r($product_expire_date);
+        
     }
     
-    //print_r($date) ?>
+     ?>
     <script type="text/javascript">
 
       $(document).ready(function(){
@@ -405,6 +405,7 @@
        {
         
              var current = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+            // alert(new_date+ " "+ total_time + " " +current);
             if(total_time > current){
                 $(".send_urself").hide();
             }
@@ -440,7 +441,7 @@
                 $("#productsViewProductsForm").submit() 
             }); 
         $(".android_app").click(function (){
-            alert("App coming soon, stay tuned!");
+            alert("App Coming Soon, Stay Tuned!");
         });
         });
   </script>
