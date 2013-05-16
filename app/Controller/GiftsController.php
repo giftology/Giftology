@@ -122,18 +122,18 @@ class GiftsController extends AppController {
         else{
             $this->log("Searching Lastest gift for receiver fb id ".$receiver_fb_id);
             $gift = $this->Gift->find('first', array(
-            	'fields' => array('id', 'product_id', 'receiver_id'),
+            	'fields' => array('id', 'product_id', 'sender_id'),
             	'conditions' => array('receiver_fb_id' => $receiver_fb_id),
             	'order' => array('created DESC')
             	));
-            $receiver_name = $this->UserProfile->find('first', array(
+            $sender_name = $this->UserProfile->find('first', array(
                 'fields' => array('first_name','last_name'),
-                'conditions' => array('user_id' => $gift['Gift']['receiver_id'])
+                'conditions' => array('user_id' => $gift['Gift']['sender_id'])
             ));
             $latest_gift = array(
                 'product_id' => $gift['Gift']['product_id'],
-                'receiver_first_name' => $receiver_name['UserProfile']['first_name'],
-                'receiver_last_name' => $receiver_name['UserProfile']['last_name']
+                'sender_first_name' => $sender_name['UserProfile']['first_name'],
+                'sender_last_name' => $sender_name['UserProfile']['last_name']
             );
             $this->set('gift', $latest_gift);    
         }
