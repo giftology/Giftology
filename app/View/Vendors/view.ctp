@@ -60,7 +60,7 @@
 		<th><?php echo __('Image'); ?></th>
 		<th><?php echo __('Days Valid'); ?></th>
 		<th><?php echo __('Terms'); ?></th>
-		<th><?php echo __('short_description'); ?></th>
+		<th><?php echo __('Short Terms'); ?></th>
 		<th><?php echo __('Code'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
@@ -79,6 +79,7 @@
 			<td><?php echo $product['image']; ?></td>
 			<td><?php echo $product['days_valid']; ?></td>
 			<td><?php echo $product['terms']; ?></td>
+			<td><?php echo $product['short_terms']; ?></td>
 			<td><?php echo $product['code']; ?></td>
 			<td><?php echo $product['created']; ?></td>
 			<td><?php echo $product['modified']; ?></td>
