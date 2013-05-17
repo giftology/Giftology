@@ -336,6 +336,9 @@ class RemindersController extends AppController {
 				$this->set('friends_active', 'active');
 			    } else {
 			    $today_users = $this->get_birthdays('mine','today');
+			    foreach($today_users as $k => $today_user){
+					$today_users[$k]['Reminder']['occasion'] = "Birthday";
+				}
 				$no_today_users = count($today_users);
 				if($no_today_users < 6 && SUGGESTED_FRIENDS)
 				{
@@ -347,62 +350,68 @@ class RemindersController extends AppController {
                 		'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => 'India')),'order' => array('RAND()')));
 					}
 					$gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id','created'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
-				 	 $gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
-					 $gift_send_friend_lists=$this->Reminder->find('all', array(
+				 	$gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
+					$gift_send_friend_lists=$this->Reminder->find('all', array(
                 		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $gift_send_facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
-					 foreach($gift_send_friend_lists as $k => $gift_send_friend_list){
+					foreach($gift_send_friend_lists as $k => $gift_send_friend_list){
 			           $gift_send_friend_lists[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($gift_send_friend_list['Reminder']['user_id']);
-			       		}
+			           $gift_send_friend_lists[$k]['Reminder']['occasion'] = "Return Gift";
+			       	}
 		       		$gift_send_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_id'=>$gift_send_friend['Gift']['sender_id'],'Gift.created >'=>$gift_send_friend['Gift']['created'])),'order'=>'Gift.id DESC'));
 			           if($gift_send_friend_hide){
 			           	$gift_send_friend_lists = NULL;
-			           }
-
-
-		             $latest_friend = $this->UserProfile->find('first', array('fields' => array('latest_friend'),'conditions' => array('UserProfile.user_id' => $this->Auth->user('id'))));
-		             $latest_friend_data = $this->Reminder->find('all', array(
+			        }
+ 
+		            $latest_friend = $this->UserProfile->find('first', array('fields' => array('latest_friend'),'conditions' => array('UserProfile.user_id' => $this->Auth->user('id'))));
+		            $latest_friend_data = $this->Reminder->find('all', array(
                 		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $latest_friend['UserProfile']['latest_friend'],'Reminder.user_id'=>$this->Auth->user('id')))));
-		             foreach($latest_friend_data as $k => $latest_friends){
+		            foreach($latest_friend_data as $k => $latest_friends){
 			           $latest_friend_data[$k]['Reminder']['latest_friend_data_id'] = $this->AesCrypt->encrypt($latest_friends['Reminder']['user_id']);
-		             }
-		             $latest_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_fb_id'=>$latest_friend['UserProfile']['latest_friend'])),'order'=>'Gift.id DESC'));
-		             if($latest_friend_hide){
+                       if($latest_friends['Reminder']['sex'] == "male") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Him";
+                       if($latest_friends['Reminder']['sex'] == "female") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Her";  
+
+		            }
+		            $latest_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_fb_id'=>$latest_friend['UserProfile']['latest_friend'])),'order'=>'Gift.id DESC'));
+		            if($latest_friend_hide){
 			           	$latest_friend_data = NULL;
-			           }
+			        }
 
 			          
-			           if($latest_friend_data != NULL && $gift_send_friend_lists != NULL)
-			           {	
-			           		$merge_list = array_merge($gift_send_friend_lists,$latest_friend_data);
-			           		$suggested_list = array_merge($merge_list,$friend_list);
-			 				foreach($suggested_list as $k => $suggested_lists){
-			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
-		             		}
-			           }
+			        if($latest_friend_data != NULL && $gift_send_friend_lists != NULL)
+			        {	
+			        	$merge_list = array_merge($gift_send_friend_lists,$latest_friend_data);
+			        	$suggested_list = array_merge($merge_list,$friend_list);
+			 			foreach($suggested_list as $k => $suggested_lists){
+			         		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+			         		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
+		             	}
+			        }
 			           
-			           if($latest_friend_data == NULL && $gift_send_friend_lists != NULL)
-			           {
-			           		$suggested_list = array_merge($gift_send_friend_lists,$friend_list);
-			 				foreach($suggested_list as $k => $suggested_lists){
-			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
-		             		}
-			           }
-			            if($latest_friend_data != NULL && $gift_send_friend_lists == NULL)
-			           {
-			           		$suggested_list = array_merge($latest_friend_data,$friend_list);
-			 				foreach($suggested_list as $k => $suggested_lists){
-			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
-		             		}
-			           }
-			           if($latest_friend_data == NULL && $gift_send_friend_lists == NULL)
-			           {
-			           		$suggested_list = $friend_list;
-			 				foreach($suggested_list as $k => $suggested_lists){
-			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
-		             		}
-			           }
-		             
-			 		
+			        if($latest_friend_data == NULL && $gift_send_friend_lists != NULL)
+			        {
+			           	$suggested_list = array_merge($gift_send_friend_lists,$friend_list);
+			 			foreach($suggested_list as $k => $suggested_lists){
+			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
+		             	}
+			        }
+			        if($latest_friend_data != NULL && $gift_send_friend_lists == NULL)
+			        {
+			        	$suggested_list = array_merge($latest_friend_data,$friend_list);
+			 			foreach($suggested_list as $k => $suggested_lists){
+			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
+		             	}
+			        }
+			        if($latest_friend_data == NULL && $gift_send_friend_lists == NULL)
+			        {
+			           	$suggested_list = $friend_list;
+			 			foreach($suggested_list as $k => $suggested_lists){
+			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
+		             	}
+			        }
+		            
 			 		$today_users = array_merge($today_users,  $suggested_list);
 			 		$today_users = array_slice($today_users, 0, 6);
 				}

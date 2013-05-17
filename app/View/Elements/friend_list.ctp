@@ -1,7 +1,9 @@
 <div class="image-wrapper">
     <?php  echo $this->Form->create('products', array('action' => 'view_products'));?>
-    <?php foreach($reminders as $reminder): ?>
-        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>" suggested-friend="<?= $reminder['Reminder']['latest_friend_fb_id']; ?>">
+    <?php foreach($reminders as $reminder):
+            if($reminder['Reminder']['occasion']) $ocasion = $reminder['Reminder']['occasion'];
+    ?>
+        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>">
               
                 <div class="event suggested">
                         <div class="image-container">
@@ -28,17 +30,13 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php 
+                        <?php
+                        //DebugBreak(); 
                         $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && array_key_exists('count', $reminder)) : 
                                ?>Turns <?php echo $age ;
-                            elseif($reminder['Reminder']['encrypted_user_id']): ?>
-                                Return Gift
-                              <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "male"): ?>
-                                Welcome Him
-                            <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "female"): ?>
-                                Welcome Her
-                            <?php elseif(!array_key_exists('count', $reminder)): ?>
-                                Suggested
+                            elseif($reminder['Reminder']['occasion']): 
+                                echo $reminder['Reminder']['occasion']
+                            ?>
                             <?php else: ?>Birthday
                             <?php endif; ?></p>
                 </div>

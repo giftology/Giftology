@@ -1,6 +1,6 @@
 <div id="celebration-details">
 	<div class="details-container">
-		<?php if ($ocasion): ?>
+		<?php if ($ocasion && $ocasion != 'Suggested' && $ocasion != 'Welcome Him' && $ocasion != 'Welcome Her' && $ocasion != 'Return Gift'): ?>
 			<h2>Celebrate <?= $receiver_name; ?>'s <?= $ocasion; ?>!</h2>
 		<?php else: ?>
 			<h2>Send a gift to 

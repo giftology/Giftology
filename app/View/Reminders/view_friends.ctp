@@ -14,7 +14,7 @@ var res_data;
   <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6007399956303&amp;value=0" /></noscript>
 <!--<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>-->
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-<script type='text/javascript'>
+<!--<script type='text/javascript'>
     $(document).ready(function(){
         var delay = (function(){
           var timer = 0;
@@ -114,10 +114,10 @@ var res_data;
         });
     });
 
-</script>
+</script>-->
 
 
-<script id="ititemplate" type="text/x-jquery-tmpl">
+<!--<script id="ititemplate" type="text/x-jquery-tmpl">
  <?php  echo $this->Form->create('products', array('action' => 'view_products'));?>
  <div class="event" id="${Reminder.encrypted_friend_fb_id}" name="${Reminder.friend_name}" birth-data="${Reminder.friend_birthday}" loc-data="${Reminder.current_location}" year-data="${Reminder.friend_birthyear}" sex-data="${Reminder.sex}">
      <div class="event suggested">
@@ -134,7 +134,7 @@ var res_data;
     </div>
 </div>
  <?php echo $this->Form->end();?>               
-</script>
+</script>-->
 
 
 
