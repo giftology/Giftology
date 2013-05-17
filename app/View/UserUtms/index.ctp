@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="userUtms index">
 	<h2><?php echo __('User Utms'); ?></h2>
 	<table cellpadding="0" cellspacing="0">

@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="gifts form">
 <?php echo $this->Form->create('Gift'); ?>
 	<fieldset>

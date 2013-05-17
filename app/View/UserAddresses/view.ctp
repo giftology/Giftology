@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="userAddresses view">
 <h2><?php  echo __('User Address'); ?></h2>
 	<dl>

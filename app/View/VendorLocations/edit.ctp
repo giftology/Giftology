@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="vendorLocations form">
 <?php echo $this->Form->create('VendorLocation'); ?>
 	<fieldset>

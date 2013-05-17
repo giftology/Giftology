@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="uploadedProductCodes form">
 <?php echo $this->Form->create('UploadedProductCode', array('type' => 'file')); ?>
 	<fieldset>

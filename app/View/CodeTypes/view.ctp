@@ -1,4 +1,5 @@
-<div class="codeTypes view">
+<?= $this->element('admin_header'); ?><div class="codeTypes view">
+
 <h2><?php  echo __('Code Type'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>

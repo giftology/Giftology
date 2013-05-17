@@ -1,4 +1,4 @@
-
+<?= $this->element('admin_header'); ?>
 Prod_id</t></t>Availble</t></t>Expires
 <?php foreach($ret as $item): ?>
 	<p>

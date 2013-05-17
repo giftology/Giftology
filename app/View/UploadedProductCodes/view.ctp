@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="uploadedProductCodes view">
 <h2><?php  echo __('Uploaded Product Code'); ?></h2>
 	<dl>

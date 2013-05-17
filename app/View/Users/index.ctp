@@ -1,8 +1,6 @@
+<?= $this->element('admin_header'); ?>
 <div class="users index">
 	<h2><?php echo __('Users'); ?></h2>
-	<div>
-		<button href="#collapse1" class="nav-toggle",sixe='1'>Search</button>
-	</div>
 	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
 
 		<?php echo $this->Form->create('User', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
@@ -48,7 +46,7 @@
          <?php  echo $this->Form->submit("Download User CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
-	<table cellpadding="0" cellspacing="0" border="1">
+	<table cellpadding="0" cellspacing="0" border="1" font-size="10px">
 
 	<tr>
 			<td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>

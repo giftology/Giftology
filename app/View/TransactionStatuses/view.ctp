@@ -1,4 +1,4 @@
-<div class="transactionStatuses view">
+<?= $this->element('admin_header'); ?><div class="transactionStatuses view">
 <h2><?php  echo __('Transaction Status'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>

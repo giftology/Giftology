@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="vendorLocations index">
 	<h2><?php echo __('Vendor Locations'); ?></h2>
 	<table cellpadding="0" cellspacing="0">

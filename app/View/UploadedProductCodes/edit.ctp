@@ -1,4 +1,5 @@
-<div class="uploadedProductCodes form">
+<?= $this->element('admin_header'); ?><div class="uploadedProductCodes form">
+
 <?php echo $this->Form->create('UploadedProductCode'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Uploaded Product Code'); ?></legend>

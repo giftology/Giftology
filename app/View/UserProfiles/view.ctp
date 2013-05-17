@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="userProfiles view">
 <h2><?php  echo __('User Profile'); ?></h2>
 	<dl>

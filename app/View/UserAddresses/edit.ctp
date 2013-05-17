@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="userAddresses form">
 <?php echo $this->Form->create('UserAddress'); ?>
 	<fieldset>

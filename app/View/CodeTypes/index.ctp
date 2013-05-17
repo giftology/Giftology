@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="codeTypes index">
 	<h2><?php echo __('Code Types'); ?></h2>
 	<table cellpadding="0" cellspacing="0">

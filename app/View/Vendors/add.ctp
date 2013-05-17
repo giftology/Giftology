@@ -1,4 +1,5 @@
-<div class="vendors form">
+<?= $this->element('admin_header'); ?><div class="vendors form">
+
 <?php echo $this->Form->create('Vendor', array('type' => 'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Add Vendor'); ?></legend>

@@ -1,4 +1,5 @@
-<div class="codeTypes form">
+<?= $this->element('admin_header'); ?><div class="codeTypes form">
+
 <?php echo $this->Form->create('CodeType'); ?>
 	<fieldset>
 		<legend><?php echo __('Add Code Type'); ?></legend>

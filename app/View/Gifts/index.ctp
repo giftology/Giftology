@@ -27,6 +27,7 @@
         $('.campaign_checkbox').show();
     });
 </script>
+<?= $this->element('admin_header'); ?>
 <div class="gifts index">
 	<h2><?php echo __('Gifts'); ?></h2>
 	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Gifts', 'action' => 'download_gift_csv', 'onsubmit'=>'return chkValidate();') );?>

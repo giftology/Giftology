@@ -1,4 +1,5 @@
-CAMPAIGN ADMIN PANEL
+<?= $this->element('admin_header'); ?>CAMPAIGN ADMIN PANEL
+
 <div class="gifts index">
 	<h2><?php echo __('Campaigns'); ?></h2>
 	<table cellpadding="0" cellspacing="1" border="1px">

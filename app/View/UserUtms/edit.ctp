@@ -1,4 +1,4 @@
-<div class="userUtms form">
+<?= $this->element('admin_header'); ?><div class="userUtms form">
 <?php echo $this->Form->create('UserUtm'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit User Utm'); ?></legend>

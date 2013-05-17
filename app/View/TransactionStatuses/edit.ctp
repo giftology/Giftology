@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="transactionStatuses form">
 <?php echo $this->Form->create('TransactionStatus'); ?>
 	<fieldset>

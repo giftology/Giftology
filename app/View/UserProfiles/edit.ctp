@@ -1,4 +1,5 @@
-<div class="userProfiles form">
+<?= $this->element('admin_header'); ?><div class="userProfiles form">
+
 <?php echo $this->Form->create('UserProfile'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit User Profile'); ?></legend>
