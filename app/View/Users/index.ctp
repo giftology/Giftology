@@ -1,4 +1,4 @@
-<?= $this->element('admin_header'); ?>
+     <?= $this->element('admin_header'); ?>
 <div class="users index">
 	<h2><?php echo __('Users'); ?></h2>
 	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
@@ -46,7 +46,7 @@
          <?php  echo $this->Form->submit("Download User CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
-	<table cellpadding="0" cellspacing="0" border="1" font-size="10px">
+	<table cellpadding="0" cellspacing="0" border="1">
 
 	<tr>
 			<td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
@@ -94,16 +94,8 @@
         <td><?php echo h($user['UserProfile']['birthday']); ?>&nbsp;</td>
         <td><?php echo h($user['UserProfile']['birthyear']); ?>&nbsp;</td>
         <td><?php echo h($user['User']['count']); ?>&nbsp;</td>
-
-
-
-
-
         
-
-        
-        
-        
+     
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
