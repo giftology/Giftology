@@ -31,7 +31,7 @@
    <li class='has-sub '><a href='#'><span>Gift/Transaction</span></a>
       <ul>
          <li><?php echo $this->Html->link(__('Free'), array('controller' => 'Gifts', 'action' => 'index')); ?></li>
-         <li><?php echo $this->Html->link(__('Paid'), array('controller' => 'user_addresses', 'action' => 'index')); ?></li>
+         <li><?php echo $this->Html->link(__('Paid'), array('controller' => 'Gifts', 'action' => 'paid_gift')); ?></li>
       </ul>
    </li>
    <li class='has-sub '><a href='#'><span>Merchant</span></a>
