@@ -34,7 +34,7 @@ class UsersController extends AppController {
         if(isset($e) && !empty($e) && !$e['user_exists']) $this->set('status', array('error' => $e));
         elseif($e['user_exists']){
             $status = array('Status' => 'OK', 'user_id' => $e['user_id'], 'message' => $e[10]);
-            $this->wsAddRefreshReminder($json_data);
+            //$this->wsAddRefreshReminder($json_data);
             $this->set('status', $status);
         }
         else{
@@ -828,7 +828,7 @@ class UsersController extends AppController {
         return $e;
     }
 
-    public function wsAddRefreshReminder($json_data){
+    /*public function wsAddRefreshReminder($json_data){
         
-    }
+    }*/
 }
