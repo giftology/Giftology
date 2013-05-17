@@ -216,22 +216,25 @@ class RemindersController extends AppController {
 		$this->Session->setFlash(__('Reminder was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-	public function send_success(){
-		$this->reminder_view_friends();
-        $this->render('view_friends');	
-        $this->autoRender = $this->autoLayout = false;    
-	}
-	public function view_friends($type=null) {
+		public function send_success(){
+			$this->reminder_view_friends();
+	        $this->render('view_friends');	
+	        $this->autoRender = $this->autoLayout = false;    
+		
+		}
 
-		if($this->Connect->user()){
-            $this->User->id = $this->Auth->User('id');
-            $this->User->updateAll(
-            	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $this->Auth->User('id'))
-            	);
-        }
-        $this->reminder_view_friends($type);	
-	}
+		public function view_friends($type=null) 
+		{
+
+				if($this->Connect->user()){
+		            $this->User->id = $this->Auth->User('id');
+		            $this->User->updateAll(
+		            array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+		            array('User.id' => $this->Auth->User('id'))
+		            );
+		        }
+		        $this->reminder_view_friends($type);	
+		}
 
 	public function reminder_view_friends($type=null){
 		$Facebook = new FB();
@@ -262,8 +265,13 @@ class RemindersController extends AppController {
             );
         $condition = NULL;
         $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
-        $result = $this->UserProfile->updateAll($data, $condition);     
-
+        $result = $this->UserProfile->updateAll($data, $condition);
+        $enc_fb_id = $this->AesCrypt->encrypt($fb_id['User']['facebook_id']); 
+        $this->set('id', $enc_fb_id);
+        $this->set('name', $fb_first_last_name); 
+        $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
+        $this->set('send_date', $gift_send_date);
+        
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;

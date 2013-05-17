@@ -278,23 +278,25 @@ var res_data;
             <?php endif; ?>
     </div>
 
-                                
-
-
+<div class="send_urself" id="news-items">
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Gift Yourself" title="Gift Yourself"/></div>
+     <?php echo $this->Form->end();?>    
+</div>
+<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/> </div>
 <div id="news-items" >
         <div class="shadow-wrapper right items">
-                <div class="frame">
+                
                 <html xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:fb="https://www.facebook.com/2008/fbml">
       
             <div id="fb-root"></div>
             <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
-            <h4>Like Giftology ? Invite your friends!</h4>
-            <button id="SendButtonForNoPerms"class="spread showtransbox"
+            <!--<h4>Like Giftology ? Invite your friends!</h4>-->
+            <div id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestToRecipients(); return false;"
-              value="Spread the Joy"
-            >Spread the Joy       
-            </button>
+              value="Spread the Joy" style="background:transparent!important; cursor:pointer;"
+            > <img src="<?= IMAGE_ROOT; ?>FInvite_Button.png" alt="Invite Friends" title="Invite Your Friends"/>      
+            </div>
             <?php 
                 $imploded_facebook_id = NULL;
                 if(isset($facebook_id) && !empty($facebook_id)){
@@ -326,7 +328,7 @@ var res_data;
                 // Handle callback here
               }
             </script>
-        </div>
+       
     </div>
 </div>
 <!--<div id="news-items" style="margin-top:-20px" >
@@ -374,7 +376,7 @@ var res_data;
                 <div class="frame">
                         <h3>Total Gifts Sent</h3><ul>
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
-                       <h3>Whats happening now</h3><ul>
+                       <h3>What's Happening Now</h3><ul>
             <?php $last_sender_id = 0; ?>
             
                         <?php foreach($gifts_sent as $gift): ?>
@@ -418,7 +420,106 @@ var res_data;
         <?php endif; ?>
     <?php endforeach; ?>
     <?php endif; */?>
+    <?php 
+    if($send_date == "")
+    {
+        $date = "";
+    } 
+    else{
+        //$date =date("Y-m-d", strtotime($send_date['Gift']['created']));
+        $days_before_mail = "7";
+        $product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime($send_date['Gift']['created'])));
+        
+    }
     
+     ?>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+       var new_date = '<?php echo $product_expire_date;?>';
+       var total_time = new Date(new_date).getTime();
+       if(new_date)
+       {
+        
+             var current = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+            // alert(new_date+ " "+ total_time + " " +current);
+            if(total_time > current){
+                $(".send_urself").hide();
+            }
+            else{
+                $(".send_urself").show();
+            }
+        }
+       else
+       {
+            $(".send_urself").show();
+        }
+        $('Form > .eve').click(function (){
+
+                var gift_value = $(this).attr('id');
+                var gift_name = $(this).attr('name');
+                //alert(gift_value + " "+gift_name );
+
+                
+                  $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'friend_id',
+                    value: gift_value,
+                }).appendTo('#productsViewProductsForm');
+
+                   $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_name+'_hidden',
+                    name: 'friend_name',
+                    value: gift_name,
+                }).appendTo('#productsViewProductsForm');
+
+                $("#productsViewProductsForm").submit() 
+            }); 
+        $(".android_app").click(function (){
+            alert("App Coming Soon, Stay Tuned!");
+        });
+        });
+  </script>
+  <script type="text/javascript">
+$(document).ready(function()
+{
+    $(".android_app").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Googleplay_Button_1.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//GooglePlay_Button.png");
+        }                         
+    ); 
+
+    $(".eve").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button_3.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button.png");
+        }                         
+    ); 
+
+    $("#SendButtonForNoPerms").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Finvite_Button_2.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//FInvite_Button.png");
+        }                         
+    );                  
+});
+
+  </script>
     
 <script type="text/javascript">
     

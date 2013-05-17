@@ -227,6 +227,12 @@ class UsersController extends AppController {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
                 $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
+            if($gift['GiftsReceived']['sender_id'] == $gift['GiftsReceived']['receiver_id'])
+             {
+                $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+
+                $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+            }
 
             if (isset($image)) {
                 $this->set('fb_image', FULL_BASE_URL.'/'.$image);

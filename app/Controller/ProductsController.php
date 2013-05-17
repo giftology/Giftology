@@ -206,8 +206,16 @@ class ProductsController extends AppController {
         }
                      
         if($this->request->is('post')){
-             $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
-            $receiver_name=$this->data['friend_name'];
+
+            $receiver_id=$this->AesCrypt->decrypt($this->data['friend_id']);
+            if($receiver_id == $this->Auth->user('facebook_id') )
+            {
+                $receiver_name = "Myself";
+            }
+            else
+            {
+                $receiver_name=$this->data['friend_name'];
+            }
             $receiver_birthday=$this->data['friend_birth'];
             $receiver_location=$this->data['friend_loc'];
             $rcvrbirth_year=$this->data['friend_year'];
@@ -327,6 +335,7 @@ class ProductsController extends AppController {
             $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
             $suggested=$this->AesCrypt->decrypt($this->data['products']['suggested']);
         }
+        $fb_id = $this->Auth->user('facebook_id');
         $rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
         $reciever_address=$this->UserAddress->find('first',array('conditions'=>array('UserAddress.user_id'=>$reciever_id_user_table)));
@@ -346,6 +355,7 @@ class ProductsController extends AppController {
         if (!$this->Product->exists()) {
             throw new NotFoundException(__('Invalid product'));
         }
+        $this->set('facebook_id', $fb_id);
         $this->set('title_for_layout', "Send Gift"); // This is read in FacebookHelper to check for sending permissions on facebook. read that before changing XXHACK NS
         $this->set('receiver_id', isset($receiver_id) ? $receiver_id : null);
         $this->set('receiver_name', isset($receiver_name) ? $receiver_name : null);
