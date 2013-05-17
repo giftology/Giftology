@@ -7,21 +7,125 @@ App::uses('AppController', 'Controller');
  */
 class TransactionsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $components = array('CCAvenue');
-
+	public $components = array('CCAvenue','Search.Prg');
+   
 	public function isAuthorized($user) {
 	    if (($this->action == 'start_transaction')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
 	}
+	public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'amount_paid', 'type' => 'value'),
+            array('field' => 'transaction_status_id', 'type' => 'value'),
+            array('field'=> 'sender_id','type'=>'value'),
+            array('field'=> 'receiver_id','type'=>'value'),
+            array('field'=> 'product_id','type'=>'value'),
+            array('field'=> 'gift_id','type'=>'value'),
+            array('field'=> 'gift_amount','type'=>'value'),
+            array('field'=> 'gift_status_id','type'=>'value'),
+            array('field'=> 'expiry_date','type'=>'value'),
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+        
+        );
 
 /**
  * index method
  *
  * @return void
  */
+public function download_transaction_csv(){
+				
+                    $filename = "Transaction ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Sender Id','Receiver Id','Product Id','Gif Id','Amount','Status','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            
+                            $result= $this->Transaction->find('first', array('conditions'=>array('Transaction.id'=>$id)));
+                           
+                            $row = array(
+                            $result['Transaction']['id'],
+                            $result['Gift']['sender_id'],
+                            $result['Gift']['receiver_id'],
+                            $result['Gift']['product_id'],
+                            $result['Gift']['id'],
+                             $result['Transaction']['amount_paid'],
+                            $result['Transaction']['transaction_status_id'],
+                            $result['Transaction']['created'],
+                            $result['Transaction']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+                  	}
 	public function index() {
+		
+        $this->Prg->commonProcess('Transaction');
+
+		
+		 if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->Transaction->parseCriteria($this->passedArgs),'Transaction.modified >'=>$modified_start,'Transaction.modified <' => $modified_end
+               
+               )); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->Transaction->parseCriteria($this->passedArgs) ,'Transaction.created >'=>$created_start,'Transaction.created <' => $created_end
+               )); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->Transaction->parseCriteria($this->passedArgs),'Transaction.modified >'=>$modified_start,'Transaction.modified <' => $modified_end
+           ,'Transaction.created >'=>$created_start,'Transaction.created <' => $created_end
+            ));  
+             }  
+            
+    
+        }
+        else{
+        $conditions= array('conditions' => array($this->Transaction->parseCriteria($this->passedArgs)));
+
+        }
+       
+		$this->paginate = $conditions;
 		$this->Transaction->recursive = 0;
 		$this->set('transactions', $this->paginate());
 	}
