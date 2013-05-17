@@ -139,10 +139,11 @@ var res_data;
 
 
 
-<?php
+<?php                                        
             $date_to_compare = strtotime(date('Y-m-d H:i:s'));
             $profile_generated_since = floor(abs($date_to_compare - strtotime($user_created)) / 86400);
-            if( !($user_mail) || (substr($user_created, 0, 10) ==  date('Y-m-d')) || (($mail_verified != 1) && (($profile_generated_since >= 180) && ($profile_generated_since < 190))) || (($profile_generated_since < 5) && ($mail_verified != 1)  || (($profile_generated_since >= 180) && ($profile_generated_since < 190))) || DEFAULT_EMAIL_VERIFICATION){ ?>
+            if((!($user_mail) && ($mail_verified == 0)) || ((substr($user_created, 0, 10) ==  date('Y-m-d')) && ($mail_verified == 0)) || (($profile_generated_since < 5) && ($mail_verified == 0)) || (($profile_generated_since >= 180) && ($profile_generated_since < 190) && ($mail_verified == 0)) || (DEFAULT_EMAIL_VERIFICATION && ($mail_verified == 0)))
+              { ?>
 
 
                       <div id="popup_box"  > <!-- OUR PopupBox DIV-->
