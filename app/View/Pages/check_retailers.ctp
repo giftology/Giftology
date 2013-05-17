@@ -117,7 +117,7 @@ jQuery(document).ready(function()
                     
 
 
-<div id="foot_content" style="height:1000px;">
+<div id="foot_content" style="height:1100px;">
   <div id="clicktocallPopup">
 
     <div class="click_to_call_form_wrapper">
@@ -214,7 +214,7 @@ jQuery(document).ready(function()
                   <p id="contacttext" ><strong>Convinced? Learn how we can work together to help you increase sales with performance marketing by filling out the form below.</strong></p>
 
     <center><h3>Get in Touch</h3></center>      
-   <div id="foot_content_contact" style="height:380px;" >
+   <div id="foot_content_contact" style="height:400px;" >
     
 
       <div id="retailer_form" class="contactForm" >
