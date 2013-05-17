@@ -204,9 +204,12 @@ class UsersController extends AppController {
                 $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.carousel_image'),'conditions' => array('Vendor.id '=>$id)));
                 $this->set('Images', $Image_new);
             }
-             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+            $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
             $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            foreach($product as $k => $p){
+                $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
+            }
             $this->set('products', $product);
 
             $slidePlaySpeed = 8000;
@@ -318,10 +321,13 @@ class UsersController extends AppController {
     }
     public function product() 
     {
-       $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
-            $this->set('products', $product);
+        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+        foreach($product as $k => $p){
+            $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
+        }
+        $this->set('products', $product);
     }
     public function logout() {
 
@@ -357,8 +363,11 @@ class UsersController extends AppController {
 
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
-            $this->set('products', $product);
+        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+        foreach($product as $k => $p){
+            $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
+        }
+        $this->set('products', $product);
          
 
          

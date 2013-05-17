@@ -1,7 +1,7 @@
 <?php foreach ($products as $product): ?>
       <a>
         
-<div class="small-voucher">
+<div class="small-voucher" id="<?php echo $product['Product']['encrypted_gift_id']; ?>">
                     <span class="free  voucher">
                             <span class="featured-frame"></span>
                             <span class="selected-overlay"></span>
