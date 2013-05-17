@@ -2788,7 +2788,7 @@ color:#333333;
 text-align: justify;
 }
 
-#retailer_form {width:430px; margin: auto;}
+#retailer_form {width:430px; height: auto;margin: auto;}
  .arrownav{
   
     background:url('../img/arrow-nav.png');
@@ -2799,6 +2799,150 @@ margin-left: -20px;
 margin-top: -15px;
 
 }
+
+.reset-link {
+    color: #7B7B7B;
+    display: block;
+    float: right;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 12px;
+    font-style: italic;
+    padding: 10px 9px 0 0;
+    border: none;
+background: transparent;
+}
+.reset-link a {
+    color: #7B7B7B;
+    text-decoration: none;
+}
+.reset-link a:hover {
+    color: #000000;
+}
+
+
+
+
+
+/*click to call api */
+
+
+
+    .click_to_call_form:before {
+
+        /* background: url("http://www.superreceptionist.in/media/images/C2C.png") repeat scroll 0 0 transparent;*/
+
+        content: "";
+
+        height: 45px;
+
+        left: -109px;
+
+        position: absolute;
+
+        top: 0;
+
+        width: 101px;
+
+    }
+
+    .click_to_call_form {
+
+        /*border: 1px solid rgba(68, 68, 68, 0.2);
+
+       display: inline-block;*/
+
+        line-height: 0;
+        margin-top: 0;
+        float:right; 
+        padding: 8px;
+        position: relative;
+
+    }
+
+    
+
+    .click_to_call_form_wrapper{
+
+      
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f8f8',GradientType=0 );
+
+    }
+
+    .widget_tb {
+
+        border: 1px solid rgba(0, 0, 0, 0.13);
+
+        border-radius: 3px;
+
+        color: rgba(0,0,0,0.4)  !important;
+
+        font-size: 16px;
+
+        height: 6px;
+
+        letter-spacing: 1px;
+
+        line-height: 20px;
+
+        text-indent: 3%;
+
+        width: 200px;
+
+        float:left;
+        margin-top: -15px;
+
+    }
+
+    .widget_tb:focus, .widget_tb:active {
+
+        color:rgba(0,0,0,0.9) !important;
+
+    }
+
+    .widget_c2c_button {
+
+        display:inline-block;
+
+        width:60px;
+
+        margin-left:-68px;
+
+        margin-top:6px;
+
+        background-image:url('http://www.superreceptionist.in/media/images/call_button.png');
+
+        text-indent:-9999px;
+
+        height:25px;
+
+    }
+
+    .call_button {
+
+ 
+
+    }
+
+    .failure_C2C {
+
+        color:#a63737;
+
+        height:60px; text-align:center; line-height:60px;
+
+    }
+
+    .success_C2C {
+
+        color:#76a609;
+
+        height:60px; text-align:center; line-height:60px;
+
+    }
+
+    /*click to call API end*/
+
+
+
 
 
 
