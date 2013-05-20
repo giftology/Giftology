@@ -1,7 +1,7 @@
 <?= $this->element('admin_header'); ?>
 <div class="userAddresses index">
 	<h2><?php echo __('User Addresses'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" border="1">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
@@ -36,21 +36,26 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-
 	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
+          	<?php
+          	    if ($this->Paginator->hasPrev()) {
+          		echo $this->Paginator->prev($this->html->image('35x35_prev.png' , array("title" => "Prev")), array('escape' => false), null, array('class' => 'prev disabled'));
+          	}
+          		 if ($this->Paginator->hasNext()) {
+          		 echo $this->Paginator->next($this->html->image('35x35_next.png' , array("title" => "next")),array('escape' => false), null, array('class' => 'next disabled'));
+          	}
+          	?>
+              </div>
+              <div style="width:auto;height:auto;margin-top:-18px;margin-left:100px;" >
+          		<br><?php echo $this->Paginator->numbers(array('separator' => ' | ','modulus'=>'10','first'=>'First Page ','last'=>' Last Page'));?>
+              </div> 
+              <div style="width:auto;height:auto;margin-top:20px;margin-left:50px;" >
+          			<?php
+          			echo $this->Paginator->counter(array(
+          				'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+          				));
+          				?>	
+              </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
