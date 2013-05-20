@@ -7,7 +7,18 @@ App::uses('AppController', 'Controller');
  */
 class UploadedProductCodesController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $components = array('Giftology');
+	public $components = array('Giftology','Search.Prg');
+	public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field'=> 'product_id','type'=>'value'),
+            array('field'=> 'code','type'=>'value'),
+            array('field'=> 'value','type'=>'value'),
+            array('field'=> 'available','type'=>'value'),
+            array('field'=> 'expiry','type'=>'value'),
+            array('field'=> 'pin','type'=>'value'),
+
+
+        );
 
 /**
  * index method
@@ -15,9 +26,42 @@ class UploadedProductCodesController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->UploadedProductCode->recursive = 0;
+		//DebugBreak();
+        $this->Prg->commonProcess('UploadedProductCode');
+ 		$conditions= array('conditions' => array($this->UploadedProductCode->parseCriteria($this->passedArgs)));
+        $this->paginate = $conditions;
+        $this->UploadedProductCode->recursive = 0;
 		$this->set('uploadedProductCodes', $this->paginate());
 	}
+	public function download_code_csv(){
+				
+                    $filename = "UploadedProductCode ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Product Id','Code','Available','Expiry');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            
+                            $result= $this->UploadedProductCode->find('first', array('conditions'=>array('UploadedProductCode.id'=>$id)));
+                            $row = array(
+                            $result['UploadedProductCode']['id'],
+                            $result['UploadedProductCode']['product_id'],
+                            $result['UploadedProductCode']['code'],
+                            $result['UploadedProductCode']['available'],
+                            $result['UploadedProductCode']['expiry'],
+                           
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+                  	}
+
 
     public function new_index() {
     	$this->UploadedProductCode->recursive = -1; 

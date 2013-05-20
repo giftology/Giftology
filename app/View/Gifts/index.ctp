@@ -1,35 +1,40 @@
-  <script>
-    function chkValidate(){
-        if($("[name='chk1[]']:checked").length<1){
-            alert('Please select atleast one record.');
-            return false;
-        }
-        return true;
-    }
-    checked=false;
- function checkedAll (frm1) {
- 
-	var aa= document.getElementById('frm1');
-	 if (checked == false)
-        {
-           checked = true
-          }
-        else        {
-          checked = false
-          }
-	for (var i =0; i < aa.elements.length; i++) 
-	{
-		 aa.elements[i].checked = checked;
-	}
-	
- }
- $(document).ready(function(){
-        $('.campaign_checkbox').show();
-    });
-</script>
+
 <?= $this->element('admin_header'); ?>
 <div class="gifts index">
 	<h2><?php echo __('Gifts'); ?></h2>
+	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+		<?php echo $this->Form->create('Gift', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
+?>  <tr>
+		<td></td>
+        <td><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1','placeholder'=>'Id'));?></td>
+        <td><?php echo $this->Form->input('product_id', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Product Id'));?></td>
+        <td><?php echo $this->Form->input('sender_id', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Sender Id'));?></td>
+        <td><?php echo $this->Form->input('receiver_id', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Receiver Id'));?></td>
+        <td><?php echo $this->Form->input('receiver_fb_id', array('type'=>'text','div' => false,'label'=>'','size'=>'15','placeholder'=>'Receiver FB Id'));?></td>
+        <td><?php echo $this->Form->input('receiver_email', array('type'=>'text','div' => false,'label'=>'','size'=>'15','placeholder'=>'Receiver Email'));?></td>
+        <td><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Code'));?></td>
+        <td><?php echo $this->Form->input('gift_amount', array('type'=>'text','div' => false,'label'=>'','size'=>'5','placeholder'=>'Gift Amount'));?></td>
+        <td><?php echo $this->Form->input('gift_status_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5','placeholder'=>'Gift Status Id'));?></td>
+        <td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date','placeholder'=>'Expiry Start'));?>
+		<?php echo $this->Form->input('expiry_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker1','placeholder'=>'End Date','placeholder'=>'Expiry End'));?>
+        </td>
+        <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Created Start Date'));?>
+		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'Created End Date'));?>
+        </td>
+        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Created Start Date'));?>
+			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'Created End Date'));?>
+        </td>
+        
+       <td>
+         <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
+        if (isset($this->params['named']) & !empty($this->params['named'])){ 
+            echo $this->Html->link(_('Reset Filter'), array('controller'=>'Gifts','action'=>'index'));
+        } 
+        ?>
+        </td>			
+    </tr>
+                 <?php echo $this->Form->end();?></td>
+                 </div>
 	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Gifts', 'action' => 'download_gift_csv', 'onsubmit'=>'return chkValidate();') );?>
         <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
          <?php  echo $this->Form->submit("Download Gift CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
@@ -52,37 +57,7 @@
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
-	<?php echo $this->Form->create('Gift', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
-?>  <tr>
-		<td></td>
-        <td><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1'));?></td>
-        <td><?php echo $this->Form->input('product_id', array('type'=>'text','div' => false,'label'=>'','size'=>'1'));?></td>
-        <td><?php echo $this->Form->input('sender_id', array('type'=>'text','div' => false,'label'=>'','size'=>'1'));?></td>
-        <td><?php echo $this->Form->input('receiver_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
-        <td><?php echo $this->Form->input('receiver_fb_id', array('type'=>'text','div' => false,'label'=>'','size'=>'15'));?></td>
-        <td><?php echo $this->Form->input('receiver_email', array('type'=>'text','div' => false,'label'=>'','size'=>'15'));?></td>
-        <td><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10'));?></td>
-        <td><?php echo $this->Form->input('gift_amount', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
-        <td><?php echo $this->Form->input('gift_status_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5'));?></td>
-        <td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date'));?>
-		<?php echo $this->Form->input('expiry_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker1','placeholder'=>'End Date'));?>
-        </td>
-        <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Start Date'));?>
-		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'End Date'));?>
-        </td>
-        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Start Date'));?>
-			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'End Date'));?>
-        </td>
-        
-       <td>
-         <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
-        if (isset($this->params['named']) & !empty($this->params['named'])){ 
-            echo $this->Html->link(_('Reset Filter'), array('controller'=>'Gifts','action'=>'index'));
-        } 
-        ?>
-        </td>			
-    </tr>
-                 <?php echo $this->Form->end();?></td>
+	
 	
 	<?php
 	foreach ($gifts as $gift): ?>
@@ -185,3 +160,57 @@
   });
 });
   </script>
+
+<script>
+		$(document).ready(function() {
+			$('#collapse1').hide();
+			
+		  $('.nav-toggle').click(function(){
+
+			//get collapse content selector
+			var collapse_content_selector = $(this).attr('href');					
+ 
+			//make the collapse content to be shown or hide
+			var toggle_switch = $(this);
+			$(collapse_content_selector).toggle(function(){
+			  if($(this).css('display')=='none'){
+                                //change the button label to be 'Show'
+				toggle_switch.html('Search(+)');
+			  }else{
+                                //change the button label to be 'Hide'
+				toggle_switch.html('Search(-)');
+			  }
+			});
+		  });
+ 
+		});	
+		</script>
+<script>
+    function chkValidate(){
+        if($("[name='chk1[]']:checked").length<1){
+            alert('Please select atleast one record.');
+            return false;
+        }
+        return true;
+    }
+    checked=false;
+ function checkedAll (frm1) {
+ 
+	var aa= document.getElementById('frm1');
+	 if (checked == false)
+        {
+           checked = true
+          }
+        else        {
+          checked = false
+          }
+	for (var i =0; i < aa.elements.length; i++) 
+	{
+		 aa.elements[i].checked = checked;
+	}
+	
+ }
+ $(document).ready(function(){
+        $('.campaign_checkbox').show();
+    });
+</script>
