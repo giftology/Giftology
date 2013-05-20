@@ -354,7 +354,6 @@ class RemindersController extends AppController {
 					$gift_send_friend_lists=$this->Reminder->find('all', array(
                 		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $gift_send_facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
 					foreach($gift_send_friend_lists as $k => $gift_send_friend_list){
-			           $gift_send_friend_lists[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($gift_send_friend_list['Reminder']['user_id']);
 			           $gift_send_friend_lists[$k]['Reminder']['occasion'] = "Return Gift";
 			       	}
 		       		$gift_send_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_id'=>$gift_send_friend['Gift']['sender_id'],'Gift.created >'=>$gift_send_friend['Gift']['created'])),'order'=>'Gift.id DESC'));
@@ -366,7 +365,6 @@ class RemindersController extends AppController {
 		            $latest_friend_data = $this->Reminder->find('all', array(
                 		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $latest_friend['UserProfile']['latest_friend'],'Reminder.user_id'=>$this->Auth->user('id')))));
 		            foreach($latest_friend_data as $k => $latest_friends){
-			           $latest_friend_data[$k]['Reminder']['latest_friend_data_id'] = $this->AesCrypt->encrypt($latest_friends['Reminder']['user_id']);
                        if($latest_friends['Reminder']['sex'] == "male") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Him";
                        if($latest_friends['Reminder']['sex'] == "female") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Her";  
 
@@ -382,7 +380,6 @@ class RemindersController extends AppController {
 			        	$merge_list = array_merge($gift_send_friend_lists,$latest_friend_data);
 			        	$suggested_list = array_merge($merge_list,$friend_list);
 			 			foreach($suggested_list as $k => $suggested_lists){
-			         		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
 			         		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
 		             	}
 			        }
@@ -391,7 +388,6 @@ class RemindersController extends AppController {
 			        {
 			           	$suggested_list = array_merge($gift_send_friend_lists,$friend_list);
 			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
 			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
 		             	}
 			        }
@@ -399,7 +395,6 @@ class RemindersController extends AppController {
 			        {
 			        	$suggested_list = array_merge($latest_friend_data,$friend_list);
 			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
 			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
 		             	}
 			        }
@@ -407,7 +402,6 @@ class RemindersController extends AppController {
 			        {
 			           	$suggested_list = $friend_list;
 			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
 			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
 		             	}
 			        }
@@ -461,9 +455,9 @@ class RemindersController extends AppController {
 					$this->set('tommorrow_users', $tommorrow_users);
 					$this->set('this_month_users', $thismonth_users);
 					$this->set('next_month_users', $nextmonth_users);    
-                   $this->set('celebrations_active', 'active');
+                   	$this->set('celebrations_active', 'active');
 				}
-			    }
+			}
 		}
 		$this->setGiftsSent();
 		if ($this->request->is('post')) {  
