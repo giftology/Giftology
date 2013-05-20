@@ -145,6 +145,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
                       <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'display','Media')); ?>
                       <?= $this->Html->link('RETAILERS', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?>
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
+                       <?= $this->Html->link('CAREER', array('controller' => 'pages', 'action' => 'display', 'check_career')); ?>
                        <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?>
                         <?= $this->Html->link('BLOG', 'http://mygiftology.wordpress.com/'); ?>
                      

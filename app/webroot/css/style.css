@@ -2942,7 +2942,98 @@ background: transparent;
     /*click to call API end*/
 
 
+/* career*/
+
+
+.careertext {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666666;
+    text-align: justify;
+    vertical-align: top;
+    padding-top: 4px;
+    padding-right: 10px;
+    padding-left: 18px;
+}
 
 
 
+.careerMainHead{
+    font:Georgia, 'Times New Roman', Times, serif ;
+ 
+ display:inline;
+  position:relative;
+  font-size:20px;
+top:20px;}
 
+.careerCustom{
+ width:530px;
+  margin:auto;
+   height:auto;}
+
+.careerCustom input[type="text"]{
+    width: 300px;
+    height: 5px;
+    border: 1px solid #B54D4D;
+    border-radius: 2px
+}
+.careerCustom input[type="file"]{
+    width: 324px;
+    height: 22px;
+    border: 1px solid #B54D4D;
+     padding:0px;
+     border-radius: 2px
+ }
+
+.careerCustom textarea{
+    width: 320px;
+    border: 1px solid #B54D4D;
+    border-radius:2px;
+    float: left;
+    } 
+
+.careerCustom input[type="submit"]{
+    width: 60px;
+    height:30px;
+    border: 1px solid #B54D4D;
+    background-color: rgba(173, 46, 13, 0.86);
+background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%,rgba(173,46, 13, 0.86) 50%,rgba(173,46,13,0.86)); 
+color: #FFF;
+border-radius: 2px;
+line-height: 0px;
+display:inline;
+}
+
+.careerCustom .button::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.careerCustom .button:before {
+  content: 'Select Resume';
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border-left: 1px solid #B54D4D;
+  padding: 5px 8px;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 600;
+  font-size: 7pt;
+  float: right;
+  color:#333;
+}
+.careerCustom .button:hover:before {
+  border-color: black;
+}
+.careerCustom .button:active:before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.careerCustom .styled-select {
+   width: 324px;
+    height: 30px;
+    border: 1px solid #B54D4D;
+    border-radius: 2px;
+    overflow: hidden;
+    background: url('../img/select.png') no-repeat right ;
+   
+   }
