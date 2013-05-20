@@ -145,21 +145,22 @@
        
       }
       
-      div.pop-up {
-        display: none;
-        position: absolute;
-        width: 280px;
-        padding: 0px 20px;
-        background: #EC8686;
-        color: #000000;
-        border-left: 4px solid #968B80;
-        border-right: 4px solid #968B80;
-        border-bottom: 8px solid #968B80;
-        border-radius:10px  10px 4px 4px;
-        font-size: 90%;
-       z-index: 20;
-       opacity: 0.9;
-      }
+     div.pop-up {
+display: none;
+position: absolute;
+width: 253px;
+height: auto;
+padding: 0px 20px;
+background: #EC8686;
+color: #000000;
+border-left: 10px solid #BF2A1D;
+border-right: 10px solid #BF2A1D;
+border-bottom: 10px solid #BF2A1D;
+border-radius: 0 0 20px 20px;
+font-size: 90%;
+z-index: 20;
+opacity: 0.9;
+}
 
 
 
@@ -180,7 +181,7 @@
     <script type="text/javascript">
       $(function() {
         var gift_value = $('.trigger_tnc').attr('name'); 
-        alert(gift_value );
+        //alert(gift_value );
         $('.trigger_tnc').hover(function(e) {
             var gift_value = this.name;            
             $('#'+gift_value).show();           
@@ -193,7 +194,7 @@
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+          $("div.pop-up").css('top', e.pageY +60 ).css('left', e.pageX + moveLeft);
         });
         
 

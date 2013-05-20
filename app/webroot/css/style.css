@@ -2789,16 +2789,32 @@ text-align: justify;
 }
 
 #retailer_form {width:430px; height: auto;margin: auto;}
- .arrownav{
+/*gift voucher hover*/
+
+
+
+.arrownav {
+background: url('/img/arrowNav.png');
+width: 280px;
+height: 36px;
+padding: 0px 20px;
+margin-left: -32px;
+margin-top: -33px;
+}
+
+/*
+.arrownav1{
   
-    background:url('../img/arrow-nav.png');
+    background:url('../img/arrowNav1.png');
 width: 280px;
 height: 25px;
 padding: 0px 20px;
 margin-left: -20px;
-margin-top: -15px;
 
-}
+
+}*/
+
+/*gift voucher hover*/
 
 .reset-link {
     color: #7B7B7B;
