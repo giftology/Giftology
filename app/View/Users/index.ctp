@@ -41,11 +41,15 @@
          <?php echo $this->Form->end();?></td>
 
 	</div>
-	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Users', 'action' => 'download_user_csv', 'onsubmit'=>'return chkValidate();') );?>
-        <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
-         <?php  echo $this->Form->submit("Download User CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
-              echo $this->Form->end();
-             ?>
+	
+		<?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Users', 'action' => 'download_user_csv', 'onsubmit'=>'return chkValidate();') );?>
+		 <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
+		 	<div style="float:right;width:220px;height:auto;margin-top:-60px;">
+		 		<?php  echo $this->Form->submit("Download User CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
+		              echo $this->Form->end();
+		             ?>
+		         </div>
+	
 	<table cellpadding="0" cellspacing="0" border="1">
 
 	<tr>
@@ -104,24 +108,27 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-
 	<div class="paging">
 	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		
-		?> <br><?php echo $this->Paginator->numbers(array('separator' => '|','modulus'=>'10','first'=>'First Page','last'=>'Last Page'));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+	    if ($this->Paginator->hasPrev()) {
+		echo $this->Paginator->prev($this->html->image('35x35_prev.png' , array("title" => "Prev")), array('escape' => false), null, array('class' => 'prev disabled'));
+	}
+		 if ($this->Paginator->hasNext()) {
+		 echo $this->Paginator->next($this->html->image('35x35_next.png' , array("title" => "next")),array('escape' => false), null, array('class' => 'next disabled'));
+	}
 	?>
-	<div class="paging">
-	
-	</div>
-</div>
+    </div>
+    <div style="width:auto;height:auto;margin-top:-18px;margin-left:100px;" >
+		<br><?php echo $this->Paginator->numbers(array('separator' => ' | ','modulus'=>'10','first'=>'First Page ','last'=>' Last Page'));?>
+    </div> 
+    <div style="width:auto;height:auto;margin-top:20px;margin-left:50px;" >
+			<?php
+			echo $this->Paginator->counter(array(
+				'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+				));
+				?>	
+    </div>
+     <br>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
