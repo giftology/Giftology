@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="users view">
 <h2><?php  echo __('User'); ?></h2>
 	<dl>
@@ -175,7 +176,7 @@
 	<div class="related">
 	<h3><?php echo __('Related User Addresses'); ?></h3>
 	<?php if (!empty($user['UserAddress'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0"  border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
@@ -220,7 +221,7 @@
 <div class="related">
 	<h3><?php echo __('Related Gifts'); ?></h3>
 	<?php if (!empty($user['GiftsReceived'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0"  border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>
@@ -269,7 +270,7 @@
 <div class="related">
 	<h3><?php echo __('Related Gifts'); ?></h3>
 	<?php if (!empty($user['GiftsSent'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" border="1" >
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>
@@ -318,7 +319,7 @@
 <div class="related">
 	<h3><?php echo __('Related Reminders'); ?></h3>
 	<?php if (!empty($user['Reminders'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0"  border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('User Id'); ?></th>

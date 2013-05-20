@@ -261,7 +261,7 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
                 $this->User->recursive = 2;
-		echo debug($this->User->read(null, $id));
+		//echo debug($this->User->read(null, $id));
 		$this->set('user', $this->User->read(null, $id));
 	}
 
