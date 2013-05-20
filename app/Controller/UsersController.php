@@ -49,24 +49,37 @@ class UsersController extends AppController {
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','User Name','Password','Role','Facebook Id','Last Login','Created','Modified');
+                    $header_row= array('Id','User Name','Role','Facebook Id','Last Login','Created','Modified','First Name','Last Name','Email','Mobile','City','Gender','Birthday','BirthYear');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
                         foreach($this->data['chk1'] as $id)  
                         {
-                            $ab=" ";
+                        $total_frnd=$this->Reminder->find('count',array('conditions' => array('Reminder.user_id '=>$id)));
+
+                           $this->User->recursive = 0;
                             $result= $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
                             $row = array(
                             $result['User']['id'],
                             $result['User']['username'],
-                            $result['User']['password'],
                             $result['User']['role'],
                             $result['User']['facebook_id'],
                             $result['User']['last_login'],
                             $result['User']['created'],
                             $result['User']['modified'],
-                            
+                            $result['UserProfile']['first_name'],
+                            $result['UserProfile']['last_name'],
+                            $result['UserProfile']['email'],
+                            $result['UserProfile']['mobile'],
+                            $result['UserProfile']['city'],
+                            $result['UserProfile']['gender'],
+                            $result['UserProfile']['birthday'],
+                            $result['UserProfile']['birthyear'],
+                            $total_frnd
+      
+
+
+
 
                              );
                             fputcsv($csv_file,$row,',','"');
