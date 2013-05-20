@@ -112,11 +112,8 @@
                             </span>
                     </span>
                     
-    </div>
-    <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -129px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['vendor_id'];?>"></span>
-      
-      
-      
+    </div><?php echo $product['Product']['vendor_id'];?>
+    <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -129px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
                                 
                                 <div id="<?php echo $product['Product']['vendor_id'];?>" class ="pop-up">
                                     <div class="arrownav">
@@ -125,12 +122,12 @@
                                 <div style="width:130px; float:left; position:relative;text-align:justify"><span style="text-align:left !important;"><b>Terms and conditions</b></span>
                                 <br><br>
                                 
-                                 <?= strip_tags($product['Product']['terms'],'<p><span><ol><li>'); ?>
+                                 <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
                              </div>
                              <div style="width:130px; float:left; position:relative; padding-left:20px; text-align:justify">
                                  <b>About Us</b>
                                 <br><br>
-                                 <?= strip_tags( $product['Vendor']['description'],'<p><span><ol><li>');?>
+                                 <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
                              </div>
 
                                 <div class="arrownav1">
