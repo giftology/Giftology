@@ -23,7 +23,7 @@
      tr a:hover {background: #000000; color: #fff;}
      td a:hover {background: #000000; color: #fff;}
      th {background: #EFFBFB repeat-x 0 -110px; line-height: 100%;font: normal 13px Arial, Helvetica, sans-serif; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: 0 1px 6px rgba(0,0,0, .4); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4); padding:2px 2px;}
-     tr,td {background: #EFFBFB repeat-x 0 -110px; line-height: 100%;font: normal 12px Arial, Helvetica, sans-serif; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .4); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4); padding:0 2px 0 2px;}
+    tr,td {background: #EFFBFB repeat-x 0 -110px; line-height: 100%;font: normal 12px Arial, Helvetica, sans-serif; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .4); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4); padding:0 2px 0 2px;}
 
          #cssmenu ul {margin: 0; padding: 7px 6px 0; background: #EFFBFB url(../img/overlay.png) repeat-x 0 -110px; line-height: 100%; border-radius: 1em; font: normal 18px Arial, Helvetica, sans-serif; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .4); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4);}
          #cssmenu li {margin: 0 5px; padding: 0 0 8px; float: left; position: relative; list-style: none; }
