@@ -2,10 +2,10 @@
 <div class="vendors index">
 
 	<h2><?php echo __('Vendors'); ?></h2>
-<<<<<<< Updated upstream
+
 	<table cellpadding="0" cellspacing="0" border="1">
 	<tr>
-=======
+
 		<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
 		<?php echo $this->Form->create('Vendor', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
 ?>  <tr>
@@ -38,7 +38,7 @@
              ?>
 	<table cellpadding="0" cellspacing="0">
 	<tr><td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
->>>>>>> Stashed changes
+
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
