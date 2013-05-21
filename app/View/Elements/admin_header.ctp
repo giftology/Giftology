@@ -3,6 +3,10 @@
          display: inline-block;
 
       }
+    div.ui-datepicker
+    {
+    font-size:10px;
+    }
 
      th  a{
       color: #000000; 
