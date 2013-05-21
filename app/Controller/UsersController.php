@@ -77,10 +77,6 @@ class UsersController extends AppController {
                             $result['UserProfile']['birthyear'],
                             $total_frnd
       
-
-
-
-
                              );
                             fputcsv($csv_file,$row,',','"');
                         }

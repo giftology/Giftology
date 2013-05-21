@@ -160,17 +160,16 @@ public $presetVars = array(
  * @return void
  */
 public function paid_gift() {
-
         $this->Prg->commonProcess('Gift');
         if(($this->passedArgs['created_start'])||($this->passedArgs['expiry_start'])||($this->passedArgs['modified_start']))
         { 
             if(!($this->passedArgs['created_start'])){
-                $modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-                $modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end =   $this->passedArgs['modified_end'].' 23:59:59';
                 $expiry_start = date("Y-m-d", strtotime($this->passedArgs['expiry_start']) - 86400);
                 $expiry_end = date("Y-m-d", strtotime($this->passedArgs['expiry_end']) + 86400);
                 if(!$this->passedArgs['modified_end']){
-                    $modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
+                    $modified_end=$this->passedArgs['modified_start'].' 00:00:00';;
                 }
                 if(!$this->passedArgs['expiry_end']){
                     $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
@@ -180,15 +179,15 @@ public function paid_gift() {
                )); 
             }
             if(!($this->passedArgs['expiry_start'])){
-                $modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-                $modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-                $created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-                $created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';;
                 if(!$this->passedArgs['modified_end']){
-                    $modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 if(!$this->passedArgs['created_end']){
-                    $created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
@@ -198,19 +197,18 @@ public function paid_gift() {
 
                 $expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
                 $expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-                $created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-                $created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
                 if(!$this->passedArgs['expiry_end']){
                     $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
                 }
                 if(!$this->passedArgs['created_end']){
-                    $created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
-                }
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_end <' => $expiry_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
                )); 
             }
-
+            }
 
             if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start'])) )
             {
@@ -224,37 +222,37 @@ public function paid_gift() {
             }
             if(!($this->passedArgs['expiry_start'])&&(!($this->passedArgs['modified_start'])))
             {
-                $created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-                $created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
                 if(!$this->passedArgs['created_end']){
-                    $created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.created >'=>$created_start,'Gift.created <' => $created_end
                     ));
             }
             if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['expiry_start'])))
             {
-                $modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-                $modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
                 if(!$this->passedArgs['modified_end']){
-                    $modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.created <' => $modified_end
                     ));
             }
            if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['expiry_start'])) )
             { 
-                $modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-                $modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-                $created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-                $created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
                 $expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
                 $expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
                 if(!$this->passedArgs['modified_end']){
-                    $modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 if(!$this->passedArgs['created_end']){
-                    $created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
                 if(!$this->passedArgs['expiry_end']){
                     $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
@@ -264,7 +262,7 @@ public function paid_gift() {
            ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
             ));  
              }  
-            
+              
     
         }
         else{
@@ -272,120 +270,118 @@ public function paid_gift() {
             'Product.min_price >' => 0));
 
         }
-        
         $this->paginate = $conditions;
         $this->Gift->recursive = 0;
         $this->set('gifts', $this->paginate());
-    }
     
+}
 public function index() {
-	//DebugBreak();
+	
 		$this->Prg->commonProcess('Gift');
-		if(($this->passedArgs['created_start'])||($this->passedArgs['expiry_start'])||($this->passedArgs['modified_start']))
-		{ 
+		 if(($this->passedArgs['created_start'])||($this->passedArgs['expiry_start'])||($this->passedArgs['modified_start']))
+        { 
             if(!($this->passedArgs['created_start'])){
-            	$modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	$expiry_start = date("Y-m-d", strtotime($this->passedArgs['expiry_start']) - 86400);
-            	$expiry_end = date("Y-m-d", strtotime($this->passedArgs['expiry_end']) + 86400);
-            	if(!$this->passedArgs['modified_end']){
-            		$modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
-            	}
-            	if(!$this->passedArgs['expiry_end']){
-            		$expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
-            	}
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end =   $this->passedArgs['modified_end'].' 23:59:59';
+                $expiry_start = date("Y-m-d", strtotime($this->passedArgs['expiry_start']) - 86400);
+                $expiry_end = date("Y-m-d", strtotime($this->passedArgs['expiry_end']) + 86400);
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 00:00:00';;
+                }
+                if(!$this->passedArgs['expiry_end']){
+                    $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
+                }
                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
                )); 
             }
             if(!($this->passedArgs['expiry_start'])){
-            	$modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	$created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-            	$created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
-            	if(!$this->passedArgs['modified_end']){
-            		$modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
-            	}
-            	if(!$this->passedArgs['created_end']){
-            		$created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
-            	}
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';;
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-               )); 	
+               ));  
             }
             if(!($this->passedArgs['modified_start'])){
 
-            	$expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	$created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-            	$created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
-            	if(!$this->passedArgs['expiry_end']){
-            		$expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
-            	}
-            	if(!$this->passedArgs['created_end']){
-            		$created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
-            	}
+                $expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
+                $expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
+                if(!$this->passedArgs['expiry_end']){
+                    $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_end <' => $expiry_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
                )); 
             }
+            }
 
-
-			if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start'])) )
+            if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start'])) )
             {
-            	$expiry_start = date("Y-m-d", strtotime($this->passedArgs['expiry_start']) - 86400);
-            	$expiry_end = date("Y-m-d", strtotime($this->passedArgs['expiry_end']) + 86400);
-            	if(!$this->passedArgs['expiry_end']){
-            		$expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
-            	}
-            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-                 	));
+                $expiry_start = date("Y-m-d", strtotime($this->passedArgs['expiry_start']) - 86400);
+                $expiry_end = date("Y-m-d", strtotime($this->passedArgs['expiry_end']) + 86400);
+                if(!$this->passedArgs['expiry_end']){
+                    $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
+                }
+                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
+                    ));
             }
             if(!($this->passedArgs['expiry_start'])&&(!($this->passedArgs['modified_start'])))
             {
-            	$created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-            	$created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
-            	if(!$this->passedArgs['created_end']){
-            		$created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
-            	}
-            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-                 	));
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.created >'=>$created_start,'Gift.created <' => $created_end
+                    ));
             }
             if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['expiry_start'])))
             {
-            	$modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	if(!$this->passedArgs['modified_end']){
-            		$modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
-            	}
-            	$conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.created <' => $modified_end
-                 	));
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.created <' => $modified_end
+                    ));
             }
            if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['expiry_start'])) )
-    		{ 
-    			$modified_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$modified_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	$created_start = date("Y-m-d", strtotime($this->passedArgs['created_start']) - 86400);
-            	$created_end = date("Y-m-d", strtotime($this->passedArgs['created_end']) + 86400);
-				$expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
-            	$expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
-            	if(!$this->passedArgs['modified_end']){
-            		$modified_end=date("Y-m-d", strtotime($this->passedArgs['modified_start']) + 86400);
-            	}
-            	if(!$this->passedArgs['created_end']){
-            		$created_end=date("Y-m-d", strtotime($this->passedArgs['created_start']) + 86400);
-            	}
-            	if(!$this->passedArgs['expiry_end']){
-            		$expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
-            	}
+            { 
+                $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
+                $modified_end = $this->passedArgs['modified_end'].' 23:59:59';
+                $created_start = $this->passedArgs['created_start'].' 00:00:00';
+                $created_end = $this->passedArgs['created_end'].' 23:59:59';
+                $expiry_start = date("Y-m-d", strtotime($this->passedArgs['modified_start']) - 86400);
+                $expiry_end = date("Y-m-d", strtotime($this->passedArgs['modified_end']) + 86400);
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['expiry_end']){
+                    $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
+                }
           $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
            ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
            ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
             ));  
              }  
-            
-	
-		}
+              
+    
+        }
 		else{
 			$conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.id = Gift.product_id',
             'Product.min_price' => 0));
