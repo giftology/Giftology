@@ -1,7 +1,7 @@
      <?= $this->element('admin_header'); ?>
 <div class="users index">
 	<h2><?php echo __('Users'); ?></h2>
-	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:10px; margin-bottom:70px;">
 
 		<?php echo $this->Form->create('User', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
 		?>
@@ -30,12 +30,12 @@
        	 <span><?php echo $this->Form->input('gender', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Gender'));?></span>
        	  <span><?php echo $this->Form->input('birthday', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Birthday'));?></span>
        	  <span><?php echo $this->Form->input('birthyear', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Birthyear'));?></span>
-       	<center>
+       	
          <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
         if (isset($this->params['named']) & !empty($this->params['named'])){ 
             echo $this->Html->link(_('Reset Filter'), array('controller'=>'Users','action'=>'index'));
         } 
-        ?></center>
+        ?>
         </span>
 
          <?php echo $this->Form->end();?></td>
@@ -121,7 +121,7 @@
     <div style="width:auto;height:auto;margin-top:-18px;margin-left:100px;" >
 		<br><?php echo $this->Paginator->numbers(array('separator' => ' | ','modulus'=>'10','first'=>'First Page ','last'=>' Last Page'));?>
     </div> 
-    <div style="width:auto;height:auto;margin-top:20px;margin-left:50px;" >
+    <div style="width:auto;height:auto;margin-top:10px;margin-left:50px;" >
 			<?php
 			echo $this->Paginator->counter(array(
 				'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
