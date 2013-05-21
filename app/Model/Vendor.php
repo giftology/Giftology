@@ -15,6 +15,22 @@ class Vendor extends AppModel {
  *
  * @var array
  */
+ public $actsAs = array('Search.Searchable');
+
+  
+    
+ 
+    public $filterArgs = array(
+            array('name' => 'id', 'type' => 'like','field' => 'Vendor.id'),
+            array('name' => 'name', 'type' => 'like','field' => 'Vendor.name'),
+           array('name' => 'created', 'type' => 'like','field' => 'Vendor.created'),
+            array('name' => 'modified', 'type' => 'like','field' => 'Vendor.modified'),
+
+
+           
+            
+            
+        );
 	public $hasMany = array(
 		'Product' => array(
 			'className' => 'Product',

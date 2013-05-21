@@ -7,12 +7,103 @@ App::uses('AppController', 'Controller');
  */
 class VendorsController extends AppController {
 	public $helpers = array('Minify.Minify');
+
+public $components = array('Search.Prg'); 
 /**
  * index method
  *
  * @return void
  */
+public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'name', 'type' => 'value'),
+            
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+        
+        );
+         public function download_vendor_csv(){
+				
+                    $filename = "Vendors ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Vendor Name','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->Vendor->find('first', array('conditions'=>array('Vendor.id'=>$id)));
+                            $row = array(
+                            $result['Vendor']['id'],
+                            $result['Vendor']['name'],
+                            $result['Vendor']['created'],
+                            $result['Vendor']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+                  	}
+
 	public function index() {
+		 $this->Prg->commonProcess('Vendor');
+	
+		 if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs),'Vendor.modified >'=>$modified_start,'Vendor.modified <' => $modified_end
+               
+               )); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs) ,'Vendor.created >'=>$created_start,'Vendor.created <' => $created_end
+               )); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs),'Vendor.modified >'=>$modified_start,'Vendor.modified <' => $modified_end
+           ,'Vendor.created >'=>$created_start,'Vendor.created <' => $created_end
+            ));  
+             }  
+            
+    
+        }
+        else{
+		$conditions= array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs)
+   ));
+}
+		$this->paginate = $conditions;
 		$this->Vendor->recursive = 0;
 		$this->set('vendors', $this->paginate());
 	}
