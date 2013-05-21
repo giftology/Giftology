@@ -3,12 +3,26 @@
 <?php echo $this->Form->create('Product'); ?>
 	<fieldset>
 		<legend><?php echo __('Add Product'); ?></legend>
-	<?php
-		echo $this->Form->input('min_price');
-		echo $this->Form->input('max_price');
-		echo $this->Form->input('min_value');
-		echo $this->Form->input('days_valid');
-		echo $this->Form->input('terms_heading');
+	<?php echo $this->Form->input('min_price'); ?>
+		<div class="error_message" id="error_min" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Min Price.</h5>
+        </div>
+
+	<?php	echo $this->Form->input('max_price'); ?>
+		<div class="error_message" id="error_max" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Max Value.</h5>
+        </div>
+
+	<?php	echo $this->Form->input('min_value'); ?>
+			<div class="error_message" id="error_first" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Min Value.</h5>
+	        </div>
+	<?php echo $this->Form->input('days_valid'); ?>
+		<div class="error_message" id="error_days" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Days.</h5>
+        </div>
+
+	<?php	echo $this->Form->input('terms_heading');
 	        echo $this->Tinymce->input('Product.terms', array( 
 	            'label' => 'Terms & Conditions' 
 		            ),array( 
@@ -29,14 +43,29 @@
 		echo $this->Form->input('product_type_id');
 		echo $this->Form->input('age_segment_id');
 		echo $this->Form->input('gender_segment_id');
-		echo $this->Form->input('city_segment_id');
-		echo $this->Form->input('display_order');
-		echo $this->Form->input('sender_gift_limit');
-		echo $this->Form->input('sender_time_limit');
-		echo $this->Form->input('receiver_gift_limit');
-		echo $this->Form->input('receiver_time_limit');
+		echo $this->Form->input('city_segment_id');?>
+		<?php echo $this->Form->input('display_order'); ?>
+			<div class="error_message" id="error_display" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Display Order.</h5>
+	        </div>
+		<?php echo $this->Form->input('sender_gift_limit'); ?>
+			<div class="error_message" id="error_sender" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Sender Gift Limit.</h5>
+	        </div>
+		<?php echo $this->Form->input('sender_time_limit'); ?>
+			<div class="error_message" id="error_sender_time" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Sender Time Limit.</h5>
+	        </div>
+		<?php echo $this->Form->input('receiver_gift_limit'); ?>
+			<div class="error_message" id="error_receiver" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Receiver Gift Limit.</h5>
+	        </div>
+		<?php echo $this->Form->input('receiver_time_limit'); ?>
+			<div class="error_message" id="error_receiver_time" style="display:none; margin-left:80px;">
+	            <h5 style="color:#FF0000">*please enter the Receiver Time Limit.</h5>
+	        </div>
 
-	?>
+	
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
@@ -59,3 +88,86 @@
 		<li><?php echo $this->Html->link(__('New Uploaded Product Code'), array('controller' => 'uploaded_product_codes', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+
+
+
+<script type="text/javascript">
+
+      $(document).ready(function(){
+      	$(".submit").click(function (){ 
+      		var e = false;
+      		if ($("#ProductMinPrice").val().length == 0) {
+                    $("#error_min").show();
+                    e = true;
+                }
+                else{
+                    $("#error_min").hide();    
+                }
+
+            if ($("#ProductMaxPrice").val().length == 0) {
+                    $("#error_max").show();
+                    e = true;
+                }
+                else{
+                    $("#error_max").hide();    
+                }
+
+      		if ($("#ProductMinValue").val().length == 0) {
+                    $("#error_first").show();
+                    e = true;
+                }
+                else{
+                    $("#error_first").hide();    
+                }
+
+            if ($("#ProductDaysValid").val().length == 0) {
+                    $("#error_days").show();
+                    e = true;
+                }
+                else{
+                    $("#error_days").hide();    
+                }
+
+            if ($("#ProductDisplayOrder").val().length == 0) {
+                    $("#error_display").show();
+                    e = true;
+                }
+                else{
+                    $("#error_display").hide();    
+                }
+
+            if ($("#ProductSenderGiftLimit").val().length == 0) {
+                    $("#error_sender").show();
+                    e = true;
+                }
+                else{
+                    $("#error_sender").hide();    
+                }
+
+            if ($("#ProductSenderTimeLimit").val().length == 0) {
+                    $("#error_sender_time").show();
+                    e = true;
+                }
+                else{
+                    $("#error_sender_time").hide();    
+                }
+
+            if ($("#ProductReceiverGiftLimit").val().length == 0) {
+                    $("#error_receiver").show();
+                    e = true;
+                }
+                else{
+                    $("#error_receiver").hide();    
+                }
+
+            if ($("#ProductReceiverTimeLimit").val().length == 0) {
+                    $("#error_receiver_time").show();
+                    e = true;
+                }
+                else{
+                    $("#error_receiver_time").hide();    
+                }
+             if(e) return false;
+      	});
+      });
+      </script>

@@ -41,6 +41,23 @@ class VendorsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Vendor->create();
 			
+			if($this->data['Vendor']['description'] == "")
+			{
+				$this->Session->setFlash(__('Please enter the description'));
+                    $this->redirect(array('controller' => 'vendors', 'action'=>'add'));   
+			}
+			$error_array= array();
+                $allowed =  array('png' ,'jpg');
+                $i = 1;
+                foreach($_FILES['data']['name']['Vendor'] as $file){
+                        $ext = pathinfo($file, PATHINFO_EXTENSION);
+                        if ($i++ == 4) break;
+                        if(!in_array($ext,$allowed) ) {
+                            $error_array[]=  $file;
+                        }      
+                    }
+            //DebugBreak();
+            if(!$error_array){
 			//facebook linter doesnt like image links with space in them, convert all space to underscore	
 			$this->request->data['Vendor']['thumb_file']['name']
 				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['thumb_file']['name']);
@@ -62,7 +79,19 @@ class VendorsController extends AppController {
 
 			$this->request->data['Vendor']['carousel_image'] = 'files/carousel/'.$this->request->data['Vendor']['carousel_image_file']['name'];
 			copy($this->request->data['Vendor']['carousel_image_file']['tmp_name'], $this->request->data['Vendor']['carousel_image']);
-
+		}
+		else { 
+            	$err1;
+                    foreach($error_array as $err){
+                        $err1= $err1.' ';
+                        $err1= $err1.$err.' ' ;
+                        
+                        
+                        
+                    }
+                    $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
+                    $this->redirect(array('controller' => 'vendors', 'action'=>'add'));   
+                }
 
 			if ($this->Vendor->save($this->request->data)) {
 				$this->Session->setFlash(__('The vendor has been saved'));
