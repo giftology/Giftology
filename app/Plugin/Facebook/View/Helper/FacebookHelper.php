@@ -136,11 +136,12 @@ class FacebookHelper extends AppHelper {
 				'alt' => $options['alt'],
 				'id' => $options['id'],
 				'url' => '#',
-				'onclick' => $onclick));
+				'onclick' => $onclick,
+				'escape' => false));
 			}
 			else {
 				return $this->Html->link($options['label'], '#', array(
-					'onclick' => $onclick, 'id' => $options['id']));
+					'onclick' => $onclick, 'id' => $options['id'],'escape' => false));
 			}
 		}
 		else {
@@ -508,7 +509,7 @@ class FacebookHelper extends AppHelper {
 	
 	public function init($options = null, $reload = true) {
 		$options = array_merge(array(
-			'perms' => 'email,publish_stream, user_birthday, user_location,friends_birthday, friends_location'
+			'perms' => 'email,publish_actions,publish_stream, user_birthday, user_location,friends_birthday, friends_location'
 			), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
 

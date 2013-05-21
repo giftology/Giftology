@@ -18,9 +18,13 @@ class FB {
   public static $Facebook = null;
   
   public function __construct() {
-    if (empty(self::$Facebook)) {
-			self::$Facebook = new Facebook(FacebookInfo::getConfig());
-		}
+    $this->__initInstance();
+  }
+  
+  private function __initInstance() {
+      if (empty(self::$Facebook)) {
+        self::$Facebook = new Facebook(FacebookInfo::getConfig());
+      }
   }
   
   /**
@@ -53,11 +57,14 @@ class FB {
     * Example:
     * - FB::getUser();
     */
-  public static function __callstatic($method, $params){
-  	try {
-  		return call_user_func_array(array(self::$Facebook, $method), $params);
-  	} catch (FacebookApiException $e) {
-	    error_log($e);
-	  }
+  public static function __callstatic($method, $params){      
+      try {
+          if (empty(self::$Facebook)) {
+              $this->__initInstance();
+          }
+          return call_user_func_array(array(self::$Facebook, $method), $params);
+      } catch (FacebookApiException $e) {
+        error_log($e);
+      }
   }
 }
