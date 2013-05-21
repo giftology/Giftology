@@ -78,7 +78,7 @@
 <div class="related">
 	<h3><?php echo __('Related Transactions'); ?></h3>
 	<?php if (!empty($gift['Transaction'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Sender Id'); ?></th>

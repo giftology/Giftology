@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="products view">
 <h2><?php  echo __('Product'); ?></h2>
 	<dl>
@@ -143,7 +144,7 @@
 <div class="related">
 	<h3><?php echo __('Related Gifts'); ?></h3>
 	<?php if (!empty($product['Gift'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>
@@ -198,7 +199,7 @@
 <div class="related">
 	<h3><?php echo __('Related Uploaded Product Codes'); ?></h3>
 	<?php if (!empty($product['UploadedProductCode'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>

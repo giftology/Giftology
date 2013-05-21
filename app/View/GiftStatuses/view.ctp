@@ -1,4 +1,4 @@
-<div class="giftStatuses view">
+<?= $this->element('admin_header'); ?><div class="giftStatuses view">
 <h2><?php  echo __('Gift Status'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
@@ -37,7 +37,7 @@
 <div class="related">
 	<h3><?php echo __('Related Gifts'); ?></h3>
 	<?php if (!empty($giftStatus['Gift'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" border="1">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Product Id'); ?></th>
