@@ -88,10 +88,11 @@ $(document).ready(function(){
            
         });
       
-      </script>
+    
 
-   
 
+  
+   </script>
    
        
                     
@@ -170,7 +171,7 @@ $(document).ready(function(){
                                    <td class="careertext">&nbsp;</td>
                                   <td class="careertext">&nbsp;</td>
                                   <td >
-                                  <h5 style="color:#FF0000; display:inline;" id="error_email1">*please enter your name.</h5>
+                                  <h5 style="color:#FF0000; display:inline; font-size:10px" class="error_message">*please enter your name.</h5>
                                   </td>
                                   </tr>   
                                  
@@ -193,7 +194,7 @@ $(document).ready(function(){
                                    <td class="careertext">&nbsp;</td>
                                   <td class="careertext">&nbsp;</td>
                                   <td >
-                                  <h5 style="color:#FF0000; display:inline;" id="error_email1">*please enter valid email address.</h5>
+                                  <h5 style="color:#FF0000; display:inline;font-size:10px" class="error_message">*please enter valid email address.</h5>
                                   </td>
                                   </tr>
                                 <tr>

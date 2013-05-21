@@ -29,6 +29,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
                    else if($("#r_phone").val().length > 10)
                  {
                  $("#error_phone").show();
+                 $(".foot_content_contact").CSS('height','420PX')
                    e = true;
                       }
                 else{
@@ -48,6 +49,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
                 } */
                 if ($("#r_name").val().length == 0) {
                     $("#error_name").show();
+                    $(".foot_content_contact").CSS('height','420PX')
                     e = true;
                 }
                 else{
@@ -63,6 +65,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
                 } */
                 if ($("#r_city").val().length == 0) {
                     $("#error_city").show();
+                    $(".foot_content_contact").CSS('height','420PX')
                     e = true;
                 }
                 else{
@@ -86,33 +89,21 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
             });
            
         });
+
+
+jQuery(document).ready(function()
+{ 
+$('.reset-link').click(function(){
+  $('.error_message').css('display','none')
+});
+});
+    
       
       </script>
 
 
 
-<script >
 
-jQuery(document).ready(function()
-{ 
-
-  var $j = jQuery.noConflict();
-	$j('input[type=reset]').each(function() {    
-  
-    var val = $j(this).val();
-    
-    var input = $j(this);
-    
-    input.after(a);
-    input.hide();
-  
-  });	
-
-});
-		
-	
-   </script>
-   
        
                     
 
@@ -229,7 +220,7 @@ jQuery(document).ready(function()
                       <div class="input email"  ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name",'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?> 
                       </div>
                        <div class="error_message" id="error_name" style="display:none; margin-left:180px;">
-                         <span style="color:#808080">*please enter the name.</span>
+                         <span style="color:#FF0000; font-size:11px;">*please enter the name.</span>
                         </div>
                 
                 </div>
@@ -253,7 +244,7 @@ jQuery(document).ready(function()
                   <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
                   </div>
                   <div class="error_message" id="error_city" style="display:none; margin-left:180px;">
-                    <span style="color:#808080">*please enter the city.</span>
+                    <span style="color:#FF0000; font-size:11px;">*please enter the city.</span>
                  </div>
               </div>
            
@@ -270,8 +261,8 @@ jQuery(document).ready(function()
                  
                     <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no.(Optional)" ,'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
                     </div>
-                    <div class="error_message" id="error_phone" style="display:none; margin-left:180px;">
-                       <span style="color:#808080">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
+                    <div class="error_message" id="error_phone" style="display:block; ">
+                       <span style="color:#FF0000; font-size:11px;">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
                     </div>
               </div>
 
