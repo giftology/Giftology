@@ -57,7 +57,7 @@ $(document).ready(function(){
                 else{
                     $("#error_name").hide();    
                 }
-
+                
                 if ($("#email").val().length == 0)
                  {
                     /*$("#error_email").show();
@@ -65,7 +65,7 @@ $(document).ready(function(){
                     var r=confirm("continue without email address!");
                     if (r==true)
                       {
-                         return true;
+                         return false;
                       }
                     else
                       {
@@ -104,7 +104,7 @@ $(document).ready(function(){
   <center ><h3 class="careerMainHead" style="margin-left:134px;">Career With Us</h3></center>
   <div class="media" >
     
-      <p>&nbsp;</p>      
+       
     <p id="contacttext" >We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
     <p>&nbsp;</p>
 
@@ -276,7 +276,8 @@ $(document).ready(function(){
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
- <p id="contacttext" ><b>   If you want to be part of building a real business out of the social media space and work on hard problems while you are at it, you ll have fun working at Giftology.</b>
+ <p id="contacttext" ><b> If you’re awesome alongwith having an Entrepreneurial attitude, Good Aesthetic Sense, Passion/Interest in eCommerce & the Enthusiasm to learn…well you’re just what we’re looking for!
+ </b></p>
 <p>&nbsp;</p>
 <p id="contacttexth1" ><b>Traits of a Giftologer :</b></p>
 
