@@ -2870,19 +2870,20 @@ color:#333333;
 text-align: justify;
 }
 
-<<<<<<< HEAD
+
 #retailer_form {width:430px; height: auto;margin: auto;}
 /*gift voucher hover*/
 
 
 
 .arrownav {
-background: url('/img/arrowNav.png');
-width: 280px;
-height: 36px;
-padding: 0px 20px;
+background: url('/img/arrow1.png') no-repeat;
+width: 20px;
+height: 20px;
+padding: 0px 0px;
 margin-left: -32px;
-margin-top: -33px;
+margin-top: -21px;
+float: right;
 }
 
 /*

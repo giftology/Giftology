@@ -119,16 +119,21 @@
                                     <div class="arrownav">
 
                                 </div>
-                                <div style="width:130px; float:left; position:relative;text-align:justify"><span style="text-align:left !important;"><b>Terms and conditions</b></span>
-                                <br><br>
-                                
-                                 <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
-                             </div>
-                             <div style="width:130px; float:left; position:relative; padding-left:20px; text-align:justify">
+                                 <div style="width:260px;  position:relative;  text-align:justify;padding-top:20px; font: normal 14px/22px Arial, Helvetica, sans-serif;">
                                  <b>About Us</b>
-                                <br><br>
+                                <br>
+                                 <p font: normal 13px/22px Arial, Helvetica, sans-serif;>
                                  <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
+                             </p>
                              </div>
+                                <div style="width:260px;  position:relative;text-align:justify; padding:20px 0; font: normal 14px/22px Arial, Helvetica, sans-serif;">
+                                    <span style="text-align:left !important;"><b>Terms and conditions</b></span>
+                                <br>
+                                <p font: normal 13px/22px Arial, Helvetica, sans-serif;>
+                                 <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
+                             </p>
+                             </div>
+                            
 
                                 <div class="arrownav1">
                               </div>
@@ -148,18 +153,16 @@
      div.pop-up {
 display: none;
 position: absolute;
-width: 253px;
+width: 263px;
 height: auto;
 padding: 0px 20px;
-background: #EC8686;
+background: #ECEAEA;
 color: #000000;
-border-left: 10px solid #BF2A1D;
-border-right: 10px solid #BF2A1D;
-border-bottom: 10px solid #BF2A1D;
-border-radius: 0 0 20px 20px;
+border: 3px solid #8AB819;
+border-radius:  10px;
 font-size: 90%;
 z-index: 20;
-opacity: 0.9;
+opacity: 0.8;
 }
 
 
