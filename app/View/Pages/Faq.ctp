@@ -194,7 +194,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: FAQ');
 				<h4 class="accordion accordion-close" id="body-section8">Will I receive an invoice along with the order?<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
+<<<<<<< HEAD
 		<p>Yes, an email containing the order details will be sent to the email id registered on Facebook.  If you haven’t received one, please contact us on <strong>cs@giftology.com.  </strong>This is to be retained for any future clarity.</p>
+=======
+		<p>Yes, an email containing the order details will be sent to the email id registered on Facebook.  If you haven’t received one, please contact us on <u> <i><font style="color:#900;">cs@giftology.com</font></i></u>This is to be retained for any future clarity.</p>
+>>>>>>> vendor_fields
 					</div>
 				</div>
 				<!-- end panel -->
@@ -203,7 +207,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: FAQ');
 				<h4 class="accordion accordion-close" id="body-section8">Who should I contact for payment related issues?<span></span></h4>
 				<div style="display: none;" class="container">
 					<div class="content">
+<<<<<<< HEAD
 		<p>Kindly email us at <strong>cs@giftology.com </strong>with your concern.  Also please mention your full name as on Facebook for us to identify your account with us. </p>
+=======
+		<p>Kindly email us at <u> <i><font style="color:#900;">cs@giftology.com</font></i></u>with your concern.  Also please mention your full name as on Facebook for us to identify your account with us. </p>
+>>>>>>> vendor_fields
 
 					</div>
 				</div>

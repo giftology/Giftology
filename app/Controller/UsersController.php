@@ -14,11 +14,11 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout');
+        $this->Auth->allow('login','logout','product','email_unsubscribed');
     }
     public function isAuthorized($user) {
         if (($this->action == 'login') || ($this->action == 'logout')
-            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')) {
+            || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
 	return parent::isAuthorized($user);
@@ -49,6 +49,34 @@ class UsersController extends AppController {
         $this->set('request', $json_data);
         unset($json_data);
         $this->set('_serialize', array('status', 'request'));
+    }
+
+    public function ws_latest_friend_joined(){
+        $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
+        $e = $this->wsLatestFriendException($user_id);
+        if(isset($e) && !empty($e)) $this->set('latest_friend', array('error' => $e));
+        else{
+            $this->log("Searching latest friedn joined for ".$user_id);
+            $latest_friend_fb_id = $this->User->find('first',
+                array(
+                    'fields' => array('UserProfile.latest_friend'),
+                    'conditions' => array('User.id' => $user_id),
+                    'contain' => array('UserProfile')
+            ));
+            $latest_friend_name = $this->User->find('first',
+                array(
+                    'fields' => array('UserProfile.first_name','UserProfile.last_name'),
+                    'conditions' => array('User.facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend']),
+                    'contain' => array('UserProfile')
+            ));
+            $latest_friend = array(
+                'facebook_id' => $latest_friend_fb_id['UserProfile']['latest_friend'],
+                'first_name' => $latest_friend_name['UserProfile']['first_name'],
+                'last_name' => $latest_friend_name['UserProfile']['last_name']
+                );
+            $this->set('latest_friend', $latest_friend);    
+        }
+        $this->set('_serialize', array('latest_friend'));
     }
 /**
  * index method
@@ -171,7 +199,11 @@ class UsersController extends AppController {
                 $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.carousel_image'),'conditions' => array('Vendor.id '=>$id)));
                 $this->set('Images', $Image_new);
             }
-        
+             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $this->set('products', $product);
+
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -221,8 +253,17 @@ class UsersController extends AppController {
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
             if (isset($vendor_name)) {
                 $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+
+                $this->set('fb_description', "To ".$receiver_name." \r\n From ".$sender_name);
             } else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
+                $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+            }
+            if($gift['GiftsReceived']['sender_id'] == $gift['GiftsReceived']['receiver_id'])
+             {
+                $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+
+                $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
 
             if (isset($image)) {
@@ -230,8 +271,9 @@ class UsersController extends AppController {
             } else {
                 $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
             }
-            $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
+            //$this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
 	        //set utm source if set
+            if($this->request->query['visit']==1) $this->set('first_vist', TRUE);
 	        if (isset($this->request->query['utm_source'])) {
 		      $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
 	        }
@@ -256,16 +298,38 @@ class UsersController extends AppController {
 		//$this->layout = 'mobile_landing';
 	    //}  
             if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
-            else $this->layout = 'landing';
+           else{
+            if(!$this->RequestHandler->isMobile()){
+                $this->layout='landing';
+            }else{
+                $this->layout='mobile_landing';
+            }
+
+           }
+
+
+           // else $this->layout = 'landing';
         }
     }
-
+    public function product() 
+    {
+       $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+            $this->set('products', $product);
+    }
     public function logout() {
 
         session_destroy();
         session_start();
         /*$this->redirect("http://www.facebook.com");*/
-        $this->layout = 'landing';
+        if($this->RequestHandler->isMobile()){
+                $this->layout='mobile_landing';
+            }else{
+                $this->layout='landing';
+            
+
+       // $this->layout = 'landing';
 	    $this->set('slidePlaySpeed', '8000');
         
         $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
@@ -283,7 +347,15 @@ class UsersController extends AppController {
             $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
             $this->set('Images', $Image_new);
         }
+
+        }
+
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $this->set('products', $product);
          
+
          
     }
 
@@ -295,6 +367,16 @@ class UsersController extends AppController {
     $this->set('check',$user_profile['UserProfile']['email_unsubscribed']);
  
     }
+    public function email_unsubscribed()
+    {
+        $reveiver_id = $this->request->params['named']['id'];
+        $id = $this->AesCrypt->decrypt($reveiver_id);
+       $this->User->UserProfile->updateAll(
+                array('email_unsubscribed' => 1), 
+                array('user_id' => $id));
+        $this->Session->setFlash('Successfully unsubscribed from email updates. Sorry to see you go! ');
+    }
+
     public function email_stop()
     {
         $user_profile = $this->User->UserProfile->find('first', array(
@@ -351,8 +433,20 @@ class UsersController extends AppController {
             $this->updateUTMForReferredUser($updatedGiftId, $last_insert_id);
         }
     }
-    function afterFacebookLogin($first_login) {    
-        if ($first_login) {
+    function afterFacebookLogin($first_login) {  
+        if ($first_login) 
+            {
+                $fb_id = $this->Auth->user('facebook_id');
+                $friends = $this->User->Reminders->find('all', array('fields' => array('user_id','friend_fb_id'),
+                    'conditions' => array('friend_fb_id' => $fb_id)));
+                foreach ($friends as $friend) 
+                {
+                    $user_id = $friend['Reminders']['user_id'];
+                    $friend_fb_id = $friend['Reminders']['friend_fb_id'];
+                     $this->User->UserProfile->updateAll(
+                    array('latest_friend' => $friend_fb_id), 
+                    array('user_id' => $user_id));
+                }
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
     	}
@@ -526,8 +620,7 @@ class UsersController extends AppController {
     }
     
     function welcome_post_to_fb() {
-       
-        $url = "http://www.giftology.com";
+        $url = FULL_BASE_URL.'/users/login/?visit=1';
         $message = "I have joined the gifting revolution on Giftology.com! Have you?";
         $access_token = FB::getAccessToken();
         $sender_fb_id = $this->Connect->user('id');
@@ -715,5 +808,18 @@ class UsersController extends AppController {
         }
                 
         return $error;
+    }
+    
+    public function wsLatestFriendException($user_id){
+        $e = array();
+        //$this->UserProfile->recursive = -1;
+        $latest_friend = $this->User->find('count',
+                array(
+                    'conditions' => array('User.id' => $user_id, 'UserProfile.latest_friend IS NOT NULL')
+            ));
+        if(!$latest_friend){
+            $e[1] = "No latest friend joined Giftology";
+        }
+        return $e;
     }
 }

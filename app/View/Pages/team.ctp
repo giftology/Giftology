@@ -44,7 +44,11 @@ $(document).ready(function(){
 
 
   
+<<<<<<< HEAD
   $(".b ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VArun.jpg");$('.b .text3').hide();$(".a2").show();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/varun.png");$('.b .text3').show();$(".a2").hide();}); 
+=======
+  $(".b ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VArun.jpg");$('.b .text3').hide();$(".a2").show();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VARUN.png");$('.b .text3').show();$(".a2").hide();}); 
+>>>>>>> vendor_fields
   /////////////////
 
   

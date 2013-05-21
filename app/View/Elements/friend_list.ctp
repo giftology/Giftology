@@ -1,18 +1,19 @@
 <div class="image-wrapper">
     <?php  echo $this->Form->create('products', array('action' => 'view_products'));?>
     <?php foreach($reminders as $reminder): ?>
-        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>">
+        <div class="event" id= "<?= $reminder['Reminder']['encrypted_friend_fb_id']; ?>" name= "<?= $reminder['Reminder']['friend_name']; ?>" birth-data="<?= $reminder['Reminder']['friend_birthday']; ?>" loc-data="<?= $reminder['Reminder']['current_location']; ?>" year-data="<?= $reminder['Reminder']['friend_birthyear']; ?>" sex-data="<?=$reminder['Reminder']['sex']; ?>" ocasion-data="<?= $ocasion; ?>" suggested-friend="<?= $reminder['Reminder']['latest_friend_fb_id']; ?>">
               
                 <div class="event suggested">
                         <div class="image-container">
                                 <div class="frame-wrapper">
                                         <div class="shadow-wrapper">
                                                 <div class="frame">
-                                                        <img src="https://graph.facebook.com/<?= $reminder['Reminder']['friend_fb_id']; ?>/picture?width=100&height=100"/>
-                                                        <?php if (!isset($no_calendar)): ?>
+                                                        <img src="https://graph.facebook.com/<?= $reminder['Reminder']['friend_fb_id']; ?>/picture?width=110&height=110"/>
+                                                        <?php if (!isset($no_calendar) && array_key_exists('count', $reminder) ): ?>
                                                             <div class="calendar">
                                                                     <p><?= date('d', strtotime($reminder['Reminder']['friend_birthday'])); ?></p>
                                                             </div>
+                                                            <?php else: ?>
                                                         <?php endif; ?>
                                                         <?php if($reminder['count'] != 0): ?>
                         <a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'sent_gifts')); ?>><div class="count" ><p style="font-color:#000000"><?= $reminder['count']; ?></p></div></a>
@@ -27,10 +28,18 @@
                         <p class="name"><?= $reminder['Reminder']['friend_name']; ?></p>
                          
                         <p class="occasion">
-                        <?php $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y")) : 
+                        <?php 
+                        $age=date("Y")-$reminder['Reminder']['friend_birthyear']; if($age>0 && $age!=date("Y") && array_key_exists('count', $reminder)) : 
                                ?>Turns <?php echo $age ;
-                            else: ?>
-                                Birthday
+                            elseif($reminder['Reminder']['encrypted_user_id']): ?>
+                                Return Gift
+                              <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "male"): ?>
+                                Welcome Him
+                            <?php  elseif($reminder['Reminder']['latest_friend_data_id'] && $reminder['Reminder']['sex'] == "female"): ?>
+                                Welcome Her
+                            <?php elseif(!array_key_exists('count', $reminder)): ?>
+                                Suggested
+                            <?php else: ?>Birthday
                             <?php endif; ?></p>
                 </div>
                 
@@ -51,7 +60,8 @@
                 var gift_year = $(this).attr('year-data');
                 var gift_sex = $(this).attr('sex-data');
                 var gift_ocasion = $(this).attr('ocasion-data');
-
+                var gift_suggested = $(this).attr('suggested-friend');
+                
                 
                   $('<input>').attr({
                     type: 'hidden',
@@ -97,6 +107,14 @@
                     name: 'friend_loc',
                     value: gift_loc,
                 }).appendTo('#productsViewProductsForm');
+
+                 $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_suggested+'_hidden',
+                    name: 'friend_suggested',
+                    value: gift_suggested,
+                }).appendTo('#productsViewProductsForm');
+
                  $('<input>').attr({
                     type: 'hidden',
                     id: gift_ocasion+'_hidden',

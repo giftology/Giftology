@@ -32,10 +32,15 @@ class GiftsController extends AppController {
 	}
 	//WEB SERVICES
 	public function ws_list () {
+		$url = array($this->params->query, $this->params->url);
+        $this->log("Logging ws_list url ".serialize($url));
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$this->log("Dont for recv fb id ".$receiver_fb_id);
 		$e = $this->wsListGiftException($receiver_fb_id );
-		if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+		if(isset($e) && !empty($e)){
+            $this->log("Logging gift received exception for ".$receiver_fb_id." ".serialize($e));
+            $this->set('gifts', array('error' => $e));
+        }
 		else{
 			$conditions = array('receiver_fb_id' => $receiver_fb_id, 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING);
 			$this->Gift->recursive = 0;
@@ -84,6 +89,8 @@ class GiftsController extends AppController {
 	}
 
 	public function ws_send () {
+        $url = array($this->params->query, $this->params->url);
+        $this->log("Logging ws_send url ".serialize($url));
 		$sender_id = isset($this->params->query['sender_id']) ? $this->params->query['sender_id'] : null;
 		$receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
 		$product_id = isset($this->params->query['product_id']) ? $this->params->query['product_id'] : null;
@@ -94,15 +101,43 @@ class GiftsController extends AppController {
         $send_now = isset($this->params->query['send_now']) ? $this->params->query['send_now'] : null;
         $receiver_birthday = isset($this->params->query['receiver_birthday']) ? $this->params->query['receiver_birthday'] : null;
         $date_to_send = isset($this->params->query['date_to_send']) ? $this->params->query['date_to_send'] : null;
-        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message);
+        $e = $this->wsSendException($product_id, $amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday);
         
-        if(isset($e) && !empty($e)) $this->set('gifts', array('error' => $e));
+        if(isset($e) && !empty($e)){
+            $this->log("Logging gift sending exception for ".$receiver_fb_id." ".serialize($e));
+            $this->set('gifts', array('error' => $e));
+        }
         else{
             $this->log("Sending ".$product_id." from ".$sender_id." to ".$receiver_fb_id);
             $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount,$send_now,'',$gift_message,$post_to_fb,$receiver_birthday,'',$date_to_send);
             $this->set('gifts', array('result' => '1'));    
         }
 		$this->set('_serialize', array('gifts'));
+	}
+
+	public function ws_latest_gift(){
+		$receiver_id = isset($this->params->query['receiver_id']) ? $this->params->query['receiver_id'] : null;
+		$e = $this->wsLatestGiftException($receiver_id);
+		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
+        else{
+            $this->log("Searching Lastest gift for receiver id ".$receiver_id);
+            $gift = $this->Gift->find('first', array(
+            	'fields' => array('id', 'product_id'),
+            	'conditions' => array('receiver_id' => $receiver_id,),
+            	'order' => array('created DESC')
+            	));
+            $receiver_name = $this->UserProfile->find('first', array(
+                'fields' => array('first_name','last_name'),
+                'conditions' => array('user_id' => $receiver_id)
+            ));
+            $latest_gift = array(
+                'product_id' => $gift['Gift']['product_id'],
+                'receiver_first_name' => $receiver_name['UserProfile']['first_name'],
+                'receiver_last_name' => $receiver_name['UserProfile']['last_name']
+            );
+            $this->set('gift', $latest_gift);    
+        }
+		$this->set('_serialize', array('gift'));
 	}
 
 /**
@@ -601,13 +636,16 @@ class GiftsController extends AppController {
 
 			$User_id = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
 	
-
 			$sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
 			if ($gift['Gift']['gift_message']) {
 				$email_message = $gift['Gift']['gift_message'];
-				$message = $gift['Gift']['gift_message']."\r\n From: ".$sender_name."\r\n To: ".'@['.$receiver_fb_id.']';
+				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
+				if($receiver_id['User']['facebook_id'] == $this->Auth->user('facebook_id') )
+		            {
+		                $message = $gift['Gift']['gift_message'];
+		            }
 			} else {
 				//$message = $sender_name.' sent '.$receiver_name.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
 				$message = $sender_name.' sent '.'@['.$receiver_fb_id.']'.' a real gift voucher to '.$gift['Product']['Vendor']['name'].' on Giftology.com';
@@ -1040,7 +1078,7 @@ class GiftsController extends AppController {
 	    $this->autoRender = $this->autoLayout = false;
 	}
     
-    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message){
+    public function wsSendException($product_id,$amount, $sender_id, $receiver_fb_id, $post_to_fb, $gift_message, $receiver_birthday){
         $error = array();
         $product = $this->Gift->Product->read(null, $product_id);
         
@@ -1069,7 +1107,33 @@ class GiftsController extends AppController {
         }
 
         if(!$gift_message){
-        	$error[7] = "Gift message is missing";	
+        	$error[8] = "Gift message is missing";	
+        }
+        
+        $valid_till = date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days"));
+        $code_exists = $this->UploadedProductCode->find('count', array(
+        	'conditions' => array(
+        		'available'=>1, 
+        		'product_id' =>$product_id,
+                'value' => $amount,
+                'expiry >' => $valid_till
+        		)
+        	));
+
+        if(!$code_exists){
+        	$error[9] = "Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?";	
+        }
+
+        $check_product_for_receiver = $this->Gift->find('count', array('conditions'
+                => array('product_id' => $product_id,
+                    'receiver_fb_id' => $receiver_fb_id,
+                    'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
+                    'expiry_date >' => date('Y-m-d') 
+                )
+            ));
+
+        if($check_product_for_receiver){
+        	$error[10] = "Your Friend has already received this gift, select any other voucher to send";	
         }
         
         return $error;
@@ -1460,7 +1524,7 @@ class GiftsController extends AppController {
     }
 
     public function contest_report_3($date_start, $date_end){
-    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.time().'.csv', 'w+');
+    	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.$date_start.'_to_'.$date_end.'_'.time().'.csv', 'w+');
     	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
     	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
     	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up', 'Friends FB ID (Joining Date)'));
@@ -1473,19 +1537,23 @@ class GiftsController extends AppController {
             ));
     	$this->Gift->recursive = -1;
     	$this->UserProfile->recursive = -1;
+    	
     	foreach($gifts as $gift){
     		$sender_name = NULL;
     		$sender_name = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
     		$receivers = $this->Gift->find('all', array('fields'=>array('DISTINCT receiver_fb_id', 'receiver_id'),
     			'conditions' => array('Gift.sender_id' => $gift['Gift']['sender_id'],'Gift.created >' => $date_start, 'Gift.created <' => $date_end)
     			));
+    		$receiver_ids_with_joining_date = array();
+    		$receiver_ids = array();
     		$receiver_ids = array();
     		foreach($receivers as $receiver){
+    			$receiver_ids[] = $receiver['Gift']['receiver_id'];
     			$receiver_joining_date = $this->UserProfile->find('first', array('conditions' => array('user_id' => $gift['Gift']['sender_id'])));
-    			$receiver_ids[] = $receiver['Gift']['receiver_fb_id'] ."(".date('Y-m-d',$receiver_joining_date['UserProfile']['created']).")";
+    			$receiver_ids_with_joining_date[] = $receiver['Gift']['receiver_fb_id'] ."(".substr($receiver_joining_date['UserProfile']['created'], 0, 10).")";
     		}
 
-    		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids)));
+    		$friend_signed_up_count = $this->UserProfile->find('count',array('conditions' => array('user_id' => $receiver_ids, 'created >' => $date_start, 'created <' => $date_end)));
     		$new_array = array();
     		$new_array[] = $sender_name['UserProfile']['first_name'];
     		$new_array[] = $sender_name['UserProfile']['last_name'];
@@ -1493,21 +1561,30 @@ class GiftsController extends AppController {
     		$new_array[] = $gift['Sender']['facebook_id'];
     		$new_array[] = $gift[0]['c'];
     		$new_array[] = $friend_signed_up_count;
-    		$new_array[] = '"'.implode(',',$receiver_ids).'"';
+    		$new_array[] = '"'.implode(',',$receiver_ids_with_joining_date).'"';
     		fputcsv($fp, $new_array);
     	}
     	$fclose($fp);
     	$this->autoRender = $this->autoLayout = false;
     }
 
-    /*public function test_new_line_fb_post(){
-    	DebugBreak();
-    	$message = "From: Alok"."
-                "."To: Shubham"."
-                "."
-                ". "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?";
-    	$this->Giftology->test_new_line_in_message($this->Connect->user('id'),FB::getAccessToken(),$message);
-    	echo "posted";
-    	$this->autoRender = $this->autoLayout = false;
-    }*/
+    public function wsLatestGiftException($receiver_id){
+    	$e = array();
+    	if(!$receiver_id){
+    		$e[1] = "Receiver Facebook Id not supplied";
+    	}
+    	else{
+            $this->User->recursive = -1;
+    		$user_exists = $this->User->find('count', array('conditions' => array('id' => $receiver_id)));
+    		if(!$user_exists){
+    			$e[2] = "User correspoding to facebook id does not exist";	
+    		}
+            $this->Gift->recursive = -1;
+    		$gift_count = $this->Gift->find('count', array('conditions' => array('receiver_id' => $receiver_id)));
+    		if(!$gift_count){
+    			$e[3] = "Facebook Id ".$receiver_id." has not received any gift yet";
+    		}
+    	}
+    	return $e;
+    }
 }

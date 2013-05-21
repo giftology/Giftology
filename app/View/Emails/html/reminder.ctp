@@ -299,43 +299,22 @@ border-width:15px;border-color:#f7f5ae">
                     <tr>
                       <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
                           <tr>
-                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?= substr($this->Time->niceShort($reminders[$i]['Reminder']['friend_birthday']), 0, -7); ?></span></td>
+                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?= substr($this->Time->niceShort($reminders[$i]['Reminder']['friend_birthday']), 0, -7); ?></span><span  style="display:block; width:100%; padding:8px 0 20px 0;"> <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div></span></td>
+
                           </tr>
                         </table></td>
                       <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
                           <tr>
-                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i+1]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?= substr($this->Time->niceShort($reminders[$i+1]['Reminder']['friend_birthday']), 0, -7); ?></span></td>
+                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i+1]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?php if (isset($reminders[$i+1])): ?><?= substr($this->Time->niceShort($reminders[$i+1]['Reminder']['friend_birthday']), 0, -7); ?><?php endif; ?></span><span  style="display:block; width:100%; padding:8px 0 20px 0;"><?php if (isset($reminders[$i+1])): ?> <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div><?php endif; ?></span></td>
                           </tr>
                         </table></td>
                       <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
                           <tr>
-                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i+2]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?= substr($this->Time->niceShort($reminders[$i+2]['Reminder']['friend_birthday']), 0, -7); ?></span></td>
+                            <td width="33%" align="center" valign="top"><span style="color:#9F2027; display:block; font-size:16px; position:relative; overflow:hidden; margin:14px 0 0; text-decoration:none;font-family:Georgia, 'Times New Roman', Times, serif;"><?= $reminders[$i+2]['Reminder']['friend_name']; ?></span> <span  style="display:block; width:100%; padding:8px 0 11px 0; color:black;font-size:16px;font-family:Georgia, 'Times New Roman', Times, serif;"><?php if (isset($reminders[$i+2])): ?><?= substr($this->Time->niceShort($reminders[$i+2]['Reminder']['friend_birthday']), 0, -7); ?><?php endif; ?></span><span  style="display:block; width:100%; padding:8px 0 20px 0;"><?php if (isset($reminders[$i+2])): ?> <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div><?php endif; ?></span></td>
                           </tr>
                         </table></td>
                     </tr>
-                    <tr>
-                      <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
-                          <tr>
-                            <td width="33%" align="center" valign="top"><a href="http://bit.ly/update_giftology" style="text-decoration:none;">
-                              <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div>
-                              </a></td>
-                          </tr>
-                        </table></td>
-                      <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
-                          <tr>
-                            <td width="33%" align="center" valign="top"><a href="http://bit.ly/update_giftology" style="text-decoration:none;">
-                              <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div>
-                              </a></td>
-                          </tr>
-                        </table></td>
-                      <td><table width="100%" cellpadding="0" cellspacing="3" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:13px">
-                          <tr>
-                            <td width="33%" align="center" valign="top"><a href="http://bit.ly/update_giftology" style="text-decoration:none;">
-                              <div style="height:26px; width:100px; background:#d91c27; overflow:hidden; border:1px solid #b6161e; border-radius:4px; color:#FFF;  font:italic 17px/160% bold Arial, Helvetica, sans-serif ; margin:0 25px; box-shadow:0 0 5px #EC8C9B;"> <span> Send a Gift</span> </div>
-                              </a></td>
-                          </tr>
-                        </table></td>
-                    </tr>
+                  
                   </table></td>
               </tr>
 
@@ -351,7 +330,7 @@ border-width:15px;border-color:#f7f5ae">
           </div></td>
       </tr>
       <tr>
-        <td><div  style="margin-top:0px;background:#FFF;padding:1px 0;">
+        <td><div  style="margin-top:0px;background:#FFF;padding:1px 0 25px 0;">
             <h3 style="color: #666;display: block;font: 26px/100% Georgia, 'Times New Roman', Times, serif;text-align:center;text-shadow: 1px 1px 1px #000;"> Featured Brands</h3>
             <p style="color: #666;display: block;text-align: left;font: normal 16px/140% Georgia, 'Times New Roman', Times, serif;"> <img src="<?= IMAGE_ROOT; ?>Featured_Brand_Banner.png" height="140" width="630"></p>
             <div style="width:100%;float:left;height:19px;text-align:center;margin:0;"><img src="<?= IMAGE_ROOT; ?>shad-bg.png" alt=""></div>
@@ -365,10 +344,10 @@ border-width:15px;border-color:#f7f5ae">
   <div style="width:530px;padding:20px 60px 30px 60px;margin:0 auto;">
     <table >
       <tr>
-        <td><p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;">Please do not reply to this message - it was sent from an unmonitored email address.<br>
+        <td><p style="text-align:center;color:#666;font: normal 13px/22px Georgia, 'Times New Roman', Times, serif;">Please do not reply to this message - it was sent from an unmonitored email address.<br>
             This message is a service email related to your account.<br>
             For any support or questions, please mail us at cs@giftology.com</p>
-          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;"><a href="javascript:void(0);" style="text-decoration:underline; cursor: pointer;color:#666;" >update subscription preferences</a> | <a href="javascript:void(0);" style="text-decoration:underline; cursor: pointer;color:#666;">unsubscribe from this list</a></p>
+          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;" ><a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;" > update subscription preferences</a> | <a href="localhost/users/email_unsubscribed/id:<?= $id; ?>" style="text-decoration:underline;cursor: pointer;color:#666;">unsubscribe from this list</a></p>
           <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;">giftology.com • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010</p></td>
       </tr>
     </table>

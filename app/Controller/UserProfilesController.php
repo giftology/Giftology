@@ -129,4 +129,23 @@ class UserProfilesController extends AppController {
         }
         $this->autoRender = $this->autoLayout = false;    
     }
+
+    public function export_users_email(){
+    	$users = $this->UserProfile->find('all');
+    	$fp = fopen(ROOT.'/app/tmp/'.'user_profile_email_'.time().'.csv', 'w+');
+    	fputcsv($fp, array('User ID', 'First Name', 'Last Name', 'Facebook ID', 'Email', 'Location'));
+    	foreach($users as $user){
+    		set_time_limit(120);
+    		$new_array = array();
+    		$new_array[] = $user['UserProfile']['user_id'];
+    		$new_array[] = $user['UserProfile']['first_name'];
+    		$new_array[] = $user['UserProfile']['last_name'];
+    		$new_array[] = '"'.$user['User']['facebook_id'].'"';
+    		$new_array[] = $user['UserProfile']['email'];
+    		$new_array[] = $user['UserProfile']['city'];
+    		fputcsv($fp, $new_array);
+    	}
+    	fclose($fp);
+    	$this->autoRender = $this->autoLayout = false;    
+    }
 }

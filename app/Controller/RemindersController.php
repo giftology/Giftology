@@ -18,14 +18,34 @@ class RemindersController extends AppController {
 	);
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend');
+		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend','mail_activation');
 	}
 
 	public function isAuthorized($user) {
-	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend' || $this->action == 'send_success') {
+	    if ($this->action == 'view_friends' || $this->action == 'send_reminder_email_for_user' || $this->action == 'send_reminder' || $this->action == 'search_friend' || $this->action == 'send_success' || $this->action == 'email_update') {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
+	}
+
+	public function ws_reminder_today(){
+        $user_id = isset($this->params->query['user_id']) ? $this->params->query['user_id'] : null;
+        $conditions = array(
+            'user_id' => $user_id);
+
+        $conditions['MONTH(friend_birthday)'] = date('m');
+        $conditions['DAY(friend_birthday)'] = date('d'); 
+		$e = $this->wsReminderTodayException($user_id, $conditions);
+		if(isset($e) && !empty($e)) $this->set('today_birthday', array('error' => $e));
+        else{
+            $this->log("Searching today birthday reminder for ".$user_id);
+            $reminders = $this->Reminder->find('all',
+                array('conditions' => $conditions,
+                    'order' => 'friend_birthday ASC'
+            ));
+            $this->set('today_birthday', $reminders);    
+        }
+		$this->set('_serialize', array('today_birthday'));
 	}
 
 
@@ -216,140 +236,32 @@ class RemindersController extends AppController {
 		$this->Session->setFlash(__('Reminder was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-	public function send_success(){
-	$Facebook = new FB();
-		$friends= array();
-        $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT uid FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
-         $fb_id_array =array();
-         foreach ($friends as $frnd){
-         $fb_id_array[]= $frnd['uid'];    
-         }
-   		 $this->set('facebook_id',$fb_id_array);
-		$users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
-		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
-		$Facebook = new FB();
-		$fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
-                                    'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$fb_id['User']['facebook_id']));
-		$data = array(
-                'UserProfile.first_name' => "'".$fb_first_last_name[0]['first_name']."'",
-                'UserProfile.last_name' => "'".$fb_first_last_name[0]['last_name']."'"
-            );
-        $condition = NULL;
-        $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
-        $result = $this->UserProfile->updateAll($data, $condition);     
-
-		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
-			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
-		$this->Reminder->recursive = -1;
-        $this->set('title_for_layout', 'Select a friend');
-         $friend_list=$this->Reminder->find('count',array('conditions' =>array (
-    		'Reminder.user_id' => $this->Auth->user('id'))));
-          $this->set('total_friends', $friend_list);
-		// First off email maketing cookies 
-        if ($this->Cookie->read('utm_source') == 'swaransoft') {
-            $this->set('fire_swaransoft_pixel', 1);
-            $this->Cookie->delete('utm_source');
-        }
-
-		if (!$this->Connect->user()) {
-		    $this->redirect(array('controller'=>'users', 'action'=>'login'));
-		}
-		if ($this->request->is('post')) {
-                $all_users= $this->get_birthdays($this->request->data['Reminders']['friend_name'],'all', 1);
-				  foreach($all_users as $k => $all_user){
-			           $all_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($all_user['Reminder']['friend_fb_id']);
-		             }
-				$this->set('all_users', $all_users);
-				$this->set('today_user', array());
-			    $this->set('this_month_user', array());
-				$this->set('friends_active', 'active');			
-		} else {
-			if ($type) {//type = all
-				$all_users=$this->get_birthdays('mine','all', 1);
-				  foreach($all_users as $k => $all_user){
-			           $all_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($all_user['Reminder']['friend_fb_id']);
-		             }
-
-				$this->set('all_users',$all_users);
-				
-				$this->set('friends_active', 'active');
-			    } else {
-				$today_users = $this->get_birthdays('mine','today');
-				$tommorrow_users = $this->get_birthdays('mine','tommorrow');
-				$thismonth_users = $this->get_birthdays('mine','thismonth');
-				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
-				if (empty($today_users) && empty($tommorrow_users) &&
-				    empty($thismonth_users) && empty($nextmonth_users)) {
-					$refresh_reminders = $this->requestAction('users/refreshReminders/'.$this->Auth->user('id'));
-					if (!$refresh_reminders) {
-						$this->redirect('/reminders/view_friends');
-					}
-
-					//type = all
-					 $all_users=$this->get_birthdays('mine','all', 1);
-				  foreach($all_users as $k => $all_user){
-			           $all_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($all_user['Reminder']['friend_fb_id']);
-		             }
-
-				$this->set('all_users',$all_users);
-					$this->set('friends_active', 'active');
-					$this->Session->setFlash(__('You have no upcoming birthdays.  Displaying all friends'));
-				} else {
-					
-                    //$encrypt_id = $thismonth_users[0]['Reminder']['friend_fb_id'];
-
-                    foreach($thismonth_users as $k => $thismonth_user){
-			           $thismonth_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($thismonth_user['Reminder']['friend_fb_id']);
-		             }
-
-					foreach($tommorrow_users as $k => $tommorrow_user){
-						$tommorrow_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($tommorrow_user['Reminder']['friend_fb_id']);
-					}
-
-					foreach($today_users as $k => $today_user){
-						$today_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($today_user['Reminder']['friend_fb_id']);
-					}
-
-					foreach($nextmonth_users as $k => $nextmonth_user){
-						$nextmonth_users[$k]['Reminder']['encrypted_friend_fb_id'] = $this->AesCrypt->encrypt($nextmonth_user['Reminder']['friend_fb_id']);
-					}
-					
-
-             
-                    $this->set('today_users', $today_users);
-					$this->set('tommorrow_users', $tommorrow_users);
-					$this->set('this_month_users', $thismonth_users);
-					$this->set('next_month_users', $nextmonth_users);    
-                   $this->set('celebrations_active', 'active');
-				}
-			    }
-		}
-		$this->setGiftsSent();
-		if ($this->request->is('post')) {  
-			$this->Mixpanel->track('Search Friend', array(
-    	            'search_term' => $this->request->data['Reminders']['friend_name'],
-            	));
-		} else {
-			$this->Mixpanel->track($type ? 'View Friends' : 'View Events', array());			
+		public function send_success(){
+			$this->reminder_view_friends();
+	        $this->render('view_friends');	
+	        $this->autoRender = $this->autoLayout = false;    
+		
 		}
 
-        $this->render('view_friends');	
-        $this->autoRender = $this->autoLayout = false;    
-	}
-	public function view_friends($type=null) {
-        if($this->Connect->user()){
-            $this->User->id = $this->Auth->User('id');
-            $this->User->updateAll(
-            	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $this->Auth->User('id'))
-            	);
-        }
+		public function view_friends($type=null) 
+		{
+
+				if($this->Connect->user()){
+		            $this->User->id = $this->Auth->User('id');
+		            $this->User->updateAll(
+		            array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+		            array('User.id' => $this->Auth->User('id'))
+		            );
+		        }
+		        $this->reminder_view_friends($type);	
+		}
+
+	public function reminder_view_friends($type=null){
 		
 		$Facebook = new FB();
 		$friends= array();
         $friends = $Facebook->api(array('method' => 'fql.query',
-                                        'query' => 'SELECT uid FROM user WHERE uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
+                                        'query' => 'SELECT uid FROM user WHERE  current_location.country == "india" AND uid IN (SELECT uid2 from friend where uid1=me()) order by rand() limit 50'));
         $fb_id_array =array();
         if(isset($friends) && !empty($friends)){
         	foreach ($friends as $frnd){
@@ -357,8 +269,13 @@ class RemindersController extends AppController {
         	}
    		 	$this->set('facebook_id',$fb_id_array);	
         }
-        
-		$users = $this->UserProfile->find('first', array('fields' => array('id','user_id'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+       
+		$users = $this->UserProfile->find('first', array('fields' => array('user_id','email','created','mail_verified'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+		$this->set('user_mail',$users['UserProfile']['email']);
+		$this->set('user_created',$users['UserProfile']['created']);
+		$this->set('mail_verified',$users['UserProfile']['mail_verified']);
+
+
 		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
 		
 		$fb_first_last_name = $Facebook->api(array('method' => 'fql.query',
@@ -369,8 +286,13 @@ class RemindersController extends AppController {
             );
         $condition = NULL;
         $condition = array('UserProfile.user_id' => $fb_id['User']['id']);
-        $result = $this->UserProfile->updateAll($data, $condition);     
-
+        $result = $this->UserProfile->updateAll($data, $condition);
+        $enc_fb_id = $this->AesCrypt->encrypt($fb_id['User']['facebook_id']); 
+        $this->set('id', $enc_fb_id);
+        $this->set('name', $fb_first_last_name); 
+        $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
+        $this->set('send_date', $gift_send_date);
+        
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;
@@ -407,7 +329,78 @@ class RemindersController extends AppController {
 				
 				$this->set('friends_active', 'active');
 			    } else {
-				$today_users = $this->get_birthdays('mine','today');
+			    $today_users = $this->get_birthdays('mine','today');
+				$no_today_users = count($today_users);
+				if($no_today_users < 6 && SUGGESTED_FRIENDS)
+				{
+					$friend_list=$this->Reminder->find('all', array('limit'=>5,
+                		'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => 'India')),'order' => array('RAND()')));
+					if($no_today_users == 0 && SUGGESTED_FRIENDS)
+					{
+						$friend_list=$this->Reminder->find('all', array('limit'=>1,
+                		'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => 'India')),'order' => array('RAND()')));
+					}
+					$gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id','created'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
+				 	 $gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
+					 $gift_send_friend_lists=$this->Reminder->find('all', array(
+                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $gift_send_facebook_id['User']['facebook_id'],'Reminder.user_id'=>$this->Auth->user('id')))));
+					 foreach($gift_send_friend_lists as $k => $gift_send_friend_list){
+			           $gift_send_friend_lists[$k]['Reminder']['encrypted_user_id'] = $this->AesCrypt->encrypt($gift_send_friend_list['Reminder']['user_id']);
+			       		}
+		       		$gift_send_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_id'=>$gift_send_friend['Gift']['sender_id'],'Gift.created >'=>$gift_send_friend['Gift']['created'])),'order'=>'Gift.id DESC'));
+			           if($gift_send_friend_hide){
+			           	$gift_send_friend_lists = NULL;
+			           }
+
+
+		             $latest_friend = $this->UserProfile->find('first', array('fields' => array('latest_friend'),'conditions' => array('UserProfile.user_id' => $this->Auth->user('id'))));
+		             $latest_friend_data = $this->Reminder->find('all', array(
+                		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $latest_friend['UserProfile']['latest_friend'],'Reminder.user_id'=>$this->Auth->user('id')))));
+		             foreach($latest_friend_data as $k => $latest_friends){
+			           $latest_friend_data[$k]['Reminder']['latest_friend_data_id'] = $this->AesCrypt->encrypt($latest_friends['Reminder']['user_id']);
+		             }
+		             $latest_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_fb_id'=>$latest_friend['UserProfile']['latest_friend'])),'order'=>'Gift.id DESC'));
+		             if($latest_friend_hide){
+			           	$latest_friend_data = NULL;
+			           }
+
+			          
+			           if($latest_friend_data != NULL && $gift_send_friend_lists != NULL)
+			           {	
+			           		$merge_list = array_merge($gift_send_friend_lists,$latest_friend_data);
+			           		$suggested_list = array_merge($merge_list,$friend_list);
+			 				foreach($suggested_list as $k => $suggested_lists){
+			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+		             		}
+			           }
+			           
+			           if($latest_friend_data == NULL && $gift_send_friend_lists != NULL)
+			           {
+			           		$suggested_list = array_merge($gift_send_friend_lists,$friend_list);
+			 				foreach($suggested_list as $k => $suggested_lists){
+			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+		             		}
+			           }
+			            if($latest_friend_data != NULL && $gift_send_friend_lists == NULL)
+			           {
+			           		$suggested_list = array_merge($latest_friend_data,$friend_list);
+			 				foreach($suggested_list as $k => $suggested_lists){
+			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+		             		}
+			           }
+			           if($latest_friend_data == NULL && $gift_send_friend_lists == NULL)
+			           {
+			           		$suggested_list = $friend_list;
+			 				foreach($suggested_list as $k => $suggested_lists){
+			           			$suggested_list[$k]['Reminder']['latest_friend_fb_id'] = $this->AesCrypt->encrypt($suggested_lists['Reminder']['friend_fb_id']);
+		             		}
+			           }
+		             
+			 		
+			 		$today_users = array_merge($today_users,  $suggested_list);
+			 		$today_users = array_slice($today_users, 0, 6);
+				}
+
 				$tommorrow_users = $this->get_birthdays('mine','tommorrow');
 				$thismonth_users = $this->get_birthdays('mine','thismonth');
 				$nextmonth_users = $this->get_birthdays('mine','nextmonth');
@@ -497,7 +490,7 @@ class RemindersController extends AppController {
         }
     }*/ //no longer works
     public function send_reminder_email_for_user($id) {
-	$user = $this->Reminder->User->find('first', array(
+    $user = $this->Reminder->User->find('first', array(
 		'conditions' => array('User.id' => $id),
 		'contain'=>array('UserProfile')));
 	if (!$user['UserProfile']['email']) {
@@ -538,7 +531,8 @@ class RemindersController extends AppController {
 	return;
     }
     function send_reminder_email($user,$reminders) {
-		$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
+    	$product = $this->Product->find('all',array('conditions' => array('Product.display_order >' => 0), 'limit' => 3));
+		$id = $this->AesCrypt->encrypt($user['User']['id']);
         $email = new CakeEmail();
 		$email->config('smtp')
         	->template('reminder', 'default') 
@@ -549,6 +543,7 @@ class RemindersController extends AppController {
               ->viewVars(array('name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
 			       'num_birthdays' => sizeof($reminders),
 			       'products' => $product,
+			       'id' => $id,
 			       'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                                'reminders' => $reminders))
              ->send();
@@ -824,5 +819,92 @@ class RemindersController extends AppController {
     	fclose($fp);
     	fclose($fp1);
     	$this->autoRender = $this->autoLayout = false;
+    }
+
+     public function email_update(){
+        if($this->RequestHandler->isAjax()){
+        	$email_to_update = $this->request->data['email'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+            $update = $this->User->UserProfile->updateAll(
+            	array('UserProfile.email_to_verify' => "'".$email_to_update."'"), 
+                array('User_id' => $this->Auth->user('id'))
+                );
+            if($update){
+            	$generatedKey = md5(rand(10000,99999).$email_to_update);
+               	$link = FULL_BASE_URL.'/reminders/mail_activation?email='.$email_to_update.'&key='.$generatedKey ;
+              	$update = $this->User->UserProfile->updateAll(
+              		array('UserProfile.verification_passkey' => "'".$generatedKey."'",'UserProfile.mail_verified'=> '2'), 
+                    array('User_id' => $this->Auth->user('id')));
+				$email = new CakeEmail();
+				$email->config('smtp')
+				  	->template('mail_verification','default') 
+				    ->emailFormat('html')
+				    ->to($email_to_update)
+				    ->from(array('noreply@giftology.com' => 'Giftology'))
+				    ->subject('Welcome')
+				    ->viewVars(array('name' =>$user_data['UserProfile']['first_name'].' '.$user_data['UserProfile']['last_name'],'email' =>$email_to_update,'link' =>$link))
+				    ->send();
+				$this->log("Verification email send to ".$user_data['UserProfile']['first_name'].' '.$email_to_update);
+				//$this->setflash("Activation link has been sent to".' '.$email_to_update);
+	            $response= "Verification mail has been sent to your Id";
+
+			    echo json_encode($response);
+	            $this->autoRender = $this->autoLayout = false;
+	            exit;
+			}else{
+                $response= "failed try again";
+                echo json_encode($response);
+                $this->autoRender = $this->autoLayout = false;
+                exit;			    
+	        }
+        }else{
+        	// $this->setflash('Oops! Wrong action Please Try Again');
+            $response= "failed try again";
+           	echo json_encode($response);
+            $this->autoRender = $this->autoLayout = false;
+            exit;
+        }
+    }
+    public function mail_activation(){
+    // if ($this->Connect->user() && $this->Auth->User('id')){
+    	if((isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['key']) && !empty($_GET['key']))){
+            $email=$_GET['email'];
+    		$passkey=$_GET['key'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('email_to_verify','verification_passkey','first_name','email'), 'conditions' => array('verification_passkey' => $passkey )));
+    		if(($user_data['UserProfile']['verification_passkey']== $passkey && $user_data['UserProfile']['email_to_verify']== $email)){
+                $update = $this->User->UserProfile->updateAll(
+                         array('UserProfile.email' => "'".$email."'"), 
+                         array('verification_passkey' => $passkey));
+                if($update){
+              	 	$this->User->UserProfile->updateAll(
+                        array('UserProfile.verification_passkey' => 'Null','UserProfile.email_to_verify'=> 'Null','UserProfile.mail_verified'=> '1'), 
+                        array('email' => $email));
+              	 	$this->set('id',$email);
+              	 	$this->set('fname',$user_data['UserProfile']['first_name']);
+              	}else{
+                    $this->set('verification_error',"Something is wrong try again or contact to admin. .");
+              	}
+            }else{
+            	$this->set('wrong_url',"Sorry it seems either mail has been verified or does not exist.");
+            }
+    	}else{
+    		$this->set('failed',"Sorry it seems you have tried wrong verification url. Try something new.");
+    	}
+    // }else{
+
+           //   $this->set('login_needed',"Sorry please do login to verify USer id.");
+     // }
+    }
+
+    public function wsReminderTodayException($user_id, $conditions){
+    	$e = array();
+    	$reminders_count = $this->Reminder->find('count',
+                array('conditions' => $conditions,
+                    'order' => 'friend_birthday ASC'
+            ));
+    	if(!$reminders_count){
+    		$e[1] = "No birthday reminder today";
+    	}
+    	return $e;
     }
 }

@@ -576,6 +576,9 @@ class FacebookHelper extends AppHelper {
 			    }
 		    });
 	}
+
+
+
 	function send_gift(send_url) {
 		clicky.log('#SendGiftClickedPermsOKSending','SendingGift');
 		top.location.href=send_url;
@@ -589,8 +592,45 @@ class FacebookHelper extends AppHelper {
 		} );
 	}
 
+//To check if the browser is chrome on iOS.
+	function check_chrome_on_ios(){
+
+		var i = 0,
+    	iOS = false,
+    	iDevice = ['iPad', 'iPhone', 'iPod'];
+
+		for ( ; i < iDevice.length ; i++ ) {
+   			 if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+		}
+
+        var chrome_on_ios=false;
+       
+       	
+		//Check from userAgent for Chrome. May or may not work later if chrome changes.
+        
+        chrome=navigator.userAgent.toLowerCase().indexOf('crios') > -1;
+        if(iOS && chrome)
+        {
+            chrome_on_ios=true;
+        }
+       
+        return chrome_on_ios;
+
+    }
+
 	// logs the user in the application and facebook
 	function login(redirection){
+
+		var chrome_on_ios_check = check_chrome_on_ios();
+		
+		if(chrome_on_ios_check)
+		{
+			
+			alert('Your are using Chrome on iOS.  Please use Safari.');
+			window.close();
+			exit();
+			
+		}
 
 		if (typeof FB == 'undefined') {
 			clicky.log('#FBNotDefined','FB not defined'); 

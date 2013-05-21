@@ -76,7 +76,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
             
               <p id="contacttext" style="margin-left:15px;">We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
 
+<<<<<<< HEAD
     <center><h3>Contact Us</h3></center>      
+=======
+    <center><h3>Conact US</h3></center>      
+>>>>>>> vendor_fields
    <div id="foot_content_contact" >
     
 

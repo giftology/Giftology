@@ -237,6 +237,8 @@ define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 5);
 define('PAID_PRODUCT_DISABLED', TRUE);
 define('TYPE_CAMPAIGN', 1);
 define('TYPE_CONTEST', 2);
+define('SUGGESTED_FRIENDS', TRUE);
+define('DEFAULT_EMAIL_VERIFICATION', FALSE);
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));

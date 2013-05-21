@@ -1,4 +1,5 @@
 <script type="text/javascript">
+var res_data;
   var fb_param = {};
   fb_param.pixel_id = '6007399956303';
   fb_param.value = '0.00';
@@ -124,7 +125,7 @@
             <div class="frame-wrapper">
                 <div class="shadow-wrapper">
                     <div class="frame">
-                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?width=100&height=100">
+                        <img src="https://graph.facebook.com/${Reminder.friend_fb_id}/picture?width=110&height=110">
                     </div>
                 </div>
             </div>
@@ -134,6 +135,43 @@
 </div>
  <?php echo $this->Form->end();?>               
 </script>
+
+
+
+
+<?php                                        
+            $date_to_compare = strtotime(date('Y-m-d H:i:s'));
+            $profile_generated_since = floor(abs($date_to_compare - strtotime($user_created)) / 86400);
+            if((!($user_mail) && ($mail_verified == 0)) || ((substr($user_created, 0, 10) ==  date('Y-m-d')) && ($mail_verified == 0)) || (($profile_generated_since < 5) && ($mail_verified == 0)) || (($profile_generated_since >= 180) && ($profile_generated_since < 190) && ($mail_verified == 0)) || (DEFAULT_EMAIL_VERIFICATION && ($mail_verified == 0)))
+              { ?>
+
+
+                      <div id="popup_box"  > <!-- OUR PopupBox DIV-->
+                      <p> "We don't want you to miss upcoming birthdays. Help us keep you informed by confirming your email address"</p>
+                      <p style="display:inline !important;">
+                      <span>Your registered E-mail address is</span>
+                      <input class="u-4" name="email" id="email"  placeholder="Email" style="display:none;" />
+                         <div  id="error_email" style="display:none; ">
+                         <h5 style="color:#FF0000; display:inline;" id="error_email">*please enter valid email address.</h5>
+                        </div>
+                      <span style="color:#b70000; margin:0 20px 0 10;" id="registered"><b><?php echo $user_mail; ?></b></span>
+                      <span id="edit">edit</span>
+                      
+                                 <input type="button" name="submit" title="send" class="submission" id="submitt" value="Confirm Email Address" style="border:2px solid black; margin:10px; cursor:pointer;  "  />
+                                <input type="button" name="" class="reset" value="Ask me later"  id="ask" style=" border:2px solid black; cursor:pointer;"  />
+
+                                <input type="submit" name="submit" title="send" class="submission" id="done" value="Done" style="border:2px solid black; margin:10px; display:none; cursor:pointer; "  />
+                        
+     
+                      </p>
+       
+     
+      
+     
+
+
+                     </div>
+  <?php } ?>
 
 <div class="left-container">
             <?php if(isset($today_users) && $today_users): ?>
@@ -241,23 +279,24 @@
             <?php endif; ?>
     </div>
 
-                                
-
-
-<div id="news-items" >
-        <div class="shadow-wrapper right items">
-                <div class="frame">
+<div class="send_urself" id="news-items">
+    <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Go On, Spoil Yourself!!" title="Gift Yourself"/></div>
+     <?php echo $this->Form->end();?>    
+</div>
+<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/> </div>
+<div id="news-items" style="margin-bottom:35px;cursor:pointer">
+       
+                
                 <html xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:fb="https://www.facebook.com/2008/fbml">
       
-            <div id="fb-root"></div>
-            <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
-            <h4>Like Giftology ? Invite your friends!</h4>
-            <button id="SendButtonForNoPerms"class="spread showtransbox"
+           
+           
+            <div id="SendButtonForNoPerms"class="spread showtransbox"
               onclick="sendRequestToRecipients(); return false;"
-              value="Spread the Joy"
-            >Spread the Joy       
-            </button>
+              value="Spread the Joy" style="background:transparent!important; cursor:pointer;"
+            > <img src="<?= IMAGE_ROOT; ?>FInvite_Button.png" alt="Invite Friends" title="Invite Your Friends"/>      
+            </div>
             <?php 
                 $imploded_facebook_id = NULL;
                 if(isset($facebook_id) && !empty($facebook_id)){
@@ -289,8 +328,8 @@
                 // Handle callback here
               }
             </script>
-        </div>
-    </div>
+       
+   
 </div>
 <!--<div id="news-items" style="margin-top:-20px" >
         <div class="shadow-wrapper right items">
@@ -337,18 +376,18 @@
                 <div class="frame">
                         <h3>Total Gifts Sent</h3><ul>
                        <h4><?= $this->Number->format($num_gifts_sent); ?></h4>
-                       <h3>Whats happening now</h3><ul>
+                       <h3>What's Happening Now</h3><ul>
             <?php $last_sender_id = 0; ?>
             
                         <?php foreach($gifts_sent as $gift): ?>
                         <?php echo $gift['Gift']['sender_id']; ?>
                         
-                <?php if ($gift['Sender']['facebook_id'] != $last_sender_id): ?>
+                <?php if ($gift['Sender']['facebook_id'] != $last_sender_id && $gift['GiftsReceived']['receiver_fb_id']!=$gift['Sender']['facebook_id']): ?>
                                 <li>
                                 <div>
                                 <img src="https://graph.facebook.com/<?= $gift['Sender']['facebook_id']; ?>/picture?type=square"/>
                               
-                                <p></p><a target="_new" href="https://facebook.com/profile.php?id=<?php echo $gift['Sender']['facebook_id']; ?>"><?= $gift['sender_name']['UserProfile']['first_name'].' '.$gift['sender_name']['UserProfile']['last_name']; ?> </a>sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <a target="_new" href="https://facebook.com/profile.php?id=<?php echo  $gift['GiftsReceived']['receiver_fb_id']; ?>"><?= $gift['receiver_name']['Reminder']['friend_name']; ?> </a>
+                                <p></p><a target="_new" href="https://facebook.com/profile.php?id=<?php echo $gift['Sender']['facebook_id']; ?>"><?= $gift['sender_name']['UserProfile']['first_name']; ?> </a>sent a <?= $gift['Product']['Vendor']['name']; ?> gift voucher to <a target="_new" href="https://facebook.com/profile.php?id=<?php echo  $gift['GiftsReceived']['receiver_fb_id']; ?>"><?= $gift['receiver_name']['Reminder']['friend_name']; ?> </a>
                                  <span id="timeago"><?= $this->Time->timeAgoInWords($gift['GiftsReceived']['created']); ?></span>
 
                                 
@@ -381,5 +420,214 @@
         <?php endif; ?>
     <?php endforeach; ?>
     <?php endif; */?>
+    <?php 
+    if($send_date == "")
+    {
+        $date = "";
+    } 
+    else{
+        //$date =date("Y-m-d", strtotime($send_date['Gift']['created']));
+        $days_before_mail = "7";
+        $product_expire_date=date('Y-m-d', strtotime('+'.$days_before_mail.'days', strtotime($send_date['Gift']['created'])));
+        
+    }
     
+     ?>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+       var new_date = '<?php echo $product_expire_date;?>';
+       var total_time = new Date(new_date).getTime();
+       if(new_date)
+       {
+        
+             var current = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+            // alert(new_date+ " "+ total_time + " " +current);
+            if(total_time > current){
+                $(".send_urself").hide();
+            }
+            else{
+                $(".send_urself").show();
+            }
+        }
+       else
+       {
+            $(".send_urself").show();
+        }
+        $('Form > .eve').click(function (){
+
+                var gift_value = $(this).attr('id');
+                var gift_name = $(this).attr('name');
+                //alert(gift_value + " "+gift_name );
+
+                
+                  $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'friend_id',
+                    value: gift_value,
+                }).appendTo('#productsViewProductsForm');
+
+                   $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_name+'_hidden',
+                    name: 'friend_name',
+                    value: gift_name,
+                }).appendTo('#productsViewProductsForm');
+
+                $("#productsViewProductsForm").submit() 
+            }); 
+        $(".android_app").click(function (){
+            alert("App Coming Soon, Stay Tuned!");
+        });
+        });
+  </script>
+  <script type="text/javascript">
+$(document).ready(function()
+{
+    $(".android_app").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Googleplay_Button_1.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//GooglePlay_Button.png");
+        }                         
+    ); 
+
+    $(".eve").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button_3.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Giftyourself_Button.png");
+        }                         
+    ); 
+
+    $("#SendButtonForNoPerms").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//Finvite_Button_2.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//FInvite_Button.png");
+        }                         
+    );                  
+});
+
+  </script>
     
+<script type="text/javascript">
+    
+    $(document).ready( function() {
+        // When site loaded, load the Popupbox First
+        loadPopupBox();
+    
+        $('#ask').click( function() {
+            $('#popup_box').slideUp(1000);
+        });
+        $('#submitt').click( function() {
+            var email_submit= '<?php echo $user_mail; ?>' ;
+
+            if(email_submit){
+                
+         $.ajax({   
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/reminders/email_update",
+                    data: "email="+email_submit,
+                    success: function(data) {
+                        var res_data = jQuery.parseJSON(data);
+                        alert(res_data);
+                        if(res_data == "Verification mail has been sent to your Id"){
+                          $('#popup_box').slideUp(1000);  
+                        } else{
+                          return false;
+                        
+                        }
+                          return false;
+                           
+                    }});
+            $('#popup_box').slideUp(1000);
+        }
+           else{
+            alert("Oops, we are missing your e-mail id.");
+            return false;
+           }
+
+        });
+            $('#edit').click( function() {
+                $(this).hide();
+                $('#submitt').hide();
+                $('#ask').hide();
+                
+            $('#email').fadeIn(1000);
+            $('#done').fadeIn(1000).css('display','inline');
+            $('#registered').css('display','none');
+            
+        });
+        function loadPopupBox() {   // To Load the Popupbox
+            $('#popup_box').fadeIn(1000);
+                    
+        }
+         /**********************************************************/   
+    });
+    
+</script>
+
+<script type="text/javascript">
+
+      $(document).ready(function(){
+            $("#done").click(function (){
+                var e = false;
+                var emailRegex = new RegExp(/^[0-9-+]+$/);
+                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+                var valid = emailRegex.test($("#email").val());
+
+                if ($("#email").val().length == 0)
+                 {
+                     $("#error_email").show();
+                             e = true;  
+                    
+                    }
+               else if(!valid)
+                        {
+                          $("#error_email").show();
+                             e = true;  
+                        }
+                else if(valid)
+                        {
+                            $("#error_email").hide(); 
+                            var email_val= $("#email").val();
+                            $("#done").attr('disabled','disabled');
+         $.ajax({   
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/reminders/email_update",
+                    data: "email="+email_val,
+                    success: function(data) {
+                        var res_data = jQuery.parseJSON(data);
+                        alert(res_data);
+                        if(res_data == "Verification mail has been sent to your Id"){
+                          $('#popup_box').slideUp(1000);  
+                        }else{
+                            var res_data = jQuery.parseJSON(data);
+                            alert(res_data);
+                            return false;
+                        }
+                          return false;
+                    }
+                });
+                        }
+                if(e) return false;
+            });
+           
+        });
+      
+      </script>

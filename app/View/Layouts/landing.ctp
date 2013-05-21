@@ -21,13 +21,30 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php echo $this->Facebook->html(); ?>
 <head>
+  <!--Start of Zopim Live Chat Script-->
+      <script type="text/javascript">
+      window.$zopim||(function(d,s){var z=$zopim=function(c){
+      z._.push(c)},$=z.s=
+      d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+      _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+      $.src='//cdn.zopim.com/?1DD7j1ZIoQJdph6paUzfvtjqsZ28C8jx';z.t=+new Date;$.
+      type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+      </script>
+  <!--End of Zopim Live Chat Script-->
   <!--<script src="//cdn.optimizely.com/js/182331063.js"></script>-->
   <?php echo $this->Html->charset(); ?>
   <title>
     Giftology | The Social Gifting Company | Homepage
   </title>
-  <?php if (isset($fb_title)): ?>
+  <?php if (isset($fb_title) && !$first_vist): ?>
           <meta property="og:type" content="giftology:gift" />
+          <meta property="og:url" content="<?= $fb_url; ?>" />
+    <meta property="og:title" content="<?= $fb_title; ?>" /> 
+    <meta property="og:image" content="<?= $fb_image; ?>" /> 
+    <meta property="og:description" content="<?= $fb_description; ?>" /> 
+  <?php endif; ?>
+  <?php if ($first_vist): ?>
+          <meta property="og:type" content="giftology:gifting" />
           <meta property="og:url" content="<?= $fb_url; ?>" />
     <meta property="og:title" content="<?= $fb_title; ?>" /> 
     <meta property="og:image" content="<?= $fb_image; ?>" /> 
@@ -95,21 +112,23 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     return false; /* This prevents url from # */
 });
   });
-    </script>    
-    <?php  if(($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == CAMPAIGN) )
-        {?>
-         <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-         'redirect' => array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id,))); ?></div>
- <?php }
-        elseif (($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == REMINDER) ) { ?>
-           <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
-  <?php       } 
-        else 
-        { ?>
-            <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
-            'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>   
-  <?php } ?>              
+    </script>
+    <?php
+      $redirect_url = array(); 
+      if(($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == CAMPAIGN) ){
+        $redirect_url = array('controller'=>'campaigns', 'action'=>'view_products',$campaign_enc_id);
+      }
+      elseif (($type==TYPE_CAMPAIGN) &&($campaign_check_on) &&($redirect_to == REMINDER) ){
+        $redirect_url = array('controller'=>'reminders', 'action'=>'view_friends');  
+      }
+      else{
+        $redirect_url = array('controller'=>'reminders', 'action'=>'view_friends');
+      } 
+    ?>   
+    
+    <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+      'redirect' => $redirect_url)); ?></div>   
+           
         <div class="clear">&nbsp;</div>
 		<?php if(($type==TYPE_CONTEST) &&($campaign_check_on) &&($redirect_to == REMINDER)){?>   
         <p>
@@ -152,7 +171,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <div class="showcase-wrap"><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$campaign_Images['0']['Vendor']['wide_image']; ?>" class="lazy" alt=""></div></section>
       <?php //else: ?>-->
       
-     <section class="show-case">
+     <!--<section class="show-case">
         <div class="showcase-wrap">
            <div id="giftVouchers">
             <?php if(CAROUSEL_CODE == 1): ?>
@@ -182,12 +201,48 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             <?php endif; ?>
           </div>
         </div>
-    </section>
+    </section>-->
    <!--<?php //endif; ?>-->
-   <?php echo $this->Facebook->friendpile(); ?>
+    
+   
+
+   
+           <section class="show-case" style="
+background: none repeat scroll 0 0 #F7F7F7;">
+                <div class="showcase-wrap">
+                   <div id="giftVouchers">
+                    <?php if(CAROUSEL_CODE == 1): ?>
+                        <?php
+                              if (glob("img/slider/*.{jpg,png}",GLOB_BRACE) != false)
+                                 {
+                                   $filecount = glob("img/slider/*.{jpg,png}",GLOB_BRACE);
+                                     
+                                     foreach($filecount as $img)
+                                        { ?>
+                                            <div><img src="<?= FULL_BASE_URL; ?>/<?php echo $img; ?>" class="lazy" alt=""></div>
+                                      <?php   }
+
+                                  }
+                                else
+                                         {
+                                  echo 0;} 
+                        ?>
+                    <?php else: ?>
+                          <?php
+                              foreach($Images as $Image)
+                                  { ?>
+                                      <div><img width="200px" height="200px" style="border-style:solid;border-width:1px;" src="<?= FULL_BASE_URL.'/'.$Image['0']['Vendor']['carousel_image']; ?>" class="lazy" alt=""></div>
+
+                                              <?php   }
+                              ?>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </section>
+              <?php echo $this->Facebook->friendpile(); ?>
          <section class="content-wrap">
             <div class="content-region">
-                <span class="block-title">See how it works</span>
+                <span class="block-title">See How It Works</span>
                 
                 <div class="how-it-work">
                     <ul>
@@ -210,9 +265,30 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                 </div>
                   <div class="clear">&nbsp;</div>
             </div>
+            <br/>
+            <span class="block-title">Available Gifts</span>
+                       
+                
+            <div class="how-it-work">
+               <div style="width:960px; margin:auto;">
+                        <?php foreach ($products as $product): ?>
+                            <a>
+                              <?= $this->element('product_on_landing',
+                                array('product' => $product,
+                                     'small' => true),
+                                array('cache' => array(
+                              'key' => $product['Product']['id'].'small'))); ?>
+                            </a>
+                        <?php endforeach; ?>
+                       <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:40px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
+               </div>
+             </div>
+              
+               
+
             <div class="featured-logo">
               <div class="flogo-block">
-                    <span class="block-title">As featured in</span>
+                    <span class="block-title">As Featured In</span>
                       <div class="featured-in">
                             <a href="javascript:void(0);" class="l1" style="outline: none;">&nbsp;</a>
                             <a href="javascript:void(0);" class="l2" style="outline: none;">&nbsp;</a>

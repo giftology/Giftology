@@ -16,6 +16,13 @@
 		            ), 
 		            'full' 
 	        );
+	        echo $this->Tinymce->input('Product.short_terms', array( 
+	            'label' => 'Short Terms & Conditions' 
+		            ),array( 
+		                'language'=>'en' 
+		            ), 
+		            'full' 
+	        );
 		echo $this->Tinymce->input('Product.redeem_instr', array( 
 	            'label' => 'Redemption Instructions' 
 		            ),array( 

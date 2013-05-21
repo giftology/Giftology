@@ -65,10 +65,8 @@
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
 
-                if ($("#email").val().length == 0)
+                /*if ($("#email").val().length == 0)
                  {
-                    /*$("#error_email").show();
-                    e = true;*/
                     var r=confirm("continue without email address!");
                     if (r==true)
                       {
@@ -78,17 +76,21 @@
                       {
                         e = true;
                       }
+                    }*/
+                    if($("[id='chk1']:checked").length<1)
+                    {
+                        if(!valid){
+                            alert("please enter valid email id");
+                            return false;
+                        }
+                        else{
+                            return ture;
+                        }
+                        
+                        return false;
                     }
-               else if(!valid)
-                        {
-                          $("#error_email").show();
-                             e = true;  
-                        }
-                else if(valid)
-                        {
-                            $("#error_email").hide();    
-                        }
-                if(e) return false;
+                    
+                    if(e) return false;
             });
            
         });
@@ -104,6 +106,20 @@
                 }
                 else{
                     $("#error_text").hide();
+                }
+                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+                var valid = emailRegex.test($("#giftsRecieverEmail").val());
+
+                if($("[id='chk1']:checked").length<1){
+                    if(!valid){
+                        alert("Please enter the email id");
+                        return false;
+                    }
+                    else{
+                        return ture;
+                    }
+                    
+                    return false;
                 }
             });
         });
@@ -142,12 +158,13 @@
             if (isset($receiver_birthday) &&
                         !$this->Time->isToday($receiver_birthday) &&
                         isset($ocasion) &&
-                        $ocasion == 'Birthday') {
+                        $ocasion == 'Birthday' ) {
                         $send_now = 0;
                         $message = array("A little something to get the party started. Happy birthday!","Now, that’s just for being the best. Happy birthday!","You got this gift to celebrate. Happy birthday!","Today lets celebrate YOU. Happy birthday!");
                         $mess = array_rand($message,1);
                       $message_random = $message[$mess];
-                    } else {
+                    }
+                     else {
                         $send_now = 1;
                         $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
                         $mess = array_rand($message,1);
@@ -160,30 +177,42 @@
                         $mess = array_rand($message,1);
                       $message_random = $message[$mess];
                     }
+                    if($receiver_id == $facebook_id)
+                    {
+                        $message_random ="Thank you Giftology for my gift! Can't wait to unwrap it :)";
+                    }
                     $receiver = explode(" ", $receiver_name);
+                    if ($suggested_friends) {
+                        $send_now = 1;
+                       $message = array(" I saw this gift and couldn't help getting it for you.","Here’s a gift just for being the best!","I hope this gift makes you feel as great as you are.");
+                        $mess = array_rand($message,1);
+                          $message_random = $message[$mess];
+                    }
             ?>
              <h3>Will be delivered: 
-                    <strong>
-                        <select id="demo-html" class="demo-htmlselect" style="width:110px">
-                            <?php if($send_now == 0 ): ?>
-                            <option value="0" class="send" id="schedule"><!--<?= 
-                            date("d-m-Y", strtotime($receiver_birthday)); ?>-->On Birthday</option> 
-                             <?php endif; ?>
-                             
-                            <option value="0" class="send" id="today">Now</option>
+           <?php 
+               if($receiver_id == $facebook_id ):?>
+               <strong>Today</strong>
+           <?php else: ?>
 
-                             <option value="0" id="later" class=c1>Later</option>
-                        </select>
-                        
-                        
+                <strong>
+                    <select id="demo-html" class="demo-htmlselect" style="width:110px">
+                        <?php if($send_now == 0 ): ?>
+                        <option value="0" class="send" id="schedule"><!--<?= 
+                        date("d-m-Y", strtotime($receiver_birthday)); ?>-->On Birthday</option> 
+                         <?php endif; ?>
+                         
+                        <option value="0" class="send" id="today">Now</option>
 
-                    </strong>
-                    <?php if($send_now == 0 ): ?>
-                            <span id = "birthday_date" style="margin-left:10px;font-size: 20px"><?= 
-                            date("d-m-Y", strtotime($receiver_birthday)); ?></span>
-                        <?php endif; ?>
-                    <span id = "date" style="margin-left:60px;font-size: 20px"></span>
-
+                         <option value="0" id="later" class=c1>Later</option>
+                    </select>
+                </strong>
+                <?php if($send_now == 0 ): ?>
+                        <span id = "birthday_date" style="margin-left:10px;font-size: 20px"><?= 
+                        date("d-m-Y", strtotime($receiver_birthday)); ?></span>
+                    <?php endif; ?>
+                <span id = "date" style="margin-left:60px;font-size: 20px"></span>
+         <?php endif; ?>
                 </h3>
              
 
@@ -310,10 +339,10 @@
                 </div>
                 </div>
             </div>
-            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
+            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to send</li></ul>
 
             <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_shipping'));?>  
+            <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_shipping'));?>  
                
             </div>    
             </div>
@@ -370,12 +399,20 @@
                     <h5 style="color:#FF0000">*please enter valid email address.</h5>
                 </div>
             </div>
-            <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
-
-            <div class="parent_submit">
-            <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
+            <?php if($product['Product']['min_price']!=0): ?>
+                <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to Send</li></ul>
+                 <div class="parent_submit">
+                <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_free'));?>  
                
-            </div>     
+                </div>
+            <?else:?>
+                <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
+                 <div class="parent_submit">
+                <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
+                   
+                </div>
+             <?php endif; ?>
+               
             </div>
 
             <?php } ?>
@@ -393,14 +430,14 @@
     $(document).ready(function(){
         $('#form_free').click(function(){
             $(this).attr('disabled','disabled');
-            if( $('.gift-message').val() !='') 
+            if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');  
         });
 
          $('#form_shipping').click(function(){
             $(this).attr('disabled','disabled');
-            if( $('.gift-message').val() !='') 
+            if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');    
         });
@@ -513,8 +550,9 @@ $(document).ready(function(){
         var selected = new Date(dateText).getTime();
         
        var today = new Date(new Date().getFullYear(), new Date().getMonth()+2, new Date().getDate()).getTime();
+       var today_Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
       
-       if(today > selected){
+       if(today > selected && selected > today_Date){
         
         document.getElementById("date").innerHTML = "On"+" "+formattedDate; 
        }
