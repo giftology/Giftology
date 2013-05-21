@@ -50,7 +50,7 @@ public $presetVars = array(
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
