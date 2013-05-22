@@ -12,6 +12,24 @@ class UserAddress extends AppModel {
  *
  * @var array
  */
+	public $actsAs = array('Search.Searchable');
+ 	public $filterArgs = array(
+            array('name' => 'id', 'type' => 'like','field' => 'UserAddress.id'),
+            array('name' => 'username', 'type' => 'like','field' => 'UserAddress.user_id'),
+            array('name' => 'First', 'type' => 'like','field' => 'UserAddress.first_name'),
+            array('name' => 'Last', 'type' => 'like','field' => 'UserAddress.last_name'),
+            array('name' => 'Address1', 'type' => 'like','field' => 'UserAddress.address1'),
+            array('name' => 'Address2', 'type' => 'like','field' => 'UserAddress.address2'),
+            array('name' => 'city', 'type' => 'like','field' => 'UserAddress.city'),
+            array('name' => 'Pin', 'type' => 'like','field' => 'UserAddress.pin_code'),
+            array('name' => 'Country', 'type' => 'like','field' => 'UserAddress.country'),
+            array('name' => 'Created', 'type' => 'like','field' => 'UserAddress.created'),
+            array('name' => 'Modified', 'type' => 'like','field' => 'UserAddress.modified'),
+            array('name' => 'Phone', 'type' => 'like','field' => 'UserAddress.phone'),
+            array('name' => 'Email', 'type' => 'like','field' => 'UserAddress.reciever_email'),
+            array('name' => 'State', 'type' => 'like','field' => 'UserAddress.state')
+            );
+
 	public $validate = array(
 		'user_id' => array(
 			'numeric' => array(
