@@ -690,7 +690,6 @@ class RemindersController extends AppController {
 
 		$Facebook = new FB();
 		
-
 		foreach($gift_sent_details as $k => $gift){
 			$sender_name = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'),'conditions' => array('UserProfile.user_id' => $gift['GiftsReceived']['sender_id'])));
 			$receiver_name = $this->Reminder->find('first', array('fields' => array('friend_name'),'conditions' => array('friend_fb_id' => $gift['GiftsReceived']['receiver_fb_id'])));
@@ -711,6 +710,7 @@ class RemindersController extends AppController {
 			$receiver_name_arr = explode(" ",$receiver_name['Reminder']['friend_name']);
 			$gift_sent_details[$k]['sender_name'] = $sender_name;
 			$gift_sent_details[$k]['receiver_name']['Reminder']['friend_name'] = $receiver_name_arr[0];
+			$gift_sent_details[$k]['gift_timestamp'] = $this->gift_sent_timestamp($gift['GiftsReceived']['created']);
 		}
 
 		
@@ -917,5 +917,50 @@ class RemindersController extends AppController {
     		$e[1] = "No birthday reminder today";
     	}
     	return $e;
+    }
+
+    public function gift_sent_timestamp($gift_created){
+        $calculated_time = NULL;
+    	$time_difference = time() - strtotime($gift_created);
+    	$seconds = $time_difference ;
+		$minutes = round($time_difference / 60 );
+		$hours = round($time_difference / 3600 );
+		$days = round($time_difference / 86400 );
+		$weeks = round($time_difference / 604800 );
+		$months = round($time_difference / 2419200 );
+		$years = round($time_difference / 29030400 );
+		// Seconds
+		if($seconds <= 60)
+		{
+			$calculated_time = $seconds."s ago";
+		}
+		//Minutes
+		if($minutes <=60 && $minutes)
+		{
+		    $calculated_time = $minutes."m ago";
+		}
+		//hours
+		
+		if($hours <= 24 && $hours){
+			$calculated_time =  $hours."h ago";
+		}
+		
+		if($days && $hours > 24 && $days){
+			$calculated_time = $days."d ago";
+		}
+
+		if($weeks && $days >=7 && $weeks){
+			$calculated_time = $weeks."w ago";
+		}
+
+		if($months && $days >=30 && $months){
+			$calculated_time = $months."M ago";
+		} 
+
+		if($years && $months >=12 && $years){
+			$calculated_time = $months."Y ago";
+		}
+        
+        return $calculated_time;
     }
 }
