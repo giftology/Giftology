@@ -49,7 +49,7 @@ class UsersController extends AppController {
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','User Name','Role','Facebook Id','Last Login','Created','Modified','First Name','Last Name','Email','Mobile','City','Gender','Birthday','BirthYear');
+                    $header_row= array('Id','User Name','Role','Facebook Id','Last Login','Created','Modified','First Name','Last Name','Email','Mobile','City','Gender','Birthday','BirthYear','Total Friend');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
@@ -117,7 +117,6 @@ class UsersController extends AppController {
  */
 
 	public function index() {
-     
         $this->setUserProfile();
          $this->Prg->commonProcess('User');
       
