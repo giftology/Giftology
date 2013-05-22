@@ -274,7 +274,7 @@ class UsersController extends AppController {
                 $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
 
-            if(isset($this->request->query['visit'])){
+            if($this->request->query['visit']==1){
                 $this->set('fb_title', "Giftology");    
             }
 
@@ -285,7 +285,7 @@ class UsersController extends AppController {
             }
             //$this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
 	        //set utm source if set
-            if($this->request->query['visit']==1) $this->set('first_vist', TRUE);
+            
 	        if (isset($this->request->query['utm_source'])) {
 		      $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
 	        }
