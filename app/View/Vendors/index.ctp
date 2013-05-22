@@ -31,9 +31,11 @@
                  </div>
 	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Vendors', 'action' => 'download_vendor_csv', 'onsubmit'=>'return chkValidate();') );?>
         <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
-         <?php  echo $this->Form->submit("Download Vendor CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
+        	<div class="download_csv">
+             <?php  echo $this->Form->submit("Download Vendor CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
+             </div>
 	<table cellpadding="0" cellspacing="0" border="1">
 	<tr><td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
 

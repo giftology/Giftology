@@ -44,7 +44,7 @@
 	
 		<?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Users', 'action' => 'download_user_csv', 'onsubmit'=>'return chkValidate();') );?>
 		 <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
-		 	<div style="float:right;width:220px;height:auto;margin-top:-60px;">
+		 	<div class="download_csv">
 		 		<?php  echo $this->Form->submit("Download User CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
 		              echo $this->Form->end();
 		             ?>

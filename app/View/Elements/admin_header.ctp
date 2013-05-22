@@ -1,4 +1,10 @@
 <style>
+      div.download_csv{
+        float:right;
+        width:220px;
+        height:auto;
+        margin-top:-60px;
+      } 
       div.paging a{
          display: inline-block;
 

@@ -37,9 +37,11 @@
                  </div>
 	 <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'Gifts', 'action' => 'download_gift_csv', 'onsubmit'=>'return chkValidate();') );?>
         <table class="grd-chkbox" cellpadding="0" cellspacing="0" id="ordrMgmt">
+        	<div class="download_csv">
          <?php  echo $this->Form->submit("Download Gift CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
+         </div>
 	<table cellpadding="0" cellspacing="0" border="1">
 	<tr>    
 <td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
