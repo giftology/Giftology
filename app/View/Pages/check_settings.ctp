@@ -43,7 +43,7 @@ $(document).ready(function(){
    
 
 
-<div id="foot_content" style="height:900px ;">
+<div id="foot_content" style="height:800px ;">
   
   <center ><h3 class="careerMainHead" >Notifications</h3></center>
   <div class="media" >
@@ -51,7 +51,7 @@ $(document).ready(function(){
        
     <p id="contacttexth1" style="text-align:center;" >We can let you know when things you're interested in happen.<br>
 Just make sure to check the boxes you want below you don't miss anything! </p>
-    <p>&nbsp;</p>
+
 
     
    
@@ -61,7 +61,7 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
     <div id="foot_content_contact" style="margin-top:30px;" >
 
       <div  class="careerCustom">
-    <p>&nbsp;</p>
+
 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
           <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
@@ -77,14 +77,12 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
         ?>
     </p>
     
-    <p style="border-bottom:1px dotted #999;">&nbsp;</p>
+    <p style="border-bottom:1px dotted #999; margin-bottom:18px;">&nbsp;</p>
 
-<p>&nbsp;</p>
 
 
 <!--/////////////////////-->
 
- <p>&nbsp;</p>
 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
           <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
@@ -100,14 +98,13 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
         ?>
     </p>
     
-    <p style="border-bottom:1px dotted #999;">&nbsp;</p>
+    <p style="border-bottom:1px dotted #999; margin-bottom:18px;">&nbsp;</p>
 
-<p>&nbsp;</p>
+
 
 
 <!--/////////////////////-->
 
- <p>&nbsp;</p>
 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
           <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
@@ -123,15 +120,14 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
         ?>
     </p>
     
-    <p style="border-bottom:1px dotted #999;">&nbsp;</p>
+    <p style="border-bottom:1px dotted #999; margin-bottom:18px;">&nbsp;</p>
 
-<p>&nbsp;</p>
+
 
 
 <!--/////////////////////-->
 
- <p>&nbsp;</p>
-
+ 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
           <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
             if($check)
@@ -147,14 +143,12 @@ The email will be sent to parul.2919@gmail.com, we use the same email as you use
         ?>
     </p>
     
-    <p style="border-bottom:1px dotted #999;">&nbsp;</p>
+    <p style="border-bottom:1px dotted #999; margin-bottom:18px;">&nbsp;</p>
 
-<p>&nbsp;</p>
 
 
 <!--/////////////////////-->
 
- <p>&nbsp;</p>
 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
           <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
