@@ -1,6 +1,11 @@
 <div class="products view">
 <h2><?php  echo __('Campaign'); ?></h2>
 	<dl>
+		<dt><?php echo __('Campaign Name'); ?></dt>
+		<dd>
+			<?php echo h($campaign['Campaign']['campaign_name']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
 			<?php  echo h($campaign['Campaign']['id']); ?>

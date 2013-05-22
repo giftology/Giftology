@@ -4,6 +4,7 @@
 	<table cellpadding="0" cellspacing="1" border="1px">
 	<tr padding="2px 2px 2px 2px">
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
+			<th><?php echo $this->Paginator->sort('campaign_name'); ?></th>
 			<th><?php echo $this->Paginator->sort('product_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('start_date'); ?></th>
 			<th><?php echo $this->Paginator->sort('end_date'); ?></th>
@@ -19,6 +20,8 @@
 	foreach ($campaigns as $campaign): ?>
 	<tr>
 		<td><?php echo h($campaign['Campaign']['id']); ?>&nbsp;</td>
+		<td><?php echo h($campaign['Campaign']['campaign_name']); ?>&nbsp;</td>
+
 		<td>
 			<?php echo $this->Html->link($campaign['Campaign']['product_id'], array('controller' => 'campaigns', 'action' => 'view', $campaign['Campaign']['id'])); ?>
 		</td>

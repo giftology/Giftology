@@ -16,7 +16,7 @@ class CampaignsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
-    public $uses = array('Campaign','Product','User','UserAddress','Gift','Reminder','User','UserProfile');
+    public $uses = array('Campaign','Product','Vendor','User','UserAddress','Gift','Reminder','User','UserProfile');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -201,6 +201,8 @@ class CampaignsController extends AppController {
  * @return void
  */
  public function add() {
+     $vendors = $this->Vendor->find('list');
+     $this->set(compact('vendors'));
     
 
         if ($this->request->is('post')) {
@@ -226,7 +228,13 @@ class CampaignsController extends AppController {
                     }
                 }
                 if(!$error_array) { 
-                    $product_id=$this->request->data['Campaign']['product_id'];
+                     $product_id=$this->request->data['Campaign']['product_id'];
+                     $this->Product->recursive=-2;
+                     $vendor= $this->Product->find('first',array('fields' =>array('Product.vendor_id'),'conditions' => array('Product.id '=>$product_id)));
+                     $val= $vendor['Product']['vendor_id'];
+                     $this->Vendor->recursive=-2;
+                     $name=$this->Vendor->find('first',array('fields' =>array('Vendor.name'),'conditions' => array('Vendor.id '=>$val)));
+                     $this->request->data['Campaign']['campaign_name'] = $name['Vendor']['name'];
                     if($product_id==""){
                         $product_id=-1;
                         $this->request->data['Campaign']['product_id']=-1;
