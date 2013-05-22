@@ -119,17 +119,17 @@
                                     <div class="arrownav">
 
                                 </div>
-                                 <div style="width:260px;  position:relative;  text-align:justify;font: normal 13px/22px Arial, Helvetica, sans-serif; border-bottom:1px dotted #333; padding:10px 0;">
+                                 <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted #333; padding:3px 0;font: normal 11px/20px Georgia;">
                                 
                                 
-                                 <p style="font: normal 12px/22px Georgia, "Times New Roman", Times, serif;">
+                                 <p style="font: normal 11px/20px Georgia, "Times New Roman", Times, serif;">
                                  <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
                              </p>
                              </div>
-                                <div style="width:260px;  position:relative;text-align:justify;  font: normal 13px/22px Arial, Helvetica, sans-serif;padding:10px 0;">
+                                <div style="width:240px;  position:relative;text-align:justify;  padding:3px 0;font: normal 11px/18px Georgia;">
                                    
                                
-                                <p style="font: normal 12px/22px Georgia, "Times New Roman", Times, serif;">
+                                <p style="font: normal 11px/18px Georgia, "Times New Roman", Times, serif;">
                                  <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
                              </p>
                              </div>
@@ -153,9 +153,9 @@
      div.pop-up {
 display: none;
 position: absolute;
-width: 263px;
+width: 240px;
 height: auto;
-padding: 0px 20px;
+padding: 0px 10px;
 background: #ECEAEA;
 color: #000000;
 border: 3px solid #8AB819;
@@ -163,6 +163,7 @@ border-radius:  10px;
 font-size: 90%;
 z-index: 20;
 opacity: 0.8;
+margin-left:30px;
 }
 
 
@@ -197,7 +198,7 @@ opacity: 0.8;
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY +30 ).css('left', e.pageX + moveLeft);
+          $("div.pop-up").css('top', e.pageY +40 ).css('left', e.pageX+moveLeft);
         });
         
 
