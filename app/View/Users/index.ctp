@@ -28,7 +28,7 @@
        	 <span><?php echo $this->Form->input('mobile', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Mobile'));?></span>
        	 <span><?php echo $this->Form->input('city', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'City'));?></span>
        	 <span><?php echo $this->Form->input('gender', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Gender'));?></span>
-       	  <span><?php echo $this->Form->input('birthday', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Birthday'));?></span>
+       	  <span><?php echo $this->Form->input('birthday', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Birthday','id'=>'datepicker6'));?></span>
        	  <span><?php echo $this->Form->input('birthyear', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Birthyear'));?></span>
        	
          <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
@@ -157,6 +157,10 @@
       buttonText: "Choose the date",
   });
                $( "#datepicker5" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  });
+                 $( "#datepicker6" ).datepicker({
      dateFormat: 'yy-mm-dd',
       buttonText: "Choose the date",
   });
