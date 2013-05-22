@@ -89,7 +89,12 @@ $(document).ready(function(){
         });
       
     
-
+jQuery(document).ready(function()
+{ 
+$('.reset-link').click(function(){
+  $('.error_message').css('display','none');
+});
+});
 
   
    </script>
@@ -167,11 +172,11 @@ $(document).ready(function(){
                                     Name</td>
                                   <td><input type="text" name="name" id="name"></td>
                                 </tr>
-                                 <tr id="error_name" style="display:none;">
+                                 <tr id="error_name" style="display:none;" class="error_message">
                                    <td class="careertext">&nbsp;</td>
                                   <td class="careertext">&nbsp;</td>
                                   <td >
-                                  <h5 style="color:#FF0000; display:inline; font-size:10px" class="error_message">*please enter your name.</h5>
+                                  <h5 style="color:#FF0000; display:inline; font-size:10px" >*please enter your name.</h5>
                                   </td>
                                   </tr>   
                                  
@@ -190,11 +195,11 @@ $(document).ready(function(){
                                   <td><input type="text"  name="email" id="email" placeholder="abc@domain.com" ></td>
                                    
                                 </tr>
-                                <tr id="error_email1" style="display:none; ">
+                                <tr id="error_email1" style="display:none; " class="error_message">
                                    <td class="careertext">&nbsp;</td>
                                   <td class="careertext">&nbsp;</td>
                                   <td >
-                                  <h5 style="color:#FF0000; display:inline;font-size:10px" class="error_message">*please enter valid email address.</h5>
+                                  <h5 style="color:#FF0000; display:inline;font-size:10px" >*please enter valid email address.</h5>
                                   </td>
                                   </tr>
                                 <tr>

@@ -29,76 +29,50 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
                    else if($("#r_phone").val().length > 10)
                  {
                  $("#error_phone").show();
-                 $(".foot_content_contact").CSS('height','420PX')
+                 $(".foot_content_contact").CSS('height','420PX');
                    e = true;
                       }
                 else{
                     $("#error_phone").hide();
                 }
-              /*  if(!valid_pin || $("#r_pin").val().length < 6){
-                    $("#error_pin").show();
-                        e = true;
-                }
-                  else if($("#r_pin").val().length > 6)
-                     {
-                       $("#error_pin").show();
-                        e = true;
-                   }
-                else{
-                    $("#error_pin").hide();    
-                } */
+              
                 if ($("#r_name").val().length == 0) {
                     $("#error_name").show();
-                    $(".foot_content_contact").CSS('height','420PX')
+                    
                     e = true;
                 }
                 else{
                     $("#error_name").hide();    
                 }  
-                /*
-                if ($("#r_address").val().length == 0) {
-                    $("#error_address").show();
-                    e = true;
-                }
-                else{
-                    $("#error_address").hide();    
-                } */
+               
                 if ($("#r_city").val().length == 0) {
                     $("#error_city").show();
-                    $(".foot_content_contact").CSS('height','420PX')
+                    
                     e = true;
                 }
                 else{
                     $("#error_city").hide();    
                 } 
-                /*
-                if ($("#r_state").val().length == 0) {
-                    $("#error_state").show();
-                    e = true;
-                }
-                else{
-                    $("#error_state").hide();    
-                } */
-                 
-                
-                       
                
-                     if(e) return false; 
+                 if(e) return false; 
                         
                 
             });
            
         });
 
+ 
+      </script>
 
-jQuery(document).ready(function()
+
+
+      <script type="text/javascript">
+      jQuery(document).ready(function()
 { 
 $('.reset-link').click(function(){
   $('.error_message').css('display','none')
 });
 });
-    
-      
       </script>
 
 
@@ -261,7 +235,7 @@ $('.reset-link').click(function(){
                  
                     <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no.(Optional)" ,'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
                     </div>
-                    <div class="error_message" id="error_phone" style="display:block; ">
+                    <div class="error_message" id="error_phone" style="display:none; margin-left:180px;">
                        <span style="color:#FF0000; font-size:11px;">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
                     </div>
               </div>

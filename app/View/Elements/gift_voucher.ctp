@@ -119,17 +119,17 @@
                                     <div class="arrownav">
 
                                 </div>
-                                 <div style="width:260px;  position:relative;  text-align:justify;padding-top:20px; font: normal 14px/22px Arial, Helvetica, sans-serif;">
-                                 <b>About Us</b>
-                                <br>
-                                 <p font: normal 13px/22px Arial, Helvetica, sans-serif;>
+                                 <div style="width:260px;  position:relative;  text-align:justify;font: normal 13px/22px Arial, Helvetica, sans-serif; border-bottom:1px dotted #333; padding:10px 0;">
+                                
+                                
+                                 <p style="font: normal 12px/22px Georgia, "Times New Roman", Times, serif;">
                                  <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
                              </p>
                              </div>
-                                <div style="width:260px;  position:relative;text-align:justify; padding:20px 0; font: normal 14px/22px Arial, Helvetica, sans-serif;">
-                                    <span style="text-align:left !important;"><b>Terms and conditions</b></span>
-                                <br>
-                                <p font: normal 13px/22px Arial, Helvetica, sans-serif;>
+                                <div style="width:260px;  position:relative;text-align:justify;  font: normal 13px/22px Arial, Helvetica, sans-serif;padding:10px 0;">
+                                   
+                               
+                                <p style="font: normal 12px/22px Georgia, "Times New Roman", Times, serif;">
                                  <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
                              </p>
                              </div>
@@ -187,17 +187,17 @@ opacity: 0.8;
         //alert(gift_value );
         $('.trigger_tnc').hover(function(e) {
             var gift_value = this.name;            
-            $('#'+gift_value).show();           
+            $('#'+gift_value).fadeIn(1000);           
             return false;
           
         }, function() {
             var gift_value = this.name;            
-            $('#'+gift_value).hide();
+            $('#'+gift_value).fadeOut(1000);
             return false;
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY +60 ).css('left', e.pageX + moveLeft);
+          $("div.pop-up").css('top', e.pageY +30 ).css('left', e.pageX + moveLeft);
         });
         
 
