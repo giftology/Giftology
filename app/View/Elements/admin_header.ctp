@@ -45,11 +45,11 @@
          #cssmenu ul ul li:hover a,
          #cssmenu li:hover li a {background: #EFFBFB; border: none; color: #000000; -webkit-box-shadow: none; -moz-box-shadow: none;}
          #cssmenu ul ul a:hover {background: #E6E6E6 url(../img/overlay.png) repeat-x 0 -100px !important; color: #000000 !important; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; text-shadow: 0 1px 1px rgba(0,0,0, .1);}
-         #cssmenu li:hover > ul {display: block;}
+         #cssmenu li:hover > ul {display: block;;z-index:1}
          #cssmenu ul ul {display: none; margin: 0; padding: 0; width: 185px; position: absolute; top: 40px; left: 0; background: #EFFBFB url(../img/overlay.png) repeat-x 0 0; border: solid 1px #E6E6E6; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .3); box-shadow: 0 1px 3px rgba(0,0,0, .3);}
          #cssmenu ul ul li {float: none; margin: 0; padding: 3px;  background: #EFFBFB url(../img/overlay.png) repeat-x 0 0; color: #000000; }
-         #cssmenu ul ul a {font-weight: normal; text-shadow: 0 1px 0 #E6E6E6; }
-         #cssmenu ul ul ul{display: none; margin: 0; padding: 0; width: 185px; position: absolute; top:0px; left: 185px; background: #EFFBFB url(../img/overlay.png) repeat-x 0 0; border: solid 1px #E6E6E6; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .3); box-shadow: 0 1px 3px rgba(0,0,0, .3);}
+         #cssmenu ul ul a {font-weight: normal; text-shadow: 0 1px 0 #E6E6E6; ;z-index:1}
+         #cssmenu ul ul ul{display: none; margin: 0; padding: 0; width: 185px; position: absolute; top:0px; left: 185px; background: #EFFBFB url(../img/overlay.png) repeat-x 0 0; border: solid 1px #E6E6E6; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .3); box-shadow: 0 1px 3px rgba(0,0,0, .3);;z-index:1}
          #cssmenu ul:after {content: '.'; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
          * html #cssmenu  ul {height: 1%;}
 </style>
