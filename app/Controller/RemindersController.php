@@ -707,8 +707,10 @@ class RemindersController extends AppController {
                                     'query' => 'SELECT first_name, last_name FROM user WHERE uid = '.$gift['Sender']['facebook_id']));	
 				$sender_name['UserProfile'] = $sender_first_last_name[0];
 			}
+			$receiver_name_arr = NULL;
+			$receiver_name_arr = explode(" ",$receiver_name['Reminder']['friend_name']);
 			$gift_sent_details[$k]['sender_name'] = $sender_name;
-			$gift_sent_details[$k]['receiver_name'] = $receiver_name;
+			$gift_sent_details[$k]['receiver_name']['Reminder']['friend_name'] = $receiver_name_arr[0];
 		}
 
 		
