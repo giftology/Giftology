@@ -274,8 +274,8 @@ class UsersController extends AppController {
                 $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
 
-            if($this->request->query['visit']==1){
-                $this->set('fb_title', "I have joined the gifting revolution on Giftology.com! Have you?");    
+            if(isset($this->request->query['visit'])){
+                $this->set('fb_title', "Giftology");    
             }
 
             if (isset($image)) {
