@@ -5,7 +5,7 @@
 
 	
 
-		<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+		<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:10px; margin-bottom:70px;">
 		<?php echo $this->Form->create('Vendor', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
 ?>  
         <td><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1','placeholder'=>'Id'));?></td>

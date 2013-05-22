@@ -1,7 +1,7 @@
 <?= $this->element('admin_header'); ?>
 <div class="products index">
 	<h2><?php echo __('Products'); ?></h2>
-	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:10px; margin-bottom:70px;">
 
 		<?php echo $this->Form->create('Product', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
 ?>

@@ -3,7 +3,7 @@
 	<div>
 		<button href="#collapse1" class="nav-toggle",sixe='1'>Search</button>
 	</div>
-	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
+	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:10px; margin-bottom:70px;">
 
 		<?php echo $this->Form->create('Transaction', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
 		?>
