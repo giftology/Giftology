@@ -131,6 +131,24 @@ public $presetVars = array(
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Vendor->create();
+			$this->Vendor->set($this->request->data);
+			if (!$this->Vendor->validates())
+            {
+                 $errors1 = $this->Vendor->validationErrors;
+                 $errors=(array_values($errors1));
+                 $errorString1 = null;
+                   foreach($errors as $err)
+                   {
+                       if($errorString1 == null)
+                           $errorString1 = $err[0];
+                       else
+                           $errorString1 = $errorString1.', '.$err[0];
+                       
+                   }
+                $finalErrorString = 'Please Enter: '.$errorString1.'<br/>';
+                $this->Session->setFlash(__($finalErrorString));
+                $this->redirect(array('controller' => 'vendors', 'action'=>'add'));   
+            }
 			
 			if($this->data['Vendor']['description'] == "")
 			{
@@ -147,7 +165,6 @@ public $presetVars = array(
                             $error_array[]=  $file;
                         }      
                     }
-            //DebugBreak();
             if(!$error_array){
 			//facebook linter doesnt like image links with space in them, convert all space to underscore	
 			$this->request->data['Vendor']['thumb_file']['name']
