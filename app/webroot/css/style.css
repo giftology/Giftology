@@ -2977,6 +2977,7 @@ background: transparent;
 
     .widget_tb {
 
+        padding:0;
         border: 1px solid rgba(0, 0, 0, 0.13);
 
         border-radius: 3px;
@@ -2985,7 +2986,7 @@ background: transparent;
 
         font-size: 16px;
 
-        height: 6px;
+        height: 27px;
 
         letter-spacing: 1px;
 

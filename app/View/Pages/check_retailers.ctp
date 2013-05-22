@@ -29,7 +29,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: Partners');
                    else if($("#r_phone").val().length > 10)
                  {
                  $("#error_phone").show();
-                 $(".foot_content_contact").CSS('height','420PX');
+                
                    e = true;
                       }
                 else{
@@ -89,7 +89,7 @@ $('.reset-link').click(function(){
 
         <div class="click_to_call_form">
 
-            <div id="clicktocall_div" style="margin-top:1px;">
+            <div id="clicktocall_div" style="margin-top:1px; ">
 
                 <form name="clicktocallform" id="id_clicktocallform" action="" method="POST">
 
@@ -179,7 +179,7 @@ $('.reset-link').click(function(){
                   <p id="contacttext" ><strong>Convinced? Learn how we can work together to help you increase sales with performance marketing by filling out the form below.</strong></p>
 
     <center><h3>Get in Touch</h3></center>      
-   <div id="foot_content_contact" style="height:400px;" >
+   <div id="foot_content_contact" style="height:450px;" >
     
 
       <div id="retailer_form" class="contactForm" >
@@ -191,17 +191,17 @@ $('.reset-link').click(function(){
                 <!--name with input mandatory constraint-->
                  <div class="input email">
                    
-                      <div class="input email"  ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name",'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?> 
+                      <div class="input email"  ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?> 
                       </div>
-                       <div class="error_message" id="error_name" style="display:none; margin-left:180px;">
-                         <span style="color:#FF0000; font-size:11px;">*please enter the name.</span>
+                       <div class="error_message" id="error_name" style="display:none;margin-bottom:-8px; ">
+                         <span style="color:#FF0000; font-size:11px; ">*please enter the name.</span>
                         </div>
                 
                 </div>
                        <!--no constraints for web portal-->
                 <div class="input email" style="margin-top:10px">
                     
-                    <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "Company",'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px" ))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "Company",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px" ))?>
                     </div>
                    
                 </div>
@@ -215,9 +215,9 @@ $('.reset-link').click(function(){
                    <!--mandatory input for city-->
                <div class="input email" style="margin-top:10px">
                
-                  <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                  <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
                   </div>
-                  <div class="error_message" id="error_city" style="display:none; margin-left:180px;">
+                  <div class="error_message" id="error_city" style="display:none;margin-bottom:-8px;">
                     <span style="color:#FF0000; font-size:11px;">*please enter the city.</span>
                  </div>
               </div>
@@ -233,15 +233,15 @@ $('.reset-link').click(function(){
                    <!--Contact no. constraint-->
               <div class="input email" style="margin-top:10px">
                  
-                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no.(Optional)" ,'style' => "width: 400px;height: 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no.(Optional)" ,'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
                     </div>
-                    <div class="error_message" id="error_phone" style="display:none; margin-left:180px;">
+                    <div class="error_message" id="error_phone" style="display:none;margin-bottom:-8px; ">
                        <span style="color:#FF0000; font-size:11px;">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
                     </div>
               </div>
 
  <!--no constraints for mail id -->
-                  <div class="input email" style="height: 91px;margin-top: 9px;" ><?php echo $this->Form->textarea("r_mail" ,array('rows'=>'5','cols'=>'5','name'=>'mail_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "your message",'style' => "width: 418px;border: 1px solid #B54D4D;border-radius: 2px; float:left" ))?>
+                  <div class="input email" style="height: 91px;margin-top: 9px;" ><?php echo $this->Form->textarea("r_mail" ,array('rows'=>'5','cols'=>'5','name'=>'mail_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "your message",'style' => "width: 398px;border: 1px solid #B54D4D;border-radius: 2px; float:left" ))?>
                   </div>
               <!-- capcha-->
                
@@ -249,7 +249,7 @@ $('.reset-link').click(function(){
                   <div class="input email" >
                          
                           <div class="captcha" style="width:430px; height:53px;" >
-                            <div class="input email" style="margin-top:7px; width:421px; float:left; border: 1px solid #B54D4D;border-radius: 2px">
+                            <div class="input email" style="margin-top:7px; width:400px; float:left; border: 1px solid #B54D4D;border-radius: 2px">
                              <div  class="captha">
                               <?php echo  $captcha ?>
                             </div>
