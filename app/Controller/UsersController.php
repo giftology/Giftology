@@ -274,7 +274,7 @@ class UsersController extends AppController {
                 $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }
 
-            if($this->request->query['visit']==1){
+            if($this->request->query['visit']=="first_visit"){
                 $this->set('fb_title', "Giftology");    
             }
 
@@ -638,7 +638,7 @@ class UsersController extends AppController {
     }
     
     function welcome_post_to_fb() {
-        $url = FULL_BASE_URL.'/users/login/?visit=1';
+        $url = FULL_BASE_URL.'/users/login/?visit=first_visit';
         $message = "I have joined the gifting revolution on Giftology.com! Have you?";
         $access_token = FB::getAccessToken();
         $sender_fb_id = $this->Connect->user('id');
