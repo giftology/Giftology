@@ -1,6 +1,7 @@
 <?= $this->element('admin_header'); ?>
 <div class="vendors form">
 <?php echo $this->Form->create('Campaign', array('type' => 'file')); ?>
+<fieldset>
    
     <?php
    echo $this->Form->input('type', array('type' => 'select','id'=>'type', 'options' =>array('1'=>'Campaign','2'=>'Contest')));?>

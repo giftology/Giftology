@@ -3,13 +3,11 @@
 
 	<h2><?php echo __('Vendors'); ?></h2>
 
-	<table cellpadding="0" cellspacing="0" border="1">
-	<tr>
+	
 
 		<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:30px; margin-bottom:50px;">
 		<?php echo $this->Form->create('Vendor', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
-?>  <tr>
-		<td></td>
+?>  
         <td><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1','placeholder'=>'Id'));?></td>
         <td><?php echo $this->Form->input('name', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>' Name'));?></td>
         
@@ -36,7 +34,7 @@
          <?php  echo $this->Form->submit("Download Vendor CSV" ,array( 'name'=>'csv', 'class'=>'button','type'=>'submit', 'id'=>'assign' , 'label' =>'','value'=>"" ));	
               echo $this->Form->end();
              ?>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" border="1">
 	<tr><td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
 
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
