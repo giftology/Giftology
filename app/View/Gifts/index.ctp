@@ -21,8 +21,8 @@
         <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Created Start Date'));?>
 		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'Created End Date'));?>
         </td>
-        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Created Start Date'));?>
-			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'Created End Date'));?>
+        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Modified Start Date'));?>
+			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'Modified End Date'));?>
         </td>
         
        <td>
