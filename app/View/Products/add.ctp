@@ -4,17 +4,17 @@
 	<fieldset>
 		<legend><?php echo __('Add Product'); ?></legend>
 	<?php echo $this->Form->input('min_price'); ?>
-		<div class="error_message" id="error_min" style="display:none; margin-left:80px;">
+		<div class="error_message" id="error_min" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
         </div>
 
 	<?php	echo $this->Form->input('max_price'); ?>
-		<div class="error_message" id="error_max" style="display:none; margin-left:80px;">
+		<div class="error_message" id="error_max" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
         </div>
 
 	<?php	echo $this->Form->input('min_value'); ?>
-			<div class="error_message" id="error_first" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_first" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
 	        </div>
 	<?php echo $this->Form->input('days_valid'); ?>
@@ -45,23 +45,23 @@
 		echo $this->Form->input('gender_segment_id');
 		echo $this->Form->input('city_segment_id');?>
 		<?php echo $this->Form->input('display_order'); ?>
-			<div class="error_message" id="error_display" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_display" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 150.</h5>
 	        </div>
 		<?php echo $this->Form->input('sender_gift_limit'); ?>
-			<div class="error_message" id="error_sender" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_sender" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 10.</h5>
 	        </div>
 		<?php echo $this->Form->input('sender_time_limit'); ?>
-			<div class="error_message" id="error_sender_time" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_sender_time" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 30.</h5>
 	        </div>
 		<?php echo $this->Form->input('receiver_gift_limit'); ?>
-			<div class="error_message" id="error_receiver" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_receiver" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 5.</h5>
 	        </div>
 		<?php echo $this->Form->input('receiver_time_limit'); ?>
-			<div class="error_message" id="error_receiver_time" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_receiver_time" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 15.</h5>
 	        </div>
 

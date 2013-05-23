@@ -31,7 +31,57 @@ class UserAddressesController extends AppController {
  */
 	public function index() {
 		$this->Prg->commonProcess('UserAddress');
-		$conditions= array('conditions' => array($this->UserAddress->parseCriteria($this->passedArgs)));
+	if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->UserAddress->parseCriteria($this->passedArgs),'UserAddress.modified >'=>$modified_start,'UserAddress.modified <' => $modified_end
+               
+               )); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->UserAddress->parseCriteria($this->passedArgs) ,'UserAddress.created >'=>$created_start,'UserAddress.created <' => $created_end
+               )); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs),'UserAddress.modified >'=>$modified_start,'UserAddress.modified <' => $modified_end
+           ,'UserAddress.created >'=>$created_start,'UserAddress.created <' => $created_end
+            ));  
+             }  
+            
+    
+        }
+        else{
+			$conditions= array('conditions' => array($this->UserAddress->parseCriteria($this->passedArgs)));
+		}
+		
 		$this->paginate = $conditions;
 		$this->UserAddress->recursive = 0;
 		$this->set('userAddresses', $this->paginate());

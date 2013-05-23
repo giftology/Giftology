@@ -28,14 +28,18 @@
        
        	<span><?php echo $this->Form->input('Country', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Country'));?></span>
 
-       	 <span><?php echo $this->Form->input('Created', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Created','id'=>'datepicker'));?></span>
+       	 <span><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Created Start','id'=>'datepicker_created_start'));?>
+       	 	<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Created End','id'=>'datepicker_created_end'));?>
+       	 </span>
 
-       	 <span><?php echo $this->Form->input('Modified', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Modified','id'=>'datepicker1'));?></span>
+       	 <span><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Modified Start','id'=>'datepicker_modified_start'));?>
+       	 	<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Modified End','id'=>'datepicker_modified_end'));?>
+       	 </span>
        	 <span><?php echo $this->Form->input('Phone', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Phone'));?></span>
        	 <span><?php echo $this->Form->input('Email', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Receiver Email'));?></span>
        	 <span><?php echo $this->Form->input('State', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'State'));?></span>
        	 
-         <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
+         <?php echo $this->Form->submit(__('Search', true), array('div' => false,'id'=>'submit'));	
         if (isset($this->params['named']) & !empty($this->params['named'])){ 
             echo $this->Html->link(_('Reset Filter'), array('controller'=>'UserAddresses','action'=>'index'));
         } 
@@ -192,13 +196,37 @@
   <script>
   $(function() {
   	
-    $( "#datepicker" ).datepicker({
+    $( "#datepicker_created_start" ).datepicker({
      dateFormat: 'yy-mm-dd',
       buttonText: "Choose the date",
   	});
-  	$( "#datepicker1" ).datepicker({
+  	$( "#datepicker_created_end" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  	});
+  	$( "#datepicker_modified_start" ).datepicker({
+     dateFormat: 'yy-mm-dd',
+      buttonText: "Choose the date",
+  	});
+  	$( "#datepicker_modified_end" ).datepicker({
      dateFormat: 'yy-mm-dd',
       buttonText: "Choose the date",
   	});
    });
+  </script>
+  <script>
+  $(document).ready(function() {
+  	$('#submit').click(function(){
+  		if($("#datepicker_created_start").val().length == 0 && $("#datepicker_created_end").val().length != 0){
+  			alert("Please enter start date");
+  	return false;
+  		}
+
+  		if($("#datepicker_modified_start").val().length == 0 && $("#datepicker_modified_end").val().length != 0){
+  			alert("Please enter start date");
+  	return false;
+  		}
+  		
+  	});
+  });
   </script>
