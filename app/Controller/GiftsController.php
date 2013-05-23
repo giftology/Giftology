@@ -924,6 +924,10 @@ class GiftsController extends AppController {
 			'conditions' => array('Gift.id'=>$id)));
     	//print_r($gift['Product']['redeem_instr']);
     	//die();
+    	  if($gift['Gift']['pdf_status'] != 1) {
+               $this->Gift->updateAll (array('Gift.pdf_status' => 1),
+                        array('Gift.id' => $id));  
+            }
     	$this->set('gift', $gift);
     	$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
