@@ -113,6 +113,19 @@ $('.reset-link').click(function(){
        
     <p id="contacttext" >We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
     <p>&nbsp;</p>
+    <p id="contacttext" > If you’re awesome alongwith having an Entrepreneurial attitude, Good Aesthetic Sense, Passion /Interest in eCommerce & the Enthusiasm to learn…well you’re just what we’re looking for!
+ </p>
+<p>&nbsp;</p>
+
+<p id="contacttexth1" ><b>Traits of a Giftologer :</b></p>
+
+<p id="contacttext">-  An entrepreneurial spirit and unmatched drive</p>
+
+<p id="contacttext" >- Enjoy the challenging atmosphere of a business start-up</p>
+
+<p id="contacttext" >-  Have a ball of a time</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
     <div class="career_recent">
 
@@ -217,6 +230,7 @@ $('.reset-link').click(function(){
                                         <option value="fiat">Graphic Designer </option>
                                         <option value="audi">Front End Development</option>
                                         <option value="audi">Business Development</option>
+                                        <option value="audi">Other</option>
                                   </select></td>
                                 </tr>
                                 <tr> 
@@ -282,19 +296,10 @@ $('.reset-link').click(function(){
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
- <p id="contacttext" ><b> If you’re awesome alongwith having an Entrepreneurial attitude, Good Aesthetic Sense, Passion/Interest in eCommerce & the Enthusiasm to learn…well you’re just what we’re looking for!
- </b></p>
-<p>&nbsp;</p>
-<p id="contacttexth1" ><b>Traits of a Giftologer :</b></p>
-
-<p id="contacttext" >Ø  An entrepreneurial spirit and unmatched drive</p>
-
-<p id="contacttext" >Ø  Enjoy the challenging atmosphere of a business start-up</p>
-
-<p id="contacttext" >Ø  Have a ball of a time</p>
+ 
 
 
 
-<p id="contacttext" ><b>Please do not hesitate to <a href="http://localhost/contact" style="color:#900;" >contact us </a>in case you have any questions.</b> </p>
+<p id="contacttext" ><b>-> Please do not hesitate to <a href="http://www.giftology.com/contact" style="color:#900;" >contact us </a>in case you have any questions.</b> </p>
 </div>
 </div>

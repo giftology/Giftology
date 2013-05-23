@@ -2734,7 +2734,7 @@ tbody tr.friends td.campaign_checkbo{
 #content{
     width: 952px;
 }
->>>>>>> vendor_fields
+
 .resources{
        width:880px;
         height:auto;
@@ -2811,6 +2811,7 @@ padding: 0 12px 0 11px;
  opacity:0.8;
  border:1px solid #ccc;
  box-shadow: 0 0  2px 1px #ccc;
+ text-align: justify;
 }
 
 

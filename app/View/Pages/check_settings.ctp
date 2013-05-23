@@ -43,7 +43,7 @@ $(document).ready(function(){
    
 
 
-<div id="foot_content" style="height:800px ;">
+<div id="foot_content" style="height:650px ;">
   
   <center ><h3 class="careerMainHead" >Notifications</h3></center>
   <div class="media" >
@@ -72,7 +72,7 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
             else
             {
               echo $this->Form->input("<p style='color:#900; font-size:18px;'> My gifts</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk1', 'checked'=>$check));
-              echo "<p class='careertext' style='padding-left:35px;'>We'll let you know when you receive a gift and when it's about to expiry.</p>";
+              echo "<p class='careertext' style='padding:13px 0 0 35px;'>We'll let you know when you receive a gift and when it's about to expire.</p>";
             }
         ?>
     </p>
@@ -92,8 +92,8 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
             }
             else
             {
-              echo $this->Form->input("<p style='color:#900; font-size:18px;'> Birthdays event</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk2', 'checked'=>$check));
-              echo "<p class='careertext' style='padding-left:35px;'>We'll notify you when your friends have their birthday.</p>";
+              echo $this->Form->input("<p style='color:#900; font-size:18px;'> Birthday Reminders</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk2', 'checked'=>$check));
+              echo "<p class='careertext' style='padding:13px 0 0 35px;'>We'll notify you of your friends birthdays.</p>";
             }
         ?>
     </p>
@@ -114,8 +114,8 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
             }
             else
             {
-             echo $this->Form->input("<p style='color:#900; font-size:18px;'> New brands and special campaigns</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk3', 'checked'=>$check));
-              echo "<p class='careertext' style='padding-left:35px;'>We'll let you know when we launch brands or have special campaigns.</p>";
+             echo $this->Form->input("<p style='color:#900; font-size:18px;'> New Partner Brands And Special Events</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk3', 'checked'=>$check));
+              echo "<p class='careertext' style='padding:13px 0 0 35px;'>We'll let you know when we partner with new brands or run special events.</p>";
             }
         ?>
     </p>
@@ -128,26 +128,7 @@ Just make sure to check the boxes you want below you don't miss anything! </p>
 <!--/////////////////////-->
 
  
-    <p  id="contacttexth1" style="color:#900; padding:0; ">
-          <?php echo $this->Form->create( '', array( 'id'=>'frm1' ,'name'=>'frm1' ,'controller'=>'users', 'action' => 'email_stop') );
-            if($check)
-            {
-              echo $this->Form->input('Currently unsubscribed, Check this box and submit to resubscribe', array('type' => 'checkbox','name'=>'chk','id'=>'chk4','checked'=>'')); 
-            }
-            else
-            {
-             echo $this->Form->input("<p style='color:#900; font-size:18px;'> Summary email every Week/ Month</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk4', 'checked'=>$check));
-              echo "<p class='careertext' style='padding-left:35px;'>We'll send you a summary of what's happening at Wrapp and fun stuff coming up.
-The email will be sent to parul.2919@gmail.com, we use the same email as you use on facebook.</p>";
-            }
-        ?>
-    </p>
-    
-    <p style="border-bottom:1px dotted #999; margin-bottom:18px;">&nbsp;</p>
 
-
-
-<!--/////////////////////-->
 
 
     <p  id="contacttexth1" style="color:#900; padding:0; ">
@@ -159,8 +140,8 @@ The email will be sent to parul.2919@gmail.com, we use the same email as you use
             else
             {
               
-              echo $this->Form->input("<p style='color:#900; font-size:18px;'> Unsubscribe from email updates</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk5', 'checked'=>$check));
-              echo "<p class='careertext' style='padding-left:35px;'>You will not get any updates or any mails from our side.</p>";
+              echo $this->Form->input("<p style='color:#900; font-size:18px;'>Unsubscribe From All Email Updates ( Not Recommended )</p>", array('type' => 'checkbox','name'=>'chk','id'=>'chk5', 'checked'=>$check));
+              echo "<p class='careertext' style='padding: 13px 0 0 35px;'>You will not receive any updates or any mails from our side.</p>";
             }
         ?>
     </p>

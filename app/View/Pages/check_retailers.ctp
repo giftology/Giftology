@@ -233,7 +233,7 @@ $('.reset-link').click(function(){
                    <!--Contact no. constraint-->
               <div class="input email" style="margin-top:10px">
                  
-                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no.(Optional)" ,'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ,'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
                     </div>
                     <div class="error_message" id="error_phone" style="display:none;margin-bottom:-8px; ">
                        <span style="color:#FF0000; font-size:11px;">*please enter the 10 digit mobile no./ landline no. along with std code.</span>

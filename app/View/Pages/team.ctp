@@ -44,11 +44,11 @@ $(document).ready(function(){
 
 
   
-<<<<<<< HEAD
+
   $(".b ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VArun.jpg");$('.b .text3').hide();$(".a2").show();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/varun.png");$('.b .text3').show();$(".a2").hide();}); 
-=======
+
   $(".b ").hover(function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VArun.jpg");$('.b .text3').hide();$(".a2").show();},function(){$(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/VARUN.png");$('.b .text3').show();$(".a2").hide();}); 
->>>>>>> vendor_fields
+
   /////////////////
 
   
@@ -111,9 +111,9 @@ $(document).ready(function(){
 				 <div class="teamHover a2 text2 " style="display:none;">
                           <p>Varun Vummidi comes off a successful stint at Jabong.com as part of the founding team. He was a key player in helping it become one of the fastest growing e-commerce companies in India.</p><br>
   
-                                        <p>Previously,Varun has been an Entrepreneur in Residence at Jabong.com, a Product Specialist at Merrill Lynch and Relationship Manager at HDFC Bank Ltd. He has also worked as a freelance Radio DJ for All India Radio in Chennai and as an M.C.</p><br>
+                                        <p>Previously, Varun has been an Entrepreneur in Residence at Jabong.com, a Product Specialist at Merrill Lynch and Relationship Manager at HDFC Bank Ltd. He has also worked as a freelance Radio DJ for All India Radio in Chennai and as an M.C.</p><br>
   
-                                        <p>Varun holds an MBA from Baruch College, New York and a B.Com from Loyola College, Chennai. Varun loves to backpackand play basketball in his free time.</p><br>
+                                        <p>Varun holds an MBA from Baruch College, New York and a B.Com from Loyola College, Chennai. Varun loves to backpack and play basketball in his free time.</p><br>
                                           <p><strong>Email:</strong> varun@giftology.com </p>
                         	
 			    </div>
@@ -187,7 +187,7 @@ $(document).ready(function(){
 				 <div class="teamHover a6 text2 " style="display:none;">
                            <p>Shailesh brings over 18 years of global experience within Finance and Operations. He hasin-depth knowledge of corporate accounting taxation, MIS and e-commerce.</p><br>
   
-                           <p>Previously,Shailesh has worked with Transact Network Ltd. as V.P Finance managing the financial operations of its prepaid card business.  He has also worked with leading Indian business houses such as DLF and Reliance with scope of business in to construction, power, service, education, ITES and finance sector.</p><br>
+                           <p>Previously, Shailesh has worked with Transact Network Ltd. as V.P Finance managing the financial operations of its prepaid card business.  He has also worked with leading Indian business houses such as DLF and Reliance with scope of business in to construction, power, service, education, ITES and finance sector.</p><br>
   
                            <p>Shailesh is a fellow member of Institute of Chartered Accountants of India, New Delhi and holds a M.Com from Agra University.</p>
 			    </div>
