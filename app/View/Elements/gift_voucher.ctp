@@ -116,9 +116,7 @@
     <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -129px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
                                 
                                 <div id="<?php echo $product['Product']['id'];?>" class ="pop-up">
-                                    <div class="arrownav">
-
-                                </div>
+                                   
                                  <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted #333; padding:3px 0;font: normal 11px/20px Georgia;">
                                 
                                 
@@ -134,9 +132,10 @@
                              </p>
                              </div>
                             
+                                 <div class="arrownav">
 
-                                <div class="arrownav1">
-                              </div>
+                                </div>
+                                
                             
                               
                           </div>
@@ -198,7 +197,7 @@ margin-left:30px;
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY +40 ).css('left', e.pageX+moveLeft);
+          $("div.pop-up").css('top', e.pageY -140 ).css('left', e.pageX+moveLeft);
         });
         
 
