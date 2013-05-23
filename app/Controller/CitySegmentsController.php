@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
+        public $uses = array( 'CitySegment','Neighbour');
+
 /**
  * index method
  *
@@ -57,12 +59,24 @@ class CitySegmentsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		//DebugBreak();
 		$this->CitySegment->id = $id;
 		if (!$this->CitySegment->exists()) {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
+		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->CitySegment->save($this->request->data)) {
+				//$data['city_segment_id'] = $this->data['CitySegment']['id'];
+				//$data['city_name'] = $this->data['CitySegment']['city_name'];
+				$data=array();
+				$thePostIdArray = explode(',', $this->data['CitySegment']['city_name']);
+				foreach ($thePostIdArray as $shubam) {
+					$data['city_name'] = $shubam;
+					$data['city_segment_id'] = $this->data['CitySegment']['id'];
+					$this->Neighbour->saveAll($data);
+					
+				} 
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {

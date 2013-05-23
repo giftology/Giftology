@@ -3,8 +3,10 @@
 	<fieldset>
 		<legend><?php echo __('Edit City Segment'); ?></legend>
 	<?php
+
 		echo $this->Form->input('id');
 		echo $this->Form->input('city');
+		echo $this->Form->input('city_name', array('type' => 'textarea'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
