@@ -209,7 +209,7 @@ class CampaignsController extends AppController {
            
             if(($this->request->data['Campaign']['thumb_file']['name']!="" || $this->request->data['Campaign']['type']==TYPE_CONTEST)&& ($this->request->data['Campaign']['wide_file']['name']!="") )
             {
-              // 
+           
                 $error_array= array();
                 $allowed =  array('png' ,'jpg');
                 if($this->request->data['Campaign']['type']==TYPE_CAMPAIGN){
@@ -229,11 +229,7 @@ class CampaignsController extends AppController {
                 }
                 if(!$error_array) { 
                      $product_id=$this->request->data['Campaign']['product_id'];
-                     $this->Product->recursive=-2;
-                     $vendor= $this->Product->find('first',array('fields' =>array('Product.vendor_id'),'conditions' => array('Product.id '=>$product_id)));
-                     $val= $vendor['Product']['vendor_id'];
-                     $this->Vendor->recursive=-2;
-                     $name=$this->Vendor->find('first',array('fields' =>array('Vendor.name'),'conditions' => array('Vendor.id '=>$val)));
+                     $name=$this->Product->find('first',array('fields' =>array('Vendor.name'),'conditions' => array('Product.vendor_id = Vendor.id','Product.id'=>$product_id)));
                      $this->request->data['Campaign']['campaign_name'] = $name['Vendor']['name'];
                     if($product_id==""){
                         $product_id=-1;
