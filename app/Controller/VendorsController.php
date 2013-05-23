@@ -197,7 +197,7 @@ public $presetVars = array(
                         
                         
                     }
-                    $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
+                    $this->Session->setFlash(__('Please upload an image in JPEG/PNG format only'));
                     $this->redirect(array('controller' => 'vendors', 'action'=>'add'));   
                 }
 

@@ -5,23 +5,23 @@
 		<legend><?php echo __('Add Vendor'); ?></legend>
 	<?php
 		echo $this->Form->input('name'); ?>
-			<div class="error_message" id="error_name" style="display:none; margin-left:80px;">
+			<div class="error_message" id="error_name" style="display:none; margin-left:20px;">
 		            <h5 style="color:#FF0000">*please enter the Vendor Name.</h5>
 	        </div>
 
 		<?php echo $this->Form->input('thumb_file', array('label' => 'Thumb (50x50px)', 'type' => 'file')); ?>
-			<div class="error_message" id="error_thumb" style="display:none; margin-left:80px;">
-		            <h5 style="color:#FF0000">*please enter the Thumb Image Path.</h5>
+			<div class="error_message" id="error_thumb" style="display:none; margin-left:20px;">
+		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
 
 		<?php echo $this->Form->input('wide_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file')); ?>
-			<div class="error_message" id="error_wide" style="display:none; margin-left:80px;">
-		            <h5 style="color:#FF0000">*please enter the Wide Image Path.</h5>
+			<div class="error_message" id="error_wide" style="display:none; margin-left:20px;">
+		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
 
 		<?php echo $this->Form->input('facebook_file', array('label' => 'Facebook Share Image (200x200px)', 'type' => 'file')); ?>
-			<div class="error_message" id="error_facebook" style="display:none; margin-left:80px;">
-		            <h5 style="color:#FF0000">*please enter the Facebook Image Path.</h5>
+			<div class="error_message" id="error_facebook" style="display:none; margin-left:20px;">
+		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
 		<?php echo $this->Form->input('carousel_image_file', array('label' => 'Carousel(199x102px)', 'type' => 'file'));
 		echo $this->Tinymce->input('Vendor.description', array( 

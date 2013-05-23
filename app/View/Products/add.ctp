@@ -18,8 +18,8 @@
 	            <h5 style="color:#FF0000">*please enter the Min Value.</h5>
 	        </div>
 	<?php echo $this->Form->input('days_valid'); ?>
-		<div class="error_message" id="error_days" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Days.</h5>
+		<div class="error_message" id="error_days" style="display:none; margin-left:20px;">
+	            <h5 style="color:#FF0000">*please enter a value between 1 - 365.</h5>
         </div>
 
 	<?php	echo $this->Form->input('terms_heading');
@@ -46,7 +46,7 @@
 		echo $this->Form->input('city_segment_id');?>
 		<?php echo $this->Form->input('display_order'); ?>
 			<div class="error_message" id="error_display" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Display Order.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 150.</h5>
 	        </div>
 		<?php echo $this->Form->input('sender_gift_limit'); ?>
 			<div class="error_message" id="error_sender" style="display:none; margin-left:80px;">
@@ -120,7 +120,8 @@
                     $("#error_first").hide();    
                 }
 
-            if ($("#ProductDaysValid").val().length == 0) {
+            if (!($("#ProductDaysValid").val() <= 365 && $("#ProductDaysValid").val() >= 1)) {
+            	//alert($("#ProductDaysValid").val());
                     $("#error_days").show();
                     e = true;
                 }
@@ -128,7 +129,7 @@
                     $("#error_days").hide();    
                 }
 
-            if ($("#ProductDisplayOrder").val().length == 0) {
+            if (!($("#ProductDisplayOrder").val() <= 150 && $("#ProductDisplayOrder").val() >=0)  || ($("#ProductDisplayOrder").val().length == 0)) {
                     $("#error_display").show();
                     e = true;
                 }
