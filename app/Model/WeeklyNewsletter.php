@@ -10,6 +10,7 @@ App::uses('AppModel', 'Model');
  * @property Transaction $Transaction
  */
 class WeeklyNewsletter extends AppModel {
+	
 
 /**
  * Validation rules
