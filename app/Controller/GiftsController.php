@@ -176,7 +176,7 @@ public function paid_gift() {
                 }
                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-               )); 
+               ),'order'=>array('Gift.modified'=>'DESC')); 
             }
             if(!($this->passedArgs['expiry_start'])){
                 $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
@@ -191,7 +191,7 @@ public function paid_gift() {
                 }
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-               ));  
+               ),'order'=>array('Gift.modified'=>'DESC'));  
             }
             if(!($this->passedArgs['modified_start'])){
 
@@ -206,7 +206,7 @@ public function paid_gift() {
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_end <' => $expiry_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-               )); 
+               ),'order'=>array('Gift.modified'=>'DESC')); 
             }
             }
 
@@ -218,7 +218,7 @@ public function paid_gift() {
                     $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-                    ));
+                    ),'order'=>array('Gift.modified'=>'DESC'));
             }
             if(!($this->passedArgs['expiry_start'])&&(!($this->passedArgs['modified_start'])))
             {
@@ -238,7 +238,7 @@ public function paid_gift() {
                     $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.created <' => $modified_end
-                    ));
+                    ),'order'=>array('Gift.modified'=>'DESC'));
             }
            if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['expiry_start'])) )
             { 
@@ -260,14 +260,14 @@ public function paid_gift() {
           $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
            ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
            ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-            ));  
+            ),'order'=>array('Gift.modified'=>'DESC'));  
              }  
               
     
         }
         else{
             $conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.id = Gift.product_id',
-            'Product.min_price >' => 0));
+            'Product.min_price >' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
         }
         $this->paginate = $conditions;
@@ -293,7 +293,7 @@ public function index() {
                 }
                $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-               )); 
+               ),'order'=>array('Gift.modified'=>'DESC')); 
             }
             if(!($this->passedArgs['expiry_start'])){
                 $modified_start = $this->passedArgs['modified_start'].' 00:00:00';
@@ -308,7 +308,7 @@ public function index() {
                 }
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-               ));  
+               ),'order'=>array('Gift.modified'=>'DESC'));  
             }
             if(!($this->passedArgs['modified_start'])){
 
@@ -323,7 +323,7 @@ public function index() {
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
              $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_end <' => $expiry_end
                ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-               )); 
+               ),'order'=>array('Gift.modified'=>'DESC')); 
             }
             }
 
@@ -335,7 +335,7 @@ public function index() {
                     $expiry_end=date("Y-m-d", strtotime($this->passedArgs['expiry_start']) + 86400);
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-                    ));
+                    ),'order'=>array('Gift.modified'=>'DESC'));
             }
             if(!($this->passedArgs['expiry_start'])&&(!($this->passedArgs['modified_start'])))
             {
@@ -345,7 +345,7 @@ public function index() {
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.created >'=>$created_start,'Gift.created <' => $created_end
-                    ));
+                    ),'order'=>array('Gift.modified'=>'DESC'));
             }
             if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['expiry_start'])))
             {
@@ -355,7 +355,7 @@ public function index() {
                     $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
                 }
                 $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.created <' => $modified_end
-                    ));
+                    ),'order'=>array('Gift.modified'=>'DESC'));
             }
            if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['expiry_start'])) )
             { 
@@ -377,14 +377,14 @@ public function index() {
           $conditions=array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Gift.modified >'=>$modified_start,'Gift.modified <' => $modified_end
            ,'Gift.created >'=>$created_start,'Gift.created <' => $created_end
            ,'Gift.expiry_date >'=>$expiry_start,'Gift.expiry_date <' => $expiry_end
-            ));  
+            ),'order'=>array('Gift.modified'=>'DESC'));  
              }  
               
     
         }
 		else{
 			$conditions= array('conditions' => array($this->Gift->parseCriteria($this->passedArgs),'Product.id = Gift.product_id',
-            'Product.min_price' => 0));
+            'Product.min_price' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
 		}
 		

@@ -63,7 +63,7 @@ public $presetVars = array(
                 
                $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs),'Vendor.modified >'=>$modified_start,'Vendor.modified <' => $modified_end
                
-               )); 
+               ),'order'=>array('Vendor.modified'=>'DESC')); 
             }
             
             if(!($this->passedArgs['modified_start'])){
@@ -73,7 +73,7 @@ public $presetVars = array(
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
              $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs) ,'Vendor.created >'=>$created_start,'Vendor.created <' => $created_end
-               )); 
+               ),'order'=>array('Vendor.modified'=>'DESC')); 
             }
 
 
@@ -94,14 +94,14 @@ public $presetVars = array(
                 
           $conditions=array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs),'Vendor.modified >'=>$modified_start,'Vendor.modified <' => $modified_end
            ,'Vendor.created >'=>$created_start,'Vendor.created <' => $created_end
-            ));  
+            ),'order'=>array('Vendor.modified'=>'DESC'));  
              }  
             
     
         }
         else{
 		$conditions= array('conditions' => array($this->Vendor->parseCriteria($this->passedArgs)
-   ));
+   ),'order'=>array('Vendor.modified'=>'DESC'));
 }
 		$this->paginate = $conditions;
 		$this->Vendor->recursive = 0;

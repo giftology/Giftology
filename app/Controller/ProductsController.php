@@ -120,7 +120,7 @@ class ProductsController extends AppController {
                 
                $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
                
-               )); 
+               ),'order'=>array('Product.modified'=>'DESC')); 
             }
             
             if(!($this->passedArgs['modified_start'])){
@@ -130,7 +130,7 @@ class ProductsController extends AppController {
                     $created_end=$this->passedArgs['created_start'].' 23:59:59';
                 }
              $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs) ,'Product.created >'=>$created_start,'Product.created <' => $created_end
-               )); 
+               ),'order'=>array('Product.modified'=>'DESC')); 
             }
 
 
@@ -151,13 +151,13 @@ class ProductsController extends AppController {
                 
           $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
            ,'Product.created >'=>$created_start,'Product.created <' => $created_end
-            ));  
+            ),'order'=>array('Product.modified'=>'DESC'));  
              }  
             
     
         }
         else{
-            $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
+            $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)),'order'=>array('Product.modified'=>'DESC'));
 
         }
         
