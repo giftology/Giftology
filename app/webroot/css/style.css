@@ -700,6 +700,8 @@ input {
     padding: 11px;
 }
 
+
+
 .captha1{margin:20px 10px -10px 10px; width:250px; border-bottom:1px solid #CCCCCC;}
 
 
@@ -3062,16 +3064,39 @@ background: transparent;
     padding-top: 4px;
     padding-right: 10px;
     padding-left: 18px;
-=======
-margin-top: -15px;
+    margin-top: -15px;
 
-
->>>>>>> vendor_fields
 }
 
 
 
-<<<<<<< HEAD
+/*career*/
+#foot_career {
+-moz-box-sizing: border-box;
+background-color: rgb(250, 250, 250);
+border: 1px solid rgb(204, 204, 204);
+border-radius: 5px 5px 5px 5px;
+margin: 20px 0px 30px 5px;
+padding: 7px;
+width: 865px;
+height:1300px;
+}
+
+#foot_career .career_img{
+    float:right;
+    margin-top:25px;
+}
+
+#foot_career .career_recent{
+width:863px; 
+height:30px;
+ background-image:url(/img/career-bg.gif);
+ margin-left: -56px; 
+ padding-top:3px;
+
+}
+#foot_career .showtext{color:#900; cursor: pointer;}
+
 .careerMainHead{
     font:Georgia, 'Times New Roman', Times, serif ;
  
@@ -3087,12 +3112,13 @@ top:20px;}
 
 .careerCustom input[type="text"]{
     width: 300px;
-    height: 5px;
+    height: 28px;
     border: 1px solid #B54D4D;
-    border-radius: 2px
+    border-radius: 2px;
+    padding: 0px;
 }
 .careerCustom input[type="file"]{
-    width: 324px;
+    width: 300px;
     height: 22px;
     border: 1px solid #B54D4D;
      padding:0px;
@@ -3100,7 +3126,7 @@ top:20px;}
  }
 
 .careerCustom textarea{
-    width: 320px;
+    width: 300px;
     border: 1px solid #B54D4D;
     border-radius:2px;
     float: left;
@@ -3143,13 +3169,12 @@ display:inline;
 }
 
 .careerCustom .styled-select {
-   width: 324px;
+   width: 303px;
     height: 30px;
     border: 1px solid #B54D4D;
     border-radius: 2px;
     overflow: hidden;
-    background: url('../img/select.png') no-repeat right ;
+    background: url('/img/select.png') no-repeat right ;
    
    }
-=======
->>>>>>> vendor_fields
+

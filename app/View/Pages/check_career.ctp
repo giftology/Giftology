@@ -105,8 +105,8 @@ $('.reset-link').click(function(){
 
 
 
-<div id="foot_content" style="height:1300px ;">
-  <p><img src="<?php echo FULL_BASE_URL;?>/img/career.png" style="float:right;margin-top:25px;" ></p>
+<div id="foot_career">
+  <p><img src="<?php echo FULL_BASE_URL;?>/img/career.png" class="career_img" ></p>
   <center ><h3 class="careerMainHead" style="margin-left:134px;">Career With Us</h3></center>
   <div class="media" >
     
@@ -114,13 +114,13 @@ $('.reset-link').click(function(){
     <p id="contacttext" >We are always on the look out for great people to work with us. If you’re good at what you do or have the drive to prove yourself contact us on <strong>careers@giftology.com</strong></p>
     <p>&nbsp;</p>
 
-    <div style="width:863px; height:30px; background-image:url(<?php echo FULL_BASE_URL;?>/img/career-bg.gif);margin-left: -56px; ">
+    <div class="career_recent">
 
-     <p id="contacttext" style="margin:20px 15px;"><b> Recent Openings</b></p>
+     <p id="contacttext"><b> Recent Openings</b></p>
     </div>
     <p>&nbsp;</p>
 
-    <p class="showtext" id="contacttexth1" style="color:#900;cursor:pointer; "><img src="<?php echo FULL_BASE_URL;?>/img/details.png" style="margin-right:10px; ">Position: Interns</p>
+    <p class="showtext" id="contacttexth1" ><img src="<?php echo FULL_BASE_URL;?>/img/details.png" style="margin-right:10px; ">Position: Interns</p>
     <div class="hiddentext" id="contacttext" style="display:none; margin-left:25px;">
     
     <p>lorum ipsum</p>
@@ -154,7 +154,7 @@ $('.reset-link').click(function(){
 <p>&nbsp;</p>
       <div align="center" class="careerCustom">
 
-        <p class="careertext">We would like to hear from you. Please submit
+        <p class="careertext" style="line-height:43px;">We would like to hear from you. Please submit
                               the form below with your resume.</p>
                 <p class="careertext"><font color="#FF0000">*</font> 
                               All Fields are Mandatory <br>
