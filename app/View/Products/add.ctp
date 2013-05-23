@@ -5,17 +5,17 @@
 		<legend><?php echo __('Add Product'); ?></legend>
 	<?php echo $this->Form->input('min_price'); ?>
 		<div class="error_message" id="error_min" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Min Price.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
         </div>
 
 	<?php	echo $this->Form->input('max_price'); ?>
 		<div class="error_message" id="error_max" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Max Value.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
         </div>
 
 	<?php	echo $this->Form->input('min_value'); ?>
 			<div class="error_message" id="error_first" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Min Value.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 50000.</h5>
 	        </div>
 	<?php echo $this->Form->input('days_valid'); ?>
 		<div class="error_message" id="error_days" style="display:none; margin-left:20px;">
@@ -50,19 +50,19 @@
 	        </div>
 		<?php echo $this->Form->input('sender_gift_limit'); ?>
 			<div class="error_message" id="error_sender" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Sender Gift Limit.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 10.</h5>
 	        </div>
 		<?php echo $this->Form->input('sender_time_limit'); ?>
 			<div class="error_message" id="error_sender_time" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Sender Time Limit.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 30.</h5>
 	        </div>
 		<?php echo $this->Form->input('receiver_gift_limit'); ?>
 			<div class="error_message" id="error_receiver" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Receiver Gift Limit.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 5.</h5>
 	        </div>
 		<?php echo $this->Form->input('receiver_time_limit'); ?>
 			<div class="error_message" id="error_receiver_time" style="display:none; margin-left:80px;">
-	            <h5 style="color:#FF0000">*please enter the Receiver Time Limit.</h5>
+	            <h5 style="color:#FF0000">*please enter a value between 0 - 15.</h5>
 	        </div>
 
 	
@@ -96,7 +96,7 @@
       $(document).ready(function(){
       	$(".submit").click(function (){ 
       		var e = false;
-      		if ($("#ProductMinPrice").val().length == 0) {
+      		if (!($("#ProductMinPrice").val() <= 50000 && $("#ProductMinPrice").val() >=0)  || ($("#ProductMinPrice").val().length == 0)) {
                     $("#error_min").show();
                     e = true;
                 }
@@ -104,7 +104,7 @@
                     $("#error_min").hide();    
                 }
 
-            if ($("#ProductMaxPrice").val().length == 0) {
+            if (!($("#ProductMaxPrice").val() <= 50000 && $("#ProductMaxPrice").val() >=0)  || ($("#ProductMaxPrice").val().length == 0)) {
                     $("#error_max").show();
                     e = true;
                 }
@@ -112,7 +112,7 @@
                     $("#error_max").hide();    
                 }
 
-      		if ($("#ProductMinValue").val().length == 0) {
+      		if (!($("#ProductMinValue").val() <= 50000 && $("#ProductMinValue").val() >=0)  || ($("#ProductMinValue").val().length == 0)) {
                     $("#error_first").show();
                     e = true;
                 }
@@ -137,7 +137,7 @@
                     $("#error_display").hide();    
                 }
 
-            if ($("#ProductSenderGiftLimit").val().length == 0) {
+            if (!($("#ProductSenderGiftLimit").val() <= 10 && $("#ProductSenderGiftLimit").val() >=0)  || ($("#ProductSenderGiftLimit").val().length == 0)) {
                     $("#error_sender").show();
                     e = true;
                 }
@@ -145,7 +145,7 @@
                     $("#error_sender").hide();    
                 }
 
-            if ($("#ProductSenderTimeLimit").val().length == 0) {
+            if (!($("#ProductSenderTimeLimit").val() <= 30 && $("#ProductSenderTimeLimit").val() >=0)  || ($("#ProductSenderTimeLimit").val().length == 0)) {
                     $("#error_sender_time").show();
                     e = true;
                 }
@@ -153,7 +153,7 @@
                     $("#error_sender_time").hide();    
                 }
 
-            if ($("#ProductReceiverGiftLimit").val().length == 0) {
+            if (!($("#ProductReceiverGiftLimit").val() <= 5 && $("#ProductReceiverGiftLimit").val() >=0)  || ($("#ProductReceiverGiftLimit").val().length == 0)) {
                     $("#error_receiver").show();
                     e = true;
                 }
@@ -161,7 +161,7 @@
                     $("#error_receiver").hide();    
                 }
 
-            if ($("#ProductReceiverTimeLimit").val().length == 0) {
+            if (!($("#ProductReceiverTimeLimit").val() <= 15 && $("#ProductReceiverTimeLimit").val() >=0)  || ($("#ProductReceiverTimeLimit").val().length == 0)) {
                     $("#error_receiver_time").show();
                     e = true;
                 }
