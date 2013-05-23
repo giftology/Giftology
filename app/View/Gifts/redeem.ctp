@@ -34,7 +34,7 @@
                                 'key' => $gift['Product']['id'].'full_redeem'))); ?>
         </div>
         <div id="gift-redemption-details">
-          <?php if(($gift['Gift']['sms']=="0")||($gift['Gift']['pdf_status']=="0")||($gift['Gift']['email_status']=="0")){?>
+          <?php if(!(($gift['Gift']['sms']=="0")&&($gift['Gift']['pdf_status']=="0")&&($gift['Gift']['email_status']=="0"))){?>
             <div id="redemption-code-title">Redemption Code</div>
             <?php if(strlen($gift['Gift']['code'])<=12) : ?>
               <div id="redemption-code"><center><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></center></div>
