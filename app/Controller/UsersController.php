@@ -136,7 +136,7 @@ class UsersController extends AppController {
 
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs),'User.modified >'=>$modified_start,'User.modified <' => $modified_end
                  ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
 
          if(!($this->passedArgs['modified_start'])){
@@ -153,7 +153,7 @@ class UsersController extends AppController {
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs) ,'User.created >'=>$created_start,'User.created <' => $created_end
                  ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
 
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
          if(!($this->passedArgs['last_login_start'])){
              $created_end=$this->passedArgs['created_end'].' 23:59:59';
@@ -169,7 +169,7 @@ class UsersController extends AppController {
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs) ,'User.created >'=>$created_start,'User.created <' => $created_end
                  ,'User.modified >'=>$modified,'User.modified <' => $modified
 
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
          if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['modified_start']))){
 
@@ -182,7 +182,7 @@ class UsersController extends AppController {
 
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
                  ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
          if(!($this->passedArgs['created_start'])&&(!($this->passedArgs['last_login_start']))){
 
@@ -195,7 +195,7 @@ class UsersController extends AppController {
 
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
                  ,'User.modified >'=>$modified_start,'User.modified <' => $modified_end
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
          if(!($this->passedArgs['modified_start'])&&(!($this->passedArgs['last_login_start']))){
 
@@ -208,7 +208,7 @@ class UsersController extends AppController {
 
              $conditions=array('conditions' => array($this->User->parseCriteria($this->passedArgs)
                  ,'User.created >'=>$created_start,'User.created <' => $created_end
-                 ),'order'=>array('User.last_login'=>'DESC')); 
+                 ),'order'=>array('User.created'=>'DESC')); 
          }
          if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start']))&&(($this->passedArgs['last_login_start'])))
          { 
@@ -232,13 +232,13 @@ class UsersController extends AppController {
                  ,'User.created >'=>$created_start,'User.created <' => $created_end
                  ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
 
-                 ),'order'=>array('User.last_login'=>'DESC'));  
+                 ),'order'=>array('User.created'=>'DESC'));  
          }  
 
 
      }
      else{
-         $conditions= array('conditions' => array($this->User->parseCriteria($this->passedArgs)),'order'=>array('User.last_login'=>'DESC'));
+         $conditions= array('conditions' => array($this->User->parseCriteria($this->passedArgs)),'order'=>array('User.created'=>'DESC'));
 
      }
 
