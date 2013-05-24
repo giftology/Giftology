@@ -18,7 +18,7 @@ class RemindersController extends AppController {
 	);
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('send_reminder_email_for_user','send_reminder','active_inactive_users_list','search_friend','mail_activation');
+		$this->Auth->allow('send_reminder_email_for_user','send_reminder','sms','active_inactive_users_list','search_friend','mail_activation');
 	}
 
 	public function isAuthorized($user) {
@@ -963,4 +963,47 @@ class RemindersController extends AppController {
         
         return $calculated_time;
     }
+
+    public function sms(){
+    	 if($this->RequestHandler->isAjax()){
+        	$mobile_no = $this->request->data['mobile_no'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+            $update = $this->User->UserProfile->updateAll(
+            	array('UserProfile.mobile' => "'".$mobile_no."'"), 
+                array('User_id' => $this->Auth->user('id'))
+                );
+            if($update){
+            	$generated_otp = rand(10000,99999);
+               //	$link = FULL_BASE_URL.'/reminders/mail_activation?email='.$email_to_update.'&key='.$generatedKey ;
+            	$msg= "Giftology account verification code".' '.$generated_otp.' '."Visit giftology/reminders/sms to complete verification";
+
+            	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$mobile_no."&msg=".urlencode($msg)."&send=Way2mint&d");
+              	$update = $this->User->UserProfile->updateAll(
+              		array('UserProfile.mobile_otp' => "'".$generated_otp."'",'UserProfile.mobile_otp_verified'=> '2'), 
+                    array('User_id' => $this->Auth->user('id')));
+	            $response= "Verification Sms has been sent to your No.";
+
+			    echo json_encode($response);
+	            $this->autoRender = $this->autoLayout = false;
+	            exit;
+			}else{
+                $response= "failed try again";
+                echo json_encode($response);
+                $this->autoRender = $this->autoLayout = false;
+                exit;			    
+	        }
+        }
+        if($this->request->is('Post')){         
+        	   $mobile_no = $this->request->data['reminders']['state'];
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','mobile_otp'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+            
+            if($user_data['UserProfile']['mobile_otp'] == $mobile_no){
+            	$update = $this->User->UserProfile->updateAll(
+              		array('UserProfile.mobile_otp' =>'Null','UserProfile.mobile_otp_verified'=> '1'), 
+                    array('User_id' => $this->Auth->user('id')));
+            	//$this->set('doneji','done')
+			}
+        }
+    }
+
 }
