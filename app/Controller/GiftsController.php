@@ -1527,7 +1527,7 @@ class GiftsController extends AppController {
     	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_3_'.$date_start.'_to_'.$date_end.'_'.time().'.csv', 'w+');
     	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
     	$date_end = date("Y-m-d", strtotime($date_end) + 86400);
-    	fputcsv($fp, array('First Name', 'Last Name', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up', 'Friends FB ID (Joining Date)'));
+    	fputcsv($fp, array('First Name', 'Last Name', 'Sender Email', 'User ID', 'Sender Facebook ID', 'No. of Gifts', 'No. of. Friends Signed Up', 'Friends FB ID (Joining Date)'));
     	$gifts = $this->Gift->find('all', array(
     		'fields' => array('count(sender_id) as c', 'sender_id'),
     		'conditions' => array('Gift.created >' => $date_start, 'Gift.created <' => $date_end), 
@@ -1557,6 +1557,7 @@ class GiftsController extends AppController {
     		$new_array = array();
     		$new_array[] = $sender_name['UserProfile']['first_name'];
     		$new_array[] = $sender_name['UserProfile']['last_name'];
+    		$new_array[] = $sender_name['UserProfile']['email'];
     		$new_array[] = $gift['Gift']['sender_id'];
     		$new_array[] = $gift['Sender']['facebook_id'];
     		$new_array[] = $gift[0]['c'];
