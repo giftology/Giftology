@@ -65,7 +65,7 @@
                             <span class="selected-overlay"></span>
                             <span class="image-container">
                                     <span class="image-frame"></span>
-                                    <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">						</span>
+                                    <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>"> </span>
                             <span class="details">
                                     <span class="issuer"><?= $product['Vendor']['name']; ?></span>
                                     <span class="value"><span id="WebRupee" class="WebRupee">Rs.</span>
@@ -101,7 +101,7 @@
                                             <span class="label">REDEEM</span>
                                     <?php else: ?>
                                             <?php if ($product['Product']['min_price'] == 0): ?>
-                                                    <span class="label">FREE</span>
+                                                    <span class="label" >FREE</span>
                                             <?php else: ?>
                                                     <span class="label">PAY <span id="WebRupee" class="WebRupee">Rs.</span>
                                                     <?= $product['Product']['min_price']; ?>
@@ -113,19 +113,35 @@
                     </span>
                     
     </div>
-    <!--<span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/notice_icon.gif" alt="" style="float:right;margin-top:-25px;margin-left:10px " name="<?php echo $product['Product']['vendor_id'];?>"></span>
-      
-      
-      
-                              <div id="<?php echo $product['Product']['vendor_id'];?>" class ="pop-up"><b>Terms and conditions</b>
-                                <br><br>
+    <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -129px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
                                 
-                                 <?= strip_tags($product['Product']['terms'],'<p><span><ol><li>'); ?>
+                                <div id="<?php echo $product['Product']['id'];?>" class ="pop-up">
+                                   
+                                 <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted #333; padding:3px 0;font: normal 11px/20px Georgia;">
                                 
-                              </div>-->
+                                
+                                 <p style="font: normal 11px/20px Georgia, "Times New Roman", Times, serif;">
+                                 <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
+                             </p>
+                             </div>
+                                <div style="width:240px;  position:relative;text-align:justify;  padding:3px 0;font: normal 11px/18px Georgia;">
+                                   
+                               
+                                <p style="font: normal 11px/18px Georgia, "Times New Roman", Times, serif;">
+                                 <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
+                             </p>
+                             </div>
+                            
+                                 <div class="arrownav">
+
+                                </div>
+                                
+                            
+                              
+                          </div>
 <?php endif; ?>
 
-<!--<style type="text/css">
+<style type="text/css">
       body {
         margin: 0;
         padding: 0;
@@ -133,17 +149,22 @@
        
       }
       
-      div.pop-up {
-        display: none;
-        position: absolute;
-        width: 280px;
-        padding: 20px;
-        background: #eeeeee;
-        color: #000000;
-        border: 1px solid #1a1a1a;
-        font-size: 90%;
-       z-index: 30;
-      }
+     div.pop-up {
+display: none;
+position: absolute;
+width: 240px;
+height: auto;
+padding: 0px 10px;
+background: #ECEAEA;
+color: #000000;
+border: 3px solid #8AB819;
+border-radius:  10px;
+font-size: 90%;
+z-index: 20;
+opacity: 0.8;
+margin-left:30px;
+}
+
 
 
      /* .small-voucher .selected-overlay {
@@ -162,30 +183,24 @@
 
     <script type="text/javascript">
       $(function() {
+        var gift_value = $('.trigger_tnc').attr('name'); 
+        //alert(gift_value );
         $('.trigger_tnc').hover(function(e) {
-            var gift_value = this.name;
-            //alert(gift_value);
-          $('#'+gift_value).show();
-          return false;
-          //.css('top', e.pageY + moveDown)
-          //.css('left', e.pageX + moveLeft)
-          //.appendTo('body');
+            var gift_value = this.name;            
+            $('#'+gift_value).fadeIn(1000);           
+            return false;
+          
         }, function() {
-            var gift_value = this.name;
-            //alert(gift_value);
-          $('#'+gift_value).hide();
-          return false;
+            var gift_value = this.name;            
+            $('#'+gift_value).fadeOut(200);
+            return false;
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+          $("div.pop-up").css('top', e.pageY -160 ).css('left', e.pageX+moveLeft);
         });
         
+
       });
-    </script>-->
+    </script>
 
-
-
-
-
-    
