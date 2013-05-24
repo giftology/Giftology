@@ -192,12 +192,12 @@ margin-left:30px;
           
         }, function() {
             var gift_value = this.name;            
-            $('#'+gift_value).fadeOut(1000);
+            $('#'+gift_value).fadeOut(200);
             return false;
         });
         
         $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY -140 ).css('left', e.pageX+moveLeft);
+          $("div.pop-up").css('top', e.pageY -160 ).css('left', e.pageX+moveLeft);
         });
         
 
