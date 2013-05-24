@@ -416,7 +416,6 @@ class GiftsController extends AppController {
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
         $this->redirectIfNotAllowedToSend();
-		
 		$this->Gift->create();
 		$this->Gift->Product->id = $product_id;
 		if (!$this->Gift->Product->exists()) {
@@ -1015,8 +1014,8 @@ class GiftsController extends AppController {
 	function redirectIfNotAllowedToSend() {
 		if ($this->Gift->find('count', array('conditions' =>
 			array('sender_id' => $this->Auth->user('id'),
-			      'Gift.created >' => date('Y-m-d'))))
-		    > DAILY_MAX_GIFTS_PER_USER) {
+			      'Gift.created >' => date('Y-m-d'),'Gift.gift_status_id !=' => 4)))
+		    >= DAILY_MAX_GIFTS_PER_USER) {
 			$this->Mixpanel->track('Not Allowed to send', array(
 				'Sender' => $this->Auth->user('id')
 			));
