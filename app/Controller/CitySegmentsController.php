@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
-        public $uses = array( 'CitySegment','Neighbour');
+        public $uses = array( 'CitySegment','Neighbour','Reminder');
 
 /**
  * index method
@@ -199,5 +199,23 @@ class CitySegmentsController extends AppController {
 		}
 		$this->Session->setFlash(__('City segment was not deleted'));
 		$this->redirect(array('action' => 'index'));
+	}
+
+	public function city_name_fiter_from_fb(){
+		DebugBreak();
+		$this->Reminder->recursive = -1;
+		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', '')));
+		$city_array = array();
+		foreach($cities as $k => $city){
+            if($city['Reminder']['current_location']){
+                $city_array[$k]['city'] = $city['Reminder']['current_location'];  
+            }  
+		}
+		$city_chunk  = array_chunk($city_array, 1000);
+        
+        foreach($city_chunk as $a){
+        	set_time_limit(300);
+        	$this->CitySegment->saveMany($a);
+        }
 	}
 }
