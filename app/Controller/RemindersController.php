@@ -969,7 +969,7 @@ class RemindersController extends AppController {
         	$mobile_no = $this->request->data['mobile_no'];
     		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
             $update = $this->User->UserProfile->updateAll(
-            	array('UserProfile.mobile' => "'".$mobile_no."'"), 
+            	array('UserProfile.mobile_to_verify' => '"'.$mobile_no.'"'), 
                 array('User_id' => $this->Auth->user('id'))
                 );
             if($update){
@@ -993,13 +993,14 @@ class RemindersController extends AppController {
                 exit;			    
 	        }
         }
-        if($this->request->is('Post')){         
+        if($this->request->is('Post')){
+        Debugbreak();         
         	   $mobile_no = $this->request->data['reminders']['state'];
-    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','mobile_otp'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+    		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','mobile_otp','mobile_to_verify'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
             
             if($user_data['UserProfile']['mobile_otp'] == $mobile_no){
             	$update = $this->User->UserProfile->updateAll(
-              		array('UserProfile.mobile_otp' =>'Null','UserProfile.mobile_otp_verified'=> '1'), 
+              		array('UserProfile.mobile_otp' =>'Null','UserProfile.mobile_otp_verified'=> '1','UserProfile.mobile_to_verify'=> 'Null','UserProfile.mobile'=>$user_data['UserProfile']['mobile_to_verify']), 
                     array('User_id' => $this->Auth->user('id')));
             	//$this->set('doneji','done')
 			}
