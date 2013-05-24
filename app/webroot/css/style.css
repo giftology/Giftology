@@ -700,6 +700,8 @@ input {
     padding: 11px;
 }
 
+
+
 .captha1{margin:20px 10px -10px 10px; width:250px; border-bottom:1px solid #CCCCCC;}
 
 
@@ -1398,8 +1400,7 @@ ul.voucher-details li {
 }
 .media #foot_content1 {
    /* margin-top:50px;*/
-    
-    
+    -moz-box-sizing: border-box;
     background-color: #FAFAFA;
     
     width:688px;
@@ -2802,9 +2803,8 @@ padding: 0 12px 0 11px;
  opacity:0.8;
  border:1px solid #ccc;
  box-shadow: 0 0  2px 1px #ccc;
+ text-align: justify;
 }
-
-
 /*contact us page css*/
 
 .media #foot_content_contact {
@@ -2862,19 +2862,285 @@ padding:0px 30px 0 40px;
 color:#333333;
 text-align: justify;
 }
-
-#retailer_form {width:430px; margin: auto;}
- .arrownav{
-  
-    background:url('../img/arrow-nav.png');
-width: 280px;
-height: 25px;
-padding: 0px 20px;
-margin-left: -20px;
-margin-top: -15px;
+#retailer_form {width:430px; height: auto;margin: auto;}
+/*gift voucher hover*/
 
 
+
+.arrownav {
+background: url('/img/arrow2.png') no-repeat;
+width: 20px;
+height: 20px;
+padding: 0px 0px;
+margin-left: -32px;
+margin-bottom: -21px;
+float: right;
+}
+/*gift voucher hover*/
+
+.reset-link {
+    color: #7B7B7B;
+    display: block;
+    float: right;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 12px;
+    font-style: italic;
+    padding: 10px 9px 0 0;
+    border: none;
+background: transparent;
+}
+.reset-link a {
+    color: #7B7B7B;
+    text-decoration: none;
+}
+.reset-link a:hover {
+    color: #000000;
 }
 
 
 
+
+
+/*click to call api */
+
+
+
+    .click_to_call_form:before {
+
+        /* background: url("http://www.superreceptionist.in/media/images/C2C.png") repeat scroll 0 0 transparent;*/
+
+        content: "";
+
+        height: 45px;
+
+        left: -109px;
+
+        position: absolute;
+
+        top: 0;
+
+        width: 101px;
+
+    }
+
+    .click_to_call_form {
+
+        /*border: 1px solid rgba(68, 68, 68, 0.2);
+
+       display: inline-block;*/
+
+        line-height: 0;
+        margin-top: 0;
+        float:right; 
+        padding: 8px;
+        position: relative;
+
+    }
+
+    
+
+    .click_to_call_form_wrapper{
+
+      
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f8f8',GradientType=0 );
+
+    }
+
+    .widget_tb {
+
+        padding:0;
+        border: 1px solid rgba(0, 0, 0, 0.13);
+
+        border-radius: 3px;
+
+        color: rgba(0,0,0,0.4)  !important;
+
+        font-size: 16px;
+
+        height: 27px;
+
+        letter-spacing: 1px;
+
+        line-height: 20px;
+
+        text-indent: 3%;
+
+        width: 200px;
+
+        float:left;
+        margin-top: -15px;
+
+    }
+
+    .widget_tb:focus, .widget_tb:active {
+
+        color:rgba(0,0,0,0.9) !important;
+
+    }
+
+    .widget_c2c_button {
+
+        display:inline-block;
+
+        width:60px;
+
+        margin-left:-68px;
+
+        margin-top:6px;
+
+        background-image:url('http://www.superreceptionist.in/media/images/call_button.png');
+
+        text-indent:-9999px;
+
+        height:25px;
+
+    }
+
+    .call_button {
+
+ 
+
+    }
+
+    .failure_C2C {
+
+        color:#a63737;
+
+        height:60px; text-align:center; line-height:60px;
+
+    }
+
+    .success_C2C {
+
+        color:#76a609;
+
+        height:60px; text-align:center; line-height:60px;
+
+    }
+
+    /*click to call API end*/
+
+
+/* career*/
+
+
+.careertext {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666666;
+    text-align: justify;
+    vertical-align: top;
+    padding-top: 4px;
+    padding-right: 10px;
+    padding-left: 18px;
+    margin-top: -15px;
+
+}
+
+/*career*/
+#foot_career {
+-moz-box-sizing: border-box;
+background-color: rgb(250, 250, 250);
+border: 1px solid rgb(204, 204, 204);
+border-radius: 5px 5px 5px 5px;
+margin: 20px 0px 30px 5px;
+padding: 7px;
+width: 865px;
+height:1300px;
+}
+
+#foot_career .career_img{
+    float:right;
+    margin-top:25px;
+}
+
+#foot_career .career_recent{
+width:863px; 
+height:30px;
+ background-image:url(/img/career-bg.gif);
+ margin-left: -56px; 
+ padding-top:3px;
+
+}
+#foot_career .showtext{color:#900; cursor: pointer;}
+
+.careerMainHead{
+    font:Georgia, 'Times New Roman', Times, serif ;
+ 
+ display:inline;
+  position:relative;
+  font-size:20px;
+top:20px;}
+
+.careerCustom{
+ width:530px;
+  margin:auto;
+   height:auto;}
+
+.careerCustom input[type="text"]{
+    width: 300px;
+    height: 28px;
+    border: 1px solid #B54D4D;
+    border-radius: 2px;
+    padding: 0px;
+}
+.careerCustom input[type="file"]{
+    width: 300px;
+    height: 22px;
+    border: 1px solid #B54D4D;
+     padding:0px;
+     border-radius: 2px
+ }
+
+.careerCustom textarea{
+    width: 300px;
+    border: 1px solid #B54D4D;
+    border-radius:2px;
+    float: left;
+    } 
+
+.careerCustom input[type="submit"]{
+    width: 60px;
+    height:30px;
+    border: 1px solid #B54D4D;
+    background-color: rgba(173, 46, 13, 0.86);
+background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%,rgba(173,46, 13, 0.86) 50%,rgba(173,46,13,0.86)); 
+color: #FFF;
+border-radius: 2px;
+line-height: 0px;
+display:inline;
+}
+
+.careerCustom .button::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.careerCustom .button:before {
+  content: 'Select Resume';
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border-left: 1px solid #B54D4D;
+  padding: 5px 8px;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 600;
+  font-size: 7pt;
+  float: right;
+  color:#333;
+}
+.careerCustom .button:hover:before {
+  border-color: black;
+}
+.careerCustom .button:active:before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.careerCustom .styled-select {
+   width: 303px;
+    height: 30px;
+    border: 1px solid #B54D4D;
+    border-radius: 2px;
+    overflow: hidden;
+    background: url('/img/select.png') no-repeat right ;
+   
+   }
