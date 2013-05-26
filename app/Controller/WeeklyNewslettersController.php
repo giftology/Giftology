@@ -9,8 +9,15 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class WeeklyNewslettersController extends AppController {
     public $helpers = array('Minify.Minify');
-    public $uses = array( 'User','Vendor','Product','Reminder','Campaign');
+    public $uses = array( 'User','Vendor','Product','Reminder','Campaign','WeeklyNewsletter');
     public $components = array('Giftology', 'AesCrypt');
+    public $paginate = array(
+        'limit' => 100,
+        'order' => array(
+            'WeeklyNewsletter.name' => 'asc'
+        )
+    );
+
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -67,22 +74,22 @@ class WeeklyNewslettersController extends AppController {
                 = $this->request->data['WeeklyNewsletters']['name'].str_replace(" ","_", $this->request->data['WeeklyNewsletters']['wide_file']['name']);
 
 
-            $this->request->data['WeeklyNewsletters']['header_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['header_banner']['name'];
+            $this->request->data['WeeklyNewsletters']['header_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['header_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['header_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['header_banner']);
 
-            $this->request->data['WeeklyNewsletters']['strip_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['strip_banner']['name'];
+            $this->request->data['WeeklyNewsletters']['strip_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['strip_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['strip_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['strip_banner']);
             
-            $this->request->data['WeeklyNewsletters']['product1_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['product1_banner']['name'];
+            $this->request->data['WeeklyNewsletters']['product1_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['product1_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['product1_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['product1_banner']);
 
-            $this->request->data['WeeklyNewsletters']['product2_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['product2_banner']['name'];
+            $this->request->data['WeeklyNewsletters']['product2_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['product2_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['product2_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['product2_banner']);
              
-             $this->request->data['WeeklyNewsletters']['brand1_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['brand1_banner']['name'];
+             $this->request->data['WeeklyNewsletters']['brand1_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['brand1_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['brand1_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['brand1_banner']);
 
-            $this->request->data['WeeklyNewsletters']['brand2_banner'] = 'files/'.$this->request->data['WeeklyNewsletters']['brand2_banner']['name'];
+            $this->request->data['WeeklyNewsletters']['brand2_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletters']['brand2_banner']['name'];
             copy($this->request->data['WeeklyNewsletters']['brand2_banner']['tmp_name'], $this->request->data['WeeklyNewsletters']['brand2_banner']);
 
 
