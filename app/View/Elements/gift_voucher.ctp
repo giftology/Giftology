@@ -116,18 +116,24 @@
     <?php if(SHOW_HOVER): ?>
     <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -129px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
     <?php  
-     if(isset($product['Vendor']['short_description']) || isset($product['Product']['short_terms'])): ?>
+     if($product['Vendor']['short_description'] || $product['Product']['short_terms']): ?>
      <div id="<?php echo $product['Product']['id'];?>" class ="pop-up">
+        <?php if($product['Vendor']['short_description']): ?>
         <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted #333; padding:3px 0;font: normal 11px/20px Georgia;">
-            <p style="font: normal 11px/20px Georgia, "Times New Roman", Times, serif;">
+            <p style="font: n$product['Vendor']['short_description']ormal 11px/20px Georgia, "Times New Roman", Times, serif;">
                 <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
             </p>
         </div>
+    <?php endif; 
+      if($product['Product']['short_terms']):  
+    ?>
+
         <div style="width:240px;  position:relative;text-align:justify;  padding:3px 0;font: normal 11px/18px Georgia;">
             <p style="font: normal 11px/18px Georgia, "Times New Roman", Times, serif;">
                 <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
             </p>
         </div>
+    <?php endif; ?>
         <div class="arrownav">
         </div>
     </div>
