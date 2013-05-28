@@ -42,7 +42,6 @@ class WeeklyNewslettersController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
 
-DEBUGBREAK();
             if($this->request->data['WeeklyNewsletter']['header_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['strip_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['product1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['product2_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="")
             {
                 $error_array= array();
