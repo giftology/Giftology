@@ -15,8 +15,26 @@ class ProductsController extends AppController {
             'Product.display_order' => 'asc'
         )
     );
+     public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'min_price', 'type' => 'value'),
+            array('field' => 'max_price', 'type' => 'value'),
+            array('field'=> 'min_value','type'=>'value'),
+            array('field'=> 'code_type_id','type'=>'value'),
+            array('field'=> 'code','type'=>'value'),
+            array('field'=> 'vendor_id','type'=>'value'),
+            array('field'=> 'product_type_id','type'=>'value'),
+            array('field'=> 'gender_segment_id','type'=>'value'),
+            array('field'=> 'city_segment_id','type'=>'value'),
+            array('field'=> 'age_segment_id','type'=>'value'),
+            array('field'=> 'display_order','type'=>'value'),
+
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+        
+        );
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode');
-    public $components = array('AesCrypt');
+    public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder');
@@ -52,10 +70,113 @@ class ProductsController extends AppController {
  *
  * @return void
  */
-    public function index() {
+ public function download_product_csv(){
+       
+          $filename = "Products ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Min Price','Max Price','Min Value','Days Valid','Code Type','Code','Vendor','Product Type','Gender Segment','City Segment','Age Segment','Display Order','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->Product->find('first', array('conditions'=>array('Product.id'=>$id)));
+                            $row = array(
+                            $result['Product']['id'],
+                            $result['Product']['min_price'],
+                            $result['Product']['max_price'],
+                            $result['Product']['min_value'],
+                            $result['Product']['days_valid'],
+                            $result['Product']['code_type_id'],
+                            $result['Product']['code'],
+                            $result['Product']['vendor_id'],
+                            $result['Product']['product_type_id'],
+                            $result['Product']['gender_segment_id'],
+                            $result['Product']['city_segment_id'],
+                            $result['Product']['age_segment_id'],
+                            $result['Product']['display_order'],
+                            $result['Product']['created'],
+                            $result['Product']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+    }
+     public function index() {
+        $this->Prg->commonProcess('Product');
+     if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+               
+               ),'order'=>array('Product.modified'=>'DESC')); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs) ,'Product.created >'=>$created_start,'Product.created <' => $created_end
+               ),'order'=>array('Product.modified'=>'DESC')); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->Product->parseCriteria($this->passedArgs),'Product.modified >'=>$modified_start,'Product.modified <' => $modified_end
+           ,'Product.created >'=>$created_start,'Product.created <' => $created_end
+            ),'order'=>array('Product.modified'=>'DESC'));  
+             }  
+            
+    
+        }
+        else{
+            $conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)),'order'=>array('Product.modified'=>'DESC'));
+
+        }
+        
+        $vendors = $this->Product->Vendor->find('list');
+        $Product_Type = $this->Product->ProductType->find('list');
+        $Code_Type = $this->Product->CodeType->find('list');
+        $City_Segment = $this->Product->CitySegment->find('list');
+        $Age_Segment = $this->Product->AgeSegment->find('list');
+
         $this->Product->recursive = 0;
+        //$conditions= array('conditions' => array($this->Product->parseCriteria($this->passedArgs)));
+        $this->paginate = $conditions;
         $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
         $this->set('products', $this->paginate());
+        $this->set('product_type',$Product_Type);
+        $this->set('code_type',$Code_Type);
+        $this->set('vendors',$vendors) ;
+        $this->set('city_segment',$City_Segment) ;
+        $this->set('age_segment',$Age_Segment) ;
     }
 /**
  * view method

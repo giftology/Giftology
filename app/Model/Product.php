@@ -16,6 +16,30 @@ class Product extends AppModel {
  *
  * @var array
  */
+public $actsAs = array('Search.Searchable');
+ public $filterArgs = array(
+            array('name' => 'id', 'type' => 'like','field' => 'Product.id'),
+            array('name' => 'min_price', 'type' => 'like','field' => 'Product.min_price'),
+            array('name' => 'max_price', 'type' => 'like','field' => 'Product.max_price'),
+            array('name' => 'min_value', 'type' => 'like','field' => 'Product.min_value'),
+            array('name' => 'days_valid', 'type' => 'like','field' => 'Product.days_valid'),
+            array('name' => 'code_type_id', 'type' => 'like','field' => 'Product.code_type_id'),
+            array('name' => 'code', 'type' => 'like','field' => 'Product.code'),
+            array('name' => 'vendor_id', 'type' => 'value','field' => 'Product.vendor_id'),
+            array('name' => 'product_type_id', 'type' => 'like','field' => 'Product.product_type_id'),
+            array('name' => 'gender_segment_id', 'type' => 'like','field' => 'Product.gender_segment_id'),
+            array('name' => 'city_segment_id', 'type' => 'like','field' => 'Product.city_segment_id'),
+            array('name' => 'age_segment_id', 'type' => 'like','field' => 'Product.age_segment_id'),
+            array('name' => 'display_order', 'type' => 'like','field' => 'Product.display_order'),
+            array('name' => 'created', 'type' => 'like','field' => 'Product.created'),
+            array('name' => 'modified', 'type' => 'like','field' => 'Product.modified'),
+
+           
+
+           
+            
+            
+        );
 	public $validate = array(
 		'vendor_id' => array(
 			'numeric' => array(
