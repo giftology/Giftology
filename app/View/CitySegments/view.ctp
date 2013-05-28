@@ -11,6 +11,21 @@
 			<?php echo h($citySegment['CitySegment']['city']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('State'); ?></dt>
+		<dd>
+			<?php echo h($citySegment['CitySegment']['state']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Country'); ?></dt>
+		<dd>
+			<?php echo h($citySegment['CitySegment']['country']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('GeoLocation'); ?></dt>
+		<dd>
+			<?php echo h($citySegment['CitySegment']['geo_location']); ?>
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
