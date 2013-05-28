@@ -161,8 +161,9 @@ class WeeklyNewslettersController extends AppController {
 
 
     public function newsletter($userid){
+        DEBUGBREAK();
         $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
-         $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => date()),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+         $detail=$this->WeeklyNewsletter->find('first',array('fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
           $mail=$name['UserProfile']['email'];
           $email = new CakeEmail();
         $email->config('smtp')
@@ -171,21 +172,21 @@ class WeeklyNewslettersController extends AppController {
             //->to($user['UserProfile']['email'])
             ->to($mail)
             ->from(array('noreply@giftology.com' => 'Giftology'))
-            ->subject($email['UserProfile']['first_name'].', We miss you online. More gifts to send!')
+            ->subject($name['UserProfile']['first_name'].', We miss you online. More gifts to send!')
             ->viewVars(array(
                     'user_name' => $name['UserProfile']['first_name'],
-                    'name' => $email['WeeklyNewsletter']['name'],
-                    'header_banner' => $email['WeeklyNewsletter']['header_banner'],
-                    'strip_banner' => $email['WeeklyNewsletter']['strip_banner'],
-                    'product1_banner' => $email['WeeklyNewsletter']['product1_banner'],
-                    'product2_banner' => $email['WeeklyNewsletter']['product2_banner'],
-                    'brand1_banner' => $email['WeeklyNewsletter']['brand1_banner'],
-                    'brand2_banner' => $email['WeeklyNewsletter']['brand2_banner'],
-                    'brand1_text' => $email['WeeklyNewsletter']['brand1_text'],
-                    'brand2_text' => $email['WeeklyNewsletter']['brand2_text'],
-                    'template_text' => $email['WeeklyNewsletter']['template_text'],
-                    'template_heading' => $email['WeeklyNewsletter']['template_heading'],
-                    'featured_brand' => $email['WeeklyNewsletter']['featured_brand']
+                    'name' => $detail['WeeklyNewsletter']['name'],
+                    'header_banner' => $detail['WeeklyNewsletter']['header_banner'],
+                    'strip_banner' => $detail['WeeklyNewsletter']['strip_banner'],
+                    'product1_banner' => $detail['WeeklyNewsletter']['product1_banner'],
+                    'product2_banner' => $detail['WeeklyNewsletter']['product2_banner'],
+                    'brand1_banner' => $detail['WeeklyNewsletter']['brand1_banner'],
+                    'brand2_banner' => $detail['WeeklyNewsletter']['brand2_banner'],
+                    'brand1_text' => $detail['WeeklyNewsletter']['brand1_text'],
+                    'brand2_text' => $detail['WeeklyNewsletter']['brand2_text'],
+                    'template_text' => $detail['WeeklyNewsletter']['template_text'],
+                    'template_heading' => $detail['WeeklyNewsletter']['template_heading'],
+                    'featured_brand' => $detail['WeeklyNewsletter']['featured_brand']
                     ))
              ->send();
             $this->log("Sent email to ".$name['UserProfile']['first_name']);

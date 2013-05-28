@@ -12,7 +12,7 @@ position: relative;"><img src="http://app.streamsend.com/public_images/389829/im
 
 <tr>
   <td>
-    <?php echo $template_heading; DEBUGBREAK(); ?>
+    <?php echo $template_heading; ?>
   </td>
 <td>
 
@@ -22,11 +22,11 @@ position: relative;"><img src="http://app.streamsend.com/public_images/389829/im
 
         
 
-<p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:-15px 0 0 0;padding:0;color:#333; text-align: left; width:630px; height:303px;"> <img src="<?php echo $header_banner; ?>" height="303" width="630" alt="Have you gifted?Jabong voucher worth Rs. 2000 YET to be won" class="user_uploaded_image" title="Have you gifted yet? Jabong voucher worth Rs. 2000 waiting to be won!" border="0" usemap="#Map"></p>
+<p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:-15px 0 0 0;padding:0;color:#333; text-align: left; width:630px; height:303px;"> <img src="../<?php echo $header_banner; ?>" height="303" width="630" alt="Have you gifted?Jabong voucher worth Rs. 2000 YET to be won" class="user_uploaded_image" title="Have you gifted yet? Jabong voucher worth Rs. 2000 waiting to be won!" border="0" usemap="#Map"></p>
 
 <p style="font: 18px/22px Georgia,'Times New Roman',Times,serif;margin: 0px;padding: 10px 35px;color: rgb(175, 175, 175);text-align: left;width: 560px;height: 25px;background: none repeat scroll 0% 0% rgb(244, 244, 244);border-bottom: 2px solid rgb(200, 200, 200);border-top: 1px solid rgb(200, 200, 200);"> Gift for Friends | Gift for Colleagues | Gift for  Siblings | Gift for  Family</p>
 
-<p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif; margin:12px 0 0 0; padding:0;color:#333; text-align: left; width:630px; height:15px;"> <img src="<?php echo $strip_banner;?>" height="15" width="630" alt="New Gifts Voucher for You" class="user_uploaded_image" title="New Gifts Voucher for You" border="0" usemap="#Map"></p>
+<p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif; margin:12px 0 0 0; padding:0;color:#333; text-align: left; width:630px; height:15px;"> <img src="../<?php echo $strip_banner;?>" height="15" width="630" alt="New Gifts Voucher for You" class="user_uploaded_image" title="New Gifts Voucher for You" border="0" usemap="#Map"></p>
 
 
              <div style="width:630px; height:260px ">
@@ -85,7 +85,7 @@ position: relative;"><img src="http://app.streamsend.com/public_images/389829/im
 <tr>
 <td><div style="background:#FFF;padding:1px 0 30px 0; width:630;">
             <h3 style="color: #000;display: block;font: 22px/100% Georgia, 'Times New Roman', Times, serif;text-align:center;text-shadow: 1px 1px 1px #000;"> Featured Brands This Week </h3>
-            <p style="color: #666;display: block;text-align: left;font: normal 16px/140% Georgia, 'Times New Roman', Times, serif; margin:5px 30px 0 30px"> <img src="<?php echo $featured_brand; ?>" alt="Featured Brands: bluegape.com|naaptol|Fabfurnish.com" title="top brands" style="margin:0 0 0 5px "></p>
+            <p style="color: #666;display: block;text-align: left;font: normal 16px/140% Georgia, 'Times New Roman', Times, serif; margin:5px 30px 0 30px"> <img src="../<?php echo $featured_brand; ?>" alt="Featured Brands: bluegape.com|naaptol|Fabfurnish.com" title="top brands" style="margin:0 0 0 5px "></p>
            
           </div></td>
       </tr>
