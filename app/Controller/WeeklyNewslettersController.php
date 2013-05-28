@@ -161,8 +161,6 @@ class WeeklyNewslettersController extends AppController {
 
 
     public function newsletter($userid){
-        DEBUGBREAK();
-      
         $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
          $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => date()),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
           $mail=$name['UserProfile']['email'];
