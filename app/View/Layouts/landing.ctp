@@ -87,11 +87,12 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <!--<script type="text/javascript" async="" src="../js/ga.js"></script><script src="../js/modernizr-2.6.2.min.js"></script>-->
 <body style="zoom: 1; margin-bottom: 0px;">
 <?php echo $this->Facebook->init(); ?>
-  <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
+  
   
   <div id="wrapper">
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
+        <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?= FULL_BASE_URL; ?>/img/Processing.gif"/></div>
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
           <?php  if($type): ?>
          <p></p>
