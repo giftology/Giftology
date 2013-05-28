@@ -205,13 +205,16 @@ class CitySegmentsController extends AppController {
 	}
 
 	public function city_name_fiter_from_fb(){
-		DebugBreak();
 		$this->Reminder->recursive = -1;
-		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', '')));
+        //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
+		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location')));
 		$city_array = array();
 		foreach($cities as $k => $city){
             if($city['Reminder']['current_location']){
-                $city_array[$k]['city'] = $city['Reminder']['current_location'];  
+                $city_array[$k]['city'] = $city['Reminder']['current_location']; 
+                $city_array[$k]['state'] = $city['Reminder']['state'];
+                $city_array[$k]['country'] = $city['Reminder']['country'];
+                $city_array[$k]['geo_location'] = $city['Reminder']['geo_location']; 
             }  
 		}
 		$city_chunk  = array_chunk($city_array, 1000);
