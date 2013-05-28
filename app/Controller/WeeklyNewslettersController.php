@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class WeeklyNewslettersController extends AppController {
     public $helpers = array('Minify.Minify');
-    public $uses = array('WeeklyNewsletter');
+    public $uses = array('WeeklyNewsletter','User','UserProfile');
     public $components = array('Giftology', 'AesCrypt');
     public $paginate = array(
         'limit' => 30,
@@ -17,6 +17,10 @@ class WeeklyNewslettersController extends AppController {
             'WeeklyNewsletter.id' => 'asc'
         )
     );
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('newsletter');
+    }
     public function index() {
         $this->WeeklyNewsletter->recursive = 0;
         $this->set('news', $this->paginate());
@@ -156,7 +160,28 @@ class WeeklyNewslettersController extends AppController {
     }
 
 
-    public function newsletter(){
+    public function newsletter($userid){
+        DEBUGBREAK();
+        $email1=$this->User->find('first',array('conditions' => array('User.id' => $userid)));
+        $email=$this->User->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email')));
+         $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => $userid),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_bannertext','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+          $mail=$email['User']['UserProfile']['email'];
+          $email = new CakeEmail();
+        $email->config('smtp')
+            ->template('scheduled_mail', 'default') 
+            ->emailFormat('html')
+            //->to($user['UserProfile']['email'])
+            ->to($mail)
+            ->from(array('noreply@giftology.com' => 'Giftology'))
+            ->subject($email['User']['UserProfile']['first_name'].', We miss you online. More gifts to send!')
+            ->viewVars(array(
+                    'name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
+                    'products' => $product,
+                    'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
+                    'last_login' => $last_login))
+             ->send();
+            $this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
+
     
 
     }

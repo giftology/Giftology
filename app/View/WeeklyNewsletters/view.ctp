@@ -65,6 +65,12 @@
 			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['brand2_banner'],array('width' => '50px','height' => '50px')); ?>
 			&nbsp;
 		</dd>
+
+		<dt><?php echo __('Min Price'); ?></dt>
+		<dd>
+			<?php echo h($news['WeeklyNewsletter']['scheduled_time']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($news['WeeklyNewsletter']['created']); ?>

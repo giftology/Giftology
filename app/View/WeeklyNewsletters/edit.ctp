@@ -11,6 +11,7 @@
 		echo $this->Form->input('brand1_file', array('label' => 'Brand1', 'type' => 'file'));
 		echo $this->Form->input('brand2_file', array('label' => 'Brand2', 'type' => 'file'));
 		echo $this->Form->input('featured_file', array('label' => 'featured Image', 'type' => 'file'));
+		echo $this->Form->input('scheduled_time', array('label' => 'Time', 'type' => 'input'));
 
 		echo $this->Tinymce->input('WeeklyNewsletter.brand1_text', array( 
 	            'label' => 'Brand1 Text' 

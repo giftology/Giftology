@@ -8,6 +8,7 @@
 			<th><?php echo $this->Paginator->sort('brand2_text'); ?></th>
 			<th><?php echo $this->Paginator->sort('template_text'); ?></th>
 			<th><?php echo $this->Paginator->sort('template_heading'); ?></th>
+			<th><?php echo $this->Paginator->sort('scheduled_time'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -21,6 +22,7 @@
 		<td><?php echo h($news['WeeklyNewsletter']['brand2_text']); ?>&nbsp;</td>
 		<td><?php echo h($news['WeeklyNewsletter']['template_text']); ?>&nbsp;</td>
 		<td><?php echo h($news['WeeklyNewsletter']['template_heading']); ?>&nbsp;</td>
+		<td><?php echo h($news['WeeklyNewsletter']['scheduled_time']); ?>&nbsp;</td>
 		<td><?php echo h($news['WeeklyNewsletter']['created']); ?>&nbsp;</td>
 		<td><?php echo h($news['WeeklyNewsletter']['modified']); ?>&nbsp;</td>
 		<td class="actions">
