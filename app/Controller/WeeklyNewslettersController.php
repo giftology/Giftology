@@ -167,7 +167,7 @@ class WeeklyNewslettersController extends AppController {
           $mail=$name['UserProfile']['email'];
           $email = new CakeEmail();
         $email->config('smtp')
-            ->template('scheduled_mail', 'default') 
+            ->template('scheduledmail', 'default') 
             ->emailFormat('html')
             //->to($user['UserProfile']['email'])
             ->to($mail)
