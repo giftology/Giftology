@@ -41,7 +41,21 @@ class WeeklyNewslettersController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
-            $this->WeeklyNewsletter->create();
+
+DEBUGBREAK();
+            if($this->request->data['WeeklyNewsletter']['header_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['strip_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['product1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['product2_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="" && $this->request->data['WeeklyNewsletter']['brand1_file']['name'] !="")
+            {
+                $error_array= array();
+                $allowed =  array('png' ,'jpg');
+                foreach($_FILES['data']['name']['WeeklyNewsletter'] as $file){
+                        $ext = pathinfo($file, PATHINFO_EXTENSION);
+                        if(!in_array($ext,$allowed) ) {
+                            $error_array[]=  $file;
+                        }      
+                    }
+                    if(!$error_array) { 
+                    $this->WeeklyNewsletter->create();
+            
             
             //facebook linter doesnt like image links with space in them, convert all space to underscore   
             $this->request->data['WeeklyNewsletter']['header_file']['name']
@@ -82,15 +96,30 @@ class WeeklyNewslettersController extends AppController {
 
             $this->request->data['WeeklyNewsletter']['featured_brand'] = 'files/news/'.$this->request->data['WeeklyNewsletter']['featured_file']['name'];
             copy($this->request->data['WeeklyNewsletter']['featured_file']['tmp_name'], $this->request->data['WeeklyNewsletter']['featured_brand']);
-
-
-
             if ($this->WeeklyNewsletter->save($this->request->data)) {
                 $this->Session->setFlash(__('The Newsletter has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The Newsletters could not be saved. Please, try again.'));
-            }
+            }         
+            }else{
+                    $err1;
+                    foreach($error_array as $err){
+                        $err1= $err1.' ';
+                        $err1= $err1.$err.' ' ;
+                        
+                        
+                        
+                    }
+                    $this->Session->setFlash(__('Please enter either JPG,PNG format for'.$err1));
+                    $this->redirect(array('action'=>'index'));   
+                }
+        }
+
+            else {
+                $this->Session->setFlash(__('Please enter all input fields'));
+                $this->redirect(array('action'=>'index'));  
+            }  
         }
     }
 
@@ -101,7 +130,7 @@ class WeeklyNewslettersController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->WeeklyNewsletter->save($this->request->data)) {
-                $this->Session->setFlash(__('The Newsletters has been saved'));
+                $this->Session->setFlash(__('The Newsletters has been edited'));
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The Newsletters could not be saved. Please, try again.'));
