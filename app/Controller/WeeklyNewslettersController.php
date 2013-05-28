@@ -162,9 +162,9 @@ class WeeklyNewslettersController extends AppController {
 
     public function newsletter($userid){
         DEBUGBREAK();
-        $email=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
-         $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => $userid),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_bannertext','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
-          $mail=$email['UserProfile']['email'];
+        $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
+         $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => $userid),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+          $mail=$name['UserProfile']['email'];
           $email = new CakeEmail();
         $email->config('smtp')
             ->template('scheduled_mail', 'default') 
@@ -174,12 +174,22 @@ class WeeklyNewslettersController extends AppController {
             ->from(array('noreply@giftology.com' => 'Giftology'))
             ->subject($email['UserProfile']['first_name'].', We miss you online. More gifts to send!')
             ->viewVars(array(
-                    'user_name' => $user['UserProfile']['first_name'],
-                    'name' => $email['WeeklyNewsletter']['first_name'],
-                    'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
-                    'last_login' => $last_login))
+                    'user_name' => $name['UserProfile']['first_name'],
+                    'name' => $email['WeeklyNewsletter']['name'],
+                    'header_banner' => $email['WeeklyNewsletter']['header_banner'],
+                    'strip_banner' => $email['WeeklyNewsletter']['strip_banner'],
+                    'product1_banner' => $email['WeeklyNewsletter']['product1_banner'],
+                    'product2_banner' => $email['WeeklyNewsletter']['product2_banner'],
+                    'brand1_banner' => $email['WeeklyNewsletter']['brand1_banner'],
+                    'brand2_banner' => $email['WeeklyNewsletter']['brand2_banner'],
+                    'brand1_text' => $email['WeeklyNewsletter']['brand1_text'],
+                    'brand2_text' => $email['WeeklyNewsletter']['brand2_text'],
+                    'template_text' => $email['WeeklyNewsletter']['template_text'],
+                    'template_heading' => $email['WeeklyNewsletter']['template_heading'],
+                    'featured_brand' => $email['WeeklyNewsletter']['featured_brand']
+                    ))
              ->send();
-            $this->log("Sent REminder email to ".$user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name']);
+            $this->log("Sent email to ".$name['UserProfile']['first_name']);
 
     
 
