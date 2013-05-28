@@ -1,9 +1,9 @@
 
 <?= $this->element('admin_header'); ?>
 <div class="gifts index">
-	<h2><?php echo __('Gifts'); ?></h2>
+	<h2><?php echo __('Paid Gifts'); ?></h2>
 	<div id="collapse1"  class="backSearch" style="border:1px solid #ccc; width:800px; padding:10px; margin-bottom:70px;">
-		<?php echo $this->Form->create('Gift', array('url' => array_merge(array('action' => 'index'), $this->params['pass']))); 
+		<?php echo $this->Form->create('Gift', array('url' => array_merge(array('action' => 'paid_gift'), $this->params['pass']))); 
 ?>  <tr>
 		<td></td>
         <td><?php echo $this->Form->input('id', array('type'=>'text','div' => false,'label'=>'','size'=>'1','placeholder'=>'Id'));?></td>
@@ -21,14 +21,14 @@
         <td><?php echo $this->Form->input('created_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker2',"placeholder"=>'Created Start Date'));?>
 		<?php echo $this->Form->input('created_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker3','placeholder'=>'Created End Date'));?>
         </td>
-        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Modified Start Date'));?>
-			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'Modified End Date'));?>
+        <td><?php echo $this->Form->input('modified_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker4',"placeholder"=>'Created Start Date'));?>
+			<?php echo $this->Form->input('modified_end', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker5','placeholder'=>'Created End Date'));?>
         </td>
         
        <td>
          <?php echo $this->Form->submit(__('Search', true), array('div' => false));	
         if (isset($this->params['named']) & !empty($this->params['named'])){ 
-            echo $this->Html->link(_('Reset Filter'), array('controller'=>'Gifts','action'=>'index'));
+            echo $this->Html->link(_('Reset Filter'), array('controller'=>'Gifts','action'=>'paid_gift'));
         } 
         ?>
         </td>			
@@ -101,7 +101,7 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	  <div class="paging">
+	<div class="paging">
           	<?php
           	    if ($this->Paginator->hasPrev()) {
           		echo $this->Paginator->prev($this->html->image('35x35_prev.png' , array("title" => "Prev")), array('escape' => false), null, array('class' => 'prev disabled'));
