@@ -7,7 +7,10 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
-        public $uses = array( 'CitySegment','Neighbour','Reminder');
+
+	public $uses = array( 'CitySegment','LocationSegment','Reminder');
+
+
 
 /**
  * index method
@@ -67,15 +70,15 @@ class CitySegmentsController extends AppController {
 		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->CitySegment->save($this->request->data)) {
-				//$data['city_segment_id'] = $this->data['CitySegment']['id'];
-				//$data['city_name'] = $this->data['CitySegment']['city_name'];
 				$data=array();
 				$thePostIdArray = explode(',', $this->data['CitySegment']['city_name']);
-				foreach ($thePostIdArray as $shubam) {
-					$data['city_name'] = $shubam;
-					$data['city_segment_id'] = $this->data['CitySegment']['id'];
-					$this->Neighbour->saveAll($data);
-					
+				foreach ($thePostIdArray as $city_name) {
+					$data['city'] = $city_name;
+					$this->CitySegment->saveAll($data);
+					$id = $this->CitySegment->find('first', array('fields' => array('id'), 'conditions' => array('city' => $city_name)));
+					$data1['city_segment_id'] = $this->data['CitySegment']['id'];
+					$data1['city_id'] = $id['CitySegment']['id'];
+					$this->LocationSegment->saveAll($data1);
 				} 
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
