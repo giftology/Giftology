@@ -5,8 +5,11 @@
 	<?php
 
 		echo $this->Form->input('id');
-		echo $this->Form->input('city');
-		echo $this->Form->input('city_name', array('type' => 'textarea'));
+		echo $this->Form->input('city');?></br/></br/>
+		<?php echo $this->Form->input('city_name', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
+		<?php echo $this->Form->input('state', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
+		<?php echo $this->Form->input('country', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
+		<?php  echo $this->Form->input('geo_location', array('type' => 'textarea','size'=>'10','rows'=>'2'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
