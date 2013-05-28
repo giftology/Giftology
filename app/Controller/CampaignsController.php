@@ -204,8 +204,6 @@ class CampaignsController extends AppController {
     
 
         if ($this->request->is('post')) {
-            DEBUGBREAK();
-           
             if(($this->request->data['Campaign']['thumb_file']['name']!="" || $this->request->data['Campaign']['type']==TYPE_CONTEST)&& ($this->request->data['Campaign']['wide_file']['name']!="") )
             {
               // 

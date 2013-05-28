@@ -1,39 +1,78 @@
-<div class="vendors view">
-<h2><?php  echo __('Vendor'); ?></h2>
+<div class="WeeklyNewsletter view">
+<h2><?php  echo __('WeeklyNewsletter'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
-			<?php echo h($vendor['Vendor']['id']); ?>
+			<?php echo h($news['WeeklyNewsletter']['id']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Name'); ?></dt>
 		<dd>
-			<?php echo h($vendor['Vendor']['name']); ?>
+			<?php echo h($news['WeeklyNewsletter']['name']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Thumb'); ?></dt>
+		<dt><?php echo __('Brand1'); ?></dt>
 		<dd>
-			<?php echo $this->Html->image('../'.$vendor['Vendor']['thumb_image']); ?>
+			<?php echo h($news['WeeklyNewsletter']['brand1_text']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Image'); ?></dt>
+
+		<dt><?php echo __('Brand2'); ?></dt>
 		<dd>
-			<?php echo $this->Html->image('../'.$vendor['Vendor']['wide_image']); ?>
+			<?php echo h($news['WeeklyNewsletter']['brand2_text']); ?>
+			&nbsp;banner
+		</dd>
+
+		<dt><?php echo __('Template'); ?></dt>
+		<dd>
+			<?php echo h($news['WeeklyNewsletter']['template_text']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('carousel'); ?></dt>
+
+		<dt><?php echo __('Min Price'); ?></dt>
 		<dd>
-			<?php echo $this->Html->image('../'.$vendor['Vendor']['carousel_image']); ?>
+			<?php echo h($news['WeeklyNewsletter']['template_heading']); ?>
+			&nbsp;
+		</dd>
+
+		<dt><?php echo __('Header'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['header_banner'],array('width' => '50px','height' => '50px')); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Strip'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['strip_banner'],array('width' => '50px','height' => '50px')); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('product1'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['product1_banner'],array('width' => '50px','height' => '50px')); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('product2'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['product2_banner'],array('width' => '50px','height' => '50px')); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Brand1'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['brand1_banner'],array('width' => '50px','height' => '50px')); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('brand2'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$news['WeeklyNewsletter']['brand2_banner'],array('width' => '50px','height' => '50px')); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
-			<?php echo h($vendor['Vendor']['created']); ?>
+			<?php echo h($news['WeeklyNewsletter']['created']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Modified'); ?></dt>
 		<dd>
-			<?php echo h($vendor['Vendor']['modified']); ?>
+			<?php echo h($news['WeeklyNewsletter']['modified']); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -41,64 +80,9 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Edit Vendor'), array('action' => 'edit', $vendor['Vendor']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Vendor'), array('action' => 'delete', $vendor['Vendor']['id']), null, __('Are you sure you want to delete # %s?', $vendor['Vendor']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Vendors'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Vendor'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit WeeklyNewsletter'), array('action' => 'edit', $news['WeeklyNewsletter']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete WeeklyNewsletter'), array('action' => 'delete', $news['WeeklyNewsletter']['id']), null, __('Are you sure you want to delete # %s?', $news['WeeklyNewsletter']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List WeeklyNewsletter'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New WeeklyNewsletter'), array('action' => 'add')); ?> </li>
 	</ul>
-</div>
-<div class="related">
-	<h3><?php echo __('Related Products'); ?></h3>
-	<?php if (!empty($vendor['Product'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Min Price'); ?></th>
-		<th><?php echo __('Max Price'); ?></th>
-		<th><?php echo __('Image'); ?></th>
-		<th><?php echo __('Days Valid'); ?></th>
-		<th><?php echo __('Terms'); ?></th>
-		<th><?php echo __('Short Terms'); ?></th>
-		<th><?php echo __('Code'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th><?php echo __('Vendor Id'); ?></th>
-		<th><?php echo __('Product Type Id'); ?></th>
-		<th><?php echo __('Product Segment Id'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($vendor['Product'] as $product): ?>
-		<tr>
-			<td><?php echo $product['id']; ?></td>
-			<td><?php echo $product['min_price']; ?></td>
-			<td><?php echo $product['max_price']; ?></td>
-			<td><?php echo $product['image']; ?></td>
-			<td><?php echo $product['days_valid']; ?></td>
-			<td><?php echo $product['terms']; ?></td>
-			<td><?php echo $product['short_terms']; ?></td>
-			<td><?php echo $product['code']; ?></td>
-			<td><?php echo $product['created']; ?></td>
-			<td><?php echo $product['modified']; ?></td>
-			<td><?php echo $product['vendor_id']; ?></td>
-			<td><?php echo $product['product_type_id']; ?></td>
-			<td><?php echo $product['product_segment_id']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'products', 'action' => 'view', $product['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'products', 'action' => 'edit', $product['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'products', 'action' => 'delete', $product['id']), null, __('Are you sure you want to delete # %s?', $product['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>

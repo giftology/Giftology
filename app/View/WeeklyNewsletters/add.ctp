@@ -1,40 +1,40 @@
 <div class="Newsletters form">
 <?php echo $this->Form->create('WeeklyNewsletter', array('type' => 'file')); ?>
 	<fieldset>
-		<legend><?php echo __('Add Newsletters'); ?></legend>
+		<legend><?php echo __('Add Newsletter'); ?></legend>
 	<?php
 		echo $this->Form->input('name');
-		echo $this->Form->input('header_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
-		echo $this->Form->input('strip_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file'));
-		echo $this->Form->input('product1_file', array('label' => 'Facebook Share Image (200x200px)', 'type' => 'file'));
-		echo $this->Form->input('product2_file', array('label' => 'Carousel(199x102px)', 'type' => 'file'));
-		echo $this->Form->input('brand1_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
-		echo $this->Form->input('brand2_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
-		echo $this->Form->input('featured_file', array('label' => 'Thumb (50x50px)', 'type' => 'file'));
+		echo $this->Form->input('header_file', array('label' => 'Header', 'type' => 'file'));
+		echo $this->Form->input('strip_file', array('label' => 'Strip', 'type' => 'file'));
+		echo $this->Form->input('product1_file', array('label' => 'product1', 'type' => 'file'));
+		echo $this->Form->input('product2_file', array('label' => 'product2', 'type' => 'file'));
+		echo $this->Form->input('brand1_file', array('label' => 'Brand1', 'type' => 'file'));
+		echo $this->Form->input('brand2_file', array('label' => 'Brand2', 'type' => 'file'));
+		echo $this->Form->input('featured_file', array('label' => 'featured Image', 'type' => 'file'));
 
 		echo $this->Tinymce->input('WeeklyNewsletter.brand1_text', array( 
-	            'label' => 'About' 
+	            'label' => 'Brand1 Text' 
 		            ),array( 
 		                'language'=>'en' 
 		            ), 
 		            'full' 
 	        ); 
 		echo $this->Tinymce->input('WeeklyNewsletter.brand2_text', array( 
-	            'label' => 'short About' 
+	            'label' => 'Brand2 Text' 
 		            ),array( 
 		                'language'=>'en' 
 		            ), 
 		            'full' 
 	        ); 
 		echo $this->Tinymce->input('WeeklyNewsletter.template_text', array( 
-	            'label' => 'About' 
+	            'label' => 'Template Text' 
 		            ),array( 
 		                'language'=>'en' 
 		            ), 
 		            'full' 
 	        ); 
 		echo $this->Tinymce->input('WeeklyNewsletter.template_heading', array( 
-	            'label' => 'About' 
+	            'label' => 'Template Heading' 
 		            ),array( 
 		                'language'=>'en' 
 		            ), 

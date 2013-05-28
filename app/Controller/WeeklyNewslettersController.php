@@ -12,24 +12,11 @@ class WeeklyNewslettersController extends AppController {
     public $uses = array('WeeklyNewsletter');
     public $components = array('Giftology', 'AesCrypt');
     public $paginate = array(
-        'limit' => 100,
+        'limit' => 30,
         'order' => array(
-            'WeeklyNewsletter.name' => 'asc'
+            'WeeklyNewsletter.id' => 'asc'
         )
     );
-
-
-    public function beforeFilter() {
-        parent::beforeFilter();
-        $this->Auth->allow();
-    }
-    public function isAuthorized($user) {
-        if (($this->action == 'newsletter')) {
-            return true;
-        }
-        return parent::isAuthorized($user);
-    }
-
     public function index() {
         $this->WeeklyNewsletter->recursive = 0;
         $this->set('news', $this->paginate());
@@ -49,7 +36,7 @@ class WeeklyNewslettersController extends AppController {
         }
             
         echo debug($this->WeeklyNewsletter->read(null, $id));
-        $this->set('news', $this->WeeklyNewsletters->read(null, $id));
+        $this->set('news', $this->WeeklyNewsletter->read(null, $id));
     }
 
     public function add() {
@@ -75,7 +62,6 @@ class WeeklyNewslettersController extends AppController {
              $this->request->data['WeeklyNewsletter']['featured_file']['name']
                 = $this->request->data['WeeklyNewsletter']['name'].str_replace(" ","_", $this->request->data['WeeklyNewsletter']['featured_file']['name']);
 
-  DEBUGBREAK();
             $this->request->data['WeeklyNewsletter']['header_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletter']['header_file']['name'];
             copy($this->request->data['WeeklyNewsletter']['header_file']['tmp_name'], $this->request->data['WeeklyNewsletter']['header_banner']);
 
@@ -94,8 +80,8 @@ class WeeklyNewslettersController extends AppController {
             $this->request->data['WeeklyNewsletter']['brand2_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletter']['brand2_file']['name'];
             copy($this->request->data['WeeklyNewsletter']['brand2_file']['tmp_name'], $this->request->data['WeeklyNewsletter']['brand2_banner']);
 
-            $this->request->data['WeeklyNewsletter']['featured_banner'] = 'files/news/'.$this->request->data['WeeklyNewsletter']['featured_file']['name'];
-            copy($this->request->data['WeeklyNewsletter']['featured_file']['tmp_name'], $this->request->data['WeeklyNewsletter']['featured_banner']);
+            $this->request->data['WeeklyNewsletter']['featured_brand'] = 'files/news/'.$this->request->data['WeeklyNewsletter']['featured_file']['name'];
+            copy($this->request->data['WeeklyNewsletter']['featured_file']['tmp_name'], $this->request->data['WeeklyNewsletter']['featured_brand']);
 
 
 
@@ -109,19 +95,19 @@ class WeeklyNewslettersController extends AppController {
     }
 
     public function edit($id = null) {
-        $this->WeeklyNewsletters->id = $id;
-        if (!$this->WeeklyNewsletters->exists()) {
+        $this->WeeklyNewsletter->id = $id;
+        if (!$this->WeeklyNewsletter->exists()) {
             throw new NotFoundException(__('Invalid Newsletters'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->WeeklyNewsletters->save($this->request->data)) {
+            if ($this->WeeklyNewsletter->save($this->request->data)) {
                 $this->Session->setFlash(__('The Newsletters has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The Newsletters could not be saved. Please, try again.'));
             }
         } else {
-            $this->request->data = $this->WeeklyNewsletters->read(null, $id);
+            $this->request->data = $this->WeeklyNewsletter->read(null, $id);
         }
     }
 
@@ -129,15 +115,15 @@ class WeeklyNewslettersController extends AppController {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
-        $this->WeeklyNewsletters->id = $id;
-        if (!$this->WeeklyNewsletters->exists()) {
+        $this->WeeklyNewsletter->id = $id;
+        if (!$this->WeeklyNewsletter->exists()) {
             throw new NotFoundException(__('Invalid user'));
         }
-        if ($this->WeeklyNewsletters->delete()) {
-            $this->Session->setFlash(__('Newsletters deleted'));
+        if ($this->WeeklyNewsletter->delete()) {
+            $this->Session->setFlash(__('Newsletter deleted'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Newsletters was not deleted'));
+        $this->Session->setFlash(__('Newsletter was not deleted'));
         $this->redirect(array('action' => 'index'));
     }
 
