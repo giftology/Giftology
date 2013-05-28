@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','OtpTransaction');
 
     public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList');
     public $paginate = array(
@@ -25,7 +25,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')||($this->action == 'email_voucher_otp')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -701,7 +701,7 @@ class GiftsController extends AppController {
 		}
 	}
 	public function email_voucher(){
-
+		//DebugBreak();
 		$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
 		if($id == "")
      	{
@@ -711,14 +711,77 @@ class GiftsController extends AppController {
 		$gift = $this->Gift->find('first', array(
 		'contain' => array(
 		'Product' => array('Vendor'),
+		'Sender' => array('UserProfile'),
 		'Receiver' => array('UserProfile')),
 		'conditions' => array('Gift.id'=>$id)));
-		$this->set('email',$gift['Receiver']['UserProfile']['email']) ;
-		$this->set('gift', $gift);
+                $receiver_email=$gift['Receiver']['UserProfile']['email'];
+
+        if($receiver_email){
+        $receiver_name=  $gift['Receiver']['UserProfile']['first_name'];
+         $vendor_name = $gift['Product']['Vendor']['name'];
+        $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift['Gift']['code']
+            )
+        ));
+                $email = new CakeEmail();
+                $email->config('smtp')
+                ->template('email_voucher', 'default') 
+                ->emailFormat('html')
+                ->to($receiver_email)
+                   ->from(array('care@giftology.com' => 'Giftology'))
+                ->subject($receiver_name.',Your '.$vendor_name.' voucher is here')
+                ->viewVars(array(
+                         'receiver' => $receiver_name,
+                         'pin' =>$pin['UploadedProductCode']['pin'],
+                         'gift' => $gift,
+                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                ->send();    
+                $this->Gift->recursive= -2; 
+                $this->Gift->id= $id;
+                $this->Gift->saveField('email_address',$receiver_email);
+               $this->Gift->updateAll (array('Gift.email_status' => 1),
+                        array('Gift.id' => $id)); 
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+        else{
+            $this->set('gift', $gift);
+        }
+		
 	}
 	function send_voucher_email()
-	{
-		$receiver_email=$this->data['gifts']['email'];
+	{   
+       //DebugBreak();
+		$user_data = $this->UserProfile->find('first', array('fields' => array('first_name','last_name'), 'conditions' => array('User_id' => $this->Auth->user('id') )));
+		$email_to_update=$this->data['gifts']['email'];
+		$receiver_name =$this->data['gifts']['user_name'];
+		$id=isset($this->data['gifts']['id']) ? $this->data['gifts']['id'] : NULL;
+		$gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
+
+		 if($email_to_update){
+            	$generatedKey = rand(10000,99999);
+               	$email = new CakeEmail();
+                $email->config('smtp')
+                ->template('email_voucher_otp', 'default') 
+                ->emailFormat('html')
+                ->to($email_to_update)
+                   ->from(array('care@giftology.com' => 'Giftology'))
+                ->subject($receiver_name.',Your OTP number is here')
+                ->viewVars(array(
+                         'receiver' => $receiver_name,
+                         'otp' =>$generatedKey,
+                         ))
+                ->send();   
+			}
+		  $data1['user_id'] = $this->Auth->user('id');
+          $data1['otp_number'] = $generatedKey;
+          $data1['email_to_varify'] = $this->data['gifts']['email'];
+          $update=$this->OtpTransaction->save($data1);
+         
+			 $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'email_voucher_otp',$gift_id));
+		/*$receiver_email=$this->data['gifts']['email'];
 		$receiver_name =$this->data['gifts']['user_name'];
 		$id=isset($this->data['gifts']['id']) ? $this->data['gifts']['id'] : NULL;
     	$gift = $this->Gift->find('first', array(
@@ -751,9 +814,28 @@ class GiftsController extends AppController {
 			   $this->Gift->updateAll (array('Gift.email_status' => 1),
 						array('Gift.id' => $id)); 
             $this->redirect(array(
-                'controller' => 'gifts', 'action'=>'view_gifts'));
+                'controller' => 'gifts', 'action'=>'view_gifts'));*/
 
 	}
+	function email_voucher_otp(){
+		DebugBreak();
+		$gift_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
+
+    if($this->request->is('Post')){
+    	 $otp = $this->OtpTransaction->find('first', array('fields' => array('id','email_to_varify','otp_number','created'), 
+            'conditions' => array('user_id' => $this->Auth->user('id'),'otp_number'=>$this->data['gifts']['email'])));
+
+        if(($otp['OtpTransaction']['otp_number'] ==$this->data['gifts']['email']))
+            $time_difference = time() - strtotime($otp['OtpTransaction']['created']);
+        $seconds = $time_difference ;
+        $minutes = round($time_difference / 60 );
+        if($minutes< 6){
+    }
+
+	
+    }  
+    $this->set('gift_id',$gift_id);
+    }
 	function send_email ($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$template)
 	{
 		$gift = $this->Gift->find('first', array(
@@ -793,6 +875,7 @@ class GiftsController extends AppController {
 		return null;
 	}
 	public function redeem() {
+		//DebugBreak();
 		if(SUSPICIOUS_USER_CHECK){
 			$friend_list=$this->Gift->Reminder->find('count',array('conditions' =>array (
     		'Reminder.user_id' => $this->Auth->user('id'))));
@@ -843,7 +926,7 @@ class GiftsController extends AppController {
 		));
 		$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
         $this->set('email',$gift['Sender']['UserProfile']['email']) ;
-		$this->set('gift', $gift);
+        $this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 	public function view_gifts() {
@@ -940,11 +1023,13 @@ class GiftsController extends AppController {
 
     public function sms() 
     { 
+    	//DebugBreak();
     	$gift_id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
      	$id = $this->AesCrypt->decrypt($gift_id);
      	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
+				'Receiver' => array('UserProfile'),
 				'Sender' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
      	if($id == "")
@@ -957,23 +1042,98 @@ class GiftsController extends AppController {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-     	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
-    	$this->set('gift', $gift);
-    	$this->set('pin',$pin['UploadedProductCode']['pin']);
-    	
-    } 
-    public function send_sms(){
-    	$gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
-    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
-           $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
-						array('Gift.id' => $gift_id)); 
+     $originalDate = $gift['Gift']['expiry_date'];
+	$newDate = date("d-m-Y", strtotime($originalDate));
+     if($pin){
+     	                $message="Dear " .$gift['Receiver']['UserProfile']['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin['UploadedProductCode']['pin']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+
+     }
+            else {
+            	$message="Dear " .$gift['Receiver']['UserProfile']['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+    }
+     if($gift['Receiver']['UserProfile']['mobile']){
+    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$gift['Receiver']['UserProfile']['mobile']."&msg=".urlencode($message)."&send=Way2mint&d");
+           $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$gift['Receiver']['UserProfile']['mobile']),
+						array('Gift.id' => $id)); 
+
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
         
 
+     }
+     else{
+     	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);
+     	$this->set('sms',$gift['Receiver']['UserProfile']['mobile']);
+    	$this->set('gift', $gift);
+    	$this->set('pin',$pin['UploadedProductCode']['pin']);
+    	}
+    } 
+    public function send_sms(){
+		$gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
+    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
+          $data1['user_id'] = $this->Auth->user('id');
+          $data1['otp_number'] = $this->data['gifts']['generated_otp'];
+          $data1['mobile_to_varify'] = $this->data['gifts']['mobile_number'];
+          $update=$this->OtpTransaction->save($data1);
+          $this->redirect(array('controller' => 'gifts', 'action'=>'otp',$this->data['gifts']['id']));
+         
         }
 		
+public function otp() 
+{ 
+   // DebugBreak();
+    $gift_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
 
+    if($this->request->is('Post')){
+
+        $otp = $this->OtpTransaction->find('first', array('fields' => array('id','mobile_to_varify','otp_number','created'), 
+            'conditions' => array('user_id' => $this->Auth->user('id'),'otp_number'=>$this->data['gifts']['mobile_number'])));
+
+        if(($otp['OtpTransaction']['otp_number'] ==$this->data['gifts']['mobile_number']))
+            $time_difference = time() - strtotime($otp['OtpTransaction']['created']);
+        $seconds = $time_difference ;
+        $minutes = round($time_difference / 60 );
+        if($minutes< 6){
+            $id =$this->data['gifts']['gift_id'] ;
+            $mobile_number=$otp[OtpTransaction]['mobile_to_varify'];
+            $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Receiver' => array('UserProfile'),
+                    'Sender' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$id)));
+            if($id == "")
+            {
+                $this->redirect(array(
+                    'controller' => 'gifts', 'action'=>'view_gifts'));    
+            }
+            $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+                'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+                'UploadedProductCode.code' => $gift['Gift']['code']
+                )
+            ));
+            $originalDate = $gift['Gift']['expiry_date'];
+            $newDate = date("d-m-Y", strtotime($originalDate));
+            if($pin){
+                $message="Dear " .$gift['Receiver']['UserProfile']['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin['UploadedProductCode']['pin']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+
+            }
+            else {
+                $message="Dear " .$gift['Receiver']['UserProfile']['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+            }
+            file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$mobile_number."&msg=".urlencode($message)."&send=Way2mint&d");
+              $this->UserProfile->updateAll (array('UserProfile.mobile' => $mobile_number),
+                        array('UserProfile.user_id' => $this->Auth->user('id'))); 
+              $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$mobile_number),
+                        array('Gift.id' => $id)); 
+                        $this->OtpTransaction->delete($otp['OtpTransaction']['id']);
+
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+    }
+    $this->set('gift_id',$gift_id);
+ } 
     
 
 	public function news() {

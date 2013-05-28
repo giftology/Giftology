@@ -57,13 +57,14 @@
                 <?php } ?>
              </div>
              <div id = "print" style="float:left">
+               <?php if(($gift['Gift']['sms']=="1")||($gift['Gift']['sms']=="1")){?>
                 <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
                        
                             <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
                                  <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
                                 <!---->
                        
-                 <?php echo $this->Form->end(); ?>
+                 <?php echo $this->Form->end(); }?>
              </div>
                 
              <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">

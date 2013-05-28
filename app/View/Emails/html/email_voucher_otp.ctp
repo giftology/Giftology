@@ -1,27 +1,18 @@
 <html>
 <head>
-	<h3> Please verify the contact email address for your Giftology Account.</h3>
+  <h3> Please verify the contact email address for your Giftology Account.</h3>
 
-	</head>
+  </head>
 </html>
 
 
-<!--<?php 
+
+Hello Mr. <?php echo $receiver;?><br>
+Your One time password is here:-<?php echo $otp;?>
 
 
 
 
-
-<?php echo "Hi".' '.$receiver.',' ; echo"<br>"; echo"<br>";?>
-<?php echo "Otp Number".' '.$otp.',' ; echo"<br>"; echo"<br>";?>
-
-
-
-
-
-<a href="<?php echo $link; ?>">click here</a> or the use the link <br>
-<?php echo"to verify and complete the process.";?>
-<?php  echo"<br>";?> <?php  echo"<br>";?>
 
 
 
