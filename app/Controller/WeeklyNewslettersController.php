@@ -162,10 +162,9 @@ class WeeklyNewslettersController extends AppController {
 
     public function newsletter($userid){
         DEBUGBREAK();
-        $email1=$this->User->find('first',array('conditions' => array('User.id' => $userid)));
-        $email=$this->User->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email')));
+        $email=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
          $email=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => $userid),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_bannertext','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
-          $mail=$email['User']['UserProfile']['email'];
+          $mail=$email['UserProfile']['email'];
           $email = new CakeEmail();
         $email->config('smtp')
             ->template('scheduled_mail', 'default') 
@@ -173,10 +172,10 @@ class WeeklyNewslettersController extends AppController {
             //->to($user['UserProfile']['email'])
             ->to($mail)
             ->from(array('noreply@giftology.com' => 'Giftology'))
-            ->subject($email['User']['UserProfile']['first_name'].', We miss you online. More gifts to send!')
+            ->subject($email['UserProfile']['first_name'].', We miss you online. More gifts to send!')
             ->viewVars(array(
-                    'name' => $user['UserProfile']['first_name'].' '.$user['UserProfile']['last_name'],
-                    'products' => $product,
+                    'user_name' => $user['UserProfile']['first_name'],
+                    'name' => $email['WeeklyNewsletter']['first_name'],
                     'linkback' => FULL_BASE_URL.'/reminders/view_friends/utm_source:member_list/utm_medium:email/utm_campaign:reminder_email',
                     'last_login' => $last_login))
              ->send();
