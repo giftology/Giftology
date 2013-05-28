@@ -691,11 +691,12 @@ class UsersController extends AppController {
         }
         
         // Update Access token and last_login
-        $this->User->updateAll(array(
-            'User.last_login' => date('Y-m-d'),
-            'User.access_token' => '"'.$access_token.'"'
-        ), array(
-            'User.id' => $user['id']));
+         $this->User->updateAll(array(
+           'User.username' => '"'.$this->Connect->user('username').'"',
+           'User.last_login' => '"'.date('Y-m-d H:i:s').'"',
+           'User.access_token' => '"'.$access_token.'"'
+       ), array(
+           'User.id' => $user['id']));
     }
 
     
