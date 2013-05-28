@@ -22,6 +22,26 @@ class User extends AppModel {
  *
  * @var array
  */
+public $actsAs = array('Search.Searchable');
+ public $filterArgs = array(
+            array('name' => 'id', 'type' => 'like','field' => 'User.id'),
+            array('name' => 'username', 'type' => 'like','field' => 'User.username'),
+		    array('name' => 'first_name', 'type' => 'like','field' => 'UserProfile.first_name'),
+		    array('name' => 'last_name', 'type' => 'like','field' => 'UserProfile.last_name'),
+			array('name' => 'email', 'type' => 'like','field' => 'UserProfile.email'),
+			array('name' => 'mobile','type' => 'like','field'=>'UserProfile.mobile'),
+			array('name' => 'city','type' => 'like','field'=>'UserProfile.city'),
+			array('name' => 'gender','type' => 'like','field'=>'UserProfile.gender'),
+
+			array('name' => 'birthday','type'=> 'like','field'=>'UserProfile.birthday'),
+			array('name' => 'birthyear','type'=> 'like','field'=>'UserProfile.birthyear'),
+			array('name' => 'password', 'type' => 'like','field' => 'User.password'),
+			array('name' => 'role', 'type' => 'like','field' => 'User.role'),
+			array('name' => 'facebook_id', 'type' => 'like','field' => 'User.facebook_id'),
+			array('name' => 'last_login', 'type' => 'like','field' => 'User.last_login'),
+			array('name' => 'created', 'type' => 'like','field' => 'User.created'),
+			array('name' => 'modified', 'type' => 'like','field' => 'User.modified'),
+);
     public $validate = array(
         'username' => array(
             'required' => array(

@@ -243,3 +243,4 @@ define('SHOW_HOVER', TRUE);
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));
+CakePlugin::load('Search');
