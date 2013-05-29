@@ -34,7 +34,8 @@ class CitySegmentsController extends AppController {
 		if (!$this->CitySegment->exists()) {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
-		$this->set('citySegment', $this->CitySegment->read(null, $id));
+		$cities = $this->CitySegment->find('first', array('fields' => array('id', 'city', 'state','country','Y(geo_location) as latitude', 'X(geo_location) as longitude'), 'conditions' => array('id' => $id)));
+		$this->set('citySegment', $cities);
 	}
 
 /**

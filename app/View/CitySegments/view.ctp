@@ -21,9 +21,14 @@
 			<?php echo h($citySegment['CitySegment']['country']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('GeoLocation'); ?></dt>
+		<dt><?php echo __('Latitude'); ?></dt>
 		<dd>
-			<?php echo h($citySegment['CitySegment']['geo_location']); ?>
+			<?php echo h($citySegment[0]['latitude']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Longitude'); ?></dt>
+		<dd>
+			<?php echo h($citySegment[0]['longitude']); ?>
 			&nbsp;
 		</dd>
 	</dl>
