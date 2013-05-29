@@ -196,12 +196,11 @@ class WeeklyNewslettersController extends AppController {
                     }
                     else
                     {
-                     $this->log("mail id does not exist".$name['UserProfile']['first_name'].$id);
+                     $this->log("Email does not exist".$name['UserProfile']['first_name'].$id);
                  }
              }
          }
          $this->log("News Letter Done");
      }
-//////////////////////mail function////////////////////////
-}
+ }
 ?>
