@@ -30,6 +30,15 @@
 		            ), 
 		            'full' 
 	        ); 
+			echo $this->Form->input('redemption_type',
+	    	array(
+	        'options' => $redemption_type,
+	        'type' => 'select',
+	        'empty' => '-- Select redemption type --',
+	        'label' => 'Select Redemption Type'
+	    		)
+			);
+		
 
 		echo $this->Form->input('code_type_id');
 		echo $this->Form->input('code');

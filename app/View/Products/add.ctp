@@ -44,7 +44,18 @@
 		echo $this->Form->input('age_segment_id');
 		echo $this->Form->input('gender_segment_id');
 		echo $this->Form->input('city_segment_id');?>
-		<?php echo $this->Form->input('display_order'); ?>
+		<?php echo $this->Form->input('display_order'); 
+		echo $this->Form->input(
+    	'redemption_type',
+    	array(
+        'options' => $redemption_type,
+        'type' => 'select',
+        'empty' => '-- Select redemption type --',
+        'label' => 'Select Redemption Type'
+    		)
+			);
+		?>
+
 			<div class="error_message" id="error_display" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 150.</h5>
 	        </div>
