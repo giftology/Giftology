@@ -77,37 +77,29 @@ class MathCaptchaComponent extends Component {
 
     ".:number:." => array(
       "0" => 0,
-      "zero" => 0,
       "1" => 1,
-      "one" => 1,
       "2" => 2,
-      "two" => 2,
       "3" => 3,
-      "three" => 3,
       "4" => 4,
-      "four" => 4,
       "5" => 5,
-      "five" => 5),
+      ),
 
     ".:operator:." => array(
       "+" => "+",
-      "plus" => "+",
-      "added to" => "+",
-      "times" => "*",
-      "multiplied by" => "*"),
+      "+" => "+",
+      "*" => "*"
+      ),
     
     ".:add:." => array(
-      "and" => "+",
-      "plus" => "+",
       "+" => "+"),
 
     ".:operatorword:." => array( 
-      "add .:number:. to" => "+",
-      "multiply .:number:. by" => "*"),
+      ".:number:. +" => "+",
+      " .:number:. *" => "*"),
 
     ".:operatorword-ing:." => array(
-      "adding .:number:. to" => "+",
-      "multiplying .:number:. by" => "*")
+      " .:number:. +" => "+",
+      ".:number:.*" => "*")
   );
 
   /**
@@ -121,22 +113,22 @@ class MathCaptchaComponent extends Component {
   * @var array
   */
   private $alternatives = array(
-    0  => array("zero", "O", "null", "nil", "nada", "zip", "zilch", "nothing", "rien", "naught"),
-    1  => "one",
-    2  => "two",
-    3  => "three",
-    4  => "four",
-    5  => "five",
-    6  => "six",
-    7  => "seven",
-    8  => "eight",
-    9  => "nine",
-    10 => "ten",
-    12 => "twelve",
-    15 => array("fifteen", "fivteen"),
-    16 => "sixteen",
-    20 => "twenty",
-    25 => array("twentyfive", "twenty-five")
+    0  => array("O"),
+    1  => "1",
+    2  => "2",
+    3  => "3",
+    4  => "4",
+    5  => "5",
+    6  => "6",
+    7  => "7",
+    8  => "8",
+    9  => "9",
+    10 => "10",
+    12 => "12",
+    15 => "15",
+    16 => "16",
+    20 => "20",
+    25 => "25",
   );
 
   /**
