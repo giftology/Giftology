@@ -26,7 +26,7 @@ class Gift extends AppModel {
  
     public $filterArgs = array(
             array('name' => 'id', 'type' => 'like','field' => 'Gift.id'),
-            array('name' => 'product_id', 'type' => 'like','field' => 'Gift.product_id'),
+            array('name' => 'product_id', 'type' => 'value','field' => 'Gift.product_id'),
             array('name' => 'sender_id', 'type' => 'like','field' => 'Gift.sender_id'),
             array('name' => 'receiver_id', 'type' => 'like','field' => 'Gift.receiver_id'),
             array('name' => 'receiver_fb_id', 'type' => 'like','field' => 'Gift.receiver_fb_id'),
