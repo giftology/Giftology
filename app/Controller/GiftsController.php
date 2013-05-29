@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode');
 
     public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');
     public $presetVars = array(
@@ -731,8 +731,8 @@ public function index() {
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
         $this->redirectIfNotAllowedToSend();
-		
 		$this->Gift->create();
+        $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
 		if (!$this->Gift->Product->exists()) {
 			throw new NotFoundException(__('Invalid Product'));
@@ -741,6 +741,7 @@ public function index() {
 		$product = $this->Gift->Product->read(null, $product_id); 
 
 		$gift['Gift']['product_id'] = $product_id;
+        $data['TemporaryGiftCode']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
 		//$gift['Gift']['date_to_send'] = $receiver_birthday;
@@ -779,7 +780,8 @@ public function index() {
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);
+        $gift['Gift']['code'] = $this->createRandomCode();
+        $data['TemporaryGiftCode']['coupon_code'] = $this->createRandomCode();
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		
 		if (!$send_now) {
@@ -809,6 +811,7 @@ public function index() {
 				$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
 			}
     		}
+            $this->TemporaryGiftCode->saveAssociated($data);
 		if ($this->Gift->saveAssociated($gift)) {
 			if ($payment_needed) {
 				$this->redirect(array('controller' => 'transactions',
@@ -845,6 +848,25 @@ public function index() {
         return $product['Product']['code']; //Static Reusable code for all gifts, as entered
         }
         }
+
+        function createRandomCode() { 
+
+            $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+            srand((double)microtime()*1000000); 
+            $i = 0; 
+            $pass = '' ; 
+
+            while ($i <= 7) { 
+                $num = rand() % 33; 
+                $tmp = substr($chars, $num, 1); 
+                $pass = $pass . $tmp; 
+                $i++; 
+            } 
+
+            return $pass; 
+
+            }
+
     function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
         $code = $this->Gift->Product->UploadedProductCode->find('first',
             array('conditions' => array('available'=>1, 'product_id' =>$product,
