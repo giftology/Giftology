@@ -160,20 +160,23 @@ class WeeklyNewslettersController extends AppController {
     }
 
 
-    public function newsletter($userid){
-        DEBUGBREAK();
-        $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $userid),'fields' => array('UserProfile.email','first_name')));
-         $detail=$this->WeeklyNewsletter->find('first',array('fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
-          $mail=$name['UserProfile']['email'];
-          $email = new CakeEmail();
-        $email->config('smtp')
-            ->template('scheduledmail', 'default') 
-            ->emailFormat('html')
-            //->to($user['UserProfile']['email'])
-            ->to($mail)
-            ->from(array('noreply@giftology.com' => 'Giftology'))
-            ->subject($name['UserProfile']['first_name'].', We miss you online. More gifts to send!')
-            ->viewVars(array(
+    public function newsletter(){
+        $name=$this->User->Find('list');
+        $Newsletter_id=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => date('Y-m-d H:i:s')),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+         
+        foreach($name as $id){
+            $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $id,'UserProfile.email_unsubscribed' => '1'),'fields' => array('UserProfile.email','first_name')));
+            if($name['UserProfile']['email']){
+                $mail=$name['UserProfile']['email'];
+                $email = new CakeEmail();
+                $email->config('smtp')
+                ->template('scheduledmail', 'default')
+                ->emailFormat('html')
+                //->to($user['UserProfile']['email'])
+                ->to($mail)
+                ->from(array('noreply@giftology.com' => 'Giftology'))
+                ->subject($name['UserProfile']['first_name'].', We miss you online. More gifts to send!')
+                ->viewVars(array(
                     'user_name' => $name['UserProfile']['first_name'],
                     'name' => $detail['WeeklyNewsletter']['name'],
                     'header_banner' => $detail['WeeklyNewsletter']['header_banner'],
@@ -188,12 +191,15 @@ class WeeklyNewslettersController extends AppController {
                     'template_heading' => $detail['WeeklyNewsletter']['template_heading'],
                     'featured_brand' => $detail['WeeklyNewsletter']['featured_brand']
                     ))
-             ->send();
-            $this->log("Sent email to ".$name['UserProfile']['first_name']);
-
-    
-
-    }
+                    ->send();
+                    $this->log("Sent email to ".$name['UserProfile']['first_name']);
+                }
+                else
+                {
+                 $this->log("maid id not exists".$name['UserProfile']['first_name'].$id);
+             }
+         }
+     }
 //////////////////////mail function////////////////////////
     public function fridayNewsletter(){
 
