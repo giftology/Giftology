@@ -161,11 +161,11 @@ class WeeklyNewslettersController extends AppController {
 
 
     public function newsletter(){
-        $name=$this->User->Find('list');
-        $Newsletter_id=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => date('Y-m-d H:i:s')),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+    $name=$this->User->Find('list');
+    $Newsletter_id=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.scheduled_time' => date('Y-m-d H:i:s')),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
          
         foreach($name as $id){
-            $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $id,'UserProfile.email_unsubscribed' => '1'),'fields' => array('UserProfile.email','first_name')));
+            $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $id,'UserProfile.email_unsubscribed' => '0'),'fields' => array('UserProfile.email','first_name')));
             if($name['UserProfile']['email']){
                 $mail=$name['UserProfile']['email'];
                 $email = new CakeEmail();
