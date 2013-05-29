@@ -227,7 +227,11 @@ define('DIGITAL',1);
 //Campaign Rediredct path
 define('CAMPAIGN',2);
 define('REMINDER',1);
+//code allocation mode
 
+define('GENERAL',1);
+define('TEMP_ALLOCATION_CODE_COUNT_RESTRICTED',2);
+define('TEMP_ALLOCATION_CODE_COUNT_NOT_RESTRICTED',3);
 
 define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);
