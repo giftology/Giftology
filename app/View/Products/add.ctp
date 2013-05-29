@@ -36,7 +36,15 @@
 		                'language'=>'en' 
 		            ), 
 		            'full' 
-	        ); 
+	        );
+		echo $this->Tinymce->input('Product.short_terms', array( 
+			'label' => 'ShortTerms & Conditions' 
+			),array(
+			'language'=>'en'
+			),
+			'full'
+			);
+
 		echo $this->Form->input('code_type_id');
 		echo $this->Form->input('code');
 		echo $this->Form->input('vendor_id');

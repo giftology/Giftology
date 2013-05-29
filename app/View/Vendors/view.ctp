@@ -1,3 +1,4 @@
+<?= $this->element('admin_header'); ?>
 <div class="vendors view">
 <h2><?php  echo __('Vendor'); ?></h2>
 	<dl>
