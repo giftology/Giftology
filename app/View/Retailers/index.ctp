@@ -248,9 +248,9 @@ $('.reset-link').click(function(){
                  
                   <div class="input email" >
                          
-                          <div class="captcha" style="width:430px; height:53px;" >
-                            <div class="input email" style="margin-top:7px; width:400px; float:left; border: 1px solid #B54D4D;border-radius: 2px">
-                             <div  class="captha">
+                          <div class="captcha" style="width:430px; height:45px;" >
+                            <div class="input email" style="margin-top:10px; width:400px; float:left; border: 1px solid #B54D4D;border-radius: 2px;padding:4px 5px 4px 5px;">
+                             <div  class="captha" style="margin-top:10px; width:300px; float:left;">
                               <?php echo  $captcha ?>
                             </div>
                             
