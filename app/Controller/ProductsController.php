@@ -201,6 +201,11 @@ class ProductsController extends AppController {
  */
     public function add() {
         if ($this->request->is('post')) {
+            if($this->data['Product']['terms'] == "" || $this->data['Product']['redeem_instr'] == "" )
+            {
+                $this->Session->setFlash(__('Please enter the T&C and Redeem Instructions.'));
+                    $this->redirect(array('controller' => 'products', 'action'=>'add'));   
+            }
             $this->Product->create();
             if ($this->Product->save($this->request->data)) {
                 $this->Session->setFlash(__('The product has been saved'));
