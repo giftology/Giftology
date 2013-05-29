@@ -7,9 +7,6 @@
 
 <?PHP echo "<b>Name of the retailer</b>:"; echo "$name"; echo"<br>"; ?>
  <?php echo "<b>Web portal:</b>"  ;echo "$web"  ; echo"<br>"; ?>
- <?php echo "<b>Field:</b>"; echo "$deals"; echo"<br>"; ?>
- 
- <?php echo "<b>No. of outlets:</b>";echo "$outlet"  ; echo"<br>"; ?>
  <?php echo "<b>City:</b>"; echo "$city"  ; echo"<br>"; ?>
 
  <?php echo "<b>Contact:</b>";echo "$contact"  ; echo"<br>";?>

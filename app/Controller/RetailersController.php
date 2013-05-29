@@ -83,16 +83,11 @@ $this->redirect(array(
           ->from(array('care@giftology.com' => 'Giftology'))
           ->subject('Welcome to Giftology')
              ->viewVars(array('name' => $this->data['name_r'],
-                               'web' => $this->data['web_r'],
-                                'deals' => $this->data['deals_r'],
-                                 
-                                 'city' => $this->data['city_r'],
-                                  'outlet' => $this->data['outlet_r'],
-                                 
-                                 'contact' => $this->data['contact_r'],
-                                  'mail' => $this->data['mail_r'])) 
-             
-              ->send();
+              'web' => $this->data['web_r'],
+              'city' => $this->data['city_r'],
+              'contact' => $this->data['contact_r'],
+              'mail' => $this->data['mail_r'])) 
+             ->send();
               
               $this->Session->setFlash('Thank you for contacting us. We will get in touch shortly.');
       
