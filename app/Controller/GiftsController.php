@@ -1204,19 +1204,18 @@ public function index() {
 	}
 
     public function fetch_code(){
-        DebugBreak();
         $gift_id=$this->request->data['search_key'];
         if($this->RequestHandler->isAjax()) {
             $this->Reminder->recursive = -1;
              $friend_list=$this->Gift->find('first',array('conditions' =>array (
                     'Gift.id' => $this->request->data['search_key']
                    )));
-             $code = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
+             $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
             'UploadedProductCode.product_id' => $friend_list['Gift']['product_id'],
             'UploadedProductCode.code' => $friend_list['Gift']['code']
             )
         ));
-        if(!$code) {
+        if(!$code_check) {
              $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
             array('conditions' => array('available'=>1, 'product_id' =>$friend_list['Gift']['product_id'],
                 'value' => $friend_list['Gift']['gift_amount'])));
@@ -1224,8 +1223,9 @@ public function index() {
         $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                      array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
        
-       $this->Gift->updateAll(array('Gift.code' => $code_orignal['UploadedProductCode']['code']),
+       $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'"),
                                      array('Gift.id' => $gift_id));
+       
                  
         }
            // $sent_temp_code = $this->TemporaryGiftCode->find('count',
