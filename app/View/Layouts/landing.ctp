@@ -259,9 +259,10 @@ background: none repeat scroll 0 0 #F7F7F7;">
                   <div class="clear">&nbsp;</div>
             </div>
             <br/>
+            <?php if(SHOW):?>
             <span class="block-title">Available Gifts</span>
                        
-                
+               
             <div class="how-it-work">
                <div style="width:960px; margin:auto;">
                         <?php foreach ($products as $product): ?>
@@ -276,6 +277,7 @@ background: none repeat scroll 0 0 #F7F7F7;">
                        <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:40px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
                </div>
              </div>
+           <?php endif; ?>
               
                
 
