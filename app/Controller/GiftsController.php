@@ -777,7 +777,7 @@ public function index() {
 		// This is where all the gifts for unregistered recipients go
 		// receipients are identified by their recipient_fb_id, and at the time of registration
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
-
+        
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
@@ -796,7 +796,11 @@ public function index() {
            $this->TemporaryGiftCode->saveAssociated($data);
 
          }
-        
+         else
+         {
+            $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);   
+         }
+         
          $gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);  
 
 		if (!$send_now) {
