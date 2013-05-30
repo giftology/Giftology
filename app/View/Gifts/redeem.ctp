@@ -1,3 +1,155 @@
+
+<style type="text/css">
+/* popup_box DIV-Styles*/
+#popup_box {
+  display:none;
+  width:600px;
+  height:688px;
+  background-image:url(../img/back.jpg);
+  z-index:10;
+  border:2px solid #999;
+  margin:auto;
+  font-size:15px;
+  -moz-box-shadow: 0 0 10px #666;
+  -webkit-box-shadow: 0 0 10px #666;
+  box-shadow: 0 0 10px #666;
+  
+
+}
+
+.RedeemH1{ text-align:center; font:24px 'calibri',Arial, Helvetica, sans-serif; color:#000000; }
+.RedeemH2{ text-align:center; font:20px 'calibri',Arial, Helvetica, sans-serif; color:#000000;}
+.mar1{margin-top:50px;margin-left:41px;}
+.mar2{margin-top:40px;}
+.mar3{margin-top:-25px;}
+.mar4{margin-top:-21px;}
+.mar5{margin-left:8px;}
+.lineh1{ line-height:30px;}
+.lineh2{ line-height:20px;}
+.lineh3{ line-height:0px;}
+.brandscreen{margin: 40px auto; width:550px; background-image:url(1.png); height:256px; }
+.brandscreen img{ width:500px; margin:20px 24px 30px 24px;}
+.done{margin:-40px auto; width:184px; height:40px;}
+.coupon{width:366px; margin: 40px auto; height:60px;}
+.FL{ float:left;}
+
+
+
+#container {
+  background: #f0f0f0; /*Sample*/
+  width:100%;
+  height:10px;
+  
+}
+a {
+  cursor: pointer;
+  text-decoration:underline;
+  color:#930;
+}
+/* This is for the positioning of the Close Link */
+#popupBoxClose {
+  font-size:20px;
+  line-height:15px;
+  right:-6px;
+  top:-5px;
+  position:absolute;
+  color:#6fa5e2;
+  font-weight:500;
+  
+}
+input[type="text"] {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #DAD7D4;
+    border-radius: 4px 4px 4px 4px;
+    color: #666666;
+    padding: 5px;
+    resize: none;
+  width:250px;
+}
+
+
+</style>
+
+<script type="text/javascript">
+  
+  $(document).ready( function() {
+  
+    // When site loaded, load the Popupbox First
+    
+    $('.imageclick').click( function() {
+    loadPopupBox();
+    $('#container').css('display','none')
+    
+    });
+  
+    $('#popupBoxClose').click( function() {     
+      unloadPopupBox();
+      $('#container').css('display','block')
+    });
+    
+    
+    $('#ask').click( function() {
+      $('#popup_box').slideUp(1000);
+    });
+    $('#submitt').click( function() {
+      $('#popup_box').slideUp(1000);
+    });
+      $('#edit').click( function() {
+        $(this).hide();
+      $('#email').fadeIn(1000);
+      $('#done').fadeIn(1000);
+      $('#registered').css('display','none');
+      
+    });
+
+    function unloadPopupBox() { // TO Unload the Popupbox
+      $('#popup_box').fadeOut("slow");
+      $("#container").css({ // this is just for style   
+        "opacity": "1"  
+      }); 
+    } 
+    
+    function loadPopupBox() { // To Load the Popupbox
+      $('#popup_box').fadeIn(1000);
+      $("#container").css({ // this is just for style
+        "opacity": "0.2"  
+      });     
+    }
+     /**********************************************************/
+  $(document).keydown(function(e){
+    if (e.keyCode == 27) { 
+      $('#popupBoxClose').click();
+       return false;
+    }});  
+  });
+</script>
+
+
+<div id="popup_box"  >
+<h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
+<h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
+<h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
+ <div class="brandscreen">
+ <img src="../img/snap_jabong.jpg">
+ </div>
+ <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
+cart choose “add coupon code” and then “apply coupon”.</p>
+<div class="coupon">
+
+<div class="FL mar5"><img src="../img/arrow1.png"></div>
+<div class="FL mar5" > <input type="text"> </div>
+<div class="FL mar4"><img src="../img/ccb.png"></div>
+
+
+</div>
+   <p class="done "><img src="done.png" align="center"></p>
+ <a id="popupBoxClose"><img src="../img/close1.png"></a>
+ </div>
+ 
+ <!--popup box-->
+
+
+
 <div>
         <ul id="breadcrumbs">
                 <li class="breadcrumb home events">
@@ -51,10 +203,16 @@
                 </div>
                 
               </div>
+              
               <?php 
                  echo $this->Form->create();
+
                 echo $this->Form->Submit(__('Use Online'));
                 ?> 
+
+                <?php echo $this->Form->input("r_city" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'class'=>'imageclick'))?>
+                
+
        
 
 
