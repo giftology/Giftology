@@ -777,12 +777,12 @@ public function index() {
 		// This is where all the gifts for unregistered recipients go
 		// receipients are identified by their recipient_fb_id, and at the time of registration
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
-        
+
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode'), 'conditions' => array('Product.id' => $product_id)));
-         if(($product_data['Product']['allocation_mode']==2)||($product_data['Product']['allocation_mode']==3)) {
+        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price'), 'conditions' => array('Product.id' => $product_id)));
+         if(($product_data['Product']['allocation_mode']==2 && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==3 && $product_data['Product']['min_price'] == 0)) {
             $temp_code = $this->createRandomCode($product_id);
             $gift['Gift']['code'] = $temp_code;
             $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
