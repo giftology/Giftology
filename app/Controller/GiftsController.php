@@ -734,6 +734,7 @@ public function index() {
 		$this->Gift->create();
         $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
+        DebugBreak();
 		if (!$this->Gift->Product->exists()) {
 			throw new NotFoundException(__('Invalid Product'));
 		}
@@ -780,10 +781,24 @@ public function index() {
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $gift['Gift']['code'] = $this->createRandomCode($product_id);
-        $data['TemporaryGiftCode']['coupon_code'] = $this->createRandomCode($product_id);
-		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
-		
+        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode'), 'conditions' => array('Product.id' => $product_id)));
+         if(($product_data['Product']['allocation_mode']==2)||($product_data['Product']['allocation_mode']==3)) {
+            $temp_code = $this->createRandomCode($product_id);
+            $gift['Gift']['code'] = $temp_code;
+            $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+            $this->TemporaryGiftCode->saveAssociated($data);
+            
+         }
+        else if($product_data['Product']['allocation_mode']==4) {
+            $temp_code = $this->createUnlimitedCode($product_id);
+           $gift['Gift']['code'] = $temp_code;
+           $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+           $this->TemporaryGiftCode->saveAssociated($data);
+
+         }
+        
+         $gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);  
+
 		if (!$send_now) {
 		    $gift['Gift']['date_to_send'] = $receiver_birthday;
 		}
@@ -811,7 +826,7 @@ public function index() {
 				$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
 			}
     		}
-            $this->TemporaryGiftCode->saveAssociated($data);
+            
 		if ($this->Gift->saveAssociated($gift)) {
 			if ($payment_needed) {
 				$this->redirect(array('controller' => 'transactions',
@@ -849,10 +864,19 @@ public function index() {
         }
         }
 
-        function createRandomCode($product_id) { 
-             $value = $this->Gift->Product->UploadedProductCode->find('count',
+        function createRandomCode($product_id) {
+        DebugBreak(); 
+            $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
             array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
-
+            
+            $sent_temp_code = $this->TemporaryGiftCode->find('count',
+            array('conditions' => array('product_id' =>$product_id)));
+            
+            $redemption_rate = $this->Gift->Product->find('first', array('fields' => array('Product.redemption_rate'), 'conditions' => array('Product.id' => $product_id)));
+            
+            $total_code_byrate= ( ($total_codes/$redemption_rate['Product']['redemption_rate'])*100) ;
+            
+            if($sent_temp_code <= $total_code_byrate) {
             $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
             $i = 0; 
@@ -866,9 +890,32 @@ public function index() {
             } 
 
             return $pass; 
+                
+            }
+            else{
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->redirect(array('controller'=>'reminders','action'=>'view_friends'));
+            }
+             
 
             }
+          function createUnlimitedCode($product_id){
+              $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+            srand((double)microtime()*1000000); 
+            $i = 0; 
+            $pass = '' ; 
 
+            while ($i <= 7) { 
+                $num = rand() % 33; 
+                $tmp = substr($chars, $num, 1); 
+                $pass = $pass . $tmp; 
+                $i++; 
+            } 
+
+            return $pass; 
+              
+          }
+          
     function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
         $code = $this->Gift->Product->UploadedProductCode->find('first',
             array('conditions' => array('available'=>1, 'product_id' =>$product,
