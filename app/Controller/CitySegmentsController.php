@@ -46,7 +46,12 @@ class CitySegmentsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->CitySegment->create();
-			if ($this->CitySegment->save($this->request->data)) {
+			DebugBreak();
+			$data['city'] = $this->data['CitySegment']['city'];
+			$data['state'] = $this->data['CitySegment']['state'];
+			$data['country'] = $this->data['CitySegment']['country'];
+			$data['geo_location'] = $this->CitySegment->getDataSource()->expression("GEOMFROMTEXT('POINT(".$this->data['CitySegment']['latitude']." ".$this->data['CitySegment']['longitude'].")',0)");
+			if ($this->CitySegment->save($data)) {
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -75,6 +80,9 @@ class CitySegmentsController extends AppController {
 				$thePostIdArray = explode(',', $this->data['CitySegment']['city_name']);
 				foreach ($thePostIdArray as $city_name) {
 					$data['city'] = $city_name;
+					$data['state'] = $this->data['CitySegment']['state'];
+					$data['country'] = $this->data['CitySegment']['country'];
+					$data['geo_location'] = $this->CitySegment->getDataSource()->expression("GEOMFROMTEXT('POINT(".$this->data['CitySegment']['latitude']." ".$this->data['CitySegment']['longitude'].")',0)");
 					$this->CitySegment->saveAll($data);
 					$id = $this->CitySegment->find('first', array('fields' => array('id'), 'conditions' => array('city' => $city_name)));
 					$data1['city_segment_id'] = $this->data['CitySegment']['id'];
@@ -210,6 +218,7 @@ class CitySegmentsController extends AppController {
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
 		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location')));
 		$city_array = array();
+		DebugBreak();
 		foreach($cities as $k => $city){
             if($city['Reminder']['current_location']){
                 $city_array[$k]['city'] = $city['Reminder']['current_location']; 

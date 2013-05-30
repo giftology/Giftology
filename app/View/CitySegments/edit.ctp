@@ -9,7 +9,9 @@
 		<?php echo $this->Form->input('city_name', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
 		<?php echo $this->Form->input('state', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
 		<?php echo $this->Form->input('country', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
-		<?php  echo $this->Form->input('geo_location', array('type' => 'textarea','size'=>'10','rows'=>'2'));
+		<?php  echo $this->Form->input('latitude', array('type' => 'textarea','size'=>'10','rows'=>'2'));
+	?></br/></br/>
+	<?php  echo $this->Form->input('longitude', array('type' => 'textarea','size'=>'10','rows'=>'2'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

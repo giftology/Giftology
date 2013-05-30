@@ -5,6 +5,18 @@
 	<?php
 		echo $this->Form->input('city');
 	?>
+	<?php
+		echo $this->Form->input('state');
+	?>
+	<?php
+		echo $this->Form->input('country');
+	?>
+	<?php
+		echo $this->Form->input('latitude');
+	?>
+	<?php
+		echo $this->Form->input('longitude');
+	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
