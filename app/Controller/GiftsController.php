@@ -780,8 +780,8 @@ public function index() {
 		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $gift['Gift']['code'] = $this->createRandomCode();
-        $data['TemporaryGiftCode']['coupon_code'] = $this->createRandomCode();
+        $gift['Gift']['code'] = $this->createRandomCode($product_id);
+        $data['TemporaryGiftCode']['coupon_code'] = $this->createRandomCode($product_id);
 		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
 		
 		if (!$send_now) {
@@ -849,7 +849,9 @@ public function index() {
         }
         }
 
-        function createRandomCode() { 
+        function createRandomCode($product_id) { 
+             $value = $this->Gift->Product->UploadedProductCode->find('count',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
 
             $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
