@@ -1173,32 +1173,34 @@ public function index() {
 		}
 	        $this->Gift->Behaviors->attach('Containable');
 	    
-		$gift = $this->Gift->find('first', array(
-			'contain' => array(
-				'Product' => array('Vendor'),
-				'Sender' => array('UserProfile')),
-			'conditions' => array('Gift.id'=>$id)));
-		if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
-			$this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
-			$this->redirect(array(
+		 $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$id)));
+        if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
+            $this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
+            $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
-		}
-		// will implement later when we have perfect UI
-		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
-		
-		$this->Gift->updateAll(
+        }
+        // will implement later when we have perfect UI
+        /*$redeem_date = "'".date('Y-m-d H:i:s')."'";
+        
+        $this->Gift->updateAll(
                 array('gift_open' => 1,'gift_open_date' => $redeem_date), 
                 array('Gift.id'=>$id));*/
-		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
-		$this->UploadedProductCode->recursive = -2;
-		$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
-			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
-			'UploadedProductCode.code' => $gift['Gift']['code']
-			)
-		));
-		$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
+        $gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
+        $this->UploadedProductCode->recursive = -2;
+        $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift['Gift']['code']
+            )
+        ));
+        $gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
         $this->set('email',$gift['Sender']['UserProfile']['email']) ;
-		$this->set('gift', $gift);
+        $this->set('sender',$gift['Sender']['facebook_id']) ;
+        $this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 	public function view_gifts() {

@@ -33,66 +33,33 @@
                         array('cache' => array(
                                 'key' => $gift['Product']['id'].'full_redeem'))); ?>
         </div>
-        <div id="gift-redemption-details">
-            <div id="redemption-code-title">Redemption Code</div>
-            <?php if(strlen($gift['Gift']['code'])<=12) : ?>
-              <div id="redemption-code"><center><?= $gift['Gift']['code']; ?><br><?php if($pin) echo "Pin: ".$pin;?></center></div>
-            <?php else : ?>
-              <div id="redemption-code-small"><center><?php $newtext = wordwrap($gift['Gift']['code'], 12, "\n", true); echo"$newtext"; ?><br><?php if($pin) echo "Pin: ".$pin;?></center></div>
-            <?php endif ; ?>
+       <div class="delivery-message">
+                <div class="greeting-bubble">
 
-            <div style="float:right;margin-top:0px;margin-left:200px;margin-right:5px;cursor:pointer;width:120;height:40px;">
+                    <?php
+                    echo $gift['Gift']['gift_message']; 
+                     echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => " ",'class'=>"gift-message" ));?>
+                </div>
                 
-             
-              <div id = "sms" style="width:35px;height:35px;margin-top:0px;float:left;"> <?php if($gift['Gift']['sms']=="0"){?>
-                 <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
-                       
-                            <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
-                            
-                                <a><span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span></a>
-                                
-                                
-                       
-                <?php echo $this->Form->end(); ?>
-                <?php } ?>
-             </div>
-             <div id = "print" style="float:left">
-                <?php  echo $this->Form->create('gifts', array('action' => 'print_pdf','id'=>'print1','target'=>'_blank'));?>
-                       
-                            <a id="print_pdf" target="_blank"><span class="arrow" style="margin-left:1px"><img title="print the voucher"   src="<?= IMAGE_ROOT; ?>printer.png" /></span></a>
-                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?></div>
-                                <!---->
-                       
-                 <?php echo $this->Form->end(); ?>
-             </div>
+                <div class="shadow-wrapper">
+                    <div class="frame">
+                        <div class="img-placeholder male">
+                            <?php $photo_url = "https://graph.facebook.com/".$sender."/picture"; ?>
+                            <img src=<?= $photo_url; ?>>
+                        </div>
+                    </div>
+                </div>
                 
-             <div id = "email_voucher"style="margin-top:3px;float:right;margin-left:4px">
-                <?php if($gift['Gift']['email_status']=="0"){?>
-                <?php  echo $this->Form->create('gifts', array('action' => 'email_voucher','id'=>'email1'));?>
-                            <a id="email_voucher"><span class="arrow" style="margin-left:1px"><img title="email the voucher"   src="<?= IMAGE_ROOT; ?>Email_Icon_2.png" /></span></a>
-                           
-                                 <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?></div>
-                                <!---->
-                       
-                 <?php echo $this->Form->end(); ?>
-                  <?php }?>
-             </div>
-        </div>
+              </div>
+              <?php 
+                 echo $this->Form->create();
+                echo $this->Form->Submit(__('allow'));
+                ?> 
+       
 
 
-            <div id="redeem-note" style="margin-top:40px;margin-left:5px">
-               <h5>Please note: Only one code will be accepted per transaction</h5>
-            </div>
-        </div>
-        <div id="redeem-instr" class="disclosure opened">
-            <p class="heading">How to Redeem</p>
-            <div class="wrapper" style="height: 0px;">
-                    <p class="content shown"><?= $gift['Product']['redeem_instr']; ?></p>
-            </div>
-            <a class="toggle" onclick="clicky.log('#Redeem Instr Toggle','Redeem Instr Toggle');">
-                    <span class="arrow"></span>
-            </a>
-        </div>
+          
+
 </div>	
 <div class="clear"></div>
 <script type="text/javascript">
