@@ -46,7 +46,6 @@ class CitySegmentsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->CitySegment->create();
-			DebugBreak();
 			$data['city'] = $this->data['CitySegment']['city'];
 			$data['state'] = $this->data['CitySegment']['state'];
 			$data['country'] = $this->data['CitySegment']['country'];
