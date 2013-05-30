@@ -76,7 +76,7 @@ input[type="text"] {
   
     // When site loaded, load the Popupbox First
     
-    $('.imageclick').click( function() {
+    $('.single-use').click( function() {
     loadPopupBox();
     $('#container').css('display','none')
     
@@ -125,25 +125,25 @@ input[type="text"] {
 </script>
 
 
-<div id="popup_box"  >
-<h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
-<h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
-<h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
- <div class="brandscreen">
- <img src="../img/snap_jabong.jpg">
- </div>
- <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
-cart choose “add coupon code” and then “apply coupon”.</p>
-<div class="coupon">
+<div id="popup_box" style="margin-top:20px" >
+    <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
+    <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
+    <h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
+     <div class="brandscreen">
+     <img src="../img/snap_jabong.jpg">
+     </div>
+     <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
+    cart choose “add coupon code” and then “apply coupon”.</p>
+    <div class="coupon">
 
-<div class="FL mar5"><img src="../img/arrow1.png"></div>
-<div class="FL mar5" > <input type="text"> </div>
-<div class="FL mar4"><img src="../img/ccb.png"></div>
+    <div class="FL mar5"><img src="../img/arrow1.png"></div>
+    <div class="FL mar5" > <input type="text"> </div>
+    <div class="FL mar4"><img src="../img/ccb.png"></div>
 
 
-</div>
-   <p class="done "><img src="done.png" align="center"></p>
- <a id="popupBoxClose"><img src="../img/close1.png"></a>
+    </div>
+       <p class="done "><img src="done.png" align="center"></p>
+     <a id="popupBoxClose"><img src="../img/close1.png"></a>
  </div>
  
  <!--popup box-->
@@ -203,14 +203,19 @@ cart choose “add coupon code” and then “apply coupon”.</p>
                 </div>
                 
               </div>
-              
-              <?php 
-                 echo $this->Form->create();
+              <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'class'=>'imageclick'))?>
 
-                echo $this->Form->Submit(__('Use Online'));
-                ?> 
-
-                <?php echo $this->Form->input("r_city" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'class'=>'imageclick'))?>
+              <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
+                <div class="arrow inner"></div>
+                <div class="arrow outer"></div>
+                <div class="content">
+                    <h3>Ready?</h3>
+                    <div class="buttons">
+                        <button class="cancel">Cancel</button>
+                        <button class="single-use"> Use online </button>
+                    </div>
+                </div>
+          </div>
                 
 
        
@@ -239,11 +244,24 @@ cart choose “add coupon code” and then “apply coupon”.</p>
             });
         });
         </script>
-        <script type="text/javascript">
+<script type="text/javascript">
 
       $(document).ready(function(){
             $("#email_voucher").click(function (){
                 $("#email1").submit()
             });
         });
-        </script>
+</script>
+
+<script>
+$(document).ready(function(){
+            $(".submit").click(function (){
+                $("#use_online").show();
+            });
+            $(".cancel").click(function (){
+                $("#use_online").hide();
+            });
+        });
+
+
+</script>

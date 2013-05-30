@@ -3144,3 +3144,95 @@ display:inline;
     background: url('/img/select.png') no-repeat right ;
    
    }
+
+
+   .popover.bottom .arrow.inner {
+    border-bottom: 16px solid white;
+    margin-left: -16px;
+    top: -12px;
+}
+
+.popover.bottom .arrow {
+    left: 50%;
+}
+.popover .arrow.inner {
+    border: 16px solid transparent;
+    z-index: 1001;
+}
+.popover .arrow {
+    height: 0;
+    position: absolute;
+    width: 0;
+}
+
+.popover.bottom .arrow.outer {
+    border-bottom: 19px solid #D9D9D9;
+    margin-left: -19px;
+    top: -18px;
+}
+.popover.bottom .arrow {
+    left: 50%;
+}
+
+.popover .arrow.outer {
+    border: 19px solid transparent;
+    z-index: 1000;
+}
+.popover .arrow {
+    height: 0;
+    position: absolute;
+    width: 0;
+}
+.popover.open-online-redeem .content {
+    overflow: hidden;
+    width: 274px;
+}
+.popover .content {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px 5px 5px 5px;
+    color: #4D4D4D;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 6px 6px;
+    text-align: center;
+}
+
+
+.popover .content h3 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.popover .content .buttons {
+    margin-top: 15px;
+}
+
+
+.popover.open-online-redeem .content button.cancel {
+    float: left;
+}
+.popover.open-online-redeem .content button {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 134px;
+}
+.popover button.cancel {
+    background-color: #FAFAFA;
+    background-image: none;
+    border: 1px solid #BFBFBF;
+    box-shadow: none;
+    color: #4C4C4C;
+}
+.popover button {
+    border-radius: 1px 1px 1px 1px;
+    font-size: 18px;
+    height: 40px;
+    line-height: 36px;
+    padding: 0 12px;
+}
