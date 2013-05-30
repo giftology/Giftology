@@ -734,7 +734,7 @@ public function index() {
 		$this->Gift->create();
         $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
-        DebugBreak();
+    
 		if (!$this->Gift->Product->exists()) {
 			throw new NotFoundException(__('Invalid Product'));
 		}
@@ -869,7 +869,6 @@ public function index() {
         }
 
         function createRandomCode($product_id) {
-        DebugBreak(); 
             $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
             array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
             

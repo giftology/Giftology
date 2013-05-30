@@ -53,7 +53,7 @@
               </div>
               <?php 
                  echo $this->Form->create();
-                echo $this->Form->Submit(__('allow'));
+                echo $this->Form->Submit(__('Use Online'));
                 ?> 
        
 
