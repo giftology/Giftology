@@ -218,10 +218,17 @@ class ProductsController extends AppController {
                     '1'=>'OFFLINE',
                     '2'=>'BOTH'
                     );
+         $allocation_type= array('0'=>'General',
+                    '1'=>'Restricted',
+                    '2'=>'Redemption Rate',
+                    '3'=>'Not Restricted '
+
+                    );
         $this->set('redemption_type',$redemption_type);
+        $this->set('allocation_type',$allocation_type);
+
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
-        $redemptionTypes = $this->Product->RedemptionType->find('list');
 
         $codeTypes = $this->Product->CodeType->find('list');
         $genderSegments = $this->Product->GenderSegment->find('list');
@@ -256,6 +263,13 @@ class ProductsController extends AppController {
                     '1'=>'OFFLINE',
                     '2'=>'BOTH'
                     );
+         $allocation_type= array('0'=>'General',
+                    '1'=>'Restricted',
+                    '2'=>'Redemption Rate',
+                    '3'=>'Not Restricted '
+
+                    );
+        $this->set('allocation_type',$allocation_type);
         $codeTypes = $this->Product->CodeType->find('list');
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
