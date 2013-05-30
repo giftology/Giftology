@@ -1202,6 +1202,46 @@ public function index() {
         $this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
+
+    public function fetch_code(){
+        DebugBreak();
+        $gift_id=$this->request->data['search_key'];
+        if($this->RequestHandler->isAjax()) {
+            $this->Reminder->recursive = -1;
+             $friend_list=$this->Gift->find('first',array('conditions' =>array (
+                    'Gift.id' => $this->request->data['search_key']
+                   )));
+             $code = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
+            'UploadedProductCode.product_id' => $friend_list['Gift']['product_id'],
+            'UploadedProductCode.code' => $friend_list['Gift']['code']
+            )
+        ));
+        if(!$code) {
+             $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$friend_list['Gift']['product_id'],
+                'value' => $friend_list['Gift']['gift_amount'])));
+       
+        $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                     array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
+       
+       $this->Gift->updateAll(array('Gift.code' => $code_orignal['UploadedProductCode']['code']),
+                                     array('Gift.id' => $gift_id));
+                 
+        }
+           // $sent_temp_code = $this->TemporaryGiftCode->find('count',
+           // array('conditions' => array('product_id' =>$product_id)));  
+            
+        //$this->set('data',$friend_list);
+        //$this->set('friends', $friend_list);
+        //$this->set('_serialize', array('result'));
+        //    echo $search_string;
+        }
+
+        echo json_encode($friend_list);
+        $this->autoRender = $this->autoLayout = false;
+        exit;
+    }
+
 	public function view_gifts() {
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('sender_id' => $this->Auth->user('id'));

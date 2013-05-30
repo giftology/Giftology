@@ -125,26 +125,7 @@ input[type="text"] {
 </script>
 
 
-<div id="popup_box" style="margin-top:20px" >
-    <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
-    <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
-    <h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
-     <div class="brandscreen">
-     <img src="../img/snap_jabong.jpg">
-     </div>
-     <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
-    cart choose “add coupon code” and then “apply coupon”.</p>
-    <div class="coupon">
 
-    <div class="FL mar5"><img src="../img/arrow1.png"></div>
-    <div class="FL mar5" > <input type="text"> </div>
-    <div class="FL mar4"><img src="../img/ccb.png"></div>
-
-
-    </div>
-       <p class="done "><img src="done.png" align="center"></p>
-     <a id="popupBoxClose"><img src="../img/close1.png"></a>
- </div>
  
  <!--popup box-->
 
@@ -212,7 +193,7 @@ input[type="text"] {
                     <h3>Ready?</h3>
                     <div class="buttons">
                         <button class="cancel">Cancel</button>
-                        <button class="single-use"> Use online </button>
+                        <button class="single-use" id="<?php echo $gift['Gift']['id'];?>"> Use online </button>
                     </div>
                 </div>
           </div>
@@ -265,3 +246,55 @@ $(document).ready(function(){
 
 
 </script>
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type='text/javascript'>
+ $('.single-use').click(function() {
+        // interrupt form submission
+            var key_value = this.id;
+           //alert(key_value);
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/gifts/fetch_code",
+                    data: "search_key="+key_value,
+                    success: function(data) {
+                        //alert(data);
+                        var res_data = jQuery.parseJSON(data);;
+                        var count = res_data.length;
+                        var new_row = '';
+                        //$('.event').remove();
+                        //$('#paginator_nav').remove();
+                        
+                         $('#ititemplate').tmpl(res_data).appendTo('.delivery-message');
+                     }
+
+                     });
+           
+        });
+   
+
+</script>
+<script id="ititemplate" type="text/x-jquery-tmpl">
+<div id="popup_box" style="margin-top:20px" >
+    <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
+    <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
+    <h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
+     <div class="brandscreen">
+     <img src="../img/snap_jabong.jpg">
+     </div>
+     <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
+    cart choose “add coupon code” and then “apply coupon”.</p>
+    <div class="coupon">
+
+    <div class="FL mar5"><img src="../img/arrow1.png"></div>
+    <div class="FL mar5" > <input type="text" value="${Gift.code}"> </div>
+    <div class="FL mar4"><img src="../img/ccb.png"></div>
+
+
+    </div>
+       <p class="done "><img src="done.png" align="center"></p>
+     <a id="popupBoxClose"><img src="../img/close1.png"></a>
+ </div>
+ </script>
