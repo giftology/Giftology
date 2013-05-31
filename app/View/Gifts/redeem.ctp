@@ -149,14 +149,12 @@ input[type="text"] {
 </div>
 
 
-<div style="float:right;margin-top:50px;margin-left:800px">
-            
-           </div>
+<br><br>
 
 
 <div id="gift-details">
 
-        <h3 style="margin-left:50px"><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
+        <h3><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
 
         <div class="purchase voucher-container">
             <?= $this->element('gift_voucher',
@@ -267,7 +265,7 @@ $(document).ready(function(){
                         //$('.event').remove();
                         //$('#paginator_nav').remove();
                         
-                         $('#ititemplate').tmpl(res_data).appendTo('.delivery-message');
+                         $('#ititemplate').tmpl(res_data).appendTo('#gift-details');
                      }
 
                      });
@@ -294,7 +292,7 @@ $(document).ready(function(){
 
 
     </div>
-       <p class="done "><img src="done.png" align="center"></p>
+       <p class="done "><a href = ""><img src="../img/done.png" align="center"></a></p>
      <a id="popupBoxClose"><img src="../img/close1.png"></a>
  </div>
  </script>
