@@ -758,7 +758,6 @@ public function index() {
 		//$gift_check = 
 		
 		$receiver = $this->Gift->User->find('first', array('fields' => array('User.id'), 'conditions' => array('User.facebook_id' => $receiver_fb_id)));
-		DebugBreak();
 		if (!$receiver) {
 			//Create a User for the receiver			
 		/* Dont create User for receiver, just set the receiver_fb_id
@@ -1247,29 +1246,34 @@ public function index() {
 
     public function fetch_code(){
         $gift_id=$this->request->data['search_key'];
-        if($this->RequestHandler->isAjax()) {
+        if($this->RequestHandler->isAjax()) 
+        {
             $this->Reminder->recursive = -1;
-             $friend_list=$this->Gift->find('first',array('conditions' =>array (
+             $gift_data = $this->Gift->find('first',array('conditions' =>array (
                     'Gift.id' => $this->request->data['search_key']
                    )));
+
              $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
-            'UploadedProductCode.product_id' => $friend_list['Gift']['product_id'],
-            'UploadedProductCode.code' => $friend_list['Gift']['code']
-            )
-        ));
-        if(!$code_check) {
-             $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
-            array('conditions' => array('available'=>1, 'product_id' =>$friend_list['Gift']['product_id'],
-                'value' => $friend_list['Gift']['gift_amount'])));
-       
-        $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
-                                     array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
-       
-       $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'"),
-                                     array('Gift.id' => $gift_id));
-       
-                 
-        }
+            'UploadedProductCode.product_id' => $gift_data['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift_data['Gift']['code']
+            )));
+            if(!$code_check) 
+            {
+                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
+                    'value' => $gift_data['Gift']['gift_amount'])));
+           
+                $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
+           
+                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'"),
+                                         array('Gift.id' => $gift_id));
+           
+                     
+            }
+             $gift_code = $this->Gift->find('first',array('conditions' =>array (
+                    'Gift.id' => $this->request->data['search_key']
+                   )));
            // $sent_temp_code = $this->TemporaryGiftCode->find('count',
            // array('conditions' => array('product_id' =>$product_id)));  
             
@@ -1279,7 +1283,7 @@ public function index() {
         //    echo $search_string;
         }
 
-        echo json_encode($friend_list);
+        echo json_encode($gift_code);
         $this->autoRender = $this->autoLayout = false;
         exit;
     }
