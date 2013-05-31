@@ -1,64 +1,98 @@
-<?php
-echo $this->Minify->css(array('main_redeem','flexslider','normalize','style','main'));
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));?>
-  
-  <div id="wrapper" style="mrgin-top:30px;" >
-        <section class="inner-content gift-bg">
-            <div class="wrap-inner"><div class="giftology"><img src="<?= FULL_BASE_URL; ?>/img/giftology-log.jpg" alt=""></div>
-           <div class="recive-by">
-                <div class="recive-by-content">
-                  <div  id="fb" ><?php echo $this->Form->input("Save To Gift Box" ,array('name'=>'gift','type' => 'submit','id' => 'gift','label' => false,'div' => false,'class'=>'imageclick'))?>
+
+
+<div>
+        <ul id="breadcrumbs">
+                <li class="breadcrumb home events">
+                        <span class="left"></span>
+                        <a href="<?= FULL_BASE_URL; ?>"><span class="arrow"></span></a>
+                </li>
+                <li class="breadcrumb">
+                        <span class="left"></span>
+                        <a href="<?= $this->Html->url(array('controller'=>'gifts',
+                                                      'action'=>'view_gifts')); ?>"><?= $facebook_user['name']; ?>'s gifts<span class="arrow"></span></a>
+                </li>
+                <li>Redeem your gift</li>
+                
+        </ul>
+        
+</div>
+
+
+<br><br>
+
+
+
+<div id="gift-details">
+
+        <h3><?= $gift['Sender']['UserProfile']['first_name'].' '.$gift['Sender']['UserProfile']['last_name']; ?> sent you this gift: <strong><?= substr($this->Time->niceShort($gift['Gift']['created']), 0, -7); ?></strong></h3>
+
+        <div class="purchase voucher-container">
+            <?= $this->element('gift_voucher',
+                        array('product' => $gift,
+                              'small' => false,
+                              'redeem' => true),
+                        array('cache' => array(
+                                'key' => $gift['Product']['id'].'full_redeem'))); ?>
+        </div>
+       <div class="delivery-message">
+                <div class="greeting-bubble">
+
+                    <?php
+                    echo $gift['Gift']['gift_message']; 
+                     echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => " ",'class'=>"gift-message" ));?>
+                </div>
+                
+                <div class="shadow-wrapper">
+                    <div class="frame">
+                        <div class="img-placeholder male">
+                            <?php $photo_url = "https://graph.facebook.com/".$sender."/picture"; ?>
+                            <img src=<?= $photo_url; ?>>
+                        </div>
                     </div>
                 </div>
                 
-                
-                
-            </div>
-           
-            
-            <div class="gift-block animated">
-                <div class="gift-content">
-                    <div class="gift-top animated">&nbsp;</div>
-                    <div class="top-shadow">&nbsp;</div>
-                    <div class="gift-btm"><img src="<?= FULL_BASE_URL; ?>/img/gift-btm.png" alt=""></div>
-                    <div class="box-shadow"></div>
-                    
-                    <div class="roof"></div>
-                    <div class="tag-content animated ">
-                        <a href="javascript:void(0);" class="tag-logo"><!--<img src="img/tag-logo.png" alt="">--></a>
-                        <span class="withlove">With Love...</span>
-                        <span class="name"><a href="javascript:void(0);">-<?= $sender_name ?></a></span>
+              </div>
+              <?php echo $this->Form->input("Save To Gift Box" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'class'=>'imageclick'))?>
+
+              <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
+                <div class="arrow inner"></div>
+                <div class="arrow outer"></div>
+                <div class="content">
+                    <h3>Ready?</h3>
+                    <div class="buttons">
+                        <button class="cancel">Cancel</button>
+                        <button class="single-use" id="<?php echo $gift['Gift']['id'];?>"> Use online </button>
                     </div>
                 </div>
-             </div>
-             <div class="clear">&nbsp;</div>
-            </div> 
-                   
-        </section>           
-              
-          
-        <script type="text/javascript">
-                $(window).load(function(){
-                    $('.gift-block').addClass('bounceInDown').fadeIn();
-                    setTimeout(function(){
-                        $('.gift-block').removeClass('bounceInDown');
-                        },1500);
+          </div>
+      </div>  
+<div class="clear"></div>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type='text/javascript'>
+ $('.single-use').click(function() {
+        // interrupt form submission
+            var key_value = this.id;
+           //alert(key_value);
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/gifts/fetch_code",
+                    data: "search_key="+key_value,
+                    success: function(data) {
+                        //alert(data);
+                        var res_data = jQuery.parseJSON(data);;
+                        var count = res_data.length;
+                        var new_row = '';
+                        //$('.event').remove();
+                        //$('#paginator_nav').remove();
                         
-                    $('.tag-content').hover(function(){
-                        $(this).addClass('swing');
-                        },function(){
-                            $(this).removeClass('swing');
-                            }); 
-                            
-                    $('.gift-content').hover(function(){
-                        $('.gift-top').addClass('topswing');
-                        },function(){
-                            $('.gift-top').removeClass('topswing');
-                            });         
-                            
-                    
-                    setTimeout(function(){
-                        $('.box-shadow').fadeIn('slow');
-                        },700);
-                });
-        </script>
+                         $('#ititemplate').tmpl(res_data).appendTo('#gift-details');
+                     }
+
+                     });
+           
+        });
+   
+
+</script>
