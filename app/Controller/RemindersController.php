@@ -251,15 +251,19 @@ class RemindersController extends AppController {
 
 		public function view_friends($type=null) 
 		{
-
-				if($this->Connect->user()){
-		            $this->User->id = $this->Auth->User('id');
-		            $this->User->updateAll(
-		            array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
-		            array('User.id' => $this->Auth->User('id'))
-		            );
-		        }
-		        $this->reminder_view_friends($type);	
+			if($this->Connect->user()){
+		        $this->User->id = $this->Auth->User('id');
+		        $this->User->updateAll(
+		        array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+		        array('User.id' => $this->Auth->User('id'))
+		        );
+		    }
+		    $gift_claimable=$this->Gift->find('all',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0)));
+          	//$this->set('us',$us);
+		    if(isset($gift_claimable) && !empty($gift_claimable)){
+		    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
+		    }
+		    else $this->reminder_view_friends($type);	
 		}
 
 	public function reminder_view_friends($type=null){
@@ -278,8 +282,6 @@ class RemindersController extends AppController {
 		$this->set('user_mail',$users['UserProfile']['email']);
 		$this->set('user_created',$users['UserProfile']['created']);
 		$this->set('mail_verified',$users['UserProfile']['mail_verified']);
-		$us=$this->Gift->find('all',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>1)));
-          $this->set('us',$us);
 
 		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
 		

@@ -1244,6 +1244,11 @@ public function index() {
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
 
+    public function claim(){
+        $gift_claimable=$this->Gift->find('all',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0)));
+        $this->set('us',$gift_claimable);
+    }
+
     public function fetch_code(){
         $gift_id=$this->request->data['search_key'];
         if($this->RequestHandler->isAjax()) 
