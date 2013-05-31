@@ -1,4 +1,4 @@
-
+<?php ?>
 
 <div>
         <ul id="breadcrumbs">
@@ -8,10 +8,9 @@
                 </li>
                 <li class="breadcrumb">
                         <span class="left"></span>
-                        <a href="<?= $this->Html->url(array('controller'=>'gifts',
-                                                      'action'=>'view_gifts')); ?>"><?= $facebook_user['name']; ?>'s gifts<span class="arrow"></span></a>
+                        <?= $facebook_user['name']; ?>'s gifts<span class="arrow"></span>
                 </li>
-                <li>Redeem your gift</li>
+                <li>Claim your gift</li>
                 
         </ul>
         

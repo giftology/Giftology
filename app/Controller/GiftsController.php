@@ -1245,8 +1245,15 @@ public function index() {
 	}
 
     public function claim(){
-        $gift_claimable=$this->Gift->find('all',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0)));
+        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0)));
         $this->set('us',$gift_claimable);
+         $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
+         $this->set('gift', $gift);
     }
 
     public function fetch_code(){
