@@ -1266,7 +1266,7 @@ public function index() {
                 $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
            
-                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'"),
+                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'", 'Gift.gift_code_allocation_mode' => $code_orignal['Product']['allocation_mode']),
                                          array('Gift.id' => $gift_id));
            
                      
@@ -1274,13 +1274,7 @@ public function index() {
              $gift_code = $this->Gift->find('first',array('conditions' =>array (
                     'Gift.id' => $this->request->data['search_key']
                    )));
-           // $sent_temp_code = $this->TemporaryGiftCode->find('count',
-           // array('conditions' => array('product_id' =>$product_id)));  
-            
-        //$this->set('data',$friend_list);
-        //$this->set('friends', $friend_list);
-        //$this->set('_serialize', array('result'));
-        //    echo $search_string;
+           
         }
 
         echo json_encode($gift_code);
