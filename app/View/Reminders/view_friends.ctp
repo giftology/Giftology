@@ -25,14 +25,14 @@ if(TRUE):?>
 echo $this->Minify->css(array('main_redeem','flexslider','normalize','style','main'));
     echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));?>
   
-  <div id="wrapper" style="margin-top:30px;" >
+  <div id="wrapper" style="mrgin-top:30px;" >
         <section class="inner-content gift-bg">
             <div class="wrap-inner"><div class="giftology"><img src="<?= FULL_BASE_URL; ?>/img/giftology-log.jpg" alt=""></div>
            <div class="recive-by">
                 <div class="recive-by-content">
-                    <div  id="fb" >
+                  <div  id="fb" ><?php echo $this->Form->input("Save To Gift Box" ,array('name'=>'gift','type' => 'submit','id' => 'gift','label' => false,'div' => false,'class'=>'imageclick'))?>
                     </div>
-                 </div>
+                </div>
                 
                 
                 
