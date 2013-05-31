@@ -53,17 +53,7 @@
               </div>
               <?php echo $this->Form->input("Save To Gift Box" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'class'=>'imageclick'))?>
 
-              <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
-                <div class="arrow inner"></div>
-                <div class="arrow outer"></div>
-                <div class="content">
-                    <h3>Ready?</h3>
-                    <div class="buttons">
-                        <button class="cancel">Cancel</button>
-                        <button class="single-use" id="<?php echo $gift['Gift']['id'];?>"> Use online </button>
-                    </div>
-                </div>
-          </div>
+             
       </div>  
 <div class="clear"></div>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
