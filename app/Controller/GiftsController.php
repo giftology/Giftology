@@ -758,7 +758,7 @@ public function index() {
 		//$gift_check = 
 		
 		$receiver = $this->Gift->User->find('first', array('fields' => array('User.id'), 'conditions' => array('User.facebook_id' => $receiver_fb_id)));
-		
+		DebugBreak();
 		if (!$receiver) {
 			//Create a User for the receiver			
 		/* Dont create User for receiver, just set the receiver_fb_id
@@ -782,20 +782,56 @@ public function index() {
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
         $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price'), 'conditions' => array('Product.id' => $product_id)));
-         if(($product_data['Product']['allocation_mode']==2 && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==3 && $product_data['Product']['min_price'] == 0)) {
+        
+         if(($product_data['Product']['allocation_mode']==2 && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==3 && $product_data['Product']['min_price'] == 0)) 
+         {
+
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+            }
+            else{
+
             $temp_code = $this->createRandomCode($product_id);
             $gift['Gift']['code'] = $temp_code;
             $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
             $this->TemporaryGiftCode->saveAssociated($data);
+
+            }
+
+            
             
          }
-        else if($product_data['Product']['allocation_mode']==4) {
-            $temp_code = $this->createUnlimitedCode($product_id);
-           $gift['Gift']['code'] = $temp_code;
-           $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
-           $this->TemporaryGiftCode->saveAssociated($data);
+        else if($product_data['Product']['allocation_mode']==4) 
+        {
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+            }
+            else
+            {
+                $temp_code = $this->createUnlimitedCode($product_id);
+               $gift['Gift']['code'] = $temp_code;
+               $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+               $this->TemporaryGiftCode->saveAssociated($data);
+            }
 
          }
+
          else
          {
             $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);   
@@ -868,7 +904,32 @@ public function index() {
         }
         }
 
-        function createRandomCode($product_id) {
+        
+        function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$product,
+                    'value' => $value, 'expiry >' => $valid_till)));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product',
+                        'receiver_id'=>$receiver_fb_id ,
+                        'receiver_name' => $reciever_name,
+                        'receiver_birthday' => $receiver_birthday,
+                        'ocasion' => isset($this->request->params['named']['ocasion']) ?
+                        $this->request->params['named']['ocasion'] : null
+
+                    )); 
+            }
+            $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
+            return $code['UploadedProductCode']['code'];
+        }
+
+         function createRandomCode($product_id) {
             $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
             array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
             
@@ -891,6 +952,7 @@ public function index() {
                 $pass = $pass . $tmp; 
                 $i++; 
             } 
+            $pass = "TEMP".$pass;
 
             return $pass; 
                 
@@ -901,8 +963,9 @@ public function index() {
             }
              
 
-            }
-          function createUnlimitedCode($product_id){
+        }
+
+        function createUnlimitedCode($product_id){
               $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
             $i = 0; 
@@ -914,37 +977,16 @@ public function index() {
                 $pass = $pass . $tmp; 
                 $i++; 
             } 
+            $pass = "TEMP".$pass;
 
             return $pass; 
               
           }
-          
-    function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
-        $code = $this->Gift->Product->UploadedProductCode->find('first',
-            array('conditions' => array('available'=>1, 'product_id' =>$product,
-                'value' => $value, 'expiry >' => $valid_till)));
-        if (!$code) {
-            $this->Mixpanel->track('Out of Codes', array(
-                    'ProductId' => $product
-                ));
-            $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
-            $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
-            $this->redirect(array('controller'=>'products', 'action'=>'view_product',
-                    'receiver_id'=>$receiver_fb_id ,
-                    'receiver_name' => $reciever_name,
-                    'receiver_birthday' => $receiver_birthday,
-                    'ocasion' => isset($this->request->params['named']['ocasion']) ?
-                    $this->request->params['named']['ocasion'] : null
 
-                )); 
-        }
-        $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
-                                     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
-        return $code['UploadedProductCode']['code'];
-    }
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
+
 	function getGiftURL($gift_id, $content) {
 	    return FULL_BASE_URL.'/users/login/?gift_id='.
 		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
