@@ -44,7 +44,7 @@
                 <div class="shadow-wrapper">
                     <div class="frame">
                         <div class="img-placeholder male">
-                            <?php $photo_url = "https://graph.facebook.com/".$sender."/picture"; ?>
+                            <?php $photo_url = "https://graph.facebook.com/".$gift['Sender']['facebook_id']."/picture"; ?>
                             <img src=<?= $photo_url; ?>>
                         </div>
                     </div>
