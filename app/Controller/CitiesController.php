@@ -232,16 +232,30 @@ class CitiesController extends AppController {
 	public function city_name_fiter_from_fb(){
 		$this->Reminder->recursive = -1;
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
-		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location')));
-		$city_array = array();
-		foreach($cities as $k => $city){
+        $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location')));
+        $city_array = array();
+        $city_search_key = array();
+        foreach($cities as $k => $city){
+            if($city['Reminder']['current_location']){
+                $city_search_key[] = $city['Reminder']['current_location'];
+            }
+        }
+        $city_details = $this->Reminder->find('all', array(
+                    'fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location'),
+                    'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $city_search_key)
+                    )
+                );
+                
+        foreach($city_details as $k => $city){
+        	set_time_limit(300);
             if($city['Reminder']['current_location']){
                 $city_array[$k]['city'] = $city['Reminder']['current_location']; 
                 $city_array[$k]['state'] = $city['Reminder']['state'];
                 $city_array[$k]['country'] = $city['Reminder']['country'];
-                $city_array[$k]['geo_location'] = $city['Reminder']['geo_location']; 
-            }  
-		}
+                $city_array[$k]['geo_location'] = $city['Reminder']['geo_location'];     
+            }
+        }
+		
 		$city_chunk  = array_chunk($city_array, 1000);
         
         foreach($city_chunk as $a){
