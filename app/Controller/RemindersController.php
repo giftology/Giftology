@@ -252,14 +252,14 @@ class RemindersController extends AppController {
 		public function view_friends($type=null) 
 		{
 
-				if($this->Connect->user()){
-		            $this->User->id = $this->Auth->User('id');
-		            $this->User->updateAll(
-		            array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+			if($this->Connect->user()){
+		        $this->User->id = $this->Auth->User('id');
+		        $this->User->updateAll(
+		        	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
 		            array('User.id' => $this->Auth->User('id'))
-		            );
-		        }
-		        $this->reminder_view_friends($type);	
+		        );
+		   	}
+		    $this->reminder_view_friends($type);	
 		}
 
 	public function reminder_view_friends($type=null){

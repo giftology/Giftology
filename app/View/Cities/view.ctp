@@ -1,20 +1,34 @@
-<div class="citySegments view">
-<h2><?php  echo __('City Segment'); ?></h2>
+<div class="city view">
+<h2><?php  echo __('City'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
-			<?php echo h($citySegment['CitySegment']['id']); ?>
+			<?php echo h($city['City']['id']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('City'); ?></dt>
 		<dd>
-			<?php echo h($citySegment['CitySegment']['city']); ?>
+			<?php echo h($city['City']['city']); ?>
 			&nbsp;
 		</dd>
-
-		<dt><?php echo __('Segment'); ?></dt>
+		<dt><?php echo __('State'); ?></dt>
 		<dd>
-			<?php echo h($citySegment['CitySegment']['segment']); ?>
+			<?php echo h($city['City']['state']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Country'); ?></dt>
+		<dd>
+			<?php echo h($city['City']['country']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Latitude'); ?></dt>
+		<dd>
+			<?php echo h($city[0]['latitude']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Longitude'); ?></dt>
+		<dd>
+			<?php echo h($city[0]['longitude']); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -22,10 +36,10 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Edit City Segment'), array('action' => 'edit', $citySegment['CitySegment']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete City Segment'), array('action' => 'delete', $citySegment['CitySegment']['id']), null, __('Are you sure you want to delete # %s?', $citySegment['CitySegment']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List City Segments'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New City Segment'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit City'), array('action' => 'edit', $city['City']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete City'), array('action' => 'delete', $city['City']['id']), null, __('Are you sure you want to delete # %s?', $city['City']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List City'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New City'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
 	</ul>

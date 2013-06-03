@@ -7,6 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
+    public $uses = array('CitySegment','City');
 /**
  * index method
  *
@@ -29,7 +30,9 @@ class CitySegmentsController extends AppController {
 		if (!$this->CitySegment->exists()) {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
-		$this->set('citySegment', $this->CitySegment->read(null, $id));
+		$city_data = $this->CitySegment->read(null, $id);
+		$city_data['CitySegment']['segment'] = $this->city_from_ids($city_data['CitySegment']['segment']);
+		$this->set('citySegment', $city_data);
 	}
 
 /**
@@ -40,7 +43,10 @@ class CitySegmentsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->CitySegment->create();
-			if ($this->CitySegment->save($this->request->data)) {
+			$city_data = array();
+			$city_data['CitySegment']['city'] = $this->data['CitySegment']['city'];
+			$city_data['CitySegment']['segment'] = $this->serialized_city_id($this->data['CitySegment']['segment']);
+			if ($this->CitySegment->save($city_data)) {
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -62,7 +68,11 @@ class CitySegmentsController extends AppController {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->CitySegment->save($this->request->data)) {
+			$city_data =array();
+			$city_data['CitySegment']['city'] = $this->request->data['CitySegment']['city'];
+			
+			$city_data['CitySegment']['segment'] = $this->serialized_city_id($this->request->data['CitySegment']['segment']);
+			if ($this->CitySegment->save($city_data)) {
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -70,6 +80,7 @@ class CitySegmentsController extends AppController {
 			}
 		} else {
 			$this->request->data = $this->CitySegment->read(null, $id);
+			$this->request->data['CitySegment']['segment'] = $this->city_from_ids($this->request->data['CitySegment']['segment']);
 		}
 	}
 
@@ -185,5 +196,30 @@ class CitySegmentsController extends AppController {
 		}
 		$this->Session->setFlash(__('City segment was not deleted'));
 		$this->redirect(array('action' => 'index'));
+	}
+
+	public function serialized_city_id($city_names){
+		$segments = explode(',', $city_names);
+        $trimmed_segments = array();
+        foreach($segments as $segment){
+            $trimmed_segments[] = ltrim(rtrim($segment));
+        }
+        unset($segment);
+		$segment_ids = $this->City->find('list', array('fields' => array('id'),'conditions' => array('city' =>  $trimmed_segments)));
+		/*$segment_id_array = array();
+		foreach($segment_ids as $id){
+			$segment_id_array[] = $id;	
+		}*/
+		return serialize($segment_ids);
+	}
+
+	public function city_from_ids($city_ids){
+		$city_ids_array = unserialize($city_ids);
+		$cities = $this->City->find('list', array('fields' => array('city'),'conditions' => array('id' =>  $city_ids_array)));
+		/*$city_array = array();
+		foreach($cities as $city){
+			$city_array[] = $city;
+		}*/
+		return implode(',',$cities);
 	}
 }

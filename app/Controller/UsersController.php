@@ -800,7 +800,9 @@ class UsersController extends AppController {
                         'friend_birthday' => $friend['birthday'],
                         'current_location' => $friend['current_location']['city'],
                         'country' => $friend['current_location']['country'],
-                        'sex' => $friend['sex']
+                        'sex' => $friend['sex'],
+                        'state' => $friend['current_location']['state'],
+                        'geo_location' => $this->Reminder->getDataSource()->expression("GEOMFROMTEXT('POINT(".$friend['current_location']['latitude']." ".$friend['current_location']['longitude'].")',0)")
                     ));
             }
             return true;
