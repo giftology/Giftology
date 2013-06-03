@@ -52,7 +52,7 @@
                 
               </div>
               <?php echo $this->Form->create('gifts', array('action' => 'claim'));?>
-              <?php echo $this->Form->hidden("giftid" ,array('value'=>$gift['Product']['id'] ))?>
+              <?php echo $this->Form->hidden("giftid" ,array('value'=>$us ))?>
               <?php echo $this->Form->end(__('Save To Gift Box'));?>
           </div> 
           <div class="clear"></div>

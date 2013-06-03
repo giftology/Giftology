@@ -18,6 +18,10 @@
 			<div class="error_message" id="error_wide" style="display:none; margin-left:20px;">
 		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
+	        <?php echo $this->Form->input('redeem_file', array('label' => 'redeem Image (200x64px)', 'type' => 'file')); ?>
+			<div class="error_message" id="error_redeem" style="display:none; margin-left:20px;">
+		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
+	        </div>
 
 		<?php echo $this->Form->input('facebook_file', array('label' => 'Facebook Share Image (200x200px)', 'type' => 'file')); ?>
 			<div class="error_message" id="error_facebook" style="display:none; margin-left:20px;">
@@ -69,6 +73,13 @@
                 }
             if ($("#VendorWideFile").val().length == 0) {
                     $("#error_wide").show();
+                    e = true;
+                }
+                else{
+                    $("#error_wide").hide();    
+                }
+            if ($("#VendorRedeemFile").val().length == 0) {
+                    $("#error_redeem").show();
                     e = true;
                 }
                 else{

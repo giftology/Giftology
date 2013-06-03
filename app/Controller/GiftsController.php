@@ -1245,17 +1245,17 @@ public function index() {
 	}
 
     public function claim(){
+        
         if($this->request->is('post')){
-            $giftid_to_claim = $this->request->data[];
+            $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
                 array('Gift.claim' => 1),
-                array('Gift.id' => $id)
+                array('Gift.id' => $this->request->data['gifts']['giftid']) 
                 );
 
         }
-        
         $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
-        $this->set('us',$gift_claimable);
+        $this->set('us',$gift_claimable['Gift']['id']);
          $gift = $this->Gift->find('first', array(
             'contain' => array(
                 'Product' => array('Vendor'),

@@ -182,6 +182,9 @@ public $presetVars = array(
 			$this->request->data['Vendor']['wide_image'] = 'files/'.$this->request->data['Vendor']['wide_file']['name'];
 			copy($this->request->data['Vendor']['wide_file']['tmp_name'], $this->request->data['Vendor']['wide_image']);
 			
+			$this->request->data['Vendor']['redeem_image'] = 'files/'.$this->request->data['Vendor']['redeem_file']['name'];
+			copy($this->request->data['Vendor']['redeem_file']['tmp_name'], $this->request->data['Vendor']['redeem_image']);
+			
 			$this->request->data['Vendor']['facebook_image'] = 'files/'.$this->request->data['Vendor']['facebook_file']['name'];
 			copy($this->request->data['Vendor']['facebook_file']['tmp_name'], $this->request->data['Vendor']['facebook_image']);
 
