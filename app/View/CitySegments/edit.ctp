@@ -5,6 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('city');
+		echo $this->Form->input('segment');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

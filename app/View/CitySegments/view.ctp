@@ -11,6 +11,12 @@
 			<?php echo h($citySegment['CitySegment']['city']); ?>
 			&nbsp;
 		</dd>
+
+		<dt><?php echo __('Segment'); ?></dt>
+		<dd>
+			<?php echo h($citySegment['CitySegment']['segment']); ?>
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
