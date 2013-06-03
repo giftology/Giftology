@@ -1245,7 +1245,6 @@ public function index() {
 	}
 
     public function claim(){
-        
         if($this->request->is('post')){
             $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
@@ -1263,6 +1262,10 @@ public function index() {
                 'Receiver' => array('UserProfile')),
             'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
          $this->set('gift', $gift);
+         if(!$gift_claimable)
+        {
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+        }
     }
 
     public function fetch_code(){
