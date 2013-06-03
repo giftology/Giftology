@@ -1245,7 +1245,8 @@ public function index() {
 	}
 
     public function claim(){
-        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.expiry_date <' => date(Y-m-d),'Gift.gift_status_id' => 1)));
+        DebugBreak();
+        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
         $this->set('us',$gift_claimable);
          $gift = $this->Gift->find('first', array(
             'contain' => array(
