@@ -1320,6 +1320,8 @@ public function index() {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
+        $conditions['claim']= 1;
+        $conditions['expiry_date >='] = date("Y-m-d");
 		$gift_count = $this->Gift->find('all', array(
 			'fields' => array('COUNT(Gift.id) as product_gift'),
 			'contain' => array(
