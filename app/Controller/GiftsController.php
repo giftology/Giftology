@@ -800,6 +800,7 @@ public function index() {
 
             $temp_code = $this->createRandomCode($product_id);
             $gift['Gift']['code'] = $temp_code;
+            $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
             $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
             $this->TemporaryGiftCode->saveAssociated($data);
 
@@ -825,6 +826,7 @@ public function index() {
             {
                 $temp_code = $this->createUnlimitedCode($product_id);
                $gift['Gift']['code'] = $temp_code;
+               $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
                $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
                $this->TemporaryGiftCode->saveAssociated($data);
             }
@@ -1290,7 +1292,7 @@ public function index() {
                 $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
            
-                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'", 'Gift.gift_code_allocation_mode' => $code_orignal['Product']['allocation_mode']),
+                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
                                          array('Gift.id' => $gift_id));
            
                      
