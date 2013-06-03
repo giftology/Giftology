@@ -1246,8 +1246,9 @@ public function index() {
 
     public function claim(){
         if($this->request->is('post')){
-        $arr = $this->Gift->updateAll(
-                array('Gift.id' => 1),
+            $giftid_to_claim = $this->request->data[];
+            $arr = $this->Gift->updateAll(
+                array('Gift.claim' => 1),
                 array('Gift.id' => $id)
                 );
 
