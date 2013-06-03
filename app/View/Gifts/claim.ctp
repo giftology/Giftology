@@ -51,14 +51,13 @@
                 </div>
                 
               </div>
-              <?php echo $this->Form->input("Save To Gift Box" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'class'=>'imageclick'))?>
-
-             
-      </div>  
-<div class="clear"></div>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-<script type='text/javascript'>
- $('.single-use').click(function() {
+              <?php echo $this->Form->create('gifts', array('action' => 'claim'));?>
+              <?php echo $this->Form->end(__('Save To Gift Box'));?>
+          </div> 
+          <div class="clear"></div>
+          <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+          <script type='text/javascript'>
+           $('.single-use').click(function() {
         // interrupt form submission
             var key_value = this.id;
            //alert(key_value);
