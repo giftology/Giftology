@@ -31,7 +31,7 @@
                               'small' => false,
                               'redeem' => true),
                         array('cache' => array(
-                                'key' => $gift['Product']['id'].'full_redeem'))); ?>
+                                'key' => $gift['Gift']['id'].'claim'))); ?>
         </div>
        <div class="delivery-message">
                 <div class="greeting-bubble">
