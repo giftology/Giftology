@@ -1,4 +1,4 @@
-<?php ?>
+<?php $this->layout = 'claim'; ?> 
 
 <div>
         <ul id="breadcrumbs">
