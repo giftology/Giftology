@@ -11,26 +11,6 @@
 			<?php echo h($citySegment['CitySegment']['city']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('State'); ?></dt>
-		<dd>
-			<?php echo h($citySegment['CitySegment']['state']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Country'); ?></dt>
-		<dd>
-			<?php echo h($citySegment['CitySegment']['country']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Latitude'); ?></dt>
-		<dd>
-			<?php echo h($citySegment[0]['latitude']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Longitude'); ?></dt>
-		<dd>
-			<?php echo h($citySegment[0]['longitude']); ?>
-			&nbsp;
-		</dd>
 	</dl>
 </div>
 <div class="actions">

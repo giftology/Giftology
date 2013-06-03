@@ -7,11 +7,6 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
-
-	public $uses = array( 'CitySegment','LocationSegment','Reminder');
-
-
-
 /**
  * index method
  *
@@ -34,8 +29,7 @@ class CitySegmentsController extends AppController {
 		if (!$this->CitySegment->exists()) {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
-		$cities = $this->CitySegment->find('first', array('fields' => array('id', 'city', 'state','country','Y(geo_location) as latitude', 'X(geo_location) as longitude'), 'conditions' => array('id' => $id)));
-		$this->set('citySegment', $cities);
+		$this->set('citySegment', $this->CitySegment->read(null, $id));
 	}
 
 /**
@@ -46,11 +40,7 @@ class CitySegmentsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->CitySegment->create();
-			$data['city'] = $this->data['CitySegment']['city'];
-			$data['state'] = $this->data['CitySegment']['state'];
-			$data['country'] = $this->data['CitySegment']['country'];
-			$data['geo_location'] = $this->CitySegment->getDataSource()->expression("GEOMFROMTEXT('POINT(".$this->data['CitySegment']['latitude']." ".$this->data['CitySegment']['longitude'].")',0)");
-			if ($this->CitySegment->save($data)) {
+			if ($this->CitySegment->save($this->request->data)) {
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -67,27 +57,12 @@ class CitySegmentsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		//DebugBreak();
 		$this->CitySegment->id = $id;
 		if (!$this->CitySegment->exists()) {
 			throw new NotFoundException(__('Invalid city segment'));
 		}
-		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->CitySegment->save($this->request->data)) {
-				$data=array();
-				$thePostIdArray = explode(',', $this->data['CitySegment']['city_name']);
-				foreach ($thePostIdArray as $city_name) {
-					$data['city'] = $city_name;
-					$data['state'] = $this->data['CitySegment']['state'];
-					$data['country'] = $this->data['CitySegment']['country'];
-					$data['geo_location'] = $this->CitySegment->getDataSource()->expression("GEOMFROMTEXT('POINT(".$this->data['CitySegment']['latitude']." ".$this->data['CitySegment']['longitude'].")',0)");
-					$this->CitySegment->saveAll($data);
-					$id = $this->CitySegment->find('first', array('fields' => array('id'), 'conditions' => array('city' => $city_name)));
-					$data1['city_segment_id'] = $this->data['CitySegment']['id'];
-					$data1['city_id'] = $id['CitySegment']['id'];
-					$this->LocationSegment->saveAll($data1);
-				} 
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -210,27 +185,5 @@ class CitySegmentsController extends AppController {
 		}
 		$this->Session->setFlash(__('City segment was not deleted'));
 		$this->redirect(array('action' => 'index'));
-	}
-
-	public function city_name_fiter_from_fb(){
-		$this->Reminder->recursive = -1;
-        //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
-		$cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location')));
-		$city_array = array();
-		DebugBreak();
-		foreach($cities as $k => $city){
-            if($city['Reminder']['current_location']){
-                $city_array[$k]['city'] = $city['Reminder']['current_location']; 
-                $city_array[$k]['state'] = $city['Reminder']['state'];
-                $city_array[$k]['country'] = $city['Reminder']['country'];
-                $city_array[$k]['geo_location'] = $city['Reminder']['geo_location']; 
-            }  
-		}
-		$city_chunk  = array_chunk($city_array, 1000);
-        
-        foreach($city_chunk as $a){
-        	set_time_limit(300);
-        	$this->CitySegment->saveMany($a);
-        }
 	}
 }

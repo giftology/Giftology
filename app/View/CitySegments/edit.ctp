@@ -3,15 +3,8 @@
 	<fieldset>
 		<legend><?php echo __('Edit City Segment'); ?></legend>
 	<?php
-
 		echo $this->Form->input('id');
-		echo $this->Form->input('city');?></br/></br/>
-		<?php echo $this->Form->input('city_name', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
-		<?php echo $this->Form->input('state', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
-		<?php echo $this->Form->input('country', array('type' => 'textarea','size'=>'10','rows'=>'2'));?></br/></br/>
-		<?php  echo $this->Form->input('latitude', array('type' => 'textarea','size'=>'10','rows'=>'2'));
-	?></br/></br/>
-	<?php  echo $this->Form->input('longitude', array('type' => 'textarea','size'=>'10','rows'=>'2'));
+		echo $this->Form->input('city');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
