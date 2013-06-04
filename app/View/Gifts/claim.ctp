@@ -52,7 +52,11 @@
               </div>
               <?php echo $this->Form->create('gifts', array('action' => 'claim'));?>
               <?php echo $this->Form->hidden("giftid" ,array('value'=>$us ))?>
-              <?php echo $this->Form->end(__('Save To Gift Box'));?>
+               <div class="parent_submit">
+            <?php echo $this->Form->end(__('Save To Gift Box'));?>
+               
+            </div>
+              
           </div> 
           <div class="clear"></div>
           <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
