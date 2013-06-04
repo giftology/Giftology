@@ -393,8 +393,8 @@ $(document).ready(function(){
                 <div class="content" style="position:relative;">
                     <h4>Ready?</h4>
                     <div class="buttons">
+                    <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
                         <button class="cancel1">Cancel</button>
-                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
                     </div>
                 </div>
           </div>
