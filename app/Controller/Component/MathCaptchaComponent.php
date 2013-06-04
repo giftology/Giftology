@@ -1,10 +1,45 @@
-<?php
-
+<?
+/**
+* MathCaptcha Component for CakePHP 2.
+*
+* Generates a basic math equation with human phrasing to prevent automated spam.
+* It's still very much beatable by sophisticated spam bots but tends to prevent 99%
+* of a website's usual spam anyways.
+*
+* Inspired by and partially based on Jamie Nay's cakePHP 1.2 Math Captcha class.
+* -> https://github.com/jamienay/math_captcha_component
+*
+* Features:
+* + differently phrased math problems
+* + allows words and numbers as answer
+* + built-in timer to devalidate answers that where too fast for a human
+*
+* @author Konstantin Koss
+* @version 0.2.2
+* @copyright Copyright 2011, Konstantin Koss
+* @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+* @package app.Controller.Component
+* @link http://codefool.tumblr.com/
+* @filesource
+*/
 class MathCaptchaComponent extends Component {
 
+  /**
+  * Other components needed by this component: Sessions.
+  *
+  * @access public
+  * @var array
+  */
   public $components = array('Session');
 
-
+  /**
+  * Phrasing-choices for the captcha question.
+  *
+  * @internal Feel free to add your own, available .:placeholders:. below.
+  *
+  * @access private
+  * @var array
+  */
   private $choices = array(
     "What is the sum of .:addition-problem:.?", 
     "What does .:word-problem:. result in?", 
@@ -13,7 +48,23 @@ class MathCaptchaComponent extends Component {
     "What do you get when you .:word2-problem:.?" 
   ); 
 
-
+  /**
+  * Placeholders to be used in the question phrasing. Recursion enabled.
+  * 
+  * @internal 
+  *   If an array is given as the first level value, a random element will be
+  *   chosen out of it to replace it.
+  *   2nd level values should be numbers, operators ("+", "-", "*", "/"), or
+  *   a boolean false. In order to create a valid equation, two numbers and one 
+  *   operator have to exist in any given captcha question.
+  *
+  *   Careful with subtraction or division as the order in which the numbers 
+  *   are mentioned matter. Generally it tends to be too difficult for users 
+  *   to not drain conversion rates.
+  *
+  * @access private
+  * @var array
+  */
   private $placeholders = array(
     ".:problem:." => ".:number:. .:operator:. .:number:.",
     ".:word-problem:." => array(
