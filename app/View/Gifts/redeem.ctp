@@ -384,13 +384,13 @@ $(document).ready(function(){
   <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
   <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px"><img src="../img/ccb.png" id="copy"></div>
       </div>
-      <div class="done" id="dones"><img src="../img/done.png" align="center"></div>
+      <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
 
- <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="top: 578px; left: 624.5px; display: none;z-index:0;">
-                <div class="arrow inner"></div>
-                <div class="arrow outer"></div>
-                <div class="content">
+ <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:720px;left:30%">
+                <div class="arrow inner" style=" position:relative; top:38px; margin-left:3px;"></div>
+                <div class="arrow outer"  style="position:relative; top:0; margin-left:0px;"></div>
+                <div class="content" style="position:relative;">
                     <h4>Ready?</h4>
                     <div class="buttons">
                         <button class="cancel1">Cancel</button>
