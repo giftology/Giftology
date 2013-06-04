@@ -370,10 +370,10 @@ $(document).ready(function(){
 
           <div class="FL mar5"><img src="../img/arrow1.png"></div>
           <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
-          <div class="FL mar4" style="float:right;margin-right:-20px"><a href="" id="copy" name="copy"><img src="../img/ccb.png" ></a></div>
+          <div class="FL mar4" style="float:right;margin-right:-20px"><img src="../img/ccb.png" id="copy"></div>
       </div>
 
-         <div class="done "><a href = ""><img src="../img/done.png" align="center"></a></div>
+         <div class="done "><img src="../img/done.png" align="center"></div>
          
          
        
