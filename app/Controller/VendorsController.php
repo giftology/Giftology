@@ -160,7 +160,7 @@ public $presetVars = array(
                 $i = 1;
                 foreach($_FILES['data']['name']['Vendor'] as $file){
                         $ext = pathinfo($file, PATHINFO_EXTENSION);
-                        if ($i++ == 4) break;
+                        if ($i++ == 5) break;
                         if(!in_array($ext,$allowed) ) {
                             $error_array[]=  $file;
                         }      

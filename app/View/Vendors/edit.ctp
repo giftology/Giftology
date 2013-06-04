@@ -9,6 +9,8 @@
 		echo $this->Form->input('wide_file', array('label' => 'Wide Image (200x64px)', 'type' => 'file'));
 		echo $this->Form->input('facebook_file', array('label' => 'Facebook Share Image (200x200px)', 'type' => 'file'));
 		echo $this->Form->input('carousel_image_file', array('label' => 'Carousel(199x102px)', 'type' => 'file'));
+		echo $this->Form->input('redeem_image_file', array('label' => 'Redeem Image (500x200px)', 'type' => 'file'));
+		echo $this->Form->input('vendor_website_link', array('label' => 'Vendor Website Link'));
 
 		echo $this->Tinymce->input('Vendor.description', array( 
 	            'label' => 'About' 

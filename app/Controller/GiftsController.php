@@ -1297,7 +1297,9 @@ public function index() {
            
                      
             }
-             $gift_code = $this->Gift->find('first',array('conditions' =>array (
+             $this->Reminder->recursive = -1;
+             $gift_code = $this->Gift->find('first',array('contain' => array(
+                'Product' => array('Vendor')),'conditions' =>array (
                     'Gift.id' => $this->request->data['search_key']
                    )));
            

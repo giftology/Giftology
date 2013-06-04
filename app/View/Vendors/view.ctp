@@ -16,12 +16,27 @@
 			<?php echo $this->Html->image('../'.$vendor['Vendor']['thumb_image']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Image'); ?></dt>
+		<dt><?php echo __('Wide Image'); ?></dt>
 		<dd>
 			<?php echo $this->Html->image('../'.$vendor['Vendor']['wide_image']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('carousel'); ?></dt>
+		<dt><?php echo __('Facebook Image'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$vendor['Vendor']['facebook_image']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Redeem Image'); ?></dt>
+		<dd>
+			<?php echo $this->Html->image('../'.$vendor['Vendor']['redeem_image']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Vendor Website Link '); ?></dt>
+		<dd>
+			<?php echo h($vendor['Vendor']['vendor_website_link']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Carousel Image'); ?></dt>
 		<dd>
 			<?php echo $this->Html->image('../'.$vendor['Vendor']['carousel_image']); ?>
 			&nbsp;

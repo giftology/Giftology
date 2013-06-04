@@ -64,7 +64,7 @@ input[type="text"] {
     color: #666666;
     padding: 5px;
     resize: none;
-  width:250px;
+    width:250px;
 }
 
 
@@ -332,14 +332,14 @@ $(document).ready(function(){
                     url: "/gifts/fetch_code",
                     data: "search_key="+key_value,
                     success: function(data) {
-                        //alert(data);
-                        var res_data = jQuery.parseJSON(data);;
+                      //alert(data);
+                        var res_data = jQuery.parseJSON(data);
                         var count = res_data.length;
                         var new_row = '';
-                        //$('.event').remove();
-                        //$('#paginator_nav').remove();
+                        $('#use_online').remove();
+                        $('.delivery-message,.submit').remove();
                         
-                         $('#ititemplate').tmpl(res_data).appendTo('#gift-details');
+                         $('#ititemplate').tmpl(res_data).appendTo('.clear');
                      }
 
                      });
@@ -349,24 +349,27 @@ $(document).ready(function(){
 
 </script>
 <script id="ititemplate" type="text/x-jquery-tmpl">
-<div id="popup_box" style="margin-top:20px" >
-    <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth rs 300..</h1>
-    <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
-    <h2 class="RedeemH2 lineh3"><u>www.jabong.com</u></h2>
-     <div class="brandscreen">
-     <img src="../img/snap_jabong.jpg">
-     </div>
-     <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
-    cart choose “add coupon code” and then “apply coupon”.</p>
-    <div class="coupon">
+  <div id="popup_box" style="margin-top:-450px" >
+      <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth Rs ${Gift.gift_amount}</h1>
+      <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
+      <h2 class="RedeemH2 lineh3"><a href="www.jabong.com"><u>${Product.Vendor.vendor_website_link}</u></a></h2>
+       <div class="brandscreen">
+       <img src="../img/snap_jabong.jpg">
+       </div>
+       <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
+      cart choose “add coupon code” and then “apply coupon”.</p>
+      <div class="coupon">
 
-    <div class="FL mar5"><img src="../img/arrow1.png"></div>
-    <div class="FL mar5" > <input type="text" value="${Gift.code}"> </div>
-    <div class="FL mar4"><img src="../img/ccb.png"></div>
+          <div class="FL mar5"><img src="../img/arrow1.png"></div>
+          <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
+          <div class="FL mar4" style="float:right;margin-right:-20px"><a href="" id="copy" name="copy"><img src="../img/ccb.png" ></a></div>
 
 
-    </div>
-       <p class="done "><a href = ""><img src="../img/done.png" align="center"></a></p>
-     <a id="popupBoxClose"><img src="../img/close1.png"></a>
- </div>
+      </div>
+         
+       
+   </div>
  </script>
+
+
+ 

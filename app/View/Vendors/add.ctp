@@ -18,7 +18,7 @@
 			<div class="error_message" id="error_wide" style="display:none; margin-left:20px;">
 		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
-	        <?php echo $this->Form->input('redeem_file', array('label' => 'redeem Image (200x64px)', 'type' => 'file')); ?>
+	        <?php echo $this->Form->input('redeem_file', array('label' => 'Redeem Image (500x200px)', 'type' => 'file')); ?>
 			<div class="error_message" id="error_redeem" style="display:none; margin-left:20px;">
 		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
@@ -27,8 +27,13 @@
 			<div class="error_message" id="error_facebook" style="display:none; margin-left:20px;">
 		            <h5 style="color:#FF0000">*Please upload an image in JPEG/PNG format only.</h5>
 	        </div>
-		<?php echo $this->Form->input('carousel_image_file', array('label' => 'Carousel(199x102px)', 'type' => 'file'));
-		echo $this->Tinymce->input('Vendor.description', array( 
+		<?php echo $this->Form->input('carousel_image_file', array('label' => 'Carousel(199x102px)', 'type' => 'file')); ?>
+        <?php echo $this->Form->input('vendor_website_link', array('label' => 'Vendor Website Link')); ?>
+        <div class="error_message" id="error_website" style="display:none; margin-left:20px;">
+                    <h5 style="color:#FF0000">*Please enter the website link.</h5>
+            </div>
+
+		<?php echo $this->Tinymce->input('Vendor.description', array( 
 	            'label' => 'About' 
 		            ),array( 
 		                'language'=>'en' 
@@ -91,6 +96,13 @@
                 }
                 else{
                     $("#error_facebook").hide();    
+                }
+                if ($("#VendorVendorWebsiteLink").val().length == 0) {
+                    $("#error_website").show();
+                    e = true;
+                }
+                else{
+                    $("#error_website").hide();    
                 }
                 if(e) return false;
             });
