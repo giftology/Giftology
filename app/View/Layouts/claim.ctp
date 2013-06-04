@@ -66,10 +66,14 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<div class="controls">
 			<div class="shadow-wrapper">
 				<div class="frame">
-					
+					<div class="img-placeholder male">
+						<?php $photo_url = "https://graph.facebook.com/".$facebook_user['id']."/picture"; ?>
+						<img src=<?= $photo_url; ?>>
+					</div>
 				</div>
 			</div>
 			<div class="current-user">
+				<p><?= $facebook_user['first_name']; ?></p>
 				
 			</div>
 		</div>

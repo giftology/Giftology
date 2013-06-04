@@ -34,11 +34,10 @@
                                 'key' => $gift['Gift']['id'].'claim'))); ?>
         </div>
        <div class="delivery-message">
-                <div class="greeting-bubble">
+                <div class="greeting-bubble" style="font-size:14px">
 
                     <?php
-                    echo $gift['Gift']['gift_message']; 
-                     echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => " ",'class'=>"gift-message" ));?>
+                    echo $gift['Gift']['gift_message'];?>
                 </div>
                 
                 <div class="shadow-wrapper">
