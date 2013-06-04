@@ -387,9 +387,9 @@ $(document).ready(function(){
       <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
 
- <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:720px;left:30%">
-                <div class="arrow inner" style=" position:relative; top:38px; margin-left:3px;"></div>
-                <div class="arrow outer"  style="position:relative; top:0; margin-left:0px;"></div>
+ <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:710px;left:30%">
+                <div class="arrow inner" style=" position:relative; top:38px; margin-left:-2px;"></div>
+                <div class="arrow outer"  style="position:relative; top:0; margin-left:-5px;"></div>
                 <div class="content" style="position:relative;">
                     <h4>Ready?</h4>
                     <div class="buttons">
