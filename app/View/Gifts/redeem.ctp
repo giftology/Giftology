@@ -268,9 +268,11 @@ input[type="text"] {
                 </div>
                 
               </div>
-              <div class = "parent_submit">
-              <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
-            </div>
+               <?php if($gift['Product']['redemption_type']==0): ?>
+                    <div class = "parent_submit">
+                    <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
+                    </div>
+                <?php endif; ?>
 
               <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
                 <div class="arrow inner"></div>
