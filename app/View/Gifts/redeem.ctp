@@ -20,6 +20,7 @@
 
 .RedeemH1{ text-align:center; font:24px 'calibri',Arial, Helvetica, sans-serif; color:#000000; }
 .RedeemH2{ text-align:center; font:20px 'calibri',Arial, Helvetica, sans-serif; color:#000000;}
+.RedeemH3{ text-align:center; font:16px 'calibri',Arial, Helvetica, sans-serif; color:#666; text-shadow: 1px 1px #fff;}
 .mar1{margin-top:50px;margin-left:41px;}
 .mar2{margin-top:40px;}
 .mar3{margin-top:-25px;}
@@ -28,7 +29,7 @@
 .lineh1{ line-height:30px;}
 .lineh2{ line-height:20px;}
 .lineh3{ line-height:0px;}
-.brandscreen{margin: 12px auto; width:550px; background-image:url(1.png); height:256px; }
+.brandscreen{margin: 12px auto; width:550px; background-image:url(../img/1.png); height:256px; }
 .brandscreen img{ width:500px; margin:20px 24px 30px 24px;}
 .done{margin:-40px auto; width:184px; height:40px;}
 .coupon{width:366px; margin: 40px auto; height:60px;}
@@ -365,7 +366,7 @@ $(document).ready(function(){
        <div class="brandscreen">
        <img src="../img/snap_jabong.jpg">
        </div>
-       <p class="RedeemH2 mar3 ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
+       <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
       <div class="coupon">
 
           <div class="FL mar5"><img src="../img/arrow1.png"></div>
