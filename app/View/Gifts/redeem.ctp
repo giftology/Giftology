@@ -80,22 +80,31 @@ input[type="text"] {
     
     $('.single').click( function() {
     loadPopupBox();
+      $('#ccb').click( function() {
+        alert("arul");
+      });
+      $('.done').click( function() {
+         $('#use_online_redeem').css('display','block');
+         $('.cancel1').click( function() {
+         $('#use_online_redeem').hide();
+      });
+      });
     $('#container').css('display','none')
     
     });
+
+    
   
     $('#popupBoxClose').click( function() {     
       unloadPopupBox();
+
+      
       $('#container').css('display','block')
     });
     
     
-    $('#ask').click( function() {
-      $('#popup_box').slideUp(1000);
-    });
-    $('#submitt').click( function() {
-      $('#popup_box').slideUp(1000);
-    });
+   
+   
       $('#edit').click( function() {
         $(this).hide();
       $('#email').fadeIn(1000);
@@ -106,6 +115,7 @@ input[type="text"] {
 
     function unloadPopupBox() { // TO Unload the Popupbox
       $('#popup_box').fadeOut("slow");
+
       $("#container").css({ // this is just for style   
         "opacity": "1"  
       }); 
@@ -280,7 +290,7 @@ input[type="text"] {
 
           
 
-</div>	
+</div>  
 <div class="clear"></div>
 <script type="text/javascript">
 
@@ -318,10 +328,7 @@ $(document).ready(function(){
             $(".cancel").click(function (){
                 $("#use_online").hide();
             });
-            $(".done").click(function (){
-              alert("shubham");
-                $("#use_online_redeem").show();
-            });
+           
         });
 
 
@@ -360,28 +367,40 @@ $(document).ready(function(){
 </script>
 <script id="ititemplate" type="text/x-jquery-tmpl">
   <div id="popup_box" style="margin-top:30px;margin-left:120px" >
-      <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth Rs ${Gift.gift_amount}</h1>
-      <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
-      <h2 class="RedeemH2 lineh3"><a href="http://${Product.Vendor.vendor_website_link}" target="_blank"><u>${Product.Vendor.vendor_website_link}</u></a></h2>
-       <div class="brandscreen">
-       <img src="../img/snap_jabong.jpg">
-       </div>
-       <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
-      <div class="coupon">
-
-          <div class="FL mar5"><img src="../img/arrow1.png"></div>
-          <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
-          <div class="FL mar4" style="float:right;margin-right:-20px"><img src="../img/ccb.png" id="copy"></div>
+  <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth Rs ${Gift.gift_amount}</h1>
+  <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
+  <h2 class="RedeemH2 lineh3"><a href="http://${Product.Vendor.vendor_website_link}" target="_blank">
+  <u>${Product.Vendor.vendor_website_link}</u>
+  </a>
+  </h2>
+  <div class="brandscreen">
+  <img src="../img/snap_jabong.jpg">
+  </div>
+  <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
+  <div class="coupon">
+  <div class="FL mar5"><img src="../img/arrow1.png"></div>
+  <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
+  <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px"><img src="../img/ccb.png" id="copy"></div>
       </div>
+      <div class="done" id="dones"><img src="../img/done.png" align="center"></div>
+     
 
-         <div class="done "><img src="../img/done.png" align="center"></div>
-         
-         
-       
-   </div>
+ <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="top: 578px; left: 624.5px; display: none;z-index:0;">
+                <div class="arrow inner"></div>
+                <div class="arrow outer"></div>
+                <div class="content">
+                    <h4>Ready?</h4>
+                    <div class="buttons">
+                        <button class="cancel1">Cancel</button>
+                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
+                    </div>
+                </div>
+          </div>
+
+      
+  </div>
 
    
  </script>
 
 
- 
