@@ -3,9 +3,10 @@
 /* popup_box DIV-Styles*/
 #popup_box {
   display:none;
-  width:600px;
-  height:688px;
+  width:580px;
+  height:670px;
   background-image:url(../img/back.jpg);
+  background-repeat: no-repeat;
   z-index:10;
   border:2px solid #999;
   margin:auto;
@@ -27,7 +28,7 @@
 .lineh1{ line-height:30px;}
 .lineh2{ line-height:20px;}
 .lineh3{ line-height:0px;}
-.brandscreen{margin: 40px auto; width:550px; background-image:url(1.png); height:256px; }
+.brandscreen{margin: 12px auto; width:550px; background-image:url(1.png); height:256px; }
 .brandscreen img{ width:500px; margin:20px 24px 30px 24px;}
 .done{margin:-40px auto; width:184px; height:40px;}
 .coupon{width:366px; margin: 40px auto; height:60px;}
@@ -76,7 +77,7 @@ input[type="text"] {
   
     // When site loaded, load the Popupbox First
     
-    $('.single-use').click( function() {
+    $('.single').click( function() {
     loadPopupBox();
     $('#container').css('display','none')
     
@@ -239,11 +240,11 @@ input[type="text"] {
                                 'key' => $gift['Product']['id'].'full_redeem'))); ?>
         </div>
        <div class="delivery-message">
-                <div class="greeting-bubble">
+                <div class="greeting-bubble" style="font-size:14px;">
 
                     <?php
                     echo $gift['Gift']['gift_message']; 
-                     echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'value' => " ",'class'=>"gift-message" ));?>
+                    ?>
                 </div>
                 
                 <div class="shadow-wrapper">
@@ -256,16 +257,18 @@ input[type="text"] {
                 </div>
                 
               </div>
-              <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','label' => false,'div' => false,'class'=>'imageclick'))?>
+              <div class = "parent_submit">
+              <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
+            </div>
 
               <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
                 <div class="arrow inner"></div>
                 <div class="arrow outer"></div>
                 <div class="content">
-                    <h3>Ready?</h3>
+                    <h4>Ready?</h4>
                     <div class="buttons">
                         <button class="cancel">Cancel</button>
-                        <button class="single-use" id="<?php echo $gift['Gift']['id'];?>"> Use online </button>
+                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
                     </div>
                 </div>
           </div>
@@ -314,6 +317,10 @@ $(document).ready(function(){
             $(".cancel").click(function (){
                 $("#use_online").hide();
             });
+            $(".done").click(function (){
+              alert("shubham");
+                $("#use_online_redeem").show();
+            });
         });
 
 
@@ -321,7 +328,7 @@ $(document).ready(function(){
 
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
 <script type='text/javascript'>
- $('.single-use').click(function() {
+ $('.single').click(function() {
         // interrupt form submission
             var key_value = this.id;
            //alert(key_value);
@@ -336,8 +343,10 @@ $(document).ready(function(){
                         var res_data = jQuery.parseJSON(data);
                         var count = res_data.length;
                         var new_row = '';
-                        $('#use_online').remove();
-                        $('.delivery-message,.submit').remove();
+                        $('#gift-details').remove();
+                        //$('.footer-wrap').remove();
+                        $('footer').remove();
+                        //$('.delivery-message,.submit').remove();
                         
                          $('#ititemplate').tmpl(res_data).appendTo('.clear');
                      }
@@ -349,26 +358,28 @@ $(document).ready(function(){
 
 </script>
 <script id="ititemplate" type="text/x-jquery-tmpl">
-  <div id="popup_box" style="margin-top:-450px" >
+  <div id="popup_box" style="margin-top:30px;margin-left:120px" >
       <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth Rs ${Gift.gift_amount}</h1>
       <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
-      <h2 class="RedeemH2 lineh3"><a href="www.jabong.com"><u>${Product.Vendor.vendor_website_link}</u></a></h2>
+      <h2 class="RedeemH2 lineh3"><a href="http://${Product.Vendor.vendor_website_link}" target="_blank"><u>${Product.Vendor.vendor_website_link}</u></a></h2>
        <div class="brandscreen">
        <img src="../img/snap_jabong.jpg">
        </div>
-       <p class="RedeemH2 mar3 ">Use your voucher code at jabong.com when checking out your <br>shopping
-      cart choose “add coupon code” and then “apply coupon”.</p>
+       <p class="RedeemH2 mar3 ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
       <div class="coupon">
 
           <div class="FL mar5"><img src="../img/arrow1.png"></div>
           <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
           <div class="FL mar4" style="float:right;margin-right:-20px"><a href="" id="copy" name="copy"><img src="../img/ccb.png" ></a></div>
-
-
       </div>
+
+         <div class="done "><a href = ""><img src="../img/done.png" align="center"></a></div>
+         
          
        
    </div>
+
+   
  </script>
 
 

@@ -1659,7 +1659,7 @@ button, input[type="submit"] {
 }
 
 
-.parent_submit input[type="submit"]:hover 
+.parent_submit  input[type="submit"]:hover 
 {   background-color: rgb(248, 63, 47); 
    
 
@@ -3148,8 +3148,8 @@ display:inline;
 
    .popover.bottom .arrow.inner {
     border-bottom: 16px solid white;
-    margin-left: -16px;
-    top: -12px;
+    margin-left: -310px;
+    top: 389px;
 }
 
 .popover.bottom .arrow {
@@ -3167,8 +3167,8 @@ display:inline;
 
 .popover.bottom .arrow.outer {
     border-bottom: 19px solid #D9D9D9;
-    margin-left: -19px;
-    top: -18px;
+    margin-left: -313px;
+    top: 382px;
 }
 .popover.bottom .arrow {
     left: 50%;
@@ -3235,4 +3235,10 @@ display:inline;
     height: 40px;
     line-height: 36px;
     padding: 0 12px;
+}
+
+.single  input[type="submit"]:hover 
+{   background-color: rgb(248, 63, 47); 
+   
+
 }
