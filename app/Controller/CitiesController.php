@@ -230,6 +230,7 @@ class CitiesController extends AppController {
 	}
 
 	public function city_name_fiter_from_fb(){
+		$exisitng_cities = $this->City->find('list', array('fields' => array('city')));
 		$this->Reminder->recursive = -1;
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
         $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location')));
@@ -240,9 +241,12 @@ class CitiesController extends AppController {
                 $city_search_key[] = $city['Reminder']['current_location'];
             }
         }
+
+        $filtered_city = array_diff($city_search_key,$exisitng_cities);
+
         $city_details = $this->Reminder->find('all', array(
                     'fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location'),
-                    'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $city_search_key)
+                    'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $filtered_city)
                     )
                 );
                 
