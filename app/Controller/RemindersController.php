@@ -344,10 +344,17 @@ class RemindersController extends AppController {
 				{
 					$friend_list=$this->Reminder->find('all', array('limit'=>5,
                 		'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => 'India')),'order' => array('RAND()')));
+					foreach($friend_list as $k => $friend_lists){
+			           $friend_list[$k]['Reminder']['occasion'] = "Suggested";
+			       }
+
 					if($no_today_users == 0 && SUGGESTED_FRIENDS)
 					{
 						$friend_list=$this->Reminder->find('all', array('limit'=>1,
                 		'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => 'India')),'order' => array('RAND()')));
+                		foreach($friend_list as $k => $friend_lists){
+			           		$friend_list[$k]['Reminder']['occasion'] = "Suggested";
+			       		}
 					}
 					$gift_send_friend = $this->Gift->find('first',array('fields'=>array('sender_id','created'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id')),'order'=>'Gift.id DESC'));
 				 	$gift_send_facebook_id = $this->User->find('first',array('fields'=>array('facebook_id'),'conditions' => array('User.id' => $gift_send_friend['Gift']['sender_id'])));
@@ -365,8 +372,8 @@ class RemindersController extends AppController {
 		            $latest_friend_data = $this->Reminder->find('all', array(
                 		'conditions' => array('AND'=>array('Reminder.friend_fb_id' => $latest_friend['UserProfile']['latest_friend'],'Reminder.user_id'=>$this->Auth->user('id')))));
 		            foreach($latest_friend_data as $k => $latest_friends){
-                       if($latest_friends['Reminder']['sex'] == "male") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Him";
-                       if($latest_friends['Reminder']['sex'] == "female") $latest_friend_data[$k]['Reminder']['occastion'] = "Welcome Her";  
+                       if($latest_friends['Reminder']['sex'] == "male") $latest_friend_data[$k]['Reminder']['occasion'] = "Welcome Him";
+                       if($latest_friends['Reminder']['sex'] == "female") $latest_friend_data[$k]['Reminder']['occasion'] = "Welcome Her";  
 
 		            }
 		            $latest_friend_hide = $this->Gift->find('first',array('conditions' => array('AND'=>array('Gift.sender_id' => $this->Auth->user('id'),'Gift.receiver_fb_id'=>$latest_friend['UserProfile']['latest_friend'])),'order'=>'Gift.id DESC'));
@@ -379,31 +386,23 @@ class RemindersController extends AppController {
 			        {	
 			        	$merge_list = array_merge($gift_send_friend_lists,$latest_friend_data);
 			        	$suggested_list = array_merge($merge_list,$friend_list);
-			 			foreach($suggested_list as $k => $suggested_lists){
-			         		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
-		             	}
+			 			
 			        }
 			           
 			        if($latest_friend_data == NULL && $gift_send_friend_lists != NULL)
 			        {
 			           	$suggested_list = array_merge($gift_send_friend_lists,$friend_list);
-			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
-		             	}
+			 			
 			        }
 			        if($latest_friend_data != NULL && $gift_send_friend_lists == NULL)
 			        {
 			        	$suggested_list = array_merge($latest_friend_data,$friend_list);
-			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
-		             	}
+			 			
 			        }
 			        if($latest_friend_data == NULL && $gift_send_friend_lists == NULL)
 			        {
 			           	$suggested_list = $friend_list;
-			 			foreach($suggested_list as $k => $suggested_lists){
-			           		$suggested_list[$k]['Reminder']['occasion'] = "Suggested";
-		             	}
+			 			
 			        }
 		            
 			 		$today_users = array_merge($today_users,  $suggested_list);
