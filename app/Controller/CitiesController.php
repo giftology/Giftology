@@ -234,7 +234,7 @@ class CitiesController extends AppController {
 		$exisitng_cities = $this->City->find('list', array('fields' => array('city')));
 		$this->Reminder->recursive = -1;
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
-        $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location')));
+        $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location'), 'conditions' => array('current_location !=' => $exisitng_cities)));
         $city_array = array();
         $city_search_key = array();
         foreach($cities as $k => $city){
@@ -243,12 +243,10 @@ class CitiesController extends AppController {
             }
         }
 
-        $filtered_city = array_diff($city_search_key,$exisitng_cities);
-
         $city_details = NULL;
         $city_details = $this->Reminder->find('all', array(
                     'fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location'),
-                    'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $filtered_city)
+                    'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $city_search_key)
                     )
                 );
                 
