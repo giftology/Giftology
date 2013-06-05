@@ -1,5 +1,5 @@
 <?php $this->layout = 'claim'; ?> 
-<div style="width:1000px;height:500px;background-image: url(../img/err17.png); background-opacity:.1;">
+
   
 
 <div >
@@ -92,4 +92,3 @@
    
 
 </script>
-</div>
