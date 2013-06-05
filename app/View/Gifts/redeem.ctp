@@ -273,10 +273,20 @@ input[type="text"] {
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>
                 <?php else: ?>
-                      <p>This is offline voucher which can be redeemed through : </p></br>
+                    <p>This is offline voucher which can be redeemed through : </p></br>
                       <div class="current-user">
-                          <a href="https://play.google.com/store/search?q=giftolgy" target="_blank"><span>Android App</span></a></br></br>
-                           <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'setting')); ?>><span>Mobile Web</span></a>
+                          <div class="android_app" style="margin-bottom:-35px;margin-left:10px;cursor:pointer">
+                            <a href="https://play.google.com/store/search?q=giftology" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/></a> 
+                          </div></br></br>
+                           <!--<a href=<?= $this->Html->url(array('controller'=>'gifts', 'action'=>'setting')); ?>><span>Mobile Web</span></a>-->
+                           <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
+                       
+                              <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
+                              </div>
+                              <a>
+                                <span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span>
+                              </a>
+                          <?php echo $this->Form->end(); ?>
                       </div>
                 <?php endif; ?>
 
@@ -314,7 +324,7 @@ input[type="text"] {
 <script type="text/javascript">
 
       $(document).ready(function(){
-            $("#sms").click(function (){
+            $(".arrow").click(function (){
                 $("#sms1").submit()
             });
         });
