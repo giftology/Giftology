@@ -1337,6 +1337,7 @@ public function index() {
 
 		}
         $conditions['claim']= 1;
+        $conditions['redeem']= 0;
         $conditions['expiry_date >='] = date("Y-m-d");
 		$gift_count = $this->Gift->find('all', array(
 			'fields' => array('COUNT(Gift.id) as product_gift'),
