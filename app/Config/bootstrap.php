@@ -241,6 +241,7 @@ define('SUGGESTED_FRIENDS', TRUE);
 define('DEFAULT_EMAIL_VERIFICATION', FALSE);
 define('SHOW_HOVER', TRUE);
 define('SHOW', FALSE);
+define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));

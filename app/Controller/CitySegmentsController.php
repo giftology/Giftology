@@ -224,7 +224,7 @@ class CitySegmentsController extends AppController {
 			));
         if(isset($city_segment_geo_location) && !empty($city_segment_geo_location)){
             $segment_search_condition = "(POW((Y(geo_location)-".$city_segment_geo_location[0]['latitude'].")*111.12, 2) + POW((X(geo_location) - ".$city_segment_geo_location[0]['longitude'].")*111.12, 2))";
-            $conditions[$segment_search_condition.' <= '] = 1600;
+            $conditions[$segment_search_condition.' <= '] = pow(CITY_SEGMENT_RADIUS,2);
             $city_segments = NULL;
             $city_segments = $this->City->find('list', array('fields' => array('id'), 'conditions' => $conditions));
             $this->CitySegment->id = $segment_id;
