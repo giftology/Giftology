@@ -206,20 +206,42 @@ class CitySegmentsController extends AppController {
         }
         unset($segment);
 		$segment_ids = $this->City->find('list', array('fields' => array('id'),'conditions' => array('city' =>  $trimmed_segments)));
-		/*$segment_id_array = array();
-		foreach($segment_ids as $id){
-			$segment_id_array[] = $id;	
-		}*/
 		return serialize($segment_ids);
 	}
 
 	public function city_from_ids($city_ids){
 		$city_ids_array = unserialize($city_ids);
 		$cities = $this->City->find('list', array('fields' => array('city'),'conditions' => array('id' =>  $city_ids_array)));
-		/*$city_array = array();
-		foreach($cities as $city){
-			$city_array[] = $city;
-		}*/
 		return implode(',',$cities);
 	}
+
+	public function get_segments($segment_id){
+		$coefficient = 111.12;
+		$city_name = $this->CitySegment->find('first', array('fields' => array('city'),'conditions' => array('id' => $segment_id)));
+		$city_segment_geo_location = $this->City->find('first', array(
+			'fields' => array('Y(geo_location) as latitude', 'X(geo_location) as longitude'),
+			'conditions' => array('city' => $city_name['CitySegment']['city'])
+			));
+        if(isset($city_segment_geo_location) && !empty($city_segment_geo_location)){
+            $segment_search_condition = "(POW((Y(geo_location)-".$city_segment_geo_location[0]['latitude'].")*111.12, 2) + POW((X(geo_location) - ".$city_segment_geo_location[0]['longitude'].")*111.12, 2))";
+            $conditions[$segment_search_condition.' <= '] = 1600;
+            $city_segments = NULL;
+            $city_segments = $this->City->find('list', array('fields' => array('id'), 'conditions' => $conditions));
+            $this->CitySegment->id = $segment_id;
+            $city_segment_data = NULL;
+            $city_segment_data['CitySegment']['segment'] = serialize($city_segments);
+            $this->CitySegment->save($city_segment_data);
+        }
+        return;
+        //$this->autoRender = $this->autoLayout = false;
+	}
+    
+    public function auto_city_segment(){
+        $city_segments = $this->CitySegment->find('list', array('fields' => array('id')));
+        foreach($city_segments as $city_segment){
+            if($city_segment!=ALL_CITIES)
+                $this->get_segments($city_segment);
+        }
+        $this->autoRender = $this->autoLayout = false;
+    }
 }
