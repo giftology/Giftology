@@ -272,6 +272,12 @@ input[type="text"] {
                     <div class = "parent_submit">
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>
+                <?php else: ?>
+                      <p>This is offline voucher which can be redeemed through : </p></br>
+                      <div class="current-user">
+                          <a href="https://play.google.com/store/search?q=giftolgy" target="_blank"><span>Android App</span></a></br></br>
+                           <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'setting')); ?>><span>Mobile Web</span></a>
+                      </div>
                 <?php endif; ?>
 
               <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
