@@ -39,7 +39,7 @@ class GiftsController extends AppController {
     }
 
 	public function isAuthorized($user) {
-	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
+	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
 		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code')) {
 	        return true;
 	    }
@@ -1245,6 +1245,20 @@ public function index() {
         $this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
+    public function redeemgift(){
+        if($this->request->is('post')){
+            $giftid_to_redeem = $this->request->data;
+            $redeem = $this->Gift->updateAll(
+                array('Gift.redeem' => 1),
+                array('Gift.id' => $this->request->data['Gift']['gift_id']) 
+                );
+            if($redeem){
+                $this->redirect(array('action' => 'view_gifts'));
+
+            }
+
+        }
+    }
 
     public function claim(){
         if($this->request->is('post')){
@@ -1255,7 +1269,7 @@ public function index() {
                 );
 
         }
-        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
         $this->set('us',$gift_claimable['Gift']['id']);
          $gift = $this->Gift->find('first', array(
             'contain' => array(

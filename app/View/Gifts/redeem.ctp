@@ -393,7 +393,10 @@ $(document).ready(function(){
                 <div class="content" style="position:relative;">
                     <h4>Ready?</h4>
                     <div class="buttons">
-                    <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
+                    <?php  echo $this->Form->create(array('action' => 'redeemgift','id' => 'redeem_form'));?>                    
+                                <?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?>
+                                <?php echo $this->Form->end(__('Redeem')); ?>
+                        
                         <button class="cancel1">Cancel</button>
                     </div>
                 </div>
