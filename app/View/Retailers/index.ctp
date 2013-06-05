@@ -18,10 +18,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
       $(document).ready(function(){
             $(".submit").click(function (){
                 var e = false;
-              var emailRegex = new RegExp(/^[0-9-+]+$/);
+              var phoneRegex = new RegExp(/^[0-9-+]+$/);
                var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-                var valid = emailRegex.test($("#email").val());
-               var valid_phone = emailRegex.test($("#r_phone").val());
+                //var valid = emailRegex.test($("#email").val());
+                var valid = true;
+               var valid_phone = phoneRegex.test($("#r_phone").val());
             var valid_pin = emailRegex.test($("#r_pin").val());
               
                 if(!valid_phone || $("#r_phone").val().length < 10){
@@ -261,6 +262,7 @@ $('.reset-link').click(function(){
  <!--no constraints for mail id -->
                   <div class="input email" style="height: 91px;margin-top: 9px;" ><?php echo $this->Form->textarea("r_mess" ,array('rows'=>'5','cols'=>'5','name'=>'mess_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "your message",'style' => "width: 398px;border: 1px solid #B54D4D;border-radius: 2px; float:left; padding:0 0 0 7px" ))?>
                   </div>
+                  <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
               <!-- capcha-->
                
                  
