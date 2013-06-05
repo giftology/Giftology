@@ -394,8 +394,9 @@ $(document).ready(function(){
                     <h4>Ready?</h4>
                     <div class="buttons">
                     <?php  echo $this->Form->create(array('action' => 'redeemgift','id' => 'redeem_form'));?>                    
-                                <?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ))?>
-                                <?php echo $this->Form->end(__('Redeem')); ?>
+                                <?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['id'] ));?>
+                                <?php echo $this->Form->input("Redeem" ,array('type'=>'button','label' => false,'div' => false,'class' => 'single','style' => 'background-color: #BE1304;color: #FFFFFF'));?>
+                                <?php echo $this->Form->end(); ?>
                         
                         <button class="cancel1">Cancel</button>
                     </div>
