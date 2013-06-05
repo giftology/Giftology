@@ -1246,8 +1246,7 @@ ul.voucher-details li {
     background-color: rgba(173, 46, 13, 0.86);
     background-image: -moz-linear-gradient(rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86) 50%, rgba(173, 46, 13, 0.86));
     color: #FFFFFF;
-    margin-left: 170px;
-    margin-top: 10px;
+    margin-left: 180px;
 }
 .retail{
 
@@ -2918,7 +2917,7 @@ margin-left: -20px;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 12px;
     font-style: italic;
-    padding: 10px 23px 0 0;
+    padding: 10px 9px 0 0;
     border: none;
 background: transparent;
 }

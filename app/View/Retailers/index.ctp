@@ -19,8 +19,6 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
             $(".submit").click(function (){
                 var e = false;
               var emailRegex = new RegExp(/^[0-9-+]+$/);
-               var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
-                var valid = emailRegex.test($("#email").val());
                var valid_phone = emailRegex.test($("#r_phone").val());
             var valid_pin = emailRegex.test($("#r_pin").val());
               
@@ -47,30 +45,14 @@ $cakeDescription = __d('cake_dev', 'Giftology: Retailers');
                     $("#error_name").hide();    
                 }  
                
-                if ($("#r_email").val().length == 0)
-                 {
-                    /*$("#error_email").show();
-                    e = true;*/
-                    var r=confirm("continue without email address!");
-                    if (r==true)
-                      {
-                         return false;
-                      }
-                    else
-                      {
-                        e = true;
-                      }
-                    }
-               else if(!valid)
-                        {
-                          $("#error_email").show();
-                             e = true;  
-                        }
-                else if(valid)
-                        {
-                            $("#error_email").hide(); 
-             
-                        }
+                if ($("#r_city").val().length == 0) {
+                    $("#error_city").show();
+                    
+                    e = true;
+                }
+                else{
+                    $("#error_city").hide();    
+                } 
                
                  if(e) return false; 
                         
@@ -209,7 +191,7 @@ $('.reset-link').click(function(){
                 <!--name with input mandatory constraint-->
                  <div class="input email">
                    
-                      <div class="input email"  ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name",'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px"))?> 
+                      <div class="input email"  ><?php echo $this->Form->input("r_name" ,array('name'=>'name_r','label' => false,'id'=>'r_name','div' => false,'class'=>"umstyle5",'placeholder' => "Name",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?> 
                       </div>
                        <div class="error_message" id="error_name" style="display:none;margin-bottom:-8px; ">
                          <span style="color:#FF0000; font-size:11px; ">*please enter the name.</span>
@@ -219,7 +201,7 @@ $('.reset-link').click(function(){
                        <!--no constraints for web portal-->
                 <div class="input email" style="margin-top:10px">
                     
-                    <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "Company",'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px" ))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_website" ,array('name'=>'web_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "Company",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px" ))?>
                     </div>
                    
                 </div>
@@ -233,10 +215,10 @@ $('.reset-link').click(function(){
                    <!--mandatory input for city-->
                <div class="input email" style="margin-top:10px">
                
-                  <div class="input email" ><?php echo $this->Form->input("r_email" ,array('name'=>'email_r','id' => 'r_email','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                  <div class="input email" ><?php echo $this->Form->input("r_city" ,array('name'=>'city_r','id' => 'r_city','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
                   </div>
-                  <div class="error_message" id="error_email" style="display:none;margin-bottom:-8px;">
-                    <span style="color:#FF0000; font-size:11px;">*please enter the valid email address.</span>
+                  <div class="error_message" id="error_city" style="display:none;margin-bottom:-8px;">
+                    <span style="color:#FF0000; font-size:11px;">*please enter the email.</span>
                  </div>
               </div>
            
@@ -251,7 +233,7 @@ $('.reset-link').click(function(){
                    <!--Contact no. constraint-->
               <div class="input email" style="margin-top:10px">
                  
-                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ,'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                    <div class="input email" ><?php echo $this->Form->input("r_phone" ,array('name'=>'contact_r','label' => false,'id'=>'r_phone','div' => false,'class'=>"umstyle5",'placeholder' => "Contact no." ,'style' => "width: 400px;height: 28px; padding:0;border: 1px solid #B54D4D;border-radius: 2px"))?>
                     </div>
                     <div class="error_message" id="error_phone" style="display:none;margin-bottom:-8px; ">
                        <span style="color:#FF0000; font-size:11px;">*please enter the 10 digit mobile no./ landline no. along with std code.</span>
@@ -259,7 +241,7 @@ $('.reset-link').click(function(){
               </div>
 
  <!--no constraints for mail id -->
-                  <div class="input email" style="height: 91px;margin-top: 9px;" ><?php echo $this->Form->textarea("r_mess" ,array('rows'=>'5','cols'=>'5','name'=>'mess_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "your message",'style' => "width: 398px;border: 1px solid #B54D4D;border-radius: 2px; float:left; padding:0 0 0 7px" ))?>
+                  <div class="input email" style="height: 91px;margin-top: 9px;" ><?php echo $this->Form->textarea("r_mail" ,array('rows'=>'5','cols'=>'5','name'=>'mail_r','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "your message",'style' => "width: 398px;border: 1px solid #B54D4D;border-radius: 2px; float:left" ))?>
                   </div>
               <!-- capcha-->
                
@@ -267,7 +249,7 @@ $('.reset-link').click(function(){
                   <div class="input email" >
                          
                           <div class="captcha" style="width:430px; height:45px;" >
-                            <div class="input email" style="margin-top:10px; width:394px; float:left; border: 1px solid #B54D4D;border-radius: 2px;padding:0px 5px 4px 7px;">
+                            <div class="input email" style="margin-top:10px; width:400px; float:left; border: 1px solid #B54D4D;border-radius: 2px;padding:4px 5px 4px 5px;">
                              <div  class="captha" style="margin-top:10px; width:300px; float:left;">
                               <?php echo  $captcha ?>
                             </div>
