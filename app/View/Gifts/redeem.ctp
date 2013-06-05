@@ -279,6 +279,7 @@ input[type="text"] {
                             <a href="https://play.google.com/store/search?q=giftology" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/></a> 
                           </div></br></br>
                            <!--<a href=<?= $this->Html->url(array('controller'=>'gifts', 'action'=>'setting')); ?>><span>Mobile Web</span></a>-->
+                           <?php if($gift['Gift']['sms']==0): ?>
                            <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
                        
                               <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
@@ -287,6 +288,7 @@ input[type="text"] {
                                 <span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span>
                               </a>
                           <?php echo $this->Form->end(); ?>
+                        <?php endif; ?>
                       </div>
                 <?php endif; ?>
 

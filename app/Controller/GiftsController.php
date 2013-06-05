@@ -35,12 +35,12 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts');
+	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page');
     }
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code') ||($this->action == 'offline_voucher_redeem_page')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -1426,24 +1426,31 @@ public function index() {
      	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
-				'Sender' => array('UserProfile')),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
      	if($id == "")
      	{
      		$this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));	
      	}
-        $user_id = $gift['Gift']['receiver_id'];
-        $user_data = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id'=>$user_id)));
-     $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+        if($gift['Receiver']['UserProfile']['mobile']!="NULL")
+        {
+            $this->set('Mobile_no',$gift['Receiver']['UserProfile']['mobile']);
+        }
+        
+        $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
+        DebugBreak();
+        $link = "http://Giftology/gifts/offline_voucher_redeem_page/".$gift_id;
+
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
-        $this->set('user_data',$user_data);
-    	$this->set('pin',$pin['UploadedProductCode']['pin']);
+        $this->set('link',$link);
+        $this->set('pin',$pin['UploadedProductCode']['pin']);
     	
     } 
     public function send_sms(){
@@ -1459,7 +1466,19 @@ public function index() {
 
         }
 		
+    public function offline_voucher_redeem_page($gift_id)
+    {
 
+        $id=$this->AesCrypt->decrypt($gift_id);
+        $value = $_SERVER['HTTP_USER_AGENT'];
+        $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$id)));
+        $this->set('gift', $gift);
+    }
     
 
 	public function news() {
