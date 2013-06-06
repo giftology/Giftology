@@ -234,12 +234,12 @@ class CitiesController extends AppController {
 		$exisitng_cities = $this->City->find('list', array('fields' => array('city')));
 		$this->Reminder->recursive = -1;
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
+        $condtions = array();
+        $conditions['country'] = 'India';
         if(isset($exisitng_cities) && !empty($exisitng_cities)){
         	$conditions['current_location NOT'] = $exisitng_cities;
         }
-        else {
-        	$conditions[] = 1;
-        }
+        
         $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location'), 'conditions' => $conditions));
         $city_array = array();
         $city_search_key = array();
@@ -250,8 +250,6 @@ class CitiesController extends AppController {
         }
 
         $city_details = NULL;
-        $condtions = array();
-
         $city_details = $this->Reminder->find('all', array(
                     'fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location'),
                     'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $city_search_key)
@@ -278,5 +276,6 @@ class CitiesController extends AppController {
 			}
 
 		}
+		$this->autoRender = $this->autoLayout = false;
 	}
 }
