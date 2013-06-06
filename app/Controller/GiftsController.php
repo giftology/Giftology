@@ -782,7 +782,7 @@ public function index() {
 		$gift['Gift']['gift_amount'] = $amount;
         $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price'), 'conditions' => array('Product.id' => $product_id)));
         
-         if(($product_data['Product']['allocation_mode']==2 && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==3 && $product_data['Product']['min_price'] == 0)) 
+         if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0)) 
          {
 
             $code = $this->Gift->Product->UploadedProductCode->find('first',
