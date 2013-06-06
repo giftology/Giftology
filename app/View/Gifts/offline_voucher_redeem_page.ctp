@@ -28,33 +28,36 @@
     <script src="http://localhost/js/scrit1.js"></script></head>
   <body>
     <div id="wrapper">
+        <div id="container" >
+            <div class="logo">
+                <img src="<?= IMAGE_ROOT.'logo11.png'; ?>">
+            </div>
+            <div class="value">
+                <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
+            </div>
     
-    <div id="container" >
-    <div class="logo">
-    <img src="<?= IMAGE_ROOT.'logo11.png'; ?>">
-    </div>
-    <div class="value">
-    <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
-    </div>
-    
-    <div class="count">
-    <div id="countdown"></div>
-    <p id="note"></p>
-    
-    </div>
-    <div>
-    <input type="text">
-    </div>
-    <div class="done">
-    <p>done shopping</p>
-    </div>
-    <div class="tnc">
-    <p style="margin:3px 0 0 33px;"><span>Terms & Condition</span> <span ><img src="<?= IMAGE_ROOT.'arrow11.png'; ?>"></span></p>
-    
-    </div>
+            <div class="count">
+                <div id="countdown"></div>
+                <p id="note"></p>
+            </div>
 
-    
-    
+            <div>
+                <center><?= $gift['Gift']['code']; ?></center>
+            </div>
+
+            <div class="done">
+                <p>done shopping</p>
+            </div>
+            <div class="disclosure opened">
+            <p class="heading">Terms and conditions</p>
+            <div class="wrapper" style="height: 0px;">
+                    <p class="content shown"><?= $gift['Product']['terms']; ?></p>
+            </div>
+            <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
+                    <span class="arrow"></span>
+            </a>
+    </div>
+        </div>
     </div>
   
 
