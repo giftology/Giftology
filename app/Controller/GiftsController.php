@@ -1444,8 +1444,7 @@ public function index() {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-        DebugBreak();
-        $link = "http://Giftology/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://Giftology.com/gifts/offline_voucher_redeem_page/".$gift_id;
 
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
@@ -1468,16 +1467,36 @@ public function index() {
 		
     public function offline_voucher_redeem_page($gift_id)
     {
-
-        $id=$this->AesCrypt->decrypt($gift_id);
+        /*$id=$this->AesCrypt->decrypt($gift_id);
         $value = $_SERVER['HTTP_USER_AGENT'];
+        $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
+        $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
+        $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
+        $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
+        $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
+        if ($iphone || $android || $palmpre || $ipod || $berry) 
+        {
+            $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$id)));
+            $this->set('gift', $gift); 
+        }
+        else
+        {
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }*/
+        $id=$this->AesCrypt->decrypt($gift_id);
         $gift = $this->Gift->find('first', array(
             'contain' => array(
                 'Product' => array('Vendor'),
                 'Sender' => array('UserProfile'),
                 'Receiver' => array('UserProfile')),
             'conditions' => array('Gift.id'=>$id)));
-        $this->set('gift', $gift);
+            $this->set('gift', $gift); 
     }
     
 
