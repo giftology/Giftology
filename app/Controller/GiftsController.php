@@ -1269,7 +1269,7 @@ public function index() {
                 );
 
         }
-        $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+        $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
         $this->set('us',$gift_claimable['Gift']['id']);
          $gift = $this->Gift->find('first', array(
             'contain' => array(
