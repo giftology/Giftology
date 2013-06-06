@@ -30,15 +30,15 @@
 		            ), 
 		            'full' 
 	        ); 
-		echo $this->Form->input('allocation_type',
+		echo $this->Form->input('allocation_mode',
 	    	array(
-	        'options' => $allocation_type,
+	        'options' => $allocation_mode,
 	        'type' => 'select',
 	        'empty' => '-- Select allocation type --',
 	        'label' => 'Select Allocation Type'
 	    		)
 			);
-			echo $this->Form->input('redemption_type',
+		echo $this->Form->input('redemption_type',
 	    	array(
 	        'options' => $redemption_type,
 	        'type' => 'select',

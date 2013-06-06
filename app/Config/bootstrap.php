@@ -232,12 +232,14 @@ define('REMINDER',1);
 
 define('GENERAL',1);
 define('TEMP_ALLOCATION_CODE_COUNT_RESTRICTED',2);
-define('TEMP_ALLOCATION_CODE_COUNT_NOT_RESTRICTED',3);
+define('TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE',3);
+define('NOT_RESTIRCTED',4);
 
 //Redemption Type
 define('ONLINE',0);
 define('OFFLINE',1);
 define('BOTH',2);
+define('SHIPPED_PRODUCT',3);
 
 define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);

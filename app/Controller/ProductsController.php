@@ -216,16 +216,17 @@ class ProductsController extends AppController {
         }
          $redemption_type= array('0'=>'ONLINE',
                     '1'=>'OFFLINE',
-                    '2'=>'BOTH'
+                    '2'=>'BOTH',
+                    '3'=>'SHIPPED_PRODUCT'
                     );
-         $allocation_type= array('0'=>'General',
-                    '1'=>'Restricted',
-                    '2'=>'Redemption Rate',
-                    '3'=>'Not Restricted '
+         $allocation_mode= array('1'=>'General',
+                    '2'=>'Restricted',
+                    '3'=>'Redemption Rate',
+                    '4'=>'Not Restricted '
 
                     );
         $this->set('redemption_type',$redemption_type);
-        $this->set('allocation_type',$allocation_type);
+        $this->set('allocation_type',$allocation_mode);
 
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
@@ -261,15 +262,16 @@ class ProductsController extends AppController {
         }
         $redemption_type= array('0'=>'ONLINE',
                     '1'=>'OFFLINE',
-                    '2'=>'BOTH'
+                    '2'=>'BOTH',
+                    '3'=>'SHIPPED_PRODUCT'
                     );
-         $allocation_type= array('0'=>'General',
-                    '1'=>'Restricted',
-                    '2'=>'Redemption Rate',
-                    '3'=>'Not Restricted '
+         $allocation_mode= array('1'=>'General',
+                    '2'=>'Restricted',
+                    '3'=>'Redemption Rate',
+                    '4'=>'Not Restricted '
 
                     );
-        $this->set('allocation_type',$allocation_type);
+        $this->set('allocation_mode',$allocation_mode);
         $codeTypes = $this->Product->CodeType->find('list');
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
