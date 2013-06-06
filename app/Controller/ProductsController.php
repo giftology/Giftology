@@ -70,6 +70,48 @@ class ProductsController extends AppController {
  *
  * @return void
  */
+public function download_user_csv_all($download_selected = null){
+        $this->Prg->commonProcess('Product');
+        $array1 = unserialize($download_selected);
+        $conditions= array('conditions' => array($this->Product->parseCriteria($array1)),'order'=>array('Product.modified'=>'DESC'));
+        $result1= $this->Product->find('all', $conditions);
+
+          $filename = "Products ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Min Price','Max Price','Min Value','Days Valid','Code Type','Code','Vendor','Product Type','Gender Segment','City Segment','Age Segment','Display Order','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($result1 as $id)  
+                        {
+                            
+                            $result= $this->Product->find('first', array('conditions'=>array('Product.id'=>$id['Product']['id'])));
+                            $row = array(
+                            $result['Product']['id'],
+                            $result['Product']['min_price'],
+                            $result['Product']['max_price'],
+                            $result['Product']['min_value'],
+                            $result['Product']['days_valid'],
+                            $result['Product']['code_type_id'],
+                            $result['Product']['code'],
+                            $result['Product']['vendor_id'],
+                            $result['Product']['product_type_id'],
+                            $result['Product']['gender_segment_id'],
+                            $result['Product']['city_segment_id'],
+                            $result['Product']['age_segment_id'],
+                            $result['Product']['display_order'],
+                            $result['Product']['created'],
+                            $result['Product']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+
+}
  public function download_product_csv(){
        
           $filename = "Products ".date("Y.m.d").".csv";
@@ -177,6 +219,8 @@ class ProductsController extends AppController {
         $this->set('vendors',$vendors) ;
         $this->set('city_segment',$City_Segment) ;
         $this->set('age_segment',$Age_Segment) ;
+        $this->set('download_selected',serialize($this->passedArgs));
+
     }
 /**
  * view method

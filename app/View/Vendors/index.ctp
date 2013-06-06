@@ -36,6 +36,10 @@
               echo $this->Form->end();
              ?>
              </div>
+     <div class="full_download">
+	  <?php 
+	  echo $this->Html->link('Download All', array('controller' => 'vendors', 'action' => 'download_user_csv_all', $download_selected),array('class' => 'button')); ?>
+		</div>
 	<table cellpadding="0" cellspacing="0" border="1">
 	<tr><td class="campaign_checkbo"> <input class="campaign_checkbox" type="checkbox" name="checkall"onclick='checkedAll(frm1);' > </td>
 

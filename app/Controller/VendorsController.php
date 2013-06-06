@@ -22,6 +22,35 @@ public $presetVars = array(
             array('field'=> 'modified','type'=>'value'),
         
         );
+public function download_user_csv_all($download_selected = null){
+        $this->Prg->commonProcess('Vendor');
+        $array1 = unserialize($download_selected);
+        $conditions= array('conditions' => array($this->Vendor->parseCriteria($array1)),'order'=>array('Vendor.modified'=>'DESC'));
+        $result1= $this->Vendor->find('all', $conditions);
+
+                    $filename = "Vendors ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Vendor Name','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($result1 as $id)  
+                        {
+                            $result= $this->Vendor->find('first', array('conditions'=>array('Vendor.id'=>$id['Vendor']['id'])));
+                            $row = array(
+                            $result['Vendor']['id'],
+                            $result['Vendor']['name'],
+                            $result['Vendor']['created'],
+                            $result['Vendor']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+}
          public function download_vendor_csv(){
 				
                     $filename = "Vendors ".date("Y.m.d").".csv";
@@ -106,6 +135,8 @@ public $presetVars = array(
 		$this->paginate = $conditions;
 		$this->Vendor->recursive = 0;
 		$this->set('vendors', $this->paginate());
+		$this->set('download_selected',serialize($this->passedArgs));
+
 	}
 
 /**
