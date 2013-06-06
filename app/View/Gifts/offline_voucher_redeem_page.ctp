@@ -15,18 +15,17 @@
             	<div id="redemption-code"><center><?= $gift['Gift']['code']; ?></center></div>
             </div>
         </div>
-</div>  -->
-<?= $this->layout='Null'; ?>
-
-<!DOCTYPE html>
+</div>  --><!DOCTYPE html>
+<?= $this->layout = false; ?>
 <html>
     <head>
         <meta charset="utf-8" />
         <title>A jQuery Countdown Timer | Tutorialzine Demo</title>
-        <?=
-        echo $this->Minify->css(array('jquery.countdown','style'));
-        echo $this->Minify->script('jquery.countdown','script');
-        ?>
+        <link rel="stylesheet" href="http://localhost/css/styles1.css" />
+        <link rel="stylesheet" href="http://localhost/css/jquery.countdown.css" />
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://localhost/js/jquery.countdown.js"></script>
+    <script src="http://localhost/js/scrit1.js"></script>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
       </head>
   <body>
