@@ -25,9 +25,7 @@
         <link rel="stylesheet" href="http://localhost/css/jquery.countdown.css" />
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://localhost/js/jquery.countdown.js"></script>
-    <script src="http://localhost/js/scrit1.js"></script>
-        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-      </head>
+    <script src="http://localhost/js/scrit1.js"></script></head>
   <body>
     <div id="wrapper">
     
