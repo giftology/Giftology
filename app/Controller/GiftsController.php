@@ -1490,13 +1490,24 @@ public function index() {
                 'controller' => 'gifts', 'action'=>'view_gifts'));
         }*/
         $id=$this->AesCrypt->decrypt($gift_id);
-        $gift = $this->Gift->find('first', array(
-            'contain' => array(
-                'Product' => array('Vendor'),
-                'Sender' => array('UserProfile'),
-                'Receiver' => array('UserProfile')),
-            'conditions' => array('Gift.id'=>$id)));
-            $this->set('gift', $gift); 
+        $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
+        if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0)
+        {
+            $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Sender' => array('UserProfile'),
+                    'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$id)));
+            $redeem = $this->Gift->updateAll(
+                    array('Gift.redeem' => 1),
+                    array('Gift.id' => $id));
+                $this->set('gift', $gift); 
+        }
+        else{
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
     }
     
 

@@ -268,7 +268,7 @@ input[type="text"] {
                 </div>
                 
               </div>
-               <?php if($gift['Product']['redemption_type']==0): ?>
+               <?php if($gift['Product']['redemption_type']==ONLINE): ?>
                     <div class = "parent_submit">
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>

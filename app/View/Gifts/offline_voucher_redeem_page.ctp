@@ -16,7 +16,7 @@
             </div>
         </div>
 </div>  --><!DOCTYPE html>
-<?= $this->layout = false; ?>
+
 <html>
     <head>
         <meta charset="utf-8" />
