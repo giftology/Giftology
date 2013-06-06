@@ -16,7 +16,7 @@
             </div>
         </div>
 </div>  --><!DOCTYPE html>
-
+<!--
 <html>
     <head>
         <meta charset="utf-8" />
@@ -49,18 +49,164 @@
                 <p>done shopping</p>
             </div>
             <div class="disclosure opened">
-            <p class="heading">Terms and conditions</p>
-            <div class="wrapper" style="height: 0px;">
+               <p class="heading">Terms and conditions</p>
+               <div class="wrapper" style="height: 0px;">
                     <p class="content shown"><?= $gift['Product']['terms']; ?></p>
-            </div>
-            <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
+               </div>
+                <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                     <span class="arrow"></span>
-            </a>
-    </div>
+                </a>
+           </div>
         </div>
     </div>
   
 
     </body>
+</html> -->
+<?= $this->layout = false; ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    <link rel="stylesheet" href="http://localhost/css/styles1.css" />
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://localhost/js/jquery.countdown.js"></script>
+    <script src="http://localhost/js/scrit1.js"></script>
+        
+    </head>
+  <body>
+    <div id="wrapper">
+      <div class="headerbluebg">
+        <div class="logo">
+        <img src="<?= IMAGE_ROOT.'logo11.png'; ?>">
+        </div>
+        
+        <div class="done1" >
+        <span>done</span> 
+        </div>
+      </div>
+      
+      <div id="container" >
+        <div class="value">
+        <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
+        </div>
+    
+        <div class="count">
+          <div id="countdown"></div>
+          <p id="note"></p>
+        </div>
+      
+        <input type="text">
+    
+       <div class="disclosure opened">
+               <p class="heading">Terms and conditions</p>
+               <div class="wrapper" style="height: 0px;">
+                    <p class="content shown"><?= $gift['Product']['terms']; ?></p>
+               </div>
+                <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
+                    <span class="arrow"></span>
+                </a>
+           </div>
+
+      </div>
+    </div>
+  
+
+    </body>
 </html>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.toggle').click(function () {
+        //JQuery animate cannot understand
+        //auto height, so calculate and give
+        //to animate before calling
+        var curHeight = $(this).parent().find('.wrapper').height();
+        $(this).parent().find('.wrapper').css('height', 'auto');
+        var finalHeight = $(this).parent().find('.wrapper').height();
+        
+        //check if wrapper is already open
+        if (curHeight == finalHeight) {
+            finalHeight = 0;
+        }
+        $(this).parent().find('.wrapper').height(curHeight).animate({
+            height: finalHeight
+            }, 1000, function() {
+            // Animation complete.
+        });
+    });
+  });
+
+
+
+
+</script>
+
+<style type="text/css">
+.disclosure {
+    -moz-box-sizing: border-box;
+    background-color: #FAFAFA;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;
+    margin-bottom: 30px;
+    padding: 7px;
+    position: relative;
+    width: 288px;
+}
+.disclosure p.heading {
+    font-size: 14px;
+    font-weight: bold;
+}
+.disclosure p {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0;
+}
+.disclosure .wrapper {
+    -moz-transition: height 300ms ease 0s;
+    height: 0;
+    overflow: hidden;
+}
+.disclosure p.content {
+    font-size: 12px;
+    padding-top: 10px;
+}
+.disclosure p {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0;
+}
+.disclosure .toggle {
+    background-color: transparent;
+    background-image: url("../img/expand-disclosure.png");
+    border: medium none;
+    border-radius: 0 0 0 0;
+    bottom: -13px;
+    box-shadow: none;
+    cursor: pointer;
+    display: block;
+    height: 26px;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    position: absolute;
+    right: 4px;
+    width: 25px;
+}
+.disclosure.opened .toggle .arrow {
+    -moz-animation: 500ms ease-out 0s normal none 1 disclosure-spin-flip;
+    -moz-transform: rotate(180deg);
+}
+.disclosure .toggle .arrow {
+    -moz-transform-origin: 50% 3px;
+    background-image: url("../img/expand-disclosure.png");
+    background-position: 0 -78px;
+    display: block;
+    height: 10px;
+    left: 6px;
+    position: absolute;
+    top: 9px;
+    width: 13px;
+}
+
+</style>
 
