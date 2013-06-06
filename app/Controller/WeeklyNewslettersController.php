@@ -19,7 +19,7 @@ class WeeklyNewslettersController extends AppController {
     );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('newsletter');
+        $this->Auth->allow('newsletter','preview');
     }
     public function index() {
         $this->WeeklyNewsletter->recursive = 0;
@@ -158,6 +158,12 @@ class WeeklyNewslettersController extends AppController {
         $this->Session->setFlash(__('Newsletter was not deleted'));
         $this->redirect(array('action' => 'index'));
     }
+    public function preview($id){
+         $newsletter_id=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.id' => $id),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
+         $this->set('value',$newsletter_id);
+    }
+
+
 
 
     public function newsletter($newsletter_id){
