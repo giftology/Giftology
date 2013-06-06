@@ -1499,9 +1499,9 @@ public function index() {
                     'Sender' => array('UserProfile'),
                     'Receiver' => array('UserProfile')),
                 'conditions' => array('Gift.id'=>$id)));
-            $redeem = $this->Gift->updateAll(
+            /*$redeem = $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
-                    array('Gift.id' => $id));
+                    array('Gift.id' => $id))*/
                 $this->set('gift', $gift); 
         }
         else{

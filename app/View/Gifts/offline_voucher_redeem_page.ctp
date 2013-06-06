@@ -95,21 +95,21 @@
 
 
       
-      <div id="container" >
-        <div class="small">
+  <div id="container" >
+    <div class="small">
         <div class="voucher">
             <div class="paper"></div>
-            <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $product['Product']['min_value']; ?></h2>
+            <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $gift['Product']['min_value']; ?></h2>
             <div class="divider"></div>
-            <img width="200" height="64" src="<?= FULL_BASE_URL.'/'.$product['Vendor']['wide_image'];
+            <img width="200" height="64" src="<?= FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image'];
             ?>" class="wide">
-            <p class="at">at</p><p class="fine-print"><?= $product['Product']['terms_heading']; ?></p>
+            <p class="at">at</p><p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
             <div class="frame"></div>
-    </div>
-    </div>
-        <div class="value">
-        <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
         </div>
+    </div>
+        <!--<div class="value">
+        <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
+        </div>-->
     
         <div class="count">
           <div id="countdown"></div>
@@ -228,61 +228,89 @@ $(document).ready(function(){
 }
 
 
-.small-voucher {
-    display: inline-block;
-    height: 90px;
-    margin: 0 32px 20px;
-    padding-top: 18px;
-    width: 250px;
+
+.voucher .frame {
+    background-image: url("/img/voucher-frame.png");
+    height: 250px;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
-.small-voucher a {
-    /*display: block;*/
-    height: 93px;
-    padding-top: 20px;
-}
-.small-voucher .voucher {
+.frame {
     display: block;
-    height: 100px;
-    margin-top: -10px;
-    width: 250px;
 }
-a .free.voucher .featured-frame {
-    background-image: url("https://d3vp9zdgypbf1g.cloudfront.net/assets/voucher-frame-featured-free-cf5f9fce5aca46ed82870d2b75191f48.png");
+.voucher {
+    height: 250px;
+    position: relative;
+    width: 320px;
 }
-.small-voucher .voucher .featured-frame {
+.voucher .paper {
+    background-color: white;
+    bottom: 25px;
+    left: 23px;
+    position: absolute;
+    right: 23px;
+    top: 23px;
+}
+.voucher-container.purchase .voucher h2 {
     display: none;
 }
-.small-voucher .voucher .featured-frame {
-    height: 90px;
-    margin: 8px 0 0 -2px;
+.voucher .value {
+    color: #000000;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 45px;
+    font-weight: bold;
+    margin: 0;
     position: absolute;
-    width: 250px;
+    text-align: center;
+    top: 42px;
+    width: 100%;
 }
-.small-voucher span {
-    display: block;
-    text-decoration: none;
+#WebRupee {
+    display: inline;
 }
-.small-voucher .selected-overlay {
-    background-image: url("http://localhost/img/small-voucher-hover-bg.png");
-    display: none;
-    height: 110px;
-    margin-top: -10px;
-    position: absolute;
-    width: 250px;
-    z-index: 10;
+.WebRupee {
+    font-family: 'WebRupee';
 }
-.small-voucher .voucher .image-container {
-    display: block;
-    float: left;
-    height: 90px;
-    width: 90px;
-}
-.small-voucher .voucher .image-container .image-frame {
-    height: 90px;
-    position: absolute;
-    width: 90px;
+.voucher .value {
+    color: #000000;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 45px;
+    font-weight: bold;
+    text-align: center;
 }
 
+.voucher .divider {
+    background-image: url("/img/voucher-divider-line.png");
+    height: 2px;
+    left: 17px;
+    position: absolute;
+    top: 120px;
+    width: 288px;
+}
+
+.voucher .at {
+    color: #8C8C8C;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 107px;
+    width: 100%;
+}
+p {
+    margin: 0;
+}
+.voucher .fine-print {
+    bottom: 28px;
+    color: #4D4D4D;
+    font-size: 11px;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
 
 
 
