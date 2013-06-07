@@ -40,7 +40,7 @@ class GiftsController extends AppController {
 
 	public function isAuthorized($user) {
 	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code') ||($this->action == 'offline_voucher_redeem_page')) {
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code') ||($this->action == 'offline_voucher_redeem_page') ||($this->action == 'error_page')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -1467,31 +1467,15 @@ public function index() {
 		
     public function offline_voucher_redeem_page($gift_id)
     {
-        /*$id=$this->AesCrypt->decrypt($gift_id);
-        $value = $_SERVER['HTTP_USER_AGENT'];
+        $id=$this->AesCrypt->decrypt($gift_id);
         $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
         $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
         $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
-        if ($iphone || $android || $palmpre || $ipod || $berry) 
-        {
-            $gift = $this->Gift->find('first', array(
-            'contain' => array(
-                'Product' => array('Vendor'),
-                'Sender' => array('UserProfile'),
-                'Receiver' => array('UserProfile')),
-            'conditions' => array('Gift.id'=>$id)));
-            $this->set('gift', $gift); 
-        }
-        else
-        {
-            $this->redirect(array(
-                'controller' => 'gifts', 'action'=>'view_gifts'));
-        }*/
-        $id=$this->AesCrypt->decrypt($gift_id);
+        DebugBreak();
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
-        if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0)
+        if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
             $gift = $this->Gift->find('first', array(
                 'contain' => array(
@@ -1501,16 +1485,19 @@ public function index() {
                 'conditions' => array('Gift.id'=>$id)));
             /*$redeem = $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
-                    array('Gift.id' => $id))*/
+                    array('Gift.id' => $id));*/
                 $this->set('gift', $gift); 
         }
         else{
             $this->redirect(array(
-                'controller' => 'gifts', 'action'=>'view_gifts'));
+                'controller' => 'gifts', 'action'=>'error_page'));
         }
     }
     
+    public function error_page()
+    {
 
+    }
 	public function news() {
 		$this->layout = 'ajax';
 		$gifts = $this->Gift->find('all', array(
