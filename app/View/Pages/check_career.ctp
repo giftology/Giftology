@@ -108,6 +108,7 @@ $('.reset-link').click(function(){
 <div id="foot_career">
   <p><img src="<?php echo FULL_BASE_URL;?>/img/career.png" class="career_img" ></p>
   <center ><h3 class="careerMainHead" style="margin-left:134px;">Career With Us</h3></center>
+  <p>&nbsp;</p>
   <div class="media" >
     
        
@@ -136,26 +137,21 @@ $('.reset-link').click(function(){
     <p class="showtext" id="contacttexth1" ><img src="<?php echo FULL_BASE_URL;?>/img/details.png" style="margin-right:10px; ">Position: Interns</p>
     <div class="hiddentext" id="contacttext" style="display:none; margin-left:25px;">
     
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
+    <p>At Giftology, we're looking for an Out of the box thinker. Someone who's passionate, excited and motivated to take on ownership of the role.<br></p>
+<p>There's no idea that's too crazy for us, so if you think you have the ability to convert all your wacky and crazy ideas to action, WELCOME
+ABOARD!!</p>
   </div>
     <p style="border-bottom:1px dotted #999;">&nbsp;</p>
 
 <p>&nbsp;</p>
 
-    <p class="showtext1" id="contacttexth1" style="color:#900;cursor:pointer; "><img src="<?php echo FULL_BASE_URL;?>/img/details.png" style="margin-right:10px;">Position: Interns</p>
+    <p class="showtext1" id="contacttexth1" style="color:#900;cursor:pointer; "><img src="<?php echo FULL_BASE_URL;?>/img/details.png" style="margin-right:10px;">Position: Graphic Designer</p>
     <div class="hiddentext1" id="contacttext" style="display:none; margin-left:25px;">
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
-    <p>lorum ipsum</p>
+    <p>Skills Required: </p>
+<p>• 1 + Year of hands on experience in relevent field</p>
+<p>• Excellent knowledge of all design tool as Photoshop, Corel Draw, Illustrator etc.</p>
+
+   
   </div>
    <!-- <p style="border-bottom:1px dotted #999;">&nbsp;</p>-->
 
@@ -222,7 +218,7 @@ $('.reset-link').click(function(){
                                 </tr>
                                 <tr>
                                   <td class="careertext">&nbsp;</td>
-                                  <td class="careertext"><font color="#FF0000">*</font> You are applying
+                                  <td class="careertext"><font color="#FF0000">*</font>You are applying
                                   for </td>
                                   <td><select name="cars" class="styled-select">
                                         <option value="volvo">Internship</option>
@@ -238,6 +234,8 @@ $('.reset-link').click(function(){
                                   <td class="careertext">&nbsp;</td>
                                   <td>&nbsp;</td>
                                 </tr>
+
+                               
                                 <tr> 
                                   <td class="careertext">&nbsp;</td>
                                   <td class="careertext"><font color="#FF0000">*</font> 
@@ -249,33 +247,51 @@ $('.reset-link').click(function(){
                                   <td class="careertext">&nbsp;</td>
                                   <td>&nbsp;</td>
                                 </tr>
-                                <tr> 
-                                  <td class="careertext">&nbsp;</td>
-                                  <td class="careertext"><font color="#FF0000">*</font> 
-                                    Paste Your resume</td>
-                                  <td><textarea name="textarea2" cols="50" rows="5"></textarea></td>
-                   <td>&nbsp;</td>
-                  
-                                </tr>
-                 <tr> 
-                                  <td class="careertext"></td>
-                                  <td class="careertext"></td>
-                                  
-                                  <td style="text-align:center" class="careertext">OR</td>
-                                  <td>&nbsp;</td>
-                                </tr>
+                               
+                 
                                 <tr>
                  <tr> 
                                   <td class="careertext"></td>
-                                  <td class="careertext"><font color="#FF0000">*</font> 
-                                    Upload Your resume</td>
+                                  <td class="careertext"><font color="#FF0000">*</font>Upload Your resume</td>
                                   <td><input type="file" id="fname" class="button"></td>
+                                </tr>
+
+
+
+                                <tr> 
+                                  <td class="careertext">&nbsp;</td>
+                                  <td class="careertext">&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                </tr>
+
+                                 <!--capcha-->
+                                 <tr> 
+                                  <td class="careertext">&nbsp;</td>
+                                  <td class="careertext"><font color="#FF0000">*</font> 
+                                    Solve</td>
+                                  <td>
+                                    <div class="input email" >
+                         
+                                    <div class="captcha" style="width:280px; height:45px;" >
+                                    <div class="input email" style="margin-top:10px; width:294px; float:left; border: 1px solid #B54D4D;border-radius: 2px;padding:0px 5px 4px 7px;">
+                                    <div  class="captha" style="margin-top:10px; width:300px; float:left;">
+                                        <?php echo  $captcha ?>
+                                    </div>
+                                      
+                                        <?php echo $this->Form->input('captcha', array('label' => '','placeholder'=>'Solve it!','style'=>'text-align:center; width:45px; float:right;border: none;border-left: 1px solid #B54D4D;border-radius: 0;'));?>
+                                    </div>
+                                     
+                                    </div>
+                    
+                                    </div>
+                                 </td>
                                 </tr>
                                 <tr> 
                                   <td class="careertext">&nbsp;</td>
                                   <td class="careertext">&nbsp;</td>
                                   <td>&nbsp;</td>
                                 </tr>
+                                <!--CAPCHA-->
                                 <tr> 
                                   <td class="careertext">&nbsp;</td>
                                   <td class="careertext"><div align="right"> </div></td>
@@ -284,6 +300,8 @@ $('.reset-link').click(function(){
                                   <input type="reset" value="reset all fields" class="reset-link" style="cursor:pointer">
                                 </td>
                                 </tr>
+
+
                               </tbody></table>
                             </form>
 </div>
@@ -300,6 +318,6 @@ $('.reset-link').click(function(){
 
 
 
-<p id="contacttext" ><b>-> Please do not hesitate to <a href="http://www.giftology.com/contact" style="color:#900;" >contact us </a>in case you have any questions.</b> </p>
+<p id="contacttext" ><b><img src="<?php echo FULL_BASE_URL;?>/img/arrow.png" style="margin-right:10px; "> Please do not hesitate to <a href="http://www.giftology.com/contact" style="color:#900;" >contact us </a>in case you have any questions.</b> </p>
 </div>
 </div>

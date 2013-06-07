@@ -3113,7 +3113,7 @@ top:20px;}
    height:auto;}
 
 .careerCustom input[type="text"]{
-    width: 300px;
+    width: 298px;
     height: 28px;
     border: 1px solid #B54D4D;
     border-radius: 2px;
@@ -3128,7 +3128,7 @@ top:20px;}
  }
 
 .careerCustom textarea{
-    width: 300px;
+    width: 294px;
     border: 1px solid #B54D4D;
     border-radius:2px;
     float: left;
@@ -3171,7 +3171,7 @@ display:inline;
 }
 
 .careerCustom .styled-select {
-   width: 303px;
+   width: 301px;
     height: 30px;
     border: 1px solid #B54D4D;
     border-radius: 2px;
