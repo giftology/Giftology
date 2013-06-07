@@ -1,13 +1,5 @@
-<?= $this->layout = false; ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="http://localhost/css/styles1.css" />
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script src="http://localhost/js/jquery.countdown.js"></script>
-    <script src="http://localhost/js/scrit1.js"></script>
-</head>
-<body>
+<?= $this->layout = 'allow'; ?>
+
     <div id="wrapper">
         <div class="headerbluebg">
             <div class="logo">
@@ -53,9 +45,6 @@
            </center>
        </div>
    </div>
-</body>
-</html>
-
 <script type="text/javascript">
 $(document).ready(function(){
  $('.toggle').click(function () {
