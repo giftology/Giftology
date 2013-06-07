@@ -22,8 +22,19 @@
 
 #wrapper{
 width:100%;
-
 margin: 0;
+}
+button{
+	width:40%;
+height:auto;
+margin-top:auto;
+text-align: center;
+padding: 2px 0px;
+    border-radius: 1px 1px 1px 1px;
+    font-size: 18px;
+    height: 40px;
+    line-height: 36px;
+    padding: 0 12px;
 }
 
 .logo{
@@ -42,7 +53,7 @@ width:22%;
 
 #container{
 width:90%;
-margin:8% auto;
+margin:15% auto;
 -moz-box-sizing: border-box;
 background:#fff;
 padding: 0 5% 5% 5%;
@@ -88,7 +99,7 @@ float:right;
 	background-color:#830707;
 	margin: 0;
 	padding:0;
-	height:60px;
+	height:100px;
 	position:fixed;
 	top:0;
 	z-index:1;

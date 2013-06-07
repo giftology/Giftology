@@ -2,12 +2,14 @@
 
     <div id="wrapper">
         <div class="headerbluebg">
-            <div class="logo">
-                <img src="<?= IMAGE_ROOT.'logo11.png'; ?>">
+            
+            <div class="header">
+                <div class="logo-block"><a href="<?= FULL_BASE_URL; ?>" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt="" style="width:150%"></a></div>
             </div>
-             <div class="done1" >
+            
+             <!--<div class="done1" >
                 <span>done</span> 
-                </div>
+                </div>-->
               </div>
             <div id="container" >
             <center>
@@ -29,10 +31,11 @@
                     <div class="count">
                       <div id="countdown"></div>
                       <p class="firstname"><?= $gift['Sender']['UserProfile']['first_name'] ?></p><p id="note"></p>
-                    </div>
+                    
                     <p class="spans"> <?= $gift['Gift']['code']; ?>
                     </p>
-                    <div class="disclosure opened">
+                    </div>
+                    <!--<div class="disclosure opened">
                            <p >Terms and conditions</p>
                            <div class="wrapper" style="height: 0px;">
                                 <p class="content shown"><?= $gift['Product']['terms']; ?></p>
@@ -40,13 +43,28 @@
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                 <span class="arrow"></span>
                             </a>
-                    </div>
+                    </div>-->
                 </div>
-           </center>
+           
+           <div class="shows">
+            <button class="hit" style="">
+            Redeem
+            </button>
+          </div>
+          </center>
        </div>
+
    </div>
+
+   
+
 <script type="text/javascript">
 $(document).ready(function(){
+    $('.count').hide();
+    $('.hit').click(function () {
+        $('.count').show();
+        
+    });
  $('.toggle').click(function () {
         //JQuery animate cannot understand
         //auto height, so calculate and give
