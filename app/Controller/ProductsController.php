@@ -403,12 +403,13 @@ public function download_user_csv_all($download_selected = null){
         $age=$today-$year;
         
         $products = array();
-        
+
+        $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
         $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
         //$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
+        $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
         $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
         
-        $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
         $products_for_gender = array();
         $products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array($gender,ALL_GENDERS)));
         
@@ -419,8 +420,6 @@ public function download_user_csv_all($download_selected = null){
         if(isset($city_segments) && !empty($city_segments)) $products_for_location_conditions['city_segment_id'] = $city_segments;
         else $products_for_location_conditions = 1;
         $products_for_location = $this->ProductCitySegment->find('list', array('fields' => array('product_id'), 'conditions' => $products_for_location_conditions));
-        
-        $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
         
         $products_for_age = array();
         $products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array($age,ALL_AGES)));
