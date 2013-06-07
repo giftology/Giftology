@@ -148,7 +148,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 .disclosure {
     -moz-box-sizing: border-box;
    	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
-	background-image:url("http://localhost/img/back3.png");
+	background-image:url("../img/back3.png");
 	background-repeat:repeat-x;
 	border-top:4px solid #838183;
 	border-bottom:4px solid #838183;
@@ -198,7 +198,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 }
 .disclosure .toggle {
     background-color: transparent;
-    background-image: url("http://localhost/img/expand-disclosure.png");
+    background-image: url("../img/expand-disclosure.png");
     border: medium none;
     border-radius: 0 0 0 0;
     top: -16px;
@@ -220,7 +220,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 }
 .disclosure .toggle .arrow {
     -moz-transform-origin: 50% 3px;
-    background-image: url("http://localhost/img/expand-disclosure.png");
+    background-image: url("../img/expand-disclosure.png");
     background-position: 0 -78px;
     display: block;
     height: 10px;
@@ -233,7 +233,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 
 
 .voucher .frame {
-    background-image: url("https://giftology.com/img/voucher-frame.png");
+    background-image: url("../img/voucher-frame.png");
     height: 250px;
     position: absolute;
     top: 0;
