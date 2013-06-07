@@ -51,7 +51,18 @@
 		echo $this->Form->input('product_type_id');
 		echo $this->Form->input('age_segment_id');
 		echo $this->Form->input('gender_segment_id');
-		echo $this->Form->input('city_segment_id');?>
+		//echo $this->Form->input('city_segment_id');
+
+		?>
+		<dt><?php echo __('City Segment'); ?></dt>
+		<?php
+		//DebugBreak();
+			foreach($citySegments as $k => $city_segment){
+		?>
+		<input type="checkbox" name="city_segment[<?php echo $k;?>]" value="<?php echo $k;?>" class="city_segment"> <?php echo $city_segment;?>
+		<?php
+			}
+		?>
 		<?php echo $this->Form->input('display_order'); ?>
 			<div class="error_message" id="error_display" style="display:none; margin-left:20px;">
 	            <h5 style="color:#FF0000">*please enter a value between 0 - 150.</h5>
@@ -179,4 +190,8 @@
              if(e) return false;
       	});
       });
+
+	$(document).ready(function(){
+        $('.city_segment').show();
+    });
       </script>
