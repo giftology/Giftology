@@ -1473,7 +1473,6 @@ public function index() {
         $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
-        DebugBreak();
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
         if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
