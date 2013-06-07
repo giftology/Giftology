@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class CitySegmentsController extends AppController {
 	public $helpers = array('Minify.Minify');
-    public $uses = array('CitySegment','City');
+    public $uses = array('CitySegment','City','LocationSegment');
 /**
  * index method
  *
@@ -47,6 +47,7 @@ class CitySegmentsController extends AppController {
 			$city_data['CitySegment']['city'] = $this->data['CitySegment']['city'];
 			$city_data['CitySegment']['segment'] = $this->serialized_city_id($this->data['CitySegment']['segment']);
 			if ($this->CitySegment->save($city_data)) {
+                $this->location_segments($this->CitySegment->getLastInsertID(),$city_data['CitySegment']['segment']);
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -70,9 +71,9 @@ class CitySegmentsController extends AppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$city_data =array();
 			$city_data['CitySegment']['city'] = $this->request->data['CitySegment']['city'];
-			
 			$city_data['CitySegment']['segment'] = $this->serialized_city_id($this->request->data['CitySegment']['segment']);
 			if ($this->CitySegment->save($city_data)) {
+                $this->update_location_segments($id,$city_data['CitySegment']['segment']);
 				$this->Session->setFlash(__('The city segment has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -231,6 +232,7 @@ class CitySegmentsController extends AppController {
             $city_segment_data = NULL;
             $city_segment_data['CitySegment']['segment'] = serialize($city_segments);
             $this->CitySegment->save($city_segment_data);
+            $this->location_segments($segment_id,$city_segment_data['CitySegment']['segment']); 
         }
         return;
         //$this->autoRender = $this->autoLayout = false;
@@ -243,5 +245,42 @@ class CitySegmentsController extends AppController {
                 $this->get_segments($city_segment);
         }
         $this->autoRender = $this->autoLayout = false;
+    }
+    
+    public function location_segments($city_segment_id, $city_data){
+        $cities = unserialize($city_data);
+        $this->LocationSegment->create();
+        $location_data = array();
+        if(isset($cities) && !empty($cities)){
+            $this->LocationSegment->create();
+            foreach($cities as $k => $city){
+                $location_data[$k]['LocationSegment']['city_segment_id'] = $city_segment_id;
+                $location_data[$k]['LocationSegment']['city_id'] = $city;                    
+            }
+            $this->LocationSegment->saveMany($location_data);       
+        }
+    }
+    
+    public function update_location_segments($city_segment_id, $city_data){
+        $cities = unserialize($city_data);
+        $cities_location_segment = $this->LocationSegment->find('list', array('fields' => array('city_id'),'conditions'=> array('city_segment_id' => $city_segment_id)));
+        $cities_deleted = array_diff($cities_location_segment,$cities);
+        $cities_added = array_diff($cities, $cities_location_segment);
+        $this->LocationSegment->create();
+        $location_data = array();
+        if(isset($cities_added) && !empty($cities_added)){
+            foreach($cities_added as $k => $city){
+                $location_data[$k]['LocationSegment']['city_segment_id'] = $city_segment_id;
+                $location_data[$k]['LocationSegment']['city_id'] = $city;                    
+            }
+            $this->LocationSegment->saveMany($location_data);    
+        }
+        
+        if(isset($cities_deleted) && !empty($cities_deleted)){
+            foreach($cities_deleted as $k => $cities){
+                $this->LocationSegment->id = $k;
+                $this->LocationSegment->delete();        
+            }
+        }
     }
 }

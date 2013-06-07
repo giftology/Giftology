@@ -33,7 +33,7 @@ class ProductsController extends AppController {
             array('field'=> 'modified','type'=>'value'),
         
         );
-    public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode');
+    public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment');
     public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
@@ -207,7 +207,10 @@ class ProductsController extends AppController {
                     $this->redirect(array('controller' => 'products', 'action'=>'add'));   
             }
             $this->Product->create();
-            if ($this->Product->save($this->request->data)) {
+            $this->request->data['Product']['city_segment'] = serialize($this->request->data['city_segment']);
+            unset($this->request->data['city_segment']);
+            if($this->Product->save($this->request->data)) {
+                $this->product_city_segments($product_id, $this->request->data['Product']['city_segment']);
                 $this->Session->setFlash(__('The product has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
@@ -236,7 +239,10 @@ class ProductsController extends AppController {
             throw new NotFoundException(__('Invalid product'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            $this->request->data['Product']['city_segment'] = serialize($this->request->data['city_segment']);
+            unset($this->request->data['city_segment']);
             if ($this->Product->save($this->request->data)) {
+                $this->update_product_city_segments($id, $this->request->data['Product']['city_segment']);
                 $this->Session->setFlash(__('The product has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
@@ -351,17 +357,38 @@ class ProductsController extends AppController {
         $today = date("Y"); 
         $gender=strtoupper($gender);
         $age=$today-$year;
-
-        $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
-        $location = $this->Product->CitySegment->find('all',array('conditions' => array('CitySegment.city' => $location)));
-        $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
-
-
+        
+        $products = array();
+        
         $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
-        $location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
+        //$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
         $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
-
-        $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
+        
+        $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
+        $products_for_gender = array();
+        $products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array($gender,ALL_GENDERS)));
+        
+        $location = $this->City->find('first',array('conditions' => array('city' => $location)));
+        $city_segments = $this->LocationSegment->find('list',array('fields' => array('city_segment_id'),'conditions' => array('city_id' => $location['City']['id'])));
+        
+        $products_for_location = array() ;
+        if(isset($city_segments) && !empty($city_segments)) $products_for_location_conditions['city_segment_id'] = $city_segments;
+        else $products_for_location_conditions = 1;
+        $products_for_location = $this->ProductCitySegment->find('list', array('fields' => array('product_id'), 'conditions' => $products_for_location_conditions));
+        
+        $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
+        
+        $products_for_age = array();
+        $products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array($age,ALL_AGES)));
+        $products = array_unique(array_merge($products_for_age,$products_for_gender,$products_for_location));
+        
+        $conditions = array();
+        $conditions['NOT'] = array('Product.display_order' => 0);
+        //$conditions['Product.gender_segment_id'] = array($gender,ALL_GENDERS);
+        $conditions['Product.id'] = $products;
+        //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
+        $this->paginate['conditions'] = $conditions;
+        //$this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
        
@@ -548,6 +575,43 @@ class ProductsController extends AppController {
         //$products = $this->Product->find('all', array('conditions' => $conditions));
         $proddd=$this->Product->find('all', array('conditions' => array('Product.id' => $result),'order'=>array('Product.show_on_top','Product.min_price','Product.display_order')));
         return $proddd;
+    }
+    
+    public function product_city_segments($product_id, $city_segment){
+        $city_segments = unserialize($city_segment);
+        $this->ProductCitySegment->create();
+        $location_data = array();
+        if(isset($city_segments) && !empty($city_segments)){
+            $this->ProductCitySegment->create();
+            foreach($city_segments as $k => $segment){
+                $location_data[$k]['ProductCitySegment']['city_segment_id'] = $city_segment_id;
+                $location_data[$k]['ProductCitySegment']['producgt_id'] = $segment;                    
+            }
+            $this->ProductCitySegment->saveMany($location_data);       
+        }
+    }
+    
+     public function update_product_city_segments($product_id, $city_data){
+        $cities = unserialize($city_data);
+        $cities_location_segment = $this->ProductCitySegment->find('list', array('fields' => array('city_segment_id'),'conditions'=> array('product_id' => $product_id)));
+        $cities_deleted = array_diff($cities_location_segment,$cities);
+        $cities_added = array_diff($cities, $cities_location_segment);
+        $this->ProductCitySegment->create();
+        $location_data = array();
+        if(isset($cities_added) && !empty($cities_added)){
+            foreach($cities_added as $k => $city){
+                $location_data[$k]['ProductCitySegment']['city_segment_id'] = $city;
+                $location_data[$k]['ProductCitySegment']['product_id'] = $product_id;                    
+            }
+            $this->ProductCitySegment->saveMany($location_data);    
+        }
+        
+        if(isset($cities_deleted) && !empty($cities_deleted)){
+            foreach($cities_deleted as $k => $cities){
+                $this->ProductCitySegment->id = $k;
+                $this->ProductCitySegment->delete();        
+            }
+        }
     }
     
 }
