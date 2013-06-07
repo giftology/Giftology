@@ -1466,7 +1466,14 @@ public function index() {
         }
 		
     public function offline_voucher_redeem_page($gift_id)
-    {
+    {   //DebugBreak();
+        if($this->RequestHandler->isAjax()) 
+        {
+           $this->Gift->updateAll(
+                    array('Gift.redeem' => 0),
+                    array('Gift.id' => $gift_id));
+           exit;
+        }
         $id=$this->AesCrypt->decrypt($gift_id);
         $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
         $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");

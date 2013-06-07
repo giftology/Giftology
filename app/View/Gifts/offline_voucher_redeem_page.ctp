@@ -46,11 +46,11 @@
                     </div>-->
                 </div>
            
-           <div class="shows">
-            <button class="hit" style="">
-            Redeem
-            </button>
-          </div>
+                   <div class="shows">
+                    <button class="hit" style="" id="<?= $gift['Gift']['id']; ?>">
+                    Redeem
+                    </button>
+                  </div>
           </center>
        </div>
 
@@ -61,11 +61,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('.count').hide();
-    $('.hit').click(function () {
-        $('.count').show();
-        
-    });
- $('.toggle').click(function () {
+    $('.toggle').click(function () {
         //JQuery animate cannot understand
         //auto height, so calculate and give
         //to animate before calling
@@ -84,4 +80,37 @@ $(document).ready(function(){
         });
     });
   });
+</script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script type='text/javascript'>
+ $('.hit').click(function() {
+    $('.count').show();
+    $('.hit').hide();
+        // interrupt form submission
+            var key_value = this.id;
+           //alert(key_value);
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    async: false,
+                    url: "/gifts/offline_voucher_redeem_page/"+key_value,
+                    data: "search_key="+key_value,
+                    success: function(data) {
+                      
+                        //var res_data = jQuery.parseJSON(data);
+                        //var count = res_data.length;
+                        //var new_row = '';
+                        //$('#gift-details').remove();
+                        //$('.footer-wrap').remove();
+                        //$('footer').remove();
+                        //$('.delivery-message,.submit').remove();
+                        
+                         //$('#ititemplate').tmpl(res_data).appendTo('.clear');
+                     }
+
+                     });
+           
+        });
+   
+
 </script>
