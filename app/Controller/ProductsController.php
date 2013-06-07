@@ -402,15 +402,15 @@ public function download_user_csv_all($download_selected = null){
         $gender=strtoupper($gender);
         $age=$today-$year;
         
-        $products = array();
+        //$products = array();
         $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
         $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
         //$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
         $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
         $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
         
-        $products_for_gender = array();
-        $products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.gender_segment_id'  => array($gender,ALL_GENDERS))));
+        //$products_for_gender = array();
+        //$products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.gender_segment_id'  => array($gender,ALL_GENDERS))));
         
         $location = $this->City->find('first',array('conditions' => array('city' => $location)));
         $city_segments = $this->LocationSegment->find('list',array('fields' => array('city_segment_id'),'conditions' => array('city_id' => $location['City']['id'])));
@@ -420,17 +420,17 @@ public function download_user_csv_all($download_selected = null){
         else $products_for_location_conditions = 1;
         $products_for_location = $this->ProductCitySegment->find('list', array('fields' => array('product_id'), 'conditions' => $products_for_location_conditions));
         
-        $products_for_age = array();
-        $products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.age_segment_id' => array($age,ALL_AGES))));
-        $products = array_unique(array_merge($products_for_age,$products_for_gender,$products_for_location));
+        //$products_for_age = array();
+        //$products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.age_segment_id' => array($age,ALL_AGES))));
+        //$products = array_unique(array_merge($products_for_age,$products_for_gender,$products_for_location));
         
-        $conditions = array();
-        $conditions['NOT'] = array('Product.display_order' => 0);
+        //$conditions = array();
+        //$conditions['NOT'] = array('Product.display_order' => 0);
         //$conditions['Product.gender_segment_id'] = array($gender,ALL_GENDERS);
-        $conditions['Product.id'] = $products;
+        //$conditions['Product.id'] = $products_for_location;
         //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
-        $this->paginate['conditions'] = $conditions;
-        //$this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES));
+        //$this->paginate['conditions'] = $conditions;
+        $this->paginate['conditions']  = array('OR' => array('Product.id' => $products_for_location, array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES))));
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
        
