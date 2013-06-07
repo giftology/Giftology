@@ -102,8 +102,15 @@ $(document).ajaxComplete(function(){
 
 // listen to an XFBML rendered Event
 $(document).bind('fb_xfbml_rendered',function(){
-    //console.log('fb_xfbml_rendered; Images are vieable');
-    $('.transbox').fadeOut('slow');
+    $('.transbox2').fadeOut('slow');
 });
+
+
+
+// listen to an XFBML rendered Event
+$(document).bind('fb_xfbml_rendered',function(){
+    $('.transbox1').fadeOut('slow');
+});
+
 
 

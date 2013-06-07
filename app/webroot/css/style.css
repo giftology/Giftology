@@ -2345,21 +2345,52 @@ font-size:12px;
     left: 80px;
     font-size: 24px;
 }
+.transbox1 {
+    width: 300px;
+    height: 40px;
+    left:50%;
+    top:65%;
+    margin: 0 0 0 -165px;
+    background-color: #243559;
+    border: 1px solid #243559;
+    opacity: .9;
+    filter: alpha(opacity=90);
+    position: absolute;
+    z-index: 10;
+}
+
 .transbox {
-    width: 100%;
-    height: 800px;
-    margin: 0px;
-    background-color: #D0D0D0;
-    border: 1px solid #D0D0D0;
-    opacity: .1;
-    filter: alpha(opacity=10);
+    width: 300px;
+    height: 40px;
+    left:50%;
+    top:65%;
+    margin: 0 0 0 -165px;
+    background-color: #243559;
+    border: 1px solid #243559;
+    opacity: .9;
+    filter: alpha(opacity=90);
+    position: absolute;
+    z-index: 10;
+}
+
+
+.transbox2 {
+    width: 300px;
+    height: 40px;
+    right:0;
+    top:30px;
+    margin: 0 0 0 -165px;
+    background-color: #243559;
+    border: 1px solid #243559;
+    opacity: .9;
+    filter: alpha(opacity=90);
     position: absolute;
     z-index: 10;
 }
 .spinner {
-    position:absolute;
-    left: 240px;
-    top: 100px;
+    position:relative;
+    left: 0px;
+    top: -5px;
 }
 #search_friend {
     float:right;
