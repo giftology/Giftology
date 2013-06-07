@@ -11,18 +11,17 @@
 
 #wrapper{
 width:100%;
-background:rgb(250, 250, 250);
-min-height:100%;
+
 margin: 0;
-border:1px solid rgb(204, 204, 204); 
 }
 
 .logo{
 position: absolute;
-margin: 0 0 0 0 ;
+margin: 0 ;
 clear:both;
-left: 41%;
+left: 30px;
 z-index: 2 ;
+width:22%;
 
 }
 .logo img{width:100%}
@@ -31,44 +30,29 @@ z-index: 2 ;
 
 
 #container{
-width:80%;
+width:90%;
 margin:8% auto;
 -moz-box-sizing: border-box;
 background:#fff;
-padding: 0 30px 50px 30px;
-box-shadow: 0px 0px 20px 4px rgb(227, 227, 227);
+padding: 0 5% 5% 5%;
+box-shadow: 0px 0px 5% 6 #d7d7d7;
 }
 /*#container .value{width:50%; margin:auto;}
 #container .value img{width:100%; }*/
 
 
 
-.done{
-background: none repeat scroll 0% 0% rgb(185, 0, 0);
-width:40%;
-margin:auto;
-height: 54px;
-border-radius: 6px;
-text-align: center;
-text-transform: uppercase;
-color: white;
-font: 20px/38px Arial, Helvetica, sans-serif;
 
-}
-
-.done p{
-padding-top:9px;
-}
 .done1{
 background: none repeat scroll 0% 0% #920909;
-width:120px;
+width:14%;
 margin:7px  30px 7px 0;
 height: 45px;
 border-radius: 6px;
 text-align: center;
 text-transform: uppercase;
 color: white;
-font: 20px/45px Arial, Helvetica, sans-serif;
+font: 1.2em/2.2em Arial, Helvetica, sans-serif;
 float:right;
 
 }
@@ -100,13 +84,12 @@ float:right;
 }
 
 
-.count{	width:50%;
+.count{	width:80%;
 height:auto;
 margin:auto;
 text-align: center;
 padding: 2px 0px;
-background: none repeat scroll 0% 0% #FBFBFB;
-border-radius: 8px ;
+
 }
 
 .countdownHolder{
@@ -123,32 +106,38 @@ width: 96%;
 margin-top: 28px;
 padding:2%;
 height: 30px;
-border-radius: 6px;
+border-radius: 3%;
 border: 1px solid #999;
 box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 }
 
 .spans{
-    background-color: #FAFAFA;
+    background:white;
+    box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
+    width: 96%;
+
+
 
     font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 45px;
+    font-size: 300%;
     font-weight: bold;
-    margin: 0;
+    margin: 10% auto;
     position: relative;
     text-align: center;
     }
 .disclosure {
     -moz-box-sizing: border-box;
-    background-color: #FAFAFA;
-    border: 1px solid #CCCCCC;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset;
-    margin-bottom: 30px;
-     margin-top: 30px;
-    padding: 7px;
-    position: relative;
-    width: 288px;
+   	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+	background-image:url("http://localhost/img/back3.png");
+	background-repeat:repeat-x;
+	border-top:4px solid #838183;
+	border-bottom:4px solid #838183;
+	margin-top:20px;
+	color:#666;
+	font:1.2em/1.8em Arial, Helvetica, sans-serif;
+	text-align:center;
+	height:38px;
+	width:96%;
 }
 .disclosure p.heading {
     font-size: 14px;
@@ -162,6 +151,22 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     -moz-transition: height 300ms ease 0s;
     height: 0;
     overflow: hidden;
+    border-bottom:1px solid #838183;
+    border-left:1px solid #838183;
+    border-right:1px solid #838183;
+    margin-top:-2px;
+    
+    border-radius:0 0 5px 5px;
+    text-align: left;
+ 	background-color: #fff;
+   	background-repeat: repeat-x; 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d7d7d7));
+    background: -webkit-linear-gradient(top, #d7d7d7, #fff); 
+    background: -moz-linear-gradient(top, #d7d7d7, #fff);
+    background: -ms-linear-gradient(top, #d7d7d7, #fff); 
+    background: -o-linear-gradient(top, #d7d7d7, #fff);
+
+    
 }
 .disclosure p.content {
     font-size: 12px;
@@ -176,7 +181,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     background-image: url("http://localhost/img/expand-disclosure.png");
     border: medium none;
     border-radius: 0 0 0 0;
-    bottom: -13px;
+    top: -16px;
     box-shadow: none;
     cursor: pointer;
     display: block;
@@ -184,9 +189,10 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     margin: 0;
     min-width: 0;
     padding: 0;
-    position: absolute;
-    right: 4px;
+    position: relative;
+    right: 13px;
     width: 25px;
+    float:right;
 }
 .disclosure.opened .toggle .arrow {
     -moz-animation: 500ms ease-out 0s normal none 1 disclosure-spin-flip;
@@ -207,7 +213,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 
 
 .voucher .frame {
-    background-image: url("/img/voucher-frame.png");
+    background-image: url("https://giftology.com/img/voucher-frame.png");
     height: 250px;
     position: absolute;
     top: 0;
@@ -219,7 +225,8 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 .voucher {
     height: 250px;
     position: relative;
-    width: 320px;
+    width:300px;
+    
 }
 .voucher .paper {
     background-color: white;
@@ -296,3 +303,38 @@ p {
     top: 140px;
     width: 200px;
 }
+
+
+
+@media all and (max-width: 500px) and (min-width: 440px) {
+
+
+  .done1{ width:20%; }
+
+  .logo{ width:30%}
+  .spans{ font-size: 220%}
+}
+
+@media all and (max-width: 439px) and (min-width: 300px) {
+  .done1{ width:25%; }
+
+  .logo{ width:40%}
+  .voucher{top:50px; left:-10%;}
+  .spans{ font-size: 150%}
+  .count{margin-top:18%;}
+
+}
+
+
+
+@media all and (max-width: 299px)  {
+  .done1{ width:28%; }
+
+  .logo{ width:45%}
+  .voucher{top:80px; left:-15%;}
+  .spans{ font-size: 100%}
+  .count{margin-top:35%;}
+
+}
+
+

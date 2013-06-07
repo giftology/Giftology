@@ -1,1 +1,2 @@
-<h1>hello</h1>
+
+<h4>This voucher can only be redeemed using mobile web or Giftology Android App.</h4>

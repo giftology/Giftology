@@ -15,7 +15,7 @@ $(function(){
 		timestamp	: ts,
 		callback	: function(days, hours, minutes, seconds){
 			
-			var message = "#First name, Your voucher expires in ";
+			var message = " Your voucher expires in <br>";
 			
 			
 			message +="<b>"+ minutes + " :" + ( minutes==1 ? '':'' ) ;
