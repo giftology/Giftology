@@ -1184,7 +1184,11 @@ public function index() {
 			'fields' => array('COUNT(Gift.id) as product_gift'),
 			'contain' => array(
 				'Product' => array('Vendor')),
-			'conditions' => array('AND'=>array('Gift.gift_status_id'=> GIFT_STATUS_VALID, 'Gift.receiver_id' => $this->Auth->user('id'))),
+			'conditions' => array('AND'=>array(
+                'Gift.gift_status_id'=> GIFT_STATUS_VALID, 
+                'Gift.receiver_id' => $this->Auth->user('id'), 
+                'Gift.expiry_date >=' => date('Y-m-d'))
+                ),
 			'group' => array('Gift.receiver_fb_id, Gift.product_id'),
 			'order' => array('Gift.id DESC')
 			));
@@ -1198,6 +1202,7 @@ public function index() {
 		$User = $this->Reminder->find('first',array('conditions' => array('Reminder.friend_fb_id' => $fb_id)));
 		$birthday = isset($User['Reminder']['friend_birthday']) ? $User['Reminder']['friend_birthday']: NULL;
 
+        $conditions['expiry_date >='] = date('Y-m-d');
 		$this->paginate['group'] = array('Gift.receiver_fb_id, Gift.product_id');
 		$this->paginate['conditions'] = $conditions;
 		$gifts = $this->paginate();
