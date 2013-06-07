@@ -1,4 +1,4 @@
-<?= $this->layout = 'allow'; ?>
+<?= $this->layout = 'offline_redeemption'; ?>
 
     <div id="wrapper">
         <div class="headerbluebg">
@@ -28,12 +28,12 @@
                 
                     <div class="count">
                       <div id="countdown"></div>
-                      <?= $gift['Sender']['UserProfile']['first_name'] ?><p id="note"></p>
+                      <p class="firstname"><?= $gift['Sender']['UserProfile']['first_name'] ?></p><p id="note"></p>
                     </div>
                     <p class="spans"> <?= $gift['Gift']['code']; ?>
                     </p>
                     <div class="disclosure opened">
-                           <p class="heading">Terms and conditions</p>
+                           <p >Terms and conditions</p>
                            <div class="wrapper" style="height: 0px;">
                                 <p class="content shown"><?= $gift['Product']['terms']; ?></p>
                            </div>

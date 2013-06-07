@@ -1,7 +1,18 @@
 
 #note{
 	color: #666666;
-	font:1em Arial, Helvetica, sans-serif;
+	font:2.5em Arial, Helvetica, sans-serif;
+	margin: 0 auto;
+	padding: 4px;
+	text-align: center;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+	width:auto;
+}
+
+
+.firstname{
+	color: #666666;
+	font:2.5em Arial, Helvetica, sans-serif;
 	margin: 0 auto;
 	padding: 4px;
 	text-align: center;
@@ -66,7 +77,7 @@ float:right;
 	border-bottom:4px solid #838183;
 	margin-top:20px;
 	color:#666;
-	font:18px/11px Arial, Helvetica, sans-serif;
+	font:2em Arial, Helvetica, sans-serif;
 	text-align:center;
 	height:30px;
 }
@@ -115,15 +126,13 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     background:white;
     box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     width: 96%;
-
-
-
-    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 300%;
     font-weight: bold;
     margin: 10% auto;
     position: relative;
     text-align: center;
+    border:1px solid #d7d7d7;
     }
 .disclosure {
     -moz-box-sizing: border-box;
@@ -134,7 +143,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 	border-bottom:4px solid #838183;
 	margin-top:20px;
 	color:#666;
-	font:1.2em/1.8em Arial, Helvetica, sans-serif;
+	font:2em Arial, Helvetica, sans-serif;
 	text-align:center;
 	height:38px;
 	width:96%;
