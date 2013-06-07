@@ -92,7 +92,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   <div id="wrapper">
     <div class="banner-block">
       <div class="banner-content" style="height: 363px;">
-        <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?= FULL_BASE_URL; ?>/img/Processing.gif"/></div>
+        <div class="transbox1" id="transbox" style="display:none"><img class="spinner" src="<?= FULL_BASE_URL; ?>/img/Processing.gif"/></div>
         <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
           <?php  if($type): ?>
          <p></p>

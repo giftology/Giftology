@@ -53,9 +53,10 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 
 </head>
 <body style="zoom: 1; margin-bottom: 0px;">
-<div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
+
 <div class="mainpage">
 	<div class="header">
+		<div class="transbox2" id="transbox" style="display:none"><img class="spinner" src="<?= FULL_BASE_URL; ?>/img/Processing.gif"/></div>
 		<div class="logo-block"><a href="<?= FULL_BASE_URL; ?>" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
 		<!--<a href=<?= FULL_BASE_URL; ?>> -
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
