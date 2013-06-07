@@ -311,6 +311,14 @@ p {
     text-align: center;
     width: 100%;
 }
+.voucher img.wide {
+    height: 64px;
+    left: 50%;
+    margin-left: -100px;
+    position: absolute;
+    top: 140px;
+    width: 200px;
+}
 
 
 
