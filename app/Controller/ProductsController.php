@@ -430,7 +430,7 @@ public function download_user_csv_all($download_selected = null){
         //$conditions['Product.id'] = $products_for_location;
         //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
         //$this->paginate['conditions'] = $conditions;
-        $this->paginate['conditions']  = array('OR' => array('Product.id' => $products_for_location, array('NOT' => array('Product.display_order' => 0), 'Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES))));
+        $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),'OR' => array('Product.id' => $products_for_location, array('Product.gender_segment_id'  => array($gender,ALL_GENDERS) ,'Product.city_segment_id' => array($location,ALL_CITIES) , 'Product.age_segment_id' => array($age,ALL_AGES))));
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
        
