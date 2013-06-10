@@ -1,13 +1,235 @@
 
-#note{
-	color: #666666;
-	font:2.5em Arial, Helvetica, sans-serif;
-	margin: 0 auto;
-	padding: 4px;
-	text-align: center;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
-	width:auto;
+
+#wrapper {
+    width:100%;
+    height:auto;
+    border:#ccc solid 0px;
+    min-height:100%;
+    position:relative;
+
+
+
 }
+.clear {
+    clear:both;
+}
+
+.headerbluebg {
+    width:100%;
+    background-color:#830707;
+    margin: 0;
+    padding:0;
+    height:10%;
+    position:fixed;
+    top:0;
+    z-index:1;
+}
+
+
+.home-content {
+    width:90%; 
+    margin:20% auto 3% auto;
+    border: 14px double #A7D441;
+    background-color: #fff;
+    border-radius: 4px 4px 4px 4px;
+    height: 680px;
+    min-height: 100%;
+
+}
+
+
+
+.logo {
+    margin:0;
+    text-align:center;
+}
+
+.voucher {
+    
+    position: relative;
+    width:100%;
+    height: 680px;
+
+}
+
+.voucher .value {
+    color: #000000;
+    font: 5em  Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 100px;
+    width: 100%;
+}
+
+.voucher .divider {
+    background-image: url("/img/voucher-divider-line.png");
+    height: 2px;
+   
+    position: relative;
+    top: 270px;
+    width: 288px;
+    margin: auto;
+
+}
+.voucher .at {
+    color: #8C8C8C;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 4em;
+     position: absolute;
+     top:-45px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+
+.voucher .fine-print {
+    bottom: 80px;
+    color: #4D4D4D;
+    font-size: 2em;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.voucher img.wide {
+    height: 200px;
+    position: relative;
+    top: 330px;
+    width: 200px;
+}
+
+ .button{
+    width:600px;
+    height:auto;
+    padding: 0 12px;
+    margin: 10% auto;
+}
+
+
+.buttoncustom{
+
+    width:600px;
+    height:auto;
+    
+    text-align: center;
+    padding: 2px 0px;
+    border-radius: 1px 1px 1px 1px;
+    font-size: 3em;
+    height: 100px;
+    line-height: 36px;
+    padding: 0 12px;
+
+}
+
+.logo {width:65%;
+float: left}
+
+
+
+
+
+
+
+
+
+.count{ width:80%;
+height:auto;
+margin:72px auto;
+text-align: center;
+padding: 2px 0px;
+
+}
+
+.countdownHolder{
+
+display:none;
+
+}
+
+.spans{
+    background:white;
+    box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
+    width: 96%;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 300%;
+    font-weight: bold;
+    margin: 3% auto;
+    position: relative;
+    text-align: center;
+    border:1px solid #d7d7d7;
+    }
+
+
+#note{
+    color: #666666;
+    font:2.5em Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    width:auto;
+}
+
+.note{
+    color: #666666;
+    font:2.5em Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    width:auto;
+}
+
+/*
+
+@media all and (max-width: 500px) and (min-width: 440px) {
+
+
+  .done1{ width:20%; }
+
+ 
+  .spans{ font-size: 220%}
+}
+
+@media all and (max-width: 439px) and (min-width: 300px) {
+  .done1{ width:25%; }
+
+  
+  
+  .spans{ font-size: 150%}
+  .count{margin-top:18%;}
+
+}
+
+
+
+@media all and (max-width: 299px)  {
+  .done1{ width:28%; }
+
+  .logo{ width:45%}
+  
+  .spans{ font-size: 100%}
+  .count{margin-top:35%;}
+
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////
+
+
+
+
+    
 
 
 .firstname{
@@ -20,22 +242,8 @@
 	width:auto;
 }
 
-#wrapper{
-width:100%;
-margin: 0;
-}
-button{
-	width:40%;
-height:auto;
-margin-top:auto;
-text-align: center;
-padding: 2px 0px;
-    border-radius: 1px 1px 1px 1px;
-    font-size: 18px;
-    height: 40px;
-    line-height: 36px;
-    padding: 0 12px;
-}
+
+
 
 .logo{
 position: absolute;
@@ -64,7 +272,7 @@ box-shadow: 0px 0px 5% 6 #d7d7d7;
 
 
 
-
+/*
 .done1{
 background: none repeat scroll 0% 0% #920909;
 width:14%;
@@ -94,16 +302,6 @@ float:right;
 }
 
 
-.headerbluebg {
-	width:98.9%;
-	background-color:#830707;
-	margin: 0;
-	padding:0;
-	height:100px;
-	position:fixed;
-	top:0;
-	z-index:1;
-}
 
 
 .count{	width:80%;
@@ -232,6 +430,7 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 
 
 
+<<<<<<< Updated upstream
 .voucher .frame {
     background-image: url("../img/voucher-frame.png");
     height: 250px;
@@ -248,6 +447,11 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
     width:300px;
     
 }
+=======
+
+
+
+>>>>>>> Stashed changes
 .voucher .paper {
     background-color: white;
     bottom: 25px;
@@ -259,35 +463,18 @@ box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
 .voucher-container.purchase .voucher h2 {
     display: none;
 }
-.voucher .value {
-    color: #000000;
-    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 45px;
-    font-weight: bold;
-    margin: 0;
-    position: absolute;
-    text-align: center;
-    top: 42px;
-    width: 100%;
-}
+
 #WebRupee {
     display: inline;
 }
 .WebRupee {
     font-family: 'WebRupee';
 }
-.voucher .value {
-    color: #000000;
-    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 45px;
-    font-weight: bold;
-    text-align: center;
-}
 
 .voucher .divider {
     background-image: url("/img/voucher-divider-line.png");
     height: 2px;
-    left: 17px;
+    left: 27%;
     position: absolute;
     top: 120px;
     width: 288px;
@@ -323,38 +510,8 @@ p {
     top: 140px;
     width: 200px;
 }
+*/
 
 
-
-@media all and (max-width: 500px) and (min-width: 440px) {
-
-
-  .done1{ width:20%; }
-
-  .logo{ width:30%}
-  .spans{ font-size: 220%}
-}
-
-@media all and (max-width: 439px) and (min-width: 300px) {
-  .done1{ width:25%; }
-
-  .logo{ width:40%}
-  .voucher{top:50px; left:-10%;}
-  .spans{ font-size: 150%}
-  .count{margin-top:18%;}
-
-}
-
-
-
-@media all and (max-width: 299px)  {
-  .done1{ width:28%; }
-
-  .logo{ width:45%}
-  .voucher{top:80px; left:-15%;}
-  .spans{ font-size: 100%}
-  .count{margin-top:35%;}
-
-}
 
 

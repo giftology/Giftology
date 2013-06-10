@@ -1,5 +1,5 @@
 $(function(){
-	
+	 $('.hit').click(function() {
 	var note = $('#note'),
 		ts = new Date(2012, 0, 1),
 		newYear = true;
@@ -15,7 +15,7 @@ $(function(){
 		timestamp	: ts,
 		callback	: function(days, hours, minutes, seconds){
 			
-			var message = " Your voucher expires in <br>";
+			var message = " Your voucher expires in ";
 			
 			
 			message +="<b>"+ minutes + " :" + ( minutes==1 ? '':'' ) ;
@@ -26,5 +26,6 @@ $(function(){
 			note.html(message);
 		}
 	});
+});
 	
 });

@@ -1,58 +1,67 @@
 <?= $this->layout = 'offline_redeemption'; ?>
 
-    <div id="wrapper">
-        <div class="headerbluebg">
-            
-            <div class="header">
-                <div class="logo-block"><a href="<?= FULL_BASE_URL; ?>" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt="" style="width:150%"></a></div>
-            </div>
-            
-             <!--<div class="done1" >
-                <span>done</span> 
-                </div>-->
-              </div>
-            <div id="container" >
-            <center>
-                <div class="small">
+
+
+
+<div id="wrapper">
+    <div class="headerbluebg"> <!--body wrapper start-->
+        <div class="logo">
+            <a href="<?= FULL_BASE_URL; ?>" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt="" style="width:100%">
+            </a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="home-content" style="padding-bottom:30px">
+
+
+         <div class="small">
                     <div class="voucher">
-                        <div class="paper"></div>
+                        
                         <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $gift['Product']['min_value']; ?></h2>
-                        <div class="divider"></div>
-                        <img width="200" height="64" src="<?= FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image'];
-                        ?>" class="wide">
-                        <p class="at">at</p><p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
+                        
+                       
+                        <div class="divider">
+                        <p class="at">at</p>
+                        </div>
+                         <div style="width:200px; margin:auto;">
+                        <img width="50" height="50" src="<?= FULL_BASE_URL; ?>/files/Nirula'sNirula's_200x200.jpg"  class="wide">
+
+                        </div>
+                       
+                        <p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
+                   
+                        
                         <div class="frame"></div>
-                    </div>
-                
-                    <!--<div class="value">
-                    <img src="<?= IMAGE_ROOT.'value11.png'; ?>" >
-                    </div>-->
-                
+                    </div>                
                     <div class="count">
                       <div id="countdown"></div>
-                      <p class="firstname"><?= $gift['Sender']['UserProfile']['first_name'] ?></p><p id="note"></p>
+                      <p class="firstname note"><?= $gift['Sender']['UserProfile']['first_name'] ?></p>
+                      <p id="note"></p>
                     
-                    <p class="spans"> <?= $gift['Gift']['code']; ?>
+                    <div class="button">
+                    <P class="  spans"> <?= $gift['Gift']['code']; ?>
                     </p>
+                    
                     </div>
-                    <!--<div class="disclosure opened">
-                           <p >Terms and conditions</p>
-                           <div class="wrapper" style="height: 0px;">
-                                <p class="content shown"><?= $gift['Product']['terms']; ?></p>
-                           </div>
-                            <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
-                                <span class="arrow"></span>
-                            </a>
-                    </div>-->
-                </div>
-           
-                   <div class="shows">
-                    <button class="hit" style="" id="<?= $gift['Gift']['id']; ?>">
+                    </div>
+                   
+         </div>
+
+         
+    </div>
+
+    <div class="shows button">
+                    <button class=" hit buttoncustom" style="" id="<?= $gift['Gift']['id']; ?>">
                     Redeem
                     </button>
-                  </div>
-          </center>
-       </div>
+    </div>
+
+
+
+
+
+
+            
 
    </div>
 
