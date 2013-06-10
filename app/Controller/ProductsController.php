@@ -253,6 +253,7 @@ public function download_user_csv_all($download_selected = null){
             $this->Product->create();
             $this->request->data['Product']['city_segment'] = serialize($this->request->data['city_segment']);
             unset($this->request->data['city_segment']);
+            $this->request->data['Product']['city_segment_id'] = ALL_CITIES;
             if($this->Product->save($this->request->data)) {
                 $this->product_city_segments($product_id, $this->request->data['Product']['city_segment']);
                 $this->Session->setFlash(__('The product has been saved'));
