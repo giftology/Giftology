@@ -67,6 +67,7 @@ input[type="text"] {
     padding: 5px;
     resize: none;
     width:250px;
+    font-size: 25px;
 }
 
 
@@ -398,16 +399,16 @@ $(document).ready(function(){
   </div>
   <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
   <div class="coupon">
-  <div class="FL mar5"><img src="../img/arrow1.png"></div>
+  <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
   <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
-  <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px"><img src="../img/ccb.png" id="copy"></div>
+  <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"><img src="../img/ccb.png" id="copy"></div>
       </div>
       <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
 
- <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:710px;left:30%">
-                <div class="arrow inner" style=" position:relative; top:38px; margin-left:-2px;"></div>
-                <div class="arrow outer"  style="position:relative; top:0; margin-left:-5px;"></div>
+ <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:700px;left:30%">
+                <div class="arrow inner" style=" position:relative; top:40px; margin-left:-9px;"></div>
+                <div class="arrow outer"  style="position:relative; top:0; margin-left:-12px;"></div>
                 <div class="content" style="position:relative;">
                     <h4>Ready?</h4>
                     <div class="buttons">
