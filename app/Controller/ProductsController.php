@@ -402,27 +402,43 @@ public function download_user_csv_all($download_selected = null){
         $gender=strtoupper($gender);
         $age=$today-$year;
         
-        //$products = array();
+        $products = array();
         $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
         $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
         //$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
         $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
         $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
         
-        //$products_for_gender = array();
-        //$products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.gender_segment_id'  => array($gender,ALL_GENDERS))));
+        $products_for_gender = array();
+        $products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.gender_segment_id'  => array($gender))));
         
         $location = $this->City->find('first',array('conditions' => array('city' => $location)));
         $city_segments = $this->LocationSegment->find('list',array('fields' => array('city_segment_id'),'conditions' => array('city_id' => $location['City']['id'])));
         
         $products_for_location = array() ;
-        if(isset($city_segments) && !empty($city_segments)) $products_for_location_conditions['city_segment_id'] = $city_segments;
-        else $products_for_location_conditions = 1;
-        $products_for_location = $this->ProductCitySegment->find('list', array('fields' => array('product_id'), 'conditions' => $products_for_location_conditions));
+        $products_for_location_conditions = array();
+        if(isset($city_segments) && !empty($city_segments)){
+            $products_for_location = $this->ProductCitySegment->find('list', array(
+                'fields' => array('product_id'),
+                'conditions' => array('city_segment_id' =>$city_segments)));
+        }
+
+        $products_for_all_locations = $this->ProductCitySegment->find('list', array('fields' => array('product_id'),
+            'conditions' => array('city_segment_id' =>ALL_CITIES)));
         
-        //$products_for_age = array();
-        //$products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.age_segment_id' => array($age,ALL_AGES))));
-        //$products = array_unique(array_merge($products_for_age,$products_for_gender,$products_for_location));
+        $products_for_age = array();
+        $products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.age_segment_id' => array($age))));
+        $products_age_location_gender = array_intersect($products_for_age,$products_for_gender,$products_for_location);
+
+        $product_for_all_age_gender = $this->Product->find('list', array('fields' => array('id'), 'conditions' => array(
+            'OR' => array(
+                'age_segment_id' => ALL_AGES,
+                'gender_segment_id' => ALL_GENDERS
+            ),
+            'AND' => array(
+                'Product.id' => $products_for_all_locations   
+            )
+            )));
         
         //$conditions = array();
         //$conditions['NOT'] = array('Product.display_order' => 0);
@@ -430,7 +446,8 @@ public function download_user_csv_all($download_selected = null){
         //$conditions['Product.id'] = $products_for_location;
         //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
         //$this->paginate['conditions'] = $conditions;
-        $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),'OR' => array('Product.id' => $products_for_location, array('Product.gender_segment_id'  => array($gender,ALL_GENDERS) , 'Product.age_segment_id' => array($age,ALL_AGES))));
+        $products = array_merge($product_for_all_age_gender, $products_age_location_gender);
+        $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),'Product.id' => $products);
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
        
@@ -654,6 +671,23 @@ public function download_user_csv_all($download_selected = null){
                 $this->ProductCitySegment->delete();        
             }
         }
+    }
+
+    public function update_city_segment(){
+        $all_cities_products = $this->Product->find('list', array('fields' => array('id'), 'conditions' => array('city_segment_id' => ALL_CITIES, 'city_segment IS NULL')));
+        $city_product_segment = array();
+        $city_segment_data['segment'] = serialize($all_cities_products);
+        $this->CitySegment->id = ALL_CITIES;
+        $this->CitySegment->save($city_segment_data);
+        foreach($all_cities_products as $k => $product){
+            $city_product_segment[$k]['city_segment_id'] = 1;
+            $city_product_segment[$k]['product_id'] = $product;
+            $this->Product->updateAll(array('Product.city_segment' => "'".serialize(array(ALL_CITIES => ALL_CITIES))."'"),array('Product.id' => $product));
+        }
+        $this->ProductCitySegment->create();
+        $this->ProductCitySegment->saveMany($city_product_segment);
+        $this->autoRender = $this->autoLayout = false;
+        exit;
     }
     
 }
