@@ -611,7 +611,16 @@ public function download_user_csv_all($download_selected = null){
                         ));
                 }
                 else{
-                    $code_exists = TRUE;
+                    if(($product['Product']['min_value'] == $product['Product']['min_price']) &&  ($product['Product']['min_price'] != $product['Product']['max_price']) && ($product['Product']['min_value'] != $product['Product']['max_price']) && ($product['Product']['code_type_id'] == UPLOADED_CODE)){
+                        $code_exists = $this->UploadedProductCode->find('count', array(
+                            'conditions' => array(
+                                'available'=>1, 
+                                'product_id' =>$product['Product']['id'],
+                                'expiry >' => $valid_till
+                                )
+                            ));
+                    }
+                    else $code_exists = TRUE;
                 }
 
                 if($code_exists){
