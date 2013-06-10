@@ -251,7 +251,6 @@ class RemindersController extends AppController {
 
 		public function view_friends($type=null) 
 		{
-
 			if($this->Connect->user()){
 		        $this->User->id = $this->Auth->User('id');
 		        $this->User->updateAll(
@@ -259,7 +258,8 @@ class RemindersController extends AppController {
 		            array('User.id' => $this->Auth->User('id'))
 		        );
 		   	}
-		    $this->reminder_view_friends($type);	
+		    $this->reminder_view_friends($type);
+		    $this->set('user_id',$this->Auth->User('id'));
 		}
 
 	public function reminder_view_friends($type=null){
