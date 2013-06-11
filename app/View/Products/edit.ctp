@@ -30,6 +30,18 @@
 		            ), 
 		            'full' 
 	        ); 
+		
+		
+
+		echo $this->Form->input('code_type_id');
+		echo $this->Form->input('code');
+		echo $this->Form->input('vendor_id');
+		echo $this->Form->input('product_type_id');
+		echo $this->Form->input('age_segment_id');
+		echo $this->Form->input('gender_segment_id');
+		echo $this->Form->input('city_segment_id');
+		echo $this->Form->input('display_order');
+		echo $this->Form->input('redemption_rate');
 		echo $this->Form->input('allocation_mode',
 	    	array(
 	        'options' => $allocation_mode,
@@ -47,16 +59,6 @@
 	    		)
 			);
 		
-		echo $this->Form->input('redemption_rate');
-
-		echo $this->Form->input('code_type_id');
-		echo $this->Form->input('code');
-		echo $this->Form->input('vendor_id');
-		echo $this->Form->input('product_type_id');
-		echo $this->Form->input('age_segment_id');
-		echo $this->Form->input('gender_segment_id');
-		echo $this->Form->input('city_segment_id');
-		echo $this->Form->input('display_order');
 		echo $this->Form->input('sender_gift_limit');
 		echo $this->Form->input('sender_gift_limit');
 		echo $this->Form->input('receiver_gift_limit');

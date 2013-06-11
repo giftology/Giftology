@@ -809,7 +809,7 @@ public function index() {
             
             
          }
-        else if($product_data['Product']['allocation_mode']==4) 
+        else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED) 
         {
             $code = $this->Gift->Product->UploadedProductCode->find('first',
             array('conditions' => array('available'=>1, 'product_id' =>$product_id,
