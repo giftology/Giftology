@@ -941,7 +941,7 @@ public function index() {
             
             $total_code_byrate= ( ($total_codes/$redemption_rate['Product']['redemption_rate'])*100) ;
             
-            if($sent_temp_code <= $total_code_byrate) {
+            if($sent_temp_code < $total_code_byrate) {
             $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
             $i = 0; 

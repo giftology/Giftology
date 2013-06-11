@@ -81,9 +81,6 @@ input[type="text"] {
     
     $('.single').click( function() {
     loadPopupBox();
-      $('#ccb').click( function() {
-        alert("arul");
-      });
       $('.done').click( function() {
          $('#use_online_redeem').css('display','block');
          $('.cancel1').click( function() {
@@ -401,7 +398,7 @@ $(document).ready(function(){
   <div class="coupon">
   <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
   <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
-  <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"><img src="../img/ccb.png" id="copy"></div>
+  /*<div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"><img src="../img/ccb.png" id="copy"></div>*/
       </div>
       <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
