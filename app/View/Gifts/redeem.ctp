@@ -277,9 +277,9 @@ input[type="text"] {
                     </div>
 
 
-                    <div class="open-online-redeem popover fade bottom in" id="use_offline" style="position:relative; top:-70px;display: block;" class="abc">
-                        <div class="arrow inner"  style=" position:relative; top:40px; margin-left:-350px;"></div>
-                        <div class="arrow outer" style="position:relative; top:0; margin-left:-353px;"></div>
+                    <div class="open-online-redeem popover fade bottom in" id="use_offline" style="position:relative;width:300px;top:-70px;display: block;" class="abc">
+                        <div class="arrow inner"  style=" position:relative; top:40px; margin-left:-13px;"></div>
+                        <div class="arrow outer" style="position:relative; top:0; margin-left:-16px;"></div>
                         <div class="content">
                           <h4>For Moblie Redeemtion</h4>
                             <div class="buttons">
