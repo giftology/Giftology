@@ -271,22 +271,44 @@ input[type="text"] {
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>
                 <?php else: ?>
-                    <p>This is offline voucher which can be redeemed through : </p></br>
+                   <p>This is offline voucher which can be redeemed through : </p></br>
+                    <div class = "parent_submit">
+                       <?php echo $this->Form->input("Use offline" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'offlineshow','style'=>'margin-left:0px;width:290px'))?>
+                    </div>
+
+
+                    <div class="open-online-redeem popover fade bottom in" id="use_offline" style="position:relative; top:-70px;display: block;" class="abc">
+                        <div class="arrow inner"  style=" position:relative; top:40px; margin-left:-350px;"></div>
+                        <div class="arrow outer" style="position:relative; top:0; margin-left:-353px;"></div>
+                        <div class="content">
+                          <h4>For Moblie Redeemtion</h4>
+                            <div class="buttons">
+                               <!-- <button class="cancel">Cancel</button>-->
+                                <a>
+                                        <span class="arrow" style="position:relative;margin-left:-400px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>app.png" /></span>
+                                      </a>
+
+
+                                 <?php if($gift['Gift']['sms']==0): ?>
+                                   <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1','style' => 'position:relative;width:0px;height:0px;'));?> 
+                               
+                                      <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
+                                      </div>
+                                     <a>
+                                        <span class="arrow" style="position:relative;margin-left:150px;top:-37px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
+                                      </a>
+                                  <?php echo $this->Form->end(); ?>
+                                <?php endif; ?>
+                            </div>
+                     </div>
+                   </div>
+                
                       <div class="current-user">
-                          <div class="android_app" style="margin-bottom:-35px;margin-left:10px;cursor:pointer">
+                          <!--<div class="android_app" style="margin-bottom:-35px;margin-left:10px;cursor:pointer">
                             <a href="https://play.google.com/store/search?q=giftology" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/></a> 
                           </div></br></br>
-                           <!--<a href=<?= $this->Html->url(array('controller'=>'gifts', 'action'=>'setting')); ?>><span>Mobile Web</span></a>-->
-                           <?php if($gift['Gift']['sms']==0): ?>
-                           <?php  echo $this->Form->create('gifts', array('action' => 'sms','id'=>'sms1'));?> 
-                       
-                              <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
-                              </div>
-                              <a>
-                                <span class="arrow" style=""><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>sms.png" /></span>
-                              </a>
-                          <?php echo $this->Form->end(); ?>
-                        <?php endif; ?>
+                           <a href=<?= $this->Html->url(array('controller'=>'gifts', 'action'=>'setting')); ?>><span>Mobile Web</span></a>-->
+                          
                       </div>
                 <?php endif; ?>
 
@@ -398,7 +420,7 @@ $(document).ready(function(){
   <div class="coupon">
   <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
   <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
-  /*<div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"><img src="../img/ccb.png" id="copy"></div>*/
+  <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"></div>
       </div>
       <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
