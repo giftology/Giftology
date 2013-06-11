@@ -1,2 +1,4 @@
 
-<h4>This voucher can only be redeemed using mobile web or Giftology Android App.</h4>
+<h4>Oops, this gift has a limited life! 
+
+This gifts looks like it has already been used. Email us if you require any assistance..</h4>

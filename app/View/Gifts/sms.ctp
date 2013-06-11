@@ -36,8 +36,9 @@ return false; }
             //if($pin)
                 //$message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
             //else $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
-              //else 
-                $message = $link;
+              //else
+                $message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from". $gift['Product']['Vendor']['name']."! View your gift here". $link.", and visit the shop to redeem it. Enjoy!";
+                //$message = $link;
            
              echo $this->Form->create('gifts', array('action' => 'send_sms'));
             

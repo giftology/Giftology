@@ -1,8 +1,4 @@
 <?= $this->layout = 'offline_redeemption'; ?>
-
-
-
-
 <div id="wrapper">
     <div class="headerbluebg"> <!--body wrapper start-->
         <div class="logo">
@@ -10,60 +6,39 @@
             </a>
         </div>
     </div>
+
     <div class="clear"></div>
     <div class="home-content" style="padding-bottom:30px">
-
-
-         <div class="small">
-                    <div class="voucher">
-                        
-                        <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $gift['Product']['min_value']; ?></h2>
-                        
-                       
-                        <div class="divider">
-                        <p class="at">at</p>
-                        </div>
-                         <div style="width:200px; margin:auto;">
-                        <img width="50" height="50" src="<?= FULL_BASE_URL; ?>/files/Nirula'sNirula's_200x200.jpg"  class="wide">
-
-                        </div>
-                       
-                        <p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
-                   
-                        
-                        <div class="frame"></div>
-                    </div>                
-                    <div class="count">
-                      <div id="countdown"></div>
-                      <p class="firstname note"><?= $gift['Sender']['UserProfile']['first_name'] ?></p>
-                      <p id="note"></p>
-                    
+        <div class="small">
+            <div class="voucher">
+                <h2 class="value"><span id="WebRupee" class="WebRupee">Rs.</span><?= $gift['Product']['min_value']; ?>
+                </h2>
+                <div class="divider">
+                    <p class="at">at</p>
+                </div>
+                 <div style="width:200px; margin:auto;">
+                    <img width="50" height="50" src="<?= FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image'];?>"  class="wide">
+                </div>
+                <p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
+                <div class="frame"></div>
+            </div>                
+            <div class="count">
+                <div id="countdown"></div>
+                <p class="firstname note"><?= $gift['Sender']['UserProfile']['first_name'] ?></p>
+                <p id="note"></p>
                     <div class="button">
-                    <P class="  spans"> <?= $gift['Gift']['code']; ?>
-                    </p>
-                    
+                        <P class="  spans"> <?= $gift['Gift']['code']; ?>
+                        </p>
                     </div>
-                    </div>
-                   
-         </div>
-
-         
+            </div>
+        </div>
     </div>
-
     <div class="shows button">
-                    <button class=" hit buttoncustom" style="" id="<?= $gift['Gift']['id']; ?>">
+        <button class=" hit buttoncustom" style="" id="<?= $gift['Gift']['id']; ?>">
                     Redeem
-                    </button>
+        </button>
     </div>
-
-
-
-
-
-
-            
-
-   </div>
+</div>
 
    
 
@@ -106,20 +81,9 @@ $(document).ready(function(){
                     data: "search_key="+key_value,
                     success: function(data) {
                       
-                        //var res_data = jQuery.parseJSON(data);
-                        //var count = res_data.length;
-                        //var new_row = '';
-                        //$('#gift-details').remove();
-                        //$('.footer-wrap').remove();
-                        //$('footer').remove();
-                        //$('.delivery-message,.submit').remove();
-                        
-                         //$('#ititemplate').tmpl(res_data).appendTo('.clear');
                      }
 
                      });
            
         });
-   
-
 </script>

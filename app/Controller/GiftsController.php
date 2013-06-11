@@ -1444,7 +1444,7 @@ public function index() {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-        $link = "http://Giftology.com/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
 
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
@@ -1452,18 +1452,30 @@ public function index() {
         $this->set('pin',$pin['UploadedProductCode']['pin']);
     	
     } 
-    public function send_sms(){
+    public function send_sms()
+    {
+        DebugBreak();
         $gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
-    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
-           $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
-						array('Gift.id' => $gift_id)); 
+    	$value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
+        if($value)
+        {
+            $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
+                        array('Gift.id' => $gift_id)); 
            $this->UserProfile->updateAll (array('UserProfile.mobile'=>$this->data['gifts']['mobile_number']),
                         array('UserProfile.user_id' => $this->Auth->user('id'))); 
+           $this->Session->setFlash(__('Congratulations !! SMS has been sent successfully'));
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+        else{
+            $this->Session->setFlash(__('Oops !! Seems like some error has occured. Please resend the SMS.'));
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+           
         
 
-        }
+    }
 		
     public function offline_voucher_redeem_page($gift_id)
     {   //DebugBreak();
@@ -1481,6 +1493,11 @@ public function index() {
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
+        if(!($iphone || $android || $palmpre || $ipod || $berry))
+        {
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
+        }
         if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
             $gift = $this->Gift->find('first', array(
@@ -1502,6 +1519,9 @@ public function index() {
     
     public function error_page()
     {
+
+    }
+    public function error_page_for_desktop(){
 
     }
 	public function news() {
