@@ -1444,11 +1444,50 @@ public function index() {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
+        $fields = array(
+                 'client_id' => '8a37cd067c1878056856e9bbba4b95335e6e4867',
+                 'client_secret' => '7c64aa83c5c4918c9d71f1446e132873c43f2636',
+                 //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
+                 'redirect_uri'=> 'http://www.master.mygiftology.net/',
+                 );
+               $ch = curl_init();
+
+               //set the url, number of POST vars, POST data
+               curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/oauth/access_token');
+               curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+               curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+               curl_setopt($ch, CURLOPT_USERPWD, "shubham150@gmail.com:12facebook.com");
+               
+               //execute post
+               $access_token = curl_exec($ch);
+               curl_close($ch);
+               
         $link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
+        $ch = curl_init();
+        $new_link_data = array(
+            'access_token' => $access_token,
+            'longUrl' => $link
+        );
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/v3/shorten?'.http_build_query($new_link_data));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+               curl_setopt($ch,CURLOPT_POSTFIELDS,$new_link_data);
+        $result = curl_exec($ch); 
+               $error = curl_error($ch);
+        $url_arr = json_decode($result);
+        $url = $url_arr->{'data'}->{'url'};
+        //$link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
 
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
-        $this->set('link',$link);
+        $this->set('link',$url);
         $this->set('pin',$pin['UploadedProductCode']['pin']);
     	
     } 
@@ -1482,7 +1521,7 @@ public function index() {
         if($this->RequestHandler->isAjax()) 
         {
            $this->Gift->updateAll(
-                    array('Gift.redeem' => 0),
+                    array('Gift.redeem' => 1),
                     array('Gift.id' => $gift_id));
            exit;
         }
