@@ -109,12 +109,131 @@ class UsersController extends AppController {
  * @return void
  */
 public function download_user_csv_all($download_selected = null){
-      
         $this->setUserProfile();
         $this->Prg->commonProcess('User');
         $this->User->recursive = 0;
         $array1 = unserialize($download_selected);
-        $conditions= array('conditions' => array($this->User->parseCriteria($array1)),'order'=>array('User.created'=>'DESC'));
+         if(($array1['created_start'])||($array1['modified_start'])||($array1['last_login_start']))
+     { 
+         if(!($this->passedArgs['created_start'])){  
+             $modified_end=$array1['modified_end'].' 23:59:59';
+             $modified_start=$array1['modified_start'].' 00:00:00';
+             $last_login_end=$array1['last_login_end'].' 23:59:59';
+             $last_login_start=$array1['last_login_start'].' 00:00:00';
+             if(!$array1['modified_end']){
+                 $modified_end=$array1['modified_start'].' 23:59:59';
+             }
+             if(!$array1['last_login_end']){
+                 $last_login_end=$array1['last_login_start'].' 23:59:59';
+             }
+
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1),'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+                 ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+
+         if(!($array1['modified_start'])){
+             $created_end=$array1['created_end'].' 23:59:59';
+             $created_start=$array1['created_start'].' 00:00:00';
+             $last_login_end=$array1['last_login_end'].' 23:59:59';
+             $last_login_start=$array1['last_login_start'].' 00:00:00';
+             if(!$array1['created_end']){
+                 $created_end=$array1['created_start'].' 23:59:59';
+             }
+             if(!$array1['last_login_end']){
+                 $last_login_end=$array1['last_login_start'].' 23:59:59';
+             }
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1) ,'User.created >'=>$created_start,'User.created <' => $created_end
+                 ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+         if(!($array1['last_login_start'])){
+             $created_end=$array1['created_end'].' 23:59:59';
+             $modified_end=$array1['modified_end'].' 23:59:59';
+             $modified_start=$array1['modified_start'].' 00:00:00';
+
+             if(!$array1['created_end']){
+                 $created_end=$array1['created_start'].' 23:59:59';
+             }
+             if(!$array1['modified_end']){
+                 $modified_end=$array1['modified_start'].' 23:59:59';
+             }
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1) ,'User.created >'=>$created_start,'User.created <' => $created_end
+                 ,'User.modified >'=>$modified,'User.modified <' => $modified
+
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+         if(!($array1['created_start'])&&(!($array1['modified_start']))){
+
+             $last_login_end=$array1['last_login_end'].' 23:59:59';
+             $last_login_start=$array1['last_login_start'].' 00:00:00';
+
+             if(!$array1['last_login_end']){
+                 $last_login_end=$array1['last_login_start'].' 23:59:59';
+             }
+
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1)
+                 ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+         if(!($array1['created_start'])&&(!($array1['last_login_start']))){
+
+             $modified_end=$array1['modified_end'].' 23:59:59';
+             $modified_start=$array1['modified_start'].' 00:00:00';
+
+             if(!$array1['modified_end']){
+                 $modified_end=$array1['modified_start'].' 23:59:59';
+             }
+
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1)
+                 ,'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+         if(!($array1['modified_start'])&&(!($array1['last_login_start']))){
+
+             $created_end=$array1['created_end'].' 23:59:59';
+             $created_start=$array1['created_start'].' 00:00:00';
+
+             if(!$array1['created_end']){
+                 $created_end=$array1['created_start'].' 23:59:59';
+             }
+
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1)
+                 ,'User.created >'=>$created_start,'User.created <' => $created_end
+                 ),'order'=>array('User.created'=>'DESC')); 
+         }
+         if(($array1['created_start'])&&(($array1['modified_start']))&&(($array1['last_login_start'])))
+         { 
+             $modified_end=$array1['modified_end'].' 23:59:59';
+             $modified_start=$array1['modified_start'].' 00:00:00';
+             $created_end=$array1['created_end'].' 23:59:59';
+             $created_start=$array1['created_start'].' 00:00:00';
+             $last_login_end=$array1['last_login_end'].' 23:59:59';
+             $last_login_start=$array1['last_login_start'].' 00:00:00';
+             if(!$array1['modified_end']){
+                 $modified_end=$array1['modified_start'].' 23:59:59';
+             }
+             if(!$array1['created_end']){
+                 $created_end=$array1['created_start'].' 23:59:59';
+             }
+             if(!$array1['last_login_end']){
+                 $last_login_end=$array1['last_login_start'].' 23:59:59';
+             }
+
+             $conditions=array('conditions' => array($this->User->parseCriteria($array1),'User.modified >'=>$modified_start,'User.modified <' => $modified_end
+                 ,'User.created >'=>$created_start,'User.created <' => $created_end
+                 ,'User.last_login >'=>$last_login_start,'User.last_login <' => $last_login_end
+
+                 ),'order'=>array('User.created'=>'DESC'));  
+         }  
+
+
+     }
+     else{
+         $conditions= array('conditions' => array($this->User->parseCriteria($array1)),'order'=>array('User.created'=>'DESC'));
+
+     }
         $result1= $this->User->find('all', $conditions);
 
          $filename = "Users ".date("Y.m.d").".csv";
@@ -198,6 +317,7 @@ public function download_user_csv_all($download_selected = null){
     }
 	 public function index() {
      $this->setUserProfile();
+    
      $this->Prg->commonProcess('User');
 
      if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start'])||($this->passedArgs['last_login_start']))

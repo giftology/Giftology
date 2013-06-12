@@ -7,14 +7,202 @@ App::uses('AppController', 'Controller');
  */
 class UserUtmsController extends AppController {
 	public $helpers = array('Minify.Minify');
+	   public $components = array('Giftology','Search.Prg');
+    public $presetVars = array(
+            array('field' => 'id', 'type' => 'value'),
+            array('field' => 'user_id', 'type' => 'value'),
+            array('field' => 'utm_source', 'type' => 'value'),
+            array('field' => 'utm_medim', 'type' => 'value'),
+            array('field' => 'utm_campaign', 'type' => 'value'),
+            array('field' => 'utm_term', 'type'=> 'value'),
+            array('field' => 'utm_content', 'type'=>'value'),
+            array('field'=> 'created','type'=>'value'),
+            array('field'=> 'modified','type'=>'value'),
+           
+        );
 /**
  * index method
  *
  * @return void
  */
+public function download_utm_all($download_selected = null){
+        $this->Prg->commonProcess('UserUtm');
+        $array1 = unserialize($download_selected);
+        if(($array1['created_start'])||($array1['modified_start']))
+        { 
+            if(!($array1['created_start'])){
+                 $modified_end=$array1['modified_end'].' 23:59:59';
+                 $modified_start=$array1['modified_start'].' 00:00:00';
+                if(!$array1['modified_end']){
+                    $modified_end=$array1['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->UserUtm->parseCriteria($array1),'UserUtm.modified >'=>$modified_start,'UserUtm.modified <' => $modified_end
+               
+               ),'order'=>array('UserUtm.modified'=>'DESC')); 
+            }
+            
+            if(!($array1['modified_start'])){
+                 $created_end=$array1['created_end'].' 23:59:59';
+                 $created_start=$array1['created_start'].' 00:00:00';
+                if(!$array1['created_end']){
+                    $created_end=$array1['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->UserUtm->parseCriteria($array1) ,'UserUtm.created >'=>$created_start,'UserUtm.created <' => $created_end
+               ),'order'=>array('UserUtm.modified'=>'DESC')); 
+            }
+
+
+        
+           
+           if(($array1['created_start'])&&(($array1['modified_start'])) )
+            { 
+                 $modified_end=$array1['modified_end'].' 23:59:59';
+                 $modified_start=$array1['modified_start'].' 00:00:00';
+                 $created_end=$array1['created_end'].' 23:59:59';
+                 $created_start=$array1['created_start'].' 00:00:00';
+                if(!$array1['modified_end']){
+                    $modified_end=$array1['modified_start'].' 23:59:59';
+                }
+                if(!$array1['created_end']){
+                    $created_end=$array1['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->UserUtm->parseCriteria($array1),'UserUtm.modified >'=>$modified_start,'UserUtm.modified <' => $modified_end
+           ,'UserUtm.created >'=>$created_start,'UserUtm.created <' => $created_end
+            ),'order'=>array('UserUtm.modified'=>'DESC'));  
+             }  
+            
+    
+        }
+        else{
+        $conditions= array('conditions' => array($this->UserUtm->parseCriteria($array1)),'order'=>array('UserUtm.modified'=>'DESC'));
+       	}
+        $result1= $this->UserUtm->find('all', $conditions);
+
+                    $filename = "UserUtm ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','User_id','Utm Source','Utm Medium','Utm Campaign','Utm Term','Utm Content','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($result1 as $id)  
+                        {
+                            $result= $this->UserUtm->find('first', array('conditions'=>array('UserUtm.id'=>$id['UserUtm']['id'])));
+                            $row = array(
+                            $result['UserUtm']['id'],
+                            $result['UserUtm']['user_id'],
+                            $result['UserUtm']['utm_source'],
+                            $result['UserUtm']['utm_medium'],
+                            $result['UserUtm']['utm_campaign'],
+                            $result['UserUtm']['utm_term'],
+                            $result['UserUtm']['utm_content'],
+
+                            $result['UserUtm']['created'],
+                            $result['UserUtm']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+}
+         public function download_utm_csv(){
+				
+                    $filename = "UserUtm ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','User_id','Utm Source','Utm Medium','Utm Campaign','Utm Term','Utm Content','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($this->data['chk1'] as $id)  
+                        {
+                            $ab=" ";
+                            $result= $this->UserUtm->find('first', array('conditions'=>array('UserUtm.id'=>$id)));
+                            $row = array(
+                            $result['UserUtm']['id'],
+                            $result['UserUtm']['user_id'],
+                            $result['UserUtm']['utm_source'],
+                            $result['UserUtm']['utm_medium'],
+                            $result['UserUtm']['utm_campaign'],
+                            $result['UserUtm']['utm_term'],
+                            $result['UserUtm']['utm_content'],
+
+                            $result['UserUtm']['created'],
+                            $result['UserUtm']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+               }
 	public function index() {
-		$this->UserUtm->recursive = 0;
-		$this->set('userUtms', $this->paginate());
+		//DebugBreak();
+
+        $this->UserUtm->recursive = 0;
+
+        $this->Prg->commonProcess('UserUtm');
+        	 if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
+        { 
+            if(!($this->passedArgs['created_start'])){
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                
+               $conditions=array('conditions' => array($this->UserUtm->parseCriteria($this->passedArgs),'UserUtm.modified >'=>$modified_start,'UserUtm.modified <' => $modified_end
+               
+               ),'order'=>array('UserUtm.modified'=>'DESC')); 
+            }
+            
+            if(!($this->passedArgs['modified_start'])){
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+             $conditions=array('conditions' => array($this->UserUtm->parseCriteria($this->passedArgs) ,'UserUtm.created >'=>$created_start,'UserUtm.created <' => $created_end
+               ),'order'=>array('UserUtm.modified'=>'DESC')); 
+            }
+
+
+        
+           
+           if(($this->passedArgs['created_start'])&&(($this->passedArgs['modified_start'])) )
+            { 
+                 $modified_end=$this->passedArgs['modified_end'].' 23:59:59';
+                 $modified_start=$this->passedArgs['modified_start'].' 00:00:00';
+                 $created_end=$this->passedArgs['created_end'].' 23:59:59';
+                 $created_start=$this->passedArgs['created_start'].' 00:00:00';
+                if(!$this->passedArgs['modified_end']){
+                    $modified_end=$this->passedArgs['modified_start'].' 23:59:59';
+                }
+                if(!$this->passedArgs['created_end']){
+                    $created_end=$this->passedArgs['created_start'].' 23:59:59';
+                }
+                
+          $conditions=array('conditions' => array($this->UserUtm->parseCriteria($this->passedArgs),'UserUtm.modified >'=>$modified_start,'UserUtm.modified <' => $modified_end
+           ,'UserUtm.created >'=>$created_start,'UserUtm.created <' => $created_end
+            ),'order'=>array('UserUtm.modified'=>'DESC'));  
+             }  
+            
+    
+        }
+        else{
+		$conditions= array('conditions' => array($this->UserUtm->parseCriteria($this->passedArgs)),'order'=>array('UserUtm.created'=>'DESC'));
+		 }
+        $this->paginate = $conditions;
+     	$users=$this->paginate();
+		$this->set('userUtms', $users);
+		$this->set('download_selected',serialize($this->passedArgs));
+
+
 	}
 
 /**

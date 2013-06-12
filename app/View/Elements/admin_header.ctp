@@ -89,6 +89,7 @@ text-align: center;
    <li class='has-sub'><a href='#'><span>User</span></a>
    	<ul>
          <li><?php echo $this->Html->link(__('list User'), array('controller' => 'users', 'action' => 'index')); ?></li>
+         <li><?php echo $this->Html->link(__('list UTM'), array('controller' => 'user_utms', 'action' => 'index')); ?></li>
          <li><?php echo $this->Html->link(__('List User Addresses'), array('controller' => 'user_addresses', 'action' => 'index')); ?></li>
       </ul>
    </li>
