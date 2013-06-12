@@ -40,13 +40,13 @@ return false; }
                 $message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from". $gift['Product']['Vendor']['name']."! View your gift here ". $link.", and visit the shop to redeem it. Enjoy!";
                 //$message = $link;
            
-             echo $this->Form->create('gifts', array('action' => 'send_sms'));
+             echo $this->Form->create('gifts', array('action' => 'send_sms','style'=>'width:250px;height:auto'));
             
              echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id']))?>
              <div class="input email">
              	<br><br>
                 
-                <div class="input email" ><label for="email">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "10 Digit Mobile Number",'value'=>$Mobile_no))?></div>
+                <div class="input email" ><label for="email" style="margin-left:-50px">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "10 Digit Mobile Number",'value'=>$Mobile_no))?></div>
                 <div class="error_message" id="error_mobile" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the 10 digit Mobile Number</h5>
                 </div>

@@ -1465,7 +1465,7 @@ public function index() {
                $access_token = curl_exec($ch);
                curl_close($ch);
                
-        $link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://www.creativeeyes.mygiftology.net/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,

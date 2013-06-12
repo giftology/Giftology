@@ -295,7 +295,7 @@ input[type="text"] {
                                       <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
                                       </div>
                                      <a>
-                                        <span class="arrow" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
+                                        <span class="arrow_sms" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
                                       </a>
                                   <?php echo $this->Form->end(); ?>
                                 <?php endif; ?>
@@ -303,13 +303,7 @@ input[type="text"] {
                      </div>
                    </div>
                 
-                      <div class="current-user">
-                          <!--<div class="android_app" style="margin-bottom:-35px;margin-left:10px;cursor:pointer">
-                            <a href="https://play.google.com/store/search?q=giftology" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" title="App Coming Soon, Stay Tuned!"/></a> 
-                          </div></br></br>
-                           <a href=<?= $this->Html->url(array('controller'=>'gifts', 'action'=>'setting')); ?>><span>Mobile Web</span></a>-->
-                          
-                      </div>
+                      
                 <?php endif; ?>
 
               <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
@@ -332,7 +326,7 @@ input[type="text"] {
 
 </div>  
 <div class="clear"></div>
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
       $(document).ready(function(){
             $("#print").click(function (){
@@ -343,14 +337,7 @@ input[type="text"] {
         });
       
 </script>
-<script type="text/javascript">
 
-      $(document).ready(function(){
-            $(".arrow").click(function (){
-                $("#sms1").submit()
-            });
-        });
-</script>
 <script type="text/javascript">
 
       $(document).ready(function(){
@@ -358,8 +345,15 @@ input[type="text"] {
                 $("#email1").submit()
             });
         });
-</script>
+</script>-->
+<script type="text/javascript">
 
+      $(document).ready(function(){
+            $(".arrow_sms").click(function (){
+                $("#sms1").submit()
+            });
+        });
+</script>
 <script>
 $(document).ready(function(){
             $(".submit").click(function (){
