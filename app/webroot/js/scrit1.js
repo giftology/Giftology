@@ -11,19 +11,34 @@ $(function(){
 		newYear = false;
 	}
 		
-	$('#countdown').countdown({
+	
+
+		$('#countdown').countdown({
 		timestamp	: ts,
 		callback	: function(days, hours, minutes, seconds){
 			
 			var message = " Your voucher expires in ";
 			
+			if(minutes==0&& seconds>=10){
+			message +="<b>"+ minutes + "0:" + ( minutes==1 ? '':'' ) ;
+			message += seconds+"</b>"  + ( seconds==1 ? '':'' ) + "  <br />";
+			note.html(message);
 			
-			message +="<b>"+ minutes + " :" + ( minutes==1 ? '':'' ) ;
+			}
+			
+			
+			
+			else{
+			message +="<b>"+ minutes + " 0:0" + ( minutes==1 ? '':'' ) ;
 			message += seconds+"</b>"  + ( seconds==1 ? '':'' ) + "  <br />";
 			
+			if(minutes==0 && seconds<1){
+				window.location.replace("http://www.giftology.com");
+			}
 			
-			
-			note.html(message);
+				note.html(message);
+			}
+				
 		}
 	});
 });
