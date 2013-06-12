@@ -284,7 +284,7 @@ input[type="text"] {
                           <h4>For Moblie Redeemtion</h4>
                             <div class="buttons">
                                <!-- <button class="cancel">Cancel</button>-->
-                                <a href="http://giftology.com">
+                                <a href="https://play.google.com/store/search?q=giftology">
                                         <span class="arroww" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>app.png" /></span>
                                       </a>
 
