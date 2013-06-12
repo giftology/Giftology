@@ -35,7 +35,7 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page');
+	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page','error_page','error_page_for_desktop');
     }
 
 	public function isAuthorized($user) {
@@ -1493,7 +1493,6 @@ public function index() {
     } 
     public function send_sms()
     {
-        DebugBreak();
         $gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
     	$value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
         if($value)
@@ -1517,8 +1516,7 @@ public function index() {
     }
 		
     public function offline_voucher_redeem_page($gift_id)
-    {   //DebugBreak();
-        if($this->RequestHandler->isAjax()) 
+    {   if($this->RequestHandler->isAjax()) 
         {
            $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
@@ -1532,11 +1530,11 @@ public function index() {
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
-        if(!($iphone || $android || $palmpre || $ipod || $berry))
+        /*if(!($iphone || $android || $palmpre || $ipod || $berry))
         {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
-        }
+        }*/
         if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
             $gift = $this->Gift->find('first', array(
@@ -1545,9 +1543,6 @@ public function index() {
                     'Sender' => array('UserProfile'),
                     'Receiver' => array('UserProfile')),
                 'conditions' => array('Gift.id'=>$id)));
-            /*$redeem = $this->Gift->updateAll(
-                    array('Gift.redeem' => 1),
-                    array('Gift.id' => $id));*/
                 $this->set('gift', $gift); 
         }
         else{

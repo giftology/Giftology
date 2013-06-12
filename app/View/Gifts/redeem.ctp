@@ -284,8 +284,8 @@ input[type="text"] {
                           <h4>For Moblie Redeemtion</h4>
                             <div class="buttons">
                                <!-- <button class="cancel">Cancel</button>-->
-                                <a>
-                                        <span class="arrow" style="position:relative;margin-left:-400px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>app.png" /></span>
+                                <a href="http://giftology.com">
+                                        <span class="arroww" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>app.png" /></span>
                                       </a>
 
 
@@ -350,7 +350,7 @@ input[type="text"] {
                 $("#sms1").submit()
             });
         });
-        </script>
+</script>
 <script type="text/javascript">
 
       $(document).ready(function(){
