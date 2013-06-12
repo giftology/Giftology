@@ -79,7 +79,7 @@ class CampaignsController extends AppController {
     }
 
     public function view_products () {
-    
+        $this->requestAction('users/refreshReminders/'.$this->Auth->user('id'));
         $campaign_id =$this->AesCrypt->decrypt($this->params['pass'][0]);
         $this->Campaign->recursive = -1;
         $campaign=$this->Campaign->find('first', array('fields' => array('product_enc_id','product_id','thumb_image','enable','end_date','description'),'conditions' => array('Campaign.id' => $campaign_id)));
