@@ -284,8 +284,10 @@ input[type="text"] {
                           <h4>For Moblie Redeemtion</h4>
                             <div class="buttons">
                                <!-- <button class="cancel">Cancel</button>-->
-                                <a href="https://play.google.com/store/search?q=giftology">
-                                        <span class="arroww" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>app.png" /></span>
+
+                                <a href="http://giftology.com">
+                                        <span class="arroww android" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>android1.png" /></span>
+
                                       </a>
 
 
@@ -295,7 +297,10 @@ input[type="text"] {
                                       <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
                                       </div>
                                      <a>
-                                        <span class="arrow_sms" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
+
+                                        
+                                        <span class="arrow otherMob" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>other1.png" /></span>
+
                                       </a>
                                   <?php echo $this->Form->end(); ?>
                                 <?php endif; ?>
@@ -326,19 +331,34 @@ input[type="text"] {
 
 </div>  
 <div class="clear"></div>
-<!--<script type="text/javascript">
+<script type="text/javascript">
 
       $(document).ready(function(){
-            $("#print").click(function (){
+            //$("#print").click(function (){
                 //var value = $(this).closest('form').attr('id');
-                $("#print_pdf").attr('target', '_blank');
-                $("#print1").submit()
-            });
+              //  $("#print_pdf").attr('target', '_blank');
+                //$("#print1").submit()
+            //});
+
+
+             $('.android').hover(function(e) {
+            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/android2.png");
+               $(".otherMob").find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/other2.png");         
+            return false;
+          
+        }, function() {
+            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/android1.png");
+               $(".otherMob").find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/other1.png");  
+            return false;
+        });
+
+
+           
         });
       
 </script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
       $(document).ready(function(){
             $("#email_voucher").click(function (){
