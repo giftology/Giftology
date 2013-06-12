@@ -33,7 +33,7 @@ class ProductsController extends AppController {
             array('field'=> 'modified','type'=>'value'),
         
         );
-    public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment');
+    public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
     public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
@@ -58,10 +58,70 @@ class ProductsController extends AppController {
             if(PAID_PRODUCT_DISABLED)
                 $conditions['Product.min_price'] = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
-            $products_temp = $this->Product->find('all', array('conditions' => $conditions));
+            //filter starts
+            $birthyear_gender_location = $this->Reminder->find('first', array('fields' => array('current_location','friend_birthyear','sex'), 'conditions' => array('friend_fb_id' => $receiver_fb_id)));
+            $location=isset($birthyear_gender_location['Reminder']['current_location']) ? $birthyear_gender_location['Reminder']['current_location'] : NULL;
+            $gender=isset($birthyear_gender_location['Reminder']['sex']) ? $birthyear_gender_location['Reminder']['sex'] : NULL;
+            $year = isset($birthyear_gender_location['Reminder']['friend_birthyear']) ? $birthyear_gender_location['Reminder']['friend_birthyear'] : NULL;
+            $today = date("Y"); 
+            $gender=strtoupper($gender);
+            $age=$today-$year;
+        
+            $products = array();
+            $gender = $this->Product->GenderSegment->find('all',array('conditions' => array('GenderSegment.gender' => $gender)));
+            $gender=isset($gender['0']['GenderSegment']['id']) ? $gender['0']['GenderSegment']['id'] : NULL;
+            //$location=isset($location['0']['CitySegment']['id']) ? $location['0']['CitySegment']['id'] : NULL;
+            $age = $this->Product->AgeSegment->find('all',array('conditions' => array('AgeSegment.max >' => $age,'AgeSegment.min <' => $age)));
+            $age=isset($age['0']['AgeSegment']['id']) ? $age['0']['AgeSegment']['id'] : NULL;
+        
+            $products_for_gender = array();
+            $products_for_gender = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.gender_segment_id'  => array($gender))));
+        
+            $location = $this->City->find('first',array('conditions' => array('city' => $location)));
+            $city_segments = $this->LocationSegment->find('list',array('fields' => array('city_segment_id'),'conditions' => array('city_id' => $location['City']['id'])));
+        
+            $products_for_location = array() ;
+            $products_for_location_conditions = array();
+            if(isset($city_segments) && !empty($city_segments)){
+                $products_for_location = $this->ProductCitySegment->find('list', array(
+                    'fields' => array('product_id'),
+                    'conditions' => array('city_segment_id' =>$city_segments)));
+            }
+
+            $products_for_all_locations = $this->ProductCitySegment->find('list', array('fields' => array('product_id'),
+                'conditions' => array('city_segment_id' =>ALL_CITIES)));
+        
+            $products_for_age = array();
+            $products_for_age = $this->Product->find('list', array('fields' => array('id'), 'conditons' => array('Product.age_segment_id' => array($age))));
+            $products_age_location_gender = array_intersect($products_for_age,$products_for_gender,$products_for_location);
+
+            $product_for_all_age_gender = $this->Product->find('list', array('fields' => array('id'), 'conditions' => array(
+                'OR' => array(
+                    'age_segment_id' => ALL_AGES,
+                    'gender_segment_id' => ALL_GENDERS
+                    ),
+                'AND' => array(
+                    'Product.id' => $products_for_all_locations   
+                    )
+            )));
+        
+            //$conditions = array();
+            //$conditions['NOT'] = array('Product.display_order' => 0);
+            //$conditions['Product.gender_segment_id'] = array($gender,ALL_GENDERS);
+            //$conditions['Product.id'] = $products_for_location;
+            //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
+            //$this->paginate['conditions'] = $conditions;
+            $filterd_products = array_merge($product_for_all_age_gender, $products_age_location_gender);
+            //$this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),);
+            //$this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
+            //filter ends
+            $products_temp = $this->Product->find('all', array(
+                'conditions' => array($conditions, 'Product.id' => $filterd_products),
+                'order' => 'Product.show_on_top,Product.min_price, Product.display_order ASC'
+            ));
             $products = $this->product_filter($products_temp, $receiver_fb_id);
             $this->set('products', $products);
-            unset($products, $products_temp);
+            unset($products, $products_temp, $filterd_products);
         }
         $this->set('_serialize', array('products'));
     }
