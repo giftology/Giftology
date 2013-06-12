@@ -776,13 +776,11 @@ public function index() {
 		// This is where all the gifts for unregistered recipients go
 		// receipients are identified by their recipient_fb_id, and at the time of registration
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
-
-		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
+        $gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price'), 'conditions' => array('Product.id' => $product_id)));
-        
-         if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0)) 
+        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price','Product.max_price','Product.code_type_id'), 'conditions' => array('Product.id' => $product_id)));
+        if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE)) 
          {
 
             $code = $this->Gift->Product->UploadedProductCode->find('first',
@@ -809,7 +807,7 @@ public function index() {
             
             
          }
-        else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED) 
+        else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE) 
         {
             $code = $this->Gift->Product->UploadedProductCode->find('first',
             array('conditions' => array('available'=>1, 'product_id' =>$product_id,
@@ -1297,7 +1295,7 @@ public function index() {
             'UploadedProductCode.product_id' => $gift_data['Gift']['product_id'],
             'UploadedProductCode.code' => $gift_data['Gift']['code']
             )));
-            if(!$code_check) 
+            if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
             {
                  $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
                 array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
