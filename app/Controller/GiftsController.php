@@ -1530,11 +1530,11 @@ public function index() {
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
-        /*if(!($iphone || $android || $palmpre || $ipod || $berry))
+        if(!($iphone || $android || $palmpre || $ipod || $berry))
         {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
-        }*/
+        }
         if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
             $gift = $this->Gift->find('first', array(

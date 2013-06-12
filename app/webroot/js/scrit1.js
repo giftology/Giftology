@@ -23,7 +23,7 @@ $(function(){
 			message +="<b>"+ minutes + "0:0" + ( minutes==1 ? '':'' ) ;
 			message += seconds+"</b>"  + ( seconds==1 ? '':'' ) + "  <br />";
 			if(minutes==0 && seconds<1){
-				window.location.replace("http://google.com");
+				window.location.replace("http://Giftology.com");
 			}
 			note.html(message);
 			

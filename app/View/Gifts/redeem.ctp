@@ -295,7 +295,7 @@ input[type="text"] {
                                       <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id'] ))?>
                                       </div>
                                      <a>
-                                        <span class="arrow" style="position:relative;margin-left:150px;top:-37px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
+                                        <span class="arrow" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>othercell.png" /></span>
                                       </a>
                                   <?php echo $this->Form->end(); ?>
                                 <?php endif; ?>
