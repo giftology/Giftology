@@ -130,8 +130,16 @@ class UserProfilesController extends AppController {
         $this->autoRender = $this->autoLayout = false;    
     }
 
-    public function export_users_email(){
-    	$users = $this->UserProfile->find('all');
+    public function export_users_email($start_date=null, $end_date=null){
+    	$conditions = array();
+    	if($start_date) $conditions['UserProfile.created >='] = $start_date;
+    	if($end_date) $conditions['UserProfile.created <='] = $end_date;
+    	if(isset($conditions) && !empty($conditions)){
+    		$users = $this->UserProfile->find('all', array('conditions' => array(
+    			'UserProfile.email iS NOT NULL', $conditions
+    			)));	
+    	}
+    	else $users = $this->UserProfile->find('all');
     	$fp = fopen(ROOT.'/app/tmp/'.'user_profile_email_'.time().'.csv', 'w+');
     	fputcsv($fp, array('User ID', 'First Name', 'Last Name', 'Facebook ID', 'Email', 'Location'));
     	foreach($users as $user){
