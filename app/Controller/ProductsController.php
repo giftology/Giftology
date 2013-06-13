@@ -49,6 +49,7 @@ class ProductsController extends AppController {
     //WEB SERVICES
     public function ws_list () {
         $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+        $sender_user_id = isset($this->params->query['sender_user_id']) ? $this->params->query['sender_user_id'] : null;
         $e = $this->wsListProductsException($receiver_fb_id );
         if(isset($e) && !empty($e)) $this->set('products', array('error' => $e));
         else{
@@ -59,7 +60,10 @@ class ProductsController extends AppController {
                 $conditions['Product.min_price'] = 0;
             $this->set('receiver_id', isset($this->request->params['named']['receiver_id']) ? $this->request->params['named']['receiver_id'] : null);
             //filter starts
-            $birthyear_gender_location = $this->Reminder->find('first', array('fields' => array('current_location','friend_birthyear','sex'), 'conditions' => array('friend_fb_id' => $receiver_fb_id)));
+            if($sender_user_id){
+                $birthyear_gender_location = $this->Reminder->find('first', array('fields' => array('current_location','friend_birthyear','sex'), 'conditions' => array('friend_fb_id' => $receiver_fb_id, 'user_id' => $sender_user_id)));
+            }
+            else $birthyear_gender_location = $this->Reminder->find('first', array('fields' => array('current_location','friend_birthyear','sex'), 'conditions' => array('friend_fb_id' => $receiver_fb_id)));
             $location=isset($birthyear_gender_location['Reminder']['current_location']) ? $birthyear_gender_location['Reminder']['current_location'] : NULL;
             $gender=isset($birthyear_gender_location['Reminder']['sex']) ? $birthyear_gender_location['Reminder']['sex'] : NULL;
             $year = isset($birthyear_gender_location['Reminder']['friend_birthyear']) ? $birthyear_gender_location['Reminder']['friend_birthyear'] : NULL;
