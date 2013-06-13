@@ -267,11 +267,13 @@ background: none repeat scroll 0 0 #F7F7F7;">
                <div style="width:960px; margin:auto;">
                         <?php foreach ($products as $product): ?>
                             <a>
+                               
+
                               <?= $this->element('product_on_landing',
                                 array('product' => $product,
                                      'small' => true),
                                 array('cache' => array(
-                              'key' => $product['Product']['id'].'small'))); ?>
+                              'key' => $product['Product']['id'].'landing'))); ?>
                             </a>
                         <?php endforeach; ?>
                        <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:40px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>

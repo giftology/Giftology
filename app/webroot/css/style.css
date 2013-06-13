@@ -789,6 +789,7 @@ ul, ol {
     height: 150px;
     line-height: 150px;
     text-align: center;
+    width:auto;
     
 }
 #celebration-details .image-container .polaroid {
