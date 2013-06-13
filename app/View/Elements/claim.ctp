@@ -12,7 +12,7 @@
 <div class="disclosure opened">
     <p class="heading">Terms and conditions</p>
     <div class="wrapper" style="height: 0px;">
-        <p class="content shown"><?= $product['Product']['terms']; ?></p>
+        <p class="content shown"><?= $product['Product']['short_terms']; ?></p>
     </div>
     <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
         <span class="arrow"></span>
@@ -21,7 +21,7 @@
 <div class="disclosure opened">
     <p class="heading">About <?= $product['Product']['Vendor']['name']; ?></p>
     <div class="wrapper" style="height: 0px;">
-        <p class="content shown"><?= $product['Product']['Vendor']['description']; ?></p>
+        <p class="content shown"><?= $product['Product']['Vendor']['short_description']; ?></p>
     </div>
     <a class="toggle" onclick="clicky.log('#About Toggle','About Toggle');">
         <span class="arrow"></span>
