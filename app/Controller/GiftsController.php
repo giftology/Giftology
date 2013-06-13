@@ -1462,7 +1462,7 @@ public function index() {
                $access_token = curl_exec($ch);
                curl_close($ch);
                
-        $link = "http://192.168.1.10/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://192.168.1.14/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,
@@ -1513,14 +1513,15 @@ public function index() {
     }
 		
     public function offline_voucher_redeem_page($gift_id)
-    {   if($this->RequestHandler->isAjax()) 
+    {   
+        if($this->RequestHandler->isAjax()) 
         {
            $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
                     array('Gift.id' => $gift_id));
            exit;
         }
-        $id=$this->AesCrypt->decrypt($gift_id);
+        
         $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
         $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
         $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
@@ -1532,6 +1533,30 @@ public function index() {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
         }
+        $id=$this->AesCrypt->decrypt($gift_id);
+        $this->Reminder->recursive = -1;
+             $gift_data = $this->Gift->find('first',array('conditions' =>array (
+                    'Gift.id' => $id
+                   )));
+
+             $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift_data['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift_data['Gift']['code']
+            )));
+            if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
+            {
+                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
+                    'value' => $gift_data['Gift']['gift_amount'])));
+           
+                $val = $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
+           
+                $h = $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
+                                         array('Gift.id' => $id));
+           
+                     
+            }
         if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
         {
             $gift = $this->Gift->find('first', array(
