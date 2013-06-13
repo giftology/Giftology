@@ -725,10 +725,17 @@ public function download_user_csv_all($download_selected = null){
     }
     
      public function update_product_city_segments($product_id, $city_data){
+        $cities = array();
         $cities = unserialize($city_data);
+        $cities_location_segment = array();
         $cities_location_segment = $this->ProductCitySegment->find('list', array('fields' => array('city_segment_id'),'conditions'=> array('product_id' => $product_id)));
-        $cities_deleted = array_diff($cities_location_segment,$cities);
-        $cities_added = array_diff($cities, $cities_location_segment);
+        $cities_deleted = array();
+        $cities_added = array();
+        if((isset($cities) && !empty($cities)) && (isset($cities_location_segment) && !empty($cities_location_segment))){
+            $cities_deleted = array_diff($cities_location_segment,$cities);
+            $cities_added = array_diff($cities, $cities_location_segment);    
+        }
+            
         $this->ProductCitySegment->create();
         $location_data = array();
         if(isset($cities_added) && !empty($cities_added)){
