@@ -28,7 +28,12 @@ return false; }
       </script>
       
  <div style="margin-top:100px">
+   </div>
+                
  	<center>
+        <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;position:relative;margin-top: 20px;">
+                      <p>SMS containing a unique URL with redemption instructions will be sent your mobile number.</p>
+                  </div>
            <?php 
             $pin;
 			$originalDate = $gift['Gift']['expiry_date'];

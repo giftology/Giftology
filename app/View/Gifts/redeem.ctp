@@ -287,7 +287,7 @@ input[type="text"] {
                                <!-- <button class="cancel">Cancel</button>-->
 
                                 <a href="https://play.google.com/store/search?q=giftology">
-                                        <span class="arroww android" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>android1.png" /></span>
+                                        <span class="arroww android" style="position:relative;margin-left:-140px;"><img title="Go to Google Play store now"   src="<?= IMAGE_ROOT; ?>android1.png" /></span>
 
                                       </a>
 
@@ -300,7 +300,7 @@ input[type="text"] {
                                      <a>
 
                                         
-                                        <span class="arrow otherMob" style="position:relative;margin-left:140px;top:-43px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>other1.png" /></span>
+                                        <span class="arrow otherMob" style="position:relative;margin-left:140px;top:-41px"><img title="send voucher to your mobile"   src="<?= IMAGE_ROOT; ?>other1.png" /></span>
 
                                       </a>
                                   <?php echo $this->Form->end(); ?>
@@ -311,8 +311,8 @@ input[type="text"] {
                    <?php 
                    $newDate = date("d-m-Y", strtotime($gift['Gift']['expiry_date']));
                    ?>
-                  <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 14px;line-height: 20px;padding: 8px 6px 6px;margin-top:-50px;margin-bottom:10px">
-                      <p>This is an special gift only for you! Please ensure you use it at the store in the next <?= $newDate ?>.</br></br>
+                  <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-top:-50px;margin-bottom:10px">
+                      <p>This is an special gift only for you! Please ensure you use it at the store by <?= $newDate ?>.</br></br>
                       <p>Android users can download our cool app. Other mobile users can use our cool SMS redemption option. We are working on other apps too, watch out!</p>
                   </div>
                       
@@ -328,7 +328,7 @@ input[type="text"] {
                         <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Redeem now </button>
                     </div>
                 </div>
-                <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 14px;line-height: 20px;padding: 8px 6px 6px;margin-bottom:10px;position:relative;margin-top: 20px;">
+                <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-bottom:10px;position:relative;margin-top: 20px;">
                       <p>Voucher will expire after use. Happy shopping!</p>
                   </div>
           </div>
@@ -353,12 +353,12 @@ input[type="text"] {
 
              $('.android').hover(function(e) {
             $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/android2.png");
-               $(".otherMob").find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/other2.png");         
+               $(".otherMob").find("img").attr("src", "<?php echo IMAGE_ROOT;?>other2.png");         
             return false;
           
         }, function() {
             $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/android1.png");
-               $(".otherMob").find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/other1.png");  
+               $(".otherMob").find("img").attr("src", "<?php echo IMAGE_ROOT;?>other1.png");  
             return false;
         });
 
