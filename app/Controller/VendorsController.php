@@ -251,6 +251,12 @@ public $presetVars = array(
 				$this->request->data['Vendor']['carousel_image'] = 'files/carousel/'.$this->request->data['Vendor']['carousel_image_file']['name'];
 				copy($this->request->data['Vendor']['carousel_image_file']['tmp_name'], $this->request->data['Vendor']['carousel_image']);
 			}
+			if (isset($this->request->data['Vendor']['redeem_image_file']['name']) && $this->request->data['Vendor']['redeem_image_file']['name']) {
+				$this->request->data['Vendor']['redeem_image_file']['name']
+					= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['redeem_image_file']['name']);
+				$this->request->data['Vendor']['redeem_image'] = 'files/'.$this->request->data['Vendor']['redeem_image_file']['name'];
+				copy($this->request->data['Vendor']['redeem_image_file']['tmp_name'], $this->request->data['Vendor']['redeem_image']);
+			}
 			if ($this->Vendor->save($this->request->data)) {
 				$this->Session->setFlash(__('The vendor has been saved'));
 				$this->redirect(array('action' => 'index'));
