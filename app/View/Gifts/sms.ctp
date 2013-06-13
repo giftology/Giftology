@@ -34,6 +34,8 @@ return false; }
         <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;position:relative;margin-top: 20px;">
                       <p>SMS containing a unique URL with redemption instructions will be sent your mobile number.</p>
                   </div>
+
+                  <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;line-height: 20px;padding: 8px 6px 6px;position:relative;margin-top: 20px;margin-left:-10px;">
            <?php 
             $pin;
 			$originalDate = $gift['Gift']['expiry_date'];
@@ -51,7 +53,7 @@ return false; }
              <div class="input email">
              	<br><br>
                 
-                <div class="input email" ><label for="email" style="margin-left:-50px">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "10 Digit Mobile Number",'value'=>$Mobile_no))?></div>
+                <div class="input email" ><label for="email" style="margin-left:-50px">Mobile Number   </label><?php echo $this->Form->input("mobile_number" ,array('id' => 'mobile_number', 'label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "10 Digit Mobile Number",'value'=>$Mobile_no,'style'=>'margin-right:-55px;'))?></div>
                 <div class="error_message" id="error_mobile" style="display:none; margin-left:120px;">
                     <h5 style="color:#FF0000">*please enter the 10 digit Mobile Number</h5>
                 </div>
@@ -61,6 +63,7 @@ return false; }
             <div class="parent_submit">
             <?php echo $this->Form->Submit(__('Send sms'), array('id'=>'form_shipping')); ?>
                
+            </div>
             </div> </center>
             </div>
             
