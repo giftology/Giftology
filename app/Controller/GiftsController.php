@@ -160,6 +160,44 @@ class GiftsController extends AppController {
  *
  * @return void
  */
+public function download_user_csv_all($download_selected = null){
+        $this->Prg->commonProcess('Gift');
+        $this->User->recursive = 0;
+        $array1 = unserialize($download_selected);
+        $conditions= array('conditions' => array($this->Gift->parseCriteria($array1)),'order'=>array('Gift.created'=>'DESC'));
+        $result1= $this->Gift->find('all', $conditions);
+                        
+                    $filename = "Gifts ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($result1 as $id)  
+                        {
+                            $result= $this->Gift->find('first', array('conditions'=>array('Gift.id'=>$id['Gift']['id'])));
+                            $row = array(
+                            $result['Gift']['id'],
+                            $result['Gift']['product_id'],
+                            $result['Gift']['sender_id'],
+                            $result['Gift']['receiver_id'],
+                            $result['Gift']['receiver_fb_id'],
+                            $result['Gift']['receiver_email'],
+                            $result['Gift']['code'],
+                            $result['Gift']['gift_amount'],
+                            $result['Gift']['gift_status_id'],
+                            $result['Gift']['expiry_date'],
+                            $result['Gift']['created'],
+                            $result['Gift']['modified'],
+
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+}
     public function download_gift_csv(){
 				
                     $filename = "Gifts ".date("Y.m.d").".csv";
@@ -308,6 +346,8 @@ class GiftsController extends AppController {
         $this->paginate = $conditions;
         $this->Gift->recursive = 0;
         $this->set('gifts', $this->paginate());
+        $this->set('download_selected',serialize($this->passedArgs));
+
     
 }
 public function index() {
@@ -426,6 +466,8 @@ public function index() {
 		$this->paginate = $conditions;
 		$this->Gift->recursive = 0;
 		$this->set('gifts', $this->paginate());
+        $this->set('download_selected',serialize($this->passedArgs));
+
 	}
 	
 

@@ -108,6 +108,54 @@ class UsersController extends AppController {
  *
  * @return void
  */
+public function download_user_csv_all($download_selected = null){
+      
+        $this->setUserProfile();
+        $this->Prg->commonProcess('User');
+        $this->User->recursive = 0;
+        $array1 = unserialize($download_selected);
+        $conditions= array('conditions' => array($this->User->parseCriteria($array1)),'order'=>array('User.created'=>'DESC'));
+        $result1= $this->User->find('all', $conditions);
+
+         $filename = "Users ".date("Y.m.d").".csv";
+                    $csv_file = fopen('php://output', 'w');
+                    header('Content-type: application/csv');
+                    header('Content-Disposition: attachment; filename="'.$filename.'"');
+                    $header_row= array('Id','User Name','Role','Facebook Id','Last Login','Created','Modified','First Name','Last Name','Email','Mobile','City','Gender','Birthday','BirthYear','Total Friend');
+                    fputcsv($csv_file,$header_row,',','"');
+                    if( !empty( $this->data ))
+                    {
+                        foreach($result1 as $id)  
+                        {
+                        $total_frnd=$this->Reminder->find('count',array('conditions' => array('Reminder.user_id '=>$id['User']['id'])));
+
+                           $this->User->recursive = 0;
+                            $result= $this->User->find('first', array('conditions'=>array('User.id'=>$id['User']['id'])));
+                            $row = array(
+                            $result['User']['id'],
+                            $result['User']['username'],
+                            $result['User']['role'],
+                            $result['User']['facebook_id'],
+                            $result['User']['last_login'],
+                            $result['User']['created'],
+                            $result['User']['modified'],
+                            $result['UserProfile']['first_name'],
+                            $result['UserProfile']['last_name'],
+                            $result['UserProfile']['email'],
+                            $result['UserProfile']['mobile'],
+                            $result['UserProfile']['city'],
+                            $result['UserProfile']['gender'],
+                            $result['UserProfile']['birthday'],
+                            $result['UserProfile']['birthyear'],
+                            $total_frnd
+      
+                             );
+                            fputcsv($csv_file,$row,',','"');
+                        }
+                    }
+                    die;
+        
+    }
     public function download_user_csv(){
        
           $filename = "Users ".date("Y.m.d").".csv";
@@ -283,6 +331,7 @@ class UsersController extends AppController {
 
      }
      $this->set('users', $users);
+     $this->set('download_selected',serialize($this->passedArgs));
  }
 
 /**
