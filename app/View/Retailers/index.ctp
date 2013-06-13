@@ -234,7 +234,7 @@ $('.reset-link').click(function(){
                    <!--mandatory input for city-->
                <div class="input email" style="margin-top:10px">
                
-                  <div class="input email" ><?php echo $this->Form->input("r_email" ,array('name'=>'email_r','id' => 'r_email','label' => false,'div' => false,'placeholder' => "www.example.com",'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
+                  <div class="input email" ><?php echo $this->Form->input("r_email" ,array('name'=>'email_r','id' => 'r_email','label' => false,'div' => false,'placeholder' => "abc@example.com",'style' => "width: 400px;height: 28px; padding:0 0 0 5px;border: 1px solid #B54D4D;border-radius: 2px"))?>
                   </div>
                   <div class="error_message" id="error_email" style="display:none;margin-bottom:-8px;">
                     <span style="color:#FF0000; font-size:11px;">*please enter the valid email address.</span>

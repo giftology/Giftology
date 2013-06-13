@@ -72,7 +72,7 @@ $this->redirect(array(
         'controller' => 'retailers', 'action'=>'index'));   
     }
       if ($this->MathCaptcha->validate($this->request->data['retailers']['captcha'])) {
-      $email = new CakeEmail();
+        $email = new CakeEmail();
     
         $email->config('smtp')
 
@@ -84,9 +84,9 @@ $this->redirect(array(
           ->subject('Welcome to Giftology')
              ->viewVars(array('name' => $this->data['name_r'],
               'web' => $this->data['web_r'],
-              'city' => $this->data['city_r'],
+              'email' => $this->data['email_r'],
               'contact' => $this->data['contact_r'],
-              'mail' => $this->data['mail_r'])) 
+              'message' => $this->data['mess_r'])) 
              ->send();
               
               $this->Session->setFlash('Thank you for contacting us. We will get in touch shortly.');
