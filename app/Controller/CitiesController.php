@@ -234,7 +234,13 @@ class CitiesController extends AppController {
 		$exisitng_cities = $this->City->find('list', array('fields' => array('city')));
 		$this->Reminder->recursive = -1;
         //$geo_locations = $this->Reminder->find('all', array('fields' => array('DISTINCT astext(geo_location)'), 'conditions' => array('geo_location !=' => '')));
-        $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location'), 'conditions' => array('current_location !=' => $exisitng_cities)));
+        if(isset($exisitng_cities) && !empty($exisitng_cities)){
+        	$conditions['current_location NOT'] = $exisitng_cities;
+        }
+        else {
+        	$conditions[] = 1;
+        }
+        $cities = $this->Reminder->find('all', array('fields' => array('DISTINCT current_location'), 'conditions' => $conditions));
         $city_array = array();
         $city_search_key = array();
         foreach($cities as $k => $city){
@@ -244,6 +250,8 @@ class CitiesController extends AppController {
         }
 
         $city_details = NULL;
+        $condtions = array();
+
         $city_details = $this->Reminder->find('all', array(
                     'fields' => array('DISTINCT current_location', 'state', 'country', 'geo_location'),
                     'conditions' => array('geo_location IS NOT NULL', 'state IS NOT NULL', 'country IS NOT NULL', 'current_location' => $city_search_key)
@@ -262,11 +270,13 @@ class CitiesController extends AppController {
         }
 
 		$city_chunk = NULL;
-		$city_chunk  = array_chunk($city_array, 1000);
-        
-        foreach($city_chunk as $a){
-        	set_time_limit(300);
-        	$this->City->saveMany($a);
-        }
+		if(!empty($city_array)){
+			$city_chunk  = array_chunk($city_array, 1000);
+			foreach($city_chunk as $a){
+				set_time_limit(300);
+				$this->City->saveMany($a);
+			}
+
+		}
 	}
 }
