@@ -165,9 +165,9 @@ class WeeklyNewslettersController extends AppController {
         $newsletter_id=$this->WeeklyNewsletter->find('first',array('conditions' => array('WeeklyNewsletter.id' => $newsletter_id),'fields' => array('WeeklyNewsletter.name','WeeklyNewsletter.header_banner','WeeklyNewsletter.strip_banner','WeeklyNewsletter.product1_banner','WeeklyNewsletter.product2_banner','WeeklyNewsletter.brand1_banner','WeeklyNewsletter.brand2_banner','WeeklyNewsletter.brand1_text','WeeklyNewsletter.brand2_text','WeeklyNewsletter.template_text','WeeklyNewsletter.template_heading','WeeklyNewsletter.featured_brand')));
         if($newsletter_id){
             foreach($name as $id){
-                $name=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $id,'UserProfile.email_unsubscribed' => '0'),'fields' => array('UserProfile.email','first_name')));
-                if($name['UserProfile']['email']){
-                    $mail=$name['UserProfile']['email'];
+                $names=$this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $id,'UserProfile.email_unsubscribed' => '0'),'fields' => array('UserProfile.email','first_name')));
+                if($names['UserProfile']['email']){
+                    $mail=$names['UserProfile']['email'];
                     $email = new CakeEmail();
                     $email->config('smtp')
                     ->template('scheduledmail', 'default')
@@ -177,26 +177,26 @@ class WeeklyNewslettersController extends AppController {
                     ->from(array('noreply@giftology.com' => 'Giftology'))
                     ->subject($name['UserProfile']['first_name'].', We miss you online. More gifts to send!')
                     ->viewVars(array(
-                        'user_name' => $name['UserProfile']['first_name'],
-                        'name' => $detail['WeeklyNewsletter']['name'],
-                        'header_banner' => $detail['WeeklyNewsletter']['header_banner'],
-                        'strip_banner' => $detail['WeeklyNewsletter']['strip_banner'],
-                        'product1_banner' => $detail['WeeklyNewsletter']['product1_banner'],
-                        'product2_banner' => $detail['WeeklyNewsletter']['product2_banner'],
-                        'brand1_banner' => $detail['WeeklyNewsletter']['brand1_banner'],
-                        'brand2_banner' => $detail['WeeklyNewsletter']['brand2_banner'],
-                        'brand1_text' => $detail['WeeklyNewsletter']['brand1_text'],
-                        'brand2_text' => $detail['WeeklyNewsletter']['brand2_text'],
-                        'template_text' => $detail['WeeklyNewsletter']['template_text'],
-                        'template_heading' => $detail['WeeklyNewsletter']['template_heading'],
-                        'featured_brand' => $detail['WeeklyNewsletter']['featured_brand']
+                        'user_name' => $names['UserProfile']['first_name'],
+                        'name' => $newsletter_id['WeeklyNewsletter']['name'],
+                        'header_banner' => $newsletter_id['WeeklyNewsletter']['header_banner'],
+                        'strip_banner' => $newsletter_id['WeeklyNewsletter']['strip_banner'],
+                        'product1_banner' => $newsletter_id['WeeklyNewsletter']['product1_banner'],
+                        'product2_banner' => $newsletter_id['WeeklyNewsletter']['product2_banner'],
+                        'brand1_banner' => $newsletter_id['WeeklyNewsletter']['brand1_banner'],
+                        'brand2_banner' => $newsletter_id['WeeklyNewsletter']['brand2_banner'],
+                        'brand1_text' => $newsletter_id['WeeklyNewsletter']['brand1_text'],
+                        'brand2_text' => $newsletter_id['WeeklyNewsletter']['brand2_text'],
+                        'template_text' => $newsletter_id['WeeklyNewsletter']['template_text'],
+                        'template_heading' => $newsletter_id['WeeklyNewsletter']['template_heading'],
+                        'featured_brand' => $newsletter_id['WeeklyNewsletter']['featured_brand']
                         ))
                         ->send();
-                        $this->log("Sent email to ".$name['UserProfile']['first_name']);
+                        $this->log("Sent email to ".$names['UserProfile']['first_name']);
                     }
                     else
                     {
-                     $this->log("Email does not exist".$name['UserProfile']['first_name'].$id);
+                     $this->log("Email does not exist".$names['UserProfile']['first_name'].$id);
                  }
              }
          }
