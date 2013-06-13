@@ -438,7 +438,8 @@ $(document).ready(function(){
   </a>
   </h2>
   <div class="brandscreen">
-  <img src="../img/snap_jabong.jpg">
+  <img src="<?php echo FULL_BASE_URL.'/'.$gift['Product']['Vendor']['redeem_image'];
+            ?>">
   </div>
   <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem an ${Product.Vendor.name} Gift Voucher or Card' section. </p>
   <div class="coupon">
