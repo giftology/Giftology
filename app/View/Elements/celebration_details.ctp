@@ -16,7 +16,7 @@
 		<div class="tag-icons"></div>
 	</div>
 	<div class="image-container">
-		<div class="polaroid"><?= $this->Facebook->picture($receiver_id, array('linked'=>false, 'size'=>'normal', 'facebook-logo'=>false)); ?></div>
+		<div class="polaroid"><img src="https://graph.facebook.com/<?= $receiver_id; ?>/picture?width=169&height=200" style="border:2px solid #ccc"/></div>
 		<div class="paperclip"></div>
 	</div>
 </div>

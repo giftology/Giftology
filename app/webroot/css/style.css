@@ -778,43 +778,53 @@ ul, ol {
     clear: both;
 }
 #celebration-details .image-container {
-    float: left;
+    float: right;
     height: 210px;
+    margin-right: 136px;
+    margin-top: 20px;
     position: relative;
 }
+
+#celebration-details .image-container{
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    
+}
 #celebration-details .image-container .polaroid {
-    -moz-border-bottom-colors: none;
+    /*-moz-border-bottom-colors: none;
     -moz-border-image: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
     -moz-transform: rotate(353deg);
-    -moz-transition-duration: 0.3s;
-    background-color: #FAFAFA;
+    -moz-transition-duration: 0.3s;*/
+   background-color: #FAFAFA;
+    border: 2px solid #CCCCCC;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    padding: 4px;
-    transform:rotate(353deg);
+    padding: 3px;
+   /* transform:rotate(353deg);
     -ms-transform:rotate(353deg); /* IE 9 */
-    -moz-transform:rotate(353deg); /* Firefox */
-    -webkit-transform:rotate(353deg); /* Safari and Chrome */
-    -o-transform:rotate(353deg); /* Opera */
+   /* -moz-transform:rotate(353deg); /* Firefox */
+   /* -webkit-transform:rotate(353deg); /* Safari and Chrome */
+   /* -o-transform:rotate(353deg); /* Opera */
 
 }
 #celebration-details .image-container .polaroid img {
-    -moz-transition-duration: 0.3s;
+   /* -moz-transition-duration: 0.3s;*/
     display: block;
     max-height: 215px;
     min-height: 100px;
     min-width: 100px;
 }
-#celebration-details .image-container .paperclip {
+/*#celebration-details .image-container .paperclip {
     background-image: url("../img/paperclip-icon.png");
     height: 48px;
     position: absolute;
     right: 30px;
     top: -11px;
     width: 76px;
-}
+}*/
 #campaigns {
     margin: 0 -45px 0 -33px;
 }
