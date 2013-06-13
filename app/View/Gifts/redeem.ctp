@@ -16,9 +16,7 @@
 </div>
 
 
-<div style="float:right;margin-top:50px;margin-left:800px">
-            
-           </div>
+
 
 
 <div id="gift-details">
