@@ -50,10 +50,12 @@
  ?>
           
 		         </div>
-<?php
-    echo $this->Html->link('Download All', array('controller' => 'users', 'action' => 'download_user_csv_all', $download_selected));
-    ?>
-	
+
+<div class="full_download">
+  <?php 
+  echo $this->Html->link('Download All', array('controller' => 'users', 'action' => 'download_user_csv_all', $download_selected),array('class' => 'button')); ?>
+	</div>
+  
 	<table cellpadding="0" cellspacing="0" border="1">
 
 	<tr>

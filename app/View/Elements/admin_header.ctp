@@ -1,4 +1,32 @@
 <style>
+     a.button{
+
+  background-color: #F7F7F7;
+border-color: #B7B7B7 #AAA #999999;
+border-left: 1px solid #AAA;
+border-radius: 5px 5px 5px 5px;
+border-right: 1px solid #AAA;
+border-style: solid;
+border-width: 1px;
+color: #4D4D4D;
+cursor: pointer;
+display: block;
+font-family: Helvetica,Arial,sans-serif;
+font-size: 20px;
+font-weight: bold;
+height: 42px;
+line-height: 44px;
+width: 140px;
+outline: medium none;
+padding: 0 14px;
+text-align: center;
+}
+
+.full_download{
+  margin-top:-61px;
+  margin-right:93px;
+  float:right;
+}
       div.download_csv{
         float:right;
         width:220px;
