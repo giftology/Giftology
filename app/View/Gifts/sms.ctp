@@ -45,7 +45,7 @@ return false; }
                 $message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from " . $gift['Product']['Vendor']['name']."! View your gift here ". $link." and visit the shop to redeem it. Enjoy!";
                 //$message = $link;
            
-             echo $this->Form->create('gifts', array('action' => 'send_sms','style'=>'width:250px;height:auto'));
+             echo $this->Form->create('gifts', array('action' => 'send_sms','style'=>'width:auto;height:auto'));
             
              echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['encrypted_gift_id']))?>
              <div class="input email">
