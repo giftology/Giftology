@@ -1436,7 +1436,6 @@ public function index() {
         {
             $this->set('Mobile_no',$gift['Receiver']['UserProfile']['mobile']);
         }
-        
         $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
@@ -1463,7 +1462,7 @@ public function index() {
                $access_token = curl_exec($ch);
                curl_close($ch);
                
-        $link = "http://www.creativeeyes.mygiftology.net/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://192.168.1.10/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,

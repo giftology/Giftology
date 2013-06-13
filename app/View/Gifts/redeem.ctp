@@ -270,10 +270,11 @@ input[type="text"] {
                     <div class = "parent_submit">
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>
+
                 <?php else: ?>
                    <p>This is offline voucher which can be redeemed through : </p></br>
                     <div class = "parent_submit">
-                       <?php echo $this->Form->input("Use offline" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'offlineshow','style'=>'margin-left:0px;width:290px'))?>
+                       <?php echo $this->Form->input("Use in Store" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'offlineshow','style'=>'margin-left:0px;width:290px'))?>
                     </div>
 
 
@@ -281,11 +282,11 @@ input[type="text"] {
                         <div class="arrow inner"  style=" position:relative; top:40px; margin-left:-13px;"></div>
                         <div class="arrow outer" style="position:relative; top:0; margin-left:-16px;"></div>
                         <div class="content">
-                          <h4>For Moblie Redeemtion</h4>
+                          <h4>Redeem via</h4>
                             <div class="buttons">
                                <!-- <button class="cancel">Cancel</button>-->
 
-                                <a href="http://giftology.com">
+                                <a href="https://play.google.com/store/search?q=giftology">
                                         <span class="arroww android" style="position:relative;margin-left:-140px;"><img title="App Coming Soon, Stay Tuned!"   src="<?= IMAGE_ROOT; ?>android1.png" /></span>
 
                                       </a>
@@ -307,7 +308,13 @@ input[type="text"] {
                             </div>
                      </div>
                    </div>
-                
+                   <?php 
+                   $newDate = date("d-m-Y", strtotime($gift['Gift']['expiry_date']));
+                   ?>
+                  <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 14px;line-height: 20px;padding: 8px 6px 6px;margin-top:-50px;margin-bottom:10px">
+                      <p>This is an special gift only for you! Please ensure you use it at the store in the next <?= $newDate ?>.</br></br>
+                      <p>Android users can download our cool app. Other mobile users can use our cool SMS redemption option. We are working on other apps too, watch out!</p>
+                  </div>
                       
                 <?php endif; ?>
 
@@ -315,12 +322,15 @@ input[type="text"] {
                 <div class="arrow inner"></div>
                 <div class="arrow outer"></div>
                 <div class="content">
-                    <h4>Ready?</h4>
+                    <h4>Are you ready?</h4>
                     <div class="buttons">
-                        <button class="cancel">Cancel</button>
-                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Use online </button>
+                        <button class="cancel"> Maybe later</button>
+                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Redeem now </button>
                     </div>
                 </div>
+                <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 14px;line-height: 20px;padding: 8px 6px 6px;margin-bottom:10px;position:relative;margin-top: 20px;">
+                      <p>Voucher will expire after use. Happy shopping!</p>
+                  </div>
           </div>
                 
 
@@ -369,7 +379,7 @@ input[type="text"] {
 <script type="text/javascript">
 
       $(document).ready(function(){
-            $(".arrow_sms").click(function (){
+            $(".otherMob").click(function (){
                 $("#sms1").submit()
             });
         });
@@ -459,6 +469,7 @@ $(document).ready(function(){
   </div>
 
    
- </script>
+ </script>    
+              
 
 
