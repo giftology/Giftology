@@ -286,7 +286,7 @@ input[type="text"] {
                             <div class="buttons">
                                <!-- <button class="cancel">Cancel</button>-->
 
-                                <a href="https://play.google.com/store/search?q=giftology">
+                                <a href="https://play.google.com/store/search?q=giftology" target="_blank">
                                         <span class="arroww android" style="position:relative;margin-left:-140px;"><img title="Go to Google Play store now"   src="<?= IMAGE_ROOT; ?>android1.png" /></span>
 
                                       </a>
