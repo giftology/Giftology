@@ -30,6 +30,8 @@
 		            ), 
 		            'full' 
 	        ); 
+		
+		
 
 		echo $this->Form->input('code_type_id');
 		echo $this->Form->input('code');
@@ -54,6 +56,24 @@
 		?>
 	<?php
 		echo $this->Form->input('display_order');
+		echo $this->Form->input('redemption_rate');
+		echo $this->Form->input('allocation_mode',
+	    	array(
+	        'options' => $allocation_mode,
+	        'type' => 'select',
+	        'empty' => '-- Select allocation type --',
+	        'label' => 'Select Allocation Type'
+	    		)
+			);
+		echo $this->Form->input('redemption_type',
+	    	array(
+	        'options' => $redemption_type,
+	        'type' => 'select',
+	        'empty' => '-- Select redemption type --',
+	        'label' => 'Select Redemption Type'
+	    		)
+			);
+		
 		echo $this->Form->input('sender_gift_limit');
 		echo $this->Form->input('sender_gift_limit');
 		echo $this->Form->input('receiver_gift_limit');
