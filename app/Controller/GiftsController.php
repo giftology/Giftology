@@ -841,63 +841,70 @@ public function index() {
         $gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
+        if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE){
         $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price','Product.max_price','Product.code_type_id'), 'conditions' => array('Product.id' => $product_id)));
-        if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE)) 
-         {
+            if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE)) 
+             {
 
-            $code = $this->Gift->Product->UploadedProductCode->find('first',
-            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
-                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
-            if (!$code) {
-                $this->Mixpanel->track('Out of Codes', array(
-                        'ProductId' => $product
-                    ));
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
-                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
-                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
-            }
-            else{
+                $code = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                    'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+                if (!$code) {
+                    $this->Mixpanel->track('Out of Codes', array(
+                            'ProductId' => $product
+                        ));
+                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                    $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+                }
+                else{
 
-            $temp_code = $this->createRandomCode($product_id);
-            $gift['Gift']['code'] = $temp_code;
-            $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
-            $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
-            $this->TemporaryGiftCode->saveAssociated($data);
+                $temp_code = $this->createRandomCode($product_id);
+                $gift['Gift']['code'] = $temp_code;
+                $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+                $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+                $this->TemporaryGiftCode->saveAssociated($data);
 
-            }
+                }
 
-            
-            
-         }
-        else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE) 
-        {
-            $code = $this->Gift->Product->UploadedProductCode->find('first',
-            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
-                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
-            if (!$code) {
-                $this->Mixpanel->track('Out of Codes', array(
-                        'ProductId' => $product
-                    ));
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
-                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
-                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
-            }
-            else
+                
+                
+             }
+            else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE) 
             {
-                $temp_code = $this->createUnlimitedCode($product_id);
-               $gift['Gift']['code'] = $temp_code;
-               $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
-               $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
-               $this->TemporaryGiftCode->saveAssociated($data);
-            }
+                $code = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                    'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+                if (!$code) {
+                    $this->Mixpanel->track('Out of Codes', array(
+                            'ProductId' => $product
+                        ));
+                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                    $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+                }
+                else
+                {
+                    $temp_code = $this->createUnlimitedCode($product_id);
+                   $gift['Gift']['code'] = $temp_code;
+                   $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+                   $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+                   $this->TemporaryGiftCode->saveAssociated($data);
+                }
 
-         }
+             }
 
-         else
-         {
+             else
+             {
+                $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);   
+             }
+    
+        }
+
+        if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
             $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);   
-         }
-         
+        }
+                     
          $gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);  
 
 		if (!$send_now) {
@@ -1303,7 +1310,11 @@ public function index() {
         $this->set('email',$gift['Sender']['UserProfile']['email']) ;
         $this->set('sender',$gift['Sender']['facebook_id']) ;
         $this->set('gift', $gift);
-		$this->set('pin', $pin['UploadedProductCode']['pin']);	
+		$this->set('pin', $pin['UploadedProductCode']['pin']);
+
+        if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
+            $this->layout = "redeem_without_temp_gift_code";
+        }	
 	}
     public function redeemgift(){
         if($this->request->is('post')){

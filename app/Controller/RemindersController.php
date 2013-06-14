@@ -258,13 +258,23 @@ class RemindersController extends AppController {
 		        array('User.id' => $this->Auth->User('id'))
 		        );
 		    }
-		    $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
-          	//$this->set('us',$us);
-		    if(isset($gift_claimable) && !empty($gift_claimable)){
-		    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
-		    }
-		    else $this->reminder_view_friends($type);	
 
+		    if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE){
+		    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+	          	//$this->set('us',$us);
+			    if(isset($gift_claimable) && !empty($gift_claimable)){
+			    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
+			    }
+			    else{
+			    	$this->reminder_view_friends($type);
+			    	$this->set('user_id',$this->Auth->User('id'));
+			    }	
+		    }
+
+		    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
+		    	$this->reminder_view_friends($type);
+			    $this->set('user_id',$this->Auth->User('id'));	
+		    }
 		}
 
 	public function reminder_view_friends($type=null){

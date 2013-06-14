@@ -184,7 +184,7 @@ CakePlugin::load('Facebook');
 
 
 // Giftology Constants
-define('IMAGE_ROOT', "http://localhost/img/");
+define('IMAGE_ROOT', "http://www.giftology.com/img/");
 define('UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID', 1);
 
 // GIft Statuses
@@ -254,6 +254,10 @@ define('DEFAULT_EMAIL_VERIFICATION', FALSE);
 define('SHOW_HOVER', TRUE);
 define('SHOW', TRUE);
 define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
+
+define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
+define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
+
 
 CakePlugin::load('Mixpanel'); 
 CakePlugin::load(array('Minify' => array('routes' => true)));
