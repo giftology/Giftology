@@ -465,6 +465,16 @@ background: none repeat scroll 0 0 #F7F7F7;">
       ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
   </script>
+
+<script type="text/javascript">
+(function() {
+        window._tt = window._tt || {};
+  var body = document.getElementsByTagName("script")[0];
+        var tt = document.createElement("script"); tt.type = 'text/javascript'; tt.async = true;
+        tt.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://dsp.tookitaki.com/tt/tag.js';
+        body.parentNode.insertBefore(tt,body);
+        })();
+</script>
   
  <?php echo $this->Mixpanel->embed(); ?>
 <?php if($campaign_id):?>
