@@ -31,20 +31,31 @@ return false; }
    </div>
                 
  	<center>
+    <?php if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE): ?>
         <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;position:relative;margin-top: 20px;">
                       <p>SMS containing a unique URL with redemption instructions will be sent your mobile number.</p>
                   </div>
-
+                <?php endif; ?>
                   <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;line-height: 20px;padding: 8px 6px 6px;position:relative;margin-top: 20px;margin-left:-10px;">
            <?php 
             $pin;
 			$originalDate = $gift['Gift']['expiry_date'];
 			$newDate = date("d-m-Y", strtotime($originalDate));
+      if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE)
+      {
+        if($pin)
+                $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+            else $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
+      }
+      else
+      {
+        $message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from " . $gift['Product']['Vendor']['name']."! View your gift here ". $link." and visit the shop to redeem it. Enjoy!";
+      }
             //if($pin)
                 //$message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code'] .", pin ".$pin." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
             //else $message="Dear " .$facebook_user['first_name'].", your " .$gift['Product']['Vendor']['name']." gift code for Rs. ".$gift['Gift']['gift_amount']." is ".$gift['Gift']['code']." valid upto ".$newDate.". Pls show SMS prior to billing. One code per transaction.";
               //else
-                $message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from " . $gift['Product']['Vendor']['name']."! View your gift here ". $link." and visit the shop to redeem it. Enjoy!";
+                //$message = "Hey! ".$gift['Sender']['UserProfile']['first_name']." wanted to make your day with a gift from " . $gift['Product']['Vendor']['name']."! View your gift here ". $link." and visit the shop to redeem it. Enjoy!";
                 //$message = $link;
            
              echo $this->Form->create('gifts', array('action' => 'send_sms','style'=>'width:auto;height:auto'));

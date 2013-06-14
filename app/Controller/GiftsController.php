@@ -1257,7 +1257,7 @@ public function index() {
 		return null;
 	}
 	public function redeem() {
-		if(SUSPICIOUS_USER_CHECK){
+        if(SUSPICIOUS_USER_CHECK){
 			$friend_list=$this->Gift->Reminder->find('count',array('conditions' =>array (
     		'Reminder.user_id' => $this->Auth->user('id'))));
 			/*$Facebook = new FB();
@@ -1414,8 +1414,12 @@ public function index() {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
-        $conditions['claim']= 1;
-        $conditions['redeem']= 0;
+        if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE)
+        {
+            $conditions['claim']= 1;
+            $conditions['redeem']= 0;
+        }
+        
         $conditions['expiry_date >='] = date("Y-m-d");
 		$gift_count = $this->Gift->find('all', array(
 			'fields' => array('COUNT(Gift.id) as product_gift'),
@@ -1547,7 +1551,7 @@ public function index() {
                $access_token = curl_exec($ch);
                curl_close($ch);
                
-        $link = "http://creativeeyes.mygiftology.net/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://www.giftology.com/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,
