@@ -192,6 +192,16 @@ var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async
 ur.src = 'http://sdscdn.userreport.com/userreport.js'; 
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
 })(); 
+</script>
+
+<script type="text/javascript">
+(function() {
+        window._tt = window._tt || {};
+	var body = document.getElementsByTagName("script")[0];
+        var tt = document.createElement("script"); tt.type = 'text/javascript'; tt.async = true;
+        tt.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://dsp.tookitaki.com/tt/tag.js';
+        body.parentNode.insertBefore(tt,body);
+        })();
 </script> 
 
 <?php echo $this->Mixpanel->embed(); ?>
