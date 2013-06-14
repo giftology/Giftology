@@ -411,14 +411,21 @@ $(document).ready(function(){
                     url: "/gifts/fetch_code",
                     data: "search_key="+key_value,
                     success: function(data) {
-                      //alert(data);
-                        var res_data = jQuery.parseJSON(data);
+                      var res_data = jQuery.parseJSON(data);
+                        
                         var count = res_data.length;
                         var new_row = '';
+                        if(res_data == "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.")
+                        {
+                          alert(res_data);
+                        }
+                        else{
+                          
                         $('#gift-details').remove();
                         //$('.footer-wrap').remove();
                         $('footer').remove();
-                        //$('.delivery-message,.submit').remove();
+                        }
+                        
                         
                          $('#ititemplate').tmpl(res_data).appendTo('.clear');
                      }

@@ -1300,6 +1300,13 @@ public function index() {
                  $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
                 array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
                     'value' => $gift_data['Gift']['gift_amount'])));
+                 if(!$code_orignal)
+                 {
+                   $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
+                    echo json_encode($response);
+                    $this->autoRender = $this->autoLayout = false;
+                    exit;
+                 }
            
                 $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
@@ -1549,6 +1556,11 @@ public function index() {
                  $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
                 array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
                     'value' => $gift_data['Gift']['gift_amount'])));
+                  if(!$code_orignal)
+                 {
+                     $this->redirect(array('controller' => 'gifts', 'action'=>'error_page',$id));
+                    
+                 }
            
                 $val = $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
@@ -1570,13 +1582,19 @@ public function index() {
         }
         else{
             $this->redirect(array(
-                'controller' => 'gifts', 'action'=>'error_page'));
+                'controller' => 'gifts', 'action'=>'error_page',$id));
         }
     }
     
-    public function error_page()
+    public function error_page($id)
     {
-
+        $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Sender' => array('UserProfile'),
+                    'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$id)));
+                $this->set('gift', $gift); 
     }
     public function error_page_for_desktop(){
 

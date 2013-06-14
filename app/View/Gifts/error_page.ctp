@@ -10,7 +10,8 @@
 .errorMobMar{margin: 0 0 0 -14px; text-align: center}
 </style>
 
-
+<?php 
+if($gift['Gift']['claim']==1 && $gift['Gift']['redeem']==1 ): ?>
 <div id="errorMobWrapper" >
   <div class="errorMobContainer">
   	
@@ -34,3 +35,28 @@
 
   </div>
 </div>
+<?php else: ?>
+
+	<div id="errorMobWrapper" >
+  <div class="errorMobContainer" style="height: 600px;">
+  	
+	    <div class="errorMobLeft">
+	      <div class="errorMobIcon"> <img src="<?php echo FULL_BASE_URL;?>/img/errorIcon.png"  />
+	        <!-- <p class="error404">404 <span style="color:#000">Error</span> </p>
+	    <p class="errorImgText"> page not found</p>-->
+	      </div>
+    	</div>
+	    <div class="errorMobRight">
+	      <div class="errorMobTextSection errorMobTextBox">
+	        <p class="errorMobMar">Oops, this gift has a limited life!  Oops! Looks like you're too late to the party.</p>
+	       
+	       
+	      </div>
+	      <div class="errorMobGiftBox "> <img src="<?php echo FULL_BASE_URL;?>/img/giftbox.png" width="125"  /> </div>
+
+	    </div>
+	
+    <p class="errorMobTextSection" style="margin:215px 65px; text-align:justify" >The gift has either expired or has exceeded the daily limit. Contact us for further assistance.</p>
+
+  </div>
+<?php endif; ?>
