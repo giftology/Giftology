@@ -1313,7 +1313,7 @@ public function index() {
 		$this->set('pin', $pin['UploadedProductCode']['pin']);
 
         if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
-            $this->layout = "redeem_without_temp_gift_code";
+            $this->render("redeem_without_temp_gift_code");
         }	
 	}
     public function redeemgift(){
