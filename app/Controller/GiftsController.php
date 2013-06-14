@@ -1527,13 +1527,14 @@ public function index() {
         $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
         $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
         $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
-        $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
+        
         if(!($iphone || $android || $palmpre || $ipod || $berry))
         {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
         }
         $id=$this->AesCrypt->decrypt($gift_id);
+        $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
         $this->Reminder->recursive = -1;
              $gift_data = $this->Gift->find('first',array('conditions' =>array (
                     'Gift.id' => $id

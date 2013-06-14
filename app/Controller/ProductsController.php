@@ -216,8 +216,7 @@ class ProductsController extends AppController {
         }
          $redemption_type= array('0'=>'ONLINE',
                     '1'=>'OFFLINE',
-                    '2'=>'BOTH',
-                    '3'=>'SHIPPED_PRODUCT'
+                    '2'=>'BOTH'
                     );
          $allocation_mode= array('1'=>'General',
                     '2'=>'Restricted',
@@ -262,8 +261,7 @@ class ProductsController extends AppController {
         }
         $redemption_type= array('0'=>'ONLINE',
                     '1'=>'OFFLINE',
-                    '2'=>'BOTH',
-                    '3'=>'SHIPPED_PRODUCT'
+                    '2'=>'BOTH'
                     );
          $allocation_mode= array('1'=>'General',
                     '2'=>'Restricted',
