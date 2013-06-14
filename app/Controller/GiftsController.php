@@ -103,6 +103,26 @@ class GiftsController extends AppController {
 		$this->set('_serialize', array('gift'));	
 	}
 
+    public function ws_redeemed(){
+        $gift_id = isset($this->params->query['gift_id']) ? $this->params->query['gift_id'] : null;
+        $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
+        $e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
+
+        if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
+        else{
+            $this->Gift->id = $gift_id;
+            //$this->Gift->Behaviors->attach('Containable');
+            $redeem_data['Gift']['redeem'] = 1;
+            $redeemed = $this->Gift->save($redeem_data);
+            if($redeemed['Gift']['redeem']){
+                $gift['redeem'] = 1;
+            }
+            else  $gift['redeem'] = 0;
+            $this->set('gift', $gift);
+        }
+        $this->set('_serialize', array('gift'));    
+    }
+
 	public function ws_send () {
         $url = array($this->params->query, $this->params->url);
         $this->log("Logging ws_send url ".serialize($url));
