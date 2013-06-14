@@ -1,0 +1,517 @@
+
+
+#wrapper {
+    width:100%;
+    height:auto;
+    border:#ccc solid 0px;
+    min-height:100%;
+    position:relative;
+
+
+
+}
+.clear {
+    clear:both;
+}
+
+.headerbluebg {
+    width:100%;
+    background-color:#830707;
+    margin: 0;
+    padding:0;
+    height:10%;
+    position:fixed;
+    top:0;
+    z-index:1;
+}
+
+
+.home-content {
+    width:90%; 
+    margin:20% auto 3% auto;
+    border: 14px double #A7D441;
+    background-color: #fff;
+    border-radius: 4px 4px 4px 4px;
+    height: 500px;
+    min-height: 100%;
+
+}
+
+
+
+.logo {
+    margin:0;
+    text-align:center;
+}
+
+.voucher {
+    
+    position: relative;
+    width:100%;
+    height: 500px;
+
+}
+
+.voucher .value {
+    color: #000000;
+    font: 5em  Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 100px;
+    width: 100%;
+}
+
+.voucher .divider {
+    background-image: url("/img/voucher-divider-line.png");
+    height: 2px;
+   
+    position: relative;
+    top: 235px;
+    width: 288px;
+    margin: auto;
+
+}
+.voucher .at {
+    color: #8C8C8C;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 4em;
+     position: absolute;
+     top:-45px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+
+.voucher .fine-print {
+    bottom: 31px;
+    color: #4D4D4D;
+    font-size: 2em;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.voucher img.wide {
+    height: 150px;
+    position: relative;
+    top: 290px;
+    width: 200px;
+}
+
+ .button{
+    width:600px;
+    height:auto;
+    padding: 0 12px;
+    margin: 10% auto;
+}
+
+
+.buttoncustom{
+
+    width:600px;
+    height:auto;
+    
+    text-align: center;
+    padding: 2px 0px;
+    border-radius: 1px 1px 1px 1px;
+    font-size: 3em;
+    height: 100px;
+    line-height: 36px;
+    padding: 0 12px;
+
+}
+
+.logo {width:65%;
+float: left}
+
+
+
+
+
+
+
+
+
+.count{ width:80%;
+height:auto;
+margin:72px auto;
+text-align: center;
+padding: 2px 0px;
+
+}
+
+.countdownHolder{
+
+display:none;
+
+}
+
+.spans{
+    background:white;
+    box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
+    width: 96%;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 300%;
+    font-weight: bold;
+    margin: 3% auto;
+    position: relative;
+    text-align: center;
+    border:1px solid #d7d7d7;
+    }
+
+
+#note{
+    color: #666666;
+    font:2.5em Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    width:auto;
+}
+
+.note{
+    color: #666666;
+    font:2.5em Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    width:auto;
+}
+
+/*
+
+@media all and (max-width: 500px) and (min-width: 440px) {
+
+
+  .done1{ width:20%; }
+
+ 
+  .spans{ font-size: 220%}
+}
+
+@media all and (max-width: 439px) and (min-width: 300px) {
+  .done1{ width:25%; }
+
+  
+  
+  .spans{ font-size: 150%}
+  .count{margin-top:18%;}
+
+}
+
+
+
+@media all and (max-width: 299px)  {
+  .done1{ width:28%; }
+
+  .logo{ width:45%}
+  
+  .spans{ font-size: 100%}
+  .count{margin-top:35%;}
+
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////
+
+
+
+
+    
+
+
+.firstname{
+    color: #666666;
+    font:2.5em Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    width:auto;
+}
+
+
+
+
+.logo{
+position: absolute;
+margin: 0 ;
+clear:both;
+left: 30px;
+z-index: 2 ;
+width:22%;
+
+}
+.logo img{width:100%}
+
+
+
+
+#container{
+width:90%;
+margin:15% auto;
+-moz-box-sizing: border-box;
+background:#fff;
+padding: 0 5% 5% 5%;
+box-shadow: 0px 0px 5% 6 #d7d7d7;
+}
+/*#container .value{width:50%; margin:auto;}
+#container .value img{width:100%; }*/
+
+
+
+/*
+.done1{
+background: none repeat scroll 0% 0% #920909;
+width:14%;
+margin:7px  30px 7px 0;
+height: 45px;
+border-radius: 6px;
+text-align: center;
+text-transform: uppercase;
+color: white;
+font: 1.2em/2.2em Arial, Helvetica, sans-serif;
+float:right;
+
+}
+
+
+.tnc{
+    box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+    background-image:url(../assets/back3.png);
+    background-repeat:repeat-x;
+    border-top:4px solid #838183;
+    border-bottom:4px solid #838183;
+    margin-top:20px;
+    color:#666;
+    font:2em Arial, Helvetica, sans-serif;
+    text-align:center;
+    height:30px;
+}
+
+
+
+
+.count{ width:80%;
+height:auto;
+margin:auto;
+text-align: center;
+padding: 2px 0px;
+
+}
+
+.countdownHolder{
+
+display:none;
+
+}
+
+
+input[type='text']
+{
+background: none repeat scroll 0% 0% white;
+width: 96%;
+margin-top: 28px;
+padding:2%;
+height: 30px;
+border-radius: 3%;
+border: 1px solid #999;
+box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
+}
+
+.spans{
+    background:white;
+    box-shadow: 1px 3px 3px 1px rgb(228, 226, 223);
+    width: 96%;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 300%;
+    font-weight: bold;
+    margin: 10% auto;
+    position: relative;
+    text-align: center;
+    border:1px solid #d7d7d7;
+    }
+.disclosure {
+    -moz-box-sizing: border-box;
+    box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+    background-image:url("../img/back3.png");
+    background-repeat:repeat-x;
+    border-top:4px solid #838183;
+    border-bottom:4px solid #838183;
+    margin-top:20px;
+    color:#666;
+    font:2em Arial, Helvetica, sans-serif;
+    text-align:center;
+    height:38px;
+    width:96%;
+}
+.disclosure p.heading {
+    font-size: 14px;
+    font-weight: bold;
+}
+.disclosure p {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0;
+}
+.disclosure .wrapper {
+    -moz-transition: height 300ms ease 0s;
+    height: 0;
+    overflow: hidden;
+    border-bottom:1px solid #838183;
+    border-left:1px solid #838183;
+    border-right:1px solid #838183;
+    margin-top:-2px;
+    
+    border-radius:0 0 5px 5px;
+    text-align: left;
+    background-color: #fff;
+    background-repeat: repeat-x; 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d7d7d7));
+    background: -webkit-linear-gradient(top, #d7d7d7, #fff); 
+    background: -moz-linear-gradient(top, #d7d7d7, #fff);
+    background: -ms-linear-gradient(top, #d7d7d7, #fff); 
+    background: -o-linear-gradient(top, #d7d7d7, #fff);
+
+    
+}
+.disclosure p.content {
+    font-size: 12px;
+    padding-top: 10px;
+}
+.disclosure p {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    margin: 0;
+}
+.disclosure .toggle {
+    background-color: transparent;
+    background-image: url("../img/expand-disclosure.png");
+    border: medium none;
+    border-radius: 0 0 0 0;
+    top: -16px;
+    box-shadow: none;
+    cursor: pointer;
+    display: block;
+    height: 26px;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    position: relative;
+    right: 13px;
+    width: 25px;
+    float:right;
+}
+.disclosure.opened .toggle .arrow {
+    -moz-animation: 500ms ease-out 0s normal none 1 disclosure-spin-flip;
+    -moz-transform: rotate(180deg);
+}
+.disclosure .toggle .arrow {
+    -moz-transform-origin: 50% 3px;
+    background-image: url("../img/expand-disclosure.png");
+    background-position: 0 -78px;
+    display: block;
+    height: 10px;
+    left: 6px;
+    position: absolute;
+    top: 9px;
+    width: 13px;
+}
+
+
+
+<<<<<<< Updated upstream
+.voucher .frame {
+    background-image: url("../img/voucher-frame.png");
+    height: 250px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.frame {
+    display: block;
+}
+.voucher {
+    height: 250px;
+    position: relative;
+    width:300px;
+    
+}
+=======
+
+
+
+>>>>>>> Stashed changes
+.voucher .paper {
+    background-color: white;
+    bottom: 25px;
+    left: 23px;
+    position: absolute;
+    right: 23px;
+    top: 23px;
+}
+.voucher-container.purchase .voucher h2 {
+    display: none;
+}
+
+#WebRupee {
+    display: inline;
+}
+.WebRupee {
+    font-family: 'WebRupee';
+}
+
+.voucher .divider {
+    background-image: url("/img/voucher-divider-line.png");
+    height: 2px;
+    left: 27%;
+    position: absolute;
+    top: 120px;
+    width: 288px;
+}
+
+.voucher .at {
+    color: #8C8C8C;
+    font-family: Adelle,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 107px;
+    width: 100%;
+}
+p {
+    margin: 0;
+}
+.voucher .fine-print {
+    bottom: 28px;
+    color: #4D4D4D;
+    font-size: 11px;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.voucher img.wide {
+    height: 64px;
+    left: 50%;
+    margin-left: -100px;
+    position: absolute;
+    top: 140px;
+    width: 200px;
+}
+*/
+
+
+
+
