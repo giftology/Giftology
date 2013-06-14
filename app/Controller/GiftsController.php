@@ -57,7 +57,7 @@ class GiftsController extends AppController {
             $this->set('gifts', array('error' => $e));
         }
 		else{
-			$conditions = array('receiver_fb_id' => $receiver_fb_id, 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING, 'expiry_date >' => date('Y-m-d'));
+			$conditions = array('receiver_fb_id' => $receiver_fb_id, 'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING, 'expiry_date >' => date('Y-m-d'), 'redeem' => 0);
 			$this->Gift->recursive = 0;
 			$gifts = $this->Gift->find('all', array('conditions' => $conditions));
 			foreach($gifts as $k => $g){
