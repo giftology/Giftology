@@ -326,8 +326,22 @@ public function download_user_csv_all($download_selected = null){
                 $this->Session->setFlash(__('The product could not be saved. Please, try again.'));
             }
         }
+         $redemption_type= array('0'=>'ONLINE',
+                    '1'=>'OFFLINE',
+                    '2'=>'BOTH'
+                    );
+         $allocation_mode= array('1'=>'General',
+                    '2'=>'Restricted',
+                    '3'=>'Redemption Rate',
+                    '4'=>'Not Restricted '
+
+                    );
+        $this->set('redemption_type',$redemption_type);
+        $this->set('allocation_type',$allocation_mode);
+
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
+
         $codeTypes = $this->Product->CodeType->find('list');
         $genderSegments = $this->Product->GenderSegment->find('list');
         $ageSegments = $this->Product->AgeSegment->find('list');
@@ -360,13 +374,24 @@ public function download_user_csv_all($download_selected = null){
         } else {
             $this->request->data = $this->Product->read(null, $id);
         }
+        $redemption_type= array('0'=>'ONLINE',
+                    '1'=>'OFFLINE',
+                    '2'=>'BOTH'
+                    );
+         $allocation_mode= array('1'=>'General',
+                    '2'=>'Restricted',
+                    '3'=>'Redemption Rate',
+                    '4'=>'Not Restricted '
+
+                    );
+        $this->set('allocation_mode',$allocation_mode);
         $codeTypes = $this->Product->CodeType->find('list');
         $vendors = $this->Product->Vendor->find('list');
         $productTypes = $this->Product->ProductType->find('list');
         $genderSegments = $this->Product->GenderSegment->find('list');
         $ageSegments = $this->Product->AgeSegment->find('list');
         $citySegments = $this->Product->CitySegment->find('list');
-        $this->set(compact('vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));   }
+        $this->set(compact('redemption_type','vendors', 'productTypes', 'genderSegments', 'ageSegments', 'citySegments', 'codeTypes'));   }
 
 /**
  * delete method

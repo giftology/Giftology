@@ -161,7 +161,7 @@ public function download_user_csv_all($download_selected = null){
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->Vendor->create();
+            $this->Vendor->create();
 			$this->Vendor->set($this->request->data);
 			if (!$this->Vendor->validates())
             {
@@ -191,7 +191,7 @@ public function download_user_csv_all($download_selected = null){
                 $i = 1;
                 foreach($_FILES['data']['name']['Vendor'] as $file){
                         $ext = pathinfo($file, PATHINFO_EXTENSION);
-                        if ($i++ == 4) break;
+                        if ($i++ == 5) break;
                         if(!in_array($ext,$allowed) ) {
                             $error_array[]=  $file;
                         }      
@@ -206,12 +206,17 @@ public function download_user_csv_all($download_selected = null){
 				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['facebook_file']['name']);
 			$this->request->data['Vendor']['carousel_image']['name']
 				= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['carousel_image']['name']);
+            $this->request->data['Vendor']['redeem_image']['name']
+                = $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['redeem_file']['name']);
 					
 			$this->request->data['Vendor']['thumb_image'] = 'files/'.$this->request->data['Vendor']['thumb_file']['name'];
 			copy($this->request->data['Vendor']['thumb_file']['tmp_name'], $this->request->data['Vendor']['thumb_image']);
 
 			$this->request->data['Vendor']['wide_image'] = 'files/'.$this->request->data['Vendor']['wide_file']['name'];
 			copy($this->request->data['Vendor']['wide_file']['tmp_name'], $this->request->data['Vendor']['wide_image']);
+			
+			$this->request->data['Vendor']['redeem_image'] = 'files/'.$this->request->data['Vendor']['redeem_file']['name'];
+			copy($this->request->data['Vendor']['redeem_file']['tmp_name'], $this->request->data['Vendor']['redeem_image']);
 			
 			$this->request->data['Vendor']['facebook_image'] = 'files/'.$this->request->data['Vendor']['facebook_file']['name'];
 			copy($this->request->data['Vendor']['facebook_file']['tmp_name'], $this->request->data['Vendor']['facebook_image']);
@@ -278,6 +283,12 @@ public function download_user_csv_all($download_selected = null){
 					= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['carousel_image_file']['name']);
 				$this->request->data['Vendor']['carousel_image'] = 'files/carousel/'.$this->request->data['Vendor']['carousel_image_file']['name'];
 				copy($this->request->data['Vendor']['carousel_image_file']['tmp_name'], $this->request->data['Vendor']['carousel_image']);
+			}
+			if (isset($this->request->data['Vendor']['redeem_image_file']['name']) && $this->request->data['Vendor']['redeem_image_file']['name']) {
+				$this->request->data['Vendor']['redeem_image_file']['name']
+					= $this->request->data['Vendor']['name'].str_replace(" ","_", $this->request->data['Vendor']['redeem_image_file']['name']);
+				$this->request->data['Vendor']['redeem_image'] = 'files/'.$this->request->data['Vendor']['redeem_image_file']['name'];
+				copy($this->request->data['Vendor']['redeem_image_file']['tmp_name'], $this->request->data['Vendor']['redeem_image']);
 			}
 			if ($this->Vendor->save($this->request->data)) {
 				$this->Session->setFlash(__('The vendor has been saved'));
