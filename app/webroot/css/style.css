@@ -799,9 +799,14 @@ ul, ol {
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
     -moz-transform: rotate(353deg);
+
     -moz-transition-duration: 0.3s;*/
-   background-color: #FAFAFA;
+  
     border: 2px solid #CCCCCC;
+
+    -moz-transition-duration: 0.3s;
+    background-color: #FAFAFA;
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     padding: 3px;
    /* transform:rotate(353deg);
@@ -1667,7 +1672,7 @@ button, input[type="submit"] {
 }
 
 
-.parent_submit input[type="submit"]:hover 
+.parent_submit  input[type="submit"]:hover 
 {   background-color: rgb(248, 63, 47); 
    
 
@@ -3152,3 +3157,101 @@ display:inline;
     background: url('/img/select.png') no-repeat right ;
    
    }
+
+
+   .popover.bottom .arrow.inner {
+    border-bottom: 16px solid #FFF;
+    margin-left: -310px;
+    top: 389px;
+}
+
+.popover.bottom .arrow {
+    left: 50%;
+}
+.popover .arrow.inner {
+    border: 16px solid transparent;
+    z-index: 1001;
+}
+.popover .arrow {
+    height: 0;
+    position: absolute;
+    width: 0;
+}
+
+.popover.bottom .arrow.outer {
+    border-bottom: 15px solid #be1304;
+    margin-left: -313px;
+    top: 382px;
+}
+.popover.bottom .arrow {
+    left: 50%;
+}
+
+.popover .arrow.outer {
+    border: 19px solid transparent;
+    z-index: 1000;
+}
+.popover .arrow {
+    height: 0;
+    position: absolute;
+    width: 0;
+}
+.popover.open-online-redeem .content {
+    overflow: hidden;
+    width: 274px;
+}
+.popover .content {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    border: 2px solid #be1304;
+    border-radius: 5px 5px 5px 5px;
+    color: #4D4D4D;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 6px 6px;
+    text-align: center;
+}
+
+
+.popover .content h3 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.popover .content .buttons {
+    margin-top: 15px;
+}
+
+
+.popover.open-online-redeem .content button.cancel {
+    float: left;
+}
+.popover.open-online-redeem .content button {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 134px;
+}
+.popover button.cancel {
+    background-color: #FAFAFA;
+    background-image: none;
+    border: 1px solid #BFBFBF;
+    box-shadow: none;
+    color: #4C4C4C;
+}
+.popover button {
+    border-radius: 1px 1px 1px 1px;
+    font-size: 18px;
+    height: 40px;
+    line-height: 36px;
+    padding: 0 12px;
+}
+
+.single  input[type="submit"]:hover 
+{   background-color: rgb(248, 63, 47); 
+   
+
+}

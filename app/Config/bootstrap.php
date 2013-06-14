@@ -184,7 +184,7 @@ CakePlugin::load('Facebook');
 
 
 // Giftology Constants
-define('IMAGE_ROOT', "http://www.giftology.com/img/");
+define('IMAGE_ROOT', "http://localhost/img/");
 define('UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID', 1);
 
 // GIft Statuses
@@ -228,6 +228,18 @@ define('DIGITAL',1);
 define('CAMPAIGN',2);
 define('REMINDER',1);
 
+//code allocation mode
+
+define('GENERAL',1);
+define('TEMP_ALLOCATION_CODE_COUNT_RESTRICTED',2);
+define('TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE',3);
+define('NOT_RESTIRCTED',4);
+
+//Redemption Type
+define('ONLINE',0);
+define('OFFLINE',1);
+define('BOTH',2);
+define('SHIPPED_PRODUCT',3);
 
 define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);

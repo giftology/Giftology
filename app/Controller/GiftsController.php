@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode');
 
     public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');
     public $presetVars = array(
@@ -35,12 +35,12 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts');
+	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page','error_page','error_page_for_desktop');
     }
 
 	public function isAuthorized($user) {
-	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'view_gifts')
-		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email')) {
+	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
+		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code') ||($this->action == 'offline_voucher_redeem_page') ||($this->action == 'error_page') ||($this->action == 'claim')) {
 	        return true;
 	    }
 	    return parent::isAuthorized($user);
@@ -793,9 +793,10 @@ public function index() {
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
         $this->redirectIfNotAllowedToSend();
-		
 		$this->Gift->create();
+        $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
+    
 		if (!$this->Gift->Product->exists()) {
 			throw new NotFoundException(__('Invalid Product'));
 		}
@@ -803,6 +804,7 @@ public function index() {
 		$product = $this->Gift->Product->read(null, $product_id); 
 
 		$gift['Gift']['product_id'] = $product_id;
+        $data['TemporaryGiftCode']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
 		//$gift['Gift']['date_to_send'] = $receiver_birthday;
@@ -818,7 +820,6 @@ public function index() {
 		//$gift_check = 
 		
 		$receiver = $this->Gift->User->find('first', array('fields' => array('User.id'), 'conditions' => array('User.facebook_id' => $receiver_fb_id)));
-		
 		if (!$receiver) {
 			//Create a User for the receiver			
 		/* Dont create User for receiver, just set the receiver_fb_id
@@ -837,13 +838,68 @@ public function index() {
 		// This is where all the gifts for unregistered recipients go
 		// receipients are identified by their recipient_fb_id, and at the time of registration
 		// recipient id is correctly filled in (in the beforeFacebookSave function)
-
-		$gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
+        $gift['Gift']['receiver_id'] = (isset($receiver) && $receiver['User']['id']) ? $receiver['User']['id']
 			: UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID;
 		$gift['Gift']['gift_amount'] = $amount;
-        $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);
-		$gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);
-		
+        $product_data = $this->Gift->Product->find('first', array('fields' => array('Product.allocation_mode','Product.min_price','Product.max_price','Product.code_type_id'), 'conditions' => array('Product.id' => $product_id)));
+        if(($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE )||($product_data['Product']['allocation_mode']==TEMP_ALLOCATION_CODE_COUNT_RESTRICTED_RATE && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE)) 
+         {
+
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+            }
+            else{
+
+            $temp_code = $this->createRandomCode($product_id);
+            $gift['Gift']['code'] = $temp_code;
+            $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+            $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+            $this->TemporaryGiftCode->saveAssociated($data);
+
+            }
+
+            
+            
+         }
+        else if($product_data['Product']['allocation_mode']==NOT_RESTIRCTED && $product_data['Product']['min_price'] == 0 && $product_data['Product']['max_price'] == 0 && $product_data['Product']['code_type_id'] == UPLOADED_CODE) 
+        {
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id,
+                'value' => $amount, 'expiry >' => date("Y-m-d", strtotime(date("Y-m-d")     . "+".$product['Product']['days_valid']." days")))));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
+            }
+            else
+            {
+                $temp_code = $this->createUnlimitedCode($product_id);
+               $gift['Gift']['code'] = $temp_code;
+               $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+               $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+               $this->TemporaryGiftCode->saveAssociated($data);
+            }
+
+         }
+
+         else
+         {
+            $gift['Gift']['code'] = $this->getCode($product, $gift['Gift']['gift_amount'],$reciever_name,$receiver_fb_id,$receiver_birthday);   
+         }
+         
+         $gift['Gift']['expiry_date'] = $this->getExpiryDate($product['Product']['days_valid']);  
+
 		if (!$send_now) {
 		    $gift['Gift']['date_to_send'] = $receiver_birthday;
 		}
@@ -871,6 +927,7 @@ public function index() {
 				$gift['Gift']['gift_status_id'] = GIFT_STATUS_SCHEDULED;
 			}
     		}
+            
 		if ($this->Gift->saveAssociated($gift)) {
 			if ($payment_needed) {
 				$this->redirect(array('controller' => 'transactions',
@@ -907,32 +964,90 @@ public function index() {
         return $product['Product']['code']; //Static Reusable code for all gifts, as entered
         }
         }
-    function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
-        $code = $this->Gift->Product->UploadedProductCode->find('first',
-            array('conditions' => array('available'=>1, 'product_id' =>$product,
-                'value' => $value, 'expiry >' => $valid_till)));
-        if (!$code) {
-            $this->Mixpanel->track('Out of Codes', array(
-                    'ProductId' => $product
-                ));
-            $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
-            $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
-            $this->redirect(array('controller'=>'products', 'action'=>'view_product',
-                    'receiver_id'=>$receiver_fb_id ,
-                    'receiver_name' => $reciever_name,
-                    'receiver_birthday' => $receiver_birthday,
-                    'ocasion' => isset($this->request->params['named']['ocasion']) ?
-                    $this->request->params['named']['ocasion'] : null
 
-                )); 
+        
+        function getUploadedCode($product, $value, $valid_till,$reciever_name,$receiver_fb_id,$receiver_birthday) {
+            $code = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$product,
+                    'value' => $value, 'expiry >' => $valid_till)));
+            if (!$code) {
+                $this->Mixpanel->track('Out of Codes', array(
+                        'ProductId' => $product
+                    ));
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
+                $this->redirect(array('controller'=>'products', 'action'=>'view_product',
+                        'receiver_id'=>$receiver_fb_id ,
+                        'receiver_name' => $reciever_name,
+                        'receiver_birthday' => $receiver_birthday,
+                        'ocasion' => isset($this->request->params['named']['ocasion']) ?
+                        $this->request->params['named']['ocasion'] : null
+
+                    )); 
+            }
+            $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
+            return $code['UploadedProductCode']['code'];
         }
-        $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
-                                     array('UploadedProductCode.id' => $code['UploadedProductCode']['id']));
-        return $code['UploadedProductCode']['code'];
-    }
+
+         function createRandomCode($product_id) {
+            $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
+            array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
+            
+            $sent_temp_code = $this->TemporaryGiftCode->find('count',
+            array('conditions' => array('product_id' =>$product_id)));
+            
+            $redemption_rate = $this->Gift->Product->find('first', array('fields' => array('Product.redemption_rate'), 'conditions' => array('Product.id' => $product_id)));
+            
+            $total_code_byrate= ( ($total_codes/$redemption_rate['Product']['redemption_rate'])*100) ;
+            
+            if($sent_temp_code < $total_code_byrate) {
+            $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+            srand((double)microtime()*1000000); 
+            $i = 0; 
+            $pass = '' ; 
+
+            while ($i <= 7) { 
+                $num = rand() % 33; 
+                $tmp = substr($chars, $num, 1); 
+                $pass = $pass . $tmp; 
+                $i++; 
+            } 
+            $pass = "TEMP".$pass;
+
+            return $pass; 
+                
+            }
+            else{
+                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->redirect(array('controller'=>'reminders','action'=>'view_friends'));
+            }
+             
+
+        }
+
+        function createUnlimitedCode($product_id){
+              $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+            srand((double)microtime()*1000000); 
+            $i = 0; 
+            $pass = '' ; 
+
+            while ($i <= 7) { 
+                $num = rand() % 33; 
+                $tmp = substr($chars, $num, 1); 
+                $pass = $pass . $tmp; 
+                $i++; 
+            } 
+            $pass = "TEMP".$pass;
+
+            return $pass; 
+              
+          }
+
         function getExpiryDate($days_valid) {
                 return date('Y-m-d', strtotime("+".$days_valid." days"));
         }
+
 	function getGiftURL($gift_id, $content) {
 	    return FULL_BASE_URL.'/users/login/?gift_id='.
 		    $gift_id.'&utm_source=facebook&utm_medium=feed_post&utm_campaign=gift_sent_new&utm_term='.
@@ -1160,34 +1275,122 @@ public function index() {
 		}
 	        $this->Gift->Behaviors->attach('Containable');
 	    
-		$gift = $this->Gift->find('first', array(
-			'contain' => array(
-				'Product' => array('Vendor'),
-				'Sender' => array('UserProfile')),
-			'conditions' => array('Gift.id'=>$id)));
-		if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
-			$this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
-			$this->redirect(array(
+		 $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$id)));
+        if($this->Auth->User('id') != $gift['Gift']['receiver_id']){
+            $this->Session->setFlash('Gift you were redeeming, it does not bleong to you. Please contact customer support - cs@giftology.com.');
+            $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
-		}
-		// will implement later when we have perfect UI
-		/*$redeem_date = "'".date('Y-m-d H:i:s')."'";
-		
-		$this->Gift->updateAll(
+        }
+        // will implement later when we have perfect UI
+        /*$redeem_date = "'".date('Y-m-d H:i:s')."'";
+        
+        $this->Gift->updateAll(
                 array('gift_open' => 1,'gift_open_date' => $redeem_date), 
                 array('Gift.id'=>$id));*/
-		$gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
-		$this->UploadedProductCode->recursive = -2;
-		$pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
-			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
-			'UploadedProductCode.code' => $gift['Gift']['code']
-			)
-		));
-		$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
+        $gift['Vendor'] = &$gift['Product']['Vendor']; //hack because our view element gift_voucher requires vendor like this
+        $this->UploadedProductCode->recursive = -2;
+        $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift['Gift']['code']
+            )
+        ));
+        $gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id);  
         $this->set('email',$gift['Sender']['UserProfile']['email']) ;
-		$this->set('gift', $gift);
+        $this->set('sender',$gift['Sender']['facebook_id']) ;
+        $this->set('gift', $gift);
 		$this->set('pin', $pin['UploadedProductCode']['pin']);	
 	}
+    public function redeemgift(){
+        if($this->request->is('post')){
+            $giftid_to_redeem = $this->request->data;
+            $redeem = $this->Gift->updateAll(
+                array('Gift.redeem' => 1),
+                array('Gift.id' => $this->request->data['Gift']['gift_id']) 
+                );
+            if($redeem){
+                $this->redirect(array('action' => 'view_gifts'));
+
+            }
+
+        }
+    }
+
+    public function claim(){
+        if($this->request->is('post')){
+            $giftid_to_claim = $this->request->data;
+            $arr = $this->Gift->updateAll(
+                array('Gift.claim' => 1),
+                array('Gift.id' => $this->request->data['gifts']['giftid']) 
+                );
+
+        }
+        $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+        $this->set('us',$gift_claimable['Gift']['id']);
+         $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
+         $this->set('gift', $gift);
+         if(!$gift_claimable)
+        {
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+        }
+    }
+
+    public function fetch_code(){
+        $gift_id=$this->request->data['search_key'];
+        if($this->RequestHandler->isAjax()) 
+        {
+            $this->Reminder->recursive = -1;
+             $gift_data = $this->Gift->find('first',array('conditions' =>array (
+                    'Gift.id' => $this->request->data['search_key']
+                   )));
+
+             $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift_data['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift_data['Gift']['code']
+            )));
+            if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
+            {
+                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
+                    'value' => $gift_data['Gift']['gift_amount'])));
+                 if(!$code_orignal)
+                 {
+                   $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
+                    echo json_encode($response);
+                    $this->autoRender = $this->autoLayout = false;
+                    exit;
+                 }
+           
+                $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
+           
+                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
+                                         array('Gift.id' => $gift_id));
+           
+                     
+            }
+             $this->Reminder->recursive = -1;
+             $gift_code = $this->Gift->find('first',array('contain' => array(
+                'Product' => array('Vendor')),'conditions' =>array (
+                    'Gift.id' => $this->request->data['search_key']
+                   )));
+           
+        }
+
+        echo json_encode($gift_code);
+        $this->autoRender = $this->autoLayout = false;
+        exit;
+    }
+
 	public function view_gifts() {
 		if (isset($this->request->params['named']['sent'])) {
 			$conditions = array('sender_id' => $this->Auth->user('id'));
@@ -1200,6 +1403,9 @@ public function index() {
 			$conditions['gift_status_id'] = GIFT_STATUS_VALID;
 
 		}
+        $conditions['claim']= 1;
+        $conditions['redeem']= 0;
+        $conditions['expiry_date >='] = date("Y-m-d");
 		$gift_count = $this->Gift->find('all', array(
 			'fields' => array('COUNT(Gift.id) as product_gift'),
 			'contain' => array(
@@ -1287,42 +1493,179 @@ public function index() {
 
     public function sms() 
     { 
-    	$gift_id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+        $gift_id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
      	$id = $this->AesCrypt->decrypt($gift_id);
      	$gift = $this->Gift->find('first', array(
 			'contain' => array(
 				'Product' => array('Vendor'),
-				'Sender' => array('UserProfile')),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
 			'conditions' => array('Gift.id'=>$id)));
      	if($id == "")
      	{
      		$this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));	
      	}
-     $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+        if($gift['Receiver']['UserProfile']['mobile']!="NULL")
+        {
+            $this->set('Mobile_no',$gift['Receiver']['UserProfile']['mobile']);
+        }
+        $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
 			'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
+        $fields = array(
+                 'client_id' => '8a37cd067c1878056856e9bbba4b95335e6e4867',
+                 'client_secret' => '7c64aa83c5c4918c9d71f1446e132873c43f2636',
+                 //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
+                 'redirect_uri'=> 'http://www.master.mygiftology.net/',
+                 );
+               $ch = curl_init();
+
+               //set the url, number of POST vars, POST data
+               curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/oauth/access_token');
+               curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+               curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+               curl_setopt($ch, CURLOPT_USERPWD, "shubham150@gmail.com:12facebook.com");
+               
+               //execute post
+               $access_token = curl_exec($ch);
+               curl_close($ch);
+               
+        $link = "http://creativeeyes.mygiftology.net/gifts/offline_voucher_redeem_page/".$gift_id;
+        $ch = curl_init();
+        $new_link_data = array(
+            'access_token' => $access_token,
+            'longUrl' => $link
+        );
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/v3/shorten?'.http_build_query($new_link_data));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+               curl_setopt($ch,CURLOPT_POSTFIELDS,$new_link_data);
+        $result = curl_exec($ch); 
+               $error = curl_error($ch);
+        $url_arr = json_decode($result);
+        $url = $url_arr->{'data'}->{'url'};
+        //$link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
+
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);
-    	$this->set('pin',$pin['UploadedProductCode']['pin']);
+        $this->set('link',$url);
+        $this->set('pin',$pin['UploadedProductCode']['pin']);
     	
     } 
-    public function send_sms(){
-    	$gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
-    	file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
-           $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
-						array('Gift.id' => $gift_id)); 
+    public function send_sms()
+    {
+        $gift_id=$this->AesCrypt->decrypt($this->data['gifts']['id']);
+    	$value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$this->data['gifts']['mobile_number']."&msg=".urlencode($this->data['gifts']['message'])."&send=Way2mint&d");
+        if($value)
+        {
+            $this->Gift->updateAll (array('Gift.sms' => 1,'Gift.sms_number'=>$this->data['gifts']['mobile_number']),
+                        array('Gift.id' => $gift_id)); 
+           $this->UserProfile->updateAll (array('UserProfile.mobile'=>$this->data['gifts']['mobile_number']),
+                        array('UserProfile.user_id' => $this->Auth->user('id'))); 
+           $this->Session->setFlash(__('Congratulations !! SMS has been sent successfully'));
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+        else{
+            $this->Session->setFlash(__('Oops !! Seems like some error has occured. Please resend the SMS.'));
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'view_gifts'));
+        }
+           
         
 
-        }
+    }
 		
+    public function offline_voucher_redeem_page($gift_id)
+    {   
+        if($this->RequestHandler->isAjax()) 
+        {
+           $this->Gift->updateAll(
+                    array('Gift.redeem' => 1),
+                    array('Gift.id' => $gift_id));
+           exit;
+        }
+        
+        $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
+        $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
+        $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
+        $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
+        $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
+        
+        if(!($iphone || $android || $palmpre || $ipod || $berry))
+        {
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
+        }
+        $id=$this->AesCrypt->decrypt($gift_id);
+        $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
+        $this->Reminder->recursive = -1;
+             $gift_data = $this->Gift->find('first',array('conditions' =>array (
+                    'Gift.id' => $id
+                   )));
 
+             $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
+            'UploadedProductCode.product_id' => $gift_data['Gift']['product_id'],
+            'UploadedProductCode.code' => $gift_data['Gift']['code']
+            )));
+            if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
+            {
+                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
+                    'value' => $gift_data['Gift']['gift_amount'])));
+                  if(!$code_orignal)
+                 {
+                     $this->redirect(array('controller' => 'gifts', 'action'=>'error_page',$id));
+                    
+                 }
+           
+                $val = $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                                         array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
+           
+                $h = $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
+                                         array('Gift.id' => $id));
+           
+                     
+            }
+        if($gift_redeem['Gift']['claim']==1 && $gift_redeem['Gift']['redeem']==0 )
+        {
+            $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Sender' => array('UserProfile'),
+                    'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$id)));
+                $this->set('gift', $gift); 
+        }
+        else{
+            $this->redirect(array(
+                'controller' => 'gifts', 'action'=>'error_page',$id));
+        }
+    }
     
+    public function error_page($id)
+    {
+        $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Sender' => array('UserProfile'),
+                    'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$id)));
+                $this->set('gift', $gift); 
+    }
+    public function error_page_for_desktop(){
 
+    }
 	public function news() {
 		$this->layout = 'ajax';
 		$gifts = $this->Gift->find('all', array(

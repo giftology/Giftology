@@ -254,12 +254,17 @@ class RemindersController extends AppController {
 			if($this->Connect->user()){
 		        $this->User->id = $this->Auth->User('id');
 		        $this->User->updateAll(
-		        	array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
-		            array('User.id' => $this->Auth->User('id'))
+		        array('User.last_login' => "'".date('Y-m-d H:i:s')."'"),
+		        array('User.id' => $this->Auth->User('id'))
 		        );
-		   	}
-		    $this->reminder_view_friends($type);
-		    $this->set('user_id',$this->Auth->User('id'));
+		    }
+		    $gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+          	//$this->set('us',$us);
+		    if(isset($gift_claimable) && !empty($gift_claimable)){
+		    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
+		    }
+		    else $this->reminder_view_friends($type);	
+
 		}
 
 	public function reminder_view_friends($type=null){
@@ -274,13 +279,10 @@ class RemindersController extends AppController {
         		$fb_id_array[]= $frnd['uid'];    
         	}
    		 	$this->set('facebook_id',$fb_id_array);	
-        }
-       
-		$users = $this->UserProfile->find('first', array('fields' => array('user_id','email','created','mail_verified'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
+        }$users = $this->UserProfile->find('first', array('fields' => array('user_id','email','created','mail_verified'), 'conditions' => array('user_id' => $this->Auth->user('id'))));
 		$this->set('user_mail',$users['UserProfile']['email']);
 		$this->set('user_created',$users['UserProfile']['created']);
 		$this->set('mail_verified',$users['UserProfile']['mail_verified']);
-
 
 		$fb_id = $this->User->find('first',array('fields' => array('id','facebook_id'),'conditions' => array('User.id' => $users['UserProfile']['user_id'])));
 		
@@ -298,6 +300,7 @@ class RemindersController extends AppController {
         $this->set('name', $fb_first_last_name); 
         $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
         $this->set('send_date', $gift_send_date);
+
         
 		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
