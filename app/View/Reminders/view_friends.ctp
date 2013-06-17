@@ -285,7 +285,7 @@ var res_data;
     <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Go On, Spoil Yourself!!" onClick="clicky.log('#GiftYourSelf','GiftYourSelf Clicked');" title="Gift Yourself"/></div>
      <?php echo $this->Form->end();?>    
 </div>
-<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" onClick="clicky.log('#GooglePlayButton','GooglePlayButton Clicked');" title="App Coming Soon, Stay Tuned!"/> </div>
+<div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><a href="https://play.google.com/store/search?q=giftology" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" onClick="clicky.log('#GooglePlayButton','GooglePlayButton Clicked');" title="Go to Google Play store now"/></a> </div>
 <div id="news-items" style="margin-bottom:35px;cursor:pointer">
        
                 
@@ -479,9 +479,9 @@ var res_data;
 
                 $("#productsViewProductsForm").submit() 
             }); 
-        $(".android_app").click(function (){
+        /*$(".android_app").click(function (){
             alert("App Coming Soon, Stay Tuned!");
-        });
+        });*/
         });
   </script>
   <script type="text/javascript">
