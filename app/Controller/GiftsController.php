@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
-	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode','Product');
+	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode');
 
     public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');
     public $presetVars = array(
@@ -792,7 +792,7 @@ public function index() {
 	}
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
-        $free_product = $this->Product->find('first',array('fields' => array('Product.min_price','Product.max_price'), 'conditions' => array('Product.id' => '$product_id')));
+        $free_product = $this->Gift->Product->find('first',array('fields' => array('Product.min_price','Product.max_price'), 'conditions' => array('Product.id' => $product_id)));
         if($free_product['Product']['min_price'] == 0 && $free_product['Product']['max_price' == 0])
         	{
         		$this->redirectIfNotAllowedToSend();
