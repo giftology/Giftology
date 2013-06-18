@@ -1219,6 +1219,7 @@ public function download_user_csv_all($download_selected = null){
         $defaulter = in_array($user_fb_id, $new_defaulters_list);*/
 
         foreach($defaulters as $defaulter){
+            set_time_limit(60);
             $this->User->updateAll(array('defaulter' => 1), array('facebook_id' => $defaulter));
         }
 
