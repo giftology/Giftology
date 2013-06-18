@@ -145,10 +145,18 @@
                 </li>
                 <li>Send a gift</li>
             </ul>
-        <?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
-                                                                'ocasion' => $ocasion),
-                              array('cache' => array('key'=>$receiver_name.$ocasion))
-                   ); ?>
+               <?php if($receiver_id == $facebook_id): ?>
+                    <?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
+                    'ocasion' => $ocasion),
+                     array('cache' => array('key'=>'myself'.$receiver_name.$ocasion))
+                      ); ?>
+                <?php else: ?>
+                    <?= $this->element('celebration_details', array('receiver_name'=>$receiver_name,
+                    'ocasion' => $ocasion),
+                     array('cache' => array('key'=>$receiver_name.$ocasion))
+                      ); ?>
+                <?php endif; ?>
+                
 
         </div>
         
@@ -224,7 +232,10 @@
              <div id="myDropdown">
                  
             </div>
-
+            <?php  if($receiver_id == $facebook_id )
+             {
+                $receiver_name = "MySelf";
+             } ?>
               <?php 
            // DebugBreak(); 
             $str1 = SHIPPED;
@@ -260,6 +271,7 @@
 
             <?php $name = explode(" ", $receiver_name);
             $last_name = isset($name[1]) ? $name[1] : NULL;
+
              ?>
             
             <div class="input email">
