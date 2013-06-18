@@ -1756,7 +1756,7 @@ public function index() {
 		if ($this->Gift->find('count', array('conditions' =>
 			array('sender_id' => $this->Auth->user('id'),
 			      'Gift.created >' => date('Y-m-d'),'Gift.gift_status_id !=' => 4)))
-		    <= DAILY_MAX_GIFTS_PER_USER){
+		    >= DAILY_MAX_GIFTS_PER_USER){
 			$this->Mixpanel->track('Not Allowed to send', array(
 				'Sender' => $this->Auth->user('id')
 			));
