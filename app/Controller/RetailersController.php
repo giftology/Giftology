@@ -62,12 +62,12 @@ $this->redirect(array(
     
         $email->config('smtp')
 
-              ->template('retail', 'default') 
+              ->template('retailer', 'default') 
           ->emailFormat('html')
           ->to('partner@giftology.com')
           ->Cc(array('aman.narang@giftology.com'))
           ->from(array('care@giftology.com' => 'Giftology'))
-          ->subject('Welcome to Giftology')
+          ->subject('Giftology Retailer Info')
              ->viewVars(array('name' => $this->data['name_r'],
               'web' => $this->data['web_r'],
               'email' => $this->data['email_r'],
