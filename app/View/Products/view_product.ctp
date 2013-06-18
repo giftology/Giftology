@@ -156,7 +156,7 @@
                      array('cache' => array('key'=>$receiver_name.$ocasion))
                       ); ?>
                 <?php endif; ?>
-                
+
 
         </div>
         
@@ -232,10 +232,7 @@
              <div id="myDropdown">
                  
             </div>
-            <?php  if($receiver_id == $facebook_id )
-             {
-                $receiver_name = "MySelf";
-             } ?>
+            
               <?php 
            // DebugBreak(); 
             $str1 = SHIPPED;
@@ -413,18 +410,25 @@
             </div>
             <?php if($product['Product']['min_price']!=0): ?>
                 <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to Send</li></ul>
-                 <div class="parent_submit">
-                <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_free'));?>  
-               
-                </div>
+                <?php if($receiver_id == $facebook_id): ?>
+                    <div class="parent_submit">
+                        <?php echo $this->Form->Submit(__('Claim Now'), array('id'=>'form_free'));?></div>
+                <?else:?>
+                     <div class="parent_submit">
+                    <?php echo $this->Form->Submit(__('Purchase for '.$receiver_name), array('id'=>'form_free'));?></div>
+                <?php endif; ?>
             <?else:?>
                 <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. FREE to send</li></ul>
-                 <div class="parent_submit">
-                <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
-                   
-                </div>
+                <?php if($receiver_id == $facebook_id): ?>
+                    <div class="parent_submit">
+                        <?php echo $this->Form->Submit(__('Claim Now'), array('id'=>'form_free'));?></div>
+                <?else:?>
+                    <div class="parent_submit">
+                        <?php echo $this->Form->Submit(__('Send to '.$receiver_name), array('id'=>'form_free'));?>  
+                   </div>
+                   <?php endif; ?>
              <?php endif; ?>
-               
+             
             </div>
 
             <?php } ?>
@@ -586,6 +590,7 @@ $(document).ready(function(){
   });
 
   </script>
+
   <style>
     div.ui-datepicker
     {

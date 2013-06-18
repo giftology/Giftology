@@ -49,13 +49,9 @@ $(document).ready(function(){
                     data: {search_key:thought,search_keys:product},
                     success: function(data) {
                     	alert(data);
-                    	window.setTimeout('location.reload()', 1000);
+                    	//window.setTimeout('location.reload()', 1000);
                       var res_data = jQuery.parseJSON(data);
-                        //alert(res_data);
-                        
-                        
-                        
-                         $('#ititemplate').tmpl(res_data).appendTo('.clear');
+                       $('#ititemplate').tmpl(res_data).appendTo('.clear');
                      }
 
                      });
