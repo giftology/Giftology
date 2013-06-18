@@ -67,7 +67,7 @@ $this->redirect(array(
           ->to('partner@giftology.com')
           ->Cc(array('aman.narang@giftology.com'))
           ->from(array('care@giftology.com' => 'Giftology'))
-          ->subject('Giftology Retailer Info')
+          ->subject('Giftology Retailer'.' '.$this->data['name_r'].' ' .'Info')
              ->viewVars(array('name' => $this->data['name_r'],
               'web' => $this->data['web_r'],
               'email' => $this->data['email_r'],
