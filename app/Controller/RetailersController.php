@@ -20,9 +20,8 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('Controller', 'Controller');
-App::uses('FB', 'Facebook.Lib');
-App::uses('CakeEmail', 'Network/Email');
+  App::uses('AppController', 'Controller');
+  App::uses('CakeEmail', 'Network/Email');
 
 
 /**
@@ -38,32 +37,19 @@ class Retailerscontroller extends AppController {
   public $components = array('AboutUs','MathCaptcha','AesCrypt');
   public $helpers = array('Minify.Minify');
  
-	/*public function beforeFilter(){
-    
-      if($this->params['controller']=='retailers'){
-      $this->Auth->Allow($this->action);
-      $this->set('user', $this->Auth->user());
-    }
-		/*if ($this->Auth->user()) {
-	    // if a user is logged in
-
-		    $this->set('user', $this->Auth->user());
-	        $this->set('facebook_user', $this->Connect->user());
-		}
-        
-		 
-	} */
-public function beforeFilter() {
+	
+  public function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index','retailer_mail');
+    $this->Auth->allow('retailer','retailer_mail');
     }
    
-  public function index(){
+  public function retailer(){
         $t=time();
         $session_time=$this->Session->write('session_time_retailer', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));
         $this->set('captcha', $this->MathCaptcha->getCaptcha());  
   }
+
 	public function retailer_mail(){
     $session_time=$this->AesCrypt->decrypt($this->data['retailers']['gift_id']);
     $green =$this->Session->read('session_time_retailer');
@@ -72,27 +58,22 @@ $this->redirect(array(
         'controller' => 'retailers', 'action'=>'index'));   
     }
       if ($this->MathCaptcha->validate($this->request->data['retailers']['captcha'])) {
-      $email = new CakeEmail();
+        $email = new CakeEmail();
     
         $email->config('smtp')
 
               ->template('retail', 'default') 
           ->emailFormat('html')
           ->to('partner@giftology.com')
-          ->Cc(array('aman.narang@giftology.com','sakshi.bajaj@giftology.com'))
+          ->Cc(array('aman.narang@giftology.com'))
           ->from(array('care@giftology.com' => 'Giftology'))
           ->subject('Welcome to Giftology')
              ->viewVars(array('name' => $this->data['name_r'],
-                               'web' => $this->data['web_r'],
-                                'deals' => $this->data['deals_r'],
-                                 
-                                 'city' => $this->data['city_r'],
-                                  'outlet' => $this->data['outlet_r'],
-                                 
-                                 'contact' => $this->data['contact_r'],
-                                  'mail' => $this->data['mail_r'])) 
-             
-              ->send();
+              'web' => $this->data['web_r'],
+              'email' => $this->data['email_r'],
+              'contact' => $this->data['contact_r'],
+              'message' => $this->data['mess_r'])) 
+             ->send();
               
               $this->Session->setFlash('Thank you for contacting us. We will get in touch shortly.');
       

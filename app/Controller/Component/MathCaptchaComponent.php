@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * MathCaptcha Component for CakePHP 2.
 *

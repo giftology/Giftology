@@ -143,7 +143,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
                     <?= $this->Html->link('ABOUT US', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?>
                     <?= $this->Html->link('TEAM', array('controller' => 'pages', 'action' => 'display', 'team')); ?>
                       <?= $this->Html->link('MEDIA', array('controller' => 'pages', 'action' =>  'display','Media')); ?>
-                      <?= $this->Html->link('RETAILERS', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?>
+                      <?= $this->Html->link('RETAILERS', array('controller' => 'retailers', 'action' => 'retailer')); ?>
                        <?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?>
                        <?= $this->Html->link('CONTACT US', array('controller' => 'pages', 'action' => 'display', 'ContactUs')); ?>
                         <?= $this->Html->link('BLOG', 'http://mygiftology.wordpress.com/'); ?>
