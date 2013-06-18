@@ -402,20 +402,74 @@ public function download_user_csv_all($download_selected = null){
  * @return void
  */
     public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Product->id = $id;
-		if (!$this->Product->exists()) {
-			throw new NotFoundException(__('Invalid product'));
-		}
-		if ($this->Product->delete()) {
-			$this->Session->setFlash(__('Product deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Product was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->Product->id = $id;
+        if (!$this->Product->exists()) {
+            throw new NotFoundException(__('Invalid product'));
+        }
+        if ($this->Product->delete()) {
+            $this->Session->setFlash(__('Product deleted'));
+            $this->redirect(array('action' => 'index'));
+        }
+        $this->Session->setFlash(__('Product was not deleted'));
+        $this->redirect(array('action' => 'index'));
+    }
+    
+    public function edit_expiry()
+    {   
+        if($this->RequestHandler->isAjax()) 
+        {
+            
+             $result = $this->UploadedProductCode->updateAll(
+                    array('UploadedProductCode.expiry' => "'".$this->data['search_key']."'"),
+                    array('UploadedProductCode.product_id' => $this->data['search_keys'],'UploadedProductCode.available'=>1));
+           if($result)
+               {
+                    $response= "Expiry Date has been updated";
+                    echo json_encode($response);
+                    $this->autoRender = $this->autoLayout = false;
+                    exit;
+               }
+           else
+           {
+                $response= "Please Try Again. Some Error Occured !!";
+                    echo json_encode($response);
+                    $this->autoRender = $this->autoLayout = false;
+                    exit;
+           }
+           
+         }
+
+        $days = "31";
+        $product_expire_date=date('Y-m-d', strtotime('+'.$days.'days', strtotime(date('Y-m-d'))));
+        $products = $this->Product->UploadedProductCode->find('all',array('fields'=>array('DISTINCT UploadedProductCode.product_id','UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.available' => 1),'order'=>array('UploadedProductCode.expiry ASC')));
+        
+        foreach ($products as $product) 
+        {
+            $product_id = $product['UploadedProductCode']['product_id'];
+            $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            
+            $vendors = $this->Product->find('all',array('fields'=>array('Product.vendor_id'),'conditions' => array('Product.id ' => $product_id)));
+            foreach ($vendors as $vendor) {
+               $vendor_id = $vendor['Product']['vendor_id'];
+               $this->Product->Vendor->unbindModel(array('hasMany' => array('Product')));
+               $name[] = $this->Product->Vendor->find('all',array('fields'=>array('Vendor.name'),'conditions'=>array('Vendor.id'=>$vendor_id)));
+            }
+            
+        }
+        $result = array();
+                foreach($products as $key=>$val){ // Loop though one array
+                    $val2 = $name[$key]; // Get the values from the other array
+                    $result[] = $val + $val2; // combine 'em
+                }
+        
+        $this->set('product',$result);
+    }
+   
+   
 	
     public function send_product_expiry_reminder($date = null, $days = null){
         //this function return product id which is going to expire after 30 days.
