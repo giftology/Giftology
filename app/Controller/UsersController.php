@@ -34,10 +34,12 @@ class UsersController extends AppController {
         );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product','email_unsubscribed');
+        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_1');
     }
     public function isAuthorized($user) {
+
         if (($this->action == 'login')|| ($this->action == 'defaulters_list') || ($this->action == 'update_defaulters')|| ($this->action == 'logout')
+
             || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
@@ -476,6 +478,7 @@ public function download_user_csv_all($download_selected = null){
  *
  * @return void
  */
+
     public function add() {
         if ($this->request->is('post')) {
             $this->User->create();
@@ -489,6 +492,15 @@ public function download_user_csv_all($download_selected = null){
         //$facebooks = $this->User->Facebook->find('list');
         //$this->set(compact('facebooks'));
     }
+
+public function isMobile_1() { 
+  preg_match('/' . REQUEST_MOBILEUA . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+  if (!empty($match)) { 
+    return true; 
+  } 
+  return false; 
+} 
+	
 
 /**
  * edit method
@@ -674,6 +686,9 @@ public function download_user_csv_all($download_selected = null){
             if(!$this->RequestHandler->isMobile()){
                 $this->layout='landing';
             }else{
+               
+               $android=$this->isMobile_1();
+                $this->set('android', $android);
                 $this->layout='mobile_landing';
             }
 
@@ -683,6 +698,8 @@ public function download_user_csv_all($download_selected = null){
            // else $this->layout = 'landing';
         }
     }
+   
+
     public function product() 
     {
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),

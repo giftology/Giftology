@@ -255,8 +255,14 @@ define('SHOW_HOVER', TRUE);
 define('SHOW', FALSE);
 define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
 
+
 define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
 define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
+
+
+//Giftology Android App Constants
+define('ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
+define('REQUEST_MOBILEUA',"Android");
 
 
 CakePlugin::load('Mixpanel'); 
