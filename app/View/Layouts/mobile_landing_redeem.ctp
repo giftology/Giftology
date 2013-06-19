@@ -39,7 +39,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
          <script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
          <?php
     echo $this->Html->meta('icon');
-    echo $this->Minify->css(array('main_redeem','flexslider','normalize','style1','main'));
+    echo $this->Minify->css(array('main_redeem','flexslider','normalize','style1'));
     echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology')); 
     echo $this->fetch('meta');
     echo $this->fetch('css');
@@ -86,9 +86,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                 
                 
             </div>
-            <?php echo $this->Facebook->friendpile(); ?>
-            
-            <div class="gift-block animated">
+             <div class="gift-block animated">
                 
                     <div class="gift-btm"><img src="<?= FULL_BASE_URL; ?>/img/giftbox.png" alt="" width="100"></div>
                    
@@ -106,28 +104,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
             
                    
         </section>           
-              <div class="featured-logo">
-                <div class="flogo-block">
-                    <span class="block-title">As featured in</span>
-                    <div class="featured-in">
-                        <a href="javascript:void(0);" class="l1">&nbsp;</a>
-                        <a href="javascript:void(0);" class="l2">&nbsp;</a>
-                        <a href="javascript:void(0);" class="l3">&nbsp;</a>
-                        <a href="javascript:void(0);" class="l4">&nbsp;</a>
-                    </div>
-                 </div>
-                </div>   
-          <footer>
-            <div class="footer-wrap">
-                <nav class="footer-nav">
-                  <li> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
-                  <li> <?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?></li>
-                  <li><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?></li>
-                  <li><?= $this->Html->link('Terms Of Service', array('controller' => 'pages', 'action' =>  'display','TermsOfServices')); ?></li>
-                </nav>
-                <div class="copyright">© Giftology 2013. All rights reserved</div>
-             </div>
-          </footer>
+                
+         <div class="clear"></div>
+          <div class="footer text14 txt-center" style="border-top:1px solid #fff; padding:10px 0; ">
+            <ul class="footer-links">
+              <li> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
+              <li> <?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'display','AboutUs')); ?></li>
+              <li><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'display','Faq')); ?></li>
+              <li><?= $this->Html->link('Terms Of Service', array('controller' => 'pages', 'action' =>  'display','TermsOfServices')); ?></li>
+            </ul>
+          </div>
           <?php if (isset($this->request->query['utm_source']) &&
               $this->request->query['utm_source'] == 'swaransoft'): ?>
                 <img width="1" height="1" border="0" src="http://socialconnexion.in/campaign/pixel.aspx?cam_id=giftologylandingpage ">
@@ -431,6 +417,41 @@ margin: 0px 0 0 -6px;
 text-shadow: 1px 1px 0 #FFF;
 font-size: 14px;
 
+}
+
+
+
+#MobileRedeemLandingWrapper .filter-btn, #MobileRedeemLandingWrapper .back-btn {float:left; margin:5px 0 5px 5px}
+#MobileRedeemLandingWrapper .filter-btn-icon {display:none}
+
+@media all and (max-width:225px) {
+
+#MobileRedeemLandingWrapper .filter-btn { display:none}
+#MobileRedeemLandingWrapper .filter-btn-icon { display:none}
+
+}
+
+@media all and (min-width:225px) and (max-width:269px) {
+
+#MobileRedeemLandingWrapper .filter-btn { display:none}
+#MobileRedeemLandingWrapper .filter-btn-icon { width:35px; height:30px; margin-top:11px; display:block; float:left}
+}
+
+#MobileRedeemLandingWrapper .text14 {font-size:14px}
+
+#MobileRedeemLandingWrapper .footer {background:#444; color:#f5f5f5;
+    position:fixed; 
+    bottom:0px;
+    width:100%;
+}
+#MobileRedeemLandingWrapper .footer-links {list-style-type:none; margin:0; padding:0;color:#fff;}
+  
+#MobileRedeemLandingWrapper .footer-links li {display:inline; }
+
+#MobileRedeemLandingWrapper .footer-links li a {padding:2px 0px; margin:0 7px; color:#fff;}
+
+#MobileRedeemLandingWrapper .txt-center {
+  text-align:center;
 }
 
 
