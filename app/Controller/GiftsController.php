@@ -1540,7 +1540,7 @@ public function index() {
                  'client_id' => '8a37cd067c1878056856e9bbba4b95335e6e4867',
                  'client_secret' => '7c64aa83c5c4918c9d71f1446e132873c43f2636',
                  //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
-                 'redirect_uri'=> FULL_BASE_URL,
+                 'redirect_uri'=> FULL_BASE_URL.'/',
                  );
                $ch = curl_init();
 
@@ -1557,7 +1557,7 @@ public function index() {
                $access_token = curl_exec($ch);
                curl_close($ch);
                
-        $link = FULL_BASE_URL."gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = FULL_BASE_URL."/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,
