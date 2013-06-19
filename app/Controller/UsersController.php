@@ -494,7 +494,7 @@ public function download_user_csv_all($download_selected = null){
     }
 
 public function isMobile_app() { 
-  preg_match('/' . REQUEST_ANDROID_IDENTIFIER . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+  preg_match('/' . REQUEST_ANDROID_MOBILE_USER_AGENT . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
   if (!empty($match)) { 
     return true; 
   } 
