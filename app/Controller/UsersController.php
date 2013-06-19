@@ -34,7 +34,7 @@ class UsersController extends AppController {
         );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_1');
+        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_android');
     }
     public function isAuthorized($user) {
 
@@ -493,7 +493,7 @@ public function download_user_csv_all($download_selected = null){
         //$this->set(compact('facebooks'));
     }
 
-public function isMobile_1() { 
+public function isMobile_android() { 
   preg_match('/' . REQUEST_MOBILEUA . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
   if (!empty($match)) { 
     return true; 
@@ -687,7 +687,7 @@ public function isMobile_1() {
                 $this->layout='landing';
             }else{
                
-               $android=$this->isMobile_1();
+               $android=$this->isMobile_android();
                 $this->set('android', $android);
                 $this->layout='mobile_landing';
             }
@@ -698,7 +698,11 @@ public function isMobile_1() {
                 if(isset($this->request->query['gift_id']))
                     $this->layout='mobile_landing_redeem';
                 else
+                {
+                    $android=$this->isMobile_android();
+                    $this->set('android', $android);
                     $this->layout='mobile_landing';
+                }
             }
             else
             {
