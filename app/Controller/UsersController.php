@@ -37,7 +37,7 @@ class UsersController extends AppController {
         $this->Auth->allow('login','logout','product','email_unsubscribed');
     }
     public function isAuthorized($user) {
-        if (($this->action == 'login') || ($this->action == 'logout')
+        if (($this->action == 'login')|| ($this->action == 'defaulters_list') || ($this->action == 'update_defaulters')|| ($this->action == 'logout')
             || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
