@@ -681,7 +681,7 @@ public function isMobile_1() {
         //} else {
         //$this->layout = 'mobile_landing';
         //}  
-            if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
+            /*if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
            else{
             if(!$this->RequestHandler->isMobile()){
                 $this->layout='landing';
@@ -692,7 +692,22 @@ public function isMobile_1() {
                 $this->layout='mobile_landing';
             }
 
-           }
+           }*/
+           if($this->RequestHandler->isMobile())
+            {
+                if(isset($this->request->query['gift_id']))
+                    $this->layout='mobile_landing_redeem';
+                else
+                    $this->layout='mobile_landing';
+            }
+            else
+            {
+                if(isset($this->request->query['gift_id']))
+                    $this->layout = 'landing_redeem';
+                else
+                    $this->layout = 'landing';
+            }
+
 
 
            // else $this->layout = 'landing';
