@@ -49,7 +49,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','accord'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -73,6 +73,23 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   })();
 
 </script>
+<script type="text/javascript">
+haccordion.setup({
+accordionid: 'hc2', //main accordion div id
+paneldimensions: {peekw:'40px', fullw:'450px', h:'40px'},
+selectedli: [-1, true], //[selectedli_index, persiststate_bool]
+collapsecurrent: true //<- No comma following very last setting!
+})
+
+</script>
+<script type="text/javascript">
+haccordion.setup({
+accordionid: 'hc3', //main accordion div id
+paneldimensions: {peekw:'60px', fullw:'1240px', h:'370px'},
+selectedli: [-1, true], //[selectedli_index, persiststate_bool]
+collapsecurrent: true //<- No comma following very last setting!
+})
+</script>
 <head>
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
@@ -90,9 +107,56 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
   
   <div id="wrapper">
+
     <div class="banner-block">
+      <!--top strip-->
+     <div class="strip" >
+        <div id="hc2" class="haccordion" style="position:relative; float:right;">
+        <ul>
+
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:250px" >
+        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
+        Lorum Ipsum Lorum Ipsum
+        </div>
+        </li>
+
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:300px">
+        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
+         Lorum Ipsum Lorum Ipsum
+        </div>
+        </li>
+
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:350px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
+        </div>
+         Lorum Ipsum Lorum Ipsum Lorum 
+         
+        </div>
+        </li>
+
+        <li>
+        <div class="hpanel" style="padding:10px; width:300px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
+        </div>
+         Lorum Ipsum Lorum Ipsum Lorum 
+        </div>
+        </li>
+
+        </ul>
+        </div>
+        </div>
+
+        <!--top strip-->
+        <div class="logo-block" style="position: absolute;z-index: 6; left:14%; top:0px"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
       <div class="banner-content" style="height: 363px;">
-        <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+        
+
+          
           <?php  if($type): ?>
          <p></p>
        <?php else:?>
@@ -119,7 +183,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       } 
     ?>   
     
-    <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+    <div class="fbconect" id="fb"  style="top:25%"><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
       'redirect' => $redirect_url)); ?></div>   
            
         <div class="clear">&nbsp;</div>
@@ -133,7 +197,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </div>
     <section class="slider">  
-        <div class="flexslider">
+        <div class="flexslider" style="top:48px;">
           <?php
             if($campaign_check_on): ?>
           <?php 
@@ -150,11 +214,43 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
                           
                         else : ?>
+
                           <ul class="slides">
                           <li style="display: list-item;">
                           <img id="banner_image" src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
+                            <!--accordian-->
+        <div id="hc3" class="haccordion" style="position:relative; float:right;position:relative; z-index:2; top:-368px">
+                  <ul>
+
+                  <li style="border-right-width:0">
+                  <div class="hpanel" style="padding:1px; width:1285px">
+                  <div style="display:inline; margin-right:1px">
+                  <img src="<?= FULL_BASE_URL; ?>/img/CAMP1.png" width="1285" height="370"  class="fb"/>
+                  </div>
+
+                  </div>
+                  </li>
+
+
+
+                  <li style="border-right-width:0">
+                  <div class="hpanel" style=" width:1285px">
+                  <div style="display:inline; ">
+                  <img src="<?= FULL_BASE_URL; ?>/img/camp2.jpg" width="1285" height="370" class="ad"/>
+                  </div>
+                   
+                   
+                  </div>
+                  </li>
+
+
+                  </ul>
+          </div>
+
+          <!--accordian-->
                          </ul>
+                        
               <?php endif;  ?>
         </div> 
       </section>

@@ -3152,3 +3152,17 @@ display:inline;
     background: url('/img/select.png') no-repeat right ;
    
    }
+
+/*accordian*/
+
+.haccordion{padding: 0;}
+.haccordion ul{margin: 0 30px 0 0;padding: 0;list-style: none;overflow: hidden;}
+.haccordion li{margin: 0;padding: 0;display: block;width: 100%;overflow: hidden; float: left; }
+.haccordion li .hpanel{width: 100%; }
+.strip{ width:100%; height:50px; border:1px solid #fafafa; background:#fff; z-index: 3; position: relative; }
+#hc2 li{margin:0;}
+#hc2 li .hpanel{padding: 2px;background: #fff;cursor: hand;cursor: pointer;}
+
+#hc3 ul{margin:0;}
+#hc3 li{margin:0;}
+#hc3 li .hpanel{padding: 1px;background: #f2f2f2;cursor: hand;cursor: pointer; height:370px;}
