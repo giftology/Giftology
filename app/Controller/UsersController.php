@@ -34,7 +34,7 @@ class UsersController extends AppController {
         );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_android');
+        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_app');
     }
     public function isAuthorized($user) {
 
@@ -687,7 +687,7 @@ public function isMobile_app() {
                 $this->layout='landing';
             }else{
                
-               $android=$this->isMobile_android();
+               $android=$this->isMobile_app();
                 $this->set('android', $android);
                 $this->layout='mobile_landing';
             }
@@ -699,7 +699,7 @@ public function isMobile_app() {
                     $this->layout='mobile_landing_redeem';
                 else
                 {
-                    $android=$this->isMobile_android();
+                    $android=$this->isMobile_app();
                     $this->set('android', $android);
                     $this->layout='mobile_landing';
                 }
