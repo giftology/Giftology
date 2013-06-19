@@ -20,7 +20,7 @@ class CampaignsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        if($this->requestAction(array('controller' => 'users', 'action' => 'defaulters_list',$this->auth->user('id'))))
+        if($this->requestAction(array('controller' => 'users', 'action' => 'defaulters_list',$this->Auth->user('id'))))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
             $this->Auth->Allow('index','view_products','campaign_gift_to_sender');
         
