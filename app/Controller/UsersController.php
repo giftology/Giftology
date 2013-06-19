@@ -493,8 +493,8 @@ public function download_user_csv_all($download_selected = null){
         //$this->set(compact('facebooks'));
     }
 
-public function isMobile_android() { 
-  preg_match('/' . REQUEST_MOBILEUA . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+public function isMobile_app() { 
+  preg_match('/' . REQUEST_ANDROID_IDENTIFIER . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
   if (!empty($match)) { 
     return true; 
   } 

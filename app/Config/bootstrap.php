@@ -261,8 +261,8 @@ define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
 
 
 //Giftology Android App Constants
-define('ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
-define('REQUEST_MOBILEUA',"Android");
+define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
+define('REQUEST_ANDROID_IDENTIFIER',"Android");
 
 
 CakePlugin::load('Mixpanel'); 
