@@ -41,7 +41,7 @@ class UsersController extends AppController {
             || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
-	return parent::isAuthorized($user);
+    return parent::isAuthorized($user);
     }
     //WEB SERVICES
     public function ws_add () {
@@ -315,7 +315,7 @@ public function download_user_csv_all($download_selected = null){
                     }
                     die;
     }
-	 public function index() {
+     public function index() {
      $this->setUserProfile();
     
      $this->Prg->commonProcess('User');
@@ -461,34 +461,34 @@ public function download_user_csv_all($download_selected = null){
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
+    public function view($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
                 $this->User->recursive = 2;
-		//echo debug($this->User->read(null, $id));
-		$this->set('user', $this->User->read(null, $id));
-	}
+        //echo debug($this->User->read(null, $id));
+        $this->set('user', $this->User->read(null, $id));
+    }
 
 /**
  * add method
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->User->create();
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
-		}
-		//$facebooks = $this->User->Facebook->find('list');
-		//$this->set(compact('facebooks'));
-	}
+    public function add() {
+        if ($this->request->is('post')) {
+            $this->User->create();
+            if ($this->User->save($this->request->data)) {
+                $this->Session->setFlash(__('The user has been saved'));
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+            }
+        }
+        //$facebooks = $this->User->Facebook->find('list');
+        //$this->set(compact('facebooks'));
+    }
 
 /**
  * edit method
@@ -497,22 +497,22 @@ public function download_user_csv_all($download_selected = null){
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->User->read(null, $id);
-		}
-	}
+    public function edit($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->User->save($this->request->data)) {
+                $this->Session->setFlash(__('The user has been saved'));
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+            }
+        } else {
+            $this->request->data = $this->User->read(null, $id);
+        }
+    }
 
 /**
  * delete method
@@ -522,21 +522,21 @@ public function download_user_csv_all($download_selected = null){
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('User was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
+    public function delete($id = null) {
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid user'));
+        }
+        if ($this->User->delete()) {
+            $this->Session->setFlash(__('User deleted'));
+            $this->redirect(array('action' => 'index'));
+        }
+        $this->Session->setFlash(__('User was not deleted'));
+        $this->redirect(array('action' => 'index'));
+    }
     
     public function login() {
         if ($this->Connect->user() && $this->Auth->User('id')){
@@ -586,7 +586,7 @@ public function download_user_csv_all($download_selected = null){
                             'Product' => array(
                                 'fields' => array('Product.id'),
                                 'Vendor' => array('fields' => array('name','facebook_image'))),
-			    'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
+                'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
                         ));
                 
                 if($gift){
@@ -644,31 +644,31 @@ public function download_user_csv_all($download_selected = null){
                 $this->set('fb_image', FULL_BASE_URL.'/'.IMAGES_URL.'default_fb_image.png');        
             }
             //$this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
-	        //set utm source if set
+            //set utm source if set
             
-	        if (isset($this->request->query['utm_source'])) {
-		      $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
-	        }
-	        if (isset($this->request->query['utm_medium'])) {
+            if (isset($this->request->query['utm_source'])) {
+              $this->Cookie->write('utm_source', $this->request->query['utm_source'], false, '2 days');
+            }
+            if (isset($this->request->query['utm_medium'])) {
                 $this->Cookie->write('utm_medium', $this->request->query['utm_medium'], false, '2 days');
-	        }
-	        if (isset($this->request->query['utm_campaign'])) {
+            }
+            if (isset($this->request->query['utm_campaign'])) {
                 $this->Cookie->write('utm_campaign', $this->request->query['utm_campaign'], false, '2 days');
-	        }
-	        if (isset($this->request->query['utm_term'])) {
+            }
+            if (isset($this->request->query['utm_term'])) {
                 $this->Cookie->write('utm_term', $this->request->query['utm_term'], false, '2 days');
-	        }
-	        if (isset($this->request->query['utm_content'])) {
+            }
+            if (isset($this->request->query['utm_content'])) {
                 $this->Cookie->write('utm_content', $this->request->query['utm_content'], false, '2 days');
-	        }
+            }
 
             $this->set('encrypted_gift_id', $this->AesCrypt->encrypt($this->request->query['gift_id']));
             $this->set('message', $message);
-	    //if (!$this->RequestHandler->isMobile()) {
+        //if (!$this->RequestHandler->isMobile()) {
                //$this->layout = 'landing_redeem';
-	    //} else {
-		//$this->layout = 'mobile_landing';
-	    //}  
+        //} else {
+        //$this->layout = 'mobile_landing';
+        //}  
             if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
            else{
             if(!$this->RequestHandler->isMobile()){
@@ -705,7 +705,7 @@ public function download_user_csv_all($download_selected = null){
             
 
        // $this->layout = 'landing';
-	    $this->set('slidePlaySpeed', '8000');
+        $this->set('slidePlaySpeed', '8000');
         
         $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
         //$this->redirect($this->referer());
@@ -827,7 +827,7 @@ public function download_user_csv_all($download_selected = null){
                 }
             $this->send_welcome_email();
             return $this->redirect($this->Auth->redirect());
-    	}
+        }
         
         $user = $this->Auth->user(); 
 
@@ -840,14 +840,14 @@ public function download_user_csv_all($download_selected = null){
         $daysSinceUpdate =round ((time() - strtotime($reminderUpdateDate['Reminders']['created']))/86400);
         $numReminders = $this->User->Reminders->find('count', array(
                     'conditions' => array('user_id' => $user['id'])));
-	
-    	if ($daysSinceUpdate > 0) {
-    	    $access_token = $this->get_new_long_lived_access_token();
-    	} else {
-    	    $access_token = FB::getAccessToken();
-    	}
+    
+        if ($daysSinceUpdate > 0) {
+            $access_token = $this->get_new_long_lived_access_token();
+        } else {
+            $access_token = FB::getAccessToken();
+        }
         if ($daysSinceUpdate > 0 || $numReminders < 10) {
-	       // Refresh old reminders
+           // Refresh old reminders
             $this->refreshReminders($user['id']);
         }
         
@@ -989,12 +989,12 @@ public function download_user_csv_all($download_selected = null){
     
     function send_welcome_email() {
         $email = new CakeEmail();
-    	$email->config('smtp')
+        $email->config('smtp')
               ->template('welcome', 'default') 
-	      ->emailFormat('html')
-	      ->to($this->Connect->user('email'))
-	      ->from(array('care@giftology.com' => 'Giftology'))
-	      ->subject('Welcome to Giftology')
+          ->emailFormat('html')
+          ->to($this->Connect->user('email'))
+          ->from(array('care@giftology.com' => 'Giftology'))
+          ->subject('Welcome to Giftology')
               ->viewVars(array('name' => $this->Connect->user('name')))
               ->send();
               $this->welcome_post_to_fb();
@@ -1038,57 +1038,57 @@ public function download_user_csv_all($download_selected = null){
     $this->set('num_gifts_sent', $this->User->GiftsReceived->find('count')+20000);
     $this->User->GiftsReceived->recursive = 2;
     $this->set('gifts_sent', $this->User->GiftsReceived->find('all',
-		  array('order'=>'GiftsReceived.id DESC',
-			'limit'=>3,
-			'order'=>'GiftsReceived.id DESC',
-			'contain' => array(
-			    'Product' => array(
-				    'fields' => array('id'),
-				    'Vendor' => array('name')),
-			    'Sender' => array(
-				    'fields' => array('facebook_id'))))));		
+          array('order'=>'GiftsReceived.id DESC',
+            'limit'=>3,
+            'order'=>'GiftsReceived.id DESC',
+            'contain' => array(
+                'Product' => array(
+                    'fields' => array('id'),
+                    'Vendor' => array('name')),
+                'Sender' => array(
+                    'fields' => array('facebook_id'))))));      
     }
 
     public function noutmuserlist() {
-		$this->User->recursive = 0;
-		$conditions = array(
-			//'UserUtm.utm_source' => 'streamsend',
-			'User.created LIKE' => date('Y-m-d', strtotime(date('Y-m-d')."-1day")).'%');
-		$this->set('users', $this->paginate($conditions));
-	}
-	
+        $this->User->recursive = 0;
+        $conditions = array(
+            //'UserUtm.utm_source' => 'streamsend',
+            'User.created LIKE' => date('Y-m-d', strtotime(date('Y-m-d')."-1day")).'%');
+        $this->set('users', $this->paginate($conditions));
+    }
+    
     function get_new_long_lived_access_token() {
-		$fields = array(		
-		  'client_id' => FB::getAppId(),
-		  'client_secret' => FB::getAppSecret(),
-		  'grant_type' => 'fb_exchange_token',
-		  'fb_exchange_token' => FB::getAccessToken(),
-	        );
-		$ch = curl_init();
+        $fields = array(        
+          'client_id' => FB::getAppId(),
+          'client_secret' => FB::getAppSecret(),
+          'grant_type' => 'fb_exchange_token',
+          'fb_exchange_token' => FB::getAccessToken(),
+            );
+        $ch = curl_init();
 
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/oauth/access_token');
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
-		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
-		
-		//execute post
-		$result = curl_exec($ch);
-		$error = curl_error($ch);
-		
-		$this->log($result, 'ns');
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL,'https://graph.facebook.com/oauth/access_token');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+        
+        //execute post
+        $result = curl_exec($ch);
+        $error = curl_error($ch);
+        
+        $this->log($result, 'ns');
 
-		if ($error) {
-			$this->log("Unable to set new access token for ".$fb_id.$error, 'ns');
-		} else {
-		    $ret = parse_str($result);
-    		$this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token.' expires '.$expires, 'ns');
-		}
-		//close connection
-		curl_close($ch);
-		return $access_token;
+        if ($error) {
+            $this->log("Unable to set new access token for ".$fb_id.$error, 'ns');
+        } else {
+            $ret = parse_str($result);
+            $this->log('Set new access token for user '.$this->Connect->user('id').'  '.$access_token.' expires '.$expires, 'ns');
+        }
+        //close connection
+        curl_close($ch);
+        return $access_token;
     }
     /* Moved to Reminders 
     public function view_friends($type=null) {
@@ -1204,6 +1204,28 @@ public function download_user_csv_all($download_selected = null){
         return $e;
     }
 
+    function defaulters_list($user_id) {
+        $defaulter = FALSE;
+
+        $defaulter_exists = $this->User->find('count', array('conditions' => array('id' => $user_id, 'defaulter' => 1)));
+        if($defaulter_exists) $defaulter = TRUE;
+        return $defaulter;
+    }
+
+    public function update_defaulters(){
+        $defaulters = array(1851691593,100005543981473,100000678486376,100004488369286,10000396701270,582264226,1792236841,100001972394330,100002449145797,1566298187,100001279783328,1234441696,100001279783328,100000377682936,677152056,100001418953825,100005543981473,100005501501914,100001392543171,1672249409,1566298187,1139626999,100005501501914,100004734788325,100004094964735,100000466429903,100000730434494,100000466429903,100000730434494);
+        $white_listed_users = array(100004342150637);
+        /*$new_defaulters_list = array_diff($defaulters, $white_listed_users);
+        $defaulter = in_array($user_fb_id, $new_defaulters_list);*/
+
+        foreach($defaulters as $defaulter){
+            $this->User->updateAll(array('defaulter' => 1), array('facebook_id' => $defaulter));
+        }
+
+        foreach($white_listed_users as $defaulter){
+            $this->User->updateAll(array('defaulter' => 0), array('facebook_id' => $defaulter));
+        }
+    }
     /*public function wsAddRefreshReminder($json_data){
         
     }*/

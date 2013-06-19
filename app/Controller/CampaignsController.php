@@ -9,7 +9,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class CampaignsController extends AppController {
     public $helpers = array('Minify.Minify');   
-     public $components = array('Defaulter', 'AesCrypt');
+     public $components = array('AesCrypt');
     public $paginate = array(
         'limit' => 100,
         'order' => array(
@@ -20,7 +20,7 @@ class CampaignsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        if($this->Defaulter->defaulters_list($this->Connect->user('id')))
+        if($this->requestAction(array('controller' => 'users', 'action' => 'defaulters_list',$this->auth->user('id'))))
                        $this->redirect(array('controller'=>'users', 'action'=>'logout'));
             $this->Auth->Allow('index','view_products','campaign_gift_to_sender');
         

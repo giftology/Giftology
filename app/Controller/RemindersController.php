@@ -250,7 +250,7 @@ class RemindersController extends AppController {
 		}
 
 		public function view_friends($type=null) 
-		{
+		{  
 			if($this->Connect->user()){
 		        $this->User->id = $this->Auth->User('id');
 		        $this->User->updateAll(
@@ -311,8 +311,8 @@ class RemindersController extends AppController {
         $gift_send_date = $this->Gift->find('first',array('fields'=>array('created'),'conditions' => array('AND'=>array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.sender_id' =>$this->Auth->user('id'))),'order'=>'Gift.id DESC',));
         $this->set('send_date', $gift_send_date);
 
-        
-		if($this->Defaulter->defaulters_list($this->Connect->user('id')))
+
+        if($this->requestAction(array('controller' => 'users', 'action' => 'defaulters_list',$this->Auth->user('id'))))
 			$this->redirect(array('controller'=>'users', 'action'=>'logout'));	 
 		$this->Reminder->recursive = -1;
         $this->set('title_for_layout', 'Select a friend');
