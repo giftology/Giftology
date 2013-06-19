@@ -3255,3 +3255,15 @@ display:inline;
    
 
 }
+
+
+/* Landing page slider*/
+
+#banner-fade ul{list-style: none;}
+#banner-fade ul.bjqs{position:relative; list-style:none;padding:0;margin:0;overflow:hidden; display:none;}
+#banner-fade li.bjqs-slide{position:absolute; display:none;}
+#banner-fade ol.bjqs-markers{list-style: none; padding: 0; margin: 0; width:100%;}
+#banner-fade ol.bjqs-markers.h-centered{text-align: center;}
+#banner-fade ol.bjqs-markers li{display:inline;}
+#banner-fade ol.bjqs-markers li a{display:inline-block;}
+#banner-fade p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bottom:0;}

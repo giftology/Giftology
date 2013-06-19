@@ -49,7 +49,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','js'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -96,7 +96,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
           <?php  if($type): ?>
          <p></p>
        <?php else:?>
-       <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+      
          <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -133,7 +133,34 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </div>
     <section class="slider">  
-        <div class="flexslider">
+
+      <div id="banner-fade">
+ <!-- start Basic jQuery Slider -->
+  <ul class="bjqs">
+    <li><img src="img/banner01.jpg" title="">
+      <div>
+         <p style="color: #FFF;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 35%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+      </div>
+    </li>
+    <li><img src="img/banner02.jpg" title="">
+    <div>
+         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: left;margin: 0;position: absolute;top: 35%;font-weight: 300; left:7%;text-shadow: 0 0 5px rgba(0,0,0,0.5);">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+      </div>
+    </li>
+    <li><img src="img/banner03.jpg" title="">
+    <div>
+         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 35%; left:10%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">lorum  ipsum <span> lorum  ipsum </span>and <br>  <span>paid </span>lorum  ipsum <span>friends</span></p>
+      </div>
+    </li>
+    <li><img src="img/banner04.png" title="">
+    <div>
+         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 43%;left:32%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">lorum  ipsum <span>free </span>and<br>  <span>paid </span>gifts to your <span>lorum  ipsum </span></p>
+      </div>
+    </li>
+  </ul>
+  <!-- end Basic jQuery Slider -->
+</div>
+       <!-- <div class="flexslider">
           <?php
             if($campaign_check_on): ?>
           <?php 
@@ -156,7 +183,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                            </li>
                          </ul>
               <?php endif;  ?>
-        </div> 
+        </div> -->
       </section>
 
      <!--<?php //if(isset($campaign_Images)): ?>
@@ -332,6 +359,17 @@ background: none repeat scroll 0 0 #F7F7F7;">
       //echo $this->fetch('script');
     ?>
       
+      <script class="secret-source">
+        jQuery(document).ready(function($) {
+
+          $('#banner-fade').bjqs({
+            height      : 363,
+            width       : 100+'%',
+            responsive  : true
+          });
+
+        });
+</script>
        <script type="text/javascript">
        !function(window){
   var $q = function(q, res){
