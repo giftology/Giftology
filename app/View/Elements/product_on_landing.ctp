@@ -31,7 +31,7 @@
                             <?php endif; ?>
                             <?php endif; ?>
                             //////////////////////////////////////////////-->
-                            <span class="image-container">
+                             <span class="image-container">
                                     <span class="image-frame"></span>
                                     <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">						</span>
                             <span class="details">

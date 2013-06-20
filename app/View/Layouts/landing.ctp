@@ -265,7 +265,9 @@ background: none repeat scroll 0 0 #F7F7F7;">
                
             <div class="how-it-work">
                <div style="width:960px; margin:auto;">
-                        <?php foreach ($products as $product): ?>
+                        <?php 
+                         echo $this->Form->create('products', array('controller' => 'products','action' => 'gift_login'));
+                        foreach ($products as $product): ?>
                             <a>
                                
 
@@ -276,6 +278,7 @@ background: none repeat scroll 0 0 #F7F7F7;">
                               'key' => $product['Product']['id'].'landing'))); ?>
                             </a>
                         <?php endforeach; ?>
+                        <?php echo $this->Form->end(); ?>
                        <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:40px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
                </div>
              </div>
@@ -331,7 +334,27 @@ background: none repeat scroll 0 0 #F7F7F7;">
       //echo $this->Minify->script('../js/carouFredSel');      
       //echo $this->fetch('script');
     ?>
-      
+      <script type="text/javascript">
+      $(document).ready(function(){
+        $('Form a > .small-voucher').click(function (){
+
+                var gift_value = $(this).attr('id');
+               // var gift_name = $(this).attr('name');
+                //alert(gift_value + " "+gift_name );
+
+                
+                  $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'gift_id',
+                    value: gift_value,
+                }).appendTo('#productsGiftLoginForm');
+                  $("#productsGiftLoginForm").submit() 
+            });
+
+      });
+
+      </script>
        <script type="text/javascript">
        !function(window){
   var $q = function(q, res){

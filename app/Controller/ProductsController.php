@@ -37,7 +37,7 @@ class ProductsController extends AppController {
     public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('send_product_expiry_reminder');
+        $this->Auth->allow('send_product_expiry_reminder','gift_login');
     }
 
     public function isAuthorized($user) {
@@ -848,6 +848,71 @@ public function download_user_csv_all($download_selected = null){
         $this->ProductCitySegment->saveMany($city_product_segment);
         $this->autoRender = $this->autoLayout = false;
         exit;
+    }
+    public function gift_login()
+    {
+        if($this->request->is('post')){
+            if($this->Connect->user() && $this->Auth->User('id'))
+            {
+                $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
+                $this->set('user',$this->Auth->User('id'));
+
+                $this->Reminder->unbindModel(array('belongsTo' => array('User')));
+            $friend_list=$this->Reminder->find('all', 
+            array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
+                ));
+            $this->set('friends_data',$friend_list);
+
+            }
+            $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
+            $this->set('Gift_info',$gift_detailes);
+            $this->set('encrypted_id',$this->data['gift_id']);
+
+            $t=time();
+            $session_time=$this->Session->write('session_time', $t);
+            $this->set('session_token',$this->AesCrypt->encrypt($t));
+
+              
+
+        }
+        if(isset($_GET['encrypted_id']) && isset($_GET['session']))
+        {
+            $session_time=$this->AesCrypt->decrypt($_GET['session']);
+            $green =$this->Session->read('session_time');
+            if($session_time != $green){
+                $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            }
+
+            if($this->Connect->user() && $this->Auth->User('id'))
+            {
+                $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
+                $this->set('user',$this->Auth->User('id'));
+
+                $this->Reminder->unbindModel(array('belongsTo' => array('User')));
+            $friend_list=$this->Reminder->find('all', 
+            array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
+                ));
+            $this->set('friends_data',$friend_list);
+
+            }
+            $gift_id = $this->AesCrypt->decrypt($_GET['encrypted_id']);
+             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                           'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
+            $this->set('Gift_info',$gift_detailes);
+            $this->set('encrypted_id',$_GET['encrypted_id']);
+
+            $t=time();
+            $session_time=$this->Session->write('session_time', $t);
+            $this->set('session_token',$this->AesCrypt->encrypt($t));
+
+        }
+
+    
+
     }
     
 }
