@@ -270,7 +270,7 @@ define('BITLY_CLIENT_SECRET', '7c64aa83c5c4918c9d71f1446e132873c43f2636');
 define('BITLY_ACCESS_TOKEN_URL', 'https://api-ssl.bitly.com/oauth/access_token');
 define('BITLY_USER_NAME', 'shubham150@gmail.com');
 define('BITLY_PASSWORD', '12facebook.com');
-define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten?');
+define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
 
 CakePlugin::load('Mixpanel'); ?
