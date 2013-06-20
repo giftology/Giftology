@@ -271,14 +271,33 @@ input[type="text"] {
                     <?php echo $this->Form->input("Use Online" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'imageclick','style'=>'margin-left:0px;width:290px'))?>
                     </div>
 
+                    <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
+                <div class="arrow inner" style="top:379px;"></div>
+                <div class="arrow outer" style="top:370px;"></div>
+                <div class="content">
+                    <h4>Are you ready?</h4>
+                    <div class="buttons">
+                     <span class="MaybeLAter cancel"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/MaybeL_B.png"  /></span>
+                        <!--<button class="cancel"> Maybe later</button>
+                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Redeem now </button>!-->
+                       <span class="redeemNow single" id="<?php echo $gift['Gift']['id'];?>"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/RedeemN_W.png"  /></span>
+                    </div>
+                </div>
+                <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-bottom:10px;position:relative;margin-top: 20px;">
+                      <p>Voucher will expire after use. Happy shopping!</p>
+                  </div>
+          </div>
+
                 <?php else: ?>
                    <p>This is offline voucher which can be redeemed through : </p></br>
                     <div class = "parent_submit">
+                      <div id="show_offline">
                        <?php echo $this->Form->input("Use in Store" ,array('name'=>'city_r','type' => 'submit','id' => 'r_city','class'=>'parent_submit','label' => false,'div' => false,'class'=>'offlineshow','style'=>'margin-left:0px;width:290px'))?>
+                     </div>
                     </div>
 
 
-                    <div class="open-ofline-redeem popover fade bottom in" id="use_offline" style="position:relative;width:300px;top:-70px;display: block;" class="abc">
+                    <div class="open-ofline-redeem popover fade bottom in" id="use_offline" style="position:relative;width:300px;top:-70px;display: none;" class="abc">
                         <div class="arrow inner"  style=" position:relative; top:40px; margin-left:-13px;"></div>
                         <div class="arrow outer" style="position:relative; top:0; margin-left:-16px;"></div>
                         <div class="content">
@@ -311,29 +330,14 @@ input[type="text"] {
                    <?php 
                    $newDate = date("d-m-Y", strtotime($gift['Gift']['expiry_date']));
                    ?>
-                  <div class="open" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-top:0px;margin-bottom:10px; display:none">
+                  <div class="open1" id="used_online" style="width:400px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-top:-50px;margin-bottom:10px; display:none">
                       <p>This is an special gift only for you! Please ensure you use it at the store by <?= $newDate ?>.</br></br>
                       <p>Android users can download our cool app. Other mobile users can use our cool SMS redemption option. We are working on other apps too, watch out!</p>
                   </div>
                       
                 <?php endif; ?>
 
-              <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
-                <div class="arrow inner" style="top:422px;"></div>
-                <div class="arrow outer" style="top:415px;"></div>
-                <div class="content">
-                    <h4>Are you ready?</h4>
-                    <div class="buttons">
-                     <span class="MaybeLAter cancel"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/MaybeL_B.png"  /></span>
-                        <!--<button class="cancel"> Maybe later</button>
-                        <button class="single" id="<?php echo $gift['Gift']['id'];?>" style="background-color: #BE1304;color: #FFFFFF"> Redeem now </button>!-->
-                       <span class="redeemNow single" id="<?php echo $gift['Gift']['id'];?>"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/RedeemN_W.png"  /></span>
-                    </div>
-                </div>
-                <div class="open" id="used_online" style="width:300px;background-color: #FAFAFA;border: 2px solid #CCCCCC;border-radius:5px 5px 5px 5px;color: #4D4D4D;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;line-height: 20px;padding: 8px 6px 6px;margin-bottom:10px;position:relative;margin-top: 20px;">
-                      <p>Voucher will expire after use. Happy shopping!</p>
-                  </div>
-          </div>
+              
                 
 
        
@@ -344,6 +348,12 @@ input[type="text"] {
 </div>  
 <div class="clear"></div>
 <script type="text/javascript">
+$('#show_offline').click(function(){
+  $('#use_online').hide();
+  $('#use_offline').css('display','block');
+  $('.open1').show();
+
+});
 
       $(document).ready(function(){
             //$("#print").click(function (){
@@ -395,14 +405,7 @@ input[type="text"] {
 
       $(document).ready(function(){
 
-        $('.parent_submit').click(function(){
-
-$('.open-online-redeem').css('display','block');
-$('#used_online').css('margin-top','50px')
-       
-
-      });
-
+        
             $(".otherMob").click(function (){
                 $("#sms1").submit()
             });
