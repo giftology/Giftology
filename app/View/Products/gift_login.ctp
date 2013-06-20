@@ -30,28 +30,17 @@
             </div>
         </div>
        
-    <!--<div id="campaigns">
-                        <?php foreach ($products as $product):  ?>
-            <a href="<?= $this->Html->url(array('controller' => 'campaigns',
-                    'action' => 'view_product',
-                    $product['Product']['id'])); ?>">
-
-                <?= $this->element('campaigns',
-                        array('product' => $product,
-                              'small' => true),
-                        array('cache' => array(
-                            'key' => $product['Product']['id'].'small'))); ?>
-            </a>
-            <?php endforeach; ?>
-        </div>-->
-        <h3 class="camp_line-header" style="margin-top:80px">
-         <p style="font: normal 17px/40px arial;color: #900"> Step 1: Choose Friends</p>
-        </h3>
+    
+        
         <?php if($user): ?>
-        <div>
-            <button class="myself"> Myself </button>
-            <button class="frnz"> frnz </button>
+        <div style="margin-top:80px">
+            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+            <button id="others"> Others </button>
         </div>
+        <h3 class="camp_line-header">
+         <p style="font: normal 17px/40px arial;color: #900"></p>
+        </h3>
+        
         <div id='searc_campaign'>
                                 <?php //echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
@@ -78,10 +67,14 @@
                 </div>
         
     	<?php else: ?>
+        <h3 class="camp_line-header" style="margin-top:40px">
+         <p style="font: normal 17px/40px arial;color: #900"> Step 1: Choose Friends</p>
+        </h3>
     	
     	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
 
     <?php endif; ?>
+    <?php echo $my_fb_id; ?>
     <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:40px">
             <div class="clear"></div>
             <!--<div style="float:right;margin-left:70px">-->
@@ -111,11 +104,13 @@
            
        <!--</div>
            <div> -->
-        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
+        <!--////////////////////////////////////////////// for other friends -->
          <div class="delivery-details" style="float:left;margin-left:32px">
+            <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
             <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
-        </p><div class="delivery-message" style="margin-bottom:0px;">
+        </p>        
+                   <div class="delivery-message" style="margin-bottom:0px;">
                     <div class="greeting-bubble">
                         <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
                     </div>
@@ -141,15 +136,89 @@
                     <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
                     <?php echo $session_token ?>
             </div> <p style="font: normal 17px/40px arial;color: #900">
+
            </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
             <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
     </div> 
+          
+          <!-- /////////////////////////for myself///////////////////////////// -->
+
+    <div class="my_delivery-details" style="float:left;margin-left:-450px;margin-top:-160px;display:none;">
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign_submit'));?>
+            <p style="font: normal 17px/40px arial;color: #900">
+            Step 2: Include a Message
+        </p>        
+                   <div class="delivery-message" style="margin-bottom:0px;">
+                    <div class="greeting-bubble">
+                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message1','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
+                    </div>
+                    <div class="shadow-wrapper">
+                        <div class="frame">
+                            <div class="img-placeholder male">
+                                <img src=<?= $photo_url; ?>>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
+                    <?php echo $Gift_info['Product']['min_value'] ?>
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
+                    <?php echo $encrypted_id; ?>
+                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
+                    <?php echo $Gift_info['Product']['vendor_id']; ?>
+                    <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>'swaaaaa' ))?></div>
+                    <?php echo "swa" ?>
+                     <div class="error_message" id="error_text1" style="display:none; margin-left:120px;">
+                        <h5 style="color:#FF0000">*please enter the message.</h5>
+                    </div>
+                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
+                    <?php echo $session_token ?>
+                    <!--div class="input email" ><?php echo $this->Form->hidden("chk2" ,array('label' => false,'div' => false,'value'=>$my_fb_id[$my_fb_id]))?></div-->
+            </div> <p style="font: normal 17px/40px arial;color: #900">
+
+           </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
+            <?php  echo $this->Form->Submit(__('Claim you gift'), array('id'=>'form_shipping_submit'));?>
+            </div>      
+    </div>
+
+
+
+
+
+
+
+
 
     <script type="text/javascript">
 
       $(document).ready(function(){
+        $("#form_shipping_submit").click(function(){
+            alert("myself");
+            //$("#campaign").remove();
+            if($("#text_message1").val().length == 0){
+                    $("#error_text1").show();
+                        return false;
+                }
+                else{
+                    $("#error_text1").hide();
+                    }
+
+                    var values = $("#myself").attr('my_facebook_id');
+                    $('<input>').attr({
+                    type: 'hidden',
+                    id: values+'_hidden',
+                    name: 'chk2['+values+']',
+                    value: values,
+                }).appendTo('#campaign');
+                    alert("added");
+                    $("#campaign").submit();
+
+
+            });
+            
             $("#form_shipping").click(function (){
+                alert("others");
                 if($("#text_message").val().length == 0){
                     $("#error_text").show();
                         return false;
@@ -166,6 +235,16 @@
             });
         });
     </script>
+
+
+
+
+
+
+
+
+
+
     <script type='text/javascript'>
     $(document).ready(function(){
         var delay = (function(){
@@ -207,13 +286,36 @@
             },1000);   
         });
     });
+
+
+
+
+
+
+
+
     $(document).ready(function(){
-        $('div > .frnz').click(function() {
-            ('.#pra').hide();
+        $('#myself').click(function() {
+           //var facebook_id = $(this).attr('my_facebook_id');
+          // alert(facebook_id);
             $('#searc_campaign').hide();
+            $('#pra').hide();
+            $('.delivery-details').hide();
+            $('.my_delivery-details').show();
+             //$('#campaign').remove();
+
 
         })
-        $('#friend_search').click(function() {
+
+        $('#others').click(function() {
+            $('.my_delivery-details').hide();
+            $('#searc_campaign').show();
+            $('#pra').show();
+            $('.delivery-details').show();
+            
+        })
+
+       /* $('#friend_search').click(function() {
         // interrupt form submission
             var key_value = $("#friend_name").val();
                 $.ajax({
@@ -244,9 +346,15 @@
                         $('.campaign_checkbox').show();
                     }
                 });   
-        });
+        });*/
                 
     });
+
+
+
+
+
+
     $(document).ready(function(){
         var count_friend = 0;
         var names = new Object();

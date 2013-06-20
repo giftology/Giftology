@@ -856,6 +856,7 @@ public function download_user_csv_all($download_selected = null){
             {
                 $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
                 $this->set('user',$this->Auth->User('id'));
+                $this->set('my_fb_id',$this->Auth->User('facebook_id'));
 
                 $this->Reminder->unbindModel(array('belongsTo' => array('User')));
             $friend_list=$this->Reminder->find('all', 
@@ -890,6 +891,7 @@ public function download_user_csv_all($download_selected = null){
             {
                 $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
                 $this->set('user',$this->Auth->User('id'));
+                $this->set('my_fb_id',$this->Auth->User('facebook_id'));
 
                 $this->Reminder->unbindModel(array('belongsTo' => array('User')));
             $friend_list=$this->Reminder->find('all', 
