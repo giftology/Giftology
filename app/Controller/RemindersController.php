@@ -525,28 +525,33 @@ class RemindersController extends AppController {
 	}
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
-		 $last_login_info=$this->User->find('first',array('conditions' => array('User.id' => $id),'fields' => array('User.last_login','User.last_mail_date')));
-         $last_login_date = strtotime($last_login_info['User']['last_login']);
-         $last_mail_date = strtotime($last_login_info['User']['last_mail_date']);
-  			$date_to_compare = strtotime(date('Y-m-d H:i:s'));
+		 if(REMINDER_MAIL_SETTING){
+		 	$last_login_info=$this->User->find('first',array('conditions' => array('User.id' => $id),'fields' => array('User.last_login','User.last_mail_date')));
+	        $last_login_date = strtotime($last_login_info['User']['last_login']);
+	        $last_mail_date = strtotime($last_login_info['User']['last_mail_date']);
+	  		$date_to_compare = strtotime(date('Y-m-d H:i:s'));
 			$last_login_date_diff = floor(abs($date_to_compare - $last_login_date) / 86400);
-		    $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
-		
+			$last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+			
 			if(($last_mail_date_diff>=15) && ($last_login_date_diff<=30)){
-               $this->User->updateAll(
-            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $id)
-            	);
-			    $this->send_reminder_email($user, $reminders);
+	        	$this->User->updateAll(
+	            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
+	            	array('User.id' => $id)
+	            	);
+				    $this->send_reminder_email($user, $reminders);
 
 			}
-		    if(($last_mail_date_diff>=10) && ($last_login_date_diff>30) ){
-			     $this->User->updateAll(
-            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $id)
-            	);
-			    $this->send_reminder_email($user, $reminders);
+			if(($last_mail_date_diff>=10) && ($last_login_date_diff>30) ){
+				$this->User->updateAll(
+	            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
+	            	array('User.id' => $id)
+	            	);
+				$this->send_reminder_email($user, $reminders);
 			}
+		 }
+		 else{
+		 	$this->send_reminder_email($user, $reminders);
+		 }
 	        
 	}
 	return;

@@ -272,6 +272,8 @@ define('BITLY_USER_NAME', 'shubham150@gmail.com');
 define('BITLY_PASSWORD', '12facebook.com');
 define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
+//REMINDER EMAIL CONTROL
+define('REMINDER_MAIL_SETTING', FALSE);
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
