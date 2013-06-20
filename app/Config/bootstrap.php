@@ -267,10 +267,10 @@ define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
 //bitly credentials and URL shortening settings
 define('BITLY_CLIENT_ID', '8a37cd067c1878056856e9bbba4b95335e6e4867');
 define('BITLY_CLIENT_SECRET', '7c64aa83c5c4918c9d71f1446e132873c43f2636');
-deifne('BITLY_ACCESS_TOKEN_URL', 'https://api-ssl.bitly.com/oauth/access_token');
+define('BITLY_ACCESS_TOKEN_URL', 'https://api-ssl.bitly.com/oauth/access_token');
 define('BITLY_USER_NAME', 'shubham150@gmail.com');
 define('BITLY_PASSWORD', '12facebook.com');
-deinfe('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten?')
+define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten?')
 
 
 CakePlugin::load('Mixpanel'); ?
