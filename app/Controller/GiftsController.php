@@ -1377,7 +1377,7 @@ public function index() {
     }
 
     public function replace_temp_gift_code_with_gift_code($gift_id){
-        $this->Reminder->recursive = -1;
+            $this->Gift->recursive = 2;
              $gift_data = $this->Gift->find('first',array('conditions' =>array (
                     'Gift.id' => $gift_id
                    )));
@@ -1407,7 +1407,7 @@ public function index() {
            
                      
             }
-             $this->Reminder->recursive = -1;
+             
              $gift_code = $this->Gift->find('first',array('contain' => array(
                 'Product' => array('Vendor')),'conditions' =>array (
                     'Gift.id' => $gift_id
