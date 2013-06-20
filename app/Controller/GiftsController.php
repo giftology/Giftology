@@ -113,6 +113,7 @@ class GiftsController extends AppController {
             $this->Gift->id = $gift_id;
             //$this->Gift->Behaviors->attach('Containable');
             $redeem_data['Gift']['redeem'] = 1;
+            $redeem_data['Gift']['claim'] = 1;
             $redeemed = $this->Gift->save($redeem_data);
             if($redeemed['Gift']['redeem']){
                 $gift['redeem'] = 1;
