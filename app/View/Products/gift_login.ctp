@@ -48,6 +48,10 @@
          <p style="font: normal 17px/40px arial;color: #900"> Step 1: Choose Friends</p>
         </h3>
         <?php if($user): ?>
+        <div>
+            <button class="myself"> Myself </button>
+            <button class="frnz"> frnz </button>
+        </div>
         <div id='searc_campaign'>
                                 <?php //echo $this->Form->create('Campaigns'); ?>
                                 <?php echo $this->Form->input('friend_name', array('label'=>'', 'placeholder' => "Search for friends...")); ?>
@@ -107,7 +111,7 @@
            
        <!--</div>
            <div> -->
-        <?php  echo $this->Form->create('gifts', array('action' => 'send','id'=>'campaign'));?>
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
          <div class="delivery-details" style="float:left;margin-left:32px">
             <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
@@ -204,6 +208,11 @@
         });
     });
     $(document).ready(function(){
+        $('div > .frnz').click(function() {
+            ('.#pra').hide();
+            $('#searc_campaign').hide();
+
+        })
         $('#friend_search').click(function() {
         // interrupt form submission
             var key_value = $("#friend_name").val();
@@ -246,9 +255,9 @@
             //if($(".campaign_checkbox").is(':checked')){
             if ($(this).prop('checked')==true){
                 count_friend = count_friend + 1;
-                if(count_friend > 10){
+                if(count_friend > 1){
                     count_friend = count_friend - 1;
-                    alert('You can select max 10 friends');
+                    alert('You can select max 1 friend');
                     $(this).attr('checked', false);
                     return;
                 }
