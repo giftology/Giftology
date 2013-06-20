@@ -274,7 +274,7 @@ $('.reset-link').click(function(){
                               <?php echo  $captcha ?>
                             </div>
                             
-                              <?php echo $this->Form->input('captcha', array('label' => '','placeholder'=>'Solve it!','style'=>'text-align:center; width:45px; float:right;border: none;border-left: 1px solid #B54D4D;border-radius: 0;'));?>
+                              <?php echo $this->Form->input('captcha', array('label' => '','placeholder'=>'Solve it!','style'=>'text-align:center; width:45px; float:right;border: none;border-left: 1px solid #B54D4D;border-radius: 0; font-size:14px'));?>
                             </div>
                            
                           </div>
