@@ -265,11 +265,11 @@ define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id
 define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
 
 //bitly credentials and URL shortening settings
-define('BITLY_CLIENT_ID', '8a37cd067c1878056856e9bbba4b95335e6e4867');
-define('BITLY_CLIENT_SECRET', '7c64aa83c5c4918c9d71f1446e132873c43f2636');
+define('BITLY_CLIENT_ID', '6ae682f18a8e3c7f19ca5e5a5906c3893f9874a5');
+define('BITLY_CLIENT_SECRET', 'bcd46f429da48c6edc0e098b9f9b65839f4e3d6f');
 define('BITLY_ACCESS_TOKEN_URL', 'https://api-ssl.bitly.com/oauth/access_token');
-define('BITLY_USER_NAME', 'shubham150@gmail.com');
-define('BITLY_PASSWORD', '12facebook.com');
+define('BITLY_USER_NAME', 'giftology');
+define('BITLY_PASSWORD', 'giftology010113');
 define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
 //REMINDER EMAIL CONTROL
