@@ -273,6 +273,6 @@ define('BITLY_PASSWORD', '12facebook.com');
 define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
 
-CakePlugin::load('Mixpanel'); ?
+CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
 CakePlugin::load('Search');
