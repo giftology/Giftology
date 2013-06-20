@@ -1545,13 +1545,13 @@ public function index() {
                $ch = curl_init();
 
                //set the url, number of POST vars, POST data
-               curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/oauth/access_token');
+               curl_setopt($ch,CURLOPT_URL, BITLY_ACCESS_TOKEN_URL);
                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
                curl_setopt($ch, CURLOPT_POST, true);
                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
                curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
-               curl_setopt($ch, CURLOPT_USERPWD, "shubham150@gmail.com:12facebook.com");
+               curl_setopt($ch, CURLOPT_USERPWD, BITLY_USER_NAME.":".BITLY_PASSWORD);
                
                //execute post
                $access_token = curl_exec($ch);
@@ -1565,7 +1565,7 @@ public function index() {
         );
 
         //set the url, number of POST vars, POST data
-        curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/v3/shorten?'.http_build_query($new_link_data));
+        curl_setopt($ch,CURLOPT_URL, BITLY_SHORTEN_URL.http_build_query($new_link_data));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
                curl_setopt($ch, CURLOPT_POST, true);
