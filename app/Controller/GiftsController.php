@@ -83,6 +83,7 @@ class GiftsController extends AppController {
 		$e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
 		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
 		else{
+            $this->replace_temp_gift_code_with_gift_code($gift_id);
 			$this->Gift->id = $gift_id;
 			$this->Gift->Behaviors->attach('Containable');
 			$gift = $this->Gift->find('first', array(
@@ -1366,9 +1367,19 @@ public function index() {
         $gift_id=$this->request->data['search_key'];
         if($this->RequestHandler->isAjax()) 
         {
-            $this->Reminder->recursive = -1;
+            $gift_code = $this->replace_temp_gift_code_with_gift_code($gift_id);
+           
+        }
+
+        echo json_encode($gift_code);
+        $this->autoRender = $this->autoLayout = false;
+        exit;
+    }
+
+    public function replace_temp_gift_code_with_gift_code($gift_id){
+        $this->Reminder->recursive = -1;
              $gift_data = $this->Gift->find('first',array('conditions' =>array (
-                    'Gift.id' => $this->request->data['search_key']
+                    'Gift.id' => $gift_id
                    )));
 
              $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
@@ -1399,14 +1410,9 @@ public function index() {
              $this->Reminder->recursive = -1;
              $gift_code = $this->Gift->find('first',array('contain' => array(
                 'Product' => array('Vendor')),'conditions' =>array (
-                    'Gift.id' => $this->request->data['search_key']
+                    'Gift.id' => $gift_id
                    )));
-           
-        }
-
-        echo json_encode($gift_code);
-        $this->autoRender = $this->autoLayout = false;
-        exit;
+             return $gift_code;
     }
 
 	public function view_gifts() {
