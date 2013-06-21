@@ -347,7 +347,7 @@ border-width:15px;border-color:#f7f5ae">
         <td><p style="text-align:center;color:#666;font: normal 13px/22px Georgia, 'Times New Roman', Times, serif;">Please do not reply to this message - it was sent from an unmonitored email address.<br>
             This message is a service email related to your account.<br>
             For any support or questions, please mail us at cs@giftology.com</p>
-          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;" ><a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;" > update subscription preferences</a> | <a href="localhost/users/email_unsubscribed/id:<?= $id; ?>" style="text-decoration:underline;cursor: pointer;color:#666;">unsubscribe from this list</a></p>
+          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;" ><a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;" > update subscription preferences</a> | <a href="http://Giftology.com/users/email_unsubscribed/id:<?= $id; ?>" style="text-decoration:underline;cursor: pointer;color:#666;">unsubscribe from this list</a></p>
           <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;">giftology.com • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010</p></td>
       </tr>
     </table>
