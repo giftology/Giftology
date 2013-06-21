@@ -3,6 +3,7 @@
       $(document).ready(function(){
             $("#form_shipping").click(function (){
                 var e = false;
+                var a = false;
                 var emailRegex = new RegExp(/^[0-9-+]+$/);
                 var valid_phone = emailRegex.test($("#phone_len").val());
                if($("#text_message").val().length == 0){
@@ -64,33 +65,47 @@
 
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
-
-                /*if ($("#email").val().length == 0)
-                 {
-                    var r=confirm("continue without email address!");
-                    if (r==true)
-                      {
-                         return true;
-                      }
-                    else
-                      {
-                        e = true;
-                      }
-                    }*/
-                    if($("[id='chk1']:checked").length<1)
-                    {
-                        if(!valid){
-                            alert("please enter valid email id");
-                            return false;
-                        }
-                        else{
-                            return ture;
-                        }
-                        
+                var valid_shipping = emailRegex.test($("#email_shipping").val());
+                if(!valid_shipping)
+                {
+                    $("#error_email_shipping").show();
+                    a = true;
+                }
+                else
+                {
+                    $("#error_email_shipping").hide();
+                }
+                var emailRegexship = new RegExp(/^[0-9-+]+$/);
+                var valid_phone_shipping = emailRegexship.test($("#phone_shipping").val());
+                if(!valid_phone_shipping || $("#phone_shipping").val().length < 10 || $("#phone_shipping").val().length >10){
+                    $("#error_phone_shipping").show();
+                        a = true;
+                }
+                else{
+                    $("#error_phone_shipping").hide();
+                }
+                if($("[id='chk1']:checked").length<1)
+                {
+                    if(!valid){
+                        alert("please enter valid email id");
                         return false;
                     }
+                    else{
+                        return ture;
+                    }
                     
-                    if(e) return false;
+                    return false;
+                }
+                
+                if(e && a)
+                { alert("shubh");
+                 return false;
+                }
+                else{
+                    alert("shubhhhhhh");
+                    $(this).parents('form').submit();
+                    $(this).attr('disabled','disabled');
+                }
             });
            
         });
@@ -360,10 +375,17 @@
                                 <?php echo $this->Form->input('Explicitly Post on Facebook', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
                     </div>
                     <div class="input email">
+                        <label for="email">Phone</label>
+                        <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_shipping','div' => false,'class'=>"umstyle5"))?></div>
+                        <div class="error_message" id="error_phone_shipping" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
                         <label for="email">Send email to<br/></label>
                         <div class="input email" ><?php echo $this->Form->input("reciever_email_show" ,array('id'=>
-                        'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
-                        <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
+                        'email_shipping','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
+                        <div class="error_message" id="error_email_shipping" style="display:none; margin-left:120px;">
                         <h5 style="color:#FF0000">*please enter valid email address.</h5>
                         </div>
                     </div>
@@ -377,7 +399,7 @@
             </div>    
             </div>
                 
-            <?php
+            <?php 
         }   
         else 
         { 
@@ -472,12 +494,12 @@
             else $(this).removeAttr('disabled');  
         });
 
-         $('#form_shipping').click(function(){
+         /*$('#form_shipping').click(function(){
             $(this).attr('disabled','disabled');
             if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');    
-        });
+        });*/
 
         /*$('.umstyle5').blur(function(){
             var field_value = $(this).val();
