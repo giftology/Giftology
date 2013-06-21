@@ -9,7 +9,8 @@
   background-repeat: no-repeat;
   z-index:10;
   border:2px solid #999;
-  margin:auto;
+  margin-top:50px;
+  margin-left:120px;
   font-size:15px;
   -moz-box-shadow: 0 0 10px #666;
   -webkit-box-shadow: 0 0 10px #666;
@@ -272,8 +273,8 @@ input[type="text"] {
                     </div>
 
                     <div class="open-online-redeem popover fade bottom in" id="use_online" style="top: 578px; left: 624.5px; display: none;">
-                <div class="arrow inner" style="top:379px;"></div>
-                <div class="arrow outer" style="top:370px;"></div>
+                <div class="arrow inner" style="top:378px;"></div>
+                <div class="arrow outer" style="top:372px;"></div>
                 <div class="content">
                     <h4>Are you ready?</h4>
                     <div class="buttons">
@@ -464,7 +465,7 @@ $(document).ready(function(){
 
 </script>
 <script id="ititemplate" type="text/x-jquery-tmpl">
-  <div id="popup_box" style="margin-top:30px;margin-left:120px" >
+  <div id="popup_box">
   <h1 class="RedeemH1 mar1" >Sponsored gift voucher worth Rs ${Gift.gift_amount}</h1>
   <h2 class="RedeemH1 lineh3 mar2">Use Online at:</h2>
   <h2 class="RedeemH2 lineh3"><a href="http://${Product.Vendor.vendor_website_link}" target="_blank">
@@ -484,7 +485,7 @@ $(document).ready(function(){
       <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
      
 
- <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:700px;left:30%">
+ <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:685px;left:30%">
                 <div class="arrow inner" style=" position:relative; top:40px; margin-left:-9px;"></div>
                 <div class="arrow outer"  style="position:relative; top:0; margin-left:-12px;"></div>
                 <div class="content" style="position:relative;">
