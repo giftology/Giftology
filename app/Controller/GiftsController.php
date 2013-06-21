@@ -1543,7 +1543,7 @@ public function index() {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
-        //DebugBreak();
+        
         $fields = array(
             'client_id' => BITLY_CLIENT_ID,
             'client_secret' => BITLY_CLIENT_SECRET,
@@ -1585,7 +1585,7 @@ public function index() {
         $url = $url_arr->{'data'}->{'url'};
         //$link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
         $this->Gift->id = $id;
-        $data_gift_url['Gift']['gift_url'] = "'".$url."'";
+        $data_gift_url['Gift']['gift_url'] = $url;
         $this->Gift->save($data_gift_url);
 
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
