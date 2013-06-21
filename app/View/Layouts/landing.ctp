@@ -113,13 +113,15 @@ collapsecurrent: true //<- No comma following very last setting!
 
      <div class="strip" >
 
-        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:16px/6px Tahoma, Geneva, sans-serif;">
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:14px/6px Arial, Helvetica, sans-serif;">
         <ul>
 
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:6px 10px; width:400px" >
+        <div class="hpanel" style="padding:10px; width:200px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
-        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="false" data-width="350" data-show-faces="false" style="display:inline; "></div>
+        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="true" data-width="150" data-show-faces="false" data-font="arial" data-layout="button_count" style="display:inline; "></div>
+
+      
 
               <div id="fb-root" style="display:inline; padding-top:4px;"></div>
               <script>(function(d, s, id) {
@@ -141,11 +143,11 @@ collapsecurrent: true //<- No comma following very last setting!
         </li>
 
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:250px">
+        <div class="hpanel" style="padding:10px; width:150px">
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download our Android app</a>
+        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download app</a>
          
         </div>
         </li>
@@ -583,5 +585,6 @@ background: none repeat scroll 0 0 #F7F7F7;">
 <?php endif ?>
 <style type="text/css">
 .fb_ltr{padding-top: 10px;}
+
 </style>
 </body></html>
