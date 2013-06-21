@@ -110,40 +110,53 @@ collapsecurrent: true //<- No comma following very last setting!
 
     <div class="banner-block">
       <!--top strip-->
+
      <div class="strip" >
-        <div id="hc2" class="haccordion" style="position:relative; float:right;">
+
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:16px/6px Tahoma, Geneva, sans-serif;">
         <ul>
 
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:250px" >
+        <div class="hpanel" style="padding:6px 10px; width:400px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
-        Lorum Ipsum Lorum Ipsum
+        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="false" data-width="350" data-show-faces="false" style="display:inline; "></div>
+
+              <div id="fb-root" style="display:inline; padding-top:4px;"></div>
+              <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=105463576223556";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));</script>
         </div>
         </li>
 
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:300px">
+        <div class="hpanel" style="padding:10px; width:150px">
         <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
-         Lorum Ipsum Lorum Ipsum
+        <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
         </li>
 
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:350px">
+        <div class="hpanel" style="padding:10px; width:250px">
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-         Lorum Ipsum Lorum Ipsum Lorum 
+        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download our Android app</a>
          
         </div>
         </li>
 
         <li>
-        <div class="hpanel" style="padding:10px; width:300px">
+        <div class="hpanel" style="padding:10px; width:200px">
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
         </div>
-         Lorum Ipsum Lorum Ipsum Lorum 
+         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px; color:#900; text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
+          
         </div>
         </li>
 
@@ -568,4 +581,7 @@ background: none repeat scroll 0 0 #F7F7F7;">
     $('.show-case').hide();
   </script>-->
 <?php endif ?>
+<style type="text/css">
+.fb_ltr{padding-top: 10px;}
+</style>
 </body></html>
