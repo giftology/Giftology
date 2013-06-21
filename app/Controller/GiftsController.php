@@ -722,6 +722,7 @@ public function index() {
             $data1['product_id'] = $product_id;
             $data1['sender_id'] = $this->Auth->user('id');
              $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
+              $data1['reciever_email'] = $this->data['gifts']['reciever_email_show'];
             if (array_key_exists('first_name', $this->data['gifts']))
             {
                 $data1['first_name'] = $this->data['gifts']['first_name'];
