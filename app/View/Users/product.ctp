@@ -1,5 +1,6 @@
 
 <div style="margin:50px 0 0 -50px;">
+    <?php echo $this->Form->create('products', array('controller' => 'products','action' => 'gift_login')); ?>
 
 <?php foreach ($products as $product): ?>
       <a>
@@ -68,6 +69,7 @@
 
       </a>
     <?php endforeach; ?>
+    <?php echo $this->form->end(); ?>
 
 </div>
 
@@ -134,3 +136,25 @@ margin-left:30px;
 
       });
     </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('Form a > .small-voucher').click(function (){
+
+                var gift_value = $(this).attr('id');
+               // var gift_name = $(this).attr('name');
+                //alert(gift_value + " "+gift_name );
+
+                
+                  $('<input>').attr({
+                    type: 'hidden',
+                    id: gift_value+'_hidden',
+                    name: 'gift_id',
+                    value: gift_value,
+                }).appendTo('#productsGiftLoginForm');
+                  $("#productsGiftLoginForm").submit() 
+            });
+
+      });
+
+      </script>
