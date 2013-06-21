@@ -10,7 +10,7 @@
                     <a><span class="left"></span>
                     Share. Surprise.<span class="arrow"></span></a>
                 </li>
-                <li><!--<?= $Gift_info['Product']['Vendor']['name']; ?>-->Brand Name</li>
+                <li><?= $Gift_info['Vendor']['name']; ?></li>
             </ul>
         </div>  
         <div id="celebration-details">
@@ -19,11 +19,11 @@
                 
                 <div class="tag-icons"></div>
                 <h5 class="line-header" >Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
-                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left">  <!-- <?= $Gift_info['Product']['Vendor']['description'] ?>--> Brand product description message</div>
+                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left"> <?= $Gift_info['Product']['terms_heading'] ?>info</div>
 
             </div>
             <div class="image-container">
-                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Product']['Vendor']['thumb_image'] ?>"></div>
+                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Vendor']['thumb_image'] ?>"></div>
                 <div class="paperclip"></div>
                 
            
@@ -73,10 +73,7 @@
         <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
     <img src="<?= FULL_BASE_URL; ?>/img/poke.png">
     	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
-
-    <?php endif; ?>
-    <?php echo $my_fb_id; ?>
-    <p style="text-decoration: blink; color:rgb(188, 22 ,27); text-shadow: 2px 2px #f7d7d7; font:bold 22px 'Courier New', Courier, monospace; margin-top:10px"> Sign Up NOW !!!</p>
+        <p style="text-decoration: blink; color:rgb(188, 22 ,27); text-shadow: 2px 2px #f7d7d7; font:bold 22px 'Courier New', Courier, monospace; margin-top:10px"> Sign Up NOW !!!</p>
     <div class="brandWrapper">
         <div class="brandRow1"   >
         <div class="brandRow2">
@@ -107,6 +104,10 @@
 
     </div>
     <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:-83px;">
+
+    <?php endif; ?>
+    <?php echo $my_fb_id; ?>
+    
             <div class="clear"></div>
             <!--<div style="float:right;margin-left:70px">-->
                 <div class="disclosure opened">
@@ -122,9 +123,9 @@
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
                     <div class="disclosure opened">
-                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Product']['Vendor']['name']; ?></p>
+                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown" ><?= $Gift_info['Product']['Vendor']['description']; ?></p>
+                                    <p class="content shown" ><?= $Gift_info['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
@@ -136,7 +137,7 @@
        <!--</div>
            <div> -->
         <!--////////////////////////////////////////////// for other friends -->
-        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>x
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
          <div class="delivery-details" style="float:left;margin-left:32px">
             
             <p style="font: normal 17px/40px arial;color: #900">
