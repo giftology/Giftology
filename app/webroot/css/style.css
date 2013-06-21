@@ -3255,3 +3255,20 @@ display:inline;
    
 
 }
+
+
+.benefitText{width:300px; 
+    float:left; 
+    background:url('/img/textbox_background.gif'); 
+    background-repeat:no-repeat;
+    margin-top:8px; 
+    color:white;
+    font:16px/35px Tahoma, Geneva, sans-serif; 
+    text-align:center}
+
+.textPad{text-align: left;padding-left: 10px;}
+.brandWrapper{width:400px;  height:auto;  float: left;
+margin: 30px 0;}
+.brandRow1{height:60px; margin:0}
+.brandRow2{width:60px; float:left;}
+
