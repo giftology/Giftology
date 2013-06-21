@@ -722,7 +722,11 @@ public function index() {
             $data1['product_id'] = $product_id;
             $data1['sender_id'] = $this->Auth->user('id');
              $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
-              $data1['reciever_email'] = $this->data['gifts']['reciever_email_show'];
+             if($this->data['gifts']['reciever_email'] == "")
+             {
+                $data1['reciever_email'] = $this->data['gifts']['reciever_email_show'];
+             }
+              
             if (array_key_exists('first_name', $this->data['gifts']))
             {
                 $data1['first_name'] = $this->data['gifts']['first_name'];
@@ -731,6 +735,10 @@ public function index() {
                 $data1['city'] = $this->data['gifts']['city'];
                 $data1['pin_code'] = $this->data['gifts']['pin_code'];
                 $data1['phone'] = $this->data['gifts']['phone'];
+                if($this->data['gifts']['phone'] == "")
+                {
+                    $data1['phone'] = $this->data['gifts']['phone_shipping'];
+                }
                 $data1['state'] = $this->data['gifts']['state'];                          
                 $data1['country'] = $this->data['gifts']['country'];
                 $data1['state'] = $this->data['gifts']['state'];
@@ -1156,6 +1164,7 @@ public function index() {
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}*/
+           
 		if ($receiver_email && $receiver_birthday==date("Y-m-d")) 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');

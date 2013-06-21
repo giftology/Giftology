@@ -376,7 +376,7 @@
                     </div>
                     <div class="input email">
                         <label for="email">Phone</label>
-                        <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_shipping','div' => false,'class'=>"umstyle5"))?></div>
+                        <div class="input email" ><?php echo $this->Form->input("phone_shipping" ,array('label' => false,'id'=>'phone_shipping','div' => false,'class'=>"umstyle5"))?></div>
                         <div class="error_message" id="error_phone_shipping" style="display:none; margin-left:120px;">
                             <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
                         </div>
