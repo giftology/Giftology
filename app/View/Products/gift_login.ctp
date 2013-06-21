@@ -202,7 +202,8 @@
                 else{
                     $("#error_text1").hide();
                     }
-
+                   // chk1.length = 0;
+                   //MY $('td .campaign_checkbox').attr('checked',false);
                     var values = $("#myself").attr('my_facebook_id');
                     $('<input>').attr({
                     type: 'hidden',
@@ -230,7 +231,6 @@
             });
             
             $("#form_shipping").click(function (){
-                alert("others");
                 if($("#text_message").val().length == 0){
                     $("#error_text").show();
                         return false;
@@ -310,10 +310,20 @@
         $('#myself').click(function() {
            //var facebook_id = $(this).attr('my_facebook_id');
           // alert(facebook_id);
+          var a = $('input[name="chk1[]"]:checked').length > 0;
+            if(a)
+            {
+                alert("please unselect the check box");
+                return false;
+            }
+            else{
             $('#searc_campaign').hide();
             $('#pra').hide();
             $('.delivery-details').hide();
             $('.my_delivery-details').show();
+        }
+            
+
              //$('#campaign').remove();
 
 

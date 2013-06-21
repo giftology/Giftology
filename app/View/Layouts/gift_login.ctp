@@ -80,9 +80,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
 		else { ?>
 		<ul class="nav float-l">
-			<li><a href="#" class="events"><span>Events</span></a></li>
-			<li><a href="#" class="friends"><span>Friends</span></a></li>
-			<li><a href="#" class="wallet"><span>My Gifts</span></a></li>
+			<li><a class="events"><span>Events</span></a></li>
+			<li><a class="friends"><span>Friends</span></a></li>
+			<li><a class="wallet"><span>My Gifts</span></a></li>
 		</ul>
 		<script type="text/javascript">
     		$(document).ready(function(){
@@ -105,29 +105,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		
 		
 	</div>
-	<!--<div id="footer">
-			<div class="footer-line">
-			
-			<ul>
-				<li class="f"> <?= $this->Html->link('Home', array('controller' => 'reminders', 'action' =>  'view_friends')); ?></li>
-		<li class="f"><?= $this->Html->link('About Us', array('controller' => 'pages', 'action' =>  'display', 'AboutUs')); ?></li>
-		<li class="f"><?= $this->Html->link('Terms Of Service', array('controller' => 'pages', 'action' => 'TermsOfServices'));?> </li>
-
-            <li class="f"><?= $this->Html->link('Privacy', array('controller' => 'pages', 'action' => 'Privacy')); ?> </li>
-            <li class="f"><?= $this->Html->link('FAQ', array('controller' => 'pages', 'action' =>  'Faq')); ?> </li>
-         <li class="f"><?= $this->Html->link('Retailers', array('controller' => 'retailers', 'action' => 'index', 'Retailers')); ?> </li>
-           <li class="f"><?= $this->Html->link('Contact Us', array('controller' => 'pages', 'action' => 'ContactUs')); ?> </li>
-           <li class="f"><?= $this->Html->link('Media', array('controller' => 'pages', 'action' => 'Media')); ?> </li>
-           
-          
-
-
-                          
-            </ul>
-            <div class="span1"><p>© Giftology 2013. All rights reserved</p>
-            </div>
-        </div> -->
-         </div>
+	</div>
         <footer>
             <div class="footer-wrap">
                 <nav class="footer-nav">
