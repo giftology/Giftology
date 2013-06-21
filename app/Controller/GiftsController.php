@@ -657,6 +657,7 @@ public function index() {
 
 	}
 	public function send() {
+        DebugBreak();
 		$session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
 		$green =$this->Session->read('session_time');
         $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
@@ -719,6 +720,8 @@ public function index() {
             }
             $data1['id'] =  $this->data['gifts']['id'];
             $data1['user_id'] =  $receiver['User']['id'];
+            $data1['product_id'] = $product_id;
+            $data1['sender_id'] = $this->Auth->user('id');
              $data1['reciever_email'] = $this->data['gifts']['reciever_email'];
             if (array_key_exists('first_name', $this->data['gifts']))
             {
@@ -739,10 +742,14 @@ public function index() {
             $amount = $this->data['contribution_amount']; 
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
+            $reciever_eamil_show = $this->data['gifts']['reciever_email_show'];
             $gift_message = $this->data['gifts']['gift-message'];
             $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
             $date_to_send_later = $this->data['gifts']['date_to_send_later'];
+            if($reciever_eamil_show != ""){
+            $gift_address_id = $this->data['gifts']['id'];
+            }
 
             if($date_to_send_later=="")
             {
@@ -755,7 +762,7 @@ public function index() {
             }
             
             
-            if (!$this->Gift->validates())
+            /*if (!$this->Gift->validates())
             {
                  $errors1 = $this->Gift->validationErrors;
                  $errors=(array_values($errors1));
@@ -779,19 +786,24 @@ public function index() {
                     $this->request->params['named']['ocasion'] : null
 
                 )); 
-            }
+            }*/
              if(isset($data1['first_name']))
              {
             $this->UserAddress->save($data1);
              }
+             if($gift_address_id == "" && $reciever_eamil_show != "")
+             {
+                $gift = $this->UserAddress->find('first',array('order'=>'UserAddress.id DESC','fields'=>array('id'),'conditions' => array('UserAddress.product_id' => $product_id,'UserAddress.sender_id' => $this->Auth->user('id'),'UserAddress.user_id' => $receiver['User']['id'])));
+                $gift_address_id = $gift['UserAddress']['id'];
+             }
             $this->send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now, 
-            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name); 
+            $reciever_email, $gift_message, $post_to_fb, $receiver_birthday,$reciever_name,$gift_address_id); 
 
         }
         $this->Session->delete('session_time');
 	}
 
-	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
+	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$gift_address_id,$date_to_send = null) {
         $free_product = $this->Gift->Product->find('first',array('fields' => array('Product.min_price','Product.max_price'), 'conditions' => array('Product.id' => $product_id)));
         if($free_product['Product']['min_price'] == 0 && $free_product['Product']['max_price' == 0])
         	{
@@ -809,7 +821,8 @@ public function index() {
 		$this->Gift->Product->recursive = 0;
 		$product = $this->Gift->Product->read(null, $product_id); 
 
-		$gift['Gift']['product_id'] = $product_id;
+		$gift['Gift']['gift_address_id'] = $gift_address_id;
+        $gift['Gift']['product_id'] = $product_id;
         $data['TemporaryGiftCode']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
@@ -1338,15 +1351,32 @@ public function index() {
     }
 
     public function claim(){
+        //DebugBreak();
         if($this->request->is('post')){
             $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
                 array('Gift.claim' => 1),
                 array('Gift.id' => $this->request->data['gifts']['giftid']) 
                 );
+              
+                
+                $arr = $this->UserAddress->updateAll(
+                array('UserAddress.first_name' => "'".$this->data['gifts']['first_name']."'",
+                      'UserAddress.last_name' => "'".$this->data['gifts']['last_name']."'",
+                      'UserAddress.address1' => "'".$this->data['gifts']['address1']."'",
+                      'UserAddress.city' => "'".$this->data['gifts']['city']."'",
+                      'UserAddress.pin_code' => $this->data['gifts']['pin_code'],
+                      'UserAddress.phone' => $this->data['gifts']['phone'],
+                      'UserAddress.state' => "'".$this->data['gifts']['state']."'",
+                      'UserAddress.country' => "'".$this->data['gifts']['country']."'",
+                      
+                      ),
+                array('UserAddress.id' => $this->data['gifts']['user_add_id']) 
+                );
 
         }
-        $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+        //DebugBreak();
+        $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
         $this->set('us',$gift_claimable['Gift']['id']);
          $gift = $this->Gift->find('first', array(
             'contain' => array(

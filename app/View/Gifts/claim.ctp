@@ -54,12 +54,75 @@
               </div>
               <?php echo $this->Form->create('gifts', array('action' => 'claim'));?>
               <?php echo $this->Form->hidden("giftid" ,array('value'=>$us ))?>
-               <div class="parent_submit">
-            <?php echo $this->Form->end(__('Save To Gift Box'));?>
+              <?php if($gift['Gift']['gift_address_id'] && $gift['Gift']['claim'] == 0) : ?>
+              <div class="delivery-sharing">
+                <h4 style="font-size:13px">The gift will be arriving soon to the following address:</h4>
+                <center><h3 style="margin-top: 25px;">Shipping Address</h3></center>
+                  <div class="input email">
+                        <label for="email">First Name</label>
+                        <div class="input email" ><?php echo $this->Form->input("first_name" ,array('id' => 'first_name','label' => false,'div' => false))?></div>
+                        <div class="error_message" id="error_first" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the first name.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Last Name</label>
+                        <div class="input email" ><?php  echo $this->Form->input("last_name" ,array('id' => 'last_name','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_last" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the second name.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Address</label>
+                        <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_address" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the address.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">City</label>
+                        <div class="input email" ><?php  echo $this->Form->input("city" ,array('id'=>'city','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the city.</h5>
+                        </div>
+                     </div>
+                     <div class="input email">
+                        <label for="email">Pin Code</label>
+                        <div class="input email" ><?php echo $this->Form->input("pin_code" ,array('id' => 'pin_code', 'label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_pin" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 6 digit pincode</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Phone</label>
+                        <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_len','div' => false,'class'=>"umstyle5"))?></div>
+                        <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">State</label>
+                        <div class="input email" ><?php echo $this->Form->input("state" ,array('id' => 'state','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_state" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter state.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Country</label>
+                        <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5" ))?></div>
+                        <div class="error_message" id="error_country" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter country.</h5>
+                        </div>
+                    </div>
+                    <div class="input email" ><?php echo $this->Form->hidden("user_add_id" ,array('label' => false,'div' => false,'value'=>$gift['Gift']['gift_address_id'] ))?></div>
+                  </div>
+            <?php endif; ?>
+               <div class="parent_submit" style="margin-left: 80px">
+            <?php echo $this->Form->end(__('Save To Gift Box'), array('id'=>'form_shipping'));?>
                
             </div>
               
-          </div> 
+  </div> 
           <div class="clear"></div>
 
         
@@ -92,4 +155,78 @@
    
 
 </script>
+
+
+     <script type="text/javascript">
+
+      $(document).ready(function(){
+            $(".submit").click(function (){
+             var e = false;
+                var emailRegex = new RegExp(/^[0-9-+]+$/);
+                var valid_phone = emailRegex.test($("#phone_len").val());
+              
+                if(!valid_phone || $("#phone_len").val().length < 10 || $("#phone_len").val().length >10){
+                    $("#error_phone").show();
+                        e = true;
+                }
+                else{
+                    $("#error_phone").hide();
+                }
+                if($("#pin_code").val().length < 6 ||$("#pin_code").val().length > 6){
+                    $("#error_pin").show();
+                        e = true;
+                }
+                else{
+                    $("#error_pin").hide();    
+                }
+                if ($("#first_name").val().length == 0) {
+                    $("#error_first").show();
+                    e = true;
+                }
+                else{
+                    $("#error_first").hide();    
+                }
+                if ($("#last_name").val().length == 0) {
+                    $("#error_last").show();
+                    e = true;
+                }
+                else{
+                    $("#error_last").hide();    
+                }
+                if ($("#address").val().length == 0) {
+                    $("#error_address").show();
+                    e = true;
+                }
+                else{
+                    $("#error_address").hide();    
+                }
+                if ($("#city").val().length == 0) {
+                    $("#error_city").show();
+                    e = true;
+                }
+                else{
+                    $("#error_city").hide();    
+                }
+                if ($("#state").val().length == 0) {
+                    $("#error_state").show();
+                    e = true;
+                }
+                else{
+                    $("#error_state").hide();    
+                }
+                if ($("#country").val().length == 0) {
+                    $("#error_country").show();
+                    e = true;
+                }
+                else{
+                    $("#error_country").hide();    
+                }
+
+                    
+                    if(e) return false;
+            });
+           
+        });
+      
+      </script>
 
