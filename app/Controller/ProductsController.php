@@ -885,11 +885,11 @@ public function download_user_csv_all($download_selected = null){
         }
         if(isset($_GET['encrypted_id']) && isset($_GET['session']))
         {
-            /*$session_time=$this->AesCrypt->decrypt($_GET['session']);
+            $session_time=$this->AesCrypt->decrypt($_GET['session']);
             $green =$this->Session->read('session_time');
             if($session_time != $green){
                 $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-            }*/
+            }
 
             if($this->Connect->user() && $this->Auth->User('id'))
             {
