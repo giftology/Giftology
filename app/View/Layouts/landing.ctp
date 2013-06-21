@@ -49,7 +49,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','accord1'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -73,6 +73,23 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   })();
 
 </script>
+<script type="text/javascript">
+haccordion.setup({
+accordionid: 'hc2', //main accordion div id
+paneldimensions: {peekw:'40px', fullw:'450px', h:'40px'},
+selectedli: [-1, true], //[selectedli_index, persiststate_bool]
+collapsecurrent: true //<- No comma following very last setting!
+})
+
+</script>
+<script type="text/javascript">
+haccordion.setup({
+accordionid: 'hc3', //main accordion div id
+paneldimensions: {peekw:'60px', fullw:'1240px', h:'370px'},
+selectedli: [-1, true], //[selectedli_index, persiststate_bool]
+collapsecurrent: true //<- No comma following very last setting!
+})
+</script>
 <head>
 <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
@@ -86,13 +103,80 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         <link rel="stylesheet" href="http://vikasmakwana.com/giftology/css/flexslider.css"> -->
         <!--<script type="text/javascript" async="" src="../js/ga.js"></script><script src="../js/modernizr-2.6.2.min.js"></script>-->
 <body style="zoom: 1; margin-bottom: 0px;">
+
+
 <?php echo $this->Facebook->init(); ?>
   <div class="transbox" id="transbox" style="display:none"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div>
   
   <div id="wrapper">
+
     <div class="banner-block">
+      <!--top strip-->
+
+     <div class="strip" >
+
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:14px/6px Arial, Helvetica, sans-serif;">
+
+        <ul>
+
+        <li style="border-right-width:0">
+
+        <div class="hpanel" style="padding:10px; width:150px" >
+        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
+         <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123811554431067";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        
+
+        
+        </div>
+        </li>
+
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:150px">
+        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
+        <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+        </li>
+
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:150px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download app</a>
+         
+        </div>
+        </li>
+
+        <li>
+        <div class="hpanel" style="padding:10px; width:200px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
+        </div>
+         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px; color:#900; text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
+          
+        </div>
+        </li>
+
+        </ul>
+        </div>
+        </div>
+
+        <!--top strip-->
+        <div class="logo-block" style="position: absolute;z-index: 6; left:14%; top:0px"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
       <div class="banner-content" style="height: 363px;">
-        <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+        
+
+          
           <?php  if($type): ?>
          <p></p>
        <?php else:?>
@@ -119,7 +203,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       } 
     ?>   
     
-    <div class="fbconect" id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+    <div class="fbconect" id="fb"  ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
       'redirect' => $redirect_url)); ?></div>   
            
         <div class="clear">&nbsp;</div>
@@ -133,7 +217,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
         </div>
     </div>
     <section class="slider">  
-        <div class="flexslider">
+        <div class="flexslider" style="top:48px;">
           <?php
             if($campaign_check_on): ?>
           <?php 
@@ -150,11 +234,16 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
                           
                         else : ?>
+
                           <ul class="slides">
                           <li style="display: list-item;">
                           <img id="banner_image" src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
+                            <!--accordian-->
+       
+          <!--accordian-->
                          </ul>
+                        
               <?php endif;  ?>
         </div> 
       </section>
@@ -201,7 +290,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 
    
            <section class="show-case" style="
-background: none repeat scroll 0 0 #F7F7F7;">
+background: none repeat scroll 0 0 #F7F7F7; margin-top:50px;">
                 <div class="showcase-wrap">
                    <div id="giftVouchers">
                     <?php if(CAROUSEL_CODE == 1): ?>
@@ -482,4 +571,8 @@ background: none repeat scroll 0 0 #F7F7F7;">
     $('.show-case').hide();
   </script>-->
 <?php endif ?>
+<style type="text/css">
+.fb_ltr{padding-top: 10px;}
+
+</style>
 </body></html>
