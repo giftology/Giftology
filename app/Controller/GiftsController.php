@@ -751,6 +751,7 @@ public function index() {
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
             $reciever_eamil_show = $this->data['gifts']['reciever_email_show'];
+            $reciever_email = $reciever_eamil_show;
             $gift_message = $this->data['gifts']['gift-message'];
             $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
@@ -1089,8 +1090,7 @@ public function index() {
 	}
 
 	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
-	
-		$product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
+	   $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
 		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
 
@@ -1171,15 +1171,14 @@ public function index() {
 			}
 		else if ($receiver_email)
 		 {	
-		 	$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent');
-		    
+		 	
             if($product_type['ProductType']['type']=='SHIPPED')
             {   
                  $email = new CakeEmail();
                 $email->config('smtp')
                 ->template('gift_sent', 'default') 
                 ->emailFormat('html')
-                ->to('care@giftology.com')
+                ->to($receiver_email)
                 ->from(array($sender_email => $sender_name))
                 ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
                 ->viewVars(array('sender' => $sender_name,
@@ -1190,6 +1189,11 @@ public function index() {
                          'value' => $gift['Gift']['gift_amount'],
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send();    
+            }
+            else
+            {
+                $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent');
+            
             }
 		}
 	}

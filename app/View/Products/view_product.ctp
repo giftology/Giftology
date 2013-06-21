@@ -98,11 +98,11 @@
                 }
                 
                 if(e && a)
-                { alert("shubh");
+                { //alert("shubh");
                  return false;
                 }
                 else{
-                    alert("shubhhhhhh");
+                    //alert("shubhhhhhh");
                     $(this).parents('form').submit();
                     $(this).attr('disabled','disabled');
                 }
