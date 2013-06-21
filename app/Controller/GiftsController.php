@@ -588,8 +588,8 @@ public function index() {
 		if($session_time != $green){
         	$this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
 		}
-         print_r($this->data);
-         die();
+        // print_r($this->data);
+        // die();
 		$this->Gift->Product->recursive = -1;
 		$decrypted_product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
 		$this->data['gifts']['product_id'] = $decrypted_product_id;

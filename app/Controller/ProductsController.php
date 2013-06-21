@@ -871,6 +871,7 @@ public function download_user_csv_all($download_selected = null){
             $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
             if(!$gift_detailes){
                 $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+                $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
             }
             $this->set('Gift_info',$gift_detailes);
             $this->set('encrypted_id',$this->data['gift_id']);
@@ -909,6 +910,7 @@ public function download_user_csv_all($download_selected = null){
             $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
             if(!$gift_detailes){
                 $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+                $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
             }
 
             $this->set('Gift_info',$gift_detailes);
