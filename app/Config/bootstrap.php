@@ -258,6 +258,7 @@ define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
 
 define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
 define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
+define('GIFT_CLAIM', TRUE); //new work flow
 
 
 //Giftology Android App Constants

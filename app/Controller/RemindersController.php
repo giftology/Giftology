@@ -259,7 +259,7 @@ class RemindersController extends AppController {
 		        );
 		    }
 
-		    if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE){
+		    if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE || (GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && GIFT_CLAIM)){
 		    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
 	          	//$this->set('us',$us);
 			    if(isset($gift_claimable) && !empty($gift_claimable)){
@@ -271,7 +271,7 @@ class RemindersController extends AppController {
 			    }	
 		    }
 
-		    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
+		    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && !GIFT_CLAIM){
 		    	$this->reminder_view_friends($type);
 			    $this->set('user_id',$this->Auth->User('id'));	
 		    }
