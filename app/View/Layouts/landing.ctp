@@ -119,11 +119,13 @@ collapsecurrent: true //<- No comma following very last setting!
         <li style="border-right-width:0">
         <div class="hpanel" style="padding:10px; width:200px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
-        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="true" data-width="150" data-show-faces="false" data-font="arial" data-layout="button_count" style="display:inline; "></div>
+        
+
+        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="arial" style="display:inline; "></div>
 
       
 
-              <div id="fb-root" style="display:inline; padding-top:4px;"></div>
+              <div id="fb-root" style="display:inline; "></div>
               <script>(function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) return;
