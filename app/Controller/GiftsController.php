@@ -657,7 +657,7 @@ public function index() {
 
 	}
 	public function send() {
-        $session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
+         $session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
 		$green =$this->Session->read('session_time');
         $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
 		if($session_time != $green){
@@ -1165,7 +1165,8 @@ public function index() {
 		 	$this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent');
 		    
             if($product_type['ProductType']['type']=='SHIPPED')
-            {
+            {   
+                 $email = new CakeEmail();
                 $email->config('smtp')
                 ->template('gift_sent', 'default') 
                 ->emailFormat('html')
