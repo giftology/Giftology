@@ -121,7 +121,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
         
 
-        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="arial" style="display:inline; "></div>
+        <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?ref=ts&fref=ts" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="arial" style="display:inline;"></div>
 
       
 
