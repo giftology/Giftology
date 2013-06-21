@@ -105,8 +105,9 @@
        <!--</div>
            <div> -->
         <!--////////////////////////////////////////////// for other friends -->
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>x
          <div class="delivery-details" style="float:left;margin-left:32px">
-            <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
+            
             <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
         </p>        
@@ -145,8 +146,7 @@
           <!-- /////////////////////////for myself///////////////////////////// -->
 
     <div class="my_delivery-details" style="float:left;margin-left:-450px;margin-top:-160px;display:none;">
-        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign_submit'));?>
-            <p style="font: normal 17px/40px arial;color: #900">
+        <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
         </p>        
                    <div class="delivery-message" style="margin-bottom:0px;">
@@ -194,8 +194,7 @@
 
       $(document).ready(function(){
         $("#form_shipping_submit").click(function(){
-            alert("myself");
-            //$("#campaign").remove();
+         //$("#campaign").remove();
             if($("#text_message1").val().length == 0){
                     $("#error_text1").show();
                         return false;
@@ -211,8 +210,21 @@
                     name: 'chk2['+values+']',
                     value: values,
                 }).appendTo('#campaign');
-                    alert("added");
                     $("#campaign").submit();
+
+                    /* var idx = $.inArray(values, chk2);
+                    if (idx == -1) {
+                        chk2.splice(idx, 1);
+                        alert("added");
+
+                      $('<input>').attr({
+                    type: 'hidden',
+                    id: values+'_hidden',
+                    name: 'chk2['+values+']',
+                    value: values,
+                }).appendTo('#campaign');
+
+                    }*/
 
 
             });
