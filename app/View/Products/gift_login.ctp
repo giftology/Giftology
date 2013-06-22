@@ -10,7 +10,7 @@
                     <a><span class="left"></span>
                     Share. Surprise.<span class="arrow"></span></a>
                 </li>
-                <li><!--<?= $Gift_info['Product']['Vendor']['name']; ?>-->Brand Name</li>
+                <li><?= $Gift_info['Product']['Vendor']['name']; ?></li>
             </ul>
         </div>  
         <div id="celebration-details">
@@ -18,8 +18,8 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header" >Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
-                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left">  <!-- <?= $Gift_info['Product']['Vendor']['description'] ?>--> Brand product description message</div>
+                <h5 class="line-header">Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
+                          <div style="margin-left:120px;width:400px;">   <?= $Gift_info['Product']['Vendor']['description'] ?></div>
 
             </div>
             <div class="image-container">
@@ -68,45 +68,14 @@
         
     	<?php else: ?>
         <h3 class="camp_line-header" style="margin-top:40px">
-         <p style="font: normal 17px/40px arial;color: #900"> Step1: Choose Friends</p>
+         <p style="font: normal 17px/40px arial;color: #900"> Step 1: Choose Friends</p>
         </h3>
-        <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
-    <img src="<?= FULL_BASE_URL; ?>/img/poke.png">
+    	
     	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
 
     <?php endif; ?>
     <?php echo $my_fb_id; ?>
-    <p style="text-decoration: blink; color:rgb(188, 22 ,27); text-shadow: 2px 2px #f7d7d7; font:bold 22px 'Courier New', Courier, monospace; margin-top:10px"> Sign Up NOW !!!</p>
-    <div class="brandWrapper">
-        <div class="brandRow1"   >
-        <div class="brandRow2">
-        <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
-        </div>
-        <div class="benefitText">
-        <p>You can gift yourself.</p>
-        </div>
-        </div>
-
-        <div class="brandRow1"  >
-        <div class="brandRow2">
-        <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
-        </div>
-        <div class="benefitText">
-        <p>You can gift Birthday reminders.</p>
-        </div>
-        </div>
-
-        <div class="brandRow1"  >
-        <div class="brandRow2">
-        <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
-        </div>
-        <div class="benefitText textPad" >
-        <p>Access to New Hot Gifts every week.</p>
-        </div>
-        </div>
-
-    </div>
-    <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:-83px;">
+    <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:40px">
             <div class="clear"></div>
             <!--<div style="float:right;margin-left:70px">-->
                 <div class="disclosure opened">
@@ -458,5 +427,3 @@
         $('.campaign_checkbox').show();
     });
     </script>
-
-  
