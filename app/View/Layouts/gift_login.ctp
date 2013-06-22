@@ -52,7 +52,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 		<!--<a href=<?= FULL_BASE_URL; ?>> -
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
 		</a>-->
-		<?php if($user){ ?><ul class="nav float-l">
+		<?php if($user){ ?>
+
+
+		<ul class="nav float-l">
+			
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends <?= isset($friends_active) ? $friends_active:''; ?>"><span>Friends</span></a></li>
 			<li><a href=<?= $this->Html->url(array('controller'=>'gifts',  'action'=>'view_gifts')); ?> class="wallet <?= isset($gifts_active) ? $gifts_active:''; ?>"><span>My Gifts</span></a></li>
