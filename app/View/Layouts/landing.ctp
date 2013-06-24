@@ -148,11 +148,6 @@ collapsecurrent: true //<- No comma following very last setting!
               fjs.parentNode.insertBefore(js, fjs);
 
             }(document, 'script', 'facebook-jssdk'));</script>
-        
-
-          
-
-          105463376223556
         </div>
         </li>
         <?php endif; ?>
