@@ -133,7 +133,7 @@ collapsecurrent: true //<- No comma following very last setting!
          <div class="hpanel" style="padding:10px; width:150px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
 
-         <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"><?=$this->Facebook->likebox('http://developers.facebook.com/docs/reference/plugins/like');?></div>
+         <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"><?php echo $this->Facebook->like();?></div>
 
        
          <!--<div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>-->
