@@ -862,7 +862,15 @@ public function download_user_csv_all($download_selected = null){
                 $friend_list=$this->Reminder->find('all', 
                 array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
                     ));
-                $this->set('friends_data',$friend_list);
+                if(isset($friend_list) && !empty($friend_list)){
+                    $this->set('friends_data',$friend_list);
+
+                }
+                else{
+                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+                    $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
+                }
+                
 
             }
             $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
@@ -901,7 +909,15 @@ public function download_user_csv_all($download_selected = null){
                 $friend_list=$this->Reminder->find('all', 
                 array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
                     ));
-                $this->set('friends_data',$friend_list);
+                if(isset($friend_list) && !empty($friend_list)){
+                    $this->set('friends_data',$friend_list);
+
+                }
+                else{
+                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+                    $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
+                }
+                //$this->set('friends_data',$friend_list);
 
             }
             $gift_id = $this->AesCrypt->decrypt($_GET['encrypted_id']);
