@@ -3272,3 +3272,30 @@ margin: 30px 0;}
 .brandRow1{height:60px; margin:0}
 .brandRow2{width:60px; float:left;}
 
+.blinkText{text-decoration: blink; color:rgb(188, 22 ,27);
+ text-shadow: 2px 2px #f7d7d7;
+ font:bold 22px 'Courier New', Courier, monospace; margin-top:10px}
+
+ #myself{ 
+   
+    background: url("/img/button1.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    display: inline;
+    float: left;
+    height: 50px;
+    width: 125px;  }
+
+     #myself :hover{ 
+   
+    background: url("/img/button2.png") no-repeat scroll 0 0 transparent;
+     }
+
+
+#others{
+    background: url("/img/button1.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    display: inline;
+    
+    height: 50px;
+    width: 125px;  
+}

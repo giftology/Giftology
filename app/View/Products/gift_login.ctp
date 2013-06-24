@@ -19,7 +19,7 @@
                 
                 <div class="tag-icons"></div>
                 <h5 class="line-header" >Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
-                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left"> <?= $Gift_info['Vendor']['description'] ?></div>
+                          <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Product']['terms_heading'] ?></div>
 
             </div>
             <div class="image-container">
@@ -33,6 +33,7 @@
     
         
         <?php if($user): ?>
+
         <div style="margin-top:80px">
             <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
             <button id="others"> Others </button>
@@ -71,8 +72,37 @@
        <!--</div>
            <div> -->
         <!--////////////////////////////////////////////// for other friends -->
-        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>x
-         <div class="delivery-details" style="float:left;margin-left:32px">
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>
+
+         <div class="purchase voucher-container" style="width:400px;margin-right:80px; margin-top:30px">
+            <div class="clear"></div>
+            <!--<div style="float:right;margin-left:70px">-->
+                <div class="disclosure opened" >
+                        <p class="heading" style="font: normal 17px/20px arial;color: #999;" >Terms and conditions</p>
+                        <div class="wrapper" style="height: 0px;">
+                                <p class="content shown"><?= $Gift_info['Product']['terms']; ?></p>
+                        </div>
+                        <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
+                                <span class="arrow"></span>
+                        </a>
+                </div>
+           <!-- </div>-->
+                <div class="clear"></div>
+              <!--  <div style="float:right;positon:relative;margin-right:110px">-->
+                    <div class="disclosure opened" >
+                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Product']['Vendor']['name']; ?></p>
+                            <div class="wrapper" style="height: 0px;">
+                                    <p class="content shown" ><?= $Gift_info['Product']['Vendor']['description']; ?></p>
+                            </div>
+                            <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
+                                    <span class="arrow"></span>
+                            </a>
+                    </div>
+               <!-- </div>-->
+           <div class="clear"></div>
+
+
+         <div class="delivery-details" >
             
             <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
@@ -107,11 +137,14 @@
            </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
             <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
-    </div> 
+    </div>  
+
+         
           
           <!-- /////////////////////////for myself///////////////////////////// -->
 
-    <div class="my_delivery-details" style="float:left;margin-left:-450px;margin-top:-160px;display:none;">
+    <div class="my_delivery-details" style="float:left;display:none;  margin-left: -510px;
+    margin-top: -150px;">
         <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
         </p>        
@@ -130,7 +163,7 @@
                     <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
                     <?php echo $Gift_info['Product']['min_value'] ?>
                     <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
-                    <?php echo $encrypted_id; ?>
+                    
                     <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
                    
                     <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>'swaaaaa' ))?></div>
@@ -148,25 +181,20 @@
             </div>      
     </div>
 
+    </div>
+
         
     	<?php else: ?>
         <h3 class="camp_line-header" style="margin-top:40px">
          <p style="font: normal 17px/40px arial;color: #900"> Step1: Choose Friends</p>
         </h3>
-        <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
-    <img src="<?= FULL_BASE_URL; ?>/img/poke.png">
-    	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
+       
+    	
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#campaign').attr('disabled','disabled');
+         <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
+    <img src="<?= FULL_BASE_URL; ?>/img/poke.png"><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
+    <p class="blinkText"> Sign Up NOW !!!</p>
 
-            });
-
-        </script>
-
-    <?php endif; ?>
-    <p style="text-decoration: blink; color:rgb(188, 22 ,27); text-shadow: 2px 2px #f7d7d7; font:bold 22px 'Courier New', Courier, monospace; margin-top:10px"> Sign Up NOW !!!</p>
     <div class="brandWrapper">
         <div class="brandRow1"   >
         <div class="brandRow2">
@@ -196,10 +224,12 @@
         </div>
 
     </div>
-    <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:-83px;">
+
+
+ <div class="purchase voucher-container" style="width:400px;margin-right:80px;margin-top:-83px;">
             <div class="clear"></div>
             <!--<div style="float:right;margin-left:70px">-->
-                <div class="disclosure opened">
+                <div class="disclosure opened" style="margin-left:34px">
                         <p class="heading" style="font: normal 17px/20px arial;color: #999;" >Terms and conditions</p>
                         <div class="wrapper" style="height: 0px;">
                                 <p class="content shown"><?= $Gift_info['Product']['terms']; ?></p>
@@ -211,7 +241,7 @@
            <!-- </div>-->
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
-                    <div class="disclosure opened">
+                    <div class="disclosure opened" style="margin-left:34px">
                             <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Product']['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
                                     <p class="content shown" ><?= $Gift_info['Product']['Vendor']['description']; ?></p>
@@ -247,6 +277,20 @@
             <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
     </div> 
+</div>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#campaign').attr('disabled','disabled');
+
+            });
+
+        </script>
+
+    <?php endif; ?>
+
+    
+
     
 
 
