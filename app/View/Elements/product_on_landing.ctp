@@ -4,7 +4,7 @@
                             <span class="featured-frame"></span>
                             <span class="selected-overlay"></span>
                             <!--////////////////////////////////////////////////////////////////
-                             <?php  if(SHOW_HOVER): ?>
+                             <?php  if(FALSE): ?>
                             <span id="trigger"><img class="trigger_tnc1" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -1px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
                             <?php  
                              if($product['Vendor']['short_description'] || $product['Product']['short_terms']): ?>
