@@ -891,9 +891,9 @@ public function download_user_csv_all($download_selected = null){
               
 
         }
-        if(isset($_GET['encrypted_id']) && isset($_GET['session']))
+        if(isset($_GET['first']) && isset($_GET['second']))
         {
-            $session_time=$this->AesCrypt->decrypt($_GET['session']);
+            $session_time=$this->AesCrypt->decrypt($_GET['second']);
             $green =$this->Session->read('session_time');
             if($session_time != $green){
                 $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
@@ -932,7 +932,7 @@ public function download_user_csv_all($download_selected = null){
             }
 
             $this->set('Gift_info',$gift_detailes);
-            $this->set('encrypted_id',$_GET['encrypted_id']);
+            $this->set('encrypted_id',$_GET['first']);
 
             $t=time();
             $session_time=$this->Session->write('session_time', $t);
