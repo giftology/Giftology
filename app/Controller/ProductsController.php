@@ -444,7 +444,7 @@ public function download_user_csv_all($download_selected = null){
 
         $days = "31";
         $product_expire_date=date('Y-m-d', strtotime('+'.$days.'days', strtotime(date('Y-m-d'))));
-        $products = $this->Product->UploadedProductCode->find('all',array('fields'=>array('DISTINCT UploadedProductCode.product_id','UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.available' => 1),'order'=>array('UploadedProductCode.expiry ASC')));
+        $products = $this->Product->UploadedProductCode->find('all',array('fields'=>array('DISTINCT UploadedProductCode.product_id','UploadedProductCode.expiry'),'conditions' => array('UploadedProductCode.available' => 1),'order'=>array('UploadedProductCode.product_id ASC')));
         
         foreach ($products as $product) 
         {
