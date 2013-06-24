@@ -92,7 +92,7 @@
                     <div class="disclosure opened" >
                             <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown" ><?= $Gift_info[['Vendor']['description']; ?></p>
+                                    <p class="content shown" ><?= $Gift_info['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
@@ -114,6 +114,7 @@
                     <div class="shadow-wrapper">
                         <div class="frame">
                             <div class="img-placeholder male">
+                                <?php $photo_url = "https://graph.facebook.com/".$facebook_user['id']."/picture"; ?>
                                 <img src=<?= $photo_url; ?>>
                             </div>
                         </div>

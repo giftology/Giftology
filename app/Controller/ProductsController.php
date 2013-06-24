@@ -906,9 +906,11 @@ public function download_user_csv_all($download_selected = null){
                 $this->set('my_fb_id',$this->Auth->User('facebook_id'));
 
                 $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                $friend_list=$this->Reminder->find('all', 
-                array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
-                    ));
+                $friend_list= $this->Reminder->find('all', 
+            array('limit'=>20,
+                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
+                'order' => array('RAND()')
+                ));
                 if(isset($friend_list) && !empty($friend_list)){
                     $this->set('friends_data',$friend_list);
 
