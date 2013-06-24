@@ -1176,7 +1176,7 @@ public function index() {
             {   
                  $email = new CakeEmail();
                 $email->config('smtp')
-                ->template('gift_sent', 'default') 
+                ->template('shipping_invoice', 'default') 
                 ->emailFormat('html')
                 ->to($receiver_email)
                 ->from(array($sender_email => $sender_name))
@@ -1186,7 +1186,9 @@ public function index() {
                          'vendor' => $vendor_name,
                          'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
                          'message' => $message,
+                         'gift_id' => $gift_id,
                          'value' => $gift['Gift']['gift_amount'],
+                         'address' => ,
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send();    
             }
