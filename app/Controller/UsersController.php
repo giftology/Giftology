@@ -1243,7 +1243,7 @@ public function isMobile_android() {
     function defaulters_list($user_id) {
         $defaulter = FALSE;
 
-        $defaulter_exists = $this->User->find('count', array('conditions' => array('id' => $user_id, 'defaulter' => 1)));
+         $defaulter_exists = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'defaulter' => 1)));
         if($defaulter_exists) $defaulter = TRUE;
         return $defaulter;
     }
