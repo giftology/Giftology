@@ -19,6 +19,7 @@
                 }
                 else{
                     $("#error_phone").hide();
+                   
                 }
                 if($("#pin_code").val().length < 6 ||$("#pin_code").val().length > 6){
                     $("#error_pin").show();
@@ -98,14 +99,30 @@
                 }
                 
                 if(e && a)
-                { //alert("shubh");
+                { 
                  return false;
                 }
                 else{
-                    //alert("shubhhhhhh");
                     $(this).parents('form').submit();
-                    $(this).attr('disabled','disabled');
+                    //$(this).attr('disabled','disabled');
                 }
+                if(valid_phone)
+                {
+                    $("#email_shipping").val('');
+                    $("#phone_shipping").val(''); 
+                }
+                else if(valid_phone_shipping)
+                {
+                    $("#pin_code").val('');
+                    $("#address").val(''); 
+                    $("#city").val(''); 
+                    $("#state").val('');
+                    $("#country").val('');
+                     $("#email").val('');
+                     $("#pin_code").val('');
+                      
+                }
+
             });
            
         });
@@ -285,7 +302,7 @@
             $last_name = isset($name[1]) ? $name[1] : NULL;
 
              ?>
-            <div><span id="know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IKnow_W.png" /></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="dont_know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IDKnow_W copy.png" /></span></div></br>
+            <div><span id="know" style="cursor:pointer;margin-left: 20px;"><img src="<?= IMAGE_ROOT; ?>IKnow_W.png" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="dont_know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IDKnow_W copy.png" /></span></div></br>
             <div id="text_msg" style="display:none">
                 <p style="margin-left:120px;font-size: 16px;">That's OK!</p></br>
                 <p style="font-size: 16px;">We will ask them to fill in their address. Don't be shy!</p>

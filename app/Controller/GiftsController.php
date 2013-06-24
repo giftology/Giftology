@@ -657,7 +657,7 @@ public function index() {
 
 	}
 	public function send() {
-         $session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
+        $session_time=$this->AesCrypt->decrypt($this->data['gifts']['gift_id']);
 		$green =$this->Session->read('session_time');
         $product_id = $this->AesCrypt->decrypt($this->data['gifts']['product_id']);
 		if($session_time != $green){
@@ -756,9 +756,8 @@ public function index() {
             $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
             $date_to_send_later = $this->data['gifts']['date_to_send_later'];
-            if($reciever_eamil_show != ""){
             $gift_address_id = $this->data['gifts']['id'];
-            }
+            
 
             if($date_to_send_later=="")
             {
@@ -800,7 +799,7 @@ public function index() {
              {
             $this->UserAddress->save($data1);
              }
-             if($gift_address_id == "" && $reciever_eamil_show != "")
+             if($gift_address_id == "" )
              {
                 $gift = $this->UserAddress->find('first',array('order'=>'UserAddress.id DESC','fields'=>array('id'),'conditions' => array('UserAddress.product_id' => $product_id,'UserAddress.sender_id' => $this->Auth->user('id'),'UserAddress.user_id' => $receiver['User']['id'])));
                 $gift_address_id = $gift['UserAddress']['id'];
@@ -830,8 +829,8 @@ public function index() {
 		$this->Gift->Product->recursive = 0;
 		$product = $this->Gift->Product->read(null, $product_id); 
 
-		$gift['Gift']['gift_address_id'] = $gift_address_id;
-        $gift['Gift']['product_id'] = $product_id;
+        $gift['Gift']['gift_address_id'] = $gift_address_id;
+		$gift['Gift']['product_id'] = $product_id;
         $data['TemporaryGiftCode']['product_id'] = $product_id;
 		$gift['Gift']['sender_id'] = $sender_id;
 		$gift['Gift']['send_now'] = $send_now;
@@ -1188,7 +1187,7 @@ public function index() {
                          'message' => $message,
                          'gift_id' => $gift_id,
                          'value' => $gift['Gift']['gift_amount'],
-                         'address' => ,
+                         'address' => $gift['Gift']['gift_amount'],
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send();    
             }
@@ -1201,7 +1200,7 @@ public function index() {
 	}
 	public function email_voucher(){
 
-		$id=isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
+		$id= isset($this->data['gifts']['gift_id']) ? $this->data['gifts']['gift_id'] : NULL;
 		if($id == "")
      	{
      		$this->redirect(array(
@@ -1367,7 +1366,6 @@ public function index() {
     }
 
     public function claim(){
-        //DebugBreak();
         if($this->request->is('post')){
             $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
@@ -1391,7 +1389,7 @@ public function index() {
                 );
 
         }
-        //DebugBreak();
+        
         $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
         $this->set('us',$gift_claimable['Gift']['id']);
          $gift = $this->Gift->find('first', array(
@@ -1401,6 +1399,8 @@ public function index() {
                 'Receiver' => array('UserProfile')),
             'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
          $this->set('gift', $gift);
+         $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
+          $this->set('value_shipping', $value_shipping);
          if(!$gift_claimable)
         {
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
@@ -1772,7 +1772,14 @@ public function index() {
 			$this->Gift->Transaction->updateAll (array('Transaction.transaction_status_id' => TX_STATUS_SUCCESS,
 								   'Transaction.amount_paid' => $Amount),
 						array('Transaction.gift_id' => $Order_Id));
-			
+
+            /* code for sms starts here */
+            $gift = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$Order_Id)));
+            $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
+			$phone = $value_shipping['UserAddress']['phone'];
+            $message = ;
+            $value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$phone."&msg=".urlencode($message)."&send=Way2mint&d");
+            /* code for sms ends here */
 			// Inform 
 			$this->informSenderReceipientOfGiftSent($Order_Id, FB::getAccessToken());
 			
