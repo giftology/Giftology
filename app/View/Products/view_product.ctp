@@ -285,7 +285,7 @@
             $last_name = isset($name[1]) ? $name[1] : NULL;
 
              ?>
-            <div><span id="know" style="cursor:pointer;border: 1px solid #CCCCCC;border-radius: 7px 7px 7px 7px;box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset; padding: 7px;width: 150px;">I Know</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="dont_know" style="cursor:pointer;border: 1px solid #CCCCCC;border-radius: 7px 7px 7px 7px;box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08) inset; padding: 7px;width: 150px;">I Don't Know</span></div></br>
+            <div><span id="know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IKnow_W.png" /></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="dont_know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IDKnow_W copy.png" /></span></div></br>
             <div id="text_msg" style="display:none">
                 <p style="margin-left:120px;font-size: 16px;">That's OK!</p></br>
                 <p style="font-size: 16px;">We will ask them to fill in their address. Don't be shy!</p>
@@ -649,7 +649,35 @@ $(document).ready(function(){
   });
 
   </script>
+  <script type="text/javascript">
+$(document).ready(function()
+{
+    $("#know").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IKnow_R.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IKnow_W.png");
+        }                         
+    ); 
 
+    $("#dont_know").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IDKnow_R copy.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IDKnow_W copy.png");
+        }                         
+    ); 
+
+                    
+});
+
+  </script>
   <style>
     div.ui-datepicker
     {
