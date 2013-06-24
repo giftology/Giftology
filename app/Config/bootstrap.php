@@ -265,6 +265,7 @@ define('GIFT_CLAIM', TRUE); //new work flow
 define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
 define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
 
+
 //bitly credentials and URL shortening settings
 define('BITLY_CLIENT_ID', '6ae682f18a8e3c7f19ca5e5a5906c3893f9874a5');
 define('BITLY_CLIENT_SECRET', 'bcd46f429da48c6edc0e098b9f9b65839f4e3d6f');
@@ -273,9 +274,21 @@ define('BITLY_USER_NAME', 'giftology');
 define('BITLY_PASSWORD', 'giftology010113');
 define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
+
+//Social Like 
+
+define('SOCIAL_LIKE',TRUE);
+define('FB_LIKE',TRUE);
+define('TWITTER_LIKE',FALSE);
+define('ANDROID_INSTALL',TRUE);
+define('GIFT_SENT',TRUE);
+
 //REMINDER EMAIL CONTROL
 define('REMINDER_MAIL_SETTING', FALSE);
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
 CakePlugin::load('Search');
+
+
+

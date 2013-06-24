@@ -112,6 +112,13 @@ collapsecurrent: true //<- No comma following very last setting!
 
     <div class="banner-block">
       <!--top strip-->
+      <?php if(SOCIAL_LIKE): ?>
+
+      <style type="text/css">
+      .show-case{margin-top:50px;}
+      .flexslider{top:48px;}
+      </style>
+
 
      <div class="strip" >
 
@@ -119,11 +126,16 @@ collapsecurrent: true //<- No comma following very last setting!
 
         <ul>
 
+          <?php if(FB_LIKE): ?>
         <li style="border-right-width:0">
-
-        <div class="hpanel" style="padding:10px; width:150px" >
+         <div class="hpanel" style="padding:10px; width:150px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
+
          <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"><?=$this->Facebook->likebox('http://developers.facebook.com/docs/reference/plugins/like');?></div>
+
+       
+         <!--<div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>-->
+
 
             <!--<div id="fb-root"></div>-->
             <!--<script>(function(d, s, id) {
@@ -132,13 +144,17 @@ collapsecurrent: true //<- No comma following very last setting!
               js = d.createElement(s); js.id = id;
               js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123811554431067";
               fjs.parentNode.insertBefore(js, fjs);
+
             }(document, 'script', 'facebook-jssdk'));</script>-->
         
 
-        
+          
+
+          
         </div>
         </li>
-
+        <?php endif; ?>
+          <?php if(TWITTER_LIKE): ?>
         <li style="border-right-width:0">
         <div class="hpanel" style="padding:10px; width:150px">
         <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
@@ -146,7 +162,8 @@ collapsecurrent: true //<- No comma following very last setting!
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
         </li>
-
+         <?php endif; ?>
+        <?php if(ANDROID_INSTALL): ?>
         <li style="border-right-width:0">
         <div class="hpanel" style="padding:10px; width:150px">
         <div style="display:inline; margin-right:10px">
@@ -156,7 +173,8 @@ collapsecurrent: true //<- No comma following very last setting!
          
         </div>
         </li>
-
+        <?php endif; ?>
+        <?php if(GIFT_SENT): ?>
         <li>
         <div class="hpanel" style="padding:10px; width:200px">
         <div style="display:inline; margin-right:10px">
@@ -166,10 +184,13 @@ collapsecurrent: true //<- No comma following very last setting!
           
         </div>
         </li>
+      <?php endif;?>
+        
 
         </ul>
         </div>
         </div>
+        <?php endif; ?>
 
         <!--top strip-->
         <div class="logo-block" style="position: absolute;z-index: 6; left:14%; top:0px"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
@@ -217,7 +238,7 @@ collapsecurrent: true //<- No comma following very last setting!
         </div>
     </div>
     <section class="slider">  
-        <div class="flexslider" style="top:48px;">
+        <div class="flexslider" >
           <?php
             if($campaign_check_on): ?>
           <?php 
@@ -290,7 +311,7 @@ collapsecurrent: true //<- No comma following very last setting!
 
    
            <section class="show-case" style="
-background: none repeat scroll 0 0 #F7F7F7; margin-top:50px;">
+background: none repeat scroll 0 0 #F7F7F7; ">
                 <div class="showcase-wrap">
                    <div id="giftVouchers">
                     <?php if(CAROUSEL_CODE == 1): ?>
