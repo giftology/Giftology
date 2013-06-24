@@ -277,10 +277,10 @@ define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 
 //Social Like 
 
-define('SOCIAL_LIKE',FALSE);
-define('FB_LIKE',FALSE);
-define('TWITTER_LIKE',FALSE);
-define('ANDROID_INSTALL',FALSE);
+define('SOCIAL_LIKE',TRUE);
+define('FB_LIKE',TRUE);
+define('TWITTER_LIKE',TRUE);
+define('ANDROID_INSTALL',TRUE);
 define('GIFT_SENT',FALSE);
 
 //Chat Plugin
