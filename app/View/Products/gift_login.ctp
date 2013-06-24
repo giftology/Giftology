@@ -90,9 +90,9 @@
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
                     <div class="disclosure opened" >
-                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Product']['Vendor']['name']; ?></p>
+                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown" ><?= $Gift_info['Product']['Vendor']['description']; ?></p>
+                                    <p class="content shown" ><?= $Gift_info[['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
@@ -242,9 +242,9 @@
                 <div class="clear"></div>
               <!--  <div style="float:right;positon:relative;margin-right:110px">-->
                     <div class="disclosure opened" style="margin-left:34px">
-                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Product']['Vendor']['name']; ?></p>
+                            <p class="heading" style="font: normal 17px/20px arial;color: #999;">About <?= $Gift_info['Vendor']['name']; ?></p>
                             <div class="wrapper" style="height: 0px;">
-                                    <p class="content shown" ><?= $Gift_info['Product']['Vendor']['description']; ?></p>
+                                    <p class="content shown" ><?= $Gift_info['Vendor']['description']; ?></p>
                             </div>
                             <a class="toggle" onclick="clicky.log('#T+C Toggle','T+C Toggle');">
                                     <span class="arrow"></span>
