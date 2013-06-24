@@ -123,16 +123,16 @@ collapsecurrent: true //<- No comma following very last setting!
 
         <div class="hpanel" style="padding:10px; width:150px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
-         <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+         <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"><?=$this->Facebook->likebox('http://developers.facebook.com/docs/reference/plugins/like');?></div>
 
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
+            <!--<div id="fb-root"></div>-->
+            <!--<script>(function(d, s, id) {
               var js, fjs = d.getElementsByTagName(s)[0];
               if (d.getElementById(id)) return;
               js = d.createElement(s); js.id = id;
               js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123811554431067";
               fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
+            }(document, 'script', 'facebook-jssdk'));</script>-->
         
 
         
