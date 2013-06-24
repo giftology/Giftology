@@ -10,7 +10,7 @@
                     <a><span class="left"></span>
                     Share. Surprise.<span class="arrow"></span></a>
                 </li>
-                <li><!--<?= $Gift_info['Product']['Vendor']['name']; ?>-->Brand Name</li>
+                <li><?= $Gift_info['Vendor']['name']; ?></li>
             </ul>
         </div>  
         <div id="celebration-details">
@@ -19,11 +19,11 @@
                 
                 <div class="tag-icons"></div>
                 <h5 class="line-header" >Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
-                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left">  <!-- <?= $Gift_info['Product']['Vendor']['description'] ?>--> Brand product description message</div>
+                          <div style="width:400px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:left"> <?= $Gift_info['Vendor']['description'] ?></div>
 
             </div>
             <div class="image-container">
-                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Product']['Vendor']['thumb_image'] ?>"></div>
+                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Vendor']['thumb_image'] ?>"></div>
                 <div class="paperclip"></div>
                 
            
@@ -65,6 +65,89 @@
                             </tbody>
                        </table>
                 </div>
+
+                
+           
+       <!--</div>
+           <div> -->
+        <!--////////////////////////////////////////////// for other friends -->
+        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>x
+         <div class="delivery-details" style="float:left;margin-left:32px">
+            
+            <p style="font: normal 17px/40px arial;color: #900">
+            Step 2: Include a Message
+        </p>        
+                   <div class="delivery-message" style="margin-bottom:0px;">
+                    <div class="greeting-bubble">
+                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
+                    </div>
+                    <div class="shadow-wrapper">
+                        <div class="frame">
+                            <div class="img-placeholder male">
+                                <img src=<?= $photo_url; ?>>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
+                  
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
+                    
+                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
+                    
+                    <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>$data['Reminder']['friend_name'] ))?></div>
+                    
+                     <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
+                        <h5 style="color:#FF0000">*please enter the message.</h5>
+                    </div>
+                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
+                    
+            </div> <p style="font: normal 17px/40px arial;color: #900">
+
+           </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
+            <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
+            </div>      
+    </div> 
+          
+          <!-- /////////////////////////for myself///////////////////////////// -->
+
+    <div class="my_delivery-details" style="float:left;margin-left:-450px;margin-top:-160px;display:none;">
+        <p style="font: normal 17px/40px arial;color: #900">
+            Step 2: Include a Message
+        </p>        
+                   <div class="delivery-message" style="margin-bottom:0px;">
+                    <div class="greeting-bubble">
+                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message1','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
+                    </div>
+                    <div class="shadow-wrapper">
+                        <div class="frame">
+                            <div class="img-placeholder male">
+                                <img src=<?= $photo_url; ?>>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
+                    <?php echo $Gift_info['Product']['min_value'] ?>
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
+                    <?php echo $encrypted_id; ?>
+                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
+                   
+                    <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>'swaaaaa' ))?></div>
+                   
+                     <div class="error_message" id="error_text1" style="display:none; margin-left:120px;">
+                        <h5 style="color:#FF0000">*please enter the message.</h5>
+                    </div>
+                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
+                    
+                    <!--div class="input email" ><?php echo $this->Form->hidden("chk2" ,array('label' => false,'div' => false,'value'=>$my_fb_id[$my_fb_id]))?></div-->
+            </div> <p style="font: normal 17px/40px arial;color: #900">
+
+           </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
+            <?php  echo $this->Form->Submit(__('Claim you gift'), array('id'=>'form_shipping_submit'));?>
+            </div>      
+    </div>
+
         
     	<?php else: ?>
         <h3 class="camp_line-header" style="margin-top:40px">
@@ -74,8 +157,15 @@
     <img src="<?= FULL_BASE_URL; ?>/img/poke.png">
     	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
 
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#campaign').attr('disabled','disabled');
+
+            });
+
+        </script>
+
     <?php endif; ?>
-    <?php echo $my_fb_id; ?>
     <p style="text-decoration: blink; color:rgb(188, 22 ,27); text-shadow: 2px 2px #f7d7d7; font:bold 22px 'Courier New', Courier, monospace; margin-top:10px"> Sign Up NOW !!!</p>
     <div class="brandWrapper">
         <div class="brandRow1"   >
@@ -132,11 +222,8 @@
                     </div>
                <!-- </div>-->
            <div class="clear"></div>
-           
-       <!--</div>
-           <div> -->
-        <!--////////////////////////////////////////////// for other friends -->
-        <?php  echo $this->Form->create('gifts', array('action' => 'send_campaign','id'=>'campaign'));?>x
+
+
          <div class="delivery-details" style="float:left;margin-left:32px">
             
             <p style="font: normal 17px/40px arial;color: #900">
@@ -149,70 +236,18 @@
                     <div class="shadow-wrapper">
                         <div class="frame">
                             <div class="img-placeholder male">
-                            	<img src=<?= $photo_url; ?>>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
-                    <?php echo $Gift_info['Product']['min_value'] ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
-                    <?php echo $encrypted_id; ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
-                    <?php echo $Gift_info['Product']['vendor_id']; ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>$data['Reminder']['friend_name'] ))?></div>
-                    <?php echo $data['Reminder']['friend_name'] ?>
-                     <div class="error_message" id="error_text" style="display:none; margin-left:120px;">
-                        <h5 style="color:#FF0000">*please enter the message.</h5>
-                    </div>
-                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
-                    <?php echo $session_token ?>
-            </div> <p style="font: normal 17px/40px arial;color: #900">
-
-           </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
-            <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
-            </div>      
-    </div> 
-          
-          <!-- /////////////////////////for myself///////////////////////////// -->
-
-    <div class="my_delivery-details" style="float:left;margin-left:-450px;margin-top:-160px;display:none;">
-        <p style="font: normal 17px/40px arial;color: #900">
-            Step 2: Include a Message
-        </p>        
-                   <div class="delivery-message" style="margin-bottom:0px;">
-                    <div class="greeting-bubble">
-                        <?php echo $this->Form->textarea("gift-message" ,array('id'=>'text_message1','label' => false,'div' => false,'placeholder' => "Write something nice to ",'class'=>"gift-message" ))?>
-                    </div>
-                    <div class="shadow-wrapper">
-                        <div class="frame">
-                            <div class="img-placeholder male">
                                 <img src=<?= $photo_url; ?>>
                             </div>
                         </div>
                     </div>
                 
-                    <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
-                    <?php echo $Gift_info['Product']['min_value'] ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
-                    <?php echo $encrypted_id; ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>
-                    <?php echo $Gift_info['Product']['vendor_id']; ?>
-                    <div class="input email" ><?php echo $this->Form->hidden("reciever_name" ,array('label' => false,'div' => false,'value'=>'swaaaaa' ))?></div>
-                    <?php echo "swa" ?>
-                     <div class="error_message" id="error_text1" style="display:none; margin-left:120px;">
-                        <h5 style="color:#FF0000">*please enter the message.</h5>
-                    </div>
-                    <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token))?></div> 
-                    <?php echo $session_token ?>
-                    <!--div class="input email" ><?php echo $this->Form->hidden("chk2" ,array('label' => false,'div' => false,'value'=>$my_fb_id[$my_fb_id]))?></div-->
-            </div> <p style="font: normal 17px/40px arial;color: #900">
+                    </div> <p style="font: normal 17px/40px arial;color: #900">
 
            </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
-            <?php  echo $this->Form->Submit(__('Claim you gift'), array('id'=>'form_shipping_submit'));?>
+            <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
-    </div>
-
+    </div> 
+    
 
 
 
