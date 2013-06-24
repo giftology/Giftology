@@ -138,13 +138,13 @@
             <?php  echo $this->Form->Submit(__('Share the Joy'), array('id'=>'form_shipping'));?>
             </div>      
     </div>  
-
+    </div>
          
           
           <!-- /////////////////////////for myself///////////////////////////// -->
 
-    <div class="my_delivery-details" style="float:left;display:none;  margin-left: -510px;
-    margin-top: -150px;">
+    <div class="my_delivery-details" style="float:left;display:none;  margin-left: 35px;
+    margin-top: 0px;">
         <p style="font: normal 17px/40px arial;color: #900">
             Step 2: Include a Message
         </p>        
@@ -181,7 +181,7 @@
             </div>      
     </div>
 
-    </div>
+    
 
         
     	<?php else: ?>
