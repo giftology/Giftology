@@ -193,7 +193,7 @@
     	
 
          <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
-    <img src="<?= FULL_BASE_URL; ?>/img/poke.png"><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?first=".$encrypted_id."&&second=".$session_token))); ?>
+    <img src="<?= FULL_BASE_URL; ?>/img/poke.png"><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png','redirect' => array('controller'=>'products', 'action'=>'gift_login'."?encrypted_id=".$encrypted_id."&&session=".$session_token))); ?>
     <p class="blinkText"> Sign Up NOW !!!</p>
 
     <div class="brandWrapper">
