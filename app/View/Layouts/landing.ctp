@@ -22,6 +22,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 <?php echo $this->Facebook->html(); ?>
 <head>
   <!--Start of Zopim Live Chat Script-->
+    <?php if(ZOPIM):?>
       <script type="text/javascript">
       window.$zopim||(function(d,s){var z=$zopim=function(c){
       z._.push(c)},$=z.s=
@@ -30,6 +31,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       $.src='//cdn.zopim.com/?1DD7j1ZIoQJdph6paUzfvtjqsZ28C8jx';z.t=+new Date;$.
       type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
       </script>
+    <?php endif; ?>
   <!--End of Zopim Live Chat Script-->
   <!--<script src="//cdn.optimizely.com/js/182331063.js"></script>-->
   <?php echo $this->Html->charset(); ?>

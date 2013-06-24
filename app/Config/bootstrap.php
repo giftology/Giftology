@@ -280,8 +280,11 @@ define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 define('SOCIAL_LIKE',TRUE);
 define('FB_LIKE',TRUE);
 define('TWITTER_LIKE',FALSE);
-define('ANDROID_INSTALL',TRUE);
-define('GIFT_SENT',TRUE);
+define('ANDROID_INSTALL',FALSE);
+define('GIFT_SENT',FALSE);
+
+//Chat Plugin
+define('ZOPIM',FALSE);
 
 //REMINDER EMAIL CONTROL
 define('REMINDER_MAIL_SETTING', FALSE);
