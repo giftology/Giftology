@@ -162,7 +162,7 @@
                     </div>
                 
                     <div class="input email" ><?php echo $this->Form->hidden("contribution_amount" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['min_value'] ))?></div>
-                    <?php echo $Gift_info['Product']['min_value'] ?>
+                    
                     <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$encrypted_id ))?></div>
                     
                     <div class="input email" ><?php echo $this->Form->hidden("vendor_id" ,array('label' => false,'div' => false,'value'=>$Gift_info['Product']['vendor_id'] ))?></div>

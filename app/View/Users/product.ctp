@@ -6,18 +6,23 @@
       <a>
         
 <div class="small-voucher" id="<?php echo $product['Product']['encrypted_gift_id']; ?>">
-                    <span class="free  voucher">
-                            <span class="featured-frame"></span>
-                            <span class="selected-overlay"></span>
-                            <!--////////////////////////////////////////////////////////////////-->
+     <!--////////////////////////////////////////////////////////////////-->
                              <?php if(SHOW_HOVER): ?>
-                            <span id="trigger"><img class="trigger_tnc" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" style="float: right;margin-top: -1px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo $product['Product']['id'];?>"></span>
+                            <span id="trigger1"><img class="trigger_tnc1" src="<?=FULL_BASE_URL;?>/img/info.png" alt="" 
+
+style="float: right;margin-top: -1px;margin-right: -28px;position: relative;z-index: 10; height:43px;" name="<?php echo 
+
+$product['Product']['id'];?>"></span>
                             <?php  
                              if($product['Vendor']['short_description'] || $product['Product']['short_terms']): ?>
-                             <div id="<?php echo $product['Product']['id'];?>" class ="pop-up">
+                             <div id="<?php echo $product['Product']['id'];?>" class ="pop-up1">
                                 <?php if($product['Vendor']['short_description']): ?>
-                                <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted #333; padding:3px 0;font: normal 11px/20px Georgia;">
-                                    <p style="font: n$product['Vendor']['short_description']ormal 11px/20px Georgia, "Times New Roman", Times, serif;">
+                                <div style="width:240px;  position:relative;  text-align:justify; border-bottom:1px dotted 
+
+#333; padding:3px 0;font: normal 11px/20px Georgia;">
+                                    <p style="font: n$product['Vendor']['short_description']ormal 11px/20px Georgia, "Times 
+
+New Roman", Times, serif;">
                                         <?= strip_tags( $product['Vendor']['short_description'],'<p><span><ol><li>');?>
                                     </p>
                                 </div>
@@ -25,7 +30,9 @@
                               if($product['Product']['short_terms']):  
                             ?>
 
-                                <div style="width:240px;  position:relative;text-align:justify;  padding:3px 0;font: normal 11px/18px Georgia;">
+                                <div style="width:240px;  position:relative;text-align:justify;  padding:3px 0;font: normal 
+
+11px/18px Georgia;">
                                     <p style="font: normal 11px/18px Georgia, "Times New Roman", Times, serif;">
                                         <?= strip_tags($product['Product']['short_terms'],'<p><span><ol><li>'); ?>
                                     </p>
@@ -37,6 +44,10 @@
                             <?php endif; ?>
                             <?php endif; ?>
                             <!--//////////////////////////////////////////////-->
+                    <span class="free  voucher">
+                            <span class="featured-frame"></span>
+                            <span class="selected-overlay"></span>
+                           
                             <span class="image-container">
                                     <span class="image-frame"></span>
                                     <img src="<?= FULL_BASE_URL.'/'.$product['Vendor']['thumb_image']; ?>">						</span>
@@ -83,7 +94,7 @@
        
       }
       
-     div.pop-up {
+     div.pop-up1 {
 display: none;
 position: absolute;
 width: 240px;
@@ -114,11 +125,11 @@ margin-left:30px;
 <!--/////////////////////////////////////////////////////////-->
 
 
-     <script type="text/javascript">
+    <script type="text/javascript">
       $(function() {
-        var gift_value = $('.trigger_tnc').attr('name'); 
+        var gift_value = $('.trigger_tnc1').attr('name'); 
         //alert(gift_value );
-        $('.trigger_tnc').hover(function(e) {
+        $('.trigger_tnc1').hover(function(e) {
             var gift_value = this.name;            
             $('#'+gift_value).fadeIn(1000);           
             return false;
@@ -129,8 +140,8 @@ margin-left:30px;
             return false;
         });
         
-        $('.trigger_tnc').mousemove(function(e) {
-          $("div.pop-up").css('top', e.pageY -280 ).css('left', e.pageX+moveLeft);
+        $('.trigger_tnc1').mousemove(function(e) {
+          $("div.pop-up1").css('top', e.pageY -140 ).css('left', e.pageX+moveLeft);
         });
         
 
