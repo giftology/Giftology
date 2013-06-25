@@ -1217,15 +1217,9 @@ public function index() {
                          'receiver' => $receiver_name,
                          'vendor' => $vendor_name,
                          'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-                         'message' => $message,
                          'gift_id' => $gift_id,
-                         'value' => $gift['Gift']['gift_amount'],
-                         'address' => $value_shipping['UserAddress']['address1'],
-                         'city' => $value_shipping['UserAddress']['city'],
-                         'pincode' => $value_shipping['UserAddress']['pin_code'],
-                         'country' => $value_shipping['UserAddress']['country'],
-                         'time' => $gift['Gift']['created'],
-                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                         'value' => $gift['Gift']['gift_amount']
+                         ))
                 ->send();    
             
             }
@@ -1240,17 +1234,10 @@ public function index() {
                 ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
                 ->viewVars(array('sender' => $sender_name,
                          'receiver' => $receiver_name,
-                         'vendor' => $vendor_name,
-                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-                         'message' => $message,
                          'gift_id' => $gift_id,
                          'value' => $gift['Gift']['gift_amount'],
-                         'address' => $value_shipping['UserAddress']['address1'],
-                         'city' => $value_shipping['UserAddress']['city'],
-                         'pincode' => $value_shipping['UserAddress']['pin_code'],
-                         'country' => $value_shipping['UserAddress']['country'],
-                         'time' => $gift['Gift']['created'],
-                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                         'time' => $gift['Gift']['created']
+                         ))
                 ->send(); 
             }
             else

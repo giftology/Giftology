@@ -14,13 +14,13 @@
      
           <tr>
           <td >
-          <div  style="background:#FFF;padding:30px 0;">
+          <div  style="background:#FFF;padding:30px 0;"> 
           <div style="float:left; position:relative; padding:0 30px 0 0;">   
            <p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:0 10px 20px 50px;padding:0;color:#333; text-align: justify;" >
            Dear, <?= echo $sender; ?><br><br>
          
 
-Oops! We seem to be facing a bad with the payment for (<?= echo $receiver; ?>) Gift. Please click here to resume your gifting ...<br>
+Oops! We seem to be facing a bad with the payment for (<?= echo $receiver; ?>) Gift. Please click here to resume your gifting <a href="www.giftology.com"></a><br>
 If you still experience any further problem, please drop a query at <font color="#9f2027"> cs@giftology.com</font>.
 We' re committed to make your gifting experience easy and stress free.
 

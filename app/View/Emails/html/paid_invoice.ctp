@@ -15,23 +15,23 @@
           <tr>
           <td >
           <div  style="background:#FFF;padding:0 0;">
-          		
+              
 <table cellspacing="0" cellpadding="0" border="0">
 <tbody>
 <tr height="30" bgcolor="#900">
 <td style="font-family:Segoe UI,arial;font-weight:bold;color:#fff;font-size:14px;text-align:left;padding-left:10px">
-Dear #Sender name#,
+Dear <?= $sender; ?>,
 <span style="color:#ffffff">
 Your
 <span class="il">Order</span>
 ID :
-<a target="_blank" style="color:#d7d7d7" href="#">889884697</a>
+<a target="_blank" style="color:#d7d7d7" href="#"><?= $gift_id; ?></a>
 </span>
 </td>
-<td style="font-family:Segoe UI,arial;color:#fff;font-size:12px;text-align:right;padding-right:10px">
+<!--td style="font-family:Segoe UI,arial;color:#fff;font-size:12px;text-align:right;padding-right:10px">
 <span class="il">Order</span>
 Placed on : 2013-02-24 20:16:41
-</td>
+</td-->
 </tr>
 <tr height="30" bgcolor="#f0eded">
 <td style="padding-left:10px;font-size:14px;font-family:Segoe UI,arial" colspan="2">
@@ -54,9 +54,9 @@ Details :
 <td width="60" valign="top" style="border:1px solid #e6e6e6">
 <center> Quantity </center>
 </td>
-<td width="113" valign="top" style="border:1px solid #e6e6e6">
+<!--td width="113" valign="top" style="border:1px solid #e6e6e6">
 <center> Estimated Dispatch Date </center>
-</td>
+</td-->
 <td width="75" valign="top" style="border:1px solid #e6e6e6">
 <center> Price </center>
 </td>
@@ -70,7 +70,7 @@ Details :
 <tbody>
 <tr>
 <td valign="top" style="font-size:12px;font-family:Segoe UI,arial">
-UCB Sports Men&Women - Red and White 150ml Each
+<?= $vendor; ?>
 <br>
 </td>
 </tr>
@@ -85,7 +85,7 @@ UCB Sports Men&Women - Red and White 150ml Each
 <tbody>
 <tr width="100%">
 <td width="100%" valign="top" style="border-top:none;font-size:12px;padding:10px">
-<center>1194397140</center>
+<center><?= $gift_id; ?></center>
 </td>
 </tr>
 <tr> </tr>
@@ -95,16 +95,16 @@ UCB Sports Men&Women - Red and White 150ml Each
 <td width="60" valign="top" style="border:1px solid #e6e6e6;font-family:Segoe UI,arial">
 <center> 1 </center>
 </td>
-<td width="113" valign="top" style="border:1px solid #e6e6e6">
+<!--td width="113" valign="top" style="border:1px solid #e6e6e6">
 <center>
 On or Before
 <br>
 Mar 01, 2013
 <br>
 </center>
-</td>
+</td-->
 <td width="75" valign="top" style="border:1px solid #e6e6e6">
-<center> 478 </center>
+<center> <?= $value; ?></center>
 </td>
 </tr>
 </tbody>
@@ -125,7 +125,7 @@ Mar 01, 2013
 <strong>Total Amount :</strong>
 </td>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">
-<strong>Rs. 478</strong>
+<strong>Rs. <?= $value; ?></strong>
 </td>
 </tr>
 <tr>
@@ -133,16 +133,16 @@ Mar 01, 2013
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">0 </td>
 </tr>
 
-<tr>
+<!--tr>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">Shipping Charges :</td>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial"> 0</td>
-</tr>
+</tr-->
 <tr>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">
 <strong> Paid Amount :</strong>
 </td>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">
-<strong>Rs. 478</strong>
+<strong>Rs. <?= $value; ?></strong>
 </td>
 </tr>
 </tbody>
@@ -159,7 +159,7 @@ Mar 01, 2013
 <tbody>
 <tr>
 <td style="font-family:Segoe UI,arial;color:#900;font-size:12px">
-<strong>Note: Post shipment, the delivery of your item(s) will take anywhere between 1 to 3 working days depending on the location being served.</strong>
+<!--strong>Note: Post shipment, the delivery of your item(s) will take anywhere between 1 to 3 working days depending on the location being served.</strong-->
 </td>
 </tr>
 </tbody>
@@ -172,7 +172,7 @@ Mar 01, 2013
 
           </div>
           </td>
-       	  </tr>
+          </tr>
        
       </table>
    
@@ -184,8 +184,8 @@ Mar 01, 2013
         <td><p style="text-align:center;color:#666;font: normal 13px/22px Georgia, 'Times New Roman', Times, serif;">Please do not reply to this message - it was sent from an unmonitored email address.<br>
             This message is a service email related to your account.<br>
             For any support or questions, please mail us at cs@giftology.com</p>
-          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;" ><a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;" > update subscription preferences</a> | <a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;">unsubscribe from this list</a></p>
-          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;">giftology.com • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010</p></td>
+          <!--p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;" ><a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;" > update subscription preferences</a> | <a href="javascript:void(0);" style="text-decoration:underline;cursor: pointer;color:#666;">unsubscribe from this list</a></p>
+          <p style="text-align:center;color:#666;display: block;font: normal 12px/22px Georgia, 'Times New Roman', Times, serif;">giftology.com • NR-27, crossroad complex • DLF Phase 3 • gurgaon 122010</p--></td>
       </tr>
     </table>
   </div>
