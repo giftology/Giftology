@@ -3256,6 +3256,7 @@ display:inline;
 
 }
 
+
 /*accordian*/
 
 .haccordion{padding: 0;}
@@ -3270,3 +3271,61 @@ display:inline;
 #hc3 li{margin:0;}
 #hc3 li .hpanel{padding: 1px;background: #f2f2f2;cursor: hand;cursor: pointer; height:370px;}
 
+
+
+.benefitText{width:300px; 
+    float:left; 
+    background:url('/img/textbox_background.gif'); 
+    background-repeat:no-repeat;
+    margin-top:8px; 
+    color:white;
+    font:16px/35px Tahoma, Geneva, sans-serif; 
+    text-align:left}
+
+.textPad{text-align: left;padding-left: 10px;}
+.brandWrapper{width:400px;  height:auto;  float: left;
+margin: 30px 0;}
+.brandRow1{height:60px; margin:0}
+.brandRow2{width:60px; float:left;}
+
+.blinkText{text-decoration: blink; color:rgb(170, 17 ,44);
+ text-shadow: 2px 2px #f7d7d7;
+ font:bold 22px 'Courier New', Courier, monospace; margin-top:10px}
+
+ #myself{ 
+   
+     background: url("/img/whitebutton.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #000000;
+    display: inline;
+    float: left;
+    font: bold 16px/42px helvetica;
+    height: 40px;
+    text-align: center;
+    width: 133px; }
+
+     #myself:hover{ 
+   
+    background: url("/img/redbutton.png") no-repeat scroll 0 0 transparent;
+    color: #fff;
+     }
+
+
+#others{
+    background: url("/img/whitebutton.png") no-repeat scroll 0 0 transparent;
+    
+    border: medium none;
+    color: #000;
+    display: inline;
+   
+    font: bold 16px/42px helvetica;
+    height: 40px;
+    text-align: center;
+    width: 133px;   
+}
+
+#others:hover{ 
+   
+    background: url("/img/redbutton.png") no-repeat scroll 0 0 transparent;
+    color: #fff;
+     }

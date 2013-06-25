@@ -578,7 +578,7 @@ public function isMobile_app() {
             }
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2 ),'limit'=>6));
             foreach($product as $k => $p){
                 $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
             }
@@ -727,7 +727,7 @@ public function isMobile_app() {
     {
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2)));
         foreach($product as $k => $p){
             $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
         }
@@ -1247,7 +1247,7 @@ public function isMobile_app() {
     function defaulters_list($user_id) {
         $defaulter = FALSE;
 
-        $defaulter_exists = $this->User->find('count', array('conditions' => array('id' => $user_id, 'defaulter' => 1)));
+         $defaulter_exists = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'defaulter' => 1)));
         if($defaulter_exists) $defaulter = TRUE;
         return $defaulter;
     }
