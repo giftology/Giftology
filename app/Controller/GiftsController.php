@@ -1093,8 +1093,8 @@ public function index() {
 
 	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null, $failed_transaction = null ) {
        $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
-		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
-        $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
+		$product_type = $this->Gift->Product->find('first', array('conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
+        //$product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
 
 		if (isset($this->request->params['named']['receiver_fb_id'])) 
 		{
@@ -1168,14 +1168,14 @@ public function index() {
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}*/
            
-		if ($receiver_email && $receiver_birthday==date("Y-m-d") && !$product_type['ProductType']['type']=='SHIPPED' && $failed_transaction != 1) 
+		if ($receiver_email && $receiver_birthday==date("Y-m-d") && $product_type['Product']['min_price']==0 && $product_type['Product']['max_price']==0 && $failed_transaction != 1) 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 		else if ($receiver_email)
 		 {	
 		 	
-            if($product_type['ProductType']['type']=='SHIPPED' && $failed_transaction != 1)
+            if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1)
             {   
                 $gift = $this->Gift->find('first', array(
                 'conditions' => array('Gift.id' => $gift_id),
@@ -1203,6 +1203,54 @@ public function index() {
                          'time' => $gift['Gift']['created'],
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send();    
+            }
+            else if ($product_type['Product']['product_type_id']==DIGITAL && $product_type['Product']['min_price']!=0 && $product_type['Product']['max_price']!=0 && $failed_transaction != 1) {
+                $email = new CakeEmail();
+                $email->config('smtp')
+                ->template('paid_invoice', 'default') 
+                ->emailFormat('html')
+                ->to($receiver_email)
+                ->from(array($sender_email => $sender_name))
+                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->viewVars(array('sender' => $sender_name,
+                         'receiver' => $receiver_name,
+                         'vendor' => $vendor_name,
+                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+                         'message' => $message,
+                         'gift_id' => $gift_id,
+                         'value' => $gift['Gift']['gift_amount'],
+                         'address' => $value_shipping['UserAddress']['address1'],
+                         'city' => $value_shipping['UserAddress']['city'],
+                         'pincode' => $value_shipping['UserAddress']['pin_code'],
+                         'country' => $value_shipping['UserAddress']['country'],
+                         'time' => $gift['Gift']['created'],
+                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                ->send();    
+            
+            }
+            else if($failed_transaction == 1)
+            {
+                $email = new CakeEmail();
+                $email->config('smtp')
+                ->template('transaction_failed', 'default') 
+                ->emailFormat('html')
+                ->to($receiver_email)
+                ->from(array($sender_email => $sender_name))
+                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->viewVars(array('sender' => $sender_name,
+                         'receiver' => $receiver_name,
+                         'vendor' => $vendor_name,
+                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+                         'message' => $message,
+                         'gift_id' => $gift_id,
+                         'value' => $gift['Gift']['gift_amount'],
+                         'address' => $value_shipping['UserAddress']['address1'],
+                         'city' => $value_shipping['UserAddress']['city'],
+                         'pincode' => $value_shipping['UserAddress']['pin_code'],
+                         'country' => $value_shipping['UserAddress']['country'],
+                         'time' => $gift['Gift']['created'],
+                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                ->send(); 
             }
             else
             {
