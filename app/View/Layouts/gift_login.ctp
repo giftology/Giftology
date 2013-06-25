@@ -28,10 +28,19 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
+		//echo $this->Minify->css('http://cdn.webrupee.com/font');
+		//echo $this->Minify->css('style');
 		echo $this->Minify->css(array('font','style'));
-		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','gift_landing'));
+		//echo $this->Minify->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js','https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js'));
+		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+		//echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
+		//echo $this->Minify->script('giftology');
+		//echo $this->Minify->script('jquery.ias.min');		
+		echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
+				//echo $this->Html->css('main');
+
 		echo $this->fetch('script');
 	?>
 </head>
