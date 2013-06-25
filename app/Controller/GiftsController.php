@@ -1174,14 +1174,15 @@ public function index() {
 			}
 		else if ($receiver_email)
 		 {	
-		 	
-            if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1)
-            {   
-                $gift = $this->Gift->find('first', array(
+		 	$gift = $this->Gift->find('first', array(
                 'conditions' => array('Gift.id' => $gift_id),
                 'contain' => array(
                     'Product' => array('Vendor'))));
                 $vendor_name = $gift['Product']['Vendor']['name'];
+            
+            if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1)
+            {   
+                
                  $email = new CakeEmail();
                 $email->config('smtp')
                 ->template('shipping_invoice', 'default') 
