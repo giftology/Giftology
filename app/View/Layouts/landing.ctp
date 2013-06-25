@@ -168,7 +168,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank" style="color:#000"> Download app</a>
+        <a href="http://bit.ly/Giftologyapp" target="_blank" style="color:#000"> Download app</a>
          
         </div>
         </li>
