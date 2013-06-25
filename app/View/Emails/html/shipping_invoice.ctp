@@ -97,9 +97,9 @@ Details :
 </td>
 <td width="113" valign="top" style="border:1px solid #e6e6e6">
 <center>
-On or Before
+with in 3-4
 <br>
-Mar 01, 2013
+ working days
 <br>
 </center>
 </td>
@@ -174,7 +174,7 @@ Mar 01, 2013
 <tbody>
 <tr>
 <td style="font-family:Segoe UI,arial;color:#900;font-size:12px">
-<strong>Note: Post shipment, the delivery of your item(s) will take anywhere between 1 to 3 working days depending on the location being served.</strong>
+<strong>. Note: Our partners will delivery of your item(s) within 1 to 5 working days (or as promised) depending on the location being served. We rely on our partners to fulfil these orders.</strong>
 </td>
 </tr>
 </tbody>
