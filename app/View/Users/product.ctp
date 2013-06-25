@@ -1,6 +1,6 @@
 
 <div style="margin:50px 0 0 -50px;">
-    <?php echo $this->Form->create('products', array('controller' => 'products','action' => 'gift_login')); ?>
+    <?php echo $this->Form->create('products', array('controller' => 'products','action' => 'login_after_gift_selection')); ?>
 
 <?php foreach ($products as $product): ?>
       <a>
@@ -162,8 +162,8 @@ margin-left:30px;
                     id: gift_value+'_hidden',
                     name: 'gift_id',
                     value: gift_value,
-                }).appendTo('#productsGiftLoginForm');
-                  $("#productsGiftLoginForm").submit() 
+                }).appendTo('#productsLoginAfterGiftSelectionForm');
+                  $("#productsLoginAfterGiftSelectionForm").submit() 
             });
 
       });

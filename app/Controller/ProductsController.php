@@ -37,7 +37,7 @@ class ProductsController extends AppController {
     public $components = array('AesCrypt','Search.Prg');
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('send_product_expiry_reminder','gift_login');
+        $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
     }
 
     public function isAuthorized($user) {
@@ -849,7 +849,7 @@ public function download_user_csv_all($download_selected = null){
         $this->autoRender = $this->autoLayout = false;
         exit;
     }
-    public function gift_login()
+    public function login_after_gift_selection()
     {
         if($this->request->is('post')){
             if($this->Connect->user() && $this->Auth->User('id'))
@@ -859,9 +859,11 @@ public function download_user_csv_all($download_selected = null){
                 $this->set('my_fb_id',$this->Auth->User('facebook_id'));
 
                 $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                $friend_list=$this->Reminder->find('all', 
-                array('conditions' => array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)
-                    ));
+                $friend_list= $this->Reminder->find('all',
+                    array('limit'=>20,
+                'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
+                'order' => array('RAND()')
+                ));
                 if(isset($friend_list) && !empty($friend_list)){
                     $this->set('friends_data',$friend_list);
 
@@ -874,7 +876,7 @@ public function download_user_csv_all($download_selected = null){
 
             }
             $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
-             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+            $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
             $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
             if(!$gift_detailes){
@@ -890,10 +892,11 @@ public function download_user_csv_all($download_selected = null){
 
               
 
-        }
-        if(isset($_GET['encrypted_id']) && isset($_GET['session']))
+        }   // token for encryptedgiftid 
+            //token_first for session
+        if(isset($_GET['token']) && isset($_GET['token_first']))
         {
-            $session_time=$this->AesCrypt->decrypt($_GET['session']);
+            $session_time=$this->AesCrypt->decrypt($_GET['token_first']);
             $green =$this->Session->read('session_time');
             if($session_time != $green){
                 $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
@@ -906,8 +909,8 @@ public function download_user_csv_all($download_selected = null){
                 $this->set('my_fb_id',$this->Auth->User('facebook_id'));
 
                 $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                $friend_list= $this->Reminder->find('all', 
-            array('limit'=>20,
+                $friend_list= $this->Reminder->find('all',
+                    array('limit'=>20,
                 'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
                 'order' => array('RAND()')
                 ));
@@ -922,7 +925,7 @@ public function download_user_csv_all($download_selected = null){
                 //$this->set('friends_data',$friend_list);
 
             }
-            $gift_id = $this->AesCrypt->decrypt($_GET['encrypted_id']);
+            $gift_id = $this->AesCrypt->decrypt($_GET['token']);
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
             $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
@@ -932,7 +935,7 @@ public function download_user_csv_all($download_selected = null){
             }
 
             $this->set('Gift_info',$gift_detailes);
-            $this->set('encrypted_id',$_GET['encrypted_id']);
+            $this->set('encrypted_id',$_GET['token']);
 
             $t=time();
             $session_time=$this->Session->write('session_time', $t);
