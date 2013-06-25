@@ -283,6 +283,8 @@ define('TWITTER_LIKE',TRUE);
 define('ANDROID_INSTALL',TRUE);
 define('GIFT_SENT',TRUE);
 
+define('ENABLE_LOGIN_AFTER_GIFT_SELECTION',TRUE);
+
 //Chat Plugin
 define('ZOPIM',FALSE);
 
