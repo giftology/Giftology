@@ -63,7 +63,7 @@ html, body {
 	position:relative;
 }
 .logo {
-	margin:40px 0 5px 0;
+	margin:10px 0 30px 0;
 	text-align:center;
 }
 
@@ -87,7 +87,7 @@ h3 {
 }
 
 .home-content {width:240px; margin:0px auto -30px auto; text-align:center;}
-.h {  height:150px;}
+.h {  height:150px; color: #FFFFFF}
 
 p {margin:0!important}
 .filter-btn, .back-btn {float:left; margin:5px 0 5px 5px}
