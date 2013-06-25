@@ -3278,22 +3278,18 @@ margin: 30px 0;}
 
  #myself{ 
    
-    background: url("/img/button1.png") no-repeat scroll 0 0 transparent;
-    border: medium none;
+    
+    
     display: inline;
     float: left;
     height: 50px;
     width: 125px;  }
 
-     #myself :hover{ 
-   
-    background: url("/img/button2.png") no-repeat scroll 0 0 transparent;
-     }
-
+    
 
 #others{
-    background: url("/img/button1.png") no-repeat scroll 0 0 transparent;
-    border: medium none;
+   
+    
     display: inline;
     
     height: 50px;

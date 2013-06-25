@@ -35,8 +35,11 @@
         <?php if($user): ?>
 
         <div style="margin-top:80px">
-            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
-            <button id="others"> Others </button>
+           <span id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/myself_r.png"  /></span>
+
+              <span id="others"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/others_w.png"  /></span> 
+
+
         </div>
         <h3 class="camp_line-header">
          <p style="font: normal 17px/40px arial;color: #900"></p>
@@ -304,6 +307,22 @@
     <script type="text/javascript">
 
       $(document).ready(function(){
+
+
+
+$('#myself').hover(function(e) {
+            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/myself_w.png");
+               $("#others").find("img").attr("src", "<?php echo IMAGE_ROOT;?>others_w.png");         
+            return false;
+          
+        }, function() {
+            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/myself_r.png");
+               $("#others").find("img").attr("src", "<?php echo IMAGE_ROOT;?>others_w.png");  
+            return false;
+        });
+
+
+
         $("#form_shipping_submit").click(function(){
          //$("#campaign").remove();
             if($("#text_message1").val().length == 0){
