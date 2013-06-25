@@ -130,13 +130,13 @@ collapsecurrent: true //<- No comma following very last setting!
 
           <?php if(FB_LIKE): ?>
         <li style="border-right-width:0">
-         <div class="hpanel" style="padding:10px; width:150px" >
+         <div class="hpanel" style="padding:9px; width:115px" >
         <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
 
          <!--<div class="fb-like"><?php echo $this->Facebook->like(array('href' => "https://www.facebook.com/GiftologyIndiaa?fref=ts"));?></div>-->
 
        
-         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="115" data-show-faces="false"></div>
 
 
             <div id="fb-root"></div>
@@ -155,7 +155,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <?php endif; ?>
           <?php if(TWITTER_LIKE): ?>
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:150px">
+        <div class="hpanel" style="padding:9px; width:145px">
         <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
         <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -164,7 +164,7 @@ collapsecurrent: true //<- No comma following very last setting!
          <?php endif; ?>
         <?php if(ANDROID_INSTALL): ?>
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:10px; width:150px">
+        <div class="hpanel" style="padding:10px; width:140px">
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
