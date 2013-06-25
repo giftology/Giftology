@@ -124,19 +124,19 @@ collapsecurrent: true //<- No comma following very last setting!
 
      <div class="strip" >
 
-        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:14px/6px Arial, Helvetica, sans-serif;">
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:12px/6px Arial, Helvetica, sans-serif;">
 
         <ul>
 
           <?php if(FB_LIKE): ?>
         <li style="border-right-width:0">
-         <div class="hpanel" style="padding:9px; width:115px" >
-        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
+         <div class="hpanel" style="padding:8px; width:130px" >
+        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb" style="margin-right:12px"/>
 
          <!--<div class="fb-like"><?php echo $this->Facebook->like(array('href' => "https://www.facebook.com/GiftologyIndiaa?fref=ts"));?></div>-->
 
        
-         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="115" data-show-faces="false"></div>
+         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
 
 
             <div id="fb-root"></div>
@@ -155,8 +155,8 @@ collapsecurrent: true //<- No comma following very last setting!
         <?php endif; ?>
           <?php if(TWITTER_LIKE): ?>
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:9px; width:145px">
-        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
+        <div class="hpanel" style="padding:8px; width:156px">
+        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw" style="margin-right:12px"/>
         <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
@@ -168,7 +168,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download app</a>
+        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank" style="color:#000"> Download app</a>
          
         </div>
         </li>
@@ -179,7 +179,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
         </div>
-         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px; color:#900; text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
+         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px;  text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
           
         </div>
         </li>
@@ -592,7 +592,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
   </script>-->
 <?php endif ?>
 <style type="text/css">
-.fb_ltr{padding-top: 10px;}
+.fb_ltr{padding-top: 7px;}
 
 </style>
 </body></html>
