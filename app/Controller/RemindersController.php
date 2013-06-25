@@ -260,7 +260,7 @@ class RemindersController extends AppController {
 		    }
 
 		    if(defined('GIFT_CLAIM')){
-		    	if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && GIFT_CLAIM){
+		    	if((GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE || GIFT_REDEEM_WITH_TEMP_GIFT_CODE) && GIFT_CLAIM){
 			    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
 				    if(isset($gift_claimable) && !empty($gift_claimable)){
 				    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
