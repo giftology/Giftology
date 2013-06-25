@@ -18,7 +18,7 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header" >Celebrate your friends  with  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
+                <h5 class="line-header" >Celebrate your friends  with a(n)  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
                           <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Product']['terms_heading'] ?></div>
 
             </div>
@@ -201,8 +201,8 @@
         <div class="brandRow2">
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
-        <div class="benefitText">
-        <p>You can Gift Yourself.</p>
+        <div class="benefitText textPad">
+        <p>You can Gift Yourself</p>
         </div>
         </div>
 
@@ -210,8 +210,8 @@
         <div class="brandRow2">
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
-        <div class="benefitText">
-        <p>You can get Birthday Reminders.</p>
+        <div class="benefitText textPad">
+        <p>You can get Birthday Reminders</p>
         </div>
         </div>
 
@@ -220,7 +220,7 @@
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
         <div class="benefitText textPad" >
-        <p>Access to new Hot Gifts every week.</p>
+        <p>Access to new Hot Gifts every week</p>
         </div>
         </div>
 
