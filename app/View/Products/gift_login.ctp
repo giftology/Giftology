@@ -18,7 +18,7 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header" >Celebrate your friends  with a(n)  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
+                <h5 class="line-header" >Celebrate your friends  with this  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
                           <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Product']['terms_heading'] ?></div>
 
             </div>
