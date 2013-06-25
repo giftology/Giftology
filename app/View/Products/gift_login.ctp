@@ -351,9 +351,18 @@
                     
                 }
                 if($("#text_message").val().length != 0){
+                    
+                var a = $('input[name="chk1[]"]:checked').length == 0;
+                if(a)
+                {
+                    alert("please select friend to send Gift");
+                    return false;
+                }else{
+                    $(this).parents('form').submit();
                     $(this).attr('disabled','disabled');
-                     $(this).parents('form').submit();    
-                }           
+                }
+                         
+             }           
                 else $(this).removeAttr('disabled');
             });
         });
