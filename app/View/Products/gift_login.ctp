@@ -18,7 +18,7 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header" >Celebrate your friends  with a Rs. <?=$Gift_info['Product']['min_value'] ?> voucher </h5>
+                <h5 class="line-header" >Celebrate your friends  with  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
                           <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Product']['terms_heading'] ?></div>
 
             </div>
@@ -35,11 +35,8 @@
         <?php if($user): ?>
 
         <div style="margin-top:80px">
-           <span id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/myself_r.png"  /></span>
-
-              <span id="others"> <img title=""   src="<?= FULL_BASE_URL; ?>/img/others_w.png"  /></span> 
-
-
+            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+            <button id="others"> My Friends </button>
         </div>
         <h3 class="camp_line-header">
          <p style="font: normal 17px/40px arial;color: #900"></p>
@@ -181,7 +178,7 @@
             </div> <p style="font: normal 17px/40px arial;color: #900">
 
            </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
-            <?php  echo $this->Form->Submit(__('Claim you gift'), array('id'=>'form_shipping_submit'));?>
+            <?php  echo $this->Form->Submit(__('Claim My gift'), array('id'=>'form_shipping_submit'));?>
             </div>      
     </div>
 
@@ -190,7 +187,7 @@
         
     	<?php else: ?>
         <h3 class="camp_line-header" style="margin-top:40px">
-         <p style="font: normal 17px/40px arial;color: #900"> Step1: Choose Friends</p>
+         <p style="font: normal 17px/40px arial;color: #900"> Step1: Choose a Friend to Gift</p>
         </h3>
        
     	
@@ -205,7 +202,7 @@
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
         <div class="benefitText">
-        <p>You can gift yourself.</p>
+        <p>You can Gift Yourself.</p>
         </div>
         </div>
 
@@ -214,7 +211,7 @@
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
         <div class="benefitText">
-        <p>You can gift Birthday reminders.</p>
+        <p>You can get Birthday Reminders.</p>
         </div>
         </div>
 
@@ -223,7 +220,7 @@
         <img src="<?= FULL_BASE_URL; ?>/img/checkbox.png" />
         </div>
         <div class="benefitText textPad" >
-        <p>Access to New Hot Gifts every week.</p>
+        <p>Access to new Hot Gifts every week.</p>
         </div>
         </div>
 
@@ -307,22 +304,6 @@
     <script type="text/javascript">
 
       $(document).ready(function(){
-
-
-
-$('#myself').hover(function(e) {
-            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/myself_w.png");
-               $("#others").find("img").attr("src", "<?php echo IMAGE_ROOT;?>others_w.png");         
-            return false;
-          
-        }, function() {
-            $(this).find("img").attr("src", "<?php echo FULL_BASE_URL;?>/img/myself_r.png");
-               $("#others").find("img").attr("src", "<?php echo IMAGE_ROOT;?>others_w.png");  
-            return false;
-        });
-
-
-
         $("#form_shipping_submit").click(function(){
          //$("#campaign").remove();
             if($("#text_message1").val().length == 0){
@@ -438,6 +419,8 @@ $('#myself').hover(function(e) {
 
     $(document).ready(function(){
         $('#myself').click(function() {
+            $('#myself').css('background','url("/img/redbutton.png")').css( 'color','#fff');
+            $('#others').css('background','url("/img/whitebutton.png")').css('color','#000');
            //var facebook_id = $(this).attr('my_facebook_id');
           // alert(facebook_id);
           var a = $('input[name="chk1[]"]:checked').length > 0;
@@ -464,8 +447,17 @@ $('#myself').hover(function(e) {
             $('#searc_campaign').show();
             $('#pra').show();
             $('.delivery-details').show();
+            $('#others').css('background','url("/img/redbutton.png")').css('color','#fff');
+
+            $('#myself').css('background','url("/img/whitebutton.png")').css('color','#000');
+            'color','#fff'
+           
+           
             
         })
+
+       
+
 
        /* $('#friend_search').click(function() {
         // interrupt form submission
