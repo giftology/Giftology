@@ -269,9 +269,8 @@ class RemindersController extends AppController {
 				    	$this->reminder_view_friends($type);
 				    	$this->set('user_id',$this->Auth->User('id'));
 				    }	
-			    }
-			    
-			    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && !GIFT_CLAIM){
+			    } 
+			    else if((GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && !GIFT_CLAIM) || ((!GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE || !IFT_REDEEM_WITH_TEMP_GIFT_CODE) && GIFT_CLAIMS)){
 			    	$this->reminder_view_friends($type);
 				    $this->set('user_id',$this->Auth->User('id'));	
 			    }	
