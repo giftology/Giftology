@@ -583,6 +583,10 @@ public function isMobile_app() {
                 $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
             }
             $this->set('products', $product);
+            $aaa = $this->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
+           
+            $this->set('num_gifts_sent', $aaa);
+
 
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {

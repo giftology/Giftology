@@ -281,7 +281,7 @@ define('SOCIAL_LIKE',TRUE);
 define('FB_LIKE',FALSE);
 define('TWITTER_LIKE',TRUE);
 define('ANDROID_INSTALL',TRUE);
-define('GIFT_SENT',FALSE);
+define('GIFT_SENT',TRUE);
 
 //Chat Plugin
 define('ZOPIM',FALSE);
