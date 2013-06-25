@@ -178,7 +178,7 @@
             </div> <p style="font: normal 17px/40px arial;color: #900">
 
            </p> <div class="parent_submit" style="margin: 21px 0 0 92px;" >
-            <?php  echo $this->Form->Submit(__('Claim My gift'), array('id'=>'form_shipping_submit'));?>
+            <?php  echo $this->Form->Submit(__('Claim My Gift'), array('id'=>'form_shipping_submit'));?>
             </div>      
     </div>
 
