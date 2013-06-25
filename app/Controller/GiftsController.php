@@ -1091,7 +1091,7 @@ public function index() {
 		    $gift_id.'&utm_content='.$content;
 	}
 
-	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
+	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null, $failed_transaction = null ) {
        $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
 		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
@@ -1168,14 +1168,14 @@ public function index() {
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}*/
            
-		if ($receiver_email && $receiver_birthday==date("Y-m-d")) 
+		if ($receiver_email && $receiver_birthday==date("Y-m-d") && !$product_type['ProductType']['type']=='SHIPPED' && $failed_transaction != 1) 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 		else if ($receiver_email)
 		 {	
 		 	
-            if($product_type['ProductType']['type']=='SHIPPED')
+            if($product_type['ProductType']['type']=='SHIPPED' && $failed_transaction != 1)
             {   
                 $gift = $this->Gift->find('first', array(
                 'conditions' => array('Gift.id' => $gift_id),
@@ -1807,22 +1807,24 @@ public function index() {
 		}
 		else if($Checksum=="true" && $AuthDesc=="B")
 		{
+            $this->informSenderReceipientOfGiftSent($Order_Id, null, null ,1);
 			$this->Session->setFlash(__('Your transaction seems to be taking too long to complete.  Try with another card ?'));
-            $this->Unsuccessfulltransaction($Order_Id);
-			$this->redirect(array(
+            $this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
 
 		}
 		else if($Checksum=="true" && $AuthDesc=="N")
-		{			
+		{	
+            $this->informSenderReceipientOfGiftSent($Order_Id, null, null ,1);	
 			$this->Session->setFlash(__('Ouch! Your transaction failed. Maybe a typing error ? Try again ? '));
-			$this->redirect(array(
+            $this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
 		}
 		else
-		{
+		{ 
+            $this->informSenderReceipientOfGiftSent($Order_Id, null, null ,1);
 			echo "<br>Security Error. Illegal access detected";
 			
 			//Here you need to simply ignore this and dont need
