@@ -723,7 +723,7 @@ public function isMobile_android() {
     {
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2)));
         foreach($product as $k => $p){
             $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
         }
