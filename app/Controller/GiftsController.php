@@ -39,7 +39,7 @@ class GiftsController extends AppController {
     }
 
 	public function isAuthorized($user) {
-	    if (($this->action == 'send') || ($this->action == 'redeem') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
+	    if (($this->action == 'send') || ($this->action == 'redeem')|| ($this->action == 'Unsuccessfulltransaction') || ($this->action == 'redeemgift') || ($this->action == 'view_gifts')
 		|| ($this->action == 'tx_callback') || ($this->action == 'send_today_scheduled_gifts') || ($this->action == 'print_pdf') || ($this->action == 'sent_gifts')|| ($this->action == 'sms')|| ($this->action == 'send_sms')|| ($this->action == 'send_campaign')||($this->action == 'email_voucher')||($this->action == 'send_voucher_email') ||($this->action == 'fetch_code') ||($this->action == 'offline_voucher_redeem_page') ||($this->action == 'error_page') ||($this->action == 'claim')) {
 	        return true;
 	    }
@@ -1777,7 +1777,7 @@ public function index() {
             $gift = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$Order_Id)));
             $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
 			$phone = $value_shipping['UserAddress']['phone'];
-            $message = ;
+            //$message = ;
             $value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$phone."&msg=".urlencode($message)."&send=Way2mint&d");
             /* code for sms ends here */
 			// Inform 
@@ -1791,6 +1791,7 @@ public function index() {
 		else if($Checksum=="true" && $AuthDesc=="B")
 		{
 			$this->Session->setFlash(__('Your transaction seems to be taking too long to complete.  Try with another card ?'));
+            $this->Unsuccessfulltransaction($Order_Id);
 			$this->redirect(array(
 				'controller' => 'reminders', 'action'=>'view_friends'));
 			// NS TODO need to make this go back to the gifts page, but need params passed in for that		
@@ -2351,5 +2352,47 @@ public function index() {
     		}
     	}
     	return $e;
+    }
+
+    public function Unsuccessfulltransaction($gift_id){
+        $gift_id= 3090 ;
+
+
+            $gift = $this->Gift->find('first', array('conditions' => array ('Gift.id' => $gift_id),
+                    'contain' => array('Sender' => array('UserProfile')))); // Use $gift for message, not named params, because this can be called after CCAv callback as well XX NS
+            $receiver_fb_id = $gift['Gift']['receiver_fb_id'];
+            $receiver_email = $gift['Gift']['receiver_email'];
+            $ret = $this->Gift->query("SELECT friend_name from reminders where friend_fb_id =".$gift['Gift']['receiver_fb_id']);
+            $receiver_name = $ret[0]['reminders']['friend_name'];
+
+            $receiver_info = $this->Gift->Reminder->find('all',array('conditions' => array('Reminder.friend_name' => $receiver_name)));
+            //$receiver_birthday=isset($receiver_info['0']['Reminder']['friend_birthday']) ? $receiver_info['0']['Reminder']['friend_birthday'] : NULL;
+
+            $receiver_id = $this->Gift->User->find('first',array('conditions' => array('User.facebook_id' => $receiver_fb_id)));
+            $idd=$receiver_id['User']['id'];
+
+            $User_id = $this->UserProfile->find('first',array('conditions' => array('UserProfile.user_id' => $idd)));
+    
+            $sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
+            $sender_email = $gift['Sender']['UserProfile']['email'];
+            $sender_fb_id = $gift['Sender']['facebook_id'];
+
+
+            $email = new CakeEmail();
+                $email->config('smtp')
+                ->template('transaction_failed', 'default') 
+                ->emailFormat('html')
+                ->to($receiver_email)
+                ->from(array($sender_email => $sender_name))
+                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->viewVars(array('sender' => $sender_name,
+                         'receiver' => $receiver_name,
+                         'vendor' => $vendor_name,
+                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+                         'gift_id' => $gift_id,
+                         'value' => $gift['Gift']['gift_amount']))
+                ->send();
+                echo"swapnil";
+                die();
     }
 }
