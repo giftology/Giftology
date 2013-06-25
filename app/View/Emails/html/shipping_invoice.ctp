@@ -20,17 +20,17 @@
 <tbody>
 <tr height="30" bgcolor="#900">
 <td style="font-family:Segoe UI,arial;font-weight:bold;color:#fff;font-size:14px;text-align:left;padding-left:10px">
-Dear <?php echo $sender; ?>,
+Dear <?= $sender; ?>,
 <span style="color:#ffffff">
 Your
 <span class="il">Order</span>
 ID :
-<a target="_blank" style="color:#d7d7d7" href="#"><?php echo $gift_id; ?></a>
+<a target="_blank" style="color:#d7d7d7" href="#"><?= $gift_id; ?></a>
 </span>
 </td>
 <td style="font-family:Segoe UI,arial;color:#fff;font-size:12px;text-align:right;padding-right:10px">
 <span class="il">Order</span>
-Placed on : 2013-02-24 20:16:41
+Placed on : <?= $time; ?>
 </td>
 </tr>
 <tr height="30" bgcolor="#f0eded">
@@ -70,7 +70,7 @@ Details :
 <tbody>
 <tr>
 <td valign="top" style="font-size:12px;font-family:Segoe UI,arial">
-UCB Sports Men&Women - Red and White 150ml Each
+<?= $vendor; ?>
 <br>
 </td>
 </tr>
@@ -85,7 +85,7 @@ UCB Sports Men&Women - Red and White 150ml Each
 <tbody>
 <tr width="100%">
 <td width="100%" valign="top" style="border-top:none;font-size:12px;padding:10px">
-<center>1194397140</center>
+<center><?= $gift_id; ?></center>
 </td>
 </tr>
 <tr> </tr>
@@ -104,7 +104,7 @@ Mar 01, 2013
 </center>
 </td>
 <td width="75" valign="top" style="border:1px solid #e6e6e6">
-<center> <?php $value; ?> </center>
+<center> <?= $value; ?> </center>
 </td>
 </tr>
 </tbody>
@@ -121,15 +121,15 @@ Mar 01, 2013
 <strong>Shipping Address :</strong>
 </p>
 <p style="margin-left:10px;font-family:Segoe UI,arial">
-<strong>#SENDER NAME#</strong>
+<strong><?= $sender; ?></strong>
 <br>
- lORUM IPSUM lORUM IPSUM lORUM IPSUM lORUM IPSUM
+<?= $address; ?>
 <br>
-STREET
+<?= $city; ?>
 <br>
-CITY - PINCODE
+<?= $pincode; ?>
 <br>
-STATE
+<?= $country; ?>
 </p>
 </td>
 <td width="60" valign="top" style="padding:12px">
@@ -140,7 +140,7 @@ STATE
 <strong>Total Amount :</strong>
 </td>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">
-<strong>Rs.<?php $value; ?></strong>
+<strong>Rs.<?= $value; ?></strong>
 </td>
 </tr>
 <tr>
@@ -157,7 +157,7 @@ STATE
 <strong> Paid Amount :</strong>
 </td>
 <td style="text-align:right;font-size:12px;font-family:Segoe UI,arial">
-<strong>Rs. <?php $value; ?></strong>
+<strong>Rs. <?= $value; ?></strong>
 </td>
 </tr>
 </tbody>

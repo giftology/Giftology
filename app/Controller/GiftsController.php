@@ -751,7 +751,10 @@ public function index() {
             $send_now = $this->data['gifts']['send_now'];
             $reciever_email = $this->data['gifts']['reciever_email'];
             $reciever_eamil_show = $this->data['gifts']['reciever_email_show'];
-            $reciever_email = $reciever_eamil_show;
+            if($reciever_email == "")
+            {
+                $reciever_email = $reciever_eamil_show;
+            }
             $gift_message = $this->data['gifts']['gift-message'];
             $post_to_fb = $this->data['chk'];
             $reciever_name = $this->data['gifts']['reciver_name'];
@@ -1089,7 +1092,7 @@ public function index() {
 	}
 
 	function informSenderReceipientOfGiftSent($gift_id, $access_token, $post_to_fb = null) {
-	   $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
+       $product_id = $this->Gift->find('first', array('fields' => array('product_id'), 'conditions' => array('Gift.id' => $gift_id)));
 		$product_type_id = $this->Gift->Product->find('first', array('fields' => array('Product.product_type_id'), 'conditions' => array('Product.id' => $product_id['Gift']['product_id'])));
         $product_type = $this->ProductType->find('first', array('fields' => array('type'), 'conditions' => array('id' => $product_type_id['Product']['product_type_id'])));
 
@@ -1129,6 +1132,7 @@ public function index() {
 			$sender_name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
 			$sender_email = $gift['Sender']['UserProfile']['email'];
 			$sender_fb_id = $gift['Sender']['facebook_id'];
+            $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
 			if ($gift['Gift']['gift_message']) {
 				$email_message = $gift['Gift']['gift_message'];
 				$message = $gift['Gift']['gift_message']."\r\n ".'@['.$receiver_fb_id.']';
@@ -1173,6 +1177,11 @@ public function index() {
 		 	
             if($product_type['ProductType']['type']=='SHIPPED')
             {   
+                $gift = $this->Gift->find('first', array(
+                'conditions' => array('Gift.id' => $gift_id),
+                'contain' => array(
+                    'Product' => array('Vendor'))));
+                $vendor_name = $gift['Product']['Vendor']['name'];
                  $email = new CakeEmail();
                 $email->config('smtp')
                 ->template('shipping_invoice', 'default') 
@@ -1187,7 +1196,11 @@ public function index() {
                          'message' => $message,
                          'gift_id' => $gift_id,
                          'value' => $gift['Gift']['gift_amount'],
-                         'address' => $gift['Gift']['gift_amount'],
+                         'address' => $value_shipping['UserAddress']['address1'],
+                         'city' => $value_shipping['UserAddress']['city'],
+                         'pincode' => $value_shipping['UserAddress']['pin_code'],
+                         'country' => $value_shipping['UserAddress']['country'],
+                         'time' => $gift['Gift']['created'],
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send();    
             }
@@ -1777,7 +1790,11 @@ public function index() {
             $gift = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$Order_Id)));
             $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
 			$phone = $value_shipping['UserAddress']['phone'];
+
             //$message = ;
+
+            $message = "hello";
+
             $value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$phone."&msg=".urlencode($message)."&send=Way2mint&d");
             /* code for sms ends here */
 			// Inform 
