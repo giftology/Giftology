@@ -1167,43 +1167,27 @@ public function index() {
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}*/
-           
-		if ($receiver_email && $receiver_birthday==date("Y-m-d") && $product_type['Product']['min_price']==0 && $product_type['Product']['max_price']==0 && $failed_transaction != 1) 
+           DebugBreak();
+		if ($receiver_email && $receiver_birthday==date("Y-m-d") && $product_type['Product']['min_price']==0 && $product_type['Product']['max_price']==0) 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}
 		else if ($receiver_email)
 		 {	
 		 	$gift = $this->Gift->find('first', array(
-                'conditions' => array('Gift.id' => $gift_id),
-                'contain' => array(
-                    'Product' => array('Vendor'))));
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$gift_id)));
                 $vendor_name = $gift['Product']['Vendor']['name'];
+                $amount = $gift['Gift']['gift_amount'];
             
-            if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1)
+            if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1 && $value_shipping['UserAddress']['address1'])
             {   
                 
-                 $email = new CakeEmail();
-                $email->config('smtp')
-                ->template('shipping_invoice', 'default') 
-                ->emailFormat('html')
-                ->to($receiver_email)
-                ->from(array($sender_email => $sender_name))
-                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
-                ->viewVars(array('sender' => $sender_name,
-                         'receiver' => $receiver_name,
-                         'vendor' => $vendor_name,
-                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
-                         'message' => $message,
-                         'gift_id' => $gift_id,
-                         'value' => $gift['Gift']['gift_amount'],
-                         'address' => $value_shipping['UserAddress']['address1'],
-                         'city' => $value_shipping['UserAddress']['city'],
-                         'pincode' => $value_shipping['UserAddress']['pin_code'],
-                         'country' => $value_shipping['UserAddress']['country'],
-                         'time' => $gift['Gift']['created'],
-                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
-                ->send();    
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_invoice_sender'); 
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_receiver');     
             }
             else if ($product_type['Product']['product_type_id']==DIGITAL && $product_type['Product']['min_price']!=0 && $product_type['Product']['max_price']!=0 && $failed_transaction != 1) {
                 $email = new CakeEmail();
@@ -1325,6 +1309,38 @@ public function index() {
 					     'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
 			    ->send();	
 	}
+
+    function send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,$template){
+            if($template == 'shipping_invoice_sender')
+                {
+                    $email_sent = $sender_email;
+                }
+                else
+                {
+                   $email_sent = $receiver_email; 
+                }
+            $email = new CakeEmail();
+                $email->config('smtp')
+                ->template($template, 'default') 
+                ->emailFormat('html')
+                ->to($email_sent)
+                ->from(array($sender_email => $sender_name))
+                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->viewVars(array('sender' => $sender_name,
+                         'receiver' => $receiver_name,
+                         'vendor' => $vendor_name,
+                         'linkback' => FULL_BASE_URL.'/users/login?utm_source=email&utm_medium=gift_email&utm_campaign=gift_sent&utm_term='.$gift_id,
+                         'message' => $message,
+                         'gift_id' => $gift_id,
+                         'value' => $amount,
+                         'address' => $value_shipping['UserAddress']['address1'],
+                         'city' => $value_shipping['UserAddress']['city'],
+                         'pincode' => $value_shipping['UserAddress']['pin_code'],
+                         'country' => $value_shipping['UserAddress']['country'],
+                         'time' => $gift['Gift']['created'],
+                         'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
+                ->send(); 
+    }
 
 
 	function redeemGiftCode ($code) {

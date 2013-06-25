@@ -613,11 +613,13 @@ $(document).ready(function(){
         $("#shipp_address_show").hide();
         $("#text_msg").show();
         $("#email_sms").show();
+        $("#phone_len").val('');
     });
     $('#know').click(function(){
         $("#shipp_address_show").show();
         $("#text_msg").hide();
         $("#email_sms").hide();
+        $("#phone_shipping").val('');
     });
 });
 </script>
