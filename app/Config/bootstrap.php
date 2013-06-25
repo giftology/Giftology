@@ -278,7 +278,7 @@ define('BITLY_SHORTEN_URL', 'https://api-ssl.bitly.com/v3/shorten');
 //Social Like 
 
 define('SOCIAL_LIKE',TRUE);
-define('FB_LIKE',FALSE);
+define('FB_LIKE',TRUE);
 define('TWITTER_LIKE',TRUE);
 define('ANDROID_INSTALL',TRUE);
 define('GIFT_SENT',TRUE);
