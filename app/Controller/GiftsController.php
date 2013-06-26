@@ -99,7 +99,7 @@ class GiftsController extends AppController {
 				)
 			));
 			$gift['pin'] = $pin['UploadedProductCode']['pin'];
-            if($gift['Gift']['temporary_code']===NULL){
+            if($gift['Gift']['temporary_code']=='NULL'){
                 $gift['Gift']['code'] = "Try later!";    
             }
 			$this->set('gift', $gift);
