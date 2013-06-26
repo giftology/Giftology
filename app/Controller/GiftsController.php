@@ -99,7 +99,7 @@ class GiftsController extends AppController {
 				)
 			));
 			$gift['pin'] = $pin['UploadedProductCode']['pin'];
-            if(!$gift['Gift']['code']){
+            if(!$gift['Gift']['temporary_code']){
                 unset($gift);
                 $gift['Gift']['code'] = "Try later!";    
             }
@@ -112,10 +112,10 @@ class GiftsController extends AppController {
         $gift_id = isset($this->params->query['gift_id']) ? $this->params->query['gift_id'] : null;
         $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
         $e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
-        $code = $this->Gift->find('first',array('field' => array('code'), 'conditions' => array('id' => $gift_id)));
+        $code = $this->Gift->find('first',array('field' => array('temporary_code'), 'conditions' => array('id' => $gift_id)));
         if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
-            if($code['Gift']['code']){
+            if($code['Gift']['temporary_code']){
                 $this->Gift->id = $gift_id;
                 //$this->Gift->Behaviors->attach('Containable');
                 $redeem_data['Gift']['redeem'] = 1;
