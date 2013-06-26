@@ -280,11 +280,12 @@ var res_data;
             </div>
             <?php endif; ?>
     </div>
-
+<?php if(GIFT_TO_MYSELF):?>
 <div class="send_urself" id="news-items">
     <?php  echo $this->Form->create('products', array('action' => 'view_products'));?><div class="eve" style="cursor:pointer;float:right;margin-bottom:-25px" id="<?= $id ?>" name="<?= $name[0]['first_name']." ".$name[0]['last_name'] ?>"><img src="<?= IMAGE_ROOT; ?>Giftyourself_Button.png" alt="Go On, Spoil Yourself!!" onClick="clicky.log('#GiftYourSelf','GiftYourSelf Clicked');" title="Gift Yourself"/></div>
      <?php echo $this->Form->end();?>    
 </div>
+<?php endif;?>
 <div id="news-items" class="android_app" style="margin-bottom:-35px;cursor:pointer"><a href="<?= GOOGLE_PLAY_BITLY ?>" target="_blank"><img src="<?= IMAGE_ROOT; ?>GooglePlay_Button.png" alt="Android App" onClick="clicky.log('#GooglePlayButton','GooglePlayButton Clicked');" title="Go to Google Play store now"/></a> </div>
 <div id="news-items" style="margin-bottom:35px;cursor:pointer">
        

@@ -34,7 +34,7 @@ class ProductsController extends AppController {
         
         );
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
-    public $components = array('AesCrypt','Search.Prg');
+    public $components = array('AesCrypt','Search.Prg','BlackListProduct');
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
@@ -590,7 +590,13 @@ public function download_user_csv_all($download_selected = null){
         //$conditions['Product.id'] = $products_for_location;
         //$conditions['Product.age_segment_id'] = array($age,ALL_AGES);
         //$this->paginate['conditions'] = $conditions;
-        $products = array_merge($product_for_all_age_gender, $products_age_location_gender);
+        $black_listed_products = array();
+        if(BLACKLISTED_PRODUCT && $receiver_id==$this->Auth->user('facebook_id')){
+            $black_listed_products = $this->BlackListProduct->products_list();   
+        }
+        
+        $pre_final_products = array_merge($product_for_all_age_gender, $products_age_location_gender);
+        $products = array_diff($pre_final_products, $black_listed_products);
         $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),'Product.id' => $products);
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
         $this->Product->recursive = 0;
@@ -806,6 +812,13 @@ public function download_user_csv_all($download_selected = null){
      public function update_product_city_segments($product_id, $city_data){
         $cities = array();
         $cities = unserialize($city_data);
+        if($cities[1]=="1"){
+            $this->ProductCitySegment->create();
+            $location_data_for_all = array();
+            $location_data_for_all['ProductCitySegment']['city_segment_id'] = 1;
+            $location_data_for_all['ProductCitySegment']['product_id'] = $product_id;
+            $this->ProductCitySegment->save($location_data_for_all);    
+        }
         $cities_location_segment = array();
         $cities_location_segment = $this->ProductCitySegment->find('list', array('fields' => array('city_segment_id'),'conditions'=> array('product_id' => $product_id)));
         $cities_deleted = array();

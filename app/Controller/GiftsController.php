@@ -711,7 +711,7 @@ public function index() {
 				$this->redirect(array('controller' => 'reminders',
          			'action'=>'view_friends'));
             }
-
+            DebugBreak();
             $receiver_fb_id=$this->data['gifts']['user_id'];
             $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
 
