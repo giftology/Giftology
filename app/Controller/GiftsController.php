@@ -111,7 +111,7 @@ class GiftsController extends AppController {
         $gift_id = isset($this->params->query['gift_id']) ? $this->params->query['gift_id'] : null;
         $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
         $e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
-        $code = $this->Gift->find('count',array('field' => array('temporary_code'), 'conditions' => array('id' => $gift_id, 'temporary_code IS NOT NULL')));
+        $code = $this->Gift->find('count',array('conditions' => array('id' => $gift_id, 'temporary_code IS NOT NULL')));
         if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
             if($code){
