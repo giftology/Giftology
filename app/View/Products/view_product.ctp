@@ -591,16 +591,6 @@ $(document).ready(function(){
 
   </script>
 
-  <script src="http://connect.facebook.net/en_US/all.js"></script>
-    <div id="fb-root"></div>
-    <script>
-      FB.init({appId: '105463376223556', xfbml: true, cookie: true, oauth: true});
-
-      FB.login({
-        scope: 'publish_stream',
-      });
-     </script>
-
   <style>
     div.ui-datepicker
     {
