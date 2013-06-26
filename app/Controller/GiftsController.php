@@ -2423,4 +2423,47 @@ public function index() {
     	return $e;
     }
 
+    public function bitly_link(){
+
+        $fields = array(
+            'client_id' => BITLY_CLIENT_ID,
+            'client_secret' => BITLY_CLIENT_SECRET,
+            //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
+            'redirect_uri'=> FULL_BASE_URL.'/',
+        );
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, BITLY_ACCESS_TOKEN_URL);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+        curl_setopt($ch, CURLOPT_USERPWD, BITLY_USER_NAME.":".BITLY_PASSWORD);
+               
+        //execute post
+        $access_token = curl_exec($ch);
+        curl_close($ch);
+               
+        $link = FULL_BASE_URL."/gifts/offline_voucher_redeem_page/".$gift_id;
+        $ch = curl_init();
+        $new_link_data = array(
+            'access_token' => $access_token,
+            'longUrl' => $link
+        );
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, BITLY_SHORTEN_URL.'?'.http_build_query($new_link_data));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$new_link_data);
+        $result = curl_exec($ch); 
+        $error = curl_error($ch);
+        $url_arr = json_decode($result);
+        $url = $url_arr->{'data'}->{'url'};
+    }
+
 }
