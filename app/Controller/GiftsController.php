@@ -35,7 +35,7 @@ class GiftsController extends AppController {
 	);
     public function beforeFilter() {
 	parent::beforeFilter();
-	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page','error_page','error_page_for_desktop');
+	$this->Auth->allow('send_today_scheduled_gifts','offline_voucher_redeem_page','error_page','error_page_for_desktop','claim');
     }
 
 	public function isAuthorized($user) {
@@ -1433,6 +1433,22 @@ public function index() {
     }
 
     public function claim(){
+        //token is encrypted_gift_id
+        if(isset($_GET['token'] && && !empty($_GET['token'])){
+            $gift_encrypted_id = $_GET['token'];
+            $gift_id = $this->AesCrypt->decrypt($gift);
+            $gift_claimable = $this->Gift->find('first',array('conditions' => array('Gift.id' => $gift_id )));
+             $this->set('us',$gift_id);
+            $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$gift_id)));
+
+
+        }
+
         if($this->request->is('post')){
             $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
@@ -1441,7 +1457,7 @@ public function index() {
                 );
               
                 
-                $arr = $this->UserAddress->updateAll(
+            $arr = $this->UserAddress->updateAll(
                 array('UserAddress.first_name' => "'".$this->data['gifts']['first_name']."'",
                       'UserAddress.last_name' => "'".$this->data['gifts']['last_name']."'",
                       'UserAddress.address1' => "'".$this->data['gifts']['address1']."'",
@@ -1454,17 +1470,20 @@ public function index() {
                       ),
                 array('UserAddress.id' => $this->data['gifts']['user_add_id']) 
                 );
-
-        }
-        
-        $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
-        $this->set('us',$gift_claimable['Gift']['id']);
-         $gift = $this->Gift->find('first', array(
+            $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+             $this->set('us',$gift_claimable['Gift']['id']);
+            $gift = $this->Gift->find('first', array(
             'contain' => array(
                 'Product' => array('Vendor'),
                 'Sender' => array('UserProfile'),
                 'Receiver' => array('UserProfile')),
             'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
+
+
+
+        }
+        
+       
          $this->set('gift', $gift);
          $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
           $this->set('value_shipping', $value_shipping);
