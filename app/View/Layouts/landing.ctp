@@ -168,8 +168,9 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-        <a href="http://bit.ly/Giftologyapp" target="_blank" style="color:#000"> Download app</a>
-         
+        <a href="<?= GOOGLE_PLAY_BITLY ?>" target="_blank" style="color:#000"> Download app</a>
+        
+
         </div>
         </li>
         <?php endif; ?>
@@ -616,6 +617,6 @@ background: none repeat scroll 0 0 #F7F7F7; ">
 <?php endif ?>
 <style type="text/css">
 .fb_ltr{padding-top: 7px;}
-
-</style>
+style
+</>
 </body></html>

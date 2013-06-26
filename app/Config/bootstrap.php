@@ -265,6 +265,8 @@ define('GIFT_CLAIM', TRUE); //new work flow
 define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.giftology");
 define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
 
+define('GOOGLE_PLAY_BITLY',"https://bit.ly/GiftologyAndroidApp");
+
 
 //bitly credentials and URL shortening settings
 define('BITLY_CLIENT_ID', '6ae682f18a8e3c7f19ca5e5a5906c3893f9874a5');

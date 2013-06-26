@@ -45,7 +45,7 @@
       <div class="logo" align="center"><?php echo $this->Facebook->login(array('img' => 'fb-connect-mobile.png',
               'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div><?php } 
 else {?>
-  <div class="logo" align="center"><a href="<?= GOOGLE_PLAY_ANDROID_URL; ?>"><img src="<?= FULL_BASE_URL; ?>/img/mobile/download_for_android.png"  alt="" /></a></div>
+  <div class="logo" align="center"><a href="<?= GOOGLE_PLAY_BITLY ?>"><img src="<?= FULL_BASE_URL; ?>/img/mobile/download_for_android.png"  alt="" /></a></div>
 <?php }
               ?>
   <div class="clear"></div>
