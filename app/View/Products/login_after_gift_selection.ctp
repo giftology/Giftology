@@ -18,12 +18,12 @@
 
                 
                 <div class="tag-icons"></div>
-                <h5 class="line-header" >Celebrate your friends  with this  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
-                          <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Product']['terms_heading'] ?></div>
+                <h5 class="line-header" style="width:570px;" >Celebrate your friends  with this  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
+                          <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Vendor']['short_description'] ?></div>
 
             </div>
             <div class="image-container">
-                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Vendor']['thumb_image'] ?>"></div>
+                <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Vendor']['facebook_image'] ?>"></div>
                 <div class="paperclip"></div>
                 
            
@@ -313,6 +313,7 @@
                 else{
                     $("#error_text1").hide();
                     }
+                    
                    // chk1.length = 0;
                    //MY $('td .campaign_checkbox').attr('checked',false);
                     var values = $("#myself").attr('my_facebook_id');
@@ -358,6 +359,7 @@
                     alert("please select friend to send Gift");
                     return false;
                 }else{
+                    $("#text_message1").val($("#text_message").val());
                     $(this).parents('form').submit();
                     $(this).attr('disabled','disabled');
                 }
