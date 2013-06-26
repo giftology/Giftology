@@ -1313,22 +1313,34 @@ public function index() {
 			    ->send();	
 	}
 
-    function send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,$template,$url = null){
+    function send_email_shipped($gift_id=null,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message = null,$value_shipping = null,$vendor_name = null, $amount = null,$template,$url = null){
         if($template == 'shipping_invoice_sender')
                 {
                     $email_sent = $sender_email;
+                    $title = "Wohooo! Your order ".$gift_id." has been placed successfully";
                 }
-                else
-                {
-                   $email_sent = $receiver_email; 
-                }
+        else if($template == 'confirmation_sender')
+        {
+            $email_sent = $sender_email;
+            $title = "Your friends gift is on it's way. Send another gift?";
+        }
+        else if($template == 'confirmation_receiver')
+        {
+            $email_sent = $receiver_email;
+            $title = "Thanks a million. Your gift is safely on it's way!";
+        }
+        else
+        {
+           $email_sent = $receiver_email; 
+           $title = "Surprise! You have received a ".$vendor_name." View details inside";
+        }
             $email = new CakeEmail();
                 $email->config('smtp')
                 ->template($template, 'default') 
                 ->emailFormat('html')
                 ->to($email_sent)
                 ->from(array($sender_email => $sender_name))
-                ->subject($receiver_name.', '.$sender_name.' sent you a gift voucher to '.$vendor_name)
+                ->subject($title)
                 ->viewVars(array('sender' => $sender_name,
                          'receiver' => $receiver_name,
                          'vendor' => $vendor_name,
@@ -1435,11 +1447,16 @@ public function index() {
     }
 
     public function claim(){
-        //token is encrypted_gift_id
-        if(isset($_GET['token']) && !empty($_GET['token'])){
+       //token is encrypted_gift_id
+        if(isset($_GET['token']) && !empty($_GET['token']))
+        {
             $gift_encrypted_id = $_GET['token'];
             $gift_id = $this->AesCrypt->decrypt($gift_encrypted_id);
-            $gift_claimable = $this->Gift->find('first',array('conditions' => array('Gift.id' => $gift_id )));
+            $gift_claimable = $this->Gift->find('first',array('conditions' => array('Gift.id' => $gift_id,'Gift.claim' => 0 )));
+            if(!$gift_claimable)
+                {
+                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+                }
              $this->set('us',$gift_id);
             $gift = $this->Gift->find('first', array(
             'contain' => array(
@@ -1451,15 +1468,15 @@ public function index() {
 
         }
 
-        if($this->request->is('post')){
-            $giftid_to_claim = $this->request->data;
+        else if($this->request->is('post'))
+        {   $giftid_to_claim = $this->request->data;
             $arr = $this->Gift->updateAll(
                 array('Gift.claim' => 1),
                 array('Gift.id' => $this->request->data['gifts']['giftid']) 
                 );
               
                 
-            $arr = $this->UserAddress->updateAll(
+            $arr_update = $this->UserAddress->updateAll(
                 array('UserAddress.first_name' => "'".$this->data['gifts']['first_name']."'",
                       'UserAddress.last_name' => "'".$this->data['gifts']['last_name']."'",
                       'UserAddress.address1' => "'".$this->data['gifts']['address1']."'",
@@ -1472,7 +1489,23 @@ public function index() {
                       ),
                 array('UserAddress.id' => $this->data['gifts']['user_add_id']) 
                 );
-            $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+           $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$this->request->data['gifts']['giftid'])));
+            $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
+            if($gift['Product']['product_type_id'] == SHIPPED)
+            {   
+                $receiver_name = $this->data['gifts']['first_name'];
+                $receiver_email = $gift['Gift']['receiver_email'];
+                $sender_name = $gift['Sender']['UserProfile']['first_name'];
+                $sender_email = $gift['Sender']['UserProfile']['email'];
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'confirmation_receiver'); 
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'confirmation_sender',$url);     
+            }
+            $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
              $this->set('us',$gift_claimable['Gift']['id']);
             $gift = $this->Gift->find('first', array(
             'contain' => array(
@@ -1480,12 +1513,20 @@ public function index() {
                 'Sender' => array('UserProfile'),
                 'Receiver' => array('UserProfile')),
             'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
-
-
-
         }
-        
-       
+        else
+        {
+            $gift_claimable=$this->Gift->find('first',array('order'=>'Gift.id DESC','fields'=>array('id','gift_address_id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' => 0,'Gift.redeem' => 0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+            $gift = $this->Gift->find('first', array(
+            'contain' => array(
+                'Product' => array('Vendor'),
+                'Sender' => array('UserProfile'),
+                'Receiver' => array('UserProfile')),
+            'conditions' => array('Gift.id'=>$gift_claimable['Gift']['id'])));
+            $this->set('us',$gift_claimable['Gift']['id']);
+        }
+
+          
          $this->set('gift', $gift);
          $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
           $this->set('value_shipping', $value_shipping);
@@ -2374,7 +2415,6 @@ public function index() {
     }
 
     public function contest_report_2($date_start, $date_end){
-    	//DebugBreak();
     	$fp = fopen(ROOT.'/app/tmp/'.'contest_report_2_'.time().'.csv', 'w+');
     	$date_start = date("Y-m-d", strtotime($date_start) - 86400);
     	$date_end = date("Y-m-d", strtotime($date_end) + 86400);

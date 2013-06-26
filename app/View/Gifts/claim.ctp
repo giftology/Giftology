@@ -54,7 +54,7 @@
               </div>
               <?php echo $this->Form->create('gifts', array('action' => 'claim'));?>
               <?php echo $this->Form->hidden("giftid" ,array('value'=>$us ))?>
-            <?php if($gift['Product']['product_type_id'] == 2 && $gift['Gift']['claim'] == 0) : ?>
+            <?php if($gift['Product']['product_type_id'] == SHIPPED && $gift['Gift']['claim'] == 0) : ?>
               <div class="delivery-sharing">
                 <h4 style="font-size:13px">The gift will be arriving soon to the following address:</h4>
                 <center><h3 style="margin-top: 25px;">Shipping Address</h3></center>
@@ -126,36 +126,7 @@
           <div class="clear"></div>
 
         
-          <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-          <script type='text/javascript'>
-           $('.single-use').click(function() {
-        // interrupt form submission
-            var key_value = this.id;
-           //alert(key_value);
-                $.ajax({
-                    type: "POST",
-                    dataType: 'html',
-                    async: false,
-                    url: "/gifts/fetch_code",
-                    data: "search_key="+key_value,
-                    success: function(data) {
-                        //alert(data);
-                        var res_data = jQuery.parseJSON(data);;
-                        var count = res_data.length;
-                        var new_row = '';
-                        //$('.event').remove();
-                        //$('#paginator_nav').remove();
-                        
-                         $('#ititemplate').tmpl(res_data).appendTo('#gift-details');
-                     }
-
-                     });
-           
-        });
-   
-
-</script>
-
+         
 
      <script type="text/javascript">
 

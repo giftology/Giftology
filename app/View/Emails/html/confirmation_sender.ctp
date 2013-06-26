@@ -20,7 +20,8 @@
            
          
 
-You've received a gift from <?= $sender ?> via Giftology. Please  confirm your address here <?=$url ?> so that we can reach you soon. 
+<?=$receiver ?> has accepted your gift. The Gift is on it's way 
+We hope you've enjoyed using Giftology as much as <?=$receiver ?> will enjoy receiving your gift!  
 
  
  </p></div>
@@ -64,5 +65,4 @@ You've received a gift from <?= $sender ?> via Giftology. Please  confirm your a
     </table>
   </div>
 </div>
-
 

@@ -587,7 +587,7 @@ public function isMobile_app() {
            
             $this->set('num_gifts_sent', $gift_count);
 
-
+            //DebugBreak();
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -600,7 +600,7 @@ public function isMobile_app() {
                             'GiftsReceived.id' => $this->request->query['gift_id']),
                         'contain' => array(
                             'Product' => array(
-                                'fields' => array('Product.id'),
+                                'fields' => array('Product.id','Product.product_type_id'),
                                 'Vendor' => array('fields' => array('name','facebook_image'))),
                 'Sender' => array('UserProfile'), 'Receiver' => array('UserProfile'))
                         ));
@@ -635,11 +635,18 @@ public function isMobile_app() {
             
             $this->set('slidePlaySpeed', $slidePlaySpeed);
             $this->set('fb_url', FULL_BASE_URL.$_SERVER[ 'REQUEST_URI' ]);
-            if (isset($vendor_name) && !empty($vendor_name)) {
-                $this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+            if (isset($vendor_name) && !empty($vendor_name) && $gift['Product']['product_type_id'] == DIGITAL) {
+                //$this->set('fb_title', "Rs. ".$amount." gift voucher at ".$vendor_name);
+                 $this->set('fb_title', "You have received a". $vendor_name. "from". $sender_name);
+                 $this->set('fb_description', "Giftology is the awesome way to give gifts. Unique. Awesome. Gifts. Signed up yet?");
+                //$this->set('fb_description', "To ".$receiver_name." \r\n From ".$sender_name);
+            } 
+            else if (isset($vendor_name) && !empty($vendor_name) && $gift['Product']['product_type_id'] == SHIPPED) {
+                $this->set('fb_title', "You have been sent a". $vendor_name. "from". $sender_name);
+                 $this->set('fb_description', "Giftology is the awesome way to give gifts. Unique. Awesome. Gifts. Signed up yet?");
+            } 
 
-                $this->set('fb_description', "To ".$receiver_name." \r\n From ".$sender_name);
-            } else {
+            else {
                 $this->set('fb_title', "Giftology | Don't just post on Facebook make it a gift post! ");
                 $this->set('fb_description', "Giftology.com is the new and unique way of sending awesome gifts to your Facebook friends instantly. Awesome. Free. Gifts. Signed up yet?");
             }

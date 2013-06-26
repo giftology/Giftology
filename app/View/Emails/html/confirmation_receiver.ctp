@@ -20,7 +20,9 @@
            
          
 
-You've received a gift from <?= $sender ?> via Giftology. Please  confirm your address here <?=$url ?> so that we can reach you soon. 
+Thanks for unwrapping your gift . Your gift will be sent to your confirmed </br>
+Address :- <b><?=  $address?> <?=  $city?> - <?= $pincode?></b>.
+We hope you enjoy your Gift as much as <?=$sender ?> enjoyed sending the gift via Giftology.
 
  
  </p></div>
@@ -64,5 +66,4 @@ You've received a gift from <?= $sender ?> via Giftology. Please  confirm your a
     </table>
   </div>
 </div>
-
 
