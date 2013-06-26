@@ -83,6 +83,7 @@ class GiftsController extends AppController {
 		$e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
 		if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
 		else{
+            $this->replace_temp_gift_code_with_gift_code($gift_id);
 			$this->Gift->id = $gift_id;
 			$this->Gift->Behaviors->attach('Containable');
 			$gift = $this->Gift->find('first', array(
@@ -113,6 +114,7 @@ class GiftsController extends AppController {
             $this->Gift->id = $gift_id;
             //$this->Gift->Behaviors->attach('Containable');
             $redeem_data['Gift']['redeem'] = 1;
+            $redeem_data['Gift']['claim'] = 1;
             $redeemed = $this->Gift->save($redeem_data);
             if($redeemed['Gift']['redeem']){
                 $gift['redeem'] = 1;
@@ -1476,9 +1478,19 @@ public function index() {
         $gift_id=$this->request->data['search_key'];
         if($this->RequestHandler->isAjax()) 
         {
-            $this->Reminder->recursive = -1;
+            $gift_code = $this->replace_temp_gift_code_with_gift_code($gift_id);
+           
+        }
+
+        echo json_encode($gift_code);
+        $this->autoRender = $this->autoLayout = false;
+        exit;
+    }
+
+    public function replace_temp_gift_code_with_gift_code($gift_id){
+            $this->Gift->recursive = 2;
              $gift_data = $this->Gift->find('first',array('conditions' =>array (
-                    'Gift.id' => $this->request->data['search_key']
+                    'Gift.id' => $gift_id
                    )));
 
              $code_check = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.code'),'conditions' => array(
@@ -1506,17 +1518,12 @@ public function index() {
            
                      
             }
-             $this->Reminder->recursive = -1;
+             
              $gift_code = $this->Gift->find('first',array('contain' => array(
                 'Product' => array('Vendor')),'conditions' =>array (
-                    'Gift.id' => $this->request->data['search_key']
+                    'Gift.id' => $gift_id
                    )));
-           
-        }
-
-        echo json_encode($gift_code);
-        $this->autoRender = $this->autoLayout = false;
-        exit;
+             return $gift_code;
     }
 
 	public function view_gifts() {
@@ -1535,6 +1542,10 @@ public function index() {
         {
             $conditions['claim']= 1;
             $conditions['redeem']= 0;
+        }
+
+        if(defined('GIFT_CLAIM') && GIFT_CLAIM){
+            $conditions['claim']= 1;    
         }
         
         $conditions['expiry_date >='] = date("Y-m-d");
@@ -1647,28 +1658,29 @@ public function index() {
 			'UploadedProductCode.code' => $gift['Gift']['code']
 			)
 		));
+        
         $fields = array(
-                 'client_id' => '8a37cd067c1878056856e9bbba4b95335e6e4867',
-                 'client_secret' => '7c64aa83c5c4918c9d71f1446e132873c43f2636',
-                 //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
-                 'redirect_uri'=> 'http://www.master.mygiftology.net/',
-                 );
-               $ch = curl_init();
+            'client_id' => BITLY_CLIENT_ID,
+            'client_secret' => BITLY_CLIENT_SECRET,
+            //'code'        => 'fe545161dcea87249388b000bfa037e35b0d8073',
+            'redirect_uri'=> FULL_BASE_URL.'/',
+        );
+        $ch = curl_init();
 
-               //set the url, number of POST vars, POST data
-               curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/oauth/access_token');
-               curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-               curl_setopt($ch, CURLOPT_POST, true);
-               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
-               curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
-               curl_setopt($ch, CURLOPT_USERPWD, "shubham150@gmail.com:12facebook.com");
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, BITLY_ACCESS_TOKEN_URL);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the output instead of sprewing it to screen
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
+        curl_setopt($ch, CURLOPT_USERPWD, BITLY_USER_NAME.":".BITLY_PASSWORD);
                
-               //execute post
-               $access_token = curl_exec($ch);
-               curl_close($ch);
+        //execute post
+        $access_token = curl_exec($ch);
+        curl_close($ch);
                
-        $link = "http://www.giftology.com/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = FULL_BASE_URL."/gifts/offline_voucher_redeem_page/".$gift_id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,
@@ -1676,17 +1688,20 @@ public function index() {
         );
 
         //set the url, number of POST vars, POST data
-        curl_setopt($ch,CURLOPT_URL,'https://api-ssl.bitly.com/v3/shorten?'.http_build_query($new_link_data));
+        curl_setopt($ch,CURLOPT_URL, BITLY_SHORTEN_URL.'?'.http_build_query($new_link_data));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-               curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-               curl_setopt($ch, CURLOPT_POST, true);
-               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-               curl_setopt($ch,CURLOPT_POSTFIELDS,$new_link_data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$new_link_data);
         $result = curl_exec($ch); 
-               $error = curl_error($ch);
+        $error = curl_error($ch);
         $url_arr = json_decode($result);
         $url = $url_arr->{'data'}->{'url'};
         //$link = "http://192.168.1.15/gifts/offline_voucher_redeem_page/".$gift_id;
+        $this->Gift->id = $id;
+        $data_gift_url['Gift']['gift_url'] = $url;
+        $this->Gift->save($data_gift_url);
 
      	$gift['Gift']['encrypted_gift_id'] = $this->AesCrypt->encrypt($id); 
     	$this->set('gift', $gift);

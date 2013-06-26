@@ -40,9 +40,14 @@
   <div class="transbox" id="transbox" style="display:none"></div>
   <div class="home-content h" >
     <p>The fun and easy way to give 
-      gifts to your facebook friends</p>
+      gifts to your facebook friends</p> 
+      <?php if(!$android) {?>
       <div class="logo" align="center"><?php echo $this->Facebook->login(array('img' => 'fb-connect-mobile.png',
-              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div>
+              'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); ?></div><?php } 
+else {?>
+  <div class="logo" align="center"><a href="<?= GOOGLE_PLAY_ANDROID_URL; ?>"><img src="<?= FULL_BASE_URL; ?>/img/mobile/download_for_android.png"  alt="" /></a></div>
+<?php }
+              ?>
   <div class="clear"></div>
   </div>
   <script type="text/javascript">

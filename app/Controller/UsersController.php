@@ -34,10 +34,12 @@ class UsersController extends AppController {
         );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product','email_unsubscribed');
+        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_app');
     }
     public function isAuthorized($user) {
+
         if (($this->action == 'login')|| ($this->action == 'defaulters_list') || ($this->action == 'update_defaulters')|| ($this->action == 'logout')
+
             || ($this->action == 'refreshReminders')  || ($this->action == 'setting') || ($this->action == 'email_stop')|| ($this->action == 'product') || ($this->action == 'email_unsubscribed')) {
             return true;
         }
@@ -476,6 +478,7 @@ public function download_user_csv_all($download_selected = null){
  *
  * @return void
  */
+
     public function add() {
         if ($this->request->is('post')) {
             $this->User->create();
@@ -489,6 +492,15 @@ public function download_user_csv_all($download_selected = null){
         //$facebooks = $this->User->Facebook->find('list');
         //$this->set(compact('facebooks'));
     }
+
+public function isMobile_app() { 
+  preg_match('/' . REQUEST_ANDROID_MOBILE_USER_AGENT . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+  if (!empty($match)) { 
+    return true; 
+  } 
+  return false; 
+} 
+	
 
 /**
  * edit method
@@ -566,11 +578,15 @@ public function download_user_csv_all($download_selected = null){
             }
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2 ),'limit'=>6));
             foreach($product as $k => $p){
                 $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
             }
             $this->set('products', $product);
+            $gift_count = $this->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
+           
+            $this->set('num_gifts_sent', $gift_count);
+
 
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
@@ -669,25 +685,49 @@ public function download_user_csv_all($download_selected = null){
         //} else {
         //$this->layout = 'mobile_landing';
         //}  
-            if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
+            /*if(isset($this->request->query['gift_id'])) $this->layout = 'landing_redeem';
            else{
             if(!$this->RequestHandler->isMobile()){
                 $this->layout='landing';
             }else{
+               
+               $android=$this->isMobile_app();
+                $this->set('android', $android);
                 $this->layout='mobile_landing';
             }
 
-           }
+           }*/
+           if($this->RequestHandler->isMobile())
+            {
+                if(isset($this->request->query['gift_id']))
+                    $this->layout='mobile_landing_redeem';
+                else
+                {
+                    $android=$this->isMobile_app();
+                    $this->set('android', $android);
+                    $this->layout='mobile_landing';
+                }
+            }
+            else
+            {
+                if(isset($this->request->query['gift_id']))
+                    $this->layout = 'landing_redeem';
+                else
+                    $this->layout = 'landing';
+            }
+
 
 
            // else $this->layout = 'landing';
         }
     }
+   
+
     public function product() 
     {
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0)));
+        $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2)));
         foreach($product as $k => $p){
             $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
         }
@@ -1207,7 +1247,7 @@ public function download_user_csv_all($download_selected = null){
     function defaulters_list($user_id) {
         $defaulter = FALSE;
 
-        $defaulter_exists = $this->User->find('count', array('conditions' => array('id' => $user_id, 'defaulter' => 1)));
+         $defaulter_exists = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'defaulter' => 1)));
         if($defaulter_exists) $defaulter = TRUE;
         return $defaulter;
     }

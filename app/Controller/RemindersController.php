@@ -250,7 +250,7 @@ class RemindersController extends AppController {
 		}
 
 		public function view_friends($type=null) 
-		{  
+		{ 
 			if($this->Connect->user()){
 		        $this->User->id = $this->Auth->User('id');
 		        $this->User->updateAll(
@@ -259,22 +259,47 @@ class RemindersController extends AppController {
 		        );
 		    }
 
-		    if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE){
-		    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
-	          	//$this->set('us',$us);
-			    if(isset($gift_claimable) && !empty($gift_claimable)){
-			    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
-			    }
-			    else{
+		    if(defined('GIFT_CLAIM')){
+		    	if((GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE || GIFT_REDEEM_WITH_TEMP_GIFT_CODE) && GIFT_CLAIM){
+			    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+				    if(isset($gift_claimable) && !empty($gift_claimable)){
+				    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
+				    }
+				    else{
+				    	$this->reminder_view_friends($type);
+				    	$this->set('user_id',$this->Auth->User('id'));
+				    }	
+			    } 
+			    else if((GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE && !GIFT_CLAIM) || ((!GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE || !IFT_REDEEM_WITH_TEMP_GIFT_CODE) && GIFT_CLAIMS)){
 			    	$this->reminder_view_friends($type);
-			    	$this->set('user_id',$this->Auth->User('id'));
+				    $this->set('user_id',$this->Auth->User('id'));	
 			    }	
 		    }
+		    else{
+		    	if(defined('GIFT_REDEEM_WITH_TEMP_GIFT_CODE') || defined('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE')){
+		    		if(GIFT_REDEEM_WITH_TEMP_GIFT_CODE){
+				    	$gift_claimable=$this->Gift->find('first',array('fields'=>array('id'),'conditions' => array('Gift.receiver_id' => $this->Auth->user('id'),'Gift.claim' =>0,'Gift.redeem' =>0,'Gift.expiry_date >' => date('Y-m-d'),'Gift.gift_status_id' => 1)));
+			          	//$this->set('us',$us);
+					    if(isset($gift_claimable) && !empty($gift_claimable)){
+					    	$this->redirect(array('controller' => 'gifts', 'action' => 'claim'));	
+					    }
+					    else{
+					    	$this->reminder_view_friends($type);
+					    	$this->set('user_id',$this->Auth->User('id'));
+					    }	
+				    }
 
-		    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
-		    	$this->reminder_view_friends($type);
-			    $this->set('user_id',$this->Auth->User('id'));	
+				    if(GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE){
+				    	$this->reminder_view_friends($type);
+					    $this->set('user_id',$this->Auth->User('id'));	
+				    }
+		    	}
+		    	else{
+		    		$this->reminder_view_friends($type);
+				    $this->set('user_id',$this->Auth->User('id'));	
+		    	}
 		    }
+
 		}
 
 	public function reminder_view_friends($type=null){
@@ -525,28 +550,33 @@ class RemindersController extends AppController {
 	}
         $reminders = $this->get_birthdays($id, 'thisweek');
 	if ($reminders && sizeof($reminders)) {
-		 $last_login_info=$this->User->find('first',array('conditions' => array('User.id' => $id),'fields' => array('User.last_login','User.last_mail_date')));
-         $last_login_date = strtotime($last_login_info['User']['last_login']);
-         $last_mail_date = strtotime($last_login_info['User']['last_mail_date']);
-  			$date_to_compare = strtotime(date('Y-m-d H:i:s'));
+		 if(REMINDER_MAIL_SETTING){
+		 	$last_login_info=$this->User->find('first',array('conditions' => array('User.id' => $id),'fields' => array('User.last_login','User.last_mail_date')));
+	        $last_login_date = strtotime($last_login_info['User']['last_login']);
+	        $last_mail_date = strtotime($last_login_info['User']['last_mail_date']);
+	  		$date_to_compare = strtotime(date('Y-m-d H:i:s'));
 			$last_login_date_diff = floor(abs($date_to_compare - $last_login_date) / 86400);
-		    $last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
-		
+			$last_mail_date_diff =  floor(abs($date_to_compare - $last_mail_date) / 86400);
+			
 			if(($last_mail_date_diff>=15) && ($last_login_date_diff<=30)){
-               $this->User->updateAll(
-            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $id)
-            	);
-			    $this->send_reminder_email($user, $reminders);
+	        	$this->User->updateAll(
+	            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
+	            	array('User.id' => $id)
+	            	);
+				    $this->send_reminder_email($user, $reminders);
 
 			}
-		    if(($last_mail_date_diff>=10) && ($last_login_date_diff>30) ){
-			     $this->User->updateAll(
-            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
-            	array('User.id' => $id)
-            	);
-			    $this->send_reminder_email($user, $reminders);
+			if(($last_mail_date_diff>=10) && ($last_login_date_diff>30) ){
+				$this->User->updateAll(
+	            	array('User.last_mail_date' => "'".date('Y-m-d H:i:s')."'"),
+	            	array('User.id' => $id)
+	            	);
+				$this->send_reminder_email($user, $reminders);
 			}
+		 }
+		 else{
+		 	$this->send_reminder_email($user, $reminders);
+		 }
 	        
 	}
 	return;
