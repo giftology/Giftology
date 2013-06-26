@@ -115,7 +115,7 @@ class GiftsController extends AppController {
         $code = $this->Gift->find('first',array('field' => array('temporary_code'), 'conditions' => array('id' => $gift_id)));
         if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
-            if($code['Gift']['temporary_code']){
+            if($code['Gift']['temporary_code'] &&  && $gift['Gift']['temporary_code']!='NULL'){
                 $this->Gift->id = $gift_id;
                 //$this->Gift->Behaviors->attach('Containable');
                 $redeem_data['Gift']['redeem'] = 1;
