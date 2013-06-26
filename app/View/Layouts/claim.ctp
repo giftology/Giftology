@@ -62,7 +62,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		</a>-->
 		
 		
-		
+		<?php if($user):?>
 		<div class="controls">
 			<div class="shadow-wrapper">
 				<div class="frame">
@@ -77,6 +77,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 				
 			</div>
 		</div>
+	<?php endif; ?>
 	
 
 		

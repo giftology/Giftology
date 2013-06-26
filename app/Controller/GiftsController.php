@@ -1187,9 +1187,10 @@ public function index() {
             
             if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1 && $value_shipping['UserAddress']['address1'])
             {   
-                
+                $link = "gifts/claim?token=";
+                $url  = $this->bitly_link($link,$gift_id);
                 $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_invoice_sender'); 
-                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_receiver');     
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_receiver',$url);     
             }
             else if ($product_type['Product']['product_type_id']==DIGITAL && $product_type['Product']['min_price']!=0 && $product_type['Product']['max_price']!=0 && $failed_transaction != 1) {
                 $email = new CakeEmail();
@@ -1312,7 +1313,8 @@ public function index() {
 			    ->send();	
 	}
 
-    function send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,$template){
+    function send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,$template,$url = null){
+        DebugBreak();
             if($template == 'shipping_invoice_sender')
                 {
                     $email_sent = $sender_email;
@@ -1340,6 +1342,7 @@ public function index() {
                          'pincode' => $value_shipping['UserAddress']['pin_code'],
                          'country' => $value_shipping['UserAddress']['country'],
                          'time' => $gift['Gift']['created'],
+                         'url' => $url,
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send(); 
     }
@@ -1434,9 +1437,10 @@ public function index() {
 
     public function claim(){
         //token is encrypted_gift_id
-        if(isset($_GET['token'] && && !empty($_GET['token'])){
+        DebugBreak();
+        if(isset($_GET['token']) && !empty($_GET['token'])){
             $gift_encrypted_id = $_GET['token'];
-            $gift_id = $this->AesCrypt->decrypt($gift);
+            $gift_id = $this->AesCrypt->decrypt($gift_encrypted_id);
             $gift_claimable = $this->Gift->find('first',array('conditions' => array('Gift.id' => $gift_id )));
              $this->set('us',$gift_id);
             $gift = $this->Gift->find('first', array(
@@ -1487,6 +1491,7 @@ public function index() {
          $this->set('gift', $gift);
          $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
           $this->set('value_shipping', $value_shipping);
+          $this->set('user',$this->Auth->User('id'));
          if(!$gift_claimable)
         {
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
@@ -1873,11 +1878,18 @@ public function index() {
 						array('Transaction.gift_id' => $Order_Id));
 
             /* code for sms starts here */
-            $gift = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$Order_Id)));
+            $gift = $this->Gift->find('first', array(
+                'contain' => array(
+                    'Product' => array('Vendor'),
+                    'Sender' => array('UserProfile'),
+                    'Receiver' => array('UserProfile')),
+                'conditions' => array('Gift.id'=>$Order_Id)));
+            $name = $gift['Sender']['UserProfile']['first_name']." ".$gift['Sender']['UserProfile']['last_name'];
             $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
 			$phone = $value_shipping['UserAddress']['phone'];
-
-            $message = "Hi You have received a gift from <First Name> via Giftology. Please  confirm your address by clicking  bit.ly/abcdef so that the gift can reach you soon.;
+            $link = "gifts/claim?token=";
+            $url  = $this->bitly_link($link,$Order_Id);
+            $message = "Hi You have received a gift from".$name." via Giftology. Please  confirm your address by clicking" .$url. "so that the gift can reach you soon.";
 
             $value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$phone."&msg=".urlencode($message)."&send=Way2mint&d");
             /* code for sms ends here */
@@ -2457,8 +2469,9 @@ public function index() {
     	return $e;
     }
 
-    public function bitly_link(){
-
+    public function bitly_link($link = null,$OrderId = null){
+        DebugBreak();
+        $id = $this->AesCrypt->encrypt($OrderId); 
         $fields = array(
             'client_id' => BITLY_CLIENT_ID,
             'client_secret' => BITLY_CLIENT_SECRET,
@@ -2480,7 +2493,7 @@ public function index() {
         $access_token = curl_exec($ch);
         curl_close($ch);
                
-        $link = FULL_BASE_URL."/gifts/offline_voucher_redeem_page/".$gift_id;
+        $link = "http://192.168.1.14/".$link.$id;
         $ch = curl_init();
         $new_link_data = array(
             'access_token' => $access_token,
@@ -2498,6 +2511,7 @@ public function index() {
         $error = curl_error($ch);
         $url_arr = json_decode($result);
         $url = $url_arr->{'data'}->{'url'};
+        return $url;
     }
 
 }
