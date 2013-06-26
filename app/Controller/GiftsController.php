@@ -1843,9 +1843,7 @@ public function index() {
             $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
 			$phone = $value_shipping['UserAddress']['phone'];
 
-            //$message = ;
-
-            $message = "hello";
+            $message = "Hi You have received a gift from <First Name> via Giftology. Please  confirm your address by clicking  bit.ly/abcdef so that the gift can reach you soon.;
 
             $value = file("http://110.234.113.234/SendSMS/sendmsg.php?uname=giftolog&pass=12345678&dest=91".$phone."&msg=".urlencode($message)."&send=Way2mint&d");
             /* code for sms ends here */
