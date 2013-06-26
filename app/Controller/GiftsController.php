@@ -1397,24 +1397,22 @@ public function index() {
             )));
             if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
             {
-                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
                 array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
                     'value' => $gift_data['Gift']['gift_amount'])));
-                 if(!$code_orignal && $this->params['ext'] != 'json')
-                 {
-                   $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
+                if(!$code_orignal && $this->params['ext'] != 'json'){
+                    $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
                     echo json_encode($response);
                     $this->autoRender = $this->autoLayout = false;
                     exit;
-                 }
-           
-                $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                }
+                if($code_orignal){
+                    $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
            
-                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
+                    $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
                                          array('Gift.id' => $gift_id));
-           
-                     
+                }    
             }
              
              $gift_code = $this->Gift->find('first',array('contain' => array(
