@@ -1169,7 +1169,7 @@ public function index() {
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
 			}*/
-           DebugBreak();
+           
 		if ($receiver_email && $receiver_birthday==date("Y-m-d") && $product_type['Product']['min_price']==0 && $product_type['Product']['max_price']==0) 
 			{
 			    $this->send_email($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,'gift_sent_birthday');
@@ -1314,8 +1314,7 @@ public function index() {
 	}
 
     function send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,$template,$url = null){
-        DebugBreak();
-            if($template == 'shipping_invoice_sender')
+        if($template == 'shipping_invoice_sender')
                 {
                     $email_sent = $sender_email;
                 }
@@ -1437,7 +1436,6 @@ public function index() {
 
     public function claim(){
         //token is encrypted_gift_id
-        DebugBreak();
         if(isset($_GET['token']) && !empty($_GET['token'])){
             $gift_encrypted_id = $_GET['token'];
             $gift_id = $this->AesCrypt->decrypt($gift_encrypted_id);
@@ -2470,7 +2468,6 @@ public function index() {
     }
 
     public function bitly_link($link = null,$OrderId = null){
-        DebugBreak();
         $id = $this->AesCrypt->encrypt($OrderId); 
         $fields = array(
             'client_id' => BITLY_CLIENT_ID,
