@@ -252,12 +252,12 @@ define('TYPE_CONTEST', 2);
 define('SUGGESTED_FRIENDS', TRUE);
 define('DEFAULT_EMAIL_VERIFICATION', FALSE);
 define('SHOW_HOVER', TRUE);
-define('SHOW', FALSE);
+define('SHOW', TRUE);
 define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
 
 
-define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
-define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
+define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', FALSE); //old work flow
+define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', TRUE); //new work flow
 define('GIFT_CLAIM', TRUE); //new work flow
 
 
