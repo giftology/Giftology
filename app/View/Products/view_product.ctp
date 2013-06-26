@@ -66,6 +66,15 @@
 
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
+                if(!valid)
+                {
+                    $("#error_email").show();
+                    e = true;
+                }
+                else
+                {
+                    $("#error_email").hide();
+                }
                 var valid_shipping = emailRegex.test($("#email_shipping").val());
                 if(!valid_shipping)
                 {
@@ -85,7 +94,7 @@
                 else{
                     $("#error_phone_shipping").hide();
                 }
-                if($("[id='chk1']:checked").length<1)
+                /*if($("[id='chk1']:checked").length<1)
                 {
                     if(!valid){
                         alert("please enter valid email id");
@@ -96,7 +105,7 @@
                     }
                     
                     return false;
-                }
+                }*/
                 
                 if(e && a)
                 { 
@@ -357,7 +366,7 @@
                     </div>
                     <div class="input email">
                         <label for="email">Country</label>
-                        <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $country ))?></div>
+                        <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5",'value'=> 'India' ))?></div>
                         <div class="error_message" id="error_country" style="display:none; margin-left:120px;">
                             <h5 style="color:#FF0000">*please enter country.</h5>
                         </div>
@@ -379,7 +388,7 @@
                             <?php echo $this->Form->input('Explicitly Post on Facebook', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
                         </div>
                         <div class="input email">
-                            <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
+                            <label for="email">Send email to<br/></label>
                             <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
                             'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com",'value'=> $reciever_email ))?></div>
                             <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
