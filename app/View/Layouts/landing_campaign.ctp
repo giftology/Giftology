@@ -51,7 +51,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology'));
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','accord1'));
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -80,8 +80,90 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
   
   <div id="wrapper">
     <div class="banner-block">
+
+
+      <!--top strip-->
+      <?php if(SOCIAL_LIKE): ?>
+
+      <style type="text/css">
+      .show-case{margin-top:50px;}
+      .flexslider{top:48px;}
+      </style>
+
+
+     <div class="strip" >
+
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:12px/6px Arial, Helvetica, sans-serif;">
+
+        <ul>
+
+          <?php if(FB_LIKE): ?>
+        <li style="border-right-width:0">
+         <div class="hpanel" style="padding:8px; width:130px" >
+        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb" style="margin-right:12px"/>
+
+         <!--<div class="fb-like"><?php echo $this->Facebook->like(array('href' => "https://www.facebook.com/GiftologyIndiaa?fref=ts"));?></div>-->
+
+       
+         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
+
+
+            <div id="fb-root"></div>
+            <script>
+            
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=105463376223556";
+              fjs.parentNode.insertBefore(js, fjs);
+
+            }(document, 'script', 'facebook-jssdk'));</script>
+        </div>
+        </li>
+        <?php endif; ?>
+          <?php if(TWITTER_LIKE): ?>
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:8px; width:156px">
+        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw" style="margin-right:12px"/>
+        <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+        </li>
+         <?php endif; ?>
+        <?php if(ANDROID_INSTALL): ?>
+        <li style="border-right-width:0">
+        <div class="hpanel" style="padding:10px; width:140px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
+        </div>
+        <a href="http://bit.ly/Giftologyapp" target="_blank" style="color:#000"> Download app</a>
+         
+        </div>
+        </li>
+        <?php endif; ?>
+        <?php if(GIFT_SENT): ?>
+        <li>
+        <div class="hpanel" style="padding:10px; width:200px">
+        <div style="display:inline; margin-right:10px">
+        <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
+        </div>
+         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px;  text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
+          
+        </div>
+        </li>
+      <?php endif;?>
+        
+
+        </ul>
+        </div>
+        </div>
+        <?php endif; ?>
+
+        <!--top strip-->
+         <div class="logo-block" style="position: absolute;z-index: 6; left:14%; top:0px"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
       <div class="banner-content" style="height: 363px;">
-        <div class="logo-block"><a href="javascript:void(0);" class="logo" style="outline: none;"><img src="<?= FULL_BASE_URL; ?>/img/logo.png" alt=""></a></div>
+       
           <?php if(!$campaign_id): ?>
          <!--<p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p> -->
          <?php endif; ?>
@@ -355,6 +437,15 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
       
 });
   </script>
+  <script type="text/javascript">
+haccordion.setup({
+accordionid: 'hc2', //main accordion div id
+paneldimensions: {peekw:'40px', fullw:'450px', h:'40px'},
+selectedli: [-1, true], //[selectedli_index, persiststate_bool]
+collapsecurrent: true //<- No comma following very last setting!
+})
+
+</script>
   <script type="text/javascript">
     var clicky_site_ids = clicky_site_ids || [];
     clicky_site_ids.push(66489932);
