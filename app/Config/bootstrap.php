@@ -262,7 +262,7 @@ define('GIFT_CLAIM', TRUE); //new work flow
 
 
 //Giftology Android App Constants
-define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
+define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.giftology");
 define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
 
 
