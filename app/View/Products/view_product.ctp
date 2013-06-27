@@ -113,7 +113,7 @@
                 }
                 else{
                     $(this).parents('form').submit();
-                    //$(this).attr('disabled','disabled');
+                    $(this).attr('disabled','disabled');
                 }
                 if(valid_phone)
                 {

@@ -193,8 +193,12 @@
                     $("#error_country").hide();    
                 }
 
-                    
-                    if(e) return false;
+                if(e){
+                  return false;
+                } 
+                else{
+                  $(".submit").attr('disabled','disabled');
+                }
             });
            
         });

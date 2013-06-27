@@ -174,7 +174,7 @@ with in 3-4
 <tbody>
 <tr>
 <td style="font-family:Segoe UI,arial;color:#900;font-size:12px">
-<strong>. Note: Our partners will delivery of your item(s) within 1 to 5 working days (or as promised) depending on the location being served. We rely on our partners to fulfil these orders.</strong>
+<strong>Note: Our partners will delivery of your item(s) within 1 to 5 working days (or as promised) depending on the location being served. We rely on our partners to fulfil these orders.</strong>
 </td>
 </tr>
 </tbody>

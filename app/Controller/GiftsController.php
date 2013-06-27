@@ -1191,13 +1191,14 @@ public function index() {
             'conditions' => array('Gift.id'=>$gift_id)));
                 $vendor_name = $gift['Product']['Vendor']['name'];
                 $amount = $gift['Gift']['gift_amount'];
-            
+                $time = $gift['Gift']['created'];
+                $time =  date('d M Y', strtotime($time));
             if($product_type['Product']['product_type_id']==SHIPPED && $failed_transaction != 1 && $value_shipping['UserAddress']['address1'])
             {   
                 $link = "gifts/claim?token=";
                 $url  = $this->bitly_link($link,$gift_id);
-                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_invoice_sender'); 
-                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_receiver',$url);     
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_invoice_sender',$url,$time); 
+                $this->send_email_shipped($gift_id,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message,$value_shipping,$vendor_name, $amount,'shipping_receiver',$url,$time);     
             }
             else if ($product_type['Product']['product_type_id']==DIGITAL && $product_type['Product']['min_price']!=0 && $product_type['Product']['max_price']!=0 && $failed_transaction != 1) {
                 $email = new CakeEmail();
@@ -1320,33 +1321,39 @@ public function index() {
 			    ->send();	
 	}
 
-    function send_email_shipped($gift_id=null,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message = null,$value_shipping = null,$vendor_name = null, $amount = null,$template,$url = null){
+    function send_email_shipped($gift_id=null,$receiver_email,$sender_name,$sender_email,$receiver_name,$email_message = null,$value_shipping = null,$vendor_name = null, $amount = null,$template,$url = null,$time){
         if($template == 'shipping_invoice_sender')
                 {
                     $email_sent = $sender_email;
                     $title = "Wohooo! Your order ".$gift_id." has been placed successfully";
+                    $sender_email = 'care@giftology.com';
+                    $sender_gitology = 'Giftology';
                 }
         else if($template == 'confirmation_sender')
         {
             $email_sent = $sender_email;
             $title = "Your friends gift is on it's way. Send another gift?";
+            $sender_email = 'care@giftology.com';
+            $sender_gitology = 'Giftology';
         }
         else if($template == 'confirmation_receiver')
         {
             $email_sent = $receiver_email;
             $title = "Thanks a million. Your gift is safely on it's way!";
+            $sender_gitology = $sender_name;
         }
         else
         {
            $email_sent = $receiver_email; 
            $title = "Surprise! You have received a ".$vendor_name." gift View details inside";
+           $sender_gitology = $sender_name;
         }
             $email = new CakeEmail();
                 $email->config('smtp')
                 ->template($template, 'default') 
                 ->emailFormat('html')
                 ->to($email_sent)
-                ->from(array($sender_email => $sender_name))
+                ->from(array($sender_email => $sender_gitology))
                 ->subject($title)
                 ->viewVars(array('sender' => $sender_name,
                          'receiver' => $receiver_name,
@@ -1359,7 +1366,7 @@ public function index() {
                          'city' => $value_shipping['UserAddress']['city'],
                          'pincode' => $value_shipping['UserAddress']['pin_code'],
                          'country' => $value_shipping['UserAddress']['country'],
-                         'time' => $gift['Gift']['created'],
+                         'time' => $time,
                          'url' => $url,
                          'wide_image_link' => FULL_BASE_URL.'/'.$gift['Product']['Vendor']['wide_image']))
                 ->send(); 
@@ -1503,7 +1510,7 @@ public function index() {
                 'Receiver' => array('UserProfile')),
                 'conditions' => array('Gift.id'=>$this->request->data['gifts']['giftid'])));
             $value_shipping = $this->UserAddress->find('first',array('conditions' => array('UserAddress.id' => $gift['Gift']['gift_address_id'])));
-            if($gift['Product']['product_type_id'] == SHIPPED)
+            if($gift['Product']['product_type_id'] == SHIPPED && $gift['Gift']['claim'] == 0 )
             {   
                 $receiver_name = $this->data['gifts']['first_name'];
                 $receiver_email = $gift['Gift']['receiver_email'];
