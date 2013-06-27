@@ -863,36 +863,58 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login(){
-        $this->login_after_gift_selection();
+        if($this->Connect->user() && $this->Auth->User('id')){
+            $this->redirect(array('controller' => 'products', 'action' => 'select_friends'));
+
+        }
+        else $this->login_after_gift_selection();
     }
+
+    public function get_friends_after_login(){
+        $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
+        $this->set('user',$this->Auth->User('id'));
+        $this->set('my_fb_id',$this->Auth->User('facebook_id'));
+
+        $this->Reminder->unbindModel(array('belongsTo' => array('User')));
+        $friend_list= $this->Reminder->find('all',
+            array('limit'=>20,
+                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
+                    'order' => array('RAND()')
+                ));
+        if(isset($friend_list) && !empty($friend_list)){
+            $this->set('friends_data',$friend_list);
+        }
+        else{
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
+        }
+    }
+
+    public function get_product_details_after_login($id){
+        $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+        $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
+        if(!$gift_detailes){
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
+        }
+        $this->set('Gift_info',$gift_detailes);
+        $this->set('encrypted_id',$this->data['gift_id']);
+
+        $t=time();
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+    }
+
     public function login_after_gift_selection()
     { 
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->request->is('post')){
-                if($this->Connect->user() && $this->Auth->User('id'))
-                {
-                    $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
-                    $this->set('user',$this->Auth->User('id'));
-                    $this->set('my_fb_id',$this->Auth->User('facebook_id'));
-
-                    $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                    $friend_list= $this->Reminder->find('all',
-                        array('limit'=>20,
-                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
-                    'order' => array('RAND()')
-                    ));
-                    if(isset($friend_list) && !empty($friend_list)){
-                        $this->set('friends_data',$friend_list);
-
-                    }
-                    else{
-                        $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                        $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
-                    }
-                    
-
+                if($this->Connect->user() && $this->Auth->User('id')){    
+                    $this->get_friends_after_login();
                 }
-                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+                /*$gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
                 $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                                'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
                 $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
@@ -905,7 +927,7 @@ public function download_user_csv_all($download_selected = null){
 
                 $t=time();
                 $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
+                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
 
                   
 
@@ -921,28 +943,9 @@ public function download_user_csv_all($download_selected = null){
 
                 if($this->Connect->user() && $this->Auth->User('id'))
                 {
-                    $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
-                    $this->set('user',$this->Auth->User('id'));
-                    $this->set('my_fb_id',$this->Auth->User('facebook_id'));
-
-                    $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                    $friend_list= $this->Reminder->find('all',
-                        array('limit'=>20,
-                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
-                    'order' => array('RAND()')
-                    ));
-                    if(isset($friend_list) && !empty($friend_list)){
-                        $this->set('friends_data',$friend_list);
-
-                    }
-                    else{
-                        $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                        $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
-                    }
-                    //$this->set('friends_data',$friend_list);
-
+                    $this->get_friends_after_login();
                 }
-                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+                /*$gift_id = $this->AesCrypt->decrypt($_GET['token']);
                 $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                                'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
                 $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
@@ -956,35 +959,18 @@ public function download_user_csv_all($download_selected = null){
 
                 $t=time();
                 $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
+                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
 
             }
             elseif(isset($_GET['token']))
             {
              if($this->Connect->user() && $this->Auth->User('id'))
                 {
-                    $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
-                    $this->set('user',$this->Auth->User('id'));
-                    $this->set('my_fb_id',$this->Auth->User('facebook_id'));
-
-                    $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                    $friend_list= $this->Reminder->find('all',
-                        array('limit'=>20,
-                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
-                    'order' => array('RAND()')
-                    ));
-                    if(isset($friend_list) && !empty($friend_list)){
-                        $this->set('friends_data',$friend_list);
-
-                    }
-                    else{
-                        $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                        $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
-                    }
+                    $this->get_friends_after_login();
                     //$this->set('friends_data',$friend_list);
 
                 }
-                $gift_id = substr($_GET['token'], -13, 2);
+                /*$gift_id = substr($_GET['token'], -13, 2);
                 $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                                'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
                 $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
@@ -999,7 +985,7 @@ public function download_user_csv_all($download_selected = null){
 
                 $t=time();
                 $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
+                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
 
             }
             else{
