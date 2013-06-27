@@ -1322,7 +1322,8 @@ public function index() {
         else if($template == 'confirmation_sender')
         {
             $email_sent = $sender_email;
-            $title = "Your friends gift is on it's way. Send another gift?";
+            $title = "Your friends gift is on
+             it's way. Send another gift?";
         }
         else if($template == 'confirmation_receiver')
         {
@@ -1332,7 +1333,7 @@ public function index() {
         else
         {
            $email_sent = $receiver_email; 
-           $title = "Surprise! You have received a ".$vendor_name." View details inside";
+           $title = "Surprise! You have received a ".$vendor_name." gift View details inside";
         }
             $email = new CakeEmail();
                 $email->config('smtp')
