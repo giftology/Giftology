@@ -29,4 +29,31 @@ class DefaulterComponent extends Component {
 			);
 		return $defaulters[$id];
 	}
+    
+    function blocked_users_check($product_id, $receiver_fb_id, $sender_fb_id){
+        $result = array();
+        $result['status'] = FALSE;
+        if(RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS){
+            $senders_restricted = array();
+            $receivers_restricted = array();
+            $senders_restricted = $this->senders_restricted_for_product($product_id);
+            $receivers_restricted = $this->receivers_restricted_for_product($product_id);
+            $receiver_blocked = FALSE;
+            $sender_blocked = FALSE;
+            if(isset($receivers_restricted) && !empty($receivers_restricted))
+                $receiver_blocked = in_array($receiver_fb_id, $receivers_restricted);
+            if(isset($senders_restricted) && !empty($senders_restricted))
+                $sender_blocked = in_array($sender_fb_id, $senders_restricted);
+            if($sender_blocked || $receiver_blocked){
+                if($sender_blocked){
+                    $result['message'] = 'You are not eligible to send this gift';   
+                }
+                if($receiver_blocked){
+                    $result['message'] = 'Receiver is not eligible to receive this gift';    
+                }
+                $result['status'] = TRUE;
+            }
+        }
+        return $result;
+    }
 }

@@ -886,7 +886,17 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login_after_gift_selection()
-    { 
+    {
+        $black_listed_products = array();
+        if(GIFT_TO_MYSELF && ($this->data['gift_id'] || ($_GET['token'] && $_GET['token_first']))){
+            if($this->data['gift_id'])
+                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+            if($_GET['token'] && $_GET['token_first'])
+                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
+            $proudct_blocked_for_myself = in_array($gift_id,$black_listed_products);
+            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
+        } 
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->request->is('post')){
                 if($this->Connect->user() && $this->Auth->User('id'))

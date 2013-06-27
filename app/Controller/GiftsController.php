@@ -11,7 +11,7 @@ class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode');
 
-    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');
+    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg','Defaulter');
     public $presetVars = array(
             array('field' => 'id', 'type' => 'value'),
             array('field' => 'product_id', 'type' => 'value'),
@@ -807,7 +807,13 @@ public function index() {
         		$this->redirectIfNotAllowedToSend();
 
         	}
-        	
+        
+        $sender = $this->User->find('first',array('fields' => array('facebook_id'), 'conditions' => array('id' => $sender_id))); 
+        $blocked_user = $this->Defaulter->blocked_users_check($product_id,$receiver_fb_id,$sender['User']['facebook_id']);
+        if($blocked_user['status']){
+            $this->Session->setFlash(__($blocked_user['message']));
+            $this->redirect(array('controller' => 'reminders', 'action' => 'view_friends'));
+        }
         $this->Gift->create();
         $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
