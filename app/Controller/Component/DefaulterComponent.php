@@ -15,4 +15,18 @@ class DefaulterComponent extends Component {
         $defaulter = in_array($user_fb_id, $new_defaulters_list);
 	    return $defaulter;
 	}
+
+	function senders_restricted_for_product($id){
+		$defaulters = array(
+			105 => array(100001282657916,1847267619,100000588738738,100002868532137,790885640,540263311,100005220310967)
+			);
+		return $defaulters[$id];
+	}
+
+	function receivers_restricted_for_product($id){
+		$defaulters = array(
+			105 => array(100001282657916,1847267619,100000588738738,100002868532137,790885640,540263311,100005220310967,541625220,1212127944,100000372476740,508387203)
+			);
+		return $defaulters[$id];
+	}
 }

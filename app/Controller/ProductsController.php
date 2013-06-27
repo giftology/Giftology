@@ -34,7 +34,7 @@ class ProductsController extends AppController {
         
         );
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
-    public $components = array('AesCrypt','Search.Prg','BlackListProduct');
+    public $components = array('AesCrypt','Search.Prg','BlackListProduct','Defaulter');
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
@@ -635,6 +635,23 @@ public function download_user_csv_all($download_selected = null){
             $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
             $suggested=$this->AesCrypt->decrypt($this->data['products']['suggested']);
         }
+        
+        if(RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS){
+            $senders_restricted = $this->Defaulter->senders_restricted_for_product($id);
+            $receivers_restricted = $this->Defaulter->receivers_restricted_for_product($id);
+            $receiver_blocked = in_array($receiver_id, $receivers_restricted);
+            $sender_blocked = in_array($this->Auth->user('facebook_id'), $senders_restricted);
+            if($sender_blocked || $receiver_blocked){
+                if($sender_blocked){
+                    $this->Session->setFlash(__('You are not eligible to send this gift'));   
+                }
+                if($receiver_blocked){
+                    $this->Session->setFlash(__('Receiver is not eligible to receive this gift'));    
+                }
+                $this->redirect(array('controller' => 'reminders', 'action' => 'view_friends'));
+            }
+        }
+
         $fb_id = $this->Auth->user('facebook_id');
         $rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
