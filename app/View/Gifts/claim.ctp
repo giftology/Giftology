@@ -56,9 +56,16 @@
               <?php echo $this->Form->hidden("giftid" ,array('value'=>$us ))?>
                <div class="parent_submit">
             <?php echo $this->Form->end(__('Save To Gift Box'));?>
+         
+            </div>
+
+             <div class="parent_submitRedeem">
+           
+             <?php echo $this->Form->end(__('Redeem Now'));?>
                
             </div>
-              
+
+            
           </div> 
           <div class="clear"></div>
 
@@ -93,3 +100,44 @@
 
 </script>
 
+<style type="text/css">
+.parent_submit input[type="submit"], .parent_submitRedeem input[type="submit"]{
+   background: url("/img/redbutton.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #fff;
+    display: inline;
+    float: left;
+    font: bold 12px/42px helvetica;
+    height: 40px;
+    text-align: center;
+    width: 133px;
+
+}
+
+
+ .parent_submit .submit{display: inline}
+
+ .parent_submitRedeem input[type="submit"]{
+   background: url("/img/whitebutton.png") no-repeat scroll 0 0 transparent;
+    color: #000000;
+    margin-left: 40px;
+}
+
+
+ .parent_submitRedeem .submit{display: inline}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('.parent_submit input[type="submit"]').hover(function() {
+            $('.parent_submit input[type="submit"]').css('background','url("/img/redbutton.png")').css( 'color','#fff');
+           $('.parent_submitRedeem input[type="submit"]').css('background','url("/img/whitebutton.png")').css('color','#000');
+          
+         });
+   $('.parent_submitRedeem input[type="submit"]').hover(function() {
+            $('.parent_submit input[type="submit"]').css('background','url("/img/whitebutton.png")').css( 'color','#000');
+           $('.parent_submitRedeem input[type="submit"]').css('background','url("/img/redbutton.png")').css('color','#fff');
+          
+         });
+});
+</script>
