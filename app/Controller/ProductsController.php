@@ -637,10 +637,16 @@ public function download_user_csv_all($download_selected = null){
         }
         
         if(RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS){
+            $senders_restricted = array();
+            $receivers_restricted = array();
             $senders_restricted = $this->Defaulter->senders_restricted_for_product($id);
             $receivers_restricted = $this->Defaulter->receivers_restricted_for_product($id);
-            $receiver_blocked = in_array($receiver_id, $receivers_restricted);
-            $sender_blocked = in_array($this->Auth->user('facebook_id'), $senders_restricted);
+            $receiver_blocked = FALSE;
+            $sender_blocked = FALSE;
+            if(isset($receivers_restricted) && !empty($receivers_restricted))
+                $receiver_blocked = in_array($receiver_id, $receivers_restricted);
+            if(isset($senders_restricted) && !empty($senders_restricted))
+                $sender_blocked = in_array($this->Auth->user('facebook_id'), $senders_restricted);
             if($sender_blocked || $receiver_blocked){
                 if($sender_blocked){
                     $this->Session->setFlash(__('You are not eligible to send this gift'));   
