@@ -16,14 +16,8 @@
           <td >
           <div  style="background:#FFF;padding:30px 0;"> 
           <div style="float:left; position:relative; padding:0 30px 0 0;">   
-           <p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:0 10px 20px 50px;padding:0;color:#333; text-align: justify;" >
-           
-         
-
-You've received a gift from <?= $sender ?> via Giftology. Please  confirm your address here <?=$url ?> so that we can reach you soon. 
-
- 
- </p></div>
+           <p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:0 10px 20px 50px;padding:0;color:#333; text-align: justify;" >You can unwrap your gift and confirm the address by clicking this link  <?=$url ?>  so that the gift can reach you soon.
+           </p></div>
          
           <a href="https://www.giftology.com/" style="text-decoration:none;">  <div style="height:40px; width:200px; background:#4162a7; overflow:hidden; border:1px solid #243559; border-radius:4px; color:#FFF; padding-left:10px; font:22px/180% bold Arial, Helvetica, sans-serif ; margin:10px 50px; box-shadow:0 0 5px #4162a7;">
            <span style="border-right:1px #f2f2f2 solid; margin:0 5px 0 10px; "><b> f </b></span> <span> Get started here</span>
