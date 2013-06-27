@@ -376,7 +376,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
             <div class="how-it-work">
                <div style="width:960px; margin:auto;">
                         <?php 
-                         echo $this->Form->create('products', array('controller' => 'products','action' => 'login_after_gift_selection'));
+                         echo $this->Form->create('products', array('controller' => 'products','action' => 'login'));
                         foreach ($products as $product): ?>
                             <a>
                                
@@ -458,8 +458,8 @@ background: none repeat scroll 0 0 #F7F7F7; ">
                     id: gift_value+'_hidden',
                     name: 'gift_id',
                     value: gift_value,
-                }).appendTo('#productsLoginAfterGiftSelectionForm');
-                  $("#productsLoginAfterGiftSelectionForm").submit() 
+                }).appendTo('#productsLoginForm');
+                  $("#productsLoginForm").submit() 
             });
 
       });
@@ -617,6 +617,5 @@ background: none repeat scroll 0 0 #F7F7F7; ">
 <?php endif ?>
 <style type="text/css">
 .fb_ltr{padding-top: 7px;}
-style
-</>
+</style>
 </body></html>

@@ -37,7 +37,7 @@ class ProductsController extends AppController {
     public $components = array('AesCrypt','Search.Prg','BlackListProduct');
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
+        $this->Auth->allow('send_product_expiry_reminder','login');
     }
 
     public function isAuthorized($user) {
@@ -861,6 +861,9 @@ public function download_user_csv_all($download_selected = null){
         $this->ProductCitySegment->saveMany($city_product_segment);
         $this->autoRender = $this->autoLayout = false;
         exit;
+    }
+    public function login(){
+        $this->login_after_gift_selection();
     }
     public function login_after_gift_selection()
     { 
