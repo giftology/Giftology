@@ -708,7 +708,7 @@ public function download_user_csv_all($download_selected = null){
         $unpaid_product =array();
         $this->Gift->recursive = -1;
         foreach($product_array as $product)
-        {
+        {  
             $product_id= NULL; 
             if($product['Product']['min_price']== 0)
             {
@@ -731,20 +731,16 @@ public function download_user_csv_all($download_selected = null){
                 $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
                     'conditions' => array(
                         'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
-                        //'created between' => $sender_end_date." and ".$tomorrow,
-                        'created >' => $sender_end_date,
-                        'created <' => $tomorrow,
+                        'created between' => $sender_end_date." and ".$tomorrow,
                         'product_id' => $product_id,
                         'sender_id' => $sender_id
                         )
                     ));
 
-                $total_gift_rec_acc_limit_receiver = $this->Gift->find('count', array(
+                $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
                     'conditions' => array(
                         'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
-                        //'created between' => $receiver_end_date." and ".$tomorrow,
-                        'created >' => $sender_end_date,
-                        'created <' => $tomorrow,
+                        'created between' => $receiver_end_date." and ".$tomorrow,
                         'product_id' => $product_id,
                         'receiver_fb_id' => $receiver_fb_id
                         )
