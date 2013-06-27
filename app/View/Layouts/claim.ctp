@@ -141,6 +141,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 	</script>
+<?php if(FEEDBACK_PLUGIN):?>
 <script type="text/javascript"> 
 var _urq = _urq || []; 
 _urq.push(['setPerformInitialShorctutAnimation', false]); 
@@ -152,6 +153,7 @@ ur.src = 'http://sdscdn.userreport.com/userreport.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
 })(); 
 </script> 
+<?php endif;?>
 
 <?php echo $this->Mixpanel->embed(); ?>
 </body>

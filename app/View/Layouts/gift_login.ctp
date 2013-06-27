@@ -157,6 +157,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 	</script>
+<?php if(FEEDBACK_PLUGIN):?>
 <script type="text/javascript"> 
 var _urq = _urq || []; 
 _urq.push(['setPerformInitialShorctutAnimation', false]); 
@@ -168,7 +169,7 @@ ur.src = 'http://sdscdn.userreport.com/userreport.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
 })(); 
 </script>
-
+<?php endif;?>
 <script type="text/javascript">
 (function() {
         window._tt = window._tt || {};
