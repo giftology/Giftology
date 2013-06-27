@@ -592,14 +592,14 @@ public function download_user_csv_all($download_selected = null){
         //$this->paginate['conditions'] = $conditions;
         $black_listed_products = array();
         if(BLACKLISTED_PRODUCT && $receiver_id==$this->Auth->user('facebook_id')){
-            $black_listed_products = $this->BlackListProduct->products_list();   
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();   
         }
         
         $pre_final_products = array_merge($product_for_all_age_gender, $products_age_location_gender);
         $products = array_diff($pre_final_products, $black_listed_products);
         $this->paginate['conditions']  = array('NOT' => array('Product.display_order' => 0),'Product.id' => $products);
         $this->paginate['order']= 'Product.show_on_top,Product.min_price, Product.display_order ASC';
-        $this->Product->recursive = 0;
+        $this->Product->recursive = -1;
        
         $product_array=$this->paginate();
         $proddd = $this->product_filter($product_array, $receiver_id);     
