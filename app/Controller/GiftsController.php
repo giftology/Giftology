@@ -99,6 +99,9 @@ class GiftsController extends AppController {
 				)
 			));
 			$gift['pin'] = $pin['UploadedProductCode']['pin'];
+            if($gift['Gift']['temporary_code']=='NULL'){
+                $gift['Gift']['code'] = "Try later!";    
+            }
 			$this->set('gift', $gift);
 		}
 		$this->set('_serialize', array('gift'));	
@@ -108,18 +111,23 @@ class GiftsController extends AppController {
         $gift_id = isset($this->params->query['gift_id']) ? $this->params->query['gift_id'] : null;
         $receiver_fb_id = isset($this->params->query['receiver_fb_id']) ? $this->params->query['receiver_fb_id'] : null;
         $e = $this->wsRdeemGiftException($gift_id, $receiver_fb_id);
-
+        $code = $this->Gift->find('first',array('field' => array('temporary_code'), 'conditions' => array('id' => $gift_id)));
         if(isset($e) && !empty($e)) $this->set('gift', array('error' => $e));
         else{
-            $this->Gift->id = $gift_id;
-            //$this->Gift->Behaviors->attach('Containable');
-            $redeem_data['Gift']['redeem'] = 1;
-            $redeem_data['Gift']['claim'] = 1;
-            $redeemed = $this->Gift->save($redeem_data);
-            if($redeemed['Gift']['redeem']){
-                $gift['redeem'] = 1;
+            if($code['Gift']['temporary_code']!='NULL'){
+                $this->Gift->id = $gift_id;
+                //$this->Gift->Behaviors->attach('Containable');
+                $redeem_data['Gift']['redeem'] = 1;
+                $redeem_data['Gift']['claim'] = 1;
+                $redeemed = $this->Gift->save($redeem_data);
+                if($redeemed['Gift']['redeem']){
+                    $gift['redeem'] = 1;
+                }
+                else  $gift['redeem'] = 0;   
             }
-            else  $gift['redeem'] = 0;
+            else{
+                $gift['redeem'] = 0;      
+            } 
             $this->set('gift', $gift);
         }
         $this->set('_serialize', array('gift'));    
@@ -703,7 +711,6 @@ public function index() {
 				$this->redirect(array('controller' => 'reminders',
          			'action'=>'view_friends'));
             }
-
             $receiver_fb_id=$this->data['gifts']['user_id'];
             $receiver = $this->Connect->User->findByFacebookId($receiver_fb_id);
 
@@ -1563,24 +1570,22 @@ public function index() {
             )));
             if(!$code_check && $gift_data['Product']['code_type_id'] == UPLOADED_CODE) 
             {
-                 $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
+                $code_orignal = $this->Gift->Product->UploadedProductCode->find('first',
                 array('conditions' => array('available'=>1, 'product_id' =>$gift_data['Gift']['product_id'],
                     'value' => $gift_data['Gift']['gift_amount'])));
-                 if(!$code_orignal)
-                 {
-                   $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
+                if(!$code_orignal && $this->params['ext'] != 'json'){
+                    $response= "Oops! Looks like you're too late to the party. The gift has either expired or has exceeded the daily limit. Contact us for further assistance.";
                     echo json_encode($response);
                     $this->autoRender = $this->autoLayout = false;
                     exit;
-                 }
-           
-                $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
+                }
+                if($code_orignal){
+                    $this->Gift->Product->UploadedProductCode->updateAll(array('available' => 0),
                                          array('UploadedProductCode.id' => $code_orignal['UploadedProductCode']['id']));
            
-                $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
+                    $this->Gift->updateAll(array('Gift.code' => "'".$code_orignal['UploadedProductCode']['code']."'", 'Gift.temporary_code' => "'".$gift_data['Gift']['code']."'"),
                                          array('Gift.id' => $gift_id));
-           
-                     
+                }    
             }
              
              $gift_code = $this->Gift->find('first',array('contain' => array(

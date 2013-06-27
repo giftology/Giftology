@@ -252,8 +252,9 @@ define('TYPE_CONTEST', 2);
 define('SUGGESTED_FRIENDS', TRUE);
 define('DEFAULT_EMAIL_VERIFICATION', FALSE);
 define('SHOW_HOVER', TRUE);
-define('SHOW', FALSE);
+define('SHOW', TRUE);
 define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
+
 
 
 define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
@@ -283,6 +284,9 @@ define('TWITTER_LIKE',TRUE);
 define('ANDROID_INSTALL',TRUE);
 define('GIFT_SENT',TRUE);
 
+
+define('GOOGLE_PLAY_BITLY',"https://bit.ly/GiftologyAndroidApp");
+
 define('ENABLE_LOGIN_AFTER_GIFT_SELECTION',TRUE);
 
 //Chat Plugin
@@ -290,6 +294,10 @@ define('ZOPIM',FALSE);
 
 //REMINDER EMAIL CONTROL
 define('REMINDER_MAIL_SETTING', FALSE);
+
+define('BLACKLISTED_PRODUCT', TRUE);
+define('GIFT_TO_MYSELF', FALSE);
+
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));

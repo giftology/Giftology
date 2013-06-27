@@ -587,7 +587,6 @@ public function isMobile_app() {
            
             $this->set('num_gifts_sent', $gift_count);
 
-            //DebugBreak();
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -779,6 +778,10 @@ public function isMobile_app() {
             $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
         }
         $this->set('products', $product);
+
+        // gift count
+        $gift_count = $this->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
+        $this->set('num_gifts_sent', $gift_count);
          
 
          
