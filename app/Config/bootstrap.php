@@ -293,12 +293,9 @@ define('ZOPIM',FALSE);
 //REMINDER EMAIL CONTROL
 define('REMINDER_MAIL_SETTING', FALSE);
 define('BLACKLISTED_PRODUCT', TRUE);
-define('GIFT_TO_MYSELF', TRUE);
+define('GIFT_TO_MYSELF', FALSE);
 define('RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS', TRUE);
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
 CakePlugin::load('Search');
-
-
-
