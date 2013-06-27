@@ -20,8 +20,7 @@
            
          
 
-<?=$receiver ?> has accepted your gift. The Gift is on it's way 
-We hope you've enjoyed using Giftology as much as <?=$receiver ?> will enjoy receiving your gift!  
+<?=$receiver ?> has accepted your gift. The Gift is on it's way. We hope you've enjoyed using Giftology as much as <?=$receiver ?> will enjoy receiving your gift!  
 
  
  </p></div>

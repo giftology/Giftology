@@ -18,7 +18,7 @@
           <div style="float:left; position:relative; padding:0 30px 0 0;">   
            <p style="font:normal 14px/22px Georgia, 'Times New Roman', Times, serif;margin:0 10px 20px 50px;padding:0;color:#333; text-align: justify;" >
             Thanks for unwrapping your gift . Your gift will be sent to your </br>
-            confirmed Address :- </br>
+            Confirmed Address :- </br>
             <b><?=  $address?> <?=  $city?> - <?= $pincode?></b>.
             We hope you enjoy your Gift as much as <?=$sender ?> enjoyed sending the gift via Giftology.
 
