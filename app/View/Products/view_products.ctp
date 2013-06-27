@@ -1,3 +1,32 @@
+
+<div id="overlay" class="mainpage" style="width: 1805px;left:-500px">
+  <!--OVERLAY PAGE 1-->
+  <div class="overlaypage" >
+    <!-- content div 1-->
+    <div id="overlayPageContent1" style="display:none" >
+      <p>asdgbfj</p>
+      <p>sdjkgfnhkn</p>
+      <p>frist div content</p>
+    </div>
+    <!-- content div 2-->
+    <div  id="overlayPageContent2" style="display:none" >
+      <p>asdgbfj</p>
+      <p>sdjkgfnhkn</p>
+      <p>second div content</p>
+    </div>
+    <!-- content div 3-->
+    <div  id="overlayPageContent3" style="display:none">
+      <p>asdgbfj</p>
+      <p>sdjkgfnhkn</p>
+      <p>third div content</p>
+    </div>
+    <div class="overlaycancel"> </div>
+  </div>
+</div>
+
+
+
+
 <div>
 <ul id="breadcrumbs">
 <li class="breadcrumb home events">
@@ -68,3 +97,86 @@ array('cache' => array(
             });
         });
 </script>
+
+
+<!--feedback strip modification-->
+<style type="text/css">
+body{overflow-x:hidden }
+#container {margin:0;padding:0;width:100%;min-height:500px;background:#fff;}
+#stripe1 {width:200px;height:42px;position:fixed;top:200px;float:right;right:-150px;cursor:pointer;}
+#stripe2 {width:200px;height:42px;position:fixed;top:300px;float:right;right:-150px;cursor:pointer;}
+#stripe3 {width:200px;height:42px;position:fixed;top:400px;float:right;right:-150px;cursor:pointer;}
+#overlay {min-height:100%;height:650px;background:#000;opacity:0.85;z-index:11;display:none;position:absolute;top:0; }
+.overlaypage {width:700px;height:300px;background:#fafafa;z-index:12;position:fixed;border:1px solid #d7d7d7;margin:200px 558px}
+.overlaycancel {width:50px;height:50px;background:#000;z-index:13;position:absolute;float:right;right:0;top:0;}
+</style>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+//strip1 hover
+$("#stripe1").hover(function(){
+    $(this).toggleClass('abs')
+    if($(this).hasClass('abs')){$('#stripe1').animate({right:'-150px'});}
+    else{$('#stripe1').animate({right:'0px'});};
+  }); 
+
+//strip2 hover
+$("#stripe2").hover(function(){
+    $(this).toggleClass('abs')
+    if($(this).hasClass('abs')){$('#stripe2').animate({right:'-150px'});}
+    else{$('#stripe2').animate({right:'0px'});};
+  }); 
+
+//strip3 hover
+$("#stripe3").hover(function(){
+    $(this).toggleClass('abs')
+    if($(this).hasClass('abs')){$('#stripe3').animate({right:'-150px'});}
+    else{$('#stripe3').animate({right:'0px'});};
+  }); 
+
+
+$("#stripe1, #stripe2, #stripe3 ").click(function(){
+  $("#overlay").fadeIn(2000);
+  
+  
+});
+$('.overlaycancel').click(function(){ 
+    $("#overlayPageContent1").css('display','none');
+    $("#overlayPageContent2").css('display','none');
+    $("#overlayPageContent3").css('display','none');
+    $("#overlay").fadeOut(1000);                          
+                              
+});
+
+$("#stripe1 ").click(function(){
+  $("#overlayPageContent1").css('display','block');
+  
+});
+
+$("#stripe2 ").click(function(){
+  $("#overlayPageContent2").css('display','block');
+});
+
+$("#stripe3 ").click(function(){
+  $("#overlayPageContent3").css('display','block');
+});
+
+$(document).keydown(function(e){
+    if (e.keyCode == 27) { 
+       $("#overlayPageContent1").css('display','none');
+    $("#overlayPageContent2").css('display','none');
+    $("#overlayPageContent3").css('display','none');
+    $("#overlay").fadeOut(1000);
+       return false;
+    }
+ });
+});
+</script>
+
+
+
+<div class="mainpage" style="width:100%; min-height:0">
+  <div id="stripe1" class="abs"> <img src="<?= FULL_BASE_URL; ?>/img/strip.png" /> </div>
+  <div id="stripe2" class="abs"> <img src="<?= FULL_BASE_URL; ?>/img/strip.png" /> </div>
+  <div id="stripe3" class="abs"> <img src="<?= FULL_BASE_URL; ?>/img/strip.png" /> </div>
+</div>
