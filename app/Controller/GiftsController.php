@@ -907,10 +907,10 @@ public function index() {
                 else
                 {
                     $temp_code = $this->createUnlimitedCode($product_id);
-                   $gift['Gift']['code'] = $temp_code;
-                   $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
-                   $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
-                   $this->TemporaryGiftCode->saveAssociated($data);
+                    $gift['Gift']['code'] = $temp_code;
+                    $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+                    $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+                    $this->TemporaryGiftCode->saveAssociated($data);
                 }
 
              }
@@ -1020,16 +1020,23 @@ public function index() {
 
          function createRandomCode($product_id) {
             $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
-            array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
+            array('conditions' => array('UploadedProductCode.available'=>1, 'UploadedProductCode.product_id' =>$product_id)));
             
             $sent_temp_code = $this->TemporaryGiftCode->find('count',
+            array('conditions' => array('product_id' =>$product_id)));
+            
+            $sent_total = $this->Gift->find('count',
             array('conditions' => array('product_id' =>$product_id)));
             
             $redemption_rate = $this->Gift->Product->find('first', array('fields' => array('Product.redemption_rate'), 'conditions' => array('Product.id' => $product_id)));
             
             $total_code_byrate= ( ($total_codes/$redemption_rate['Product']['redemption_rate'])*100) ;
+            $allowed_total_codes = $this->Gift->Product->UploadedProductCode->find('count',
+            array('conditions' => array('UploadedProductCode.product_id' =>$product_id)));
             
-            if($sent_temp_code < $total_code_byrate) {
+            $remained_codes = round((($allowed_total_codes/$redemption_rate['Product']['redemption_rate'])*100)) - $sent_total;
+            
+            if($remained_codes > 0 && $total_codes > 0) {
             $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
             $i = 0; 
