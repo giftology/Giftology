@@ -482,7 +482,7 @@ $(document).ready(function(){
   <div class="FL mar5" >Code:<input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
   <p>&nbsp;</p>
   <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
-  <div class="FL mar5" ><span style="margin-top:3px;">Pin:&nbsp;&nbsp; </span><input type="text" name="box-content" id="box-content" value="${Gift.code}" style="margin-left:2px;"> </div>
+  <div class="FL mar5" ><span style="margin-top:3px;">Pin:&nbsp;&nbsp; </span><input type="text" name="box-content" id="box-content" value="${Gift.pin}" style="margin-left:2px;"> </div>
   <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"></div>
       </div>
       <div class="done" id="dones" style="z-index:0; margin-top:15px;"><img src="../img/done.png" align="center"></div>

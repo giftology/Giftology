@@ -1412,11 +1412,17 @@ public function index() {
                                          array('Gift.id' => $gift_id));
                 }    
             }
-             
-             $gift_code = $this->Gift->find('first',array('contain' => array(
+            $gift_code = $this->Gift->find('first',array('contain' => array(
                 'Product' => array('Vendor')),'conditions' =>array (
                     'Gift.id' => $gift_id
                    )));
+            $this->UploadedProductCode->recursive = -2;
+            $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+                'UploadedProductCode.product_id' => $gift_code['Gift']['product_id'],
+                'UploadedProductCode.code' => $gift_code['Gift']['code']
+                )
+            ));
+            $gift_code['Gift']['pin'] = $pin['UploadedProductCode']['pin'];
              return $gift_code;
     }
 
