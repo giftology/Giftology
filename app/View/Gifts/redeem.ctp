@@ -33,7 +33,7 @@
 .brandscreen{margin: 12px auto; width:550px; background-image:url(../img/1.png); height:256px; }
 .brandscreen img{ width:500px; margin:20px 24px 30px 24px;}
 .done{margin:-40px auto; width:184px; height:40px;}
-.coupon{width:366px; margin: 40px auto; height:60px;}
+.coupon{width:380px; margin: 40px auto; min-height:70px; height:auto;}
 .FL{ float:left;}
 
 
@@ -479,10 +479,13 @@ $(document).ready(function(){
   <p class="RedeemH3  ">Copy the code below and click on the link above.To redeem, enter your code in the 'Redeem at ${Product.Vendor.name} Gift Voucher or Card' section. </p>
   <div class="coupon">
   <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
-  <div class="FL mar5" > <input type="text" name="box-content" id="box-content" value="${Gift.code}"></div>
+  <div class="FL mar5" >Code:<input type="text" name="box-content" id="box-content" value="${Gift.code}"> </div>
+  <p>&nbsp;</p>
+  <div class="FL mar5" style="margin-top:10px"><img src="../img/arrow1.png"></div>
+  <div class="FL mar5" ><span style="margin-top:3px;">Pin:&nbsp;&nbsp; </span><input type="text" name="box-content" id="box-content" value="${Gift.code}" style="margin-left:2px;"> </div>
   <div class="FL mar4" id="ccb" style="float:right;margin-right:-20px;margin-top:-10px;"></div>
       </div>
-      <div class="done" id="dones" style="z-index:0;"><img src="../img/done.png" align="center"></div>
+      <div class="done" id="dones" style="z-index:0; margin-top:15px;"><img src="../img/done.png" align="center"></div>
      
 
  <div class="open-online-redeem popover fade bottom in" id="use_online_redeem" style="display: none;position:absolute; top:685px;left:30%">
