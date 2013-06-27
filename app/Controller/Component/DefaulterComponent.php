@@ -18,7 +18,7 @@ class DefaulterComponent extends Component {
 
 	function senders_restricted_for_product($id){
 		$defaulters = array(
-			105 => array(100001282657916,1847267619,100002868532137,540263311,100005220310967,100005645021182)
+			105 => array(100001282657916,1847267619,100002868532137,100005220310967,100005645021182)
 			);
 		return $defaulters[$id];
 	}
