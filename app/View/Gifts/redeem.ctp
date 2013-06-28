@@ -460,7 +460,7 @@ $(document).ready(function(){
 
                      });
                           //hidding the pin field if pin is not available.
-                      if($('#box_content').val().length <= 0){
+                       if($('#box_content').val() === ""){
                         $('#pins').hide();
                         $('#pins_image').hide();
                         $('#dones').css('margin-top','-40px');
