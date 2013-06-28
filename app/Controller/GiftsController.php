@@ -1665,10 +1665,17 @@ public function index() {
         
 
     }
-		
+    
+	public function isMobile_app() 
+    { 
+      preg_match('/' . REQUEST_ANDROID_MOBILE_USER_AGENT . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+      if (!empty($match)) { 
+        return true; 
+      } 
+      return false; 
+    }
     public function offline_voucher_redeem_page($gift_id)
-    {   
-        if($this->RequestHandler->isAjax()) 
+    {   if($this->RequestHandler->isAjax()) 
         {
            $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
@@ -1687,6 +1694,12 @@ public function index() {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
         }
+        $android_mobile = $this->isMobile_app();
+        if($android_mobile)
+        {   
+            $this->redirect(array('controller' => 'users','action' => 'login'));
+        }
+        else{
         $id=$this->AesCrypt->decrypt($gift_id);
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
         $this->Reminder->recursive = -1;
@@ -1736,6 +1749,7 @@ public function index() {
         else{
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page',$id));
+        }
         }
     }
     
