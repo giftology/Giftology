@@ -32,6 +32,8 @@ class Gift extends AppModel {
             array('name' => 'receiver_fb_id', 'type' => 'like','field' => 'Gift.receiver_fb_id'),
             array('name' => 'receiver_email', 'type' => 'like','field' => 'Gift.receiver_email'),
             array('name' => 'code', 'type' => 'like','field' => 'Gift.code'),
+            array('name' => 'claim', 'type' => 'like','field' => 'Gift.claim'),
+            array('name' => 'redeem', 'type' => 'like','field' => 'Gift.redeem'),
             array('name' => 'gift_amount', 'type' => 'like','field' => 'Gift.gift_amount'),
             array('name' => 'gift_status_id', 'type' => 'like','field' => 'Gift.gift_status_id'),
             array('name' => 'expiry_date', 'type' => 'like','field' => 'Gift.expiry_date'),

@@ -23,6 +23,8 @@ class GiftsController extends AppController {
             array('field'=> 'gift_amount','type'=>'value'),
             array('field'=> 'gift_status_id','type'=>'value'),
             array('field'=> 'expiry_date','type'=>'value'),
+            array('field'=> 'claim','type'=>'value'),
+            array('field'=> 'redeem','type'=>'value'),
             array('field'=> 'created','type'=>'value'),
             array('field'=> 'modified','type'=>'value'),
         
@@ -201,7 +203,7 @@ public function download_user_csv_all($download_selected = null){
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Claim','Redeem','Gift Amount','Gift Status','Expiry Date','Created','Modified');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
@@ -216,6 +218,9 @@ public function download_user_csv_all($download_selected = null){
                             $result['Gift']['receiver_fb_id'],
                             $result['Gift']['receiver_email'],
                             $result['Gift']['code'],
+                            $result['Gift']['claim'],
+                            $result['Gift']['redeem'],
+
                             $result['Gift']['gift_amount'],
                             $result['Gift']['gift_status_id'],
                             $result['Gift']['expiry_date'],
@@ -234,7 +239,7 @@ public function download_user_csv_all($download_selected = null){
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Claim','Redeem','Gift Amount','Gift Status','Expiry Date','Created','Modified');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
@@ -250,6 +255,9 @@ public function download_user_csv_all($download_selected = null){
                             $result['Gift']['receiver_fb_id'],
                             $result['Gift']['receiver_email'],
                             $result['Gift']['code'],
+                            $result['Gift']['claim'],
+                            $result['Gift']['redeem'],
+
                             $result['Gift']['gift_amount'],
                             $result['Gift']['gift_status_id'],
                             $result['Gift']['expiry_date'],
@@ -373,6 +381,12 @@ public function download_user_csv_all($download_selected = null){
             'Product.min_price >' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
         }
+        $claim= array('1'=>'claim'
+        );
+        $redeem= array('1'=>'redeem'
+        );
+        $this->set('claim',$claim);
+        $this->set('redeem',$redeem);
         $this->paginate = $conditions;
         $this->Gift->recursive = 0;
         $this->set('gifts', $this->paginate());
@@ -492,7 +506,13 @@ public function index() {
             'Product.min_price' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
 		}
-		
+		$claim= array('1'=>'claim'
+        );
+        $redeem= array('1'=>'redeem'
+        );
+        $this->set('claim',$claim);
+        $this->set('redeem',$redeem);
+
 		$this->paginate = $conditions;
 		$this->Gift->recursive = 0;
 		$this->set('gifts', $this->paginate());
