@@ -37,16 +37,31 @@ class AppController extends Controller {
     var $helpers = array('Session', 'Facebook.Facebook', 'Mixpanel.Mixpanel');
     var $components = array('Session', 'Mixpanel.Mixpanel',
                             'Auth' => array(
+                            	'loginAction' => array(
+            					'controller' => 'users',
+            					'action' => 'login',
+            					'plugin' => 'users'
+        						),
+        						'authError' => 'Did you really think you are allowed to see that?',
+        						'authenticate' => array(
+            						'Form' => array(
+            				    'fields' => array('username' => 'email')
+            						)
+        						),
                                 'authorize' => 'Controller',
                                 'authorizedActions' => array ('index', 'view'),
-                                'loginRedirect' => array('controller' => 'reminders', 'action' => 'view_friends'),
+                                'loginRedirect' => array('controller' => 'products', 'action' => 'view_product_after_email_login'),
                                 'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'home')
                             ),
                             'Facebook.Connect' => array('model' => 'User'),
                             'RequestHandler', 'Cookie');
 
     function beforeFilter() {
-
+$this->Auth->fields = array(
+        'username' => 'userName',
+    'email'=>'userEmail',
+        'password' => 'password'
+     );
 	if (isset($this->params['ext']) && $this->params['ext'] == 'json' &&
 	    isset($this->params->query['rand']) && isset($this->params->query['key'])) {
 		//json call

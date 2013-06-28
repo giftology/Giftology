@@ -42,6 +42,111 @@ public $actsAs = array('Search.Searchable');
 			array('name' => 'created', 'type' => 'like','field' => 'User.created'),
 			array('name' => 'modified', 'type' => 'like','field' => 'User.modified'),
 );
+function RegisterValidate() {
+		$validate1 = array(
+				"user_group_id" => array(
+					'rule' => array('comparison', '!=', 0),
+					'message'=> 'Please select group'),
+				'username'=> array(
+					'mustNotEmpty'=>array(
+						'rule' => 'notEmpty',
+						'message'=> 'Please enter username',
+						'last'=>true),
+					'mustUnique'=>array(
+						'rule' =>'isUnique',
+						'message' =>'This username already taken',
+					'last'=>true),
+					'mustBeLonger'=>array(
+						'rule' => array('minLength', 4),
+						'message'=> 'Username must be greater than 3 characters',
+						'last'=>true),
+					),
+				
+				'email'=> array(
+					'mustNotEmpty'=>array(
+						'rule' => 'notEmpty',
+						'message'=> 'Please enter email',
+						'last'=>true),
+					'mustBeEmail'=> array(
+						'rule' => array('email'),
+						'message' => 'Please enter valid email',
+						'last'=>true),
+					'mustUnique'=>array(
+						'rule' =>'isUnique',
+						'message' =>'This email is already registered',
+						)
+					),
+				'password'=>array(
+					'mustNotEmpty'=>array(
+						'rule' => 'notEmpty',
+						'message'=> 'Please enter password',
+						'on' => 'create',
+						'last'=>true),
+					'mustBeLonger'=>array(
+						'rule' => array('minLength', 6),
+						'message'=> 'Password must be greater than 5 characters',
+						'on' => 'create',
+						'last'=>true),
+					'mustMatch'=>array(
+						'rule' => array('verifies','cpassword'),
+						'message' => 'Both passwords must match'),
+						//'on' => 'create'
+					)
+			);
+		$this->validate=$validate1;
+		return $this->validates();
+	}
+	public function verifies() {
+		return ($this->data['User']['password']===$this->data['User']['cpassword']);
+	}
+		/**
+	 * Used to send forgot password mail to user
+	 *
+	 * @access public
+	 * @param array $user user detail
+	 * @return void
+	 */
+	public function forgotPassword($user) {
+        DebugBreak();
+		$userId=$user['User']['id'];
+		$email = new CakeEmail();
+		$fromConfig = "prabhat@giftology.com";
+		$fromNameConfig = "prabhat@giftology.com";
+		$email->from(array( $fromConfig => $fromNameConfig));
+		$email->sender(array( $fromConfig => $fromNameConfig));
+		$email->to($user['User']['email']);
+		$email->subject(emailFromName.': Request to Reset Your Password');
+		$body= "Welcome ".$user['User']['first_name'].", let's help you get signed in
+
+You have requested to have your password . Please login with password ". md5($user['User']['password'])."
+
+Thanks,\n".
+
+emailFromName;
+		try{
+			$result = $email->send($body);
+		} catch (Exception $ex){
+			// we could not send the email, ignore it
+			$result="Could not send forgot password email to userid-".$userId;
+		}
+		$this->log($result, LOG_DEBUG);
+	}
+	function LoginValidate() {
+		$validate1 = array(
+				'email'=> array(
+					'mustNotEmpty'=>array(
+						'rule' => 'notEmpty',
+						'message'=> 'Please enter email or username')
+					),
+				'password'=>array(
+					'mustNotEmpty'=>array(
+						'rule' => 'notEmpty',
+						'message'=> 'Please enter password')
+					)
+			);
+		$this->validate=$validate1;
+		return $this->validates();
+	}
     public $validate = array(
         'username' => array(
             'required' => array(
@@ -145,7 +250,7 @@ public $actsAs = array('Search.Searchable');
 			'counterQuery' => ''                
                 )
 	);
-        
+       
         public function beforeSave($options = array()) {
             if (isset($this->data[$this->alias]['password'])) {
                 $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);

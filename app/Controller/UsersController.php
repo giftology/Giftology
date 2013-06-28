@@ -34,7 +34,7 @@ class UsersController extends AppController {
         );
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_app');
+        $this->Auth->allow('login','logout','product','email_unsubscribed','isMobile_app','register','forgotPassword');
     }
     public function isAuthorized($user) {
 
@@ -550,9 +550,110 @@ public function isMobile_app() {
         $this->redirect(array('action' => 'index'));
     }
     
+    public function forgotPassword(){
+        DebugBreak();
+        if ($this->request -> isPost()) {
+            $this->User->set($this->data);
+            if ($this->User->LoginValidate()) {
+                $email  = $this->data['User']['email'];
+                $user = $this->User->findByUsername($email);
+                if (empty($user)) {
+                    $user = $this->User->findByEmail($email);
+                    if (empty($user)) {
+                        $this->Session->setFlash(__('Incorrect Email/Username or Password'));
+                        return;
+                    }
+                }
+                // check for inactive account
+               
+                $this->User->forgotPassword($user);
+                $this->Session->setFlash(__('Please check your mail for reset your password'));
+                $this->redirect('/login');
+            }
+        }
+
+    }
+    public function register(){
+    if ($this->request->isPost()) {
+        $this->User->set($this->data);
+        if ($this->User->RegisterValidate()){
+            $this->request->data['User']['password'] = md5($this->request->data['User']['password']);
+            $this->User->save($this->request->data,false);
+            }
+        }
+
+    }
     public function login() {
+    DebugBreak();
         if ($this->Connect->user() && $this->Auth->User('id')){
             $this->redirect(array('controller'=>'reminders', 'action'=>'view_friends'));
+        }
+            if ($this->request->isPost()) {
+        if(empty($this->data['User']['username']) == false)
+        {
+                $email  = $this->data['User']['username'];
+                $password = $this->data['User']['password'];
+
+                $user = $this->User->findByUsername($email);
+                if (empty($user)) {
+                    $user = $this->User->findByEmail($email);
+                    if (empty($user)) {
+                        $this->Session->setFlash(__('Incorrect Email/Username or Password'));
+                        return;
+                    }
+                }
+            // Here we validate the user by calling that method from the User model
+            $hashed = md5($password);
+                if ($user['User']['password'] === $hashed)
+            {
+                // Write some Session variables and redirect to our next page!
+                $this->Session->setFlash('Thank you for logging in!');
+                $this->Session->write('User', $email);
+ 
+                // Go to our first destination!
+                $this->Redirect(array('controller' => 'products', 'action' => 'view_product_after_email_login'));
+                exit();
+            }
+            else
+            {
+                $this->Session->setFlash('Incorrect username/password!', true);
+                $this->Redirect(array('action' => 'login'));
+                exit();
+            }
+        }
+                /*
+            $this->User->set($this->data);
+            //if($this->User->LoginValidate()) 
+            {
+                $email  = $this->data['User']['email'];
+                $password = $this->data['User']['password'];
+
+                $user = $this->User->findByUsername($email);
+                if (empty($user)) {
+                    $user = $this->User->findByEmail($email);
+                    if (empty($user)) {
+                        $this->Session->setFlash(__('Incorrect Email/Username or Password'));
+                        return;
+                    }
+                }
+                // check for inactive account
+               // if ($user['User']['id'] != 1 and $user['User']['active']==0) {
+                //    $this->Session->setFlash(__('Your registration has not been confirmed please verify your email or contact to Administrator'));
+                //    return;
+               // }
+                $hashed = md5($password);
+                if ($user['User']['password'] === $hashed) {
+                 
+            $this->redirect(array('controller'=>'products', 'action'=>'view_product_after_email_login'));
+                           //  die();
+                   
+                } 
+
+                else {
+                    $this->Session->setFlash(__('Incorrect Email/Username or Password'));
+                    return;
+                }
+            }*/
         }
         else{
             $check_on_campaign=$this->Campaign->find('first',array('conditions' => array('Campaign.on_landing_page '=>1,'Campaign.enable'=>1)));
@@ -578,7 +679,7 @@ public function isMobile_app() {
             }
             $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0 , 'Product.product_type_id !=' => 2 ),'limit'=>6));
+            $product = $this->Product->find('all',array('conditions' => array('Product.display_order >'=>0),'limit'=>6));
             foreach($product as $k => $p){
                 $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
             }

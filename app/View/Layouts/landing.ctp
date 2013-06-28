@@ -124,19 +124,19 @@ collapsecurrent: true //<- No comma following very last setting!
 
      <div class="strip" >
 
-        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:12px/6px Arial, Helvetica, sans-serif;">
+        <div id="hc2" class="haccordion" style="position:relative; float:right; color:black;  font:14px/6px Arial, Helvetica, sans-serif;">
 
         <ul>
 
           <?php if(FB_LIKE): ?>
         <li style="border-right-width:0">
-         <div class="hpanel" style="padding:8px; width:130px" >
-        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb" style="margin-right:12px"/>
+         <div class="hpanel" style="padding:9px; width:115px" >
+        <img src="<?= FULL_BASE_URL; ?>/img/facebook.png" width="30" height="30"  class="fb"/>
 
          <!--<div class="fb-like"><?php echo $this->Facebook->like(array('href' => "https://www.facebook.com/GiftologyIndiaa?fref=ts"));?></div>-->
 
        
-         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
+         <div class="fb-like" data-href="https://www.facebook.com/GiftologyIndiaa?fref=ts" data-send="false" data-layout="button_count" data-width="115" data-show-faces="false"></div>
 
 
             <div id="fb-root"></div>
@@ -155,8 +155,8 @@ collapsecurrent: true //<- No comma following very last setting!
         <?php endif; ?>
           <?php if(TWITTER_LIKE): ?>
         <li style="border-right-width:0">
-        <div class="hpanel" style="padding:8px; width:156px">
-        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw" style="margin-right:12px"/>
+        <div class="hpanel" style="padding:9px; width:145px">
+        <img src="<?= FULL_BASE_URL; ?>/img/twitter.png" width="30" height="30" class="tw"/>
         <a href="https://twitter.com/share" class="twitter-share-button" style="padding-top:4px;">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
@@ -168,9 +168,8 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
-        <a href="<?= GOOGLE_PLAY_BITLY ?>" target="_blank" style="color:#000"> Download app</a>
-        
-
+        <a href="https://play.google.com/store/apps/details?id=com.unikove.giftology&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS51bmlrb3ZlLmdpZnRvbG9neSJd" target="_blank"> Download app</a>
+         
         </div>
         </li>
         <?php endif; ?>
@@ -180,7 +179,7 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/gift.png" width="30" height="30" class="gb"/>
         </div>
-         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px;  text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
+         Total Gifts Sent: <span style=" box-shadow:0 2px 2px 1px #d7d7d7; padding:2px 5px; color:#900; text-shadow:0 1px #f0f0f0;"> <?= $this->Number->format($num_gifts_sent); ?> </span>
           
         </div>
         </li>
@@ -228,7 +227,7 @@ collapsecurrent: true //<- No comma following very last setting!
       'redirect' => $redirect_url)); ?></div>   
            
         <div class="clear">&nbsp;</div>
-		<?php if(($type==TYPE_CONTEST) &&($campaign_check_on) &&($redirect_to == REMINDER)){?>   
+    <?php if(($type==TYPE_CONTEST) &&($campaign_check_on) &&($redirect_to == REMINDER)){?>   
         <p>
          <div class="tnc">
         <a href="/contest_tnc" class="tnc_a"> Click here for T&C </a>
@@ -268,6 +267,26 @@ collapsecurrent: true //<- No comma following very last setting!
               <?php endif;  ?>
         </div> 
       </section>
+<!-- user login form -->
+<div class="users form">
+  </div>
+<div class="how-it-work"style="height: 180px;">
+<?php echo $this->Session->flash('auth'); ?>
+<?php echo $this->Form->create('User'); ?>
+    <fieldset>
+        <legend><?php echo __('Please enter your Email and password'); ?></legend>
+        <?php echo $this->Form->input('username');
+        echo $this->Form->input('password');
+    ?>
+    </fieldset>
+    <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'forgotPassword')); ?>><span>Forgot Password?</span></a>
+<?php echo $this->Form->end(__('Login')); ?>
+<a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'register')); ?>><span>Sign Up using email</span></a>
+
+
+</div>
+
+
 
      <!--<?php //if(isset($campaign_Images)): ?>
          <section class="show-case">
@@ -375,9 +394,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
                
             <div class="how-it-work">
                <div style="width:960px; margin:auto;">
-                        <?php 
-                         echo $this->Form->create('products', array('controller' => 'products','action' => 'login_after_gift_selection'));
-                        foreach ($products as $product): ?>
+                        <?php foreach ($products as $product): ?>
                             <a>
                                
 
@@ -388,7 +405,6 @@ background: none repeat scroll 0 0 #F7F7F7; ">
                               'key' => $product['Product']['id'].'landing'))); ?>
                             </a>
                         <?php endforeach; ?>
-                        <?php echo $this->Form->end(); ?>
                        <a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'product')); ?>><span class="product_label" style=" color: #F5F7F2;background-color: crimson;float:right;margin-top:0px;margin-right:40px;font-size: 13px;border-radius: 2px 2px 2px 2px;display: inline-block;text-shadow: none;font-weight: bold;padding: 3px 5px 3px 5px;">See More</span></a>
                </div>
              </div>
@@ -444,27 +460,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
       //echo $this->Minify->script('../js/carouFredSel');      
       //echo $this->fetch('script');
     ?>
-      <script type="text/javascript">
-      $(document).ready(function(){
-        $('Form a > .small-voucher').click(function (){
-
-                var gift_value = $(this).attr('id');
-               // var gift_name = $(this).attr('name');
-                //alert(gift_value + " "+gift_name );
-
-                
-                  $('<input>').attr({
-                    type: 'hidden',
-                    id: gift_value+'_hidden',
-                    name: 'gift_id',
-                    value: gift_value,
-                }).appendTo('#productsLoginAfterGiftSelectionForm');
-                  $("#productsLoginAfterGiftSelectionForm").submit() 
-            });
-
-      });
-
-      </script>
+      
        <script type="text/javascript">
        !function(window){
   var $q = function(q, res){
@@ -616,7 +612,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
   </script>-->
 <?php endif ?>
 <style type="text/css">
-.fb_ltr{padding-top: 7px;}
-style
-</>
+.fb_ltr{padding-top: 10px;}
+
+</style>
 </body></html>

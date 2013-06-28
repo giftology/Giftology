@@ -60,7 +60,15 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<!--<a href=<?= FULL_BASE_URL; ?>> -
 		<img class="mt-20 float-l" src="<?= IMAGE_ROOT; ?>brand-logo.jpg" />
 		</a>-->
-		<?php if($user){ ?>
+		<?php
+		 if($this->Session->check('User')){
+		 	$login_mail = $this->Session->read('User');
+		 	echo "welcome-"; print_r($login_mail); ?>
+		 	<a href=<?= $this->Html->url(array('controller'=>'users', 'action'=>'email_logout')); ?>><span>Logout</span></a>
+		 <?	
+		}
+		else{
+		 if($user){ ?>
 		<ul class="nav float-l">
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends')); ?> class="events <?= isset($celebrations_active) ? $celebrations_active:''; ?>"><span>Events</span></a></li>
 			<li><a href=<?= $this->Html->url(array('controller'=>'reminders',  'action'=>'view_friends', 'all')); ?> class="friends <?= isset($friends_active) ? $friends_active:''; ?>"><span>Friends</span></a></li>
@@ -99,7 +107,7 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 		<div class="fbconect" id="fb" style="padding:0; display:inline-block; position:absolute; right:0; top:30px;">	<?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
 							'redirect' => array('controller'=>'reminders', 'action'=>'view_friends'))); 
 			 echo $this->Facebook->init(); ?> </div>
-		<?php } ?>
+		<?php } }?>
 	</div>
 				
 		<!-- <div class="transbox"><img class="spinner" src="<?echo IMAGE_ROOT.'/spinner.gif'; ?>"/></div> -->
@@ -182,7 +190,6 @@ ul.left-menu li a { font-size:13px;  color:#fff}
 			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 	</script>
-<?php if(FEEDBACK_PLUGIN):?>
 <script type="text/javascript"> 
 var _urq = _urq || []; 
 _urq.push(['setPerformInitialShorctutAnimation', false]); 
@@ -194,7 +201,7 @@ ur.src = 'http://sdscdn.userreport.com/userreport.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
 })(); 
 </script>
-<?php endif; ?>
+
 <script type="text/javascript">
 (function() {
         window._tt = window._tt || {};

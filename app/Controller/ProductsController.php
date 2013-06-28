@@ -36,12 +36,13 @@ class ProductsController extends AppController {
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
     public $components = array('AesCrypt','Search.Prg','BlackListProduct','Defaulter');
     public function beforeFilter() {
+        DebugBreak();
         parent::beforeFilter();
-        $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
+        $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection','view_product_after_email_login');
     }
 
     public function isAuthorized($user) {
-        if (($this->action == 'view_products') || ($this->action == 'view_product')) {
+        if (($this->action == 'view_products') || ($this->action == 'view_product')||($this->action =='view_product_after_email_login') ){
             return true;
         }
         return parent::isAuthorized($user);
@@ -212,7 +213,28 @@ public function download_user_csv_all($download_selected = null){
                         }
                     }
                     die;
+    } 
+
+    public function view_product_after_email_login(){
+       DebugBreak();
+        if(!$this->Session->check('User'))
+           
+        {
+            $this->redirect(array('controller' => 'users', 'action' => 'login'));
+            exit();
+        }
+         $green = $this->Session->read('User');
+            $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                         'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+            //DebugBreak();
+            $product = $this->Product->find('all');
+            foreach($product as $k => $p){
+                $product[$k]['Product']['encrypted_gift_id'] = $this->AesCrypt->encrypt($p['Product']['id']);
+            }
+            $this->set('products', $product);
+
     }
+    
      public function index() {
         $this->Prg->commonProcess('Product');
      if(($this->passedArgs['created_start'])||($this->passedArgs['modified_start']))
