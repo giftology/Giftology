@@ -700,8 +700,10 @@ public function isMobile_app() {
            if($this->RequestHandler->isMobile())
             {
                 if(isset($this->request->query['gift_id']))
-			if($this->isMobile_app())
+ 			$android=$this->isMobile_app();
+			if($android)
 			{
+
 			  $this->set('android', $android);
 			 $this->layout='mobile_landing';
 			}
