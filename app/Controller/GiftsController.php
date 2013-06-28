@@ -1705,7 +1705,13 @@ public function index() {
                     'Sender' => array('UserProfile'),
                     'Receiver' => array('UserProfile')),
                 'conditions' => array('Gift.id'=>$id)));
-                $this->set('gift', $gift); 
+                $this->set('gift', $gift);
+            $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+                'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+                'UploadedProductCode.code' => $gift['Gift']['code']
+                )
+            )); 
+            $this->set('pin', $pin);
         }
         else{
             $this->redirect(array(
