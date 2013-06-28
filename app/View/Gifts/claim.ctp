@@ -118,7 +118,7 @@
                   </div>
             <?php endif; ?>
                <div class="parent_submit" style="margin-left: 80px">
-            <?php echo $this->Form->end(__('Save To Gift Box'), array('id'=>'form_shipping'));?>
+            <?php echo $this->Form->end(__('Claim Now'), array('id'=>'form_shipping'));?>
                
             </div>
               

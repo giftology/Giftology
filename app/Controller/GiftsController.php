@@ -1329,8 +1329,7 @@ public function index() {
         else if($template == 'confirmation_sender')
         {
             $email_sent = $sender_email;
-            $title = "Your friends gift is on
-             it's way. Send another gift?";
+            $title = "Your friends gift is on it's way. Send another gift?";
         }
         else if($template == 'confirmation_receiver')
         {
