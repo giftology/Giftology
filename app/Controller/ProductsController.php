@@ -863,20 +863,50 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login(){
+        //DebugBreak();
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
-            if($this->Connect->user() && $this->Auth->User('id')){
-                $this->redirect(array('controller' => 'products', 'action' => 'select_friends'));
+            if($this->data['gift_id']){
+                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+            }
+            if($_GET['token'] && !$_GET['token_first']){
+                $gift_id = substr($_GET['token'], -13, 2); 
+            }    
+            
+            if($_GET['token'] && $_GET['token_first']){
+                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+            }
+                
+            $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
+            
+            if($this->request->is('post') && $this->data['gift_id']){
+                //DebugBreak();
+                $t=time();
+                $session_time=$this->Session->write('session_time', $t);
+                $this->set('session_token',$this->AesCrypt->encrypt($t));
+                $this->set('encrypted_id',$encrypted_gift_id);    
+            }
+            if($gift_id){
+                if($this->Connect->user() && $this->Auth->User('id')){
+                    $this->redirect(array('controller' => 'products', 'action' => 'select_friends', 'search_key' => $encrypted_gift_id));
+                }
+                /*else{
+                    $this->redirect(array('controller' => 'products', 'action' => 'login'));    
+                }*/    
             }    
         }
         else{
             $this->redirect(array('controller' => 'users', 'action' => 'login'));    
-        }
-        
+        }    
         //else $this->login_after_gift_selection();
     }
     
     public function select_friends(){
-        
+        $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
+        //$this->set('encrypted_id',$product_id);
+        $this->get_friends_after_login();
+        $this->get_product_details_after_login($product_id);
+        //$this->render = 'login';
+        $this->render('login');
     }
 
     public function get_friends_after_login(){
@@ -899,8 +929,8 @@ public function download_user_csv_all($download_selected = null){
         }
     }
 
-    public function get_product_details_after_login($id){
-        $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+    public function get_product_details_after_login($product_id){
+        $gift_id = $product_id;
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                                'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
         $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
@@ -908,8 +938,11 @@ public function download_user_csv_all($download_selected = null){
             $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
             $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
         }
+        
+        
         $this->set('Gift_info',$gift_detailes);
-        $this->set('encrypted_id',$this->data['gift_id']);
+        $gift_id = $this->AesCrypt->encrypt($gift_id);
+        $this->set('encrypted_id',$gift_id);
 
         $t=time();
         $session_time=$this->Session->write('session_time', $t);
