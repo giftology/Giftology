@@ -863,11 +863,20 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login(){
-        if($this->Connect->user() && $this->Auth->User('id')){
-            $this->redirect(array('controller' => 'products', 'action' => 'select_friends'));
-
+        if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
+            if($this->Connect->user() && $this->Auth->User('id')){
+                $this->redirect(array('controller' => 'products', 'action' => 'select_friends'));
+            }    
         }
-        else $this->login_after_gift_selection();
+        else{
+            $this->redirect(array('controller' => 'users', 'action' => 'login'));    
+        }
+        
+        //else $this->login_after_gift_selection();
+    }
+    
+    public function select_friends(){
+        
     }
 
     public function get_friends_after_login(){
