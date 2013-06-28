@@ -24,7 +24,7 @@
             </div>                
             <div class="count">
                 <div id="countdown"></div>
-                <p class="firstname note"><?= $gift['Sender']['UserProfile']['first_name'] ?></p>
+                <p class="firstname note"><?= $gift['Receiver']['UserProfile']['first_name'] ?></p>
                 <p id="note"></p>
                     <div class="button">
                         <P class="  spans"> <?= $gift['Gift']['code']; ?>
