@@ -894,7 +894,7 @@ public function index() {
                     $this->Mixpanel->track('Out of Codes', array(
                             'ProductId' => $product
                         ));
-                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                     $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                     $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
                 }
@@ -920,7 +920,7 @@ public function index() {
                     $this->Mixpanel->track('Out of Codes', array(
                             'ProductId' => $product
                         ));
-                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                     $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                     $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
                 }
@@ -1022,7 +1022,7 @@ public function index() {
                 $this->Mixpanel->track('Out of Codes', array(
                         'ProductId' => $product
                     ));
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                 $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                 $this->redirect(array('controller'=>'products', 'action'=>'view_product',
                         'receiver_id'=>$receiver_fb_id ,
@@ -1074,7 +1074,7 @@ public function index() {
                 
             }
             else{
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                 $this->redirect(array('controller'=>'reminders','action'=>'view_friends'));
             }
              
@@ -1911,7 +1911,7 @@ public function index() {
         	));
 
         if(!$code_exists){
-        	$error[9] = "Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?";	
+        	$error[9] = "Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?";	
         }
 
         $check_product_for_receiver = $this->Gift->find('count', array('conditions'
