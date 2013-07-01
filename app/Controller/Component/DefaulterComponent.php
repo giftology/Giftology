@@ -17,16 +17,12 @@ class DefaulterComponent extends Component {
 	}
 
 	function senders_restricted_for_product($id){
-		$defaulters = array(
-			105 => array(100001282657916,1847267619,100002868532137,100005220310967,100005645021182)
-			);
+		$defaulters = array();
 		return $defaulters[$id];
 	}
 
 	function receivers_restricted_for_product($id){
-		$defaulters = array(
-			105 => array(100001282657916,1847267619,100000588738738,100002868532137,100005220310967,541625220,1212127944,100000372476740,508387203,100005645021182)
-			);
+		$defaulters = array();
 		return $defaulters[$id];
 	}
     
