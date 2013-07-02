@@ -430,6 +430,7 @@
 
 
     $(document).ready(function(){
+        $('#others').css('background','url("/img/redbutton.png")').css('color','#000');
         $('#myself').click(function() {
             $('#myself').css('background','url("/img/redbutton.png")').css( 'color','#fff');
             $('#others').css('background','url("/img/whitebutton.png")').css('color','#000');

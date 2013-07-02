@@ -867,23 +867,26 @@ public function download_user_csv_all($download_selected = null){
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->data['gift_id']){
                 $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }
             if($_GET['token'] && !$_GET['token_first']){
-                $gift_id = substr($_GET['token'], -13, 2); 
+                $gift_id = substr($_GET['token'], -13, 2);
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }    
             
             if($_GET['token'] && $_GET['token_first']){
                 $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }
                 
-            $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
+            
             
             if($this->request->is('post') && $this->data['gift_id']){
                 //DebugBreak();
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
-                $this->set('encrypted_id',$encrypted_gift_id);    
+                //$t=time();
+                //$session_time=$this->Session->write('session_time', $t);
+                //$this->set('session_token',$this->AesCrypt->encrypt($t));
+                //$this->set('encrypted_id',$encrypted_gift_id);    
             }
             if($gift_id){
                 if($this->Connect->user() && $this->Auth->User('id')){
@@ -898,6 +901,10 @@ public function download_user_csv_all($download_selected = null){
             $this->redirect(array('controller' => 'users', 'action' => 'login'));    
         }    
         //else $this->login_after_gift_selection();
+        $t=time();
+                $session_time=$this->Session->write('session_time', $t);
+                $this->set('session_token',$this->AesCrypt->encrypt($t));
+                $this->set('encrypted_id',$encrypted_gift_id);  
     }
     
     public function select_friends(){
