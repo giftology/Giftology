@@ -2378,4 +2378,23 @@ public function index() {
     	}
     	return $e;
     }
+
+    public function gifts_on_birthday(){
+        $this->Gift->recursive = 1;
+        $valid_gifts = $this->Gift->find('all', array('fields' => array('id', 'modified', 'receiver_fb_id', 'sender_id'),'conditions' => array('gift_status_id' => 1)));
+        $i = 0;
+        //$gift_id_str;
+        foreach($valid_gifts as $gift){
+            set_time_limit(300);
+            $check = $this->Reminder->find('count', array('conditions' => array('Reminder.friend_birthday' => substr($gift['Gift']['modified'],0,10), 'Reminder.friend_fb_id' => $gift['Gift']['receiver_fb_id'], 'Reminder.user_id' => $gift['Gift']['sender_id'])));
+            if($check){
+                //$gift_id_str = $gift_id_str.",".$gift['Gift']['id'].",";
+                $i++;    
+            }
+               
+        }
+        echo $i++;
+        //echo $gift_id_str;
+        $this->autoRender = $this->autoLayout = false;
+    } 
 }
