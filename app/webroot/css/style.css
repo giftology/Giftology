@@ -3267,3 +3267,7 @@ display:inline;
 #banner-fade ol.bjqs-markers li{display:inline;}
 #banner-fade ol.bjqs-markers li a{display:inline-block;}
 #banner-fade p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bottom:0;}
+
+p.bjqs-caption{
+    background: rgba(157,155,157,0.5);
+}

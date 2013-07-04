@@ -134,74 +134,25 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     </div>
     <section class="slider">  
 
-      <div id="banner-fade">
- <!-- start Basic jQuery Slider -->
-  <!--<ul class="bjqs">
-    <li><img src="<?= FULL_BASE_URL; ?>/img/banner01.jpg" title="">
-      <div>
-         <p style="color: #FFF;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 35%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
-      </div>
-    </li>
-    <li><img src="<?= FULL_BASE_URL; ?>/img/banner02.jpg" title="">
-    <div>
-         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: left;margin: 0;position: absolute;top: 35%;font-weight: 300; left:7%;text-shadow: 0 0 5px rgba(0,0,0,0.5);">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
-      </div>
-    </li>
-    <li><img src="<?= FULL_BASE_URL; ?>/img/banner03.jpg" title="">
-    <div>
-         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 35%; left:10%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">lorum  ipsum <span> lorum  ipsum </span>and <br>  <span>paid </span>lorum  ipsum <span>friends</span></p>
-      </div>
-    </li>
-    <li><img src="<?= FULL_BASE_URL; ?>/img/banner04.png" title="">
-    <div>
-         <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 43%;left:32%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">lorum  ipsum <span>free </span>and<br>  <span>paid </span>gifts to your <span>lorum  ipsum </span></p>
-      </div>
-    </li>
-  </ul>-->
+     
 
   <div id="banner-fade">
  <!-- start Basic jQuery Slider -->
   <ul class="bjqs">
     
-     
+<li><img src="img/banner04.png" title="Gifts your friend will love to receive."></li>
 
-<li><img src="img/banner04.png" title="">
-    <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 53%;font-weight: 300; left:-1%;text-shadow: 0 0 5px rgba(0,0,0,0.5); ">Gifts your friend will love to receive.</p>
-   </li>
+<li><img src="img/banner02.jpg" title="Real Gift for your precious ones."> </li>
 
+<li><img src="img/post_sliderimage.png" title="Don’t just post on facebook, you can now make it a gift post!"> </li>
 
+<li><img src="img/banner03.jpg" title="Don't forget another birthday! Get reminders."> </li>
 
+<li><img src="img/banner01.jpg" title="The fun and easy way to give FREE and paid gifts to your Facebook friends"> </li>
 
-  <li><img src="img/banner02.jpg" title="">
-    <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: left;margin: 0;position: absolute;top: 51%;font-weight: 300; left:13%;text-shadow: 0 0 5px rgba(0,0,0,0.5);">Real Gift for your precious ones.</p>
-  </li>
-
-
- <li><img src="img/post_sliderimage.png" title="">
-    <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 40%;font-weight: 300; left:20%;text-shadow: 0 0 5px #333;">Don’t just post on facebook, <br>you can now make it a gift post!</p>
-  </li>
-
-
-<li><img src="img/banner03.jpg" title="">
-    <p style="color: #900;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 40%;font-weight: 300; left:9%;text-shadow: 0 0 5px rgba(0,0,0,0.5);">Don't forget another birthday!<br> Get reminders.</p>
-  </li>
-
-
-
-   
-    <li><img src="img/banner01.jpg" title="">
-     <p style="color: #FFF;font-size: 35px;float: left;width: 100%;text-align: center;margin: 0;position: absolute;top: 35%;font-weight: 300;text-shadow: 0 0 5px rgba(0,0,0,0.8);">The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
-   </li>
-
-  
-    
-    
-    
-    
-  </ul>
+</ul>
   <!-- end Basic jQuery Slider -->
-</div>
-  <!-- end Basic jQuery Slider -->
+
 </div>
        <!-- <div class="flexslider">
           <?php
