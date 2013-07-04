@@ -245,7 +245,7 @@ define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);
 define('GIFT_CODE_EXPIRY_REMINDER_EMAIL', 'aman.narang@giftology.com');
 define('SUSPICIOUS_USER_CHECK', TRUE);
-define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 5);
+define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 15);
 define('PAID_PRODUCT_DISABLED', TRUE);
 define('TYPE_CAMPAIGN', 1);
 define('TYPE_CONTEST', 2);
@@ -293,11 +293,12 @@ define('ZOPIM',FALSE);
 //REMINDER EMAIL CONTROL
 define('REMINDER_MAIL_SETTING', FALSE);
 define('BLACKLISTED_PRODUCT', TRUE);
-define('GIFT_TO_MYSELF', FALSE);
+define('GIFT_TO_MYSELF', TRUE);
+define('RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS', TRUE);
+
+//FEEDBACK
+define('FEEDBACK_PLUGIN', FALSE);
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
 CakePlugin::load('Search');
-
-
-

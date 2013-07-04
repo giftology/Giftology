@@ -35,7 +35,10 @@
         <?php if($user): ?>
 
         <div style="margin-top:80px">
-            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+            <?php if($gift_to_myself):?>
+             <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+            <?php endif;?>
+
             <button id="others"> My Friends </button>
         </div>
         <h3 class="camp_line-header">

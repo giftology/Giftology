@@ -11,7 +11,7 @@ class GiftsController extends AppController {
 	public $helpers = array('Minify.Minify');
 	public $uses = array('Gift','UserAddress','User','ProductType','UserProfile','Reminder','Vendor','UploadedProductCode','TemporaryGiftCode');
 
-    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg');
+    public $components = array('Giftology', 'CCAvenue', 'AesCrypt', 'UserWhiteList','Search.Prg','Defaulter');
     public $presetVars = array(
             array('field' => 'id', 'type' => 'value'),
             array('field' => 'product_id', 'type' => 'value'),
@@ -23,6 +23,8 @@ class GiftsController extends AppController {
             array('field'=> 'gift_amount','type'=>'value'),
             array('field'=> 'gift_status_id','type'=>'value'),
             array('field'=> 'expiry_date','type'=>'value'),
+            array('field'=> 'claim','type'=>'value'),
+            array('field'=> 'redeem','type'=>'value'),
             array('field'=> 'created','type'=>'value'),
             array('field'=> 'modified','type'=>'value'),
         
@@ -201,7 +203,7 @@ public function download_user_csv_all($download_selected = null){
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Claim','Redeem','Gift Amount','Gift Status','Expiry Date','Created','Modified');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
@@ -216,6 +218,9 @@ public function download_user_csv_all($download_selected = null){
                             $result['Gift']['receiver_fb_id'],
                             $result['Gift']['receiver_email'],
                             $result['Gift']['code'],
+                            $result['Gift']['claim'],
+                            $result['Gift']['redeem'],
+
                             $result['Gift']['gift_amount'],
                             $result['Gift']['gift_status_id'],
                             $result['Gift']['expiry_date'],
@@ -234,7 +239,7 @@ public function download_user_csv_all($download_selected = null){
                     $csv_file = fopen('php://output', 'w');
                     header('Content-type: application/csv');
                     header('Content-Disposition: attachment; filename="'.$filename.'"');
-                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Gift Amount','Gift Status','Expiry Date','Created','Modified');
+                    $header_row= array('Id','Product Id','Sender Id','Receiver Id','Receiver FB Id','Receiver Email','Code','Claim','Redeem','Gift Amount','Gift Status','Expiry Date','Created','Modified');
                     fputcsv($csv_file,$header_row,',','"');
                     if( !empty( $this->data ))
                     {
@@ -250,6 +255,9 @@ public function download_user_csv_all($download_selected = null){
                             $result['Gift']['receiver_fb_id'],
                             $result['Gift']['receiver_email'],
                             $result['Gift']['code'],
+                            $result['Gift']['claim'],
+                            $result['Gift']['redeem'],
+
                             $result['Gift']['gift_amount'],
                             $result['Gift']['gift_status_id'],
                             $result['Gift']['expiry_date'],
@@ -373,6 +381,12 @@ public function download_user_csv_all($download_selected = null){
             'Product.min_price >' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
         }
+        $claim= array('1'=>'claim'
+        );
+        $redeem= array('1'=>'redeem'
+        );
+        $this->set('claim',$claim);
+        $this->set('redeem',$redeem);
         $this->paginate = $conditions;
         $this->Gift->recursive = 0;
         $this->set('gifts', $this->paginate());
@@ -492,7 +506,13 @@ public function index() {
             'Product.min_price' => 0),'order'=>array('Gift.modified'=>'DESC'));
 
 		}
-		
+		$claim= array('1'=>'claim'
+        );
+        $redeem= array('1'=>'redeem'
+        );
+        $this->set('claim',$claim);
+        $this->set('redeem',$redeem);
+
 		$this->paginate = $conditions;
 		$this->Gift->recursive = 0;
 		$this->set('gifts', $this->paginate());
@@ -802,12 +822,17 @@ public function index() {
 
 	public function send_base($sender_id, $receiver_fb_id, $product_id, $amount, $send_now = 1,$receiver_email = null, $gift_message = null, $post_to_fb = true,$receiver_birthday = null, $reciever_name = null,$date_to_send = null) {
         $free_product = $this->Gift->Product->find('first',array('fields' => array('Product.min_price','Product.max_price'), 'conditions' => array('Product.id' => $product_id)));
-        if($free_product['Product']['min_price'] == 0 && $free_product['Product']['max_price' == 0])
+        if($free_product['Product']['min_price'] == 0 && $free_product['Product']['max_price'] == 0)
         	{
         		$this->redirectIfNotAllowedToSend();
 
         	}
-        	
+        $sender = $this->User->find('first',array('fields' => array('facebook_id'), 'conditions' => array('User.id' => $sender_id))); 
+        $blocked_user = $this->Defaulter->blocked_users_check($product_id,$receiver_fb_id,$sender['User']['facebook_id']);
+        if($blocked_user['status']){
+            $this->Session->setFlash(__($blocked_user['message']));
+            $this->redirect(array('controller' => 'reminders', 'action' => 'view_friends'));
+        }
         $this->Gift->create();
         $this->TemporaryGiftCode->create();
 		$this->Gift->Product->id = $product_id;
@@ -868,7 +893,7 @@ public function index() {
                     $this->Mixpanel->track('Out of Codes', array(
                             'ProductId' => $product
                         ));
-                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                     $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                     $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
                 }
@@ -894,17 +919,17 @@ public function index() {
                     $this->Mixpanel->track('Out of Codes', array(
                             'ProductId' => $product
                         ));
-                    $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                    $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                     $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                     $this->redirect(array('controller'=>'products', 'action'=>'view_product')); 
                 }
                 else
                 {
                     $temp_code = $this->createUnlimitedCode($product_id);
-                   $gift['Gift']['code'] = $temp_code;
-                   $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
-                   $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
-                   $this->TemporaryGiftCode->saveAssociated($data);
+                    $gift['Gift']['code'] = $temp_code;
+                    $gift['Gift']['gift_code_allocation_mode'] = $product_data['Product']['allocation_mode'];
+                    $data['TemporaryGiftCode']['coupon_code'] = $temp_code;
+                    $this->TemporaryGiftCode->saveAssociated($data);
                 }
 
              }
@@ -996,7 +1021,7 @@ public function index() {
                 $this->Mixpanel->track('Out of Codes', array(
                         'ProductId' => $product
                     ));
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                 $this->log('Out of uploaded codes for prod id '.$product.' value '.$value, 'ns');
                 $this->redirect(array('controller'=>'products', 'action'=>'view_product',
                         'receiver_id'=>$receiver_fb_id ,
@@ -1014,16 +1039,23 @@ public function index() {
 
          function createRandomCode($product_id) {
             $total_codes = $this->Gift->Product->UploadedProductCode->find('count',
-            array('conditions' => array('available'=>1, 'product_id' =>$product_id)));
+            array('conditions' => array('UploadedProductCode.available'=>1, 'UploadedProductCode.product_id' =>$product_id)));
             
             $sent_temp_code = $this->TemporaryGiftCode->find('count',
+            array('conditions' => array('product_id' =>$product_id)));
+            
+            $sent_total = $this->Gift->find('count',
             array('conditions' => array('product_id' =>$product_id)));
             
             $redemption_rate = $this->Gift->Product->find('first', array('fields' => array('Product.redemption_rate'), 'conditions' => array('Product.id' => $product_id)));
             
             $total_code_byrate= ( ($total_codes/$redemption_rate['Product']['redemption_rate'])*100) ;
+            $allowed_total_codes = $this->Gift->Product->UploadedProductCode->find('count',
+            array('conditions' => array('UploadedProductCode.product_id' =>$product_id)));
             
-            if($sent_temp_code < $total_code_byrate) {
+            $remained_codes = round((($allowed_total_codes/$redemption_rate['Product']['redemption_rate'])*100)) - $sent_total;
+            
+            if($remained_codes > 0 && $total_codes > 0) {
             $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
             srand((double)microtime()*1000000); 
             $i = 0; 
@@ -1041,7 +1073,7 @@ public function index() {
                 
             }
             else{
-                $this->Session->setFlash(__('Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?'));
+                $this->Session->setFlash(__('Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?'));
                 $this->redirect(array('controller'=>'reminders','action'=>'view_friends'));
             }
              
@@ -1412,11 +1444,17 @@ public function index() {
                                          array('Gift.id' => $gift_id));
                 }    
             }
-             
-             $gift_code = $this->Gift->find('first',array('contain' => array(
+            $gift_code = $this->Gift->find('first',array('contain' => array(
                 'Product' => array('Vendor')),'conditions' =>array (
                     'Gift.id' => $gift_id
                    )));
+            $this->UploadedProductCode->recursive = -2;
+            $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+                'UploadedProductCode.product_id' => $gift_code['Gift']['product_id'],
+                'UploadedProductCode.code' => $gift_code['Gift']['code']
+                )
+            ));
+            $gift_code['Gift']['pin'] = $pin['UploadedProductCode']['pin'];
              return $gift_code;
     }
 
@@ -1626,10 +1664,17 @@ public function index() {
         
 
     }
-		
+    
+	public function isMobile_app() 
+    { 
+      preg_match('/' . REQUEST_ANDROID_MOBILE_USER_AGENT . '/i', $_SERVER['HTTP_USER_AGENT'], $match); 
+      if (!empty($match)) { 
+        return true; 
+      } 
+      return false; 
+    }
     public function offline_voucher_redeem_page($gift_id)
-    {   
-        if($this->RequestHandler->isAjax()) 
+    {   if($this->RequestHandler->isAjax()) 
         {
            $this->Gift->updateAll(
                     array('Gift.redeem' => 1),
@@ -1648,6 +1693,12 @@ public function index() {
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page_for_desktop'));
         }
+        $android_mobile = $this->isMobile_app();
+        if($android_mobile)
+        {   
+            $this->redirect(array('controller' => 'users','action' => 'login'));
+        }
+        else{
         $id=$this->AesCrypt->decrypt($gift_id);
         $gift_redeem = $this->Gift->find('first', array('conditions' => array('Gift.id'=>$id)));
         $this->Reminder->recursive = -1;
@@ -1686,11 +1737,18 @@ public function index() {
                     'Sender' => array('UserProfile'),
                     'Receiver' => array('UserProfile')),
                 'conditions' => array('Gift.id'=>$id)));
-                $this->set('gift', $gift); 
+                $this->set('gift', $gift);
+            $pin = $this->UploadedProductCode->find('first', array('fields' => array('UploadedProductCode.pin'),'conditions' => array(
+                'UploadedProductCode.product_id' => $gift['Gift']['product_id'],
+                'UploadedProductCode.code' => $gift['Gift']['code']
+                )
+            )); 
+            $this->set('pin', $pin);
         }
         else{
             $this->redirect(array(
                 'controller' => 'gifts', 'action'=>'error_page',$id));
+        }
         }
     }
     
@@ -1852,7 +1910,7 @@ public function index() {
         	));
 
         if(!$code_exists){
-        	$error[9] = "Ooops, our bad ! Seems like we ran out of gift vouchers for this vendor.  Will you select another vendor ?";	
+        	$error[9] = "Ooops, our bad! Seems like we ran out of these gift vouchers. Will you select another?";	
         }
 
         $check_product_for_receiver = $this->Gift->find('count', array('conditions'
@@ -2319,4 +2377,23 @@ public function index() {
     	}
     	return $e;
     }
+
+    public function gifts_on_birthday(){
+        $this->Gift->recursive = 1;
+        $valid_gifts = $this->Gift->find('all', array('fields' => array('id', 'modified', 'receiver_fb_id', 'sender_id'),'conditions' => array('gift_status_id' => 1)));
+        $i = 0;
+        //$gift_id_str;
+        foreach($valid_gifts as $gift){
+            set_time_limit(300);
+            $check = $this->Reminder->find('count', array('conditions' => array('Reminder.friend_birthday' => substr($gift['Gift']['modified'],0,10), 'Reminder.friend_fb_id' => $gift['Gift']['receiver_fb_id'], 'Reminder.user_id' => $gift['Gift']['sender_id'])));
+            if($check){
+                //$gift_id_str = $gift_id_str.",".$gift['Gift']['id'].",";
+                $i++;    
+            }
+               
+        }
+        echo $i++;
+        //echo $gift_id_str;
+        $this->autoRender = $this->autoLayout = false;
+    } 
 }

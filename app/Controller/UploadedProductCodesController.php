@@ -84,10 +84,11 @@ class UploadedProductCodesController extends AppController {
                 $new_array['expiry'] = $line_array[3];
                 if(count($line_array) == "5") $new_array['pin'] = $line_array[4];
             	$csv_data[] = $new_array;
-                unset($new_arryay, $line_array);
+                unset($new_array, $line_array);
         	}
         	fclose($fp);
         	//var_dump($csv_data);
+            $this->UploadedProductCode->create();
         	$results = $this->UploadedProductCode->saveMany($csv_data);
         	//echo debug($results);
 		}
