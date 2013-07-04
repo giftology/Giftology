@@ -35,9 +35,7 @@
         <?php if($user): ?>
 
         <div style="margin-top:80px">
-            <?php if($gift_to_myself):?>
             <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
-            <?php endif;?>
             <button id="others"> My Friends </button>
         </div>
         <h3 class="camp_line-header">
@@ -195,7 +193,7 @@
     	
 
          <p style="font: normal 17px/40px arial;color: #000"> To see list of friends</p>
-    <img src="<?= FULL_BASE_URL; ?>/img/poke.png"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png','redirect' => array('controller'=>'products', 'action'=>'login_after_gift_selection'."?token=".$encrypted_id."&&token_first=".$session_token))); ?>
+    <img src="<?= FULL_BASE_URL; ?>/img/poke.png"><?php echo $this->Facebook->login(array('img' => 'fb-connect-large.png','redirect' => array('controller'=>'products', 'action'=>'login'."?token=".$encrypted_id."&&token_first=".$session_token))); ?>
     <p class="blinkText"> Sign Up NOW !!!</p>
 
     <div class="brandWrapper">
@@ -439,10 +437,8 @@
           var a = $('input[name="chk1[]"]:checked').length > 0;
             if(a)
             {
-                $('#myself').css('background','url("/img/whitebutton.png")').css( 'color','#000');
                 alert("please unselect the check box");
                 return false;
-
             }
             else{
             $('#searc_campaign').hide();

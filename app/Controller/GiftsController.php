@@ -827,7 +827,6 @@ public function index() {
         		$this->redirectIfNotAllowedToSend();
 
         	}
-        
         $sender = $this->User->find('first',array('fields' => array('facebook_id'), 'conditions' => array('User.id' => $sender_id))); 
         $blocked_user = $this->Defaulter->blocked_users_check($product_id,$receiver_fb_id,$sender['User']['facebook_id']);
         if($blocked_user['status']){

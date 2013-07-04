@@ -37,11 +37,11 @@ class ProductsController extends AppController {
     public $components = array('AesCrypt','Search.Prg','BlackListProduct','Defaulter');
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
+        $this->Auth->allow('send_product_expiry_reminder','login');
     }
 
     public function isAuthorized($user) {
-        if (($this->action == 'view_products') || ($this->action == 'view_product')) {
+        if (($this->action == 'view_products') || ($this->action == 'view_product') || ($this->action=='select_friends')) {
             return true;
         }
         return parent::isAuthorized($user);
@@ -889,114 +889,89 @@ public function download_user_csv_all($download_selected = null){
         $this->autoRender = $this->autoLayout = false;
         exit;
     }
-    public function login_after_gift_selection()
-    {
-        $black_listed_products = array();
-        if(GIFT_TO_MYSELF && ($this->data['gift_id'] || ($_GET['token'] && $_GET['token_first']))){
-            if($this->data['gift_id'])
-                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
-            if($_GET['token'] && $_GET['token_first'])
-                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
-            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
-            $proudct_blocked_for_myself = in_array($gift_id,$black_listed_products);
-            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
-        } 
+
+    public function login(){
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
-            if($this->request->is('post')){
-                if($this->Connect->user() && $this->Auth->User('id'))
-                {
-                    $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
-                    $this->set('user',$this->Auth->User('id'));
-                    $this->set('my_fb_id',$this->Auth->User('facebook_id'));
-
-                    $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                    $friend_list= $this->Reminder->find('all',
-                        array('limit'=>20,
-                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
-                    'order' => array('RAND()')
-                    ));
-                    if(isset($friend_list) && !empty($friend_list)){
-                        $this->set('friends_data',$friend_list);
-
-                    }
-                    else{
-                        $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                        $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
-                    }
-                    
-
-                }
+            if($this->data['gift_id']){
                 $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
-                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-                $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
-                if(!$gift_detailes){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
-                }
-                $this->set('Gift_info',$gift_detailes);
-                $this->set('encrypted_id',$this->data['gift_id']);
-
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
-
-                  
-
-            }   // token for encryptedgiftid 
-                //token_first for session
-            if(isset($_GET['token']) && isset($_GET['token_first']))
-            {
-                $session_time=$this->AesCrypt->decrypt($_GET['token_first']);
-                $green =$this->Session->read('session_time');
-                if($session_time != $green){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                }
-
-                if($this->Connect->user() && $this->Auth->User('id'))
-                {
-                    $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
-                    $this->set('user',$this->Auth->User('id'));
-                    $this->set('my_fb_id',$this->Auth->User('facebook_id'));
-
-                    $this->Reminder->unbindModel(array('belongsTo' => array('User')));
-                    $friend_list= $this->Reminder->find('all',
-                        array('limit'=>20,
-                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
-                    'order' => array('RAND()')
-                    ));
-                    if(isset($friend_list) && !empty($friend_list)){
-                        $this->set('friends_data',$friend_list);
-
-                    }
-                    else{
-                        $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                        $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
-                    }
-                    //$this->set('friends_data',$friend_list);
-
-                }
-                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
-                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-                $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
-                if(!$gift_detailes){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
-                }
-
-                $this->set('Gift_info',$gift_detailes);
-                $this->set('encrypted_id',$_GET['token']);
-
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
-
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }
-
-        
-
+            if($_GET['token'] && !$_GET['token_first']){
+                $gift_id = substr($_GET['token'], -13, 2);
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
+            }    
+            
+            if($_GET['token'] && $_GET['token_first']){
+                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+                $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
+            }
+            
+            if($gift_id){
+                if($this->Connect->user() && $this->Auth->User('id')){
+                    $this->redirect(array('controller' => 'products', 'action' => 'select_friends', 'search_key' => $encrypted_gift_id));
+                }    
+            }    
         }
+        else{
+            $this->redirect(array('controller' => 'users', 'action' => 'login'));    
+        }    
+        
+        $t=time();
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+        $this->set('encrypted_id',$encrypted_gift_id);  
     }
     
+    public function select_friends(){
+        $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
+        $black_listed_products = array();
+        if(GIFT_TO_MYSELF){
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
+            $proudct_blocked_for_myself = in_array($product_id,$black_listed_products);
+            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
+        }
+        $this->get_friends_after_login();
+        $this->get_product_details_after_login($product_id);
+        $this->render('login');
+    }
+
+    public function get_friends_after_login(){
+        $this->requestAction(array('controller' => 'users','action' => 'refreshReminders',$this->Auth->User('id')));
+        $this->set('user',$this->Auth->User('id'));
+        $this->set('my_fb_id',$this->Auth->User('facebook_id'));
+
+        $this->Reminder->unbindModel(array('belongsTo' => array('User')));
+        $friend_list= $this->Reminder->find('all',
+            array('limit'=>20,
+                    'conditions' => array('AND'=>array('Reminder.user_id' => $this->Auth->user('id'),'Reminder.country' => India)),
+                    'order' => array('RAND()')
+                ));
+        if(isset($friend_list) && !empty($friend_list)){
+            $this->set('friends_data',$friend_list);
+        }
+        else{
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            $this->Session->setFlash(__('Ooops!, Invalid action Please try again'));
+        }
+    }
+
+    public function get_product_details_after_login($product_id){
+        $gift_id = $product_id;
+        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+        $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
+        if(!$gift_detailes){
+            $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
+            $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
+        }
+        
+        
+        $this->set('Gift_info',$gift_detailes);
+        $gift_id = $this->AesCrypt->encrypt($gift_id);
+        $this->set('encrypted_id',$gift_id);
+
+        $t=time();
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+    }
 }
