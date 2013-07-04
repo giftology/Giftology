@@ -940,6 +940,7 @@ public function download_user_csv_all($download_selected = null){
             $proudct_blocked_for_myself = in_array($gift_id,$black_listed_products);
             if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
         } 
+    }
 
     public function select_friends(){
         $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
