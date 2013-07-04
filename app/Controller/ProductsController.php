@@ -863,7 +863,6 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login(){
-        //DebugBreak();
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->data['gift_id']){
                 $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
@@ -878,41 +877,27 @@ public function download_user_csv_all($download_selected = null){
                 $gift_id = $this->AesCrypt->decrypt($_GET['token']);
                 $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }
-                
             
-            
-            if($this->request->is('post') && $this->data['gift_id']){
-                //DebugBreak();
-                //$t=time();
-                //$session_time=$this->Session->write('session_time', $t);
-                //$this->set('session_token',$this->AesCrypt->encrypt($t));
-                //$this->set('encrypted_id',$encrypted_gift_id);    
-            }
             if($gift_id){
                 if($this->Connect->user() && $this->Auth->User('id')){
                     $this->redirect(array('controller' => 'products', 'action' => 'select_friends', 'search_key' => $encrypted_gift_id));
-                }
-                /*else{
-                    $this->redirect(array('controller' => 'products', 'action' => 'login'));    
-                }*/    
+                }    
             }    
         }
         else{
             $this->redirect(array('controller' => 'users', 'action' => 'login'));    
         }    
-        //else $this->login_after_gift_selection();
+        
         $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));
-                $this->set('encrypted_id',$encrypted_gift_id);  
+        $session_time=$this->Session->write('session_time', $t);
+        $this->set('session_token',$this->AesCrypt->encrypt($t));
+        $this->set('encrypted_id',$encrypted_gift_id);  
     }
     
     public function select_friends(){
         $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
-        //$this->set('encrypted_id',$product_id);
         $this->get_friends_after_login();
         $this->get_product_details_after_login($product_id);
-        //$this->render = 'login';
         $this->render('login');
     }
 
@@ -955,95 +940,4 @@ public function download_user_csv_all($download_selected = null){
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));
     }
-
-    public function login_after_gift_selection()
-    { 
-        if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
-            if($this->request->is('post')){
-                if($this->Connect->user() && $this->Auth->User('id')){    
-                    $this->get_friends_after_login();
-                }
-                /*$gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
-                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-                $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
-                if(!$gift_detailes){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
-                }
-                $this->set('Gift_info',$gift_detailes);
-                $this->set('encrypted_id',$this->data['gift_id']);
-
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
-
-                  
-
-            }   // token for encryptedgiftid 
-                //token_first for session
-            elseif(isset($_GET['token']) && isset($_GET['token_first']))
-            {
-                $session_time=$this->AesCrypt->decrypt($_GET['token_first']);
-                $green =$this->Session->read('session_time');
-                if($session_time != $green){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                }
-
-                if($this->Connect->user() && $this->Auth->User('id'))
-                {
-                    $this->get_friends_after_login();
-                }
-                /*$gift_id = $this->AesCrypt->decrypt($_GET['token']);
-                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-                $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
-                if(!$gift_detailes){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
-                }
-
-                $this->set('Gift_info',$gift_detailes);
-                $this->set('encrypted_id',$_GET['token']);
-
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
-
-            }
-            elseif(isset($_GET['token']))
-            {
-             if($this->Connect->user() && $this->Auth->User('id'))
-                {
-                    $this->get_friends_after_login();
-                    //$this->set('friends_data',$friend_list);
-
-                }
-                /*$gift_id = substr($_GET['token'], -13, 2);
-                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                               'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-                $gift_detailes = $this->Product->find('first',array('conditions' => array('Product.id' => $gift_id)));
-                if(!$gift_detailes){
-                    $this->redirect(array('controller' => 'reminders', 'action'=>'view_friends'));
-                    $this->Session->setFlash(__('Ooops!, Sorry wrong attempt'));
-                }
-
-                $encrypted_id = $this->AesCrypt->encrypt($gift_id);
-                $this->set('Gift_info',$gift_detailes);
-                $this->set('encrypted_id',$encrypted_id);
-
-                $t=time();
-                $session_time=$this->Session->write('session_time', $t);
-                $this->set('session_token',$this->AesCrypt->encrypt($t));*/
-
-            }
-            else{
-                $this->redirect(array('controller' => 'reminders', 'action' => 'view_friends'));
-            }
-
-        
-
-        }
-    }
-    
 }
