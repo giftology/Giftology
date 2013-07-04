@@ -168,9 +168,17 @@ collapsecurrent: true //<- No comma following very last setting!
         <div style="display:inline; margin-right:10px">
         <img src="<?= FULL_BASE_URL; ?>/img/android.png" width="30" height="30" class="ad"/>
         </div>
+<<<<<<< HEAD
         <a href="<?= GOOGLE_PLAY_BITLY ?>" target="_blank" style="color:#000"> Download app</a>
         
 
+=======
+
+        <a href="<?= GOOGLE_PLAY_BITLY ?>" target="_blank" style="color:#000"> Download app</a>
+        
+
+
+>>>>>>> shipping_address
         </div>
         </li>
         <?php endif; ?>
@@ -376,7 +384,11 @@ background: none repeat scroll 0 0 #F7F7F7; ">
             <div class="how-it-work">
                <div style="width:960px; margin:auto;">
                         <?php 
+<<<<<<< HEAD
                          echo $this->Form->create('products', array('controller' => 'products','action' => 'login'));
+=======
+                         echo $this->Form->create('products', array('controller' => 'products','action' => 'login_after_gift_selection'));
+>>>>>>> shipping_address
                         foreach ($products as $product): ?>
                             <a>
                                
@@ -458,8 +470,13 @@ background: none repeat scroll 0 0 #F7F7F7; ">
                     id: gift_value+'_hidden',
                     name: 'gift_id',
                     value: gift_value,
+<<<<<<< HEAD
                 }).appendTo('#productsLoginForm');
                   $("#productsLoginForm").submit() 
+=======
+                }).appendTo('#productsLoginAfterGiftSelectionForm');
+                  $("#productsLoginAfterGiftSelectionForm").submit() 
+>>>>>>> shipping_address
             });
 
       });
@@ -617,5 +634,13 @@ background: none repeat scroll 0 0 #F7F7F7; ">
 <?php endif ?>
 <style type="text/css">
 .fb_ltr{padding-top: 7px;}
+<<<<<<< HEAD
 </style>
+=======
+
+
+
+</style>
+
+>>>>>>> shipping_address
 </body></html>

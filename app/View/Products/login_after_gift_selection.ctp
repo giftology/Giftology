@@ -18,12 +18,26 @@
 
                 
                 <div class="tag-icons"></div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
+>>>>>>> shipping_address
                 <h5 class="line-header" style="width:570px;" >Celebrate your friends  with this  <?=$Gift_info['Vendor']['name'] ?> voucher </h5>
                           <div style="width:530px; color:#000; font:16px/18px Arial, Helvetica, sans-serif ; text-align:justify"> <?= $Gift_info['Vendor']['short_description'] ?></div>
 
             </div>
             <div class="image-container">
                 <div class="polaroid"><img  src="<?= FULL_BASE_URL.'/'.$Gift_info['Vendor']['facebook_image'] ?>"></div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
+>>>>>>> shipping_address
                 <div class="paperclip"></div>
                 
            
@@ -35,9 +49,19 @@
         <?php if($user): ?>
 
         <div style="margin-top:80px">
+<<<<<<< HEAD
             <?php if($gift_to_myself):?>
             <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
             <?php endif;?>
+=======
+<<<<<<< HEAD
+            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+=======
+            <?php if($gift_to_myself):?>
+            <button id="myself" my_facebook_id="<?php echo $my_fb_id; ?>"> Myself </button>
+            <?php endif;?>
+>>>>>>> master
+>>>>>>> shipping_address
             <button id="others"> My Friends </button>
         </div>
         <h3 class="camp_line-header">
@@ -315,7 +339,17 @@
                 else{
                     $("#error_text1").hide();
                     }
+<<<<<<< HEAD
                     
+=======
+<<<<<<< HEAD
+
+                    
+
+=======
+                    
+>>>>>>> master
+>>>>>>> shipping_address
                    // chk1.length = 0;
                    //MY $('td .campaign_checkbox').attr('checked',false);
                     var values = $("#myself").attr('my_facebook_id');
@@ -361,7 +395,17 @@
                     alert("please select friend to send Gift");
                     return false;
                 }else{
+<<<<<<< HEAD
                     $("#text_message1").val($("#text_message").val());
+=======
+<<<<<<< HEAD
+
+                    $("#text_message1").val($("#text_message").val());
+
+=======
+                    $("#text_message1").val($("#text_message").val());
+>>>>>>> master
+>>>>>>> shipping_address
                     $(this).parents('form').submit();
                     $(this).attr('disabled','disabled');
                 }
@@ -439,10 +483,15 @@
           var a = $('input[name="chk1[]"]:checked').length > 0;
             if(a)
             {
+<<<<<<< HEAD
                 $('#myself').css('background','url("/img/whitebutton.png")').css( 'color','#000');
                 alert("please unselect the check box");
                 return false;
 
+=======
+                alert("please unselect the check box");
+                return false;
+>>>>>>> shipping_address
             }
             else{
             $('#searc_campaign').hide();

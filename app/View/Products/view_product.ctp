@@ -3,6 +3,7 @@
       $(document).ready(function(){
             $("#form_shipping").click(function (){
                 var e = false;
+                var a = false;
                 var emailRegex = new RegExp(/^[0-9-+]+$/);
                 var valid_phone = emailRegex.test($("#phone_len").val());
                if($("#text_message").val().length == 0){
@@ -18,6 +19,7 @@
                 }
                 else{
                     $("#error_phone").hide();
+                   
                 }
                 if($("#pin_code").val().length < 6 ||$("#pin_code").val().length > 6){
                     $("#error_pin").show();
@@ -64,33 +66,72 @@
 
                 var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
                 var valid = emailRegex.test($("#email").val());
-
-                /*if ($("#email").val().length == 0)
-                 {
-                    var r=confirm("continue without email address!");
-                    if (r==true)
-                      {
-                         return true;
-                      }
-                    else
-                      {
-                        e = true;
-                      }
-                    }*/
-                    if($("[id='chk1']:checked").length<1)
-                    {
-                        if(!valid){
-                            alert("please enter valid email id");
-                            return false;
-                        }
-                        else{
-                            return ture;
-                        }
-                        
+                if(!valid)
+                {
+                    $("#error_email").show();
+                    e = true;
+                }
+                else
+                {
+                    $("#error_email").hide();
+                }
+                var valid_shipping = emailRegex.test($("#email_shipping").val());
+                if(!valid_shipping)
+                {
+                    $("#error_email_shipping").show();
+                    a = true;
+                }
+                else
+                {
+                    $("#error_email_shipping").hide();
+                }
+                var emailRegexship = new RegExp(/^[0-9-+]+$/);
+                var valid_phone_shipping = emailRegexship.test($("#phone_shipping").val());
+                if(!valid_phone_shipping || $("#phone_shipping").val().length < 10 || $("#phone_shipping").val().length >10){
+                    $("#error_phone_shipping").show();
+                        a = true;
+                }
+                else{
+                    $("#error_phone_shipping").hide();
+                }
+                /*if($("[id='chk1']:checked").length<1)
+                {
+                    if(!valid){
+                        alert("please enter valid email id");
                         return false;
                     }
+                    else{
+                        return ture;
+                    }
                     
-                    if(e) return false;
+                    return false;
+                }*/
+                
+                if(e && a)
+                { 
+                 return false;
+                }
+                else{
+                    $(this).parents('form').submit();
+                    $(this).attr('disabled','disabled');
+                }
+                if(valid_phone)
+                {
+                    $("#email_shipping").val('');
+                    $("#phone_shipping").val(''); 
+                }
+                else if(valid_phone_shipping)
+                {
+                    $("#pin_code").val('');
+                    $("#address").val(''); 
+                    $("#city").val(''); 
+                    $("#state").val('');
+                    $("#country").val('');
+                     $("#email").val('');
+                     $("#pin_code").val('');
+                      
+                }
+
             });
            
         });
@@ -270,82 +311,110 @@
             $last_name = isset($name[1]) ? $name[1] : NULL;
 
              ?>
+            <div><span id="know" style="cursor:pointer;margin-left: 20px;"><img src="<?= IMAGE_ROOT; ?>IKnow_W.png" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="dont_know" style="cursor:pointer"><img src="<?= IMAGE_ROOT; ?>IDKnow_W copy.png" /></span></div></br>
+            <div id="text_msg" style="display:none">
+                <p style="margin-left:120px;font-size: 16px;">That's OK!</p></br>
+                <p style="font-size: 16px;">We will ask them to fill in their address. Don't be shy!</p>
+                
+            </div></br>
+                <div id="shipp_address_show">
+                    <div class="input email">
+                        <label for="email">First Name</label>
+                        <div class="input email" ><?php echo $this->Form->input("first_name" ,array('id' => 'first_name','label' => false,'div' => false,'value'=>$name[0]))?></div>
+                        <div class="error_message" id="error_first" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the first name.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Last Name</label>
+                        <div class="input email" ><?php  echo $this->Form->input("last_name" ,array('label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$last_name))?></div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Address</label>
+                        <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$address1))?></div>
+                        <div class="error_message" id="error_address" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the address.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">City</label>
+                        <div class="input email" ><?php  echo $this->Form->input("city" ,array('id'=>'city','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $city ))?></div>
+                        <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the city.</h5>
+                        </div>
+                     </div>
+                     <div class="input email">
+                        <label for="email">Pin Code</label>
+                        <div class="input email" ><?php echo $this->Form->input("pin_code" ,array('id' => 'pin_code', 'label' => false,'div' => false,'class'=>"umstyle5",'value'=> $pin_code ))?></div>
+                        <div class="error_message" id="error_pin" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 6 digit pincode</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Phone</label>
+                        <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_len','div' => false,'class'=>"umstyle5",'value'=> $phone ))?></div>
+                        <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">State</label>
+                        <div class="input email" ><?php echo $this->Form->input("state" ,array('id' => 'state','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=> $state))?></div>
+                        <div class="error_message" id="error_state" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter state.</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Country</label>
+                        <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5",'value'=> 'India' ))?></div>
+                        <div class="error_message" id="error_country" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter country.</h5>
+                        </div>
+                    </div>
             
-            <div class="input email">
-                <label for="email">First Name</label>
-                <div class="input email" ><?php echo $this->Form->input("first_name" ,array('id' => 'first_name','label' => false,'div' => false,'value'=>$name[0]))?></div>
-                <div class="error_message" id="error_first" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter the first name.</h5>
+                    <span style="float:right;display:none;top:320px;left:32%;position:absolute" id="datepicker1"><?php echo $this->Form->hidden("date_to_send_later" ,array('style'=>'top:20%','label' => false,'div' => false,'id'=>'datepicker' ))?></span>
+                    <div class="input email" ><?php echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$id ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
+                     <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
+                    <div class="input email" id="input_email"><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
+                    <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
+                     
+                        <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
+                            <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
+                        </div> -->
+                        <div class="input checkbox">
+                            <?php echo $this->Form->input('Explicitly Post on Facebook', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
+                        </div>
+                        <div class="input email">
+                            <label for="email">Send email to<br/></label>
+                            <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
+                            'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com",'value'=> $reciever_email ))?></div>
+                            <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter valid email address.</h5>
+                            </div>
+                        </div>
                 </div>
-            </div>
-            <div class="input email">
-                <label for="email">Last Name</label>
-                <div class="input email" ><?php  echo $this->Form->input("last_name" ,array('label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$last_name))?></div>
-            </div>
-            <div class="input email">
-                <label for="email">Address</label>
-                <div class="input email" ><?php echo $this->Form->input("address1" ,array('id'=>'address','type'=>'textarea','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=>$address1))?></div>
-                <div class="error_message" id="error_address" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter the address.</h5>
-                </div>
-            </div>
-            <div class="input email">
-                <label for="email">City</label>
-                <div class="input email" ><?php  echo $this->Form->input("city" ,array('id'=>'city','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $city ))?></div>
-                <div class="error_message" id="error_city" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter the city.</h5>
-                </div>
-             </div>
-             <div class="input email">
-                <label for="email">Pin Code</label>
-                <div class="input email" ><?php echo $this->Form->input("pin_code" ,array('id' => 'pin_code', 'label' => false,'div' => false,'class'=>"umstyle5",'value'=> $pin_code ))?></div>
-                <div class="error_message" id="error_pin" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter the 6 digit pincode</h5>
-                </div>
-            </div>
-            <div class="input email">
-                <label for="email">Phone</label>
-                <div class="input email" ><?php echo $this->Form->input("phone" ,array('label' => false,'id'=>'phone_len','div' => false,'class'=>"umstyle5",'value'=> $phone ))?></div>
-                <div class="error_message" id="error_phone" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
-                </div>
-            </div>
-            <div class="input email">
-                <label for="email">State</label>
-                <div class="input email" ><?php echo $this->Form->input("state" ,array('id' => 'state','label' => false,'div' => false,'class'=>"umstyle5" ,'value'=> $state))?></div>
-                <div class="error_message" id="error_state" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter state.</h5>
-                </div>
-            </div>
-            <div class="input email">
-                <label for="email">Country</label>
-                <div class="input email" ><?php echo $this->Form->input("country" ,array('id' => 'country','label' => false,'div' => false,'class'=>"umstyle5",'value'=> $country ))?></div>
-                <div class="error_message" id="error_country" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter country.</h5>
-                </div>
-            </div>
-            <span style="float:right;display:none;top:320px;left:32%;position:absolute" id="datepicker1"><?php echo $this->Form->hidden("date_to_send_later" ,array('style'=>'top:20%','label' => false,'div' => false,'id'=>'datepicker' ))?></span>
-            <div class="input email" ><?php echo $this->Form->hidden("id" ,array('label' => false,'div' => false,'value'=>$id ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("user_id" ,array('label' => false,'div' => false,'value'=>$receiver_id ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("receiver_birthday" ,array('label' => false,'div' => false,'value'=>$receiver_birthday ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("product_id" ,array('label' => false,'div' => false,'value'=>$product['Product']['encrypted_gift_id'] ))?></div>
-             <div class="input email" ><?php echo $this->Form->hidden("gift_id" ,array('label' => false,'div' => false,'value'=>$session_token ))?></div>
-            <div class="input email" id="input_email"><?php echo $this->Form->hidden("send_now" ,array('label' => false,'div' => false,'value'=>$send_now ))?></div>
-            <div class="input email" ><?php echo $this->Form->hidden("reciver_name" ,array('label' => false,'div' => false,'value'=>$receiver_name ))?></div>
-             
-                <!--<div class="input checkbox"><input type="checkbox" value="facebook" name="facebook" id="post_to_fb" class="facebook" checked>
-                    <label for="facebook">Share on <?= $receiver_name; ?>'s Facebook wall</label>
-                </div> -->
-            <div class="input checkbox">
-                <?php echo $this->Form->input('Explicitly Post on Facebook', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
-            </div>
-                <div class="input email">
-                    <label for="email">Send email to<br/><span style="color:grey;padding-left:20px;font-size:small;">(optional)</span></label>
-                    <div class="input email" ><?php echo $this->Form->input("reciever_email" ,array('id'=>
-                    'email','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com",'value'=> $reciever_email ))?></div>
-                    <div class="error_message" id="error_email" style="display:none; margin-left:120px;">
-                    <h5 style="color:#FF0000">*please enter valid email address.</h5>
-                </div>
+                <div id = "email_sms" style="display:none">
+                    <div class="input checkbox">
+                                <?php echo $this->Form->input('Explicitly Post on Facebook', array('type' => 'checkbox','name'=>'chk','id'=>'chk1','checked'=>'true')); ?>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Phone</label>
+                        <div class="input email" ><?php echo $this->Form->input("phone_shipping" ,array('label' => false,'id'=>'phone_shipping','div' => false,'class'=>"umstyle5"))?></div>
+                        <div class="error_message" id="error_phone_shipping" style="display:none; margin-left:120px;">
+                            <h5 style="color:#FF0000">*please enter the 10 digit mobile no</h5>
+                        </div>
+                    </div>
+                    <div class="input email">
+                        <label for="email">Send email to<br/></label>
+                        <div class="input email" ><?php echo $this->Form->input("reciever_email_show" ,array('id'=>
+                        'email_shipping','label' => false,'div' => false,'class'=>"umstyle5", 'placeholder' => "$receiver_name@example.com" ))?></div>
+                        <div class="error_message" id="error_email_shipping" style="display:none; margin-left:120px;">
+                        <h5 style="color:#FF0000">*please enter valid email address.</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
             <ul class="voucher-details"><li>Valid for <?= $product['Product']['days_valid']; ?> days. Purchase to send</li></ul>
@@ -356,7 +425,7 @@
             </div>    
             </div>
                 
-            <?php
+            <?php 
         }   
         else 
         { 
@@ -451,12 +520,12 @@
             else $(this).removeAttr('disabled');  
         });
 
-         $('#form_shipping').click(function(){
+         /*$('#form_shipping').click(function(){
             $(this).attr('disabled','disabled');
             if( $('.gift-message').val() !='' && !$("[id='chk1']:checked").length<1) 
                 $(this).parents('form').submit();
             else $(this).removeAttr('disabled');    
-        });
+        });*/
 
         /*$('.umstyle5').blur(function(){
             var field_value = $(this).val();
@@ -507,7 +576,7 @@
  
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
    
-   <script  type='text/javascript'>
+<script  type='text/javascript'>
 $(document).ready(function(){
     $(".demo-htmlselect").change(function(){
         var id = $(this).find(':selected')[0].id;
@@ -546,6 +615,24 @@ $(document).ready(function(){
       
 });
   </script>
+
+  <script  type='text/javascript'>
+$(document).ready(function(){
+    $('#dont_know').click(function(){
+        $("#shipp_address_show").hide();
+        $("#text_msg").show();
+        $("#email_sms").show();
+        $("#phone_len").val('');
+    });
+    $('#know').click(function(){
+        $("#shipp_address_show").show();
+        $("#text_msg").hide();
+        $("#email_sms").hide();
+        $("#phone_shipping").val('');
+    });
+});
+</script>
+
   <script  type='text/javascript'>
   var formattedDate;
   $(function() {
@@ -590,7 +677,35 @@ $(document).ready(function(){
   });
 
   </script>
+  <script type="text/javascript">
+$(document).ready(function()
+{
+    $("#know").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IKnow_R.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IKnow_W.png");
+        }                         
+    ); 
 
+    $("#dont_know").hover(
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IDKnow_R copy.png");
+        },
+        function()
+        {
+            $(this).find("img").attr("src", "../img//IDKnow_W copy.png");
+        }                         
+    ); 
+
+                    
+});
+
+  </script>
   <style>
     div.ui-datepicker
     {
