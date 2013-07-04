@@ -899,6 +899,7 @@ public function download_user_csv_all($download_selected = null){
             if($_GET['token'] && !$_GET['token_first']){
                 $gift_id = substr($_GET['token'], -13, 2);
                 $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
+                $this->get_product_details_after_login($gift_id);
             }    
             
             if($_GET['token'] && $_GET['token_first']){
