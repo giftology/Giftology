@@ -34,10 +34,12 @@ class ProductsController extends AppController {
         
         );
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
+
     public $components = array('AesCrypt','Search.Prg','BlackListProduct','Defaulter');
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder','login');
+
     }
 
     public function isAuthorized($user) {
@@ -592,7 +594,9 @@ public function download_user_csv_all($download_selected = null){
         //$this->paginate['conditions'] = $conditions;
         $black_listed_products = array();
         if(BLACKLISTED_PRODUCT && $receiver_id==$this->Auth->user('facebook_id')){
+
             $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();   
+
         }
         
         $pre_final_products = array_merge($product_for_all_age_gender, $products_age_location_gender);
@@ -890,6 +894,7 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
 
+
     public function login(){
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->data['gift_id']){
@@ -919,9 +924,23 @@ public function download_user_csv_all($download_selected = null){
         $t=time();
         $session_time=$this->Session->write('session_time', $t);
         $this->set('session_token',$this->AesCrypt->encrypt($t));
-        $this->set('encrypted_id',$encrypted_gift_id);  
-    }
-    
+        $this->set('encrypted_id',$encrypted_gift_id); 
+        } 
+
+    public function login_after_gift_selection()
+
+    {
+        $black_listed_products = array();
+        if(GIFT_TO_MYSELF && ($this->data['gift_id'] || ($_GET['token'] && $_GET['token_first']))){
+            if($this->data['gift_id'])
+                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+            if($_GET['token'] && $_GET['token_first'])
+                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
+            $proudct_blocked_for_myself = in_array($gift_id,$black_listed_products);
+            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
+        } 
+
     public function select_friends(){
         $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
         $black_listed_products = array();

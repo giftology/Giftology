@@ -6,8 +6,7 @@ class BlackListProductComponent extends Component {
 	   //$defaulters = array(105 => 105,109 => 109, 110 => 110);
 	   return $defaulters;
 	}
-    
-    function products_not_to_gift_yourself() {
+	function products_not_to_gift_yourself() {
         $defaulters = array();
         $defaulters = array(105 => 105,109 => 109, 110 => 110);
        return $defaulters;

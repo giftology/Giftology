@@ -586,13 +586,6 @@ public function isMobile_app() {
             $gift_count = $this->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
            
             $this->set('num_gifts_sent', $gift_count);
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> shipping_address
-
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -712,11 +705,7 @@ public function isMobile_app() {
            if($this->RequestHandler->isMobile())
             {
                 if(isset($this->request->query['gift_id']))
-<<<<<<< HEAD
-=======
-
->>>>>>> shipping_address
-		{
+                {
  			$android=$this->isMobile_app();
 			if($android)
 			{
@@ -729,11 +718,7 @@ public function isMobile_app() {
 				$this->layout='mobile_landing_redeem';
 			}
 		}
-<<<<<<< HEAD
-=======
-
->>>>>>> shipping_address
-                else
+        else
                 {
                     $android=$this->isMobile_app();
                     $this->set('android', $android);
