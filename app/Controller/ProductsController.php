@@ -34,7 +34,9 @@ class ProductsController extends AppController {
         
         );
     public $uses = array( 'Product','User','UserAddress','Gift','UploadedProductCode','City', 'CitySegment', 'LocationSegment', 'ProductCitySegment', 'Reminder');
-    public $components = array('AesCrypt','Search.Prg','BlackListProduct');
+
+    public $components = array('AesCrypt','Search.Prg','BlackListProduct','Defaulter');
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('send_product_expiry_reminder','login_after_gift_selection');
@@ -592,7 +594,9 @@ public function download_user_csv_all($download_selected = null){
         //$this->paginate['conditions'] = $conditions;
         $black_listed_products = array();
         if(BLACKLISTED_PRODUCT && $receiver_id==$this->Auth->user('facebook_id')){
-            $black_listed_products = $this->BlackListProduct->products_list();   
+
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();   
+
         }
         
         $pre_final_products = array_merge($product_for_all_age_gender, $products_age_location_gender);
@@ -635,6 +639,29 @@ public function download_user_csv_all($download_selected = null){
             $id=$this->AesCrypt->decrypt($this->data['encrypted_product_id']);
             $suggested=$this->AesCrypt->decrypt($this->data['products']['suggested']);
         }
+        
+        if(RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS){
+            $senders_restricted = array();
+            $receivers_restricted = array();
+            $senders_restricted = $this->Defaulter->senders_restricted_for_product($id);
+            $receivers_restricted = $this->Defaulter->receivers_restricted_for_product($id);
+            $receiver_blocked = FALSE;
+            $sender_blocked = FALSE;
+            if(isset($receivers_restricted) && !empty($receivers_restricted))
+                $receiver_blocked = in_array($receiver_id, $receivers_restricted);
+            if(isset($senders_restricted) && !empty($senders_restricted))
+                $sender_blocked = in_array($this->Auth->user('facebook_id'), $senders_restricted);
+            if($sender_blocked || $receiver_blocked){
+                if($sender_blocked){
+                    $this->Session->setFlash(__('You are not eligible to send this gift'));   
+                }
+                if($receiver_blocked){
+                    $this->Session->setFlash(__('Receiver is not eligible to receive this gift'));    
+                }
+                $this->redirect(array('controller' => 'reminders', 'action' => 'view_friends'));
+            }
+        }
+
         $fb_id = $this->Auth->user('facebook_id');
         $rec_id = $this->User->find('first',array('fields'=>'User.id','conditions'=>array('User.facebook_id'=>$receiver_id)));
         $reciever_id_user_table=$rec_id['User']['id'];
@@ -685,7 +712,7 @@ public function download_user_csv_all($download_selected = null){
         $unpaid_product =array();
         $this->Gift->recursive = -1;
         foreach($product_array as $product)
-        {  
+        {
             $product_id= NULL; 
             if($product['Product']['min_price']== 0)
             {
@@ -708,16 +735,20 @@ public function download_user_csv_all($download_selected = null){
                 $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
                     'conditions' => array(
                         'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
-                        'created between' => $sender_end_date." and ".$tomorrow,
+                        //'created between' => $sender_end_date." and ".$tomorrow,
+                        'created >' => $sender_end_date,
+                        'created <' => $tomorrow,
                         'product_id' => $product_id,
                         'sender_id' => $sender_id
                         )
                     ));
 
-                $total_send_gift_acc_limit_sender = $this->Gift->find('count', array(
+                $total_gift_rec_acc_limit_receiver = $this->Gift->find('count', array(
                     'conditions' => array(
                         'gift_status_id !=' => GIFT_STATUS_TRANSACTION_PENDING,
-                        'created between' => $receiver_end_date." and ".$tomorrow,
+                        //'created between' => $receiver_end_date." and ".$tomorrow,
+                        'created >' => $sender_end_date,
+                        'created <' => $tomorrow,
                         'product_id' => $product_id,
                         'receiver_fb_id' => $receiver_fb_id
                         )
@@ -863,7 +894,21 @@ public function download_user_csv_all($download_selected = null){
         exit;
     }
     public function login_after_gift_selection()
+<<<<<<< HEAD
     { 
+=======
+    {
+        $black_listed_products = array();
+        if(GIFT_TO_MYSELF && ($this->data['gift_id'] || ($_GET['token'] && $_GET['token_first']))){
+            if($this->data['gift_id'])
+                $gift_id = $this->AesCrypt->decrypt($this->data['gift_id']);
+            if($_GET['token'] && $_GET['token_first'])
+                $gift_id = $this->AesCrypt->decrypt($_GET['token']);
+            $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
+            $proudct_blocked_for_myself = in_array($gift_id,$black_listed_products);
+            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
+        } 
+>>>>>>> master
         if(ENABLE_LOGIN_AFTER_GIFT_SELECTION){
             if($this->request->is('post')){
                 if($this->Connect->user() && $this->Auth->User('id'))

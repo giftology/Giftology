@@ -13,6 +13,8 @@
         <td><?php echo $this->Form->input('receiver_fb_id', array('type'=>'text','div' => false,'label'=>'','size'=>'15','placeholder'=>'Receiver FB Id'));?></td>
         <td><?php echo $this->Form->input('receiver_email', array('type'=>'text','div' => false,'label'=>'','size'=>'15','placeholder'=>'Receiver Email'));?></td>
         <td><?php echo $this->Form->input('code', array('type'=>'text','div' => false,'label'=>'','size'=>'10','placeholder'=>'Code'));?></td>
+        <span><label>Claim:</label><?php echo $this->Form->select('claim', $claim);?></span>
+        <span><label>Redeem:</label><?php echo $this->Form->select('redeem', $redeem);?></span>
         <td><?php echo $this->Form->input('gift_amount', array('type'=>'text','div' => false,'label'=>'','size'=>'5','placeholder'=>'Gift Amount'));?></td>
         <td><?php echo $this->Form->input('gift_status_id', array('type'=>'text','div' => false,'label'=>'','size'=>'5','placeholder'=>'Gift Status Id'));?></td>
         <td><?php echo $this->Form->input('expiry_start', array('type'=>'text','div' => false,'label'=>'','size'=>'5','id'=>'datepicker',"placeholder"=>'Start Date','placeholder'=>'Expiry Start'));?>
@@ -57,6 +59,8 @@
 			<th><?php echo $this->Paginator->sort('receiver_fb_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('receiver_email'); ?></th>
 			<th><?php echo $this->Paginator->sort('code'); ?></th>
+			<th><?php echo $this->Paginator->sort('claim'); ?></th>
+			<th><?php echo $this->Paginator->sort('redeem'); ?></th>
 			<th><?php echo $this->Paginator->sort('gift_amount'); ?></th>
 			<th><?php echo $this->Paginator->sort('gift_status_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('expiry_date'); ?></th>
@@ -91,6 +95,9 @@
 		}
 		?>&nbsp;</td>	
 		<td><?php echo h($gift['Gift']['code']); ?>&nbsp;</td>
+		<td><?php echo h($gift['Gift']['claim']); ?>&nbsp;</td>
+		<td><?php echo h($gift['Gift']['redeem']); ?>&nbsp;</td>
+
 		<td><?php echo h($gift['Gift']['gift_amount']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($gift['GiftStatus']['id'], array('controller' => 'gift_statuses', 'action' => 'view', $gift['GiftStatus']['id'])); ?>

@@ -587,6 +587,9 @@ public function isMobile_app() {
            
             $this->set('num_gifts_sent', $gift_count);
 
+
+
+
             $slidePlaySpeed = 8000;
             if (isset($this->request->query['gift_id'])) {
                 $this->Mixpanel->track('Gift Recipient arrived', array(
@@ -706,7 +709,21 @@ public function isMobile_app() {
            if($this->RequestHandler->isMobile())
             {
                 if(isset($this->request->query['gift_id']))
-                    $this->layout='mobile_landing_redeem';
+
+		{
+ 			$android=$this->isMobile_app();
+			if($android)
+			{
+
+			  $this->set('android', $android);
+			 $this->layout='mobile_landing';
+			}
+			else
+			{
+				$this->layout='mobile_landing_redeem';
+			}
+		}
+
                 else
                 {
                     $android=$this->isMobile_app();

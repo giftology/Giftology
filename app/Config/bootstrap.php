@@ -245,7 +245,7 @@ define('DAILY_MAX_GIFTS_PER_USER', 10);
 define('CAROUSEL_CODE', 1);
 define('GIFT_CODE_EXPIRY_REMINDER_EMAIL', 'aman.narang@giftology.com');
 define('SUSPICIOUS_USER_CHECK', TRUE);
-define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 5);
+define('MINIMUM_NUMBER_OF_FRIENDS_TO_REDEEM_GIFT', 15);
 define('PAID_PRODUCT_DISABLED', TRUE);
 define('TYPE_CAMPAIGN', 1);
 define('TYPE_CONTEST', 2);
@@ -257,14 +257,18 @@ define('CITY_SEGMENT_RADIUS', 40); //CITY_SEGMENT_RADIUS in KM.
 
 
 
-define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', TRUE); //old work flow
-define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', FALSE); //new work flow
+
+define('GIFT_REDEEM_WITHOUT_TEMP_GIFT_CODE', FALSE); //old work flow
+define('GIFT_REDEEM_WITH_TEMP_GIFT_CODE', TRUE); //new work flow
 define('GIFT_CLAIM', TRUE); //new work flow
 
 
+
 //Giftology Android App Constants
-define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.unikove.giftology");
+define('GOOGLE_PLAY_ANDROID_URL', "https://play.google.com/store/apps/details?id=com.giftology");
 define('REQUEST_ANDROID_MOBILE_USER_AGENT',"Android");
+
+define('GOOGLE_PLAY_BITLY',"https://bit.ly/GiftologyAndroidApp");
 
 
 //bitly credentials and URL shortening settings
@@ -285,8 +289,6 @@ define('ANDROID_INSTALL',TRUE);
 define('GIFT_SENT',TRUE);
 
 
-define('GOOGLE_PLAY_BITLY',"https://bit.ly/GiftologyAndroidApp");
-
 define('ENABLE_LOGIN_AFTER_GIFT_SELECTION',TRUE);
 
 //Chat Plugin
@@ -296,7 +298,11 @@ define('ZOPIM',FALSE);
 define('REMINDER_MAIL_SETTING', FALSE);
 
 define('BLACKLISTED_PRODUCT', TRUE);
-define('GIFT_TO_MYSELF', FALSE);
+define('GIFT_TO_MYSELF', TRUE);
+define('RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS', TRUE);
+
+//FEEDBACK
+define('FEEDBACK_PLUGIN', FALSE);
 
 
 CakePlugin::load('Mixpanel');

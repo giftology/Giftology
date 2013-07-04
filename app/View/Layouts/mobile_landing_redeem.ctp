@@ -79,7 +79,11 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
                     <p><b>You've received a gift from <span><?= $sender_name ?></span></b></p>
                      <!--<a href="javascript:void(0);" class="fb-btn">&nbsp;</a>-->
                      <div  id="fb" ><?php echo $this->Facebook->login(array('img' => 'fb-btn.png',
+<<<<<<< HEAD
                 'redirect' => array('controller'=>'gifts','action'=>'redeem','enc_id'=>$encrypted_gift_id))); ?>
+=======
+                'redirect' => array('controller'=>'reminders','action'=>'view_friends'))); ?>
+>>>>>>> master
                     </div>
                  </div>
                 <div class="fblike"><!--<img src="<?= FULL_BASE_URL; ?>/img/fblike.jpg" alt="">--></div>

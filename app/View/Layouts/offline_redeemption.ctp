@@ -60,6 +60,7 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
 			( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 	</script>
+<?php if(FEEDBACK_PLUGIN):?>
 <script type="text/javascript"> 
 var _urq = _urq || []; 
 _urq.push(['setPerformInitialShorctutAnimation', false]); 
@@ -70,7 +71,8 @@ var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async
 ur.src = 'http://sdscdn.userreport.com/userreport.js'; 
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s); 
 })(); 
-</script> 
+</script>
+<?php endif;?>
 
 <?php echo $this->Mixpanel->embed(); ?>
 </body>

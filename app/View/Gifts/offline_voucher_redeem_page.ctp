@@ -18,17 +18,21 @@
                 </div>
                  <div style="width:200px; margin:auto;">
                     <img width="50" height="50" src="<?= FULL_BASE_URL.'/'.$gift['Product']['Vendor']['facebook_image'];?>"  class="wide">
-                </div>
+                </div></br>
                 <p class="fine-print"><?= $gift['Product']['terms_heading']; ?></p>
                 <div class="frame"></div>
             </div>                
             <div class="count">
                 <div id="countdown"></div>
-                <p class="firstname note"><?= $gift['Sender']['UserProfile']['first_name'] ?></p>
+                <p class="firstname note"><?= $gift['Receiver']['UserProfile']['first_name'] ?></p>
                 <p id="note"></p>
                     <div class="button">
-                        <P class="  spans"> <?= $gift['Gift']['code']; ?>
+                        <P class="  spans">Code : <?= $gift['Gift']['code']; ?>
                         </p>
+                    <?php if($pin['UploadedProductCode']['pin'] != "") :?>
+                        <P class="  spans">Pin : <?= $pin['UploadedProductCode']['pin']; ?>
+                        </p>
+                    <?php endif; ?>
                     </div>
             </div>
         </div>
