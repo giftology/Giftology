@@ -51,7 +51,9 @@ $cakeDescription = __d('cake_dev', 'Giftology: The social gifting company');
     //echo $this->Minify->css('normalize');
     
     //echo $this->Minify->css('flexslider');
-    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','accord1'));
+
+    echo $this->Minify->script(array('jquery-1.7.2.min','jquery-ui-1.8.23.min','jquery-1.9.0.min','jquery.easing-1.3','jquery.flexslider-min','plugins','main','carouFredSel','modernizr-2.6.2.min','mixpanel-2.1.min','jquery.ias.min','giftology','accord1','js'));
+
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
     //echo $this->Html->script('slides.min.jquery');
     //echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
@@ -199,7 +201,7 @@ collapsecurrent: true //<- No comma following very last setting!
           <?php  if($type): ?>
          <p></p>
        <?php else:?>
-       <p>The fun and easy way to give <span>free </span>and<br>  <span>paid </span>gifts to your <span>Facebook friends</span></p>
+      
          <?php endif; ?>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -222,7 +224,7 @@ collapsecurrent: true //<- No comma following very last setting!
       } 
     ?>   
     
-    <div class="fbconect" id="fb"  ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+    <div class="fbconect" id="fb" style="" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
       'redirect' => $redirect_url)); ?></div>   
            
         <div class="clear">&nbsp;</div>
@@ -235,8 +237,37 @@ collapsecurrent: true //<- No comma following very last setting!
     <?php } ?>
         </div>
     </div>
-    <section class="slider">  
-        <div class="flexslider" >
+    <?php if(ENABLE_SLIDER): ?>
+      <style type="text/css">
+      .show-case{margin-top:0px;}
+      </style>
+    <section class="slider" style="margin-top:2%;"> 
+
+
+     
+
+  <div id="banner-fade">
+ <!-- start Basic jQuery Slider -->
+  <ul class="bjqs">
+    
+<li><img src="img/banner04.png" title="Gifts your friends will love to receive"></li>
+
+<li><img src="img/banner02.jpg" title="Real Gifts for your precious ones"> </li>
+
+<li><img src="img/post_sliderimage.png" title="Don’t just post on facebook, you can now make it a gift post!"> </li>
+
+<li><img src="img/banner03.jpg" title="Don't forget another birthday! Get reminders"> </li>
+
+<li><img src="img/banner01.jpg" title="The fun and easy way to give FREE and paid gifts to your Facebook friends"> </li>
+
+</ul>
+  <!-- end Basic jQuery Slider -->
+
+</div>
+       <?php else : ?>
+       <section class="slider" style="margin-top:2%;">
+        <div class="flexslider">
+
           <?php
             if($campaign_check_on): ?>
           <?php 
@@ -258,13 +289,11 @@ collapsecurrent: true //<- No comma following very last setting!
                           <li style="display: list-item;">
                           <img id="banner_image" src="<?= FULL_BASE_URL; ?>/img/slides.jpg">
                            </li>
-                            <!--accordian-->
-       
-          <!--accordian-->
                          </ul>
                         
               <?php endif;  ?>
-        </div> 
+        </div>
+      <?php endif; ?>
       </section>
 
      <!--<?php //if(isset($campaign_Images)): ?>
@@ -308,8 +337,7 @@ collapsecurrent: true //<- No comma following very last setting!
    
 
    
-           <section class="show-case" style="
-background: none repeat scroll 0 0 #F7F7F7; ">
+           <section class="show-case" style="background: none repeat scroll 0 0 #F7F7F7; ">
                 <div class="showcase-wrap">
                    <div id="giftVouchers">
                     <?php if(CAROUSEL_CODE == 1): ?>
@@ -442,6 +470,7 @@ background: none repeat scroll 0 0 #F7F7F7; ">
       //echo $this->Minify->script('../js/carouFredSel');      
       //echo $this->fetch('script');
     ?>
+
       <script type="text/javascript">
       $(document).ready(function(){
         $('Form a > .small-voucher').click(function (){
@@ -463,6 +492,20 @@ background: none repeat scroll 0 0 #F7F7F7; ">
       });
 
       </script>
+
+      
+      <script class="secret-source">
+        jQuery(document).ready(function($) {
+
+          $('#banner-fade').bjqs({
+            height      : 363,
+            width       : 100+'%',
+            responsive  : true
+          });
+
+        });
+</script>
+
        <script type="text/javascript">
        !function(window){
   var $q = function(q, res){
