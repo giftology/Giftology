@@ -226,7 +226,7 @@ collapsecurrent: true //<- No comma following very last setting!
       } 
     ?>   
     
-    <div class="fbconect" id="fb"  ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
+    <div class="fbconect" id="fb" style="" ><?php echo $this->Facebook->login(array('img' => 'fb-start-gifting.png',
       'redirect' => $redirect_url)); ?></div>   
            
         <div class="clear">&nbsp;</div>
@@ -248,13 +248,13 @@ collapsecurrent: true //<- No comma following very last setting!
  <!-- start Basic jQuery Slider -->
   <ul class="bjqs">
     
-<li><img src="img/banner04.png" title="Gifts your friend will love to receive."></li>
+<li><img src="img/banner04.png" title="Gifts your friends will love to receive"></li>
 
-<li><img src="img/banner02.jpg" title="Real Gift for your precious ones."> </li>
+<li><img src="img/banner02.jpg" title="Real Gifts for your precious ones"> </li>
 
 <li><img src="img/post_sliderimage.png" title="Don’t just post on facebook, you can now make it a gift post!"> </li>
 
-<li><img src="img/banner03.jpg" title="Don't forget another birthday! Get reminders."> </li>
+<li><img src="img/banner03.jpg" title="Don't forget another birthday! Get reminders"> </li>
 
 <li><img src="img/banner01.jpg" title="The fun and easy way to give FREE and paid gifts to your Facebook friends"> </li>
 
