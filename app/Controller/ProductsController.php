@@ -928,9 +928,7 @@ public function download_user_csv_all($download_selected = null){
         $this->set('encrypted_id',$encrypted_gift_id); 
         } 
 
-    public function login_after_gift_selection()
-
-    {
+    public function login_after_gift_selection(){
         $black_listed_products = array();
         if(GIFT_TO_MYSELF && ($this->data['gift_id'] || ($_GET['token'] && $_GET['token_first']))){
             if($this->data['gift_id'])
