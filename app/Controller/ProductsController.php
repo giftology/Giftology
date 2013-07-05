@@ -902,7 +902,8 @@ public function download_user_csv_all($download_selected = null){
                 $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }
             if($_GET['token'] && !$_GET['token_first']){
-                $gift_id = substr($_GET['token'], -13, 2);
+                preg_match_all("/\((.*?)\)/", $_GET['token'], $result_array);
+                $gift_id = end($result_array);
                 $encrypted_gift_id = $this->AesCrypt->encrypt($gift_id);
             }    
             
@@ -944,11 +945,13 @@ public function download_user_csv_all($download_selected = null){
 
     public function select_friends(){
         $product_id = $this->AesCrypt->decrypt($this->params->named['search_key']);
+        if(is_array($product_id)) $product_id = end($product_id);
         $black_listed_products = array();
         if(GIFT_TO_MYSELF){
             $black_listed_products = $this->BlackListProduct->products_not_to_gift_yourself();
             $proudct_blocked_for_myself = in_array($product_id,$black_listed_products);
-            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);   
+            if($proudct_blocked_for_myself) $this->set('gift_to_myself',FALSE);
+            else $this->set('gift_to_myself',TRUE);   
         }
         $this->get_friends_after_login();
         $this->get_product_details_after_login($product_id);
