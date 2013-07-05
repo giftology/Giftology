@@ -239,6 +239,10 @@ collapsecurrent: true //<- No comma following very last setting!
     <?php } ?>
         </div>
     </div>
+    <?php if(ENABLE_SLIDER): ?>
+      <style type="text/css">
+      .show-case{margin-top:0px;}
+      </style>
     <section class="slider" style="margin-top:2%;"> 
 
 
@@ -262,7 +266,9 @@ collapsecurrent: true //<- No comma following very last setting!
   <!-- end Basic jQuery Slider -->
 
 </div>
-       <!-- <div class="flexslider">
+       <?php else : ?>
+       <section class="slider" style="margin-top:2%;">
+        <div class="flexslider">
 
           <?php
             if($campaign_check_on): ?>
@@ -288,7 +294,8 @@ collapsecurrent: true //<- No comma following very last setting!
                          </ul>
                         
               <?php endif;  ?>
-        </div> -->
+        </div>
+      <?php endif; ?>
       </section>
 
      <!--<?php //if(isset($campaign_Images)): ?>
@@ -332,8 +339,7 @@ collapsecurrent: true //<- No comma following very last setting!
    
 
    
-           <section class="show-case" style="
-background: none repeat scroll 0 0 #F7F7F7; ">
+           <section class="show-case" style="background: none repeat scroll 0 0 #F7F7F7; ">
                 <div class="showcase-wrap">
                    <div id="giftVouchers">
                     <?php if(CAROUSEL_CODE == 1): ?>
