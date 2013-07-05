@@ -300,7 +300,7 @@ define('RESTRICT_GIFTOLOGY_EMPLOYEE_FOR_PRODUCTS', TRUE);
 define('FEEDBACK_PLUGIN', FALSE);
 
 //slider landing page
-define('ENABLE_SLIDER',TRUE);
+define('ENABLE_SLIDER',FALSE);
 
 CakePlugin::load('Mixpanel');
 CakePlugin::load(array('Minify' => array('routes' => true)));
