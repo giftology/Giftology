@@ -761,26 +761,25 @@ public function isMobile_app() {
                 $this->layout='landing';
             
 
-       // $this->layout = 'landing';
-        $this->set('slidePlaySpeed', '8000');
-        
-        $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
-        //$this->redirect($this->referer());
+               // $this->layout = 'landing';
+                $this->set('slidePlaySpeed', '8000');
+                
+                $this->set('message', 'Thanks for stopping by Giftology.  Come back soon !');
+                //$this->redirect($this->referer());
 
-     //   $this->redirect($this->Auth->logout());
-        $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
-                                                                           'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
-        $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
-        $Image_new = array();
-        foreach ($Image as $Images) 
-        {
-            $id=$Images['Product']['vendor_id'];
-            $this->Vendor->unbindModel(array('hasMany' => array('Product')));
-            $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
-            $this->set('Images', $Image_new);
-        }
-
-        }
+             //   $this->redirect($this->Auth->logout());
+                $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
+                                                                                   'belongsTo' => array('Vendor','ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
+                $Image = $this->Product->find('all',array('fields' =>'DISTINCT Product.vendor_id' ,'conditions' => array('Product.display_order >'=>0)));
+                $Image_new = array();
+                foreach ($Image as $Images) 
+                {
+                    $id=$Images['Product']['vendor_id'];
+                    $this->Vendor->unbindModel(array('hasMany' => array('Product')));
+                    $Image_new[] = $this->Vendor->find('all',array('fields' =>array('Vendor.wide_image'),'conditions' => array('Vendor.id '=>$id)));
+                    $this->set('Images', $Image_new);
+                }
+            }
 
         $this->Product->unbindModel(array('hasMany' => array('Gift','UploadedProductCode'),
                                                                            'belongsTo' => array('ProductType','GenderSegment','AgeSegment','CodeType','Gift')));
@@ -792,8 +791,7 @@ public function isMobile_app() {
 
         // gift count
         $gift_count = $this->User->GiftsReceived->find('count', array('conditions' => array('GiftsReceived.sender_id !=' => UNREGISTERED_GIFT_RECIPIENT_PLACEHODER_USER_ID)));
-        $this->set('num_gifts_sent', $gift_count);
-         
+        $this->set('num_gifts_sent', $gift_count); 
 
          
     }

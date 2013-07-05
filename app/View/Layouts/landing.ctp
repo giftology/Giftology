@@ -250,15 +250,15 @@ collapsecurrent: true //<- No comma following very last setting!
  <!-- start Basic jQuery Slider -->
   <ul class="bjqs">
     
-<li><img src="img/banner04.png" title="Gifts your friends will love to receive"></li>
+<li><img src="<?= FULL_BASE_URL; ?>/img/banner04.png" title="Gifts your friends will love to receive"></li>
 
-<li><img src="img/banner02.jpg" title="Real Gifts for your precious ones"> </li>
+<li><img src="<?= FULL_BASE_URL; ?>/img/banner02.jpg" title="Real Gifts for your precious ones"> </li>
 
-<li><img src="img/post_sliderimage.png" title="Don’t just post on facebook, you can now make it a gift post!"> </li>
+<li><img src="<?= FULL_BASE_URL; ?>/img/post_sliderimage.png" title="Don’t just post on facebook, you can now make it a gift post!"> </li>
 
-<li><img src="img/banner03.jpg" title="Don't forget another birthday! Get reminders"> </li>
+<li><img src="<?= FULL_BASE_URL; ?>/img/banner03.jpg" title="Don't forget another birthday! Get reminders"> </li>
 
-<li><img src="img/banner01.jpg" title="The fun and easy way to give FREE and paid gifts to your Facebook friends"> </li>
+<li><img src="<?= FULL_BASE_URL; ?>/img/banner01.jpg" title="The fun and easy way to give FREE and paid gifts to your Facebook friends"> </li>
 
 </ul>
   <!-- end Basic jQuery Slider -->
