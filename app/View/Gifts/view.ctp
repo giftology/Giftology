@@ -46,6 +46,11 @@
 			<?php echo h($gift['Gift']['expiry_date']); ?>
 			&nbsp;
 		</dd>
+        <dt><?php echo __('Gift URL'); ?></dt>
+        <dd>
+            <?php echo h($gift['Gift']['gift_url']); ?>
+            &nbsp;
+        </dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($gift['Gift']['created']); ?>
